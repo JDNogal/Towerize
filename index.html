@@ -527,7 +527,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v234</div>
+<div id="ver">Towerize v235</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1124,7 +1124,6 @@ const OPTS=[
  {tab:'jg',type:'toggle',key:'ptipw',def:false,label:'Tooltips de portales abiertos en fase de combate',desc:'Durante la oleada, cada portal muestra siempre la escuadra que está saliendo y la siguiente. Al pasar el ratón por encima ves todo lo que le queda por salir.',descT:'Durante la oleada, cada portal muestra siempre la escuadra que está saliendo y la siguiente. Al tocarlo ves todo lo que le queda por salir.'},
  {tab:'jg',type:'toggle',key:'treal',def:false,label:'Mostrar tiempo real',desc:'Muestra arriba el tiempo real que llevas de partida, contando todo: pausas, menús y lo que tardes en pensar.'},
  {tab:'jg',type:'toggle',key:'tcomb',def:false,label:'Mostrar tiempo de combate',desc:'Muestra arriba el tiempo de juego: solo avanza con el juego en marcha y va al ritmo de la velocidad (a ×2 cuenta el doble de rápido; en pausa se detiene).'},
- {tab:'jg',type:'reset',label:'Borrar progreso',desc:'Borra todo lo que has conseguido y descubierto: compendio, logros, récords de héroe, desbloqueos de rondas y tutoriales. Tus opciones se mantienen. No se puede deshacer.'},
  {tab:'jg',type:'toggle',key:'slow',def:true,label:'Ralentizar el juego al consultar información',desc:'Al mantener el ratón sobre un elemento o un panel, el juego baja hasta ×0,25.',descT:'Al mantener pulsado un elemento o mientras tienes un panel abierto, el juego baja hasta ×0,25.'},
  {tab:'hs',type:'choice',label:'Velocidad de escritura',get:()=>OPT.dspd||'n',set:v=>{OPT.dspd=v;saveOpt();},choices:[['l','Lenta'],['n','Normal'],['r','Rápida']]},
  {tab:'hs',type:'toggle',key:'dtype',def:true,label:'Efecto máquina de escribir',desc:'El texto de los diálogos aparece letra a letra. Desactivado, aparece de golpe.'},
@@ -1137,6 +1136,7 @@ const OPTS=[
  {tab:'un',type:'toggle',key:'u_tw',def:false,label:'Desbloquear todas las torres',desc:'Todas las torres pueden salirte en las ofertas desde la primera partida.'},
  {tab:'un',type:'toggle',key:'u_hr',def:false,label:'Desbloquear todos los héroes',desc:'Todos los héroes disponibles en la selección, junto con las torres de sus mazos.'},
  {tab:'jg',type:'toggle',key:'keys',def:true,label:'Atajos de teclado',desc:'WASD mover el mapa · Q/E zoom · F habilidad · G definitiva · H mover héroe · Espacio pausa · V velocidad · Intro empezar oleada · 1–7 elegir torre · U mejorar · Mayús+1–9 reliquias.'},
+ {tab:'jg',type:'reset',label:'Borrar progreso',desc:'Borra todo lo que has conseguido y descubierto: compendio, logros, récords de héroe, desbloqueos de rondas y tutoriales. Tus opciones se mantienen. No se puede deshacer.'},
  {tab:'un',type:'toggle',key:'u_rl',def:false,label:'Desbloquear todas las reliquias',desc:'Las reliquias que dependen de un logro también pueden salir en los cofres.'},
  {tab:'un',type:'toggle',key:'u_cs',def:false,label:'Desbloquear toda la personalización',desc:'Paletas, núcleos y decoraciones disponibles sin conseguir sus logros.'},
  {tab:'ps',type:'cosm'},
