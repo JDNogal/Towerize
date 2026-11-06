@@ -99,7 +99,7 @@ small{opacity:.75}
 .ric,.rl{display:flex;align-items:center;justify-content:center}.ric{width:52px;height:52px;border-radius:10px;margin:4px auto 8px;font-size:28px}
 #relics{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:44px;margin:6px 0;box-sizing:border-box;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 10px}#relics:empty{display:none}
 .rl{width:38px;height:38px;border-radius:8px;border:1px solid var(--line);font-size:22px;cursor:pointer;position:relative;padding:0;margin:0;transition:opacity .15s}
-.rtip{border-bottom:1px dotted currentColor;cursor:help}.rcard{display:flex;flex-direction:column}.rcard>button{margin:auto 0 0}.rcard>.ric+*{}.rcard>small:last-of-type{margin-bottom:12px}.lock{opacity:.4;pointer-events:none}.rl.dim{opacity:.35}.rl.hero{box-shadow:inset 0 0 0 2px #f0d36a}.rl.off{opacity:.35}.rl.act{box-shadow:0 0 0 2px var(--gold)}.rl.aim{box-shadow:0 0 0 2px #9fdcff}
+.rtip{border-bottom:1px dotted currentColor;cursor:help}.rcard{display:flex;flex-direction:column}.rcard>button{margin:auto 0 0}.rcard>.ric+*{}.rcard>small:last-of-type{margin-bottom:12px}.lock{opacity:.4;pointer-events:none}.rl.dim{opacity:.35}.rl.hero{box-shadow:inset 0 0 0 2px #f0d36a}.rl.off{opacity:.35}.rl.act{box-shadow:0 0 0 2px var(--gold)}.rl.rdy{box-shadow:0 0 0 2px var(--gold),0 0 9px color-mix(in srgb,var(--gold) 55%,transparent)}.rl.rdy.pul{animation:rpul 1.6s ease-in-out infinite}@keyframes rpul{0%,100%{box-shadow:0 0 0 2px var(--gold),0 0 6px color-mix(in srgb,var(--gold) 40%,transparent)}50%{box-shadow:0 0 0 3px var(--gold),0 0 18px var(--gold)}}.rl.rfl{animation:rfl .9s ease-out}@keyframes rfl{0%{transform:scale(1);filter:brightness(1)}30%{transform:scale(1.18);filter:brightness(1.8)}100%{transform:scale(1);filter:brightness(1)}}.rl.aim{box-shadow:0 0 0 2px #9fdcff}
 .rl .bdg{position:absolute;right:-5px;bottom:-5px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;font-size:11px;padding:0 4px;line-height:14px;color:#fff;opacity:1}
 .dps{margin-top:auto;padding-top:10px}
 .ttl{margin-bottom:8px}
@@ -526,7 +526,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v224</div>
+<div id="ver">Towerize v225</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1284,10 +1284,16 @@ function renderRelics(){
  const hb=S.hero?`<button class="rl hero${S.aim==='hero'?' aim':''}${S.aim&&S.aim!=='hero'?' dim':''}${S.hero.s.hp<=0?' off':''}" data-a="hero" data-tip="hero:x" style="background:${S.hero.def.col}">${portrait(S.hero.id,1)}<span class="bdg">${S.hero.s.hp<=0?Math.ceil(S.hero.s.rt)+'s':S.hero.lvl}</span></button>`:'';
  const vb=Object.keys(VCH).filter(k=>S.vch&&S.vch[k]>0).map(k=>`<button class="rl${S.aim==='vch'&&S.vty===k?' aim':''}${S.aim&&!(S.aim==='vch'&&S.vty===k)?' dim':''}" data-a="vch" data-id="${k}" data-tip="vch:${k}" style="background:#5a4a2a">${VCH[k].ic}<span class="bdg">${S.vch[k]}</span></button>`).join('');
  $('relics').innerHTML=vb+(S.relics.length?S.relics.map(id=>{const st=S.rs[id],R=RELIC[id],off=st.cd>0,on=st.t>0,bd=on?Math.ceil(st.t)+'s':off?st.cd:'';
-  return `<button class="rl${off?' off':''}${on?' act':''}${S.aim===id?' aim':''}${S.aim&&S.aim!==id?' dim':''}" data-a="ract" data-id="${id}" data-tip="relic:${id}" style="background:${R.col}">${R.ic}${bd!==''?`<span class="bdg">${bd}</span>`:''}</button>`;}).join(''):'');
+  const rd=relUsable(id);return `<button class="rl${off?' off':''}${on?' act':''}${rd?' rdy'+(RUSE()<3?' pul':''):''}${RFL[id]&&performance.now()-RFL[id]<900?' rfl':''}${S.aim===id?' aim':''}${S.aim&&S.aim!==id?' dim':''}" data-a="ract" data-id="${id}" data-tip="relic:${id}" style="background:${R.col}">${R.ic}${bd!==''?`<span class="bdg">${bd}</span>`:''}</button>`;}).join(''):'');
 }
-let RSIG='';
-function relicTick(){const sg=S.relics.map(id=>S.rs[id].cd+':'+Math.ceil(S.rs[id].t)).join(',')+'|'+S.aim+'|'+(S.hero?S.hero.lvl+':'+(S.hero.s.hp>0?1:Math.ceil(S.hero.s.rt)):'');if(sg!==RSIG){RSIG=sg;renderRelics();}}
+let RSIG='';const RFL={},RPCD={};
+// activa usable ahora mismo (para el brillo): recargada, sin efecto en curso y en la fase en que se puede usar
+function relUsable(id){const st=S.rs&&S.rs[id];if(!st||st.cd>0||st.t>0||RL.open||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return false;
+ if(id==='square')return S.phase==='place';if(['coin','map','hammer','scale','notebook','crystal','mimic'].includes(id))return true;return S.phase==='wave';}
+// cuántas veces has usado activos de reliquia (entre partidas): con menos de 3, el brillo late para llamar más la atención
+const RUSE=()=>{try{return +localStorage.getItem('rt-ruse')||0;}catch(e){return 9;}};
+function relicTick(){if(RPCD._S!==S){for(const k in RPCD)delete RPCD[k];RPCD._S=S;}for(const id of S.relics){const st=S.rs[id],c=st.cd,u=c>0||st.t>0,pv=RPCD[id];if(pv&&pv.c>0&&c<=0&&realG()){RFL[id]=performance.now();try{sfx('rready');}catch(e){}setTimeout(()=>{RSIG='';},950);}if(pv&&!pv.u&&u&&realG()){try{localStorage.setItem('rt-ruse',RUSE()+1);}catch(e){}}RPCD[id]={c,u};}
+ const sg=S.relics.map(id=>S.rs[id].cd+':'+Math.ceil(S.rs[id].t)+(relUsable(id)?'r':'')+(RFL[id]&&performance.now()-RFL[id]<900?'f':'')).join(',')+'|'+S.aim+'|'+(S.hero?S.hero.lvl+':'+(S.hero.s.hp>0?1:Math.ceil(S.hero.s.rt)):'');if(sg!==RSIG){RSIG=sg;renderRelics();}}
 function nearChest(e){const NB=N/BN,R=2*NB/P;for(const k in S.chests){if(!S.chests[k])continue;const[bx,by]=k.split(',').map(Number),x0=bx*NB,y0=by*NB,dx=Math.max(x0-e.x,0,e.x-(x0+NB)),dy=Math.max(y0-e.y,0,e.y-(y0+NB));if(Math.hypot(dx,dy)<=R)return true;}return false;}
 function freeSlot(){const c=[];for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k])continue;if(D.some(([a,b])=>S.blocks[(bx+a)+','+(by+b)]))c.push(k);}return c.length?c[Math.floor(Math.random()*c.length)]:null;}
 function addPois(e,w,src,rv){(e.ps=e.ps||[]).push({w:w*stkM(e),t:POISD,src,rv});}
@@ -2227,7 +2233,7 @@ function uniqInfo(t,k,lvo){const T=TW[k],src=t?'tw:'+t.id:'shop:'+k,X=t?tinfo(t)
    if(pin)h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`;}
   if(pin&&t.lvl<(T.pig?4:3)){const c=upCost(T,t.lvl+1);h+=`<div class="tgt"><button data-a="up" data-id="${t.id}">⬆ Mejorar a Nv ${t.lvl+1} (${upLbl(c)})</button></div>`;}}
  if(pin)h+='<small>Las torres únicas no se pueden vender.</small>';return h;}
-function guildUp(t){if(!t||!TW[t.type].guild||t.lvl>=4||!(S.phase==='build'||S.phase==='wave'))return;const c=TW[t.type].upc[t.lvl+1];if(S.gold<c){S.msg='Oro insuficiente.';ui();return;}
+function guildUp(t){if(!t||!TW[t.type].guild||t.lvl>=4||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;const c=TW[t.type].upc[t.lvl+1];if(S.gold<c){S.msg='Oro insuficiente.';ui();return;}
  S.gold-=c;S.st.spent+=c;t.lvl++;t.inv=(t.inv||0)+c;mkGuild(t);if(t.lvl>=4)S.guildS=1;S.msg='La Sede del Gremio sube a rango '+RANKS[t.lvl-1]+'.';refreshPrim();ui();}
 
 // tiempos de partida: real (todo incluido) y de combate (tiempo de juego, con la velocidad); FPS
@@ -2463,7 +2469,7 @@ function build(fx,fy){
 const upLbl=c=>c?`<span class="gd">−${c} 🪙</span>`:'<span class="gd">gratis</span>';
 function upgrade(t){
  if(t&&TW[t.type].uniq&&!TW[t.type].upc)return;
- if(!t||!S.list.includes(t)||t.lvl>=(TW[t.type].pig?4:3)||!(S.phase==='build'||S.phase==='wave'))return;
+ if(!t||!S.list.includes(t)||t.lvl>=(TW[t.type].pig?4:3)||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  const T=TW[t.type],c=upCost(T,t.lvl+1);
  if(S.gold<c){S.msg='Oro insuficiente para mejorar.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.lvl++;t.inv=(t.inv||T.cost)+c;if(S.tut&&S.tut.freeUp)S.tut.freeUp=0;
@@ -2506,14 +2512,14 @@ function upRow(t,pinned){
  return '<small>Nivel máximo.</small>';
 }
 function chooseSpec(t,sp){
- if(!t||!S.list.includes(t)||t.lvl!==3||!SPECS[t.type]||!SPECS[t.type][sp]||!(S.phase==='build'||S.phase==='wave'))return;
+ if(!t||!S.list.includes(t)||t.lvl!==3||!SPECS[t.type]||!SPECS[t.type][sp]||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  const T=TW[t.type],c=upCost(T,4);
  if(S.gold<c){S.msg='Oro insuficiente para mejorar.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.lvl=4;t.spec=sp;t.inv=(t.inv||T.cost)+c;t.ab={};t.acd={};if(t.type==='augur'&&sp==='lord'&&!t.flag)autoFlag(t);
  if(t.sd){const m=sdHp(t);for(const q of t.sd){const dd=m-q.max;q.max=m;if(q.hp>0)q.hp=Math.min(m,Math.max(1,q.hp+dd));}}S.msg='';refreshPrim();ui();
 }
 function buyAb(t,id){
- if(!t||!S.list.includes(t)||t.lvl!==4||!SPECS[t.type][t.spec].ab.includes(id)||!(S.phase==='build'||S.phase==='wave'))return;
+ if(!t||!S.list.includes(t)||t.lvl!==4||!SPECS[t.type][t.spec].ab.includes(id)||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  const D=AB[id],rk=t.ab[id]||0;if(rk>=D.ranks.length)return;const c=D.ranks[rk].c;
  if(S.gold<c){S.msg='Oro insuficiente para la habilidad.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.ab[id]=rk+1;t.inv=(t.inv||TW[t.type].cost)+c;if(rk===0)t.acd[id]=0;S.msg='';refreshPrim();ui();
@@ -3620,7 +3626,7 @@ function wishOk(w){const t=S.list.find(o=>o.id===w.id);if(!t)return null;const T
  if(w.a==='spec')return t.lvl===3&&SPECS[t.type]&&SPECS[t.type][w.v]?{t,c:upCost(T,4)}:null;
  if(w.a==='abuy'){const D=AB[w.v],rk=t.ab&&t.ab[w.v]||0;return t.lvl===4&&D&&rk===w.rk&&rk<D.ranks.length?{t,c:D.ranks[rk].c}:null;}
  return null;}
-function wishToggle(b){if(!S||!S.list||!(S.phase==='build'||S.phase==='wave'))return;const a=b.dataset.a,id=+b.dataset.id,v=b.dataset.v||'',t=S.list.find(o=>o.id===id);if(!t)return;
+function wishToggle(b){if(!S||!S.list||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;const a=b.dataset.a,id=+b.dataset.id,v=b.dataset.v||'',t=S.list.find(o=>o.id===id);if(!t)return;
  S.wish=S.wish||[];const i=S.wish.findIndex(w=>w.a===a&&w.id===id&&w.v===v);
  if(i>=0)S.wish.splice(i,1);else{if(a==='spec')S.wish=S.wish.filter(w=>!(w.a==='spec'&&w.id===id));S.wish.push({a,id,v,lv:t.lvl,rk:a==='abuy'?(t.ab&&t.ab[v]||0):0});}
  S.msg='';try{sfx('btn');}catch(e){}wishDeco();ui();}
@@ -3629,7 +3635,7 @@ function wishDeco(){const L=(typeof S!=='undefined'&&S&&S.wish)||[];for(const b 
  const tt=on?(TOUCH?'Marcada: se comprará sola cuando tengas oro. Mantén pulsado para desmarcar.':'Marcada: se comprará sola cuando tengas oro. Clic derecho para desmarcar.'):(TOUCH?'Mantén pulsado para marcarla y comprarla sola cuando tengas oro.':'Clic derecho: marcar para comprarla sola cuando tengas oro.');if(b.title!==tt)b.title=tt;}}
 function wishTick(){if(typeof S==='undefined'||!S||!S.wish||!S.wish.length)return;
  S.wish=S.wish.filter(w=>wishOk(w));if(!S.wish.length){wishDeco();return;}
- if(RL.open||!(S.phase==='build'||S.phase==='wave'))return;
+ if(RL.open||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  const w=S.wish[0],o=wishOk(w);if(!o||S.gold<o.c)return;const t=o.t,T=TW[t.type],lv=t.lvl,rk=t.ab&&t.ab[w.v]||0;
  if(w.a==='up')upgrade(t);else if(w.a==='spec')chooseSpec(t,w.v);else buyAb(t,w.v);
  S.wish.shift();
@@ -4048,7 +4054,8 @@ const SFXG=[
   ['lose','Derrota',[{y:'lose',v:.6,cd:2,mx:1}]]]],
  ['Recompensas',[
   ['relic','Reliquia',[{s:'glass1',sr:.8,y:'relic',v:.55,cd:.3,mx:1}]],
-  ['ach','Logro',[{y:'tada',v:.55,cd:.3,mx:1}]]]]];
+  ['ach','Logro',[{y:'tada',v:.55,cd:.3,mx:1}]],
+  ['rready','Reliquia recargada',[{y:'sparkle',v:.4,cd:.5,mx:1}]]]]];
 // Reserva para otros momentos (no salen en Probar sonidos): synth 'clrA' (fanfarria), 'clrB' (campanillas), 'nv4B' (mágico), 'sparkle', 'wind', 'bubB', 'bubC', 'rock', 'gravel', 'coinB', 'coinC', 'bopA', 'bopB', 'bossA', 'bossB'; muestras 'wclear', 'coin', 'rock_wood'.
 const SFXK={};for(const[,rows]of SFXG)for(const[k,n,vs]of rows)SFXK[k]={n,vs};
 const sfxDef=k=>{const e=SFXK[k];if(!e)return null;const i=Math.min(SV[k]||0,e.vs.length-1);return e.vs[i];};
