@@ -469,7 +469,7 @@ body.mfs #panel:has(.pstrip) #msg{display:none}
 .pstrip{display:flex;align-items:center;gap:6px;white-space:nowrap}.pstrip b{font-size:13px}.pstrip .gd{font-size:12px}
 .pstrip button{min-height:40px;margin:0;padding:0 10px;font-size:13px}.pstrip button[data-a="pexp"]{min-width:40px;padding:0}
 /* móvil: reliquias en columna a la izquierda; si hay más de 4, se desplazan */
-body.mfs #relics{left:6px!important;bottom:auto!important;top:126px!important;flex-direction:column;flex-wrap:nowrap;align-items:center;gap:6px;padding:5px!important;max-height:min(208px,calc(100vh - 132px));max-height:min(208px,calc(100dvh - 132px));overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y}
+body.mfs #relics{left:6px!important;bottom:8px!important;top:auto!important;flex-direction:column-reverse;flex-wrap:nowrap;align-items:center;gap:6px;padding:5px!important;max-height:154px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y}
 body.mfs #relics .rl{width:44px;height:44px;flex:0 0 44px;font-size:24px}
 .tutnext{text-align:left;margin:10px auto 4px;max-width:440px}.tutnext ul{margin:6px 0 0;padding-left:18px}.tutnext li{margin:3px 0;font-size:13px}
 .sfxg{margin:8px 0 10px}.sfxg>b{display:block;font-size:13px;color:var(--acc);margin-bottom:4px}.sfxr{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:3px 0;border-bottom:1px solid var(--line)}.sfxr>span{width:190px;font-size:13px}.sfxr button{font-size:12px;padding:3px 9px;margin:0}.sfxr button.on{border-color:var(--acc);color:var(--acc)}
@@ -495,7 +495,7 @@ button[data-a="mback"]:hover,button[data-a="pback"]:hover,button[data-a="cback"]
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v210</div>
+<div id="ver">Towerize v211</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -827,14 +827,16 @@ Object.assign(ACH.chest,{n:'¿Qué hace este botón?',d:'Abre un cofre, elige un
 {const CAT={tut_m:'tu',tut_e:'tu',chest:'tu',event:'tu',elem:'hr',pyro:'st'};for(const k in CAT)ACH[k].c=CAT[k];}
 Object.assign(ACH,{
  curious:{c:'tu',n:'Mente curiosa',d:'Consulta la ficha de 3 torres distintas.',ux:'el Compendio'},
- first:{c:'tu',n:'Primera victoria',d:'Gana una partida.'},
+ first:{c:'tu',n:'Primera victoria',d:'Gana una partida.',rl:'crystal'},
+ sky:{c:'jg',n:'Cielos despejados',d:'Elimina 40 voladores en una sola partida.',rl:'harpoon'},
+ hunt:{c:'jg',n:'Gran cacería',d:'Elimina 10 élites o mini-élites en una sola partida.',rl:'trophy'},
  marathon:{c:'jg',n:'Maratón',d:'Gana una partida de 42 rondas.'},
  perfect:{c:'jg',n:'¿Partida perfecta?',d:'Gana con 1 de vida sin que ningún enemigo golpee tu núcleo.'},
  minimal:{c:'jg',n:'Minimalista',d:'Gana construyendo solo torres del mazo inicial de tu héroe.'},
  collector:{c:'jg',n:'Coleccionista',d:'Gana una partida de 15 rondas o más con exactamente 7 torres construidas, una de cada tipo.'},
  close:{c:'jg',n:'Por los pelos',d:'Gana tras quedarte a 1 de vida por golpes enemigos, con el jefe final muriendo a 2 casillas o menos de tu núcleo.'},
  noact:{c:'jg',n:'Autosuficiente',d:'Gana sin usar ni una vez la activa de ninguna reliquia.'},
- untouch:{c:'hr',n:'Intocable',d:'Gana sin que caigan nunca tu héroe ni ninguna unidad de tus torres (las invocaciones no cuentan).'},
+ untouch:{c:'hr',n:'Intocable',d:'Gana sin que caigan nunca tu héroe ni ninguna unidad de tus torres (las invocaciones no cuentan).',rl:'banner'},
  bowl:{c:'hr',n:'Bola de Bolos',d:'Aturde a 8 enemigos con una sola Carga Heroica de Reinhart.'},
  jungle:{c:'hr',n:'Reyes de la Selva',d:'En una partida con Sylvana, consigue 20 bajas o más con cada una de sus bestias.'},
  bhole:{c:'hr',n:'Agujero negro',d:'Atrae a 10 enemigos con el Pulso arcano de Radagast y mátalos a todos con la explosión de esa runa.'},
@@ -848,13 +850,13 @@ Object.assign(ACH,{
  dragon:{c:'ev',n:'Madre de dragones',d:'Gana con el Dragón anciano como la torre que más daño ha hecho en la partida.',sec:'drag3',h:'Cría a tu dragón hasta su última fase para descubrir este logro.'},
  faro:{c:'ev',n:'Luz eterna',d:'Sube el Faro a Nv 4 con sus dos haces iluminando a la vez a 4 torres o más.',sec:'faro4',h:'Sube el Faro a Nv 4 para descubrir este logro.'},
  party:{c:'ev',n:'El grupo del héroe',d:'Sube la Sede del Gremio a Nv 4 y gana sin que caiga ningún aventurero después.'},
- roma:{c:'mp',n:'Todos los caminos llevan a Roma',d:'Haz que un camino salga de tu base por un lado y que su portal acabe en el lado opuesto del mapa.'},
+ roma:{c:'mp',n:'Todos los caminos llevan a Roma',d:'Haz que un camino salga de tu base por un lado y que su portal acabe en el lado opuesto del mapa.',rl:'square'},
  treasure:{c:'mp',n:'Cazatesoros',d:'Abre 3 cofres antes de la ronda 7.'},
  nobuild:{c:'vet',n:'Sin obras',d:'Gana sin construir ninguna torre desde el menú de torres: solo con tu héroe, torres de evento e invocaciones.'}});
 // ---- progreso de logros: mejor marca histórica (barra) y estado de la partida actual ----
 const inRun=()=>typeof S!=='undefined'&&S&&S.round>=1&&(S.hero||S.tut)&&S.phase!=='won'&&S.phase!=='lost'&&!document.body.classList.contains('inmenu');
 function recBest(id,v){if(typeof S==='undefined'||!S||S.pvE)return;S.gbest=S.gbest||{};if(v>(S.gbest[id]||0))S.gbest[id]=v;if(v>(ACHBEST[id]||0)){ACHBEST[id]=v;try{localStorage.setItem('rt-achbest',JSON.stringify(ACHBEST));}catch(e){}}}
-const APM={curious:{max:3,best:1,cur:()=>CUR.length},bowl:{max:8,best:1},bhole:{max:10,best:1},zero:{max:30,best:1},thermal:{max:10,best:1},bar:{max:5,best:1},circuit:{max:3,best:1},cloink:{max:CLOINK,best:1},faro:{max:4,best:1},jungle:{max:60,best:1},pyro:{max:100,best:1},
+const APM={curious:{max:3,best:1,cur:()=>CUR.length},bowl:{max:8,best:1},bhole:{max:10,best:1},zero:{max:30,best:1},thermal:{max:10,best:1},bar:{max:5,best:1},circuit:{max:3,best:1},cloink:{max:CLOINK,best:1},faro:{max:4,best:1},jungle:{max:60,best:1},pyro:{max:100,best:1},sky:{max:40,best:1},hunt:{max:10,best:1},
  collector:{max:7,cur:()=>new Set(S.list.filter(t=>TW[t.type]&&!TW[t.type].uniq).map(t=>t.type)).size},pigs:{max:3,cur:()=>['brick','wood','straw'].filter(k=>S.list.some(t=>t.type===k&&t.lvl>=4)).length},treasure:{max:3,cur:()=>S.chOpen||0}};
 const BL=e=>[e.bn>0,e.ps&&e.ps.length,e.bl&&e.bl.length,e.cs&&e.cs.length,e.ez&&e.ez.n>0].filter(Boolean).length;
 function achState(id){const H=S.hero,B=S.built||[];const ok=t=>['ok','✓ En curso'+(t?': '+t:'')],ko=t=>['ko','✗ Ya no es posible en esta partida'+(t?' ('+t+')':'')],win=t=>['nt','Se comprueba al ganar'+(t?': '+t:'')],now=()=>['nt','Salta en el momento en que lo consigas'];
@@ -1115,8 +1117,8 @@ const RELICS=[
  {id:'anvil',n:'Yunque rúnico',ic:'⚒️',col:'#6a3a2a'},{id:'frost',n:'Amuleto de escarcha',ic:'❄️',col:'#2a5f86'},
  {id:'horn',n:'Cuerno de guerra',ic:'📯',col:'#7a4a1a'},{id:'compass',n:'Brújula rota',ic:'🧭',col:'#4a4a6a'},
  {id:'venom',n:'Frasco de veneno',ic:'☠️',col:'#3a6a2a'},{id:'map',n:'Mapa del cartógrafo',ic:'📜',col:'#6a5a2a'},
- {id:'square',n:'Escuadra del arquitecto',ic:'📐',col:'#5a5a3a'},{id:'harpoon',n:'Arpón celeste',ic:'🔱',col:'#2a5a7a'},
- {id:'banner',n:'Estandarte del regimiento',ic:'🏴',col:'#5a2a2a'},{id:'crystal',n:'Corazón de cristal',ic:'💎',col:'#2a6a7a'},{id:'trophy',n:'Trofeo de caza',ic:'🦴',col:'#6a5a4a'},
+ {id:'square',n:'Escuadra del arquitecto',ic:'📐',col:'#5a5a3a',ach:'roma'},{id:'harpoon',n:'Arpón celeste',ic:'🔱',col:'#2a5a7a',ach:'sky'},
+ {id:'banner',n:'Estandarte del regimiento',ic:'🏴',col:'#5a2a2a',ach:'untouch'},{id:'crystal',n:'Corazón de cristal',ic:'💎',col:'#2a6a7a',ach:'first'},{id:'trophy',n:'Trofeo de caza',ic:'🦴',col:'#6a5a4a',ach:'hunt'},
  {id:'barricade',n:'Barricada',ic:'🚧',col:'#6a4a2a',ini:1},{id:'quiver',n:'Carcaj',ic:'🎒',col:'#3a5a2a',ini:1},{id:'tome',n:'Tomo arcano',ic:'📘',col:'#3a3f8a',ini:1},{id:'balance',n:'Piedra del equilibrio',ic:'☯️',col:'#6a4a6a',ini:1},{id:'hammer',n:'Martillo del herrero',ic:'🛠️',col:'#6a5a4a',evr:1,ev:'smith'},{id:'scale',n:'Balanza del mercader',ic:'⚖️',col:'#8a7a3a',evr:1,ev:'merchant'},{id:'idol',n:'Ídolo profanado',ic:'🗿',col:'#5a5a6a',evr:1,ev:'shrine'},{id:'mimic',n:'Mímico domesticado',ic:'🦷',col:'#7a4a3a',evr:1,ev:'chest'},{id:'ember',n:'Brasa de dragona',ic:'☄️',col:'#9a3a2a',evr:1,ev:'nest'},{id:'badge',n:'Insignia de mercenario',ic:'🎖️',col:'#4a5a7a',evr:1,ev:'guild'},{id:'notebook',n:'Cuaderno del aprendiz',ic:'📓',col:'#4a6a5a',ach:'tut_m'}];
 // Cada reliquia: pasivo + activo. Al usar el activo se pierde el pasivo durante `cd` rondas (incluida la actual). dur = segundos de juego que dura el activo.
 const mapN=()=>Math.max(0,Object.keys(S.blocks).length-1),mapDmg=()=>5*mapN(),mapCool=()=>5*Math.floor(mapN()/3);
@@ -2897,7 +2899,7 @@ function update(dt){
    S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:1.2*K,col:'#c0304a'});}}
  wolfTick(dt);dragonAdults(dt);guildHeal(dt);furyTick();orbTick(dt);heroAbTick(dt);mechaTick(dt);achTick(dt);logTick(dt);
  let bossDead=false;
- S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=100)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
+ S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=100)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
   {const gb=killGoldF(e.t),g1=rndG(gb*(e.src&&e.src.type&&TW[e.src.type]&&TW[e.src.type].guild?1.25:1)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=rp('coin')?rndG(gb*.5):0;S.gold+=g1+g2+g3;if(rp('mimic')&&nearChest(e)){const gm=rndG(gb*.75);S.gold+=gm;RS('mimic').gold+=gm;}if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;if(e.src)e.src.kills=(e.src.kills||0)+1;}}
   orbAdd(e.x,e.y,(e.hx||0)+(S.nbR===S.round&&!S.pvH?1:0));
   if(isBoss(e)&&S.round===ROUNDS&&!S.tut)bossDead=true;
