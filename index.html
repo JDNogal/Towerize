@@ -527,7 +527,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v232</div>
+<div id="ver">Towerize v233</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1423,13 +1423,13 @@ function twAt(k,lv,spec){const T=TW[k],L=lvMods(k,lv,spec),TT=twm(k,spec);const 
 function twMax(lv){const o={dmg:0,dps:0,rate:0,range:0,uhp:0};for(const k of Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k))){const sp=lv>=4&&SPECS[k]?Object.keys(SPECS[k]):[null];for(const p of sp){const a=twAt(k,lv,p);if(a.st)o.dps=Math.max(o.dps,a.dv);else o.dmg=Math.max(o.dmg,a.dv);o.rate=Math.max(o.rate,a.s.rate);o.range=Math.max(o.range,a.s.range);o.uhp=Math.max(o.uhp,a.uhp);}}return o;}
 function twGlance(k){const st=cpState(k),a=twAt(k,st.lv,st.spec),M=twMax(st.lv),src='shop:'+k,full=shopInfo(k,1),head=full.slice(0,full.indexOf('</div>')+6);
  const dm=a.st?`<div class="grow"><span class="cd">${kst('dps','DPS',src)}</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,100*a.dv/M.dps))}%;background:${GCOL[a.st]}"></i></div><span class="gv ${a.st==='burn'?'cbu':'cpo'}">${f(a.dv)} ${GICO[a.st]}</span></div>`:gRow(kst('dmg','Daño',src),'cd',a.dv,M.dmg,f(a.dv));
- return head+'<div class="gbody">'+dm+gRow(kst('cool','Enfriamiento',src),'ccl',a.s.rate,M.rate,f(1/a.s.rate)+' s')+gRow(kst('rng','Rango',src),'cg',a.s.range,M.range,f(a.s.range/K)+' cas.')+
+ return head+'<div class="gbody">'+dm+gRow(kst('cool','Enfriamiento',src),'ccl',a.s.rate,M.rate,f(1/a.s.rate)+' s')+
   (a.T.unit?gRow(kst('uhp','Vida de unidades',src),'chp',a.uhp,M.uhp,Math.round(a.uhp)):'')+(effHtml(a.TT,src)?gTxt(kst('eff','Efectos',src),'cf',gIcons(a.TT,src)).replace('class="gv2"','class="gv2 gleft"'):'')+'</div>';}
 // tarjeta de vistazo rápido de una torre de evento (barras comparadas con las torres normales del mismo nivel, donde se puede)
 const uPrevOk=(k,cur)=>{const T=TW[k];return !T.faro&&!(T.dragon&&cur<=1);};
 function uniqGlance(k,cur){const T=TW[k],src='shop:'+k,full=uniqInfo(null,k,cur),head=full.slice(0,full.indexOf('</div>')+6),M=twMax(Math.min(3,cur));let b='';
- const D=(v,l)=>gRow(kst('dmg',l||'Daño',src),'cd',v,M.dmg,f(v)),C=r=>gRow(kst('cool','Enfriamiento',src),'ccl',r,M.rate,f(1/r)+' s'),G=v=>gRow(kst('rng','Rango',src),'cg',v,M.range,f(v/K)+' cas.'),U=v=>gRow(kst('uhp','Vida de unidades',src),'chp',v,M.uhp,Math.round(v)),I=ids=>gTxt(kst('eff','Efectos',src),'cf',ids.map(id=>`<span class="kw gico" data-kw="${id}" data-src="${src}">${GICO[id]||'✦'}</span>`).join('')).replace('class="gv2"','class="gv2 gleft"');
- if(T.faro){const L=FARO[cur-1];b=gTxt('Radio','ca',f(L.r)+' cas.')+gTxt('Alcance a torres cercanas','cg','+'+Math.round(L.rg*100)+'%')+(L.d?gTxt('Daño a torres cercanas','cd','+'+Math.round(L.d*100)+'%'):'')+(L.c?gTxt('Enfriamiento de torres cercanas','ccl','−'+Math.round(L.c*100)+'%'):'')+'<small>No ataca: ilumina y mejora las torres cercanas.</small>';}
+ const D=(v,l)=>gRow(kst('dmg',l||'Daño',src),'cd',v,M.dmg,f(v)),C=r=>gRow(kst('cool','Enfriamiento',src),'ccl',r,M.rate,f(1/r)+' s'),G=v=>'',U=v=>gRow(kst('uhp','Vida de unidades',src),'chp',v,M.uhp,Math.round(v)),I=ids=>gTxt(kst('eff','Efectos',src),'cf',ids.map(id=>`<span class="kw gico" data-kw="${id}" data-src="${src}">${GICO[id]||'✦'}</span>`).join('')).replace('class="gv2"','class="gv2 gleft"');
+ if(T.faro){const L=FARO[cur-1];b=gTxt('Alcance a torres cercanas','cg','+'+Math.round(L.rg*100)+'%')+(L.d?gTxt('Daño a torres cercanas','cd','+'+Math.round(L.d*100)+'%'):'')+(L.c?gTxt('Enfriamiento de torres cercanas','ccl','−'+Math.round(L.c*100)+'%'):'')+'<small>No ataca: ilumina y mejora las torres cercanas.</small>';}
  else if(T.dragon){const sg=cur-1;b=gTxt('Forma','',DRAG[sg].n)+(sg===0?'<small>Todavía no hace nada: espera a que eclosione.</small>':sg===1?D(8,'Daño (fuego)')+G(2.5*K)+U(60):sg===2?D(18,'Daño (bola de fuego)')+G(3.5*K):D(22,'Daño (bola de fuego)')+G(3.5*K)+I(['burn']));}
  else if(T.guild){const L=lvMods(k,cur,null);b=D(T.dmg*L.dmg,'Daño (cada uno)')+C(T.rate/L.cd)+G(T.range*L.range)+U(T.unit.hp*L.hp)+gTxt('Aventureros','',PARTY[cur].length);}
  else{const L=lvMods(k,cur,null),dm=T.dmg*L.dmg;b=(dm>0?D(dm):'')+C(T.rate/L.cd)+G(T.range*L.range)+(T.pig&&cur>=4&&PIGU[k]?U(PIGU[k].hp):'')+I(T.slow?['slow']:T.log?['logk']:T.wall?['bwall']:[]);}
@@ -1437,7 +1437,7 @@ function uniqGlance(k,cur){const T=TW[k],src='shop:'+k,full=uniqInfo(null,k,cur)
 function heroGlance(id){const D=HEROES[id],x=hsAt(id,1),src='hero:'+id,R2=RELIC[D.relic],hs=Object.keys(HEROES).map(h=>hsAt(h,1)),mx=k=>Math.max(...hs.map(o=>o[k]));
  const mr=Math.max(...Object.keys(HEROES).map(h=>HEROES[h].ranged?HEROES[h].base.range:0)),mrate=Math.max(...hs.map(o=>1/o.cd));
  return `<div class="cport">${portrait(id)}</div><div class="ttl"><b>${D.ic} ${D.n}</b></div><div class="gbody">`+gRow(kst('hhp','Vida',src),'chp',x.hp,mx('hp'),Math.round(x.hp))+gArm(Math.round(x.ap),0,src)+gRow(kst('hdmg','Daño',src),'cd',x.dmg,mx('dmg'),f(x.dmg))+
-  gRow(kst('hcd','Enfriamiento',src),'ccl',1/x.cd,mrate,f(x.cd)+' s')+(D.ranged?gRow(kst('hrng','Rango',src),'cg',D.base.range,mr,f(D.base.range)+' cas.'):gTxt(kst('hrng','Rango',src),'cg','<span class="gnone">Cuerpo a cuerpo</span>'))+
+  gRow(kst('hcd','Enfriamiento',src),'ccl',1/x.cd,mrate,f(x.cd)+' s')+gTxt('Ataque','',D.ranged?'A distancia':'Cuerpo a cuerpo')+
   gTxt(kst('hrel','Reliquia inicial',src),'cf',kw('rl_'+D.relic,R2.ic+' '+R2.n,src,'st'))+'</div>';}
 const EFAM=[['Guerreros',['norm','vet','champ']],['Rápidos',['fast','runner','raider']],['Tanques',['tank','armored']],['Voladores',['bat','harpy','griffin']],['A distancia',['sling','javelin']],['Místicos',['acolyte','warlock']],['Apoyo',['custodian','shaman']],['Élites',['mini','elite']],['Jefes',['boss','colossus']],['Lobos',['cub','greyw','bigw']],['Dragones',['momdrg']]];
 const ehp1=k=>{const E=ET[k];return Math.round(E.hf&&!E.evn?E.hf*hpR(1):HP0*HPOLD(1)*E.hp);},ecore=k=>['boss','colossus','bob'].includes(k)?20:ET[k].dmg;
