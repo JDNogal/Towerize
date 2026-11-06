@@ -526,7 +526,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v222</div>
+<div id="ver">Towerize v223</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -2278,6 +2278,14 @@ function collectEnds(first){
      if(!seen[gx+','+gy]){seen[gx+','+gy]=1;out.push({x:gx*K+1+a,y:gy*K+1+b,bx,by,dir:[a,b]});}}}}}
  return out;
 }
+// salidas del camino al borde de la cuadrícula: no sirven para poner piezas, pero sí pueden abrir portales
+function borderEnds(){const out=[];
+ for(const k in S.blocks){const[bx,by]=k.split(',').map(Number);
+  for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;if(S.cc[gy][gx]!==2)continue;
+   for(const[a,b]of D){const lx=x+a,ly=y+b;if(lx>=0&&ly>=0&&lx<P&&ly<P)continue;
+    const nx=bx+(lx<0?-1:lx>=P?1:0),ny=by+(ly<0?-1:ly>=P?1:0);
+    if(nx<0||ny<0||nx>=BN||ny>=BN)out.push({x:gx*K+1+a,y:gy*K+1+b,bx,by,dir:[a,b],bd:1});}}}
+ return out;}
 // 0 = válida, 1 = no conecta, 2 = cierra el camino
 function check(bx,by,p){
  if(bx<0||by<0||bx>=BN||by>=BN||S.blocks[bx+','+by]||!conns(bx,by,p))return 1;
@@ -2340,8 +2348,9 @@ function placePiece(bx,by){
  const d=field();let any=null,ad=-1;
  for(let y=0;y<P;y++)for(let x=0;x<P;x++){if(p[y][x]!=='.')continue;const fx=(bx*P+x)*K+1,fy=(by*P+y)*K+1,dd=d[fy][fx];if(dd<1e9&&dd>ad){ad=dd;any={x:fx,y:fy,d:dd,dir:[0,0]};}}
  // prioridad: extremos de la pieza nueva (más lejanos primero) y después el resto, de más lejos a más cerca de la base
- const ends=shuf(collectEnds());
+ const ends=shuf(collectEnds().concat(borderEnds()));
  for(const e of ends){e.d=d[e.y][e.x];e.nw=e.bx===bx&&e.by===by;}
+ for(let i=ends.length-1;i>=0;i--)if(!(ends[i].d<1e9))ends.splice(i,1);
  ends.sort((a,b)=>a.nw===b.nw?b.d-a.d:a.nw?-1:1);
  if(!ends.length)ends.push({...any,nw:true});
  S.ends=ends;
@@ -3890,7 +3899,7 @@ function hintScan(){
   hintL('build','Construir torres','Elige una torre de tu mazo y colócala en un <b>solar</b>. Disparan solas a lo que tengan a su alcance.',tgEl('#ui [data-a="sel"]'));
   for(const k in S.chests)if(S.chests[k]){const[bx,by]=k.split(',').map(Number);hintL('chest','Cofres','Esto es un cofre. Si tu camino llega hasta él, podrás abrirlo y elegir una reliquia para esta partida.',tgCell((bx*P+3)*K+1,(by*P+3)*K+1,1.6));{const h=HQ.q.find(h=>h.id==='chest');if(h)h.cam={x:(bx*P+3)*K+1,y:(by*P+3)*K+1,fit:1};}break;}
   for(const k in S.evts)if(S.evts[k]){const[bx,by]=k.split(',').map(Number);hintL('evtile','Casillas de evento','Esto es una casilla de evento. Si tu camino llega hasta ella, pasará algo… y tendrás que tomar una decisión.',tgCell((bx*P+3)*K+1,(by*P+3)*K+1,1.6));{const h=HQ.q.find(h=>h.id==='evtile');if(h)h.cam={x:(bx*P+3)*K+1,y:(by*P+3)*K+1,fit:1};}break;}
-  if(S.ends.length>1)hintL('fork','Bifurcaciones','Tu camino tiene varios extremos libres: más sitios donde colocar las próximas piezas, pero también más portales por los que pueden salir enemigos.',null);
+  if(S.ends.filter(e=>!e.bd).length>1)hintL('fork','Bifurcaciones','Tu camino tiene varios extremos libres: más sitios donde colocar las próximas piezas, pero también más portales por los que pueden salir enemigos.',null);
   {let bt=null;for(const k in S.blocks){const[bx,by]=k.split(',').map(Number),NB=N/BN;for(let y=by*NB;y<(by+1)*NB&&!bt;y+=K)for(let x=bx*NB;x<(bx+1)*NB&&!bt;x+=K){const q=sqOf(x,y);if(S.buff[q.y]&&BF[S.buff[q.y][q.x]]&&S.cc[q.ky][q.kx]===1&&!S.occ[q.x+','+q.y])bt=q;}if(bt)break;}
    if(bt)hintL('tile','Casillas especiales','La torre que pongas sobre una <b>casilla de color</b> gana su bonus. '+HOV()+' la casilla para verlo.',tgCell(bt.x,bt.y,1.2));}
  }
