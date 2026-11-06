@@ -4,7 +4,7 @@
 
 Towerize es un *tower defense* con elementos *roguelike* para navegador. En cada partida construyes el mapa pieza a pieza mientras defiendes un núcleo de oleadas de enemigos cada vez más duras. Ninguna partida es igual a la anterior.
 
-### ▶ [Jugar ahora](https://jdnogal.github.io/towerize/)
+### ▶ [Jugar ahora](https://jdnogal.github.io/Towerize/)
 
 Funciona en el navegador, tanto en ordenador como en móvil (en horizontal). No hace falta instalar nada.
 
