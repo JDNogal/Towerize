@@ -526,7 +526,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v226</div>
+<div id="ver">Towerize v227</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3619,6 +3619,9 @@ setInterval(()=>{try{for(const el of document.querySelectorAll(SMSEL)){const on=
  setInterval(()=>{if(cur&&!document.body.contains(cur))hide();},300);})();
 
 
+// sonido al pasar el ratón por los botones de los menús (fuera de la partida; en partida cansaría)
+{let lastHB=null;document.addEventListener('mouseover',e=>{if(TOUCH)return;const b=e.target.closest&&e.target.closest('button');if(b===lastHB)return;lastHB=b;
+ if(!b||b.disabled)return;const inM=document.body.classList.contains('inmenu')||(RL.open&&RL.hpick);if(!inM||(typeof DLG!=='undefined'&&DLG.on)||(typeof INTRO!=='undefined'&&INTRO.on))return;try{sfx('uih');}catch(er){}},true);}
 // ---- compra marcada: clic derecho (o mantener pulsado) en una mejora para comprarla sola cuando haya oro ----
 const WISHTXT=()=>TOUCH?' Mantén pulsado el botón para marcarla: se comprará sola cuando tengas oro.':' Clic derecho en el botón para marcarla: se comprará sola cuando tengas oro.';
 function wishOk(w){const t=S.list.find(o=>o.id===w.id);if(!t)return null;const T=TW[t.type];
@@ -4023,6 +4026,7 @@ let SV={};try{SV=JSON.parse(localStorage.getItem('rt-sv'))||{};}catch(e){}
 const SFXG=[
  ['Interfaz',[
   ['ui','Botón',[{y:'bopD',v:.55,cd:.04,mx:2,pv:.04}]],
+  ['uih','Pasar el ratón (menús)',[{y:'hov',v:.35,cd:.03,mx:1,pv:.05}]],
   ['uix','Cerrar / volver',[{y:'bopDx',v:.5,cd:.04,mx:2,pv:.04}]],
   ['err','Error',[{s:'ui_err',v:.5,cd:.3,mx:1}]]]],
  ['Construcción',[
@@ -4079,7 +4083,8 @@ function synth(kind,t0,out,v,r){const c=SND.ctx;
  switch(kind){
  case 'bopA':bop(320,640,.09,.7);bop(640,1280,.06,.12);break;
  case 'bopB':bop(420,980,.11,.6);bop(840,1960,.07,.08,'triangle');break;
- case 'bopD':bop(260,520,.07,.6);tone('sine',520,880,.045,.008,.08,.45);break;
+ case 'hov':tone('sine',1150,1350,0,.004,.04,.35);break;
+   case 'bopD':bop(260,520,.07,.6);tone('sine',520,880,.045,.008,.08,.45);break;
  case 'bopDx':bop(880,520,.07,.5);tone('sine',520,260,.045,.008,.08,.55);break;
  case 'upArp':[523,659,784].forEach((f,i)=>tone('triangle',f,f,.04+i*.05,.01,.22,.26));break;
  case 'nv4U':[523,659,784].forEach((f,i)=>tone('triangle',f,f,.04+i*.05,.01,.22,.26));synth('nv4A',t0+.22,out,v,r);break;
