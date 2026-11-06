@@ -526,7 +526,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v218</div>
+<div id="ver">Towerize v219</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -542,13 +542,27 @@ const cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=cv.height=V
 let ZINI=1.5,ZMAX=4,BS=Math.min(VIEW,VH)/(N*CS);const CAM={z:ZINI,x:0,y:0},ZMIN=1;
 function setSize(bn){BN=bn;NC=P*BN;N=NC*K;BS=Math.min(VIEW,VH)/(N*CS);ZINI=1.5*BN/5;ZMAX=4*BN/5;}
 const sc=()=>BS*CAM.z;
-function clampCam(){const w=VIEW/sc(),h=VH/sc(),M=N*CS;CAM.x=M<=w?(M-w)/2:Math.max(0,Math.min(M-w,CAM.x));CAM.y=M<=h?(M-h)/2:Math.max(0,Math.min(M-h,CAM.y));}
+function clampCam(){const w=VIEW/sc(),h=VH/sc(),M=N*CS,G=P*K*CS;CAM.x=M+2*G<=w?(M-w)/2:Math.max(-G,Math.min(M-w+G,CAM.x));CAM.y=M+2*G<=h?(M-h)/2:Math.max(-G,Math.min(M-h+G,CAM.y));}
 const KEYS=new Set();
+const clickA=(sel,i)=>{const L=[...document.querySelectorAll(sel)].filter(b=>b.offsetParent||b.getClientRects().length);const b=L[i||0];if(b&&!b.disabled){b.click();return true;}return false;};
+addEventListener('keydown',e=>{if(OPT.keys===false||!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.repeat||RL.open||PMU.open)return;const k=e.key.toLowerCase(),c=e.code||'';
+ const dg=/^Digit([1-9])$/.exec(c);
+ if(dg&&e.shiftKey){if(clickA('#relics [data-a="ract"]',+dg[1]-1))e.preventDefault();return;}
+ if(dg&&!e.shiftKey){if(clickA('#ui [data-a="sel"]',+dg[1]-1))e.preventDefault();return;}
+ if(k==='f'){clickA('[data-a="hab"]');e.preventDefault();}
+ else if(k==='g'){clickA('[data-a="hult"]');e.preventDefault();}
+ else if(k==='h'){clickA('[data-a="hero"]');e.preventDefault();}
+ else if(k===' '){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
+ else if(k==='v'){e.preventDefault();const Lv=[.5,1,2],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
+ else if(k==='enter'&&S.phase==='build'){if(clickA('[data-a="wave"]'))e.preventDefault();}
+ else if(k==='u'){if(clickA('[data-a="up"]'))e.preventDefault();}});
 const keyOK=e=>!(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))&&typeof S!=='undefined'&&S&&!document.body.classList.contains('inmenu')&&!CP.open&&!OP.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof INTRO!=='undefined'&&INTRO.on);
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey)return;if('wasd'.includes(k)&&k.length===1){KEYS.add(k);e.preventDefault();}
  else if(k==='e'||k==='+'||k==='='){zoomAt(1.2,VIEW/2,VH/2);e.preventDefault();}else if(k==='q'||k==='-'){zoomAt(1/1.2,VIEW/2,VH/2);e.preventDefault();}});
 addEventListener('keyup',e=>KEYS.delete(e.key.toLowerCase()));addEventListener('blur',()=>KEYS.clear());
 {let last=0;const tick=t=>{const dt=Math.min(.05,(t-(last||t))/1000);last=t;if(KEYS.size&&typeof S!=='undefined'&&S){const sp=VIEW*.9*dt/sc();if(KEYS.has('a'))CAM.x-=sp;if(KEYS.has('d'))CAM.x+=sp;if(KEYS.has('w'))CAM.y-=sp;if(KEYS.has('s'))CAM.y+=sp;clampCam();}requestAnimationFrame(tick);};requestAnimationFrame(tick);}
+document.addEventListener('mouseover',e=>{if(TOUCH||!S||S.phase!=='place'||S.pi==null||S.pexp)return;if(e.target.closest&&e.target.closest('.pstrip')&&!e.target.closest('button')){S.pexp=true;ui();}});
+document.addEventListener('mouseout',e=>{if(TOUCH||!S||S.phase!=='place'||S.pi==null||!S.pexp)return;const p=$('panel');if(p&&p.contains(e.target)&&!(e.relatedTarget&&p.contains(e.relatedTarget))){S.pexp=false;ui();}});
 function zoomAt(f,px,py){const a=sc(),wx=px/a+CAM.x,wy=py/a+CAM.y;CAM.z=Math.max(ZMIN,Math.min(ZMAX,CAM.z*f));const b=sc();CAM.x=wx-px/b;CAM.y=wy-py/b;clampCam();}
 function camCenter(x,y){const w=VIEW/sc(),h=VH/sc();CAM.x=x*CS+CS/2-w/2;CAM.y=y*CS+CS/2-h/2;clampCam();}
 // escritorio: el lienzo ocupa toda la ventana y se dibuja a su resolución real
@@ -583,6 +597,12 @@ function decorate(o){const g=o.p.map(r=>[...r]),free=(x,y)=>x>=0&&y>=0&&x<P&&y<P
   else if(f==='quarry')n+=grow(s,2+Math.floor(Math.random()*2),'R').length;
   else n+=grow(s,1+Math.floor(Math.random()*2),'A').length;}
  o.p=g.map(r=>r.join(''));}
+function drawRim(g,k){const BCS=K*CS,x0=Math.floor(CAM.x/BCS)-1,y0=Math.floor(CAM.y/BCS)-1,x1=Math.ceil((CAM.x+VIEW/k)/BCS)+1,y1=Math.ceil((CAM.y+VH/k)/BCS)+1;
+ const ext=COSM.dec.filter(d=>decOn(d.id)).map(d=>d.ch),pool=['T','T','T','R','T','R'].concat(ext);
+ for(let gy=Math.max(y0,-P);gy<Math.min(y1,NC+P);gy++)for(let gx=Math.max(x0,-P);gx<Math.min(x1,NC+P);gx++){if(gx>=0&&gy>=0&&gx<NC&&gy<NC)continue;
+  const X=gx*BCS,Y=gy*BCS,h=((gx*374761393+gy*668265263)^(gx*gy*2246822519))>>>0;g.fillStyle='#2c3a2f';g.fillRect(X,Y,BCS,BCS);
+  if(h%100<38)drawObs(g,pool[(h>>>8)%pool.length],X,Y,BCS);else drawObs(g,'#',X,Y,BCS);
+  const d=Math.max(gx<0?-gx:gx>=NC?gx-NC+1:0,gy<0?-gy:gy>=NC?gy-NC+1:0)/P;g.fillStyle=`rgba(8,10,14,${(.35+.5*d).toFixed(2)})`;g.fillRect(X,Y,BCS,BCS);}}
 function drawObs(c,ch,x,y,s){if('njklgefuzb'.includes(ch))return drawDeco2(c,ch,x,y,s);
  if(ch==='#'){const h=((x*73+y*151)|0)%7;if(h===0){c.fillStyle='#d9c26a';c.beginPath();c.arc(x+s*.3,y+s*.35,s*.05,0,7);c.fill();}else if(h===3){c.fillStyle='#c98ac9';c.beginPath();c.arc(x+s*.68,y+s*.62,s*.05,0,7);c.fill();}else if(h===5){c.strokeStyle='#3e5a3a';c.lineWidth=Math.max(1,s*.04);c.beginPath();c.moveTo(x+s*.45,y+s*.7);c.lineTo(x+s*.42,y+s*.55);c.moveTo(x+s*.5,y+s*.7);c.lineTo(x+s*.55,y+s*.56);c.stroke();}return;}
  if(ch==='T'){c.fillStyle='#5a3c22';c.fillRect(x+s*.44,y+s*.55,s*.12,s*.3);c.fillStyle='#2f6b3a';c.beginPath();c.arc(x+s*.5,y+s*.42,s*.3,0,7);c.fill();c.fillStyle='#3e8a4a';c.beginPath();c.arc(x+s*.42,y+s*.36,s*.15,0,7);c.fill();}
@@ -1115,6 +1135,7 @@ const OPTS=[
  {tab:'un',type:'note',desc:'Para quien quiera probarlo todo sin pasar por el progreso: streaming, pruebas o simplemente jugar a tu aire. Cada sección se puede desactivar cuando quieras: vuelve a bloquearse lo que no hayas conseguido jugando. Los logros siguen funcionando con normalidad.'},
  {tab:'un',type:'toggle',key:'u_tw',def:false,label:'Desbloquear todas las torres',desc:'Todas las torres pueden salirte en las ofertas desde la primera partida.'},
  {tab:'un',type:'toggle',key:'u_hr',def:false,label:'Desbloquear todos los héroes',desc:'Todos los héroes disponibles en la selección, junto con las torres de sus mazos.'},
+ {tab:'jg',type:'toggle',key:'keys',def:true,label:'Atajos de teclado',desc:'WASD mover el mapa · Q/E zoom · F habilidad · G definitiva · H mover héroe · Espacio pausa · V velocidad · Intro empezar oleada · 1–7 elegir torre · U mejorar · Mayús+1–9 reliquias.'},
  {tab:'un',type:'toggle',key:'u_rl',def:false,label:'Desbloquear todas las reliquias',desc:'Las reliquias que dependen de un logro también pueden salir en los cofres.'},
  {tab:'un',type:'toggle',key:'u_cs',def:false,label:'Desbloquear toda la personalización',desc:'Paletas, núcleos y decoraciones disponibles sin conseguir sus logros.'},
  {tab:'ps',type:'cosm'},
@@ -1898,7 +1919,7 @@ function renderCredits(){$('msetup').innerHTML='<h3>Créditos</h3><div class="cr
  '<div><a href="https://lentikula.itch.io/freecc0-basic-spell-impacts-sfx" target="_blank" rel="noopener">Lentikula</a> · Basic Spell Impacts <small>(CC0)</small></div>'+
  '<div><small>El resto de efectos se generan en el propio juego.</small></div></div>'+
  '</div><button data-a="mback">Volver</button>';$('menu').classList.add('setup');}
-function renderHelp(){$('msetup').innerHTML='<h3>Ayuda</h3><small style="display:block;max-width:440px;margin:0 auto 10px"><b>Controles en PC:</b> mueve el mapa con <b>WASD</b> o arrastrando (clic izquierdo, derecho o rueda); en trackpad, con dos dedos. Acerca y aleja con <b>E</b> / <b>Q</b>, la rueda o pellizcando. Para vender una torre, selecciónala y usa su botón <b>Vender</b>.</small><button data-a="tutfull">🎓 Tutorial completo</button><button data-a="tutquick">⚡ Tutorial rápido</button><button data-a="htog">💡 Pistas: '+(OPT.hints?'activadas':'desactivadas')+'</button><button data-a="hreset">💡 Restablecer pistas</button><button disabled title="Próximamente">📘 Guía avanzada (próximamente)</button><button data-a="mback">Volver</button>';$('menu').classList.add('setup');}
+function renderHelp(){$('msetup').innerHTML='<h3>Ayuda</h3><small style="display:block;max-width:440px;margin:0 auto 10px"><b>Controles en PC:</b> mueve el mapa con <b>WASD</b> o arrastrando (clic izquierdo, derecho o rueda); en trackpad, con dos dedos. Acerca y aleja con <b>E</b> / <b>Q</b>, la rueda o pellizcando.<br><b>Atajos:</b> <b>F</b> habilidad del héroe · <b>G</b> definitiva · <b>H</b> mover héroe · <b>Espacio</b> pausa · <b>V</b> velocidad · <b>Intro</b> empezar oleada · <b>1–7</b> elegir torre · <b>U</b> mejorar · <b>Mayús+1–9</b> reliquias.<br>Para vender una torre, selecciónala y usa su botón <b>Vender</b>.</small><button data-a="tutfull">🎓 Tutorial completo</button><button data-a="tutquick">⚡ Tutorial rápido</button><button data-a="htog">💡 Pistas: '+(OPT.hints?'activadas':'desactivadas')+'</button><button data-a="hreset">💡 Restablecer pistas</button><button disabled title="Próximamente">📘 Guía avanzada (próximamente)</button><button data-a="mback">Volver</button>';$('menu').classList.add('setup');}
 const QS={i:0,on:false,raf:0,t0:0,after:null};
 const QSL=[
  {t:'Objetivo',d:'Defiende el <b>núcleo</b>. Los enemigos salen por los extremos del camino y van hacia él; si llegan, pierdes vida. Si la vida llega a 0, pierdes la partida.'},
@@ -2574,7 +2595,7 @@ function heroShoot(s,dt){const H=s.H,t=s.tw,st=stats(t);s.cd-=dt;let tg=s.fight?
  let n=0;while(s.cd<=0&&n++<4){s.cd+=1/st.rate;const crit=Math.random()<st.crit+mkB(tg),dm=st.dmg*(crit?st.critm:1);
   if(s.fight){hurt(tg,dm*HMELEE,t,H.def.dt||'phys',st.pen);if(crit)critMark(tg);onHit(tg,t);}
   else{const ov=H.id==='radagast'&&H.lvl>=4&&((H.oc=(H.oc||0)+1)%4===0);S.proj.push({x:s.x,y:s.y,e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm:dm*(ov?2:1),dt:H.def.dt||'phys',src:t,sp:14,area:(H.def.area?H.def.area*K:0)*(ov?2:1),slow:0,pen:st.pen,col:ov?'#e2b8ff':H.def.col,crit});}}}
-function startFlag(t){closePrim();S.aim='flag';S.aimT=t;S.msg='Elige una casilla del camino dentro del rango.'+CANC();renderRelics();ui();}
+function startFlag(t){closePrim();S.aim='flag';S.aimT=t;S.msg='Elige una casilla del camino dentro del rango. Haz clic fuera del círculo para cancelar.';renderRelics();ui();}
 // ---- oleadas ----
 // Reintentar: al empezar la oleada se guarda una copia de la partida; reintentar vuelve a ella (fase de construcción) y gasta una carga
 function retryWave(){if(!S.snap||!(S.rc>0)||(S.phase!=='wave'&&S.phase!=='lost'))return;
@@ -3049,7 +3070,7 @@ function rangeCircle(x,y,r){g.fillStyle='rgba(90,180,255,.17)';g.strokeStyle='rg
 function draw(){
  const k=sc(),lw=v=>v*PXR/k,BCS=K*CS;
  g.setTransform(1,0,0,1,0,0);g.fillStyle=COL.bg2;g.fillRect(0,0,VIEW,VH);
- g.setTransform(k,0,0,k,-CAM.x*k,-CAM.y*k);
+ g.setTransform(k,0,0,k,-CAM.x*k,-CAM.y*k);drawRim(g,k);
  if(S.phase==='place'){g.strokeStyle='rgba(232,176,74,.35)';g.lineWidth=lw(1);g.setLineDash([lw(4),lw(4)]);
   // solo los huecos a los que llega una salida de camino (donde una pieza puede engancharse)
   const sl=new Set(collectEnds().map(e=>{const gx=Math.floor(e.x/K),gy=Math.floor(e.y/K);return Math.floor((gx+e.dir[0])/P)+','+Math.floor((gy+e.dir[1])/P);}));
@@ -3086,7 +3107,7 @@ function draw(){
   g.stroke();}
  for(const b of S.barr)drawBarr(b,1);
  drawFaros();
- if(S.oneEnd&&S.lastEnd&&!FO.open&&S.phase!=='lost'&&S.phase!=='won'){const e=S.lastEnd,gx=Math.floor(e.x/K),gy=Math.floor(e.y/K),bx=Math.floor((gx+e.dir[0])/P),by=Math.floor((gy+e.dir[1])/P);
+ if(S.oneEnd&&S.lastEnd&&!FO.open&&S.phase==='place'&&S.phase!=='lost'&&S.phase!=='won'){const e=S.lastEnd,gx=Math.floor(e.x/K),gy=Math.floor(e.y/K),bx=Math.floor((gx+e.dir[0])/P),by=Math.floor((gy+e.dir[1])/P);
   g.save();g.globalAlpha=.5+.45*Math.sin(performance.now()/180);g.strokeStyle='#ffcc33';g.lineWidth=lw(3);g.strokeRect(gx*K*CS,gy*K*CS,K*CS,K*CS);
   g.setLineDash([lw(8),lw(5)]);g.strokeRect(bx*P*K*CS+lw(2),by*P*K*CS+lw(2),P*K*CS-lw(4),P*K*CS-lw(4));g.restore();}
  for(const k in S.bless||{}){const[bx,by]=k.split(',').map(Number),B=N/BN*CS;g.strokeStyle='rgba(255,215,90,.55)';g.lineWidth=lw(2);g.setLineDash([lw(6),lw(4)]);g.strokeRect(bx*B+lw(2),by*B+lw(2),B-lw(4),B-lw(4));g.setLineDash([]);}
@@ -3529,7 +3550,7 @@ function ui(){
  $('mtl').innerHTML=(MF?`<button data-a="pause" title="Menú de pausa">☰</button><div class="gap"></div>`:`<button data-a="menuask" class="${S.mask?'warn':''}" title="${S.mask?'Pulsa otra vez para abandonar la partida':'Menú principal'}">⏻</button><button data-a="comp" title="Compendio">📖</button><button data-a="apan" title="Logros fijados">🏆</button><button data-a="opts" title="Opciones">⚙</button><div class="gap"></div>`)+
   `<button data-a="retry" class="${S.rask?'warn':''}"${rcOk?'':' disabled'} title="${S.rask?'Pulsa otra vez para reintentar la oleada (gasta 1 carga)':'Reintentar la oleada desde el principio'}">↺<span class="bdg">${S.tut?'∞':S.rc||0}</span></button>`;
  $('mbr').innerHTML=xPanel()+heroPanel()+(S.phase==='build'?'<button class="go" data-a="wave">Empezar oleada</button>':'');
- if(S.phase==='place'&&MF&&S.pi!=null&&!S.pexp&&S.offers[S.pi]){const o=S.offers[S.pi];h=`<div class="pstrip"><b>${o.n}</b>${payOn()&&pcost(o)?`<span class="gd">${pcost(o)} 🪙</span>`:''}<button data-a="prot" data-i="${S.pi}">⟳ Girar</button><button data-a="pick" data-i="${S.pi}">✕ Cancelar</button><button data-a="pexp" title="Ver las piezas">▲</button></div>`;}
+ if(S.phase==='place'&&(MF||!TOUCH)&&S.pi!=null&&!S.pexp&&S.offers[S.pi]){const o=S.offers[S.pi];h=`<div class="pstrip"><b>${o.n}</b>${payOn()&&pcost(o)?`<span class="gd">${pcost(o)} 🪙</span>`:''}<button data-a="prot" data-i="${S.pi}">⟳ Girar</button><button data-a="pick" data-i="${S.pi}">✕ Cancelar</button><button data-a="pexp" title="Ver las piezas">▲</button></div>`;}
  else if(S.phase==='place'){
   h='<small style="display:block;margin-bottom:12px">'+(S.pi==null?'Elige una pieza. Puedes girarla antes de colocarla.':(BARX.pc=1,'Pulsa un hueco marcado que conecte con el camino.'+(HSEEN.barpc?'':' Vuelve a pulsar la pieza para dejar de elegirla.')))+'</small><div class="prow">'+
   S.offers.map((o,i)=>`<div class="cardw"><button class="card ${i===S.pi?'on':''}" data-a="pick" data-i="${i}" data-tip="piece:${i}"><canvas width="98" height="98" data-i="${i}"></canvas>${o.n}${!payOn()?'':pcost(o)?`<span class="pcst gd">${pcost(o)} 🪙</span>`:'<span class="pcst pfree">Gratis</span>'}</button><button class="rbtn${TOUCH?'':' wide'}" data-a="prot" data-i="${i}" title="Girar la pieza${TOUCH?'':' (R)'}"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13.2 8.4A5.2 5.2 0 1 1 11.6 4.3"/><path d="M12.6 1.8v3.4H9.2"/></svg>${TOUCH?'':'R'}</button></div>`).join('')+'</div>';}
@@ -3623,7 +3644,7 @@ cv.addEventListener('click',e=>{
  if(S.aim==='balance'){if(inb(c.x,c.y)){(S.bz=S.bz||[]).push({x:c.x,y:c.y,r:3*K,t:8,tk:0});const st=S.rs.balance;setCD('balance');st.t=8;S.aim=null;S.msg='';renderRelics();ui();}return;}
  if(S.aim==='tome'){if(inb(c.x,c.y)){S.tz.push({x:c.x,y:c.y,r:TZR,t:8});const st=S.rs.tome;setCD('tome');st.t=8;S.aim=null;S.msg='';renderRelics();ui();}return;}
  if(S.aim==='quiver'){if(inb(c.x,c.y)){S.dbl.push({x:c.x,y:c.y,r:QR,t:10});const st=S.rs.quiver;setCD('quiver');st.t=10;S.aim=null;S.msg='';renderRelics();ui();}return;}
- if(S.aim==='flag'){const t=S.aimT;if(t&&S.list.includes(t)){const st=stats(t);if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2&&Math.hypot(c.x-t.x,c.y-t.y)<=st.range){setFlag(t,c);S.aim=null;S.aimT=null;S.msg='Bandera movida.';if(MFSQ()){S.selT=null;hideLupa();}}else S.msg='Elige una casilla del camino dentro del rango.';}else{S.aim=null;S.aimT=null;}renderRelics();ui();return;}
+ if(S.aim==='flag'){const t=S.aimT;if(t&&S.list.includes(t)){const st=stats(t);if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2&&Math.hypot(c.x-t.x,c.y-t.y)<=st.range){setFlag(t,c);S.aim=null;S.aimT=null;S.msg='Bandera movida.';if(MFSQ()){S.selT=null;hideLupa();}}else if(Math.hypot(c.x-t.x,c.y-t.y)>st.range){S.aim=null;S.aimT=null;S.msg='';}else S.msg='Elige una casilla del camino dentro del rango. Haz clic fuera del círculo para cancelar.';}else{S.aim=null;S.aimT=null;}renderRelics();ui();return;}
 {const fx=c.fx-.5,fy=c.fy-.5;let be=null,bd=1.4;
   for(const q of S.enemies){const dd=Math.hypot(q.x-fx,q.y-fy);if(dd<bd){bd=dd;be=q;}}
   if(be&&MFSQ()){S.tsel=null;S.selE=be;LUPA.tg={key:'ei:'+(++EID),html:()=>enemyInst(be),get rect(){return be.hp>0?cellRect(be.x,be.y):null;}};LUPA.sticky=true;placeLupa(LUPA.tg.rect);ui();return;}
