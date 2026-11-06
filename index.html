@@ -69,7 +69,7 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .hban{background:rgba(255,215,90,.1);border:1px solid rgba(255,215,90,.4);border-radius:8px;padding:6px 10px;margin:6px 0;font-size:13px}
 #toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:99;display:flex;flex-direction:column;gap:6px;pointer-events:none}
 .tst{background:rgba(20,22,28,.96);color:#eee;border:1px solid var(--hl);border-radius:10px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:tstin .3s ease-out;transition:opacity .5s,transform .5s;max-width:80vw}
-.tst.out{opacity:0;transform:translateY(-10px)}@keyframes tstin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}#comp.open,#opts.open,#relic.open{display:block}
+.tst.out{opacity:0;transform:translateY(-10px)}@keyframes tstin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}#comp.open,#opts.open,#relic.open{display:block}#relic.peek{display:none!important}.rlbar{position:absolute;top:10px;right:12px;z-index:3;display:flex;gap:6px;align-items:center}.rlbar .rlg{font-weight:700;color:var(--gold);padding:5px 10px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}.rlbar button{padding:4px 10px;font-size:16px;line-height:1.2}#peekb{position:absolute;left:56px;top:8px;z-index:21;display:none;padding:9px 16px;font-weight:700;border-color:var(--gold);box-shadow:0 4px 14px rgba(0,0,0,.45);background:var(--panel)}#peekb.on{display:block}button.wish{border-color:var(--gold)!important;box-shadow:inset 0 0 0 1px var(--gold)}button.wish::after{content:" 🔖"}
 .orow{margin:14px 0}.orow small{display:block}.orow label{display:block}
 #comp .cgrid,#relic .gbody{margin-top:4px}
 .grow{display:grid;grid-template-columns:118px 1fr 74px;align-items:center;gap:8px;margin:calc(4px*var(--hs)) 0;font-size:calc(12px*var(--hs))}
@@ -526,7 +526,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v221</div>
+<div id="ver">Towerize v222</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -555,7 +555,7 @@ addEventListener('keydown',e=>{if(OPT.keys===false||!keyOK(e)||e.ctrlKey||e.meta
  else if(k===' '){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
  else if(k==='v'){e.preventDefault();const Lv=[.5,1,2],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(k==='enter'&&S.phase==='build'){if(clickA('[data-a="wave"]'))e.preventDefault();}
- else if(k==='u'){if(clickA('[data-a="up"]'))e.preventDefault();}});
+ else if(k==='u'){if(e.shiftKey){const b=document.querySelector('#side [data-a="up"],#tip [data-a="up"]');if(b){wishToggle(b);e.preventDefault();}}else if(clickA('[data-a="up"]'))e.preventDefault();}});
 const keyOK=e=>!(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))&&typeof S!=='undefined'&&S&&!document.body.classList.contains('inmenu')&&!CP.open&&!OP.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof INTRO!=='undefined'&&INTRO.on);
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey)return;if('wasd'.includes(k)&&k.length===1){KEYS.add(k);e.preventDefault();}
  else if(k==='e'||k==='+'||k==='='){zoomAt(1.2,VIEW/2,VH/2);e.preventDefault();}else if(k==='q'||k==='-'){zoomAt(1/1.2,VIEW/2,VH/2);e.preventDefault();}});
@@ -1919,7 +1919,7 @@ function renderCredits(){$('msetup').innerHTML='<h3>Créditos</h3><div class="cr
  '<div><a href="https://lentikula.itch.io/freecc0-basic-spell-impacts-sfx" target="_blank" rel="noopener">Lentikula</a> · Basic Spell Impacts <small>(CC0)</small></div>'+
  '<div><small>El resto de efectos se generan en el propio juego.</small></div></div>'+
  '</div><button data-a="mback">Volver</button>';$('menu').classList.add('setup');}
-function renderHelp(){$('msetup').innerHTML='<h3>Ayuda</h3><small style="display:block;max-width:440px;margin:0 auto 10px"><b>Controles en PC:</b> mueve el mapa con <b>WASD</b> o arrastrando (clic izquierdo, derecho o rueda); en trackpad, con dos dedos. Acerca y aleja con <b>E</b> / <b>Q</b>, la rueda o pellizcando.<br><b>Atajos:</b> <b>F</b> habilidad del héroe · <b>G</b> definitiva · <b>H</b> mover héroe · <b>Espacio</b> pausa · <b>V</b> velocidad · <b>Intro</b> empezar oleada · <b>1–7</b> elegir torre · <b>U</b> mejorar · <b>Mayús+1–9</b> reliquias.<br>Para vender una torre, selecciónala y usa su botón <b>Vender</b>.</small><button data-a="tutfull">🎓 Tutorial completo</button><button data-a="tutquick">⚡ Tutorial rápido</button><button data-a="htog">💡 Pistas: '+(OPT.hints?'activadas':'desactivadas')+'</button><button data-a="hreset">💡 Restablecer pistas</button><button disabled title="Próximamente">📘 Guía avanzada (próximamente)</button><button data-a="mback">Volver</button>';$('menu').classList.add('setup');}
+function renderHelp(){$('msetup').innerHTML='<h3>Ayuda</h3><small style="display:block;max-width:440px;margin:0 auto 10px"><b>Controles en PC:</b> mueve el mapa con <b>WASD</b> o arrastrando (clic izquierdo, derecho o rueda); en trackpad, con dos dedos. Acerca y aleja con <b>E</b> / <b>Q</b>, la rueda o pellizcando.<br><b>Atajos:</b> <b>F</b> habilidad del héroe · <b>G</b> definitiva · <b>H</b> mover héroe · <b>Espacio</b> pausa · <b>V</b> velocidad · <b>Intro</b> empezar oleada · <b>1–7</b> elegir torre · <b>U</b> mejorar · <b>Mayús+U</b> marcar mejora · <b>Mayús+1–9</b> reliquias · <b>Tab</b> ver el mapa en eventos y ofertas.<br><b>Compra marcada:</b> haz clic derecho (en móvil, mantén pulsado) en una mejora que aún no puedas pagar: se marca con 🔖 y se compra sola en cuanto tengas oro.<br>Para vender una torre, selecciónala y usa su botón <b>Vender</b>.</small><button data-a="tutfull">🎓 Tutorial completo</button><button data-a="tutquick">⚡ Tutorial rápido</button><button data-a="htog">💡 Pistas: '+(OPT.hints?'activadas':'desactivadas')+'</button><button data-a="hreset">💡 Restablecer pistas</button><button disabled title="Próximamente">📘 Guía avanzada (próximamente)</button><button data-a="mback">Volver</button>';$('menu').classList.add('setup');}
 const QS={i:0,on:false,raf:0,t0:0,after:null};
 const QSL=[
  {t:'Objetivo',d:'Defiende el <b>núcleo</b>. Los enemigos salen por los extremos del camino y van hacia él; si llegan, pierdes vida. Si la vida llega a 0, pierdes la partida.'},
@@ -2456,7 +2456,7 @@ function upgrade(t){
  if(t&&TW[t.type].uniq&&!TW[t.type].upc)return;
  if(!t||!S.list.includes(t)||t.lvl>=(TW[t.type].pig?4:3)||!(S.phase==='build'||S.phase==='wave'))return;
  const T=TW[t.type],c=upCost(T,t.lvl+1);
- if(S.gold<c){S.msg='Oro insuficiente para mejorar.';ui();return;}
+ if(S.gold<c){S.msg='Oro insuficiente para mejorar.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.lvl++;t.inv=(t.inv||T.cost)+c;if(S.tut&&S.tut.freeUp)S.tut.freeUp=0;
  if(t.sd){const m=sdHp(t);for(const q of t.sd){const dd=m-q.max;q.max=m;if(q.hp>0)q.hp+=dd;}}
  S.msg='';if(T.pig&&t.lvl===4){mkPig(t);reveal('pig4');if(pigHouses().every(h=>h&&h.lvl>=4)&&!S.tut)achieve('pigs');S.msg='¡El '+PIGU[t.type].n.toLowerCase()+' sale a la batalla!';if(pigHouses().every(h=>h&&h.lvl>=4))hint('mecha','¡Mecha Cerdito!','Tienes las tres casas a Nv 4: durante la oleada, pulsa el botón 🤖 (encima del panel del héroe) para que los tres cerditos se unan en un mecha gigante.',null);}refreshPrim();ui();
@@ -2499,14 +2499,14 @@ function upRow(t,pinned){
 function chooseSpec(t,sp){
  if(!t||!S.list.includes(t)||t.lvl!==3||!SPECS[t.type]||!SPECS[t.type][sp]||!(S.phase==='build'||S.phase==='wave'))return;
  const T=TW[t.type],c=upCost(T,4);
- if(S.gold<c){S.msg='Oro insuficiente para mejorar.';ui();return;}
+ if(S.gold<c){S.msg='Oro insuficiente para mejorar.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.lvl=4;t.spec=sp;t.inv=(t.inv||T.cost)+c;t.ab={};t.acd={};
  if(t.sd){const m=sdHp(t);for(const q of t.sd){const dd=m-q.max;q.max=m;if(q.hp>0)q.hp=Math.min(m,Math.max(1,q.hp+dd));}}S.msg='';refreshPrim();ui();
 }
 function buyAb(t,id){
  if(!t||!S.list.includes(t)||t.lvl!==4||!SPECS[t.type][t.spec].ab.includes(id)||!(S.phase==='build'||S.phase==='wave'))return;
  const D=AB[id],rk=t.ab[id]||0;if(rk>=D.ranks.length)return;const c=D.ranks[rk].c;
- if(S.gold<c){S.msg='Oro insuficiente para la habilidad.';ui();return;}
+ if(S.gold<c){S.msg='Oro insuficiente para la habilidad.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.ab[id]=rk+1;t.inv=(t.inv||TW[t.type].cost)+c;if(rk===0)t.acd[id]=0;S.msg='';refreshPrim();ui();
 }
 function pinTower(t){S.selT=t;openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:{x:t.x,y:t.y}});PR.pinned=true;refreshPrim();ui();}
@@ -3138,6 +3138,7 @@ function draw(){
   g.fillStyle='#14161c';g.font=Math.round(BCS*.7)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(X.ic,t.x*CS+CS/2,t.y*CS+CS/2+1);
   if(t.flash){g.strokeStyle='#fff';g.lineWidth=lw(3);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.flash.x*CS+CS/2,t.flash.y*CS+CS/2);g.stroke();}
   for(let i=1;i<Math.min(t.lvl,4);i++){g.fillStyle='#fff';g.strokeStyle='#14161c';g.lineWidth=lw(1);g.beginPath();g.arc(t.x*CS+CS/2+(i-1.5)*CS*.4,t.y*CS+CS/2+BCS*.36,CS*.14,0,7);g.fill();g.stroke();}
+  if(S.wish&&S.wish.some(w=>w.id===t.id)){g.font=Math.round(BCS*.34)+'px sans-serif';g.fillText('🔖',t.x*CS+CS/2+BCS*.36,t.y*CS+CS/2-BCS*.34);}
   if(t===S.selT){g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.strokeRect((t.x-1)*CS+lw(1),(t.y-1)*CS+lw(1),BCS-lw(2),BCS-lw(2));}
   if(t.rays&&S.phase==='wave'){g.lineWidth=lw(2);for(const r of t.rays)if(r.e.hp>0){g.strokeStyle=r.el.col;g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(r.e.x*CS+CS/2,r.e.y*CS+CS/2);g.stroke();}}
   else if(t.tgt&&S.phase==='wave'&&t.tgt.hp>0){g.strokeStyle=T.col;g.lineWidth=lw(2.5);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.tgt.x*CS+CS/2,t.tgt.y*CS+CS/2);g.stroke();}}
@@ -3602,6 +3603,50 @@ setInterval(()=>{try{for(const el of document.querySelectorAll(SMSEL)){const on=
  document.addEventListener('mouseover',e=>{if(TOUCH)return;const a=tgt(e);if(a)show(a);else if(cur&&!(e.target.closest&&e.target.closest('#hpop')))hide();});
  setInterval(()=>{if(cur&&!document.body.contains(cur))hide();},300);})();
 
+
+// ---- compra marcada: clic derecho (o mantener pulsado) en una mejora para comprarla sola cuando haya oro ----
+const WISHTXT=()=>TOUCH?' Mantén pulsado el botón para marcarla: se comprará sola cuando tengas oro.':' Clic derecho en el botón para marcarla: se comprará sola cuando tengas oro.';
+function wishOk(w){const t=S.list.find(o=>o.id===w.id);if(!t)return null;const T=TW[t.type];
+ if(w.a==='up')return t.lvl===w.lv&&t.lvl<(T.pig?4:3)?{t,c:upCost(T,t.lvl+1)}:null;
+ if(w.a==='spec')return t.lvl===3&&SPECS[t.type]&&SPECS[t.type][w.v]?{t,c:upCost(T,4)}:null;
+ if(w.a==='abuy'){const D=AB[w.v],rk=t.ab&&t.ab[w.v]||0;return t.lvl===4&&D&&rk===w.rk&&rk<D.ranks.length?{t,c:D.ranks[rk].c}:null;}
+ return null;}
+function wishToggle(b){if(!S||!S.list||!(S.phase==='build'||S.phase==='wave'))return;const a=b.dataset.a,id=+b.dataset.id,v=b.dataset.v||'',t=S.list.find(o=>o.id===id);if(!t)return;
+ S.wish=S.wish||[];const i=S.wish.findIndex(w=>w.a===a&&w.id===id&&w.v===v);
+ if(i>=0)S.wish.splice(i,1);else{if(a==='spec')S.wish=S.wish.filter(w=>!(w.a==='spec'&&w.id===id));S.wish.push({a,id,v,lv:t.lvl,rk:a==='abuy'?(t.ab&&t.ab[v]||0):0});}
+ S.msg='';try{sfx('btn');}catch(e){}wishDeco();ui();}
+function wishDeco(){const L=(typeof S!=='undefined'&&S&&S.wish)||[];for(const b of document.querySelectorAll('button[data-a="up"],button[data-a="spec"],button[data-a="abuy"]')){
+ const on=L.some(w=>w.a===b.dataset.a&&w.id===+b.dataset.id&&w.v===(b.dataset.v||''));if(b.classList.contains('wish')!==on)b.classList.toggle('wish',on);
+ const tt=on?(TOUCH?'Marcada: se comprará sola cuando tengas oro. Mantén pulsado para desmarcar.':'Marcada: se comprará sola cuando tengas oro. Clic derecho para desmarcar.'):(TOUCH?'Mantén pulsado para marcarla y comprarla sola cuando tengas oro.':'Clic derecho: marcar para comprarla sola cuando tengas oro.');if(b.title!==tt)b.title=tt;}}
+function wishTick(){if(typeof S==='undefined'||!S||!S.wish||!S.wish.length)return;
+ S.wish=S.wish.filter(w=>wishOk(w));if(!S.wish.length){wishDeco();return;}
+ if(RL.open||!(S.phase==='build'||S.phase==='wave'))return;
+ const w=S.wish[0],o=wishOk(w);if(!o||S.gold<o.c)return;const t=o.t,T=TW[t.type],lv=t.lvl,rk=t.ab&&t.ab[w.v]||0;
+ if(w.a==='up')upgrade(t);else if(w.a==='spec')chooseSpec(t,w.v);else buyAb(t,w.v);
+ S.wish.shift();
+ if(t.lvl!==lv||(t.ab&&(t.ab[w.v]||0)!==rk))toast('🔖 <b>'+T.n+'</b>: '+(w.a==='up'?'mejorada a Nv '+t.lvl:w.a==='spec'?'ahora es '+SPECS[t.type][w.v].n:AB[w.v].n+' a rango '+t.ab[w.v]));
+ wishDeco();}
+setInterval(()=>{try{wishTick();wishDeco();}catch(e){}},150);
+{const SEL='button[data-a="up"],button[data-a="spec"],button[data-a="abuy"]';let lpT=null,lpAt=0,lpEat=false;
+ document.addEventListener('contextmenu',e=>{const b=e.target.closest&&e.target.closest(SEL);if(!b)return;e.preventDefault();if(performance.now()-lpAt<900)return;wishToggle(b);},true);
+ document.addEventListener('touchstart',e=>{const b=e.target.closest&&e.target.closest(SEL);clearTimeout(lpT);if(!b)return;lpT=setTimeout(()=>{lpAt=performance.now();lpEat=true;wishToggle(b);try{navigator.vibrate&&navigator.vibrate(20);}catch(e){}},500);},{passive:true,capture:true});
+ for(const ev of ['touchend','touchmove','touchcancel'])document.addEventListener(ev,()=>clearTimeout(lpT),{passive:true,capture:true});
+ document.addEventListener('click',e=>{if(lpEat){lpEat=false;const b=e.target.closest&&e.target.closest(SEL);if(b&&performance.now()-lpAt<1500){e.stopPropagation();e.preventDefault();}}},true);}
+
+// ---- ventanas sobre el mapa (eventos, reliquias, ofertas): 👁 para ocultarlas y ver el mapa, y el oro siempre a la vista ----
+function peekLbl(){const r=$('relic');return r.querySelector('[data-a="relic"]')?'reliquias':r.querySelector('[data-a="towpick"]')?'oferta':r.querySelector('[data-a="evopt"],[data-a="evok"]')?'evento':'ventana';}
+function setPeek(on){RL.peek=!!on;$('relic').classList.toggle('peek',RL.peek);let b=$('peekb');
+ if(!b){b=document.createElement('button');b.id='peekb';b.onclick=()=>setPeek(false);$('cw').appendChild(b);}
+ const l=peekLbl();b.textContent='👁 Volver '+(l==='reliquias'?'a las reliquias':l==='oferta'?'a la oferta':l==='evento'?'al evento':'a la ventana');b.title='Volver (Tab)';b.classList.toggle('on',RL.peek);
+ if(RL.peek){closePrim();}ui();}
+function rlBar(){const r=$('relic');if(!RL.open||RL.hpick||typeof S==='undefined'||!S||!S.list){if(RL.peek)setPeek(false);return;}
+ if(!r.querySelector('[data-a="relic"],[data-a="towpick"],[data-a="evopt"],[data-a="evok"]'))return;
+ let bar=r.querySelector('.rlbar');if(!bar){bar=document.createElement('div');bar.className='rlbar';bar.innerHTML='<span class="rlg"></span><button data-a="peek" title="Ocultar para ver el mapa (Tab)">👁</button>';r.insertBefore(bar,r.firstChild);}
+ const g=bar.querySelector('.rlg'),tx='🪙 '+S.gold;if(g.textContent!==tx)g.textContent=tx;}
+setInterval(()=>{try{rlBar();}catch(e){}},150);
+try{new MutationObserver(()=>{try{rlBar();}catch(e){}}).observe($('relic'),{childList:true});}catch(e){}
+addEventListener('keydown',e=>{if(e.key!=='Tab'||!RL.open||RL.hpick||!$('relic').querySelector('.rlbar'))return;e.preventDefault();setPeek(!RL.peek);});
+
 // ---- menú de pausa (móvil): reúne lo que no hace falta tener siempre en pantalla ----
 const PMU={open:false,view:'main',ask:0,spd:1};
 (()=>{const d=document.createElement('div');d.id='pmenu';d.innerHTML='<div class="pmc"></div>';($('comp').parentElement||document.body).appendChild(d);d.addEventListener('click',e=>{if(e.target===d){closePause(true);return;}act(e);});})();
@@ -3679,7 +3724,7 @@ addEventListener('keydown',e=>{if(RL.open&&RL.hpick&&(e.key==='ArrowLeft'||e.key
 const AIMLOCK=['pick','rot','prot','sel','wave','sell','up','spec','abuy','pin4','close','tgt','tgtall','tgtdef','flag'];
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
- if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','menuask','menu'].includes(a))return;
+ if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','menuask','menu','peek'].includes(a))return;
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim)||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -3701,6 +3746,7 @@ function act(e){
  else if(a==='pach'){toggleComp(true);CP.tab='lg';CP.solo=true;renderComp();}
  else if(a==='popts')toggleOpts(true);
  else if(a==='sell')sell(S.selT);
+ else if(a==='peek'){setPeek(true);}
  else if(a==='up'){const t=S.list.find(o=>o.id===+b.dataset.id);upgrade(t);}
  else if(a==='spec'){chooseSpec(S.list.find(o=>o.id===+b.dataset.id),b.dataset.v);}
  else if(a==='abuy'){buyAb(S.list.find(o=>o.id===+b.dataset.id),b.dataset.v);}
