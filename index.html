@@ -361,8 +361,8 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 #dlg.big .dtx{font-size:21px}
 #dlg .dnx{position:absolute;right:16px;bottom:8px;font-size:12px;opacity:0}#dlg .dnx.on{opacity:.7;animation:ipr 1.4s infinite}
 #dlg .dbx.nar{background:transparent;border:0;box-shadow:none;bottom:40vh;text-align:center}#dlg .dbx.nar .dtx{font:italic 400 24px/1.5 Georgia,"Times New Roman",serif;color:var(--fg)}#dlg.big .dbx.nar .dtx{font-size:28px}
-#dlg .dbx.gl .dtx{animation:dgl 3.2s infinite steps(1)}
-@keyframes dgl{0%,93%,100%{opacity:1;transform:none}94%{opacity:.35;transform:translateX(2px)}96%{opacity:.8;transform:translateX(-2px)}}
+#dlg .dbx.gl .dtx{animation:dgl 3.2s infinite steps(1)}#dlg .dbx.g3 .dtx{animation:dgl3 1.7s infinite steps(1)}#dlg .dbx.g2 .dtx{animation:dgl 2.2s infinite steps(1)}#dlg .dbx.g1 .dtx{animation:dgl 3.4s infinite steps(1)}#dlg .dbx.gk{animation:dshk .18s linear 2}#dlg .dtx .gch{color:#6fd3f0;text-shadow:2px 0 #ff4fa0,-2px 0 #3df2ff}
+@keyframes dgl3{0%,80%,100%{opacity:1;transform:none;text-shadow:none}82%{opacity:.4;transform:translateX(3px) skewX(-6deg);text-shadow:2px 0 #ff4fa0,-2px 0 #3df2ff}85%{opacity:.85;transform:translateX(-3px);text-shadow:-2px 0 #ff4fa0,2px 0 #3df2ff}88%{opacity:1;transform:translateY(1px)}91%{opacity:.5;transform:translateX(2px)}}@keyframes dshk{0%,100%{transform:translateX(-50%)}25%{transform:translateX(calc(-50% + 4px))}75%{transform:translateX(calc(-50% - 4px))}}@keyframes dgl{0%,93%,100%{opacity:1;transform:none}94%{opacity:.35;transform:translateX(2px)}96%{opacity:.8;transform:translateX(-2px)}}
 #dlg .din{display:flex;gap:8px;margin-top:10px}#dlg .din input{flex:1;font:inherit;font-size:16px;padding:8px 10px;border-radius:7px;border:1px solid #3fa7c9;background:#0c1018;color:#dfeef5}#dlg .din button{margin:0}
 #dlg .dsk{position:absolute;top:14px;right:16px;margin:0;font-size:12px;padding:5px 10px;opacity:.7}
 /* ---- pantalla de era ---- */
@@ -526,7 +526,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v225</div>
+<div id="ver">Towerize v226</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3950,11 +3950,17 @@ function glitch(s,lv){if(!OPT.dglitch||!lv)return s;let h=0;for(const c of s)h=(
   x=[...x].map(c=>/[a-záéíóúñ]/i.test(c)&&rnd()<.03*lv?G[Math.floor(rnd()*G.length)]:c).join('');o+=(o?' ':'')+x;if(lv>=3&&!tag&&rnd()<.12){o+=' [ERR 0x'+Math.floor(rnd()*255).toString(16).toUpperCase().padStart(2,'0')+']';tag=1;}}
  return o;}
 const DLG={on:false};
+// fallos visuales de ÉTER: letras que se corrompen un instante y sacudidas; más a menudo cuanto más dañado (g 3 → 1)
+setInterval(()=>{try{if(!DLG.on||!OPT.dglitch)return;const L=DLG.lines&&DLG.lines[DLG.i];if(!L||!L.g)return;const el=$('dlg');
+ if(DLG.gx&&performance.now()>=DLG.gx.u){DLG.gx=null;dlgRender();}
+ if(!DLG.gx&&Math.random()<[0,.12,.22,.35][L.g]){const sh=DLG.full.slice(0,Math.floor(DLG.n)),ix=[];for(let i=0;i<sh.length;i++)if(/[a-záéíóúñ]/i.test(sh[i]))ix.push(i);
+  if(ix.length){const i=ix[Math.floor(Math.random()*ix.length)],n=Math.random()<.3?Math.min(3,sh.length-i):1,G='▒░▓█';let c='';for(let k=0;k<n;k++)c+=G[Math.floor(Math.random()*G.length)];DLG.gx={i,c,u:performance.now()+90+Math.random()*120};dlgRender();}}
+ if(L.g>=2&&Math.random()<(L.g===3?.05:.025)){const b=el.querySelector('.dbx');if(b){b.classList.remove('gk');void b.offsetWidth;b.classList.add('gk');}}}catch(e){}},110);
 function playDialog(lines,done){DLG.lines=lines;DLG.i=-1;DLG.done=done;DLG.on=true;const el=$('dlg');el.classList.add('on');el.classList.toggle('big',!!OPT.dbig);dlgNext();}
 function dlgShow(){const L=DLG.lines[DLG.i],el=$('dlg'),nm=STO.name||'Piloto',txt=(OPT.dglitch&&L.gt?L.gt:L.t).replace(/\{N\}/g,nm);DLG.full=txt;DLG.n=OPT.dtype===false?txt.length:0;DLG.t=0;DLG.wait=0;
- el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L.g>=2&&OPT.dglitch?' gl':''}">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}<div class="dnx">▶ continuar</div></div>`;
+ el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}<div class="dnx">▶ continuar</div></div>`;
  dlgRender();if(L.input)setTimeout(()=>{const i=$('dname');if(i)i.focus();},50);}
-function dlgRender(){const el=$('dlg'),t=el.querySelector('.dtx');if(!t)return;t.textContent=DLG.full.slice(0,Math.floor(DLG.n));const fin=DLG.n>=DLG.full.length,L=DLG.lines[DLG.i];el.querySelector('.dnx').classList.toggle('on',fin&&!L.input);}
+function dlgRender(){const el=$('dlg'),t=el.querySelector('.dtx');if(!t)return;const sh=DLG.full.slice(0,Math.floor(DLG.n)),gx=DLG.gx;if(gx&&gx.i<sh.length&&performance.now()<gx.u){t.textContent='';t.append(sh.slice(0,gx.i));const sp=document.createElement('span');sp.className='gch';sp.textContent=gx.c;t.append(sp,sh.slice(gx.i+gx.c.length));}else t.textContent=sh;const fin=DLG.n>=DLG.full.length,L=DLG.lines[DLG.i];el.querySelector('.dnx').classList.toggle('on',fin&&!L.input);}
 function dlgNext(){const L=DLG.lines[DLG.i];if(L&&L.input&&!STO.name)return;DLG.i++;if(DLG.i>=DLG.lines.length){dlgEnd();return;}dlgShow();}
 function dlgEnd(){DLG.on=false;$('dlg').classList.remove('on');$('dlg').innerHTML='';const d=DLG.done;DLG.done=null;if(d)d();}
 function dlgTap(){if(!DLG.on)return;if(DLG.n<DLG.full.length){DLG.n=DLG.full.length;dlgRender();return;}dlgNext();}
@@ -3968,13 +3974,13 @@ addEventListener('keydown',e=>{if(!DLG.on)return;if(e.target&&e.target.id==='dna
 // textos (g = nivel de fallo; {N} = nombre del capitán)
 const STORY={
  intro:[{t:'El salto debía durar un parpadeo. Duró una eternidad.'},
-  {sp:'ÉTER',g:3,gt:'Pi-Piloto, ¿me recibe? Daños crít▒cos en el núcleo. No recnozco esta fe░ha… ni este silgo. [ERR 0x3F]',t:'Piloto, ¿me recibe? Daños críticos en el núcleo. No reconozco esta fecha… ni este siglo.'},
-  {sp:'ÉTER',g:3,gt:'Hay algo más. Mi enrgía está atrayendo a… cri-criaturas. Nos han locali▓ado.',t:'Hay algo más. Mi energía está atrayendo a… criaturas. Nos han localizado.'},
-  {sp:'ÉTER',g:3,gt:'Si el nú-núcleo cae, nos quedamos aquí para siempe. Defiéndalo. Yo me encargaré de repar░rme… pieza a pieza.',t:'Si el núcleo cae, nos quedamos aquí para siempre. Defiéndalo. Yo me encargaré de repararme… pieza a pieza.'}],
- p1:[{sp:'ÉTER',g:2,gt:'El jefe ha dejado un fragmento cristlino. Es compatible con mis circ▒itos, Pi-Piloto. Pieza integrada: 1 de 3. [ERR 0x1C]',t:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circuitos, Piloto. Pieza integrada: 1 de 3.'},
-  {sp:'ÉTER',g:2,gt:'Sistemas de memoria restau▓ados al 12%. Re-recuerdo… una ciudad. Nuestro hogar. Y un destelo que lo cubría todo.',t:'Sistemas de memoria restaurados al 12%. Recuerdo… una ciudad. Nuestro hogar. Y un destello que lo cubría todo.'}],
- p2:[{sp:'ÉTER',g:1,gt:'Segunda pieza integrada. Mis sens░res vuelven a funcionr, Piloto.',t:'Segunda pieza integrada. Mis sensores vuelven a funcionar, Piloto.'},
-  {sp:'ÉTER',g:1,gt:'Estas criaturas no pertenecn a esta era. Lle▒an por grietas. Algo ha roto el tiempo.',t:'Estas criaturas no pertenecen a esta era. Llegan por grietas. Algo ha roto el tiempo.'}],
+  {sp:'ÉTER',g:3,gt:'Pi-Piloto, ¿me recibe? Daños crít▒cos en el núcleo. No reconozco esta fe░ha… ni este siglo. [ERR 0x3F]',t:'Piloto, ¿me recibe? Daños críticos en el núcleo. No reconozco esta fecha… ni este siglo.'},
+  {sp:'ÉTER',g:3,gt:'Hay algo más. Mi energía está atrayendo a… cri-criaturas. Nos han locali▓ado.',t:'Hay algo más. Mi energía está atrayendo a… criaturas. Nos han localizado.'},
+  {sp:'ÉTER',g:3,gt:'Si el nú-núcleo cae, nos quedamos aquí para siempre. Defiéndalo. Yo me encargaré de repar░rme… pieza a pieza.',t:'Si el núcleo cae, nos quedamos aquí para siempre. Defiéndalo. Yo me encargaré de repararme… pieza a pieza.'}],
+ p1:[{sp:'ÉTER',g:2,gt:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circ▒itos, Pi-Piloto. Pieza integrada: 1 de 3. [ERR 0x1C]',t:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circuitos, Piloto. Pieza integrada: 1 de 3.'},
+  {sp:'ÉTER',g:2,gt:'Sistemas de memoria restau▓ados al 12%. Re-recuerdo… una ciudad. Nuestro hogar. Y un destello que lo cubría todo.',t:'Sistemas de memoria restaurados al 12%. Recuerdo… una ciudad. Nuestro hogar. Y un destello que lo cubría todo.'}],
+ p2:[{sp:'ÉTER',g:1,gt:'Segunda pieza integrada. Mis sens░res vuelven a funcionar, Piloto.',t:'Segunda pieza integrada. Mis sensores vuelven a funcionar, Piloto.'},
+  {sp:'ÉTER',g:1,gt:'Estas criaturas no pertenecen a esta era. Lle▒an por grietas. Algo ha roto el tiempo.',t:'Estas criaturas no pertenecen a esta era. Llegan por grietas. Algo ha roto el tiempo.'}],
  p3:[{sp:'ÉTER',g:0,t:'Tercera pieza integrada. Núcleo estable.'},
   {sp:'ÉTER',g:0,t:'Registros de tripulación restaurados. Rango: Capitán. Nombre: [datos corruptos]…'},
   {sp:'ÉTER',g:0,t:'Lo siento, Capitán. Hay huecos en mi memoria. ¿Cómo debo llamarle?',input:1},
