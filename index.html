@@ -233,7 +233,7 @@ body.inmenu #stats,body.inmenu #relics,body.inmenu #ctl,body.inmenu #opt,body.in
 .mctl button:hover{border-color:var(--acc)}.mctl button.on{border-color:var(--acc);color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}.mctl button.dim{opacity:.55}.mctl button.warn{border-color:var(--red);color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}.mctl button:disabled{opacity:.4;cursor:default}
 #mtl{top:8px;left:8px;flex-direction:column}#mtl .gap{height:8px}#mbl{bottom:8px;left:8px}#mbl button{padding:0 8px;font-size:13px}#mbr{bottom:8px;right:8px;flex-direction:column;align-items:flex-end;gap:6px}
 .hpan{display:flex;gap:6px}.hpb{width:46px;height:46px;border-radius:10px;border:1px solid var(--line2);background:color-mix(in srgb,var(--panel) 92%,transparent);font-size:24px;padding:0;margin:0;position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center;overflow:visible}
-.hpb.aim{border-color:var(--hl);box-shadow:0 0 0 2px var(--hl)}.hpb.off{filter:grayscale(.8) brightness(.75)}.hpport{overflow:hidden}.hpport svg{width:100%;height:100%;border-radius:9px}.hpport.off{filter:grayscale(1) brightness(.6)}
+.hpb.aim{border-color:var(--hl);box-shadow:0 0 0 2px var(--hl)}.hpb.off{filter:grayscale(.8) brightness(.75)}.hpport{overflow:hidden}body:not(.mfs) #mbr .hpan .hpb{width:64px;height:64px;min-width:64px;font-size:32px;border-radius:12px}body:not(.mfs) #mbr .hpan .hpport svg{border-radius:11px}body:not(.mfs) #mbr .hpan{gap:8px}.hpport svg{width:100%;height:100%;border-radius:9px}.hpport.off{filter:grayscale(1) brightness(.6)}
 .hcdv{position:absolute;inset:0;border-radius:9px;background:conic-gradient(rgba(10,12,16,.72) var(--p,0deg),transparent 0);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;pointer-events:none}
 .xpan{display:flex;padding:3px;border:1px dashed #e8b06a;border-radius:13px;background:rgba(60,40,20,.45)}.xpb{border-color:#e8b06a}
 .hpult.lock,.xpb.lock{background:repeating-linear-gradient(45deg,var(--btn) 0 6px,#232631 6px 12px)}.hlck{font-size:20px}.hchain{position:absolute;font-size:30px;opacity:.55}
@@ -527,7 +527,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v233</div>
+<div id="ver">Towerize v234</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -984,7 +984,7 @@ function achWin(){roundUnlock();const H=S.hero,B=S.built||[],nm=S.list.filter(t=
 function romaChk(){const c=BN>>1;let ex=null;for(let y=0;y<P;y++)for(let x=0;x<P;x++){const ch=S.cc[c*P+y]&&S.cc[c*P+y][c*P+x];if(ch===2&&(x===0||y===0||x===P-1||y===P-1))ex=[x===0?-1:x===P-1?1:0,y===0?-1:y===P-1?1:0];}
  if(!ex||!S.core)return;for(const p of S.portals){const v=(p.x-S.core.x)*ex[0]+(p.y-S.core.y)*ex[1];if(v<-P*K*.75){achieve('roma');return;}}}
 function achTick(dt){if(S.pvE||!S.list)return;
- {const pe=S.enemies.find(e=>e.hp>0&&(ET[e.t].need||1)>1&&e.ct>0&&!e.stopped);if(pe)hint('pblock','Enemigos corpulentos','Necesita <b>'+ET[pe.t].need+' unidades</b> a la vez para pararse. Con menos, avanza más lento. El 🛡️ muestra cuántas lo sujetan.',()=>{const r=cv.getBoundingClientRect(),k=sc()/VIEW*r.width;return{x:((pe.x+.5)*CS-CAM.x)*k+r.left,y:((pe.y+.5)*CS-CAM.y)*k+r.top,r:40};});}
+ {const pe=S.enemies.find(e=>e.hp>0&&(ET[e.t].need||1)>1&&e.ct>0&&!e.stopped);if(pe){const tg=()=>{const r=cv.getBoundingClientRect(),k=sc()/VIEW*r.width;return{x:((pe.x+.5)*CS-CAM.x)*k+r.left,y:((pe.y+.5)*CS-CAM.y)*k+r.top,r:40};};hint('pblock','Enemigos corpulentos',[['Este enemigo es <b>corpulento</b>: para pararlo necesita ser bloqueado por <b>'+ET[pe.t].need+' unidades</b>. Menos unidades solo lo frenarán.',tg],['El 🛡️ sobre él indica cuántas unidades lo están frenando.',tg]]);}}
  if(!S.tut&&S.round>=Math.ceil(ROUNDS/2)){let td=null,qd=null;try{td=localStorage.getItem('rt-tutdone');qd=localStorage.getItem('rt-qdone');}catch(e){}if(!td&&!qd)hint('optsx','Personaliza tu juego',OPTTXT,tgEl('#mtl [data-a="opts"]'));}
  for(const f of S.list){if(!TW[f.type]||!TW[f.type].faro||(f.lvl||1)<4)continue;reveal('faro4');const L=FARO[3];let n=0;for(const t of S.list)if(t!==f&&!TW[t.type].faro&&Math.hypot(t.x-f.x,t.y-f.y)<=L.r*K&&faroLit(f,t))n++;if(!S.tut)recBest('faro',n);if(n>=4&&!S.tut)achieve('faro');}
  // tutorial, ronda 10: si no has usado aún la reliquia del cofre, te pide usarla cuando Bob entra en tu zona de fuego
@@ -1907,7 +1907,7 @@ function tutPhase(ph){if(!S||!S.tut)return;const r=S.round,T=S.tut;
  if(ph==='build'){
   if(r===1)tutOffer(['arrow','cata'],'Elige tu primera torre','De momento será la única torre que puedas construir. <b>Arqueros</b>: disparos rápidos a un solo enemigo. <b>Catapulta</b>: disparos lentos con daño en área.');
   if(r===2){T.lock=lockSquares(S.lastBk);if(T.lock.length)hint('tut_tile2','Construye en la casilla especial','Esta ronda, coloca tu torre en la casilla especial de la pieza nueva. Al acabar la oleada verás la diferencia con la torre de la ronda 1.',tgCell(T.lock[0].x,T.lock[0].y,1.3));else T.lock=null;}
-  if(r===4){const sp=S.list.find(t=>t.id===T.t2id)||S.list[0];T.freeUp=1;hint('tut_gold','Mejorar torres','Pulsa una torre y usa su botón de <b>mejora</b>. Esta primera te sale <b>gratis</b>: elige la que quieras.',sp?tgCell(sp.x,sp.y,1.3):null);}
+  if(r===4){const sp=S.list.find(t=>t.id===T.t2id)||S.list[0];T.freeUp=1;hint('tut_gold','Mejorar torres','Pulsa una torre y luego ⬆ para <b>mejorarla</b>. Esta primera te sale <b>gratis</b>: elige la que quieras.',sp?tgCell(sp.x,sp.y,1.3):null);}
   if(r===5)tutOffer(['orb','frost'],'Nueva torre','Se acercan enemigos más duros. Elige: <b>Orbe arcano</b> (rayo mágico concentrado en un enemigo) o <b>Cryomago</b> (daño mágico que ralentiza, para que tus torres disparen más veces).');
   if(r===7)tutOffer(['bastion','monk'],'Torres de unidades','Elige una torre de unidades: <b>Baluarte</b> (soldados con armadura que bloquean el paso) o <b>Monasterio</b> (monjes élficos que golpean, se curan y curan a otras unidades).');
   if(r===10)hint('tut_final','Última oleada','Llega tu primer jefe: <b>Bob</b>. Aguanta mucho más que cualquier enemigo que hayas visto. Usa todo lo que has aprendido. ¡Suerte!',null);}
@@ -2125,14 +2125,14 @@ const lv1Ok=t=>t.lvl===1&&!TW[t.type].uniq,lv1Count=()=>S.list.filter(lv1Ok).len
 function setCD(id){S.usedAct=1;if((S.chestRel||[]).includes(id)){S.chestUsed=1;achieve('chest');}if(S.mimFor===id){S.rs.mimic.cd=RELIC.mimic.cd;S.mimFor=null;}else S.rs[id].cd=RELIC[id].cd;}
 const idolPct=()=>typeof S!=='undefined'&&S&&S.idolN?Math.min(50,5*S.idolN):0;
 const furyM=()=>S&&S.fury?1+.25*S.fury:1;
-function furyTick(){if(S.phase!=='wave'||!S.furyAt)return;const F=S.wt>S.furyAt?Math.floor((S.wt-S.furyAt)/10)+1:0;if(F>(S.fury||0)){if(!S.fury){S.msg='¡Furia! Cada 10 s todos ganan +25% de daño.';hint('fury','Furia','La oleada se alarga: cada 10 s, <b>todos</b> ganan <span class="cd">+25% de daño</span> (tus torres no lo ganan contra jefes). Así ninguna oleada se atasca.',tgEl('#sr'));}S.fury=F;}}
+function furyTick(){if(S.phase!=='wave'||!S.furyAt)return;const F=S.wt>S.furyAt?Math.floor((S.wt-S.furyAt)/10)+1:0;if(F>(S.fury||0)){if(!S.fury){S.msg='¡Furia! Cada 10 s todos ganan +25% de daño.';hint('fury','Furia',[['Cuando una oleada se alarga demasiado, entra en juego la <b>Furia</b>, que hace que <b>todos</b> reciban un <span class="cd">+25% de daño</span> cada 10 s.',tgEl('#sr')],['Así ninguna oleada se atasca.',null]]);}S.fury=F;}}
 // la experiencia viaja en bolitas desde el enemigo (al morir o al escapar) hasta el héroe, y se suma al llegar
 function orbAdd(x,y,v){if(!(v>0)||!S.hero)return;(S.orbs=S.orbs||[]).push({x,y,v,t:0});}
 function orbTick(dt){if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;
  S.orbs=S.orbs.filter(o=>{o.t+=dt;if(q.hp<=0){o.y+=Math.sin(o.t*4)*dt*.6;return true;}const dx=q.x-o.x,dy=q.y-o.y,d=Math.hypot(dx,dy),sp=(8+o.t*18)*(K/3);
   if(d<=sp*dt+.3){giveXp(H,o.v);return false;}o.x+=dx/d*sp*dt;o.y+=dy/d*sp*dt;return true;});}
 function orbFlush(){if(S.orbs&&S.hero)for(const o of S.orbs)giveXp(S.hero,o.v);S.orbs=[];}
-function hpLoss(n,en){if(en)hint('retry','Reintentar','Un enemigo ha llegado al núcleo y has perdido vida. Si una oleada sale mal, puedes repetirla desde el principio con este botón (tiene cargas limitadas).',tgEl('#mtl [data-a="retry"]'));S.hp-=n;S.idolN=(S.idolN||0)+n;if(en)S.hpEn=(S.hpEn||0)+n;}
+function hpLoss(n,en){if(en)hint('retry','Reintentar',[['Un enemigo ha llegado al núcleo y has perdido <b>vida</b>.',tgEl('#sh')],['Si una oleada sale mal, puedes repetirla desde el principio con este botón. Tiene cargas limitadas.',tgEl('#mtl [data-a="retry"]')]]);S.hp-=n;S.idolN=(S.idolN||0)+n;if(en)S.hpEn=(S.hpEn||0)+n;}
 const interest=()=>Math.min(30,Math.floor(S.gold*.1/5)*5);
 const heroHpM=()=>rp('badge')?1.15:1;
 function heroSync(){const H=S.hero;if(!H)return;const q=H.s,m=hsAt(H.id,H.lvl).hp*heroHpM();if(Math.abs(q.max-m)>.01){const f=q.max>0?q.hp/q.max:1;q.max=m;if(q.hp>0)q.hp=m*f;}}
@@ -2356,7 +2356,7 @@ function deal(){if(S.tut&&tutDeal()){S.allowClose=false;S.noSlot=false;return;}S
 function nextRound(){
  mechaEnd();if(S.mecha)S.mecha.cd=0;for(const id in S.rs){if(S.rs[id].cd>0)S.rs[id].cd--;S.rs[id].t=0;}S.aim=null;S.aimT=null;S.orbs=[];S.fury=0;S.summ=[];S.ivy=[];S.runes=[];S.storm=null;S.ice=[];S.cata=null;S.bz=[];S.logs=[];S.hawk=null;if(S.hero){S.hero.bcd=0;S.hero.chg=null;}S.barr=[];S.dbl=[];S.tz=[];S.fz=[];S.merc=null;S.mimFor=null;for(const t of S.list)t.curse=0;for(const t of unitTowers())for(const s of t.sd){const q=slotOf(t,s.i);s.hp=s.max;s.rt=0;s.en=null;s.fight=false;s.lock=false;s.x=q.x;s.y=q.y;}S.round++;heroSync();if(S.round%2===0&&!S.tut)S.towOff=1;S.phase='place';S.pi=null;S.selT=null;S.ends=[];S.portals=[];S.proj=[];S.fx=[];S.rain=[];deal();
  S.msg=S.tut?'':S.round===ROUNDS?'Última ronda: la pieza que coloques invoca al jefe final.':bossRound(S.round)?'Ronda de jefe: la pieza que coloques invoca al jefe.':'';if(S.noSlot){skipPlace();return;}ui();setTimeout(()=>tutPhase('place'),0);
- if(!S.tut&&S.offers.some(o=>pcost(o)))setTimeout(()=>hint('bfcost','Casillas de pago','Las casillas especiales <b>cuestan oro</b>: <span class="gd">25 🪙</span> cada una (<span class="gd">50 🪙</span> las súper). Siempre habrá una pieza gratis.',tgEl('#ui .card')),0);
+ if(!S.tut&&S.offers.some(o=>pcost(o)))setTimeout(()=>hint('bfcost','Casillas de pago',[['Las casillas especiales <b>cuestan oro</b>: <span class="gd">25 🪙</span> cada una (<span class="gd">50 🪙</span> las súper).',tgCard('#ui .pcst:not(.pfree)')],['Siempre habrá una pieza <b>gratis</b>.',tgCard('#ui .pfree')]]),0);
 }
 function field(){
  const d=Array.from({length:N},()=>Array(N).fill(1e9)),q=[[S.core.x,S.core.y]];d[S.core.y][S.core.x]=0;
@@ -2490,7 +2490,7 @@ function build(fx,fy){
  const cost0=S.half?Math.ceil(t.cost/2):t.cost;if(S.gold<cost0){S.msg='Oro insuficiente.';ui();return;}
  const tw={id:++S.tid,type:S.tsel,lvl:1,x,y,cells:[[x,y]],sq:sqCells(q),inv:t.cost,spec:null,ab:{},acd:{},cd:0,tgt:null,mode:S.dtg[S.tsel]||'core'};
  if(S.tut&&S.tut.lock){S.tut.t2id=tw.id;S.tut.lock=null;}
- see('tw',tw.type);if(t.dt==='elem')hint('elem','Daño elemental','Esta torre hace <b>daño elemental</b>: ignora tanto la armadura como la resistencia mágica.',tgCell(x,y,1.4));if(t.unit)hint('units','Torres de unidades','Esta torre no dispara: manda unidades a su bandera para bloquear y pelear. Pulsa la torre para mover la bandera.',tgCell(x,y,1.4));if(t.unit)mkSoldiers(tw);S.list.push(tw);for(const[a,b]of tw.sq)S.occ[a+','+b]=tw;
+ see('tw',tw.type);if(t.dt==='elem')hint('elem','Daño elemental','Esta torre hace <b>daño elemental</b>: ignora tanto la armadura como la resistencia mágica.',tgCell(x,y,1.4));if(t.unit)hint('units','Torres de unidades',[['Esta torre no dispara: manda <b>unidades</b> a pelear y bloquear.',tgCell(x,y,1.4)],['Pulsa la torre y luego 🚩 para mover su <b>bandera</b>.',()=>tw.flag?tgCell(tw.flag.x,tw.flag.y,1.2)():tgCell(x,y,1.4)()]]);if(t.unit)mkSoldiers(tw);S.list.push(tw);for(const[a,b]of tw.sq)S.occ[a+','+b]=tw;
  S.gold-=cost0;S.st.spent+=cost0;if(!(S.built=S.built||[]).includes(tw.type))S.built.push(tw.type);if(!TW[tw.type].uniq)(S.bcnt=S.bcnt||{})[tw.type]=(S.bcnt[tw.type]||0)+1;if(S.half&&t.cost>0){S.half=0;tw.inv=cost0;}tw.rd=S.round;S.st.all.push(tw);S.msg='';S.selT=null;if(TOUCH){M.has=false;HV.key=null;HV.t=0;}ui();
 }
 const upLbl=c=>c?`<span class="gd">−${c} 🪙</span>`:'<span class="gd">gratis</span>';
@@ -2501,7 +2501,7 @@ function upgrade(t){
  if(S.gold<c){S.msg='Oro insuficiente para mejorar.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.lvl++;t.inv=(t.inv||T.cost)+c;if(S.tut&&S.tut.freeUp)S.tut.freeUp=0;
  if(t.sd){const m=sdHp(t);for(const q of t.sd){const dd=m-q.max;q.max=m;if(q.hp>0)q.hp+=dd;}}
- S.msg='';if(T.pig&&t.lvl===4){mkPig(t);reveal('pig4');if(pigHouses().every(h=>h&&h.lvl>=4)&&!S.tut)achieve('pigs');S.msg='¡El '+PIGU[t.type].n.toLowerCase()+' sale a la batalla!';if(pigHouses().every(h=>h&&h.lvl>=4))hint('mecha','¡Mecha Cerdito!','Tienes las tres casas a Nv 4: durante la oleada, pulsa el botón 🤖 (encima del panel del héroe) para que los tres cerditos se unan en un mecha gigante.',null);}refreshPrim();ui();
+ S.msg='';if(T.pig&&t.lvl===4){mkPig(t);reveal('pig4');if(pigHouses().every(h=>h&&h.lvl>=4)&&!S.tut)achieve('pigs');S.msg='¡El '+PIGU[t.type].n.toLowerCase()+' sale a la batalla!';if(pigHouses().every(h=>h&&h.lvl>=4))hint('mecha','¡Mecha Cerdito!',[['Tienes las <b>tres casas</b> a Nv 4.',tgCell(t.x,t.y,1.4)],['Durante la oleada, pulsa 🤖 para que los cerditos se unan en un <b>mecha gigante</b>.',tgEl('[data-a="mecha"]')]]);}refreshPrim();ui();
 }
 function upText(t){
  const T=TW[t.type],n=t.lvl+1,L=LV[n],p=v=>Math.round((v-1)*100),a=[];
@@ -2769,7 +2769,7 @@ function dnTick(dt){if(!S.dn)return;for(const d of S.dn){d.age+=dt;d.idle+=dt;if
 const fmtD=n=>{n=Math.round(n);if(OPT.dsci&&n>=1e6){const s=n.toExponential(2).split('e+');return s[0].replace('.',',')+'e'+s[1];}
  if(OPT.dabbr&&n>=1000){const u=['K','M','B','T','Qa','Qi'];let i=-1,v=n;while(v>=1000&&i<u.length-1){v/=1000;i++;}return String(+v.toFixed(v<10?2:v<100?1:0)).replace('.',',')+u[i];}
  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');};
-const hurt=(e,a,src,ty,pen)=>{if(e.fx&&e.fx.wet&&src&&(src.type==='augur'||src.type==='tesla'))a*=1+e.fx.wet.m;if(ty==='magic'&&e.fx&&e.fx.hex)a*=1+e.fx.hex.m;if(S.fury&&!isBoss(e))a*=furyM();if(ET[e.t].fly&&rp('harpoon'))a*=1.25;if(e.prey>0)a*=1.15;if(src&&S.faros&&S.faros.length&&!src.hero)faroFeed(src,Math.min(Math.max(e.hp,0),a));if(ty==='phys'&&src&&src.ab&&src.ab.hollow)a*=1+abRank(src,'hollow').p*Math.max(0,armorOf(e,'phys'));const A=ty==='elem'?0:Math.max(-MAXPEN,armorOf(e,ty)-(pen||0)),m=1-A/(A+ARM_K);if(src&&src.hero&&e.hp>0)e.hx=(e.hx||0)+ET[e.t].xp*Math.min(e.hp,a*m)/e.max;if(src&&!src.hero){if(ty==='phys')e.ph=1;else if(ty==='magic')e.mh=1;}const dl=Math.min(Math.max(e.hp,0),a*m);e.hp-=a*m;if(src)e.src=src;e.kdn=DNK;if(S.tut&&src&&src.id)(e.hb=e.hb||{})[src.id]=S.wt;if(dl>0&&S.dn)dnAdd(e,dl,dnKey(src,ty));if(S.st&&dl>0){S.st.dmg+=dl;if(src){src.dmgT=(src.dmgT||0)+dl;relDmg(src,dl);}}
+const hurt=(e,a,src,ty,pen)=>{if(e.fx&&e.fx.wet&&src&&(src.type==='augur'||src.type==='tesla'))a*=1+e.fx.wet.m;if(ty==='magic'&&e.fx&&e.fx.hex)a*=1+e.fx.hex.m;if(S.fury)a*=furyM();if(ET[e.t].fly&&rp('harpoon'))a*=1.25;if(e.prey>0)a*=1.15;if(src&&S.faros&&S.faros.length&&!src.hero)faroFeed(src,Math.min(Math.max(e.hp,0),a));if(ty==='phys'&&src&&src.ab&&src.ab.hollow)a*=1+abRank(src,'hollow').p*Math.max(0,armorOf(e,'phys'));const A=ty==='elem'?0:Math.max(-MAXPEN,armorOf(e,ty)-(pen||0)),m=1-A/(A+ARM_K);if(src&&src.hero&&e.hp>0)e.hx=(e.hx||0)+ET[e.t].xp*Math.min(e.hp,a*m)/e.max;if(src&&!src.hero){if(ty==='phys')e.ph=1;else if(ty==='magic')e.mh=1;}const dl=Math.min(Math.max(e.hp,0),a*m);e.hp-=a*m;if(src)e.src=src;e.kdn=DNK;if(S.tut&&src&&src.id)(e.hb=e.hb||{})[src.id]=S.wt;if(dl>0&&S.dn)dnAdd(e,dl,dnKey(src,ty));if(S.st&&dl>0){S.st.dmg+=dl;if(src){src.dmgT=(src.dmgT||0)+dl;relDmg(src,dl);}}
  if(!TZX&&S.tz&&S.tz.length&&S.tz.some(z=>Math.hypot(e.x-z.x,e.y-z.y)<=z.r)){TZX=1;const d0=S.st?S.st.dmg:0;hurt(e,a*.25,src,'magic',0);if(S.st)RS('tome').dmg+=S.st.dmg-d0;TZX=0;}
  return m;};
 function pierceChain(e,raw,t,ty,pen,R){
@@ -3109,6 +3109,7 @@ function drawPat(c,o,cs,ox,oy,a){
 }
 function rangeCircle(x,y,r){g.fillStyle='rgba(90,180,255,.17)';g.strokeStyle='rgba(110,190,255,.95)';g.lineWidth=1.5/sc();
  g.beginPath();g.arc(x*CS+CS/2,y*CS+CS/2,r*CS,0,7);g.fill();g.stroke();}
+const SKULL=new Image();SKULL.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAOQklEQVR42u2da4xdVRXHf+vcO9PpFCn0LcUWEV9JRUUxoLFW5SWpQYMfJKgxEl/BR6LRaPQDiTGamIhEv2hSotEEvqjxgzy0YEArr4iBKg+BUnmUx3SgDzqdzp17/n44a9PN8T7OvefMnen07uTkztxz7jlrrf/Za++9XtsYUJNkQDhkZml07vXAOcBrgNXAGcAmYD0wUvLRzwA7gceAp4DngR1m9mD0/KQVXYNoNiDB15y5Zk7oHwbOBlYBJwHLgFH/PBEYA5KSJEwDB4BD/vdhYB/wLPAP4Ebg4SB4SXX/XdPMdMwCEAn+ZUYkrQI2A+cCbwQ+4MKer3YIuA14CNgB3GZmk+3oP2YAkGQx0ZLWAO/y4xLgzOjyGf9MIpriozQ5uQMgqJnR6LqdwO+AvwP/NLOJdvwcaz3gDcCngc8AK0P3rljIVYBT8+8mgWuBXwL/OaZ6gKQagJk1Ja0GPuHHm4Bxjp025WrpN8BvzGwi5m1BAiBp1Mxm/O/3Al8G3gOcEr1tqasaW4BCb0XfHh8bfmpmf83zuSAAcFWT+Ft/MnAp8HHgg35Jw59TW6CCbwVE0z/DFPgW4Hrgt2b2oveGtArVVGUPWAVcAXzDdf2sn6pz7LaYh0ngR8A2M9s77z0gnhm4vv8O8HlgyaDWGAPuFQBHgJ8D3w+zpLIzJKtA7az3wepd0UCrRQiARQP03cAnzOzpsuqo31VmzYX/auAHwBYXfmMRCj+8qHL+xp3fH0h6tc+Kav3euN7H2183s1lJZwBfAz7ZYtBajM2cv1n/+5PAS5J+bGaPBrkMogc0JS0FvuhH6gTVOT5a3flNgwxcHs1BqSADPgZcEN0j4fhqMc8XuDxszgCQlEgyN9ue47OdN7tOPJ5bw+XweeCcnJwq7QFhqjUOfJPMhJyUGXwWSau5HM52uYy7nKwyAMI0S9IIcD5wMZkVceY4VD2t5Dfj8rgYON/llAbbURU9IHFUTwe+FFkPRxg2XA5BJl8CTnd5JaUB8FVeQ9IomSNls6Ot4dv/ChnK5bIZ2OwGu4YvWEv1gMRvcprfvD6Ud9cp6mbgtGAtKAtAGHy3AO+PFlw2lHXLlXLT5bSl6GDcDYDU1c87ySIUbBEa2qo0aprL6Z0ut7QUAB4psMkHYA2FXwiEMGHZVCTEpchAusUXXzYUfiEQzOW1pYpZUJ3MubJsKNue2jJgZRRj1HcPOAXYEA0ww9a9hYnKhsgf3jcAryMLE7QolGTYOqugIKczXH6lAFgbzf2Hwu9tMK67/EoBsJrF6eMdBABLXH6lAHgtR/28QwB6A2Dc5VcKgNeQRSgPW+9tzOVXCoBVQxVUSgWtKgvAqVEPGALQGwBjLr/+44IkNTh2QgpZiCGOZjZSBgAN5ViyO5hZGRU0BKCakMb+/QFDGc5t7O3Qrcj8+zOHbQED8DRZWudwPOhd7x8my0suBcC/gYNDAPoC4CWyJL9SADxGlks7BKC/HvBEWQD+RZZlPgSgdwD2AfeUBWA3RxOphwD0BsB0FT3gKbJUzeGaoPe5/yQwUQUAT0WRwMNWfGb5dOkeYGYvRGPAUA31lsw3YWbPUEGO2IEoBFt9ZJ6rQ/zMQqoV0Y7OXjP7zeV1gIqS9Bp+jFI8LKPp1xdRWzNRJv0gVuYpR0NHRgsKd8bpq/WQOdOoCoBDZLmxywoyFwjdB/zTx5CpiOkxYAWZu+7MHLCzzJ3/IcQ21SOgZ4D7gSeBF3zmEl6GcTKHytvJikkR1ZLo1l6KFrClAdjvIKwuqP+mgMeB3wM3AA+a2b64qAdZwNImsgS3dwDr/LuxHhnt5a1PnN9pn9mFill/8vXOnrgIh6STyPK/LgY+SuZgX1owOvyAA1pJDYiPSfqPspaqdWv650FJ2yRtilOcQuJaSGLL3X+5pK2Srpc0rblt0/6crZKW5+h4BY1xipGkTc7XwRy/+Rbk84CkSwYJQBDcLZJW9JP8LWmdpE9JOuL3OtKB0aKtmbvfp/w5/SSor3D+1OFFmRMAPi5pVxcAJOn3ks7NpbYmrdKeoretFl8jaVTSRZJ+IWkyEmLao+DTCLxJv99Frv5i+mrRG2+0Ts+N6TvX+VQXAB6S9NGqAPicpOdaABD//aykS/36JUVyo1p0/Xr03WmSrom6fNoDCPG1B/0+p+V6W9IHjUv870udX3WQyS5Jl1XlkDmhTbmxOPngBuA+15s91VgzM5lZ6vUnEknjZrYbuBq4zgd162ENEk8GrgOuNrPdksYlJWY268/riUYv0VAD7nN+W8khtFcBy6sCYITWKamKPm80s0ejOXa/EQSpmU154YvdwFVe17PhtKYFZzsN/91VLvy6mU2VLMra9LI0j/q91cE6UCkAJ7ZZBcf/P+SfoxVVGJQDsgfYBjxS0BQSzj/ila32VGVCcb5Gc/y2u3fdp6ylM2SWO5rdkvMaRdMyCzLbDNNXssKqd5I5OJIOwgy5y4f9+tvCdLLCSodh7Gh0yZZMgOW+ligdmnhKB11HVMBJc2GsM7NQoeq5qExMO/Vjft3d/rvKV9POZ62LGjSyDJn1VQBwagEANFfM+jTweTdttDOkxW0f8LwPuJor2roAgAv/1LIArKNYTYgVUTEnq7gHpG6LWdpFDYbvlwInVV0F3flq5vjtNnlZVxaApVF3sw7JyWe7vksrLoUZ6Dud/0/3aWfOXuvX00vdnoJm5tT5PLvDuGiRA2tpWQCOdFA98W/PBzaWLWCXK5GTmFkqaQPwPu8FQaXsAn4BfMs/d0XnTgLeJ2mD94KkaOkYChQqBDY6v91kmLr8Sgliq6S7IluK2qwA90r6bhj1e11p5lactSAwSWsk/UzSIUmz/qwpSVd6RfZwzZX+vfy6Q/67NZFBsFaCpiRYSJ3PvW3kEMvpLklbywJwlqTtbQDIP/xhSVfkrIhlCsOulPTt6DmH3b6zIwJoeSTgHX7+cETXtyWtLKn3Y6vuFc6nOtjGgpy2SzqrLAAbJV3bxQSr6O38h6QLcnYXK/CGWfyGSlot6SeSZiKmUkmPSro8um4kusflfj6NhDDj91md62FWkK7YPnWB8xfz28k0f62kjWUBGJH0vQjpbv6ApqSdkr4iaV3uPmNuqAvHWBBg7ARxdXKrpP3RMxuRxXVlBEASCWtlZKlsRLTu9/tdmV8YFaHLzddfcb6aBf0BqcttpJRHzKs+3UcWoLWhgxM98SlazT1dXwdeJ+km4F4ze67d6lHSuA9sbwc+BLzX/w++1brf9zmyzXcmo2peaVS7eVLSDrLtUdZEvz+RrIbP6WSVDW8kc5X+1xdr7ehaC5wFXAR8xPkn4rNTIMITwH1m1igFgL9hdwJ3uEuu2aWCYOrHBuALXjXkdgdxL5kPNjAwApzs930T8G6y9H4iJ/hIZN28B9juC6y0Da3bfca0NaprF4IENvpxDtk2JQ9Jehx40UEIdI2SZTe+laz61dv8u9kClSLDKvkO4M52tPbkqfLPz7YZhDvpwXbqaqrDuUaL7h3s+1d1mttH6uiqNv6DZqTKWqmOqQLOnSLtiKTP5nZk6r9iln/e7FbJuJt1u691WNxZhx6ZtFjuPw7c24Xm8P29fn3ebJB06PHWYdFkBeUUnrPN5UUlFbMcxSf9xndF4R2zPQRnBTWQtvmuVQBXGgng167KOhrj/Pztfr21EYKiZ3ajSwU3eQghN3e5nJ50H0QlFbMCEfcD15AFnI5EA2+35XsSxQol0XPj7/I9Jg79eAbY7qEtSbThmsXTybDq9eu2++9o4U2z6Jnd6LICTprE5THh8rm/FwNlUsQ274w1gD8Av3LmkmjgVcWbRgTP1rR35z3RdoMv71oRjmhOH1ate/x30wU9ab1GfysKQktcHr8C/uBySor6IJIeAptwZ8f3/Xggcj7YHGaZ3AM862+4Iu9U3ltFtBfks/67ucpvs8g59EAkk8NFdX9PGzgEBv3zgKRtPtB9g6PF6ZotmLUC1stujI5GM4pRSTPuwB8j89YdNLPp+DxHd8mzEsG6tOEnHpRvI9vY51Yzm27xQlS/h0zo/m6PeYsvnD7sC6ATCgxYVsBiqqibPwZ81cxujmi4ELjQHR5PATe3OH+NlwxLCgIfBtJ6gVDNO4A/An8DdroLta/NfPrdxOcV23VI2uwr2Y2+CDuZLJi37seYg7O+wGqSFvGhtwJ/Jgt6PdmF/w6/7zRZjOfNvqg6wc3FH+ghzjSm52l/zrS/MLNksbEvuEXgCV/d72gnj0FtY/XyIJzbpvYUNwWsJKuZM+rmgPXAeS645T2UQJ7t8FZ2AnK2oIoNdOx3ILc7CCEvYtqF/3wUZfGyz8LjoAa6B3Eni6Z1uGaZG7+u9tXlbB/RbmmbVW63853uG+i42ulbVoZP5qNUQW6QbnfNIZ+iXU8WWZZ0iXJgAIkaYUC9AbjezBpmdqgMn8z1NlbdiIvn5G3U3YTPm61CVVnmjTSnZyJyJqlNoJiq3tq2PgdxPC1D9oJl0D1Ua1lYbS2w0sx2lbZgHgPVUsZzcZPzlaQXP3f5fO13nMyT7k0XWA+YN5rmC4DZBZB7rNyU9bgBYMrn3OkCevv3O13HBQB7I2vqQugBwZq5d7EDEMzGE2Tx+wupBzzi01Ab9AuRDLB+pjy8b5rMKX4HR/ebT+dpEdZwOv7udNWqnuezkMpSuv0oZJpcSObgIbcRdI3qa0gocqUq2hsY4BIyQ96M11lNFy0AuQXZErLg2nPJ4nZGB0jGDPAXf/t/aGZHBr0Am08ALGe6eAtwGdme9CvISiKsifLSrILyMTNkSR4TZJbNu4HrzGxnK5oWNQA5IBJ3ZoySbZf4brJItPPcnF22ZkT4/SSZmfkmH392m9lM2Cl2PgQf2v8AMshS+Oc4yG4AAAAASUVORK5CYII=';
 function draw(){
  const k=sc(),lw=v=>v*PXR/k,BCS=K*CS;
  g.setTransform(1,0,0,1,0,0);g.fillStyle=COL.bg2;g.fillRect(0,0,VIEW,VH);
@@ -3171,8 +3172,6 @@ function draw(){
  for(const p of S.pools){g.fillStyle=(p.el==='bleed'?'rgba(224,72,90,':p.el==='fire'?'rgba(255,120,40,':'rgba(123,211,74,')+Math.min(.55,p.t/2)+')';g.beginPath();g.arc(p.x*CS+CS/2,p.y*CS+CS/2,p.r*CS,0,7);g.fill();}
  g.strokeStyle='rgba(192,57,74,.55)';g.lineWidth=lw(2);
  for(const e of S.ends){g.beginPath();g.arc(e.x*CS+CS/2,e.y*CS+CS/2,CS*.9,0,7);g.stroke();}
- for(const p of S.portals){g.fillStyle='#e03a4e';g.beginPath();g.arc(p.x*CS+CS/2,p.y*CS+CS/2,CS*.8,0,7);g.fill();
-  g.strokeStyle='#ffb0b8';g.lineWidth=lw(2);g.stroke();}
  drawCore(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
  for(const t of S.list)if(t.fl&&S.phase==='wave')drawFlame(g,t,x=>x*CS+CS/2,y=>y*CS+CS/2,CS);
  for(const t of S.list){const T=TW[t.type];
@@ -3207,8 +3206,11 @@ function draw(){
    const px=d.x*CS+CS/2,py=d.y*CS+CS/2-d.r*CS-lw(18)-d.i*lw(15)-rise,txt=fmtD(d.sh)+(cr?'!':'');
    g.globalAlpha=a;g.font='bold '+sz+'px "Trebuchet MS",sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';g.lineWidth=lw(3);g.strokeStyle='rgba(10,12,16,.9)';g.strokeText(txt,px,py);g.fillStyle=DNC[d.key]||'#fff';g.fillText(txt,px,py);}
   g.globalAlpha=1;}
+ // portales encima de los enemigos: salen «de debajo» y el portal siempre se ve y se puede pulsar
+ for(const p of S.portals){const px=p.x*CS+CS/2,py=p.y*CS+CS/2,R=CS*1.35;g.fillStyle='#c8303f';g.beginPath();g.arc(px,py,R,0,7);g.fill();g.strokeStyle='#ffb0b8';g.lineWidth=lw(2.5);g.stroke();
+  if(SKULL.complete&&SKULL.naturalWidth){const z=R*1.35;g.drawImage(SKULL,px-z/2,py-z/2,z,z);}}
  if(S.aim==='flag'&&S.aimT&&S.list.includes(S.aimT)){const t=S.aimT,R2=stats(t).range;g.fillStyle='rgba(90,180,255,.12)';g.strokeStyle='rgba(110,190,255,.9)';g.lineWidth=lw(1.5);g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,R2*CS,0,7);g.fill();g.stroke();
-  const r=Math.ceil(R2);for(let y=Math.max(0,t.y-r);y<=Math.min(N-1,t.y+r);y++)for(let x=Math.max(0,t.x-r);x<=Math.min(N-1,t.x+r);x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=R2){g.fillStyle=(h&&h.x===x&&h.y===y)?'rgba(255,255,255,.55)':'rgba(91,141,239,.45)';g.fillRect(x*CS,y*CS,CS,CS);}}
+  const r=Math.ceil(R2);for(let y=Math.max(0,t.y-r);y<=Math.min(N-1,t.y+r);y++)for(let x=Math.max(0,t.x-r);x<=Math.min(N-1,t.x+r);x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=R2){g.fillStyle='rgba(91,141,239,.45)';g.fillRect(x*CS,y*CS,CS,CS);if(h&&h.x===x&&h.y===y){g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.arc(x*CS+CS/2,y*CS+CS/2,CS*.48,0,7);g.fill();}}}
  if(S.selE&&PR.pinned&&PR.key&&PR.key.startsWith('ei:')&&S.enemies.includes(S.selE)){const q=S.selE,A=ET[q.t].aura,px=q.x*CS+CS/2,py=q.y*CS+CS/2;
   g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.beginPath();g.arc(px,py,ET[q.t].r*CS+lw(5),0,7);g.stroke();
   if(A){g.fillStyle='rgba(170,176,189,.18)';g.strokeStyle='rgba(200,205,215,.9)';g.beginPath();g.arc(px,py,A.r*CS,0,7);g.fill();g.stroke();}}
@@ -3225,7 +3227,7 @@ function draw(){
   
   g.strokeStyle=p.col;g.lineWidth=lw(2);g.beginPath();g.moveTo(px-p.vx*CS*.9,py-p.vy*CS*.9);g.lineTo(px,py);g.stroke();
   g.fillStyle=p.col;g.beginPath();g.arc(px,py,lw(p.area?3.5:2.5),0,7);g.fill();}
- if(h&&S.aim==='hero'&&inb(h.x,h.y)&&S.cells[h.y][h.x]===2){g.fillStyle='rgba(255,255,255,.5)';g.fillRect(h.x*CS,h.y*CS,CS,CS);}
+ if(h&&S.aim==='hero'&&inb(h.x,h.y)&&S.cells[h.y][h.x]===2){g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.arc(h.x*CS+CS/2,h.y*CS+CS/2,CS*.48,0,7);g.fill();}
  if(S.aim==='barricade'){const pc=(a,b)=>inbc(a,b)&&S.cc[b][a]===2;g.fillStyle='rgba(230,60,60,.45)';for(let y=0;y<NC;y++)for(let x=0;x<NC;x++)if(pc(x,y)&&pc(x-1,y)+pc(x+1,y)+pc(x,y-1)+pc(x,y+1)>=3)g.fillRect(x*K*CS,y*K*CS,K*CS,K*CS);
   if(h)drawBarr(barrPick(h.x,h.y),.65);}
  if(h&&S.aim==='balance'){g.fillStyle='rgba(200,120,200,.2)';g.strokeStyle='rgba(225,150,225,.95)';g.lineWidth=lw(1.5);g.beginPath();g.arc(h.x*CS+CS/2,h.y*CS+CS/2,3*K*CS,0,7);g.fill();g.stroke();}
@@ -3978,10 +3980,11 @@ const HEROTXT='Pulsa el <b>retrato</b> de tu héroe y elige una casilla del cami
 const hintSeen=id=>{if(S&&S.tut)TUTHS[id]=1;HSEEN[id]=1;try{localStorage.setItem('rt-hints',JSON.stringify(HSEEN));}catch(e){}};
 // objetivos: devuelven {x,y,r} en píxeles de la ventana, o null
 const tgCell=(x,y,rc)=>()=>{const r=cv.getBoundingClientRect(),k=sc()/VIEW*r.width;return{x:((x+.5)*CS-CAM.x)*k+r.left,y:((y+.5)*CS-CAM.y)*k+r.top,r:Math.max(30,(rc||1.6)*K*CS*k)};};
+const tgCard=sel=>()=>{const e=document.querySelector(sel);return e?tgEl(e.closest('button')||e)():null;};
 const tgEnemy=e=>()=>e.hp>0?tgCell(e.x,e.y,1.3)():null;
 const tgEl=sel=>()=>{const el=typeof sel==='string'?document.querySelector(sel):sel;if(!el||!el.offsetParent)return null;const b=el.getBoundingClientRect();return{x:b.left+b.width/2,y:b.top+b.height/2,r:Math.max(26,Math.max(b.width,b.height)/2+10)};};
 function hintShow(h){HQ.cur=h;let el=$('hint');if(!el){el=document.createElement('div');el.id='hint';document.body.appendChild(el);el.addEventListener('click',e=>{if(e.target.closest('[data-a="hintok"]')){const c=HQ.cur;if(c&&c.steps&&c.si<c.steps.length-1){c.si++;c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}else hintClose();}});}
- const ns=h.steps&&h.si<h.steps.length-1;el.innerHTML=`<div class="hring"></div><div class="hmsg tipc"><b>${h.title}</b>${h.steps?`<small class="hstep">${h.si+1}/${h.steps.length}</small>`:''}<div style="margin:4px 0 8px">${h.txt}</div><button class="go" data-a="hintok">${ns?'Siguiente ›':'Entendido'}</button></div>`;el.className='open'+(S.phase==='wave'?' slow':'');
+ const ns=h.steps&&h.si<h.steps.length-1;const wt=h.steps&&h.steps[h.si][2];el.innerHTML=`<div class="hring"></div><div class="hmsg tipc"><b>${h.title}</b>${h.steps?`<small class="hstep">${h.si+1}/${h.steps.length}</small>`:''}<div style="margin:4px 0 ${wt?2:8}px">${h.txt}</div>${wt?'':`<button class="go" data-a="hintok">${ns?'Siguiente ›':'Entendido'}</button>`}</div>`;el.className='open'+(S.phase==='wave'?' slow':'');
  if(h.cam){if(h.cam.fit){const zf=VH/(BS*1.6*P*K*CS),zw=VIEW/(BS*1.6*P*K*CS);CAM.z=Math.max(ZMIN,Math.min(CAM.z,zf,zw));}camCenter(h.cam.x,h.cam.y);}}
 function hintClose(){if(!HQ.cur)return;hintSeen(HQ.cur.id);if(HQ.cur.id==='tut_tiles'){hintSeen('tile');hintSeen('bfcost');}if(HQ.cur.id==='tut_fork')hintSeen('fork');if(S&&S.phase==='wave')HQ.nt=(S.wt||0)+HGAP;HQ.pn=(HQ.pn||0)+1;HQ.cur=null;const el=$('hint');if(el)el.className='';}
 function hintPos(){const el=$('hint');if(!el||!HQ.cur)return;const ring=el.firstChild,msg=el.lastChild,t=HQ.cur.tg?HQ.cur.tg():null,W=innerWidth,H=innerHeight;
@@ -4000,6 +4003,7 @@ function hintTick(rdt){
  if(HQ.cur&&!realG())hintClose();
  const el=$('hint');if(el&&HQ.cur){el.classList.toggle('hid',busy);el.classList.toggle('dim',HQ.f<.35||S.phase!=='wave');}
  const tgt=HQ.cur&&S.phase==='wave'?0:1;HQ.f+=(tgt-HQ.f)*Math.min(1,rdt/.18);if(Math.abs(HQ.f-tgt)<.01)HQ.f=tgt;
+ {const c=HQ.cur,w=c&&c.steps&&c.steps[c.si][2];if(w){const r=w();if(r===2||(r===1&&c.si>=c.steps.length-1))hintClose();else if(r===1||r===-1){c.si=Math.max(0,c.si+r);c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}}}
  hintPos();if(realG())hintScan();}
 // disparadores que dependen del estado del mapa o del combate
 function hintScan(){
@@ -4009,21 +4013,21 @@ function hintScan(){
   hintL('build','Construir torres','Elige una torre de tu mazo y colócala en un <b>solar</b>. Disparan solas a lo que tengan a su alcance.',tgEl('#ui [data-a="sel"]'));
   for(const k in S.chests)if(S.chests[k]){const[bx,by]=k.split(',').map(Number);hintL('chest','Cofres','Esto es un cofre. Si tu camino llega hasta él, podrás abrirlo y elegir una reliquia para esta partida.',tgCell((bx*P+3)*K+1,(by*P+3)*K+1,1.6));{const h=HQ.q.find(h=>h.id==='chest');if(h)h.cam={x:(bx*P+3)*K+1,y:(by*P+3)*K+1,fit:1};}break;}
   for(const k in S.evts)if(S.evts[k]){const[bx,by]=k.split(',').map(Number);hintL('evtile','Casillas de evento','Esto es una casilla de evento. Si tu camino llega hasta ella, pasará algo… y tendrás que tomar una decisión.',tgCell((bx*P+3)*K+1,(by*P+3)*K+1,1.6));{const h=HQ.q.find(h=>h.id==='evtile');if(h)h.cam={x:(bx*P+3)*K+1,y:(by*P+3)*K+1,fit:1};}break;}
-  if(S.ends.filter(e=>!e.bd).length>1)hintL('fork','Bifurcaciones','Tu camino tiene varios extremos libres: más sitios donde colocar las próximas piezas, pero también más portales por los que pueden salir enemigos.',null);
+  if(S.ends.filter(e=>!e.bd).length>1){const e0=S.ends.find(e=>!e.bd),p0=S.portals&&S.portals[0];hintL('fork','Bifurcaciones',[['Tu camino tiene varios <b>extremos libres</b>: más sitios donde colocar piezas.',e0?tgCell(e0.x,e0.y,1.4):null],['Pero también más <b>portales</b> por los que pueden salir enemigos.',p0?tgCell(p0.x,p0.y,1.4):null]]);}
   {let bt=null;for(const k in S.blocks){const[bx,by]=k.split(',').map(Number),NB=N/BN;for(let y=by*NB;y<(by+1)*NB&&!bt;y+=K)for(let x=bx*NB;x<(bx+1)*NB&&!bt;x+=K){const q=sqOf(x,y);if(S.buff[q.y]&&BF[S.buff[q.y][q.x]]&&S.cc[q.ky][q.kx]===1&&!S.occ[q.x+','+q.y])bt=q;}if(bt)break;}
    if(bt)hintL('tile','Casillas especiales','La torre que pongas sobre una <b>casilla de color</b> gana su bonus. '+HOV()+' la casilla para verlo.',tgCell(bt.x,bt.y,1.2));}
  }
  if(S.tut&&S.phase==='place'&&S.round>=3)for(const k in S.chests)if(S.chests[k]){const[bx,by]=k.split(',').map(Number);hint('chest','Cofres','Esto es un cofre. Si tu camino llega hasta él, podrás abrirlo y elegir una reliquia para esta partida.',tgCell((bx*P+3)*K+1,(by*P+3)*K+1,1.6));{const h=HQ.q.find(h=>h.id==='chest');if(h)h.cam={x:(bx*P+3)*K+1,y:(by*P+3)*K+1,fit:1};}break;}
  if(S.tut&&S.phase==='wave'){const p=S.portals[0];if(S.round===1&&p)hint('portal','Portales','Por aquí saldrán los enemigos. '+HOV()+' el portal para ver qué viene.',tgCell(p.x,p.y,1.4));if(S.hero)hint('hero','Tu héroe',HEROTXT,tgEl('#mbr .hpport'));}
- if(S.phase==='wave'&&S.hero&&S.hero.s.hp>0&&!(S.hero.bcd>0))hint('hab','Habilidad del héroe','Pulsa el botón junto al retrato y elige un punto del camino para usar la <b>habilidad</b> de tu héroe.',tgEl('#mbr [data-a="hab"]'));
+ if(S.phase==='wave'&&S.hero&&S.hero.s.hp>0&&!(S.hero.bcd>0))hint('hab','Habilidad del héroe',[['Pulsa este botón para usar la <b>habilidad</b> de tu héroe.<br><small>Pruébala para continuar.</small>',tgEl('#mbr [data-a="hab"]'),()=>S.aim==='habb'?1:S.hero&&S.hero.bcd>0?2:0],['Ahora elige un punto del camino. Cuando se recargue, podrás volver a usarla.<br><small>Elige el punto para continuar.</small>',()=>S.hero?tgCell(S.hero.s.x,S.hero.s.y,1.6)():null,()=>S.hero&&S.hero.bcd>0?1:S.aim!=='habb'?-1:0]]);
  if(S.phase==='wave'){
-  hint('speed','Velocidad','Con estos botones pausas el juego o cambias su velocidad. En pausa puedes construir, mejorar y mover a tu héroe con calma.',tgEl('#mbl'));
+  hint('speed','Velocidad',[['En <b>pausa</b> puedes construir, mejorar y mover a tu héroe con calma.',tgEl('#mbl [data-a="spd"][data-v="0"]')],['Con estos cambias la <b>velocidad</b> del juego.',tgEl('#mbl')]]);
   for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];
    if(E.ap>0&&e.ph&&e.hp<e.max*.85)hint('armor','Armadura','¿Ves que tus golpes le quitan menos vida? Es la <b>armadura</b>: reduce el daño físico. El daño mágico la ignora.',tgEnemy(e));
    if(E.am>0&&e.mh&&e.hp<e.max*.85)hint('mres','Resistencia mágica','Este enemigo tiene <b>resistencia mágica</b>: reduce el daño mágico que recibe. El daño físico no se ve afectado.',tgEnemy(e));
    if(E.rg==='ranged'&&e.stopped)hint('ranged','Enemigos a distancia','Algunos enemigos atacan desde lejos: se detienen para disparar a tus unidades y no avanzarán hasta acabar con ellas.',tgEnemy(e));
    if(E.dodge&&unitTowers().some(t=>t.sd.some(s=>s.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<=K)))hint('dodge','Enemigos escurridizos','Este enemigo esquiva a tus unidades: ni lo bloquean ni lo atacan. Solo lo paran tus torres, las barricadas y los muros.',tgEnemy(e));
-   if(E.rg!=='ranged'&&e.stopped&&e.ct>0)hint('block','Bloqueo','Tus unidades han frenado a este enemigo: mientras pelean con él no avanza. Cada unidad bloquea a uno; los enemigos con más corpulencia necesitan varias.',tgEnemy(e));}}
+   if(E.rg!=='ranged'&&e.stopped&&e.ct>0)hint('block','Bloqueo',[['Tus unidades han frenado a este enemigo: mientras pelean con él, <b>no avanza</b>.',tgEnemy(e)],['Cada unidad puede bloquear a un enemigo: cuantas más unidades, más enemigos frenas a la vez.',tgEnemy(e)]]);}}
 }
 let last=performance.now();
 function loop(t){
