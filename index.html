@@ -164,7 +164,7 @@ button.dim{border-color:var(--acc);opacity:.55}
  body.inmenu #menu{position:fixed!important;inset:0!important;border-radius:0!important}
  #ui small{font-size:11px}#ui .prow{gap:4px}#ui .prow .cardw{max-width:92px}#ui .prow button.card{padding:3px;font-size:11px}#ui .rbtn{top:2px;right:2px;width:24px;height:24px}#ui .prot button{padding:3px 10px;margin:0}#ui .prot{margin-top:4px}
 }
-#menu{position:absolute;inset:0;display:none;z-index:18;box-sizing:border-box;padding:16px;background:radial-gradient(circle at 50% 30%,#2a3040,var(--panel2) 72%);color:var(--fg);border-radius:6px;flex-direction:column;align-items:center;justify-content:center;justify-content:safe center;text-align:center;overflow-y:auto}
+#menu{position:absolute;inset:0;display:none;z-index:18;box-sizing:border-box;padding:16px;background:radial-gradient(circle at 50% 30%,var(--bgg),var(--bg) 75%);color:var(--fg);border-radius:6px;flex-direction:column;align-items:center;justify-content:center;justify-content:safe center;text-align:center;overflow-y:auto}
 body.inmenu #menu{display:flex}
 body.inmenu #stats,body.inmenu #relics,body.inmenu #ctl,body.inmenu #opt,body.inmenu #panel,body.inmenu #zm,body.inmenu #side,body.inmenu h1{display:none!important}
 #menu h2{font:700 clamp(24px,6vw,44px)/1.1 Georgia,"Times New Roman",serif;margin:0 0 6px}
@@ -504,10 +504,9 @@ button[data-a="mback"]:hover,button[data-a="pback"]:hover,button[data-a="cback"]
 :root[data-pal="perg"] :is(.kw:not(.st),.cbu,.cpo,.chp,.cvl,.cmg,.cel,.cr,.ccl,.cg,.cc,.ca,.cf,.cd,.gd){filter:brightness(.55) saturate(1.6)}
 :root[data-pal="esc"] :is(.kw:not(.st),.cbu,.cpo,.chp,.cvl,.cmg,.cel,.cr,.ccl,.cg,.cc,.ca,.cf,.cd,.gd){filter:brightness(.55) saturate(1.6)}
 body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
-/* El menú principal y las cinemáticas no cambian con la paleta */
-#menu,#intro,#dlg{--bg:#12141a;--bgg:#1a1a22;--bg2:#0d0f14;--panel:#1c1f28;--panel2:#14161c;--btn:#262a36;--line:#343948;--line2:#4a5068;--fg:#e8e6df;--fg1:#c9ced8;--fg2:#9aa0ad;--acc:#e8b04a;--accfg:#1d1f26;--hl:#ffd75a;--gold:#f0b429;--red:#ff6b5e;--cxl:#c0392b;--cxf:#ff8a7a;--cxb:color-mix(in srgb,#c0392b 16%,#262a36);--bkl:#5b8def;--bkf:#a9c4ff;--bkb:color-mix(in srgb,#5b8def 16%,#262a36);color-scheme:dark}
-body.inmenu{background:#12141a}
-:root[data-pal] :is(#menu,#intro,#dlg) :is(.kw:not(.st),.cbu,.cpo,.chp,.cvl,.cmg,.cel,.cr,.ccl,.cg,.cc,.ca,.cf,.cd,.gd){filter:none}
+/* Las cinemáticas (intro y diálogos) mantienen siempre el estilo oscuro */
+#intro,#dlg{--bg:#12141a;--bgg:#1a1a22;--bg2:#0d0f14;--panel:#1c1f28;--panel2:#14161c;--btn:#262a36;--line:#343948;--line2:#4a5068;--fg:#e8e6df;--fg1:#c9ced8;--fg2:#9aa0ad;--acc:#e8b04a;--accfg:#1d1f26;--hl:#ffd75a;--gold:#f0b429;--red:#ff6b5e;--cxl:#c0392b;--cxf:#ff8a7a;--cxb:color-mix(in srgb,#c0392b 16%,#262a36);--bkl:#5b8def;--bkf:#a9c4ff;--bkb:color-mix(in srgb,#5b8def 16%,#262a36);color-scheme:dark}
+:root[data-pal] :is(#intro,#dlg) :is(.kw:not(.st),.cbu,.cpo,.chp,.cvl,.cmg,.cel,.cr,.ccl,.cg,.cc,.ca,.cf,.cd,.gd){filter:none}
 .go,#menu button.go,#mbr button.go{box-shadow:0 0 12px color-mix(in srgb,var(--acc) 35%,transparent)}
 </style></head><body>
 <div id="dlg"></div>
@@ -523,7 +522,7 @@ body.inmenu{background:#12141a}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v215</div>
+<div id="ver">Towerize v216</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
