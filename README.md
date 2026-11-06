@@ -8,8 +8,8 @@ Towerize es un *tower defense* con elementos *roguelike* para navegador. En cada
 
 Funciona en el navegador, tanto en ordenador como en móvil (en horizontal). No hace falta instalar nada.
 
-<!-- Añade aquí una captura del juego: sube la imagen al repositorio (por ejemplo, captura.png) y quita los símbolos de comentario de la línea de abajo -->
-<!-- ![Captura de Towerize](captura.png) -->
+
+![Captura de Towerize](captura.png)
 
 > 🚧 **En desarrollo.** El juego está en evolución constante y algunas partes pueden cambiar.
 
