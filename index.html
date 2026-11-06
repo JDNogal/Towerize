@@ -111,7 +111,7 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw{font-weight:700;border-bottom:1px dashed currentColor;cursor:help}
 .kw.st{font-weight:inherit;border-bottom:1px dotted currentColor}
 .kw:not(.st)[data-kw="burn"],.kw:not(.st)[data-kw="flam"],.kw:not(.st)[data-kw="breath"]{color:#ff9a4a}
-.kw:not(.st)[data-kw="poison"]{color:#8be05a}
+.kw:not(.st)[data-kw="poison"]{color:#5fdc7a}
 .kw:not(.st)[data-kw="sticky"]{color:#c8a060}
 .kw:not(.st)[data-kw="chill"]{color:#9fe4ff}
 .kw:not(.st)[data-kw="freeze"]{color:#cdf2ff}
@@ -131,19 +131,19 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw:not(.st)[data-kw="mhit"],.kw:not(.st)[data-kw="tmagic"],.kw:not(.st)[data-kw="umr"],.kw:not(.st)[data-kw="penp"]{color:#8f9bff}
 .kw:not(.st)[data-kw="telem"]{color:#4fd6b8}
 .kw:not(.st)[data-kw="tphys"],.kw:not(.st)[data-kw="aphys"],.kw:not(.st)[data-kw="brk"],.kw:not(.st)[data-kw="hblk"],.kw:not(.st)[data-kw="aura"],.kw:not(.st)[data-kw="pierce"],.kw:not(.st)[data-kw="bres"]{color:var(--fg1)}
-.kw:not(.st)[data-kw="crit"]{color:#5fdc7a}
+.kw:not(.st)[data-kw="crit"]{color:#ff4fa8}
 .kw:not(.st)[data-kw="area"]{color:#ff9a3c}
 .kw:not(.st)[data-kw="spect"]{color:#b8c4ff}
 .kw:not(.st)[data-kw="call"],.kw:not(.st)[data-kw="howl"],.kw:not(.st)[data-kw="blow"],.kw:not(.st)[data-kw="dodge"]{color:#e0b8ff}
 .kw:not(.st)[data-kw="steal"],.kw:not(.st)[data-kw="vch"]{color:var(--hl)}
 .kw:not(.st)[data-kw="rcd"]{color:#f3e7a1}
-.cbu{color:#ff9a4a}.cpo{color:#8be05a}
+.cbu{color:#ff9a4a}.cpo{color:#5fdc7a}
 .kpanel{position:fixed;z-index:55;width:236px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
 .kpanel.inline{position:static;width:auto;margin-top:8px;box-shadow:none}
 .tipc b{font-size:14px}.tipc small{display:block;opacity:.65;margin-top:4px}
 .tipc .row{display:flex;justify-content:space-between;gap:12px}.tipc .row span:last-child{text-align:right}
 .tipc i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:5px;vertical-align:-1px}
-.chp{color:#9be15d}.cvl{color:#ffe14d}.cph{color:var(--fg1)}.cmg{color:#8f9bff}.cel{color:#4fd6b8}.cd{color:var(--red)}.cr{color:#a15cff}.ccl{color:#f3e7a1}.usub{border:1px solid var(--line);border-radius:8px;padding:6px 8px 4px;margin:8px 0 4px;background:rgba(255,255,255,.03)}.usub>b{display:block;font-size:12px;letter-spacing:.04em;color:var(--fg1);margin-bottom:2px}.cg{color:#5ab4ff}.cc{color:#5fdc7a}.ca{color:#ff9a3c}.cf{color:#e0b8ff}.gd{color:var(--gold)}.tipc b{color:var(--fg)}
+.chp{color:#9be15d}.cvl{color:#ffe14d}.cph{color:var(--fg1)}.cmg{color:#8f9bff}.cel{color:#4fd6b8}.cd{color:var(--red)}.cr{color:#a15cff}.ccl{color:#f3e7a1}.usub{border:1px solid var(--line);border-radius:8px;padding:6px 8px 4px;margin:8px 0 4px;background:rgba(255,255,255,.03)}.usub>b{display:block;font-size:12px;letter-spacing:.04em;color:var(--fg1);margin-bottom:2px}.cg{color:#5ab4ff}.cc{color:#ff4fa8}.ca{color:#ff9a3c}.cf{color:#e0b8ff}.gd{color:var(--gold)}.tipc b{color:var(--fg)}
 #wheel{position:fixed;z-index:60;width:22px;height:22px;border-radius:50%;pointer-events:none;display:none;
 -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px))}
 #rot{display:none;position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 35%,var(--bgg),var(--bg) 75%);color:var(--fg);flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px;box-sizing:border-box}
@@ -527,7 +527,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v231</div>
+<div id="ver">Towerize v232</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1411,7 +1411,7 @@ const CFILTERS={tw:[{key:'dt',label:'Tipo de daño',kw:'dtype',opts:Object.keys(
 const fbarHtml=fl=>fl.map(f=>`<div class="fbar">${kst(f.kw,f.label,'')}: <button class="${CP.flt[f.key]?'':'on'}" data-a="cflt" data-f="${f.key}" data-v="">Todos</button>`+f.opts.map(([v,l,c])=>`<button class="${c} ${CP.flt[f.key]===v?'on':''}" data-a="cflt" data-f="${f.key}" data-v="${v}">${l}</button>`).join('')+'</div>').join('');
 const csec=(t,s)=>`<div class="esec" style="margin-top:14px">${t}</div><small>${s}</small>`;
 // ---- compendio: vistazo general con barras (lo demás, con números, en la vista de detalle) ----
-const GCOL={cd:'#ff6b5e',ccl:'#f3e7a1',cg:'#5ab4ff',chp:'#9be15d',cph:'#c9ced8',cmg:'#8f9bff',cvl:'#ffe14d',burn:'#ff9a4a',poison:'#8be05a'};
+const GCOL={cd:'#ff6b5e',ccl:'#f3e7a1',cg:'#5ab4ff',chp:'#9be15d',cph:'#c9ced8',cmg:'#8f9bff',cvl:'#ffe14d',burn:'#ff9a4a',poison:'#5fdc7a'};
 const GICO={burn:'🔥',poison:'🧪',slow:'🐌',ez:'⚡',chain:'🔗',bwall:'🧱',logk:'🪵',mheal:'✚',drunk:'🍺',freeze:'🧊',chill:'❄️',bleed:'🩸',stun:'💫',wet:'💧',root:'🌿',sticky:'🫗'};
 const gRow=(lab,cls,v,m,txt,col)=>`<div class="grow"><span class="${cls}">${lab}</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,m>0?100*v/m:0))}%;background:${col||GCOL[cls]}"></i></div><span class="${cls} gv">${txt}</span></div>`;
 const gTxt=(lab,cls,html)=>`<div class="grow gt"><span class="${cls}">${lab}</span><span class="gv2">${html}</span></div>`;
@@ -1425,6 +1425,15 @@ function twGlance(k){const st=cpState(k),a=twAt(k,st.lv,st.spec),M=twMax(st.lv),
  const dm=a.st?`<div class="grow"><span class="cd">${kst('dps','DPS',src)}</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,100*a.dv/M.dps))}%;background:${GCOL[a.st]}"></i></div><span class="gv ${a.st==='burn'?'cbu':'cpo'}">${f(a.dv)} ${GICO[a.st]}</span></div>`:gRow(kst('dmg','Daño',src),'cd',a.dv,M.dmg,f(a.dv));
  return head+'<div class="gbody">'+dm+gRow(kst('cool','Enfriamiento',src),'ccl',a.s.rate,M.rate,f(1/a.s.rate)+' s')+gRow(kst('rng','Rango',src),'cg',a.s.range,M.range,f(a.s.range/K)+' cas.')+
   (a.T.unit?gRow(kst('uhp','Vida de unidades',src),'chp',a.uhp,M.uhp,Math.round(a.uhp)):'')+(effHtml(a.TT,src)?gTxt(kst('eff','Efectos',src),'cf',gIcons(a.TT,src)).replace('class="gv2"','class="gv2 gleft"'):'')+'</div>';}
+// tarjeta de vistazo rápido de una torre de evento (barras comparadas con las torres normales del mismo nivel, donde se puede)
+const uPrevOk=(k,cur)=>{const T=TW[k];return !T.faro&&!(T.dragon&&cur<=1);};
+function uniqGlance(k,cur){const T=TW[k],src='shop:'+k,full=uniqInfo(null,k,cur),head=full.slice(0,full.indexOf('</div>')+6),M=twMax(Math.min(3,cur));let b='';
+ const D=(v,l)=>gRow(kst('dmg',l||'Daño',src),'cd',v,M.dmg,f(v)),C=r=>gRow(kst('cool','Enfriamiento',src),'ccl',r,M.rate,f(1/r)+' s'),G=v=>gRow(kst('rng','Rango',src),'cg',v,M.range,f(v/K)+' cas.'),U=v=>gRow(kst('uhp','Vida de unidades',src),'chp',v,M.uhp,Math.round(v)),I=ids=>gTxt(kst('eff','Efectos',src),'cf',ids.map(id=>`<span class="kw gico" data-kw="${id}" data-src="${src}">${GICO[id]||'✦'}</span>`).join('')).replace('class="gv2"','class="gv2 gleft"');
+ if(T.faro){const L=FARO[cur-1];b=gTxt('Radio','ca',f(L.r)+' cas.')+gTxt('Alcance a torres cercanas','cg','+'+Math.round(L.rg*100)+'%')+(L.d?gTxt('Daño a torres cercanas','cd','+'+Math.round(L.d*100)+'%'):'')+(L.c?gTxt('Enfriamiento de torres cercanas','ccl','−'+Math.round(L.c*100)+'%'):'')+'<small>No ataca: ilumina y mejora las torres cercanas.</small>';}
+ else if(T.dragon){const sg=cur-1;b=gTxt('Forma','',DRAG[sg].n)+(sg===0?'<small>Todavía no hace nada: espera a que eclosione.</small>':sg===1?D(8,'Daño (fuego)')+G(2.5*K)+U(60):sg===2?D(18,'Daño (bola de fuego)')+G(3.5*K):D(22,'Daño (bola de fuego)')+G(3.5*K)+I(['burn']));}
+ else if(T.guild){const L=lvMods(k,cur,null);b=D(T.dmg*L.dmg,'Daño (cada uno)')+C(T.rate/L.cd)+G(T.range*L.range)+U(T.unit.hp*L.hp)+gTxt('Aventureros','',PARTY[cur].length);}
+ else{const L=lvMods(k,cur,null),dm=T.dmg*L.dmg;b=(dm>0?D(dm):'')+C(T.rate/L.cd)+G(T.range*L.range)+(T.pig&&cur>=4&&PIGU[k]?U(PIGU[k].hp):'')+I(T.slow?['slow']:T.log?['logk']:T.wall?['bwall']:[]);}
+ return head+'<div class="gbody">'+b+'</div>';}
 function heroGlance(id){const D=HEROES[id],x=hsAt(id,1),src='hero:'+id,R2=RELIC[D.relic],hs=Object.keys(HEROES).map(h=>hsAt(h,1)),mx=k=>Math.max(...hs.map(o=>o[k]));
  const mr=Math.max(...Object.keys(HEROES).map(h=>HEROES[h].ranged?HEROES[h].base.range:0)),mrate=Math.max(...hs.map(o=>1/o.cd));
  return `<div class="cport">${portrait(id)}</div><div class="ttl"><b>${D.ic} ${D.n}</b></div><div class="gbody">`+gRow(kst('hhp','Vida',src),'chp',x.hp,mx('hp'),Math.round(x.hp))+gArm(Math.round(x.ap),0,src)+gRow(kst('hdmg','Daño',src),'cd',x.dmg,mx('dmg'),f(x.dmg))+
@@ -1445,7 +1454,11 @@ function renderComp(){setTimeout(()=>{if(!ALKNEW.size)return;for(const id of ALK
    tabs=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:8px"><div style="font-size:20px;font-weight:700">🏆 Logros <span style="font-size:14px;font-weight:400;opacity:.7">${n} / ${tot}${inG?' · el juego está en pausa':''}</span></div><button data-a="cclose">Cerrar ✕</button></div>`+lgDesc;}
  const lock='<div class="ce lock"><b>???</b><small>Aún no descubierto.</small></div>';
  let body='';
- if(CP.tab==='tw'&&CP.prev){const k=CP.prev,es=Object.keys(ET).filter(e=>seen('en',e));
+ if(CP.tab==='tw'&&CP.prev&&TW[CP.prev].uniq){const k=CP.prev,T=TW[k],es=Object.keys(ET).filter(e=>seen('en',e)),o=T.dragon?['Huevo','Bebé','Adulto','Anciano']:T.guild?RANKS:['1','2','3','4'],cur=(CP.ulv&&CP.ulv[k])||1;
+  const ub=`<button class="stbtn lvbtn" data-a="ulv" data-k="${k}" data-v="${cur>=o.length?1:cur+1}" title="Ver la torre en otro nivel">${cur>=o.length?'Nv Max':'Nv '+cur}</button>`,info=(lvSec(k,cur)?'<div class="ttl"><b>'+T.ic+' '+T.n+'</b></div><small>???  · Sigue jugando para descubrir este nivel.</small>':uniqInfo(null,k,cur)).replace('<div class="ttl">','<div class="ttl">'+ub);
+  body=`<div style="margin-bottom:8px"><button data-a="cback">← Volver a la lista</button></div><div class="cdet"><div class="ce dwide">${info}</div>`+(uPrevOk(k,cur)&&!lvSec(k,cur)?
+   `<div class="dbot"><canvas id="pvc" width="288" height="288" class="dpv"></canvas><div class="ce dside"><div style="margin-top:8px"><label>Enemigo: <select id="pve">${es.map(e=>`<option value="${e}"${e===CP.pen?' selected':''}>${ET[e].n}</option>`).join('')}</select></label></div><div style="margin-top:6px"><label>Velocidad de movimiento: <select id="pvs">${[1,2,3].map(v=>`<option value="${v}"${v===CP.spd?' selected':''}>×${v}</option>`).join('')}</select></label></div><small style="display:block;max-width:288px;margin-top:6px">Previsualización con las estadísticas base del enemigo (ronda 0), sin bufos de casilla ni reliquias. Los enemigos aparecen sin parar, uno cada poco tiempo.</small></div></div>`:'')+'</div>';}
+ else if(CP.tab==='tw'&&CP.prev){const k=CP.prev,es=Object.keys(ET).filter(e=>seen('en',e));
   body=`<div style="margin-bottom:8px"><button data-a="cback">← Volver a la lista</button></div><div class="cdet"><div class="ce dwide">${shopInfo(k,1)}</div>`+
    `<div class="dbot"><canvas id="pvc" width="288" height="288" class="dpv"></canvas><div class="ce dside"><div style="margin-top:8px"><label>Enemigo: <select id="pve">${es.map(e=>`<option value="${e}"${e===CP.pen?' selected':''}>${ET[e].n}</option>`).join('')}</select></label></div><div style="margin-top:6px"><label>Velocidad de movimiento: <select id="pvs">${[1,2,3].map(v=>`<option value="${v}"${v===CP.spd?' selected':''}>×${v}</option>`).join('')}</select></label></div>`+
    `<small style="display:block;max-width:288px;margin-top:6px">Previsualización con las estadísticas base del enemigo (ronda 0), sin bufos de casilla ni reliquias. Los enemigos aparecen sin parar, uno cada poco tiempo. En las especializaciones se muestran las habilidades al rango máximo.</small>${(cpState(k).spec&&SPECS[k][cpState(k).spec].d)?'<div class="ddesc">'+SPECS[k][cpState(k).spec].d+'</div>':''}</div></div></div>`;}
@@ -1453,7 +1466,7 @@ function renderComp(){setTimeout(()=>{if(!ALKNEW.size)return;for(const id of ALK
   const bar=fl.map(f=>`<div class="fbar">${kst(f.kw,f.label,'')}: <button class="${CP.flt[f.key]?'':'on'}" data-a="cflt" data-f="${f.key}" data-v="">Todos</button>`+f.opts.map(([v,l,c])=>`<button class="${c} ${CP.flt[f.key]===v?'on':''}" data-a="cflt" data-f="${f.key}" data-v="${v}">${l}</button>`).join('')+'</div>').join('');
   const ids=Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k)&&act.every(f=>seen('tw',k)&&f.test(k,CP.flt[f.key])));
   const gbar='<div class="fbar">'+kst('tlv','Nivel de torre','')+': '+GLV.map(([v,l])=>`<button class="${Object.keys(TW).filter(k=>!TW[k].uniq).every(k=>(CP.lv[k]||1)===glState(k,v))?'on':''}" data-a="glv" data-v="${v}">${l}</button>`).join('')+'</div>';
-  body=bar+gbar+csec('Torres normales','Se compran en la tienda durante la fase de construcción.')+(ids.length?'<div class="cgrid">'+ids.map(k=>seen('tw',k)?`<div class="ce tcard">${twGlance(k)}<div class="pvrow"><button class="pvbtn" data-a="cprev" data-v="${k}" title="Ver una previsualización de cómo ataca esta torre"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="6.8" cy="6.8" r="4.6"/><path d="M10.3 10.3L14 14"/></svg></button></div></div>`:lock).join('')+'</div>':'<small>Ninguna torre cumple ese filtro.</small>')+'<small style="display:block;margin-top:8px">Las barras comparan cada torre con las demás del mismo nivel. Pulsar la lupa de una tarjeta muestra todos sus valores y una previsualización.</small>'+csec('Torres de evento','Solo se consiguen en eventos concretos y se colocan dentro de la pieza del evento.')+'<div class="cgrid">'+Object.keys(TW).filter(k=>TW[k].uniq).map(k=>{if(!seen('tw',k))return lock;const T=TW[k],o=T.dragon?['Huevo','Bebé','Adulto','Anciano']:T.guild?RANKS:['1','2','3','4'],cur=(CP.ulv&&CP.ulv[k])||1;const ub=`<button class="stbtn lvbtn" data-a="ulv" data-k="${k}" data-v="${cur>=o.length?1:cur+1}" title="Ver la torre en otro nivel">${cur>=o.length?'Nv Max':'Nv '+cur}</button>`;return `<div class="ce tcard">${(lvSec(k,cur)?'<div class="ttl"><b>'+T.ic+' '+T.n+'</b></div><small>???  · Sigue jugando para descubrir este nivel.</small>':uniqInfo(null,k,cur)).replace('<div class="ttl">','<div class="ttl">'+ub)}</div>`;}).join('')+'</div>';}
+  body=bar+gbar+csec('Torres normales','Se compran en la tienda durante la fase de construcción.')+(ids.length?'<div class="cgrid">'+ids.map(k=>seen('tw',k)?`<div class="ce tcard">${twGlance(k)}<div class="pvrow"><button class="pvbtn" data-a="cprev" data-v="${k}" title="Ver una previsualización de cómo ataca esta torre"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="6.8" cy="6.8" r="4.6"/><path d="M10.3 10.3L14 14"/></svg></button></div></div>`:lock).join('')+'</div>':'<small>Ninguna torre cumple ese filtro.</small>')+'<small style="display:block;margin-top:8px">Las barras comparan cada torre con las demás del mismo nivel. Pulsar la lupa de una tarjeta muestra todos sus valores y una previsualización.</small>'+csec('Torres de evento','Solo se consiguen en eventos concretos y se colocan dentro de la pieza del evento. Las barras las comparan con las torres normales del mismo nivel.')+'<div class="cgrid">'+Object.keys(TW).filter(k=>TW[k].uniq).map(k=>{if(!seen('tw',k))return lock;const T=TW[k],o=T.dragon?['Huevo','Bebé','Adulto','Anciano']:T.guild?RANKS:['1','2','3','4'],cur=(CP.ulv&&CP.ulv[k])||1;const ub=`<button class="stbtn lvbtn" data-a="ulv" data-k="${k}" data-v="${cur>=o.length?1:cur+1}" title="Ver la torre en otro nivel">${cur>=o.length?'Nv Max':'Nv '+cur}</button>`;const sec=lvSec(k,cur);return `<div class="ce tcard">${(sec?'<div class="ttl"><b>'+T.ic+' '+T.n+'</b></div><small>???  · Sigue jugando para descubrir este nivel.</small>':uniqGlance(k,cur)).replace('<div class="ttl">','<div class="ttl">'+ub)}${sec?'':`<div class="pvrow"><button class="pvbtn" data-a="cprev" data-v="${k}" title="${uPrevOk(k,cur)?'Ver todos sus valores y una previsualización':'Ver todos sus valores'}"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="6.8" cy="6.8" r="4.6"/><path d="M10.3 10.3L14 14"/></svg></button></div>`}</div>`;}).join('')+'</div>';}
  else if(CP.tab==='hr'&&CP.hprev){const id=CP.hprev,D=HEROES[id],es=Object.keys(ET).filter(e=>seen('en',e));if(!es.includes(CP.hen))CP.hen=es[0]||'norm';
   body=`<div style="margin-bottom:8px"><button data-a="chback">← Volver a la lista</button></div><div class="cdet"><div class="ce dwide"><div class="cport dport">${portrait(id)}</div>${heroInfo(id,1)}</div>`+
    `<div class="dbot"><canvas id="pvc" width="288" height="288" class="dpv"></canvas><div class="ce dside">`+
@@ -1493,12 +1506,21 @@ function renderComp(){setTimeout(()=>{if(!ALKNEW.size)return;for(const id of ALK
  el.querySelectorAll('canvas[data-pi]').forEach(cn=>drawPat(cn.getContext('2d'),(()=>{const P0=PIECES[+cn.dataset.pi],o={n:P0.n,p:P0.p,b:[]};solarize(o,(CP.pcv||{})[+cn.dataset.pi]||0,1);return o;})(),16,0,0,1));
 }
 // ---- previsualización de torres (mini-partida independiente con un solo enemigo) ----
+// prepara una torre de evento en la previsualización (nivel/forma elegidos en el compendio)
+function uPrevFix(st,k){const T=TW[k],cur=(CP.ulv&&CP.ulv[k])||1,tw=st.list[0];if(!tw)return;const real=S;S=st;
+ if(!st.cc){st.cc=Array.from({length:NC},()=>Array(NC).fill(0));for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++){const ky=Math.floor(y/K),kx=Math.floor(x/K);if(st.cells[y][x]===2)st.cc[ky][kx]=2;else if(!st.cc[ky][kx])st.cc[ky][kx]=1;}}st.logs=st.logs||[];
+ try{tw.flag={x:PVCX,y:tw.y};
+  if(T.dragon){tw.lvl=1;tw.born=-99;tw.stage=cur-1;tw.sd=[];if(cur===2){tw.sd=[{i:0,x:PVCX,y:tw.y,hp:60,max:60,en:null,cd:0,rt:0,tw,lock:false,fight:false,rng:1,drag:1}];}if(cur>=3)tw.fly={a:0,cd:0};}
+  else if(T.guild){tw.lvl=cur;tw.sd=[];mkGuild(tw);tw.sd.forEach(q=>{const o=slotOf(tw,q.i);q.x=o.x;q.y=o.y;q.lock=false;});}
+  else if(T.pig){tw.lvl=cur;if(cur>=4){mkPig(tw);const q=tw.pigT&&tw.pigT.sd[0];if(q){q.x=PVCX;q.y=tw.y;q.lock=false;}}}
+ }finally{S=real;}}
 let PV=null;const PVN=P*K,PVX=14*K,PVY=14*K,PVC=288/PVN,PVCX=PVX+(PVN>>1);
-function newPrev(k,en){
+function newPrev(k,en){if(TW[k].uniq&&!uPrevOk(k,(CP.ulv&&CP.ulv[k])||1)){PV=null;return;}
  const cells=Array.from({length:N},()=>Array(N).fill(0)),buff=Array.from({length:N},()=>Array(N).fill(null));
  for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=Math.abs(x-PVCX)<=1?2:1;
  const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:PVCX,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:0,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:0,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:k,selT:null,hover:null,core:{x:PVCX,y:PVY+PVN-1},speed:1,field:null,msg:'',espd:CP.spd};
  const real=S;S=st;try{st.field=field();const tx=PVCX-3,ty=PVY+7,tw={id:1,type:k,lvl:cpState(k).lv,spec:cpState(k).spec,ab:{},acd:{},x:tx,y:ty,cells:[[tx,ty]],sq:[[tx,ty]],cd:0,tgt:null,mode:'core'};if(TW[k].unit){mkSoldiers(tw);tw.flag={x:PVCX,y:ty};tw.sd.forEach(q=>{const o=slotOf(tw,q.i);q.x=o.x;q.y=o.y;q.lock=false;});}if(tw.spec)for(const id of SPECS[k][tw.spec].ab)tw.ab[id]=AB[id].ranks.length;st.list.push(tw);st.occ[tx+','+ty]=tw;}finally{S=real;}
+ if(TW[k].uniq)uPrevFix(st,k);
  PV={S:st,k,en,rt:.3};
 }
 // ---- previsualización de enemigos: un enemigo contra un héroe ----
@@ -1632,7 +1654,7 @@ function drawPrev(){
 c.fillStyle="#2e3441";c.fillRect(0,0,PVN*PVC,PVN*PVC);
  for(let y=0;y<PVN;y++)for(let x=0;x<PVN;x++){c.fillStyle=s.cells[PVY+y][PVX+x]===2?'#a8854a':'#2e3441';c.fillRect(x*PVC,y*PVC,PVC,PVC);}
  c.fillStyle='#3dd6c4';c.fillRect(X(s.core.x)-PVC*1.2,Y(s.core.y)-PVC*1.2,PVC*2.4,PVC*2.4);
- c.fillStyle='rgba(90,180,255,.15)';c.strokeStyle='rgba(110,190,255,.9)';c.lineWidth=1.5;c.beginPath();c.arc(X(tw.x),Y(tw.y),T.range*lvMods(PV.k,tw.lvl,tw.spec).range*PVC,0,7);c.fill();c.stroke();
+ c.fillStyle='rgba(90,180,255,.15)';c.strokeStyle='rgba(110,190,255,.9)';c.lineWidth=1.5;c.beginPath();c.arc(X(tw.x),Y(tw.y),(T.uniq?(()=>{const r=S;S=s;try{return stats(tw).range;}catch(e){return T.range;}finally{S=r;}})():T.range*lvMods(PV.k,tw.lvl,tw.spec).range)*PVC,0,7);c.fill();c.stroke();
  for(const m of s.mines){c.fillStyle='#3a2a2a';c.strokeStyle='#ff9a5c';c.lineWidth=2;c.beginPath();c.arc(X(m.x),Y(m.y),PVC*.5,0,7);c.fill();c.stroke();}
  for(const p of s.pools){c.fillStyle=p.el==='bleed'?'rgba(224,72,90,.28)':p.el==='fire'?'rgba(255,120,40,.3)':'rgba(123,211,74,.28)';c.strokeStyle=p.el==='bleed'?'rgba(240,100,110,.8)':p.el==='fire'?'rgba(255,160,70,.85)':'rgba(150,230,90,.8)';c.beginPath();c.arc(X(p.x),Y(p.y),p.r*PVC,0,7);c.fill();c.stroke();}
  drawFlame(c,tw,X,Y,PVC);
@@ -1642,7 +1664,10 @@ c.fillStyle="#2e3441";c.fillRect(0,0,PVN*PVC,PVN*PVC);
  else if(tw.tgt&&tw.tgt.hp>0){c.strokeStyle=T.col;c.lineWidth=3;c.beginPath();c.moveTo(X(tw.x),Y(tw.y));c.lineTo(X(tw.tgt.x),Y(tw.tgt.y));c.stroke();}
  for(const q of s.fx)if(q.bolt)drawBolt(c,q,X,Y,2,3);
  for(const q of s.fx){if(q.bolt||q.frag)continue;if(q.mk){const k=1-q.t/q.m;c.globalAlpha=Math.min(1,q.t/q.m*2);c.font='bold 20px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textAlign='center';c.textBaseline='middle';c.lineWidth=3;c.strokeStyle='#fff';c.fillStyle='#e8262e';const tx=X(q.x)+12,ty=Y(q.y)-8-k*14;c.strokeText('!',tx,ty);c.fillText('!',tx,ty);c.globalAlpha=1;continue;}c.globalAlpha=Math.max(0,q.t/q.m)*.7;c.fillStyle=q.col;c.beginPath();c.arc(X(q.x),Y(q.y),q.r*PVC,0,7);c.fill();c.globalAlpha=1;}
+ for(const b of s.barr||[]){if(!b.poly)continue;c.save();c.beginPath();b.poly.forEach((p,i)=>i?c.lineTo((p[0]-PVX)*PVC,(p[1]-PVY)*PVC):c.moveTo((p[0]-PVX)*PVC,(p[1]-PVY)*PVC));c.closePath();c.fillStyle=b.brick?'#b0503a':'#8a5a2b';c.fill();c.strokeStyle='#f0c040';c.lineWidth=2;c.stroke();c.restore();}
+ for(const L of s.logs||[]){if(L.x===undefined)continue;c.save();c.translate(X(L.x),Y(L.y));c.rotate(L.ang+Math.PI/2);const len=K*PVC*.86,th=K*PVC*.32;c.fillStyle='#8a5a2b';c.fillRect(-len/2,-th/2,len,th);c.strokeStyle='#5a3a1a';c.lineWidth=1.5;c.strokeRect(-len/2,-th/2,len,th);c.restore();}
  drawUnits(c,s,PVC,-PVX*PVC,-PVY*PVC);
+ for(const t of s.list){if(!t.fly||t.fly.x===undefined)continue;const px=X(t.fly.x),py=Y(t.fly.y);c.fillStyle='rgba(0,0,0,.25)';c.beginPath();c.ellipse(px,py+PVC*1.6,PVC*1.2,PVC*.5,0,0,7);c.fill();if(t.stage>=3){c.fillStyle='rgba(255,110,40,.25)';c.beginPath();c.arc(px,py,PVC*2,0,7);c.fill();}c.font=Math.round(PVC*(t.stage>=3?3.3:2.6))+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('🐉',px,py);}
  for(const e of s.enemies){const E=ET[e.t],px=X(e.x),py=Y(e.y),r=E.r*PVC,sk=e.ps&&e.ps.length;
   const bl=e.bl&&e.bl.length;c.fillStyle=e.fx.freeze?'#cdf2ff':e.fx.stun?'#fff2a0':sk?'#8fc24a':e.bn>=.5?'#ff9a4a':bl?'#d0506a':e.fx.slow?'#7fb4d9':E.col;c.beginPath();c.arc(px,py,r,0,7);c.fill();
   if(E.el){c.strokeStyle='#f0b429';c.lineWidth=2;c.beginPath();c.arc(px,py,r+2,0,7);c.stroke();}
@@ -2733,7 +2758,7 @@ const armorOf=(e,ty)=>e.fx&&e.fx.poly?0:ty==='phys'?Math.max(-MAXPEN,(ET[e.t].ap
 // Penetración plana: resta armadura (puede quedar negativa, mínimo -MAXPEN => máximo x2 de daño). El daño elemental ignora armadura y penetración.
 let TZX=0;const TZR=4*K;
 // ---- números de daño: se suman por enemigo y tipo mientras sigan llegando golpes ----
-const DNC={taken:'#ff8a7a',phys:'#f2efe6',magic:'#a3adff',ice:'#9fe4ff',poison:'#8be05a',fire:'#ff7a3c',elec:'#ffe14d',bleed:'#ff5a64',elem:'#4fd6b8'};
+const DNC={taken:'#ff8a7a',phys:'#f2efe6',magic:'#a3adff',ice:'#9fe4ff',poison:'#5fdc7a',fire:'#ff7a3c',elec:'#ffe14d',bleed:'#ff5a64',elem:'#4fd6b8'};
 let DNK=null,DNF=0;
 const dnKey=(src,ty)=>{if(DNK)return DNK;if(ty==='magic')return src&&src.type==='frost'?'ice':'magic';if(ty!=='elem')return 'phys';const T=src&&src.type;return T==='poison'?'poison':T==='flame'||T==='sala'?'fire':T==='tesla'||T==='augur'?'elec':'elem';};
 function dnAdd(e,v,key){if(!OPT.dnum||!S.dn)return;e.dnm=e.dnm||{};let d=e.dnm[key];
@@ -3914,7 +3939,7 @@ function act(e){
  else if(a==='erago'){renderSetup();$('menu').classList.add('setup');}
  else if(a==='help')renderHelp();
  else if(a==='credits')renderCredits();
- else if(a==='ulv'){CP.ulv=CP.ulv||{};CP.ulv[b.dataset.k]=+b.dataset.v;const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}
+ else if(a==='ulv'){CP.ulv=CP.ulv||{};CP.ulv[b.dataset.k]=+b.dataset.v;if(CP.prev===b.dataset.k)newPrev(CP.prev,CP.pen);const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}
  else if(a==='achm'){APAN.open=false;apanTick();toggleComp(true);CP.tab='lg';CP.solo=true;renderComp();}
  else if(a==='apan'){APAN.open=!APAN.open;apanTick();}
  else if(a==='apin'){const id=b.dataset.id;if(PINS.includes(id))PINS=PINS.filter(x=>x!==id);else if(PINS.length>=3){toast('📌 Ya tienes 3 logros fijados: quita uno para fijar este.');return;}else PINS.push(id);savePins();if(CP.open){const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}apanTick(1);}
