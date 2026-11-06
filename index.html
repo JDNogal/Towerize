@@ -495,7 +495,7 @@ button[data-a="mback"]:hover,button[data-a="pback"]:hover,button[data-a="cback"]
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v208</div>
+<div id="ver">Towerize v209</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3778,45 +3778,46 @@ let SV={};try{SV=JSON.parse(localStorage.getItem('rt-sv'))||{};}catch(e){}
 // s = muestra · y = sintetizado · v = volumen · cd = separación mínima (s) · mx = a la vez · pv = variación de tono · r = velocidad · dk = baja el resto · sr = velocidad de la muestra
 const SFXG=[
  ['Interfaz',[
-  ['ui','Botón',[{n:'A',y:'bopA',v:.55,cd:.04,mx:2,pv:.04},{n:'B',y:'bopB',v:.55,cd:.04,mx:2,pv:.04},{n:'D',y:'bopD',v:.55,cd:.04,mx:2,pv:.04}]],
-  ['uix','Cerrar / volver',[{y:'bopX',v:.5,cd:.04,mx:2,pv:.04}]],
+  ['ui','Botón',[{y:'bopD',v:.55,cd:.04,mx:2,pv:.04}]],
+  ['uix','Cerrar / volver',[{y:'bopDx',v:.5,cd:.04,mx:2,pv:.04}]],
   ['err','Error',[{s:'ui_err',v:.5,cd:.3,mx:1}]]]],
  ['Construcción',[
   ['build','Construir',[{s:'build',v:.7,cd:.1,mx:2,pv:.06}]],
-  ['up','Mejorar',[{s:'up',v:.6,cd:.1,mx:2}]],
-  ['nv4','Nv 4',[{n:'A · épico',y:'nv4A',v:.7,cd:.5,mx:1},{n:'B · mágico',y:'nv4B',s:'glass2',sr:.6,v:.7,cd:.5,mx:1}]],
+  ['up','Mejorar',[{s:'up',y:'upArp',v:.6,cd:.1,mx:2}]],
+  ['nv4','Nv 4',[{s:'up',y:'nv4U',v:.7,cd:.5,mx:1}]],
   ['sell','Vender',[{s:'sell',v:.5,cd:.2,mx:1}]],
   ['piece','Colocar pieza',[{s:'piece',v:.7,cd:.15,mx:1,pv:.05}]]]],
  ['Oro y bajas',[
-  ['coin','Oro por baja',[{n:'A · ding',y:'coinA',v:.35,cd:.07,mx:2,pv:.04},{n:'B · rebote',y:'coinB',v:.35,cd:.09,mx:2,pv:.04},{n:'C · tintineo',y:'coinC',v:.35,cd:.07,mx:2,pv:.04},{n:'Anterior',s:'coin',v:.22,cd:.07,mx:2,pv:.12,r:1.15}]],
+  ['coin','Oro por baja',[{y:'coinA',v:.35,cd:.07,mx:2,pv:.04}]],
   ['kill_w','Baja · guerrero / tanque',[{y:'killW',v:.35,cd:.04,mx:3,pv:.12}]],
   ['kill_f','Baja · rápido',[{y:'killF',v:.3,cd:.04,mx:3,pv:.12}]],
   ['kill_a','Baja · volador',[{y:'killA',v:.25,cd:.05,mx:2,pv:.1}]],
   ['kill_m','Baja · místico',[{y:'killM',v:.3,cd:.06,mx:2,pv:.08}]],
   ['kill_b','Baja · jefe',[{y:'killB',v:.6,cd:.5,mx:1}]]]],
  ['Impactos',[
-  ['h_arrow','Flecha',[{n:'A · actual',s:['h_arrow','h_arrow2'],v:.32,cd:.05,mx:3,pv:.12},{n:'B · thwack',s:'h_thwack',v:.4,cd:.05,mx:3,pv:.12},{n:'C · zip + clavo',y:'zip',s:'h_arrow',dl:.05,sr:.85,v:.32,cd:.06,mx:3,pv:.1},{n:'D · chasquido',s:['h_arrow','h_arrow2'],sr:1.45,v:.3,cd:.05,mx:3,pv:.1}]],
-  ['h_heavy','Piedra',[{n:'A · golpe + grava',s:'rock_wood',sr:.7,y:'gravel',v:.55,cd:.08,mx:2,pv:.1},{n:'B · hormigón',s:'rock_conc',sr:.75,v:.7,cd:.08,mx:2,pv:.1},{n:'C · sintetizado',y:'rock',v:.6,cd:.08,mx:2,pv:.1}]],
+  ['h_arrow','Flecha',[{n:'A · actual',s:['h_arrow','h_arrow2'],v:.32,cd:.05,mx:3,pv:.12},{n:'B · thwack',s:'h_thwack',v:.4,cd:.05,mx:3,pv:.12},{n:'C · zip + clavo',y:'zip',s:'h_arrow',dl:.05,sr:.85,v:.32,cd:.06,mx:3,pv:.1},{n:'D · chasquido',s:['h_arrow','h_arrow2'],sr:1.45,v:.3,cd:.05,mx:3,pv:.1},{n:'E · zip largo + chasquido',y:'zipL',s:['h_arrow','h_arrow2'],dl:.1,sr:1.45,v:.3,cd:.06,mx:3,pv:.1}]],
+  ['h_heavy','Piedra',[{s:'rock_conc',sr:.75,v:.7,cd:.08,mx:2,pv:.1}]],
   ['h_melee','Cuerpo a cuerpo',[{s:'h_melee',v:.35,cd:.06,mx:3,pv:.12}]],
   ['h_metal','Escudo',[{s:'h_metal',v:.3,cd:.07,mx:2,pv:.12}]],
   ['h_blade','Cuchilla',[{s:'h_blade',v:.3,cd:.07,mx:2,pv:.12}]],
   ['h_fire','Fuego',[{s:'h_fire',v:.3,cd:.1,mx:2,pv:.1}]],
-  ['h_magic','Mágico',[{n:'A · destello',y:'sparkle',v:.3,cd:.08,mx:2,pv:.08},{n:'B · arcano',y:'arcane',s:'glass2',sr:.7,v:.3,cd:.08,mx:2,pv:.08}]],
+  ['h_magic','Mágico',[{y:'arcane',s:'glass2',sr:.7,v:.3,cd:.08,mx:2,pv:.08}]],
   ['h_zap','Rayo',[{s:'h_zap',v:.22,cd:.09,mx:2,pv:.1,r:1.2}]],
-  ['h_ice','Hielo',[{n:'A · ráfaga + cristal',y:'wind',s:'glass1',dl:.18,sr:1.2,v:.35,cd:.1,mx:2,pv:.08},{n:'B · siseo helado',y:'frost',v:.35,cd:.1,mx:2,pv:.08}]],
-  ['h_poison','Veneno',[{n:'A · burbujas',y:'bubA',v:.35,cd:.1,mx:2,pv:.08},{n:'B · caldero',y:'bubB',v:.4,cd:.1,mx:2,pv:.08},{n:'C · ácido',y:'bubC',v:.35,cd:.1,mx:2,pv:.08}]],
+  ['h_ice','Hielo',[{y:'frost',v:.35,cd:.1,mx:2,pv:.08}]],
+  ['h_poison','Veneno',[{y:'bubA',v:.35,cd:.1,mx:2,pv:.08}]],
   ['beam','Rayo continuo',[{y:'beam',v:.12,cd:.3,mx:2,pv:.08}]]]],
  ['Partida',[
   ['wave','Empieza la oleada',[{y:'horn',v:.5,cd:1,mx:1}]],
-  ['wclear','Oleada superada',[{n:'A · fanfarria',y:'clrA',v:.5,cd:1,mx:1},{n:'B · campanillas',y:'clrB',v:.45,cd:1,mx:1},{n:'C · acorde',y:'clrC',v:.45,cd:1,mx:1},{n:'Anterior',s:'wclear',v:.6,cd:1,mx:1}]],
+  ['wclear','Oleada superada',[{y:'clrC',v:.63,cd:1,mx:1}]],
   ['core','Daño al núcleo',[{s:'bell',sr:.85,y:'crash',v:.75,cd:.4,mx:1,dk:1}]],
-  ['boss','Jefe',[{n:'A · chan-chan',y:'bossA',v:.6,cd:2,mx:1,dk:1},{n:'B · con eco',y:'bossB',v:.6,cd:2,mx:1,dk:1}]],
+  ['boss','Jefe',[{n:'A · chan-chan-chaaan',y:'boss3A',v:.6,cd:2,mx:1,dk:1},{n:'B · chan-chan-CHAN',y:'boss3B',v:.6,cd:2,mx:1,dk:1}]],
   ['fury','Furia',[{y:'fury',v:.5,cd:2,mx:1,dk:1}]],
   ['win','Victoria',[{s:'wclear',sr:.85,y:'nv4A',v:.7,cd:2,mx:1}]],
   ['lose','Derrota',[{y:'lose',v:.6,cd:2,mx:1}]]]],
  ['Recompensas',[
   ['relic','Reliquia',[{s:'glass1',sr:.8,y:'relic',v:.55,cd:.3,mx:1}]],
   ['ach','Logro',[{y:'tada',v:.55,cd:.3,mx:1}]]]]];
+// Reserva para otros momentos (no salen en Probar sonidos): synth 'clrA' (fanfarria), 'clrB' (campanillas), 'nv4B' (mágico), 'sparkle', 'wind', 'bubB', 'bubC', 'rock', 'gravel', 'coinB', 'coinC', 'bopA', 'bopB', 'bossA', 'bossB'; muestras 'wclear', 'coin', 'rock_wood'.
 const SFXK={};for(const[,rows]of SFXG)for(const[k,n,vs]of rows)SFXK[k]={n,vs};
 const sfxDef=k=>{const e=SFXK[k];if(!e)return null;const i=Math.min(SV[k]||0,e.vs.length-1);return e.vs[i];};
 function sndInit(){if(SND.ctx)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;SND.ctx=new C();
@@ -3834,6 +3835,12 @@ function synth(kind,t0,out,v,r){const c=SND.ctx;
  case 'bopA':bop(320,640,.09,.7);bop(640,1280,.06,.12);break;
  case 'bopB':bop(420,980,.11,.6);bop(840,1960,.07,.08,'triangle');break;
  case 'bopD':bop(260,520,.07,.6);tone('sine',520,880,.045,.008,.08,.45);break;
+ case 'bopDx':bop(880,520,.07,.5);tone('sine',520,260,.045,.008,.08,.55);break;
+ case 'upArp':[523,659,784].forEach((f,i)=>tone('triangle',f,f,.04+i*.05,.01,.22,.26));break;
+ case 'nv4U':[523,659,784].forEach((f,i)=>tone('triangle',f,f,.04+i*.05,.01,.22,.26));synth('nv4A',t0+.22,out,v,r);break;
+ case 'zipL':noise('highpass',1800,7500,1,0,.01,.1,.28);tone('sine',2400,1200,0,.005,.09,.05);break;
+ case 'boss3A':brass([73,110,147],0,.25,.22);tone('sine',62,40,0,.005,.3,.8);brass([73,110,147],.3,.25,.22);tone('sine',62,40,.3,.005,.3,.8);brass([55,82,110],.62,1.1,.24);tone('sine',50,32,.62,.005,1,1);break;
+ case 'boss3B':brass([73,110,147],0,.25,.22);tone('sine',62,40,0,.005,.3,.8);brass([73,110,147],.3,.25,.22);tone('sine',62,40,.3,.005,.3,.8);brass([98,147,196,294],.62,1,.26);tone('sine',70,40,.62,.005,.9,1);noise('lowpass',2500,400,.7,.62,.005,.6,.4);break;
  case 'bopX':bop(560,260,.1,.65);bop(1120,520,.06,.1);break;
  case 'nv4A':tone('sine',90,40,0,.01,.6,.8);noise('bandpass',400,4000,1.5,0,.5,.25,.35);[523,659,784,1047,1319].forEach((f,i)=>tone('triangle',f,f,.12+i*.07,.01,.45,.32));[2093,2637,3136].forEach((f,i)=>tone('sine',f,f,.5+i*.05,.02,.7,.12));break;
  case 'nv4B':{const e=echo(.12,.35);[392,494,587,784].forEach((f,i)=>tone('sine',f,f*1.01,i*.06,.04,.6,.25,e));for(let i=0;i<8;i++)tone('sine',2000+Math.random()*2500,2000,.25+i*.05,.005,.12,.1);tone('sine',70,45,0,.02,.6,.6);break;}
