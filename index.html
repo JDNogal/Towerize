@@ -526,7 +526,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v223</div>
+<div id="ver">Towerize v224</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -2509,7 +2509,7 @@ function chooseSpec(t,sp){
  if(!t||!S.list.includes(t)||t.lvl!==3||!SPECS[t.type]||!SPECS[t.type][sp]||!(S.phase==='build'||S.phase==='wave'))return;
  const T=TW[t.type],c=upCost(T,4);
  if(S.gold<c){S.msg='Oro insuficiente para mejorar.'+WISHTXT();ui();return;}
- S.gold-=c;S.st.spent+=c;t.lvl=4;t.spec=sp;t.inv=(t.inv||T.cost)+c;t.ab={};t.acd={};
+ S.gold-=c;S.st.spent+=c;t.lvl=4;t.spec=sp;t.inv=(t.inv||T.cost)+c;t.ab={};t.acd={};if(t.type==='augur'&&sp==='lord'&&!t.flag)autoFlag(t);
  if(t.sd){const m=sdHp(t);for(const q of t.sd){const dd=m-q.max;q.max=m;if(q.hp>0)q.hp=Math.min(m,Math.max(1,q.hp+dd));}}S.msg='';refreshPrim();ui();
 }
 function buyAb(t,id){
