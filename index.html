@@ -284,18 +284,18 @@ body.dsk main{max-width:none;height:100%}
 body.dsk h1{display:none}
 body.dsk #cw{position:fixed;inset:0;max-width:none;margin:0}
 body.dsk canvas#c{width:100%;height:100%;border:0;border-radius:0}
-body.dsk .fl{background:rgba(20,22,28,.84);border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.35);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
-body.dsk #stats{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:12;gap:26px;padding:7px 20px;border-radius:22px;white-space:nowrap;background:rgba(20,22,28,.84);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.35)}
-body.dsk #relics{position:fixed;left:8px;bottom:8px;z-index:12;margin:0;max-width:24vw;min-height:0;padding:6px 8px;border-radius:12px;background:rgba(20,22,28,.84);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.35)}
+body.dsk .fl{background:color-mix(in srgb,var(--panel) 84%,transparent);border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.35);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+body.dsk #stats{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:12;gap:26px;padding:7px 20px;border-radius:22px;white-space:nowrap;background:color-mix(in srgb,var(--panel) 84%,transparent);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.35)}
+body.dsk #relics{position:fixed;left:8px;bottom:8px;z-index:12;margin:0;max-width:24vw;min-height:0;padding:6px 8px;border-radius:12px;background:color-mix(in srgb,var(--panel) 84%,transparent);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.35)}
 body.dsk #relics:empty{display:none}
-body.dsk #panel{position:fixed;left:50%;bottom:8px;transform:translateX(-50%);z-index:12;width:max-content;min-width:min(420px,calc(100vw - 40px));max-width:min(820px,calc(100vw - 2*min(24vw,300px) - 60px));max-height:44vh;overflow:auto;min-height:0;box-sizing:border-box;border-radius:12px;background:rgba(20,22,28,.86);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.35)}
+body.dsk #panel{position:fixed;left:50%;bottom:8px;transform:translateX(-50%);z-index:12;width:max-content;min-width:min(420px,calc(100vw - 40px));max-width:min(820px,calc(100vw - 2*min(24vw,300px) - 60px));max-height:44vh;overflow:auto;min-height:0;box-sizing:border-box;border-radius:12px;background:color-mix(in srgb,var(--panel) 86%,transparent);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.35)}
 body.dsk #ctl,body.dsk #opt{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(44vh + 18px);z-index:12;margin:0}
 body.dsk #ctl:empty,body.dsk #opt:empty{display:none}
 body.dsk #mbl{top:8px;right:8px;bottom:auto;left:auto}
 body.dsk #zm{top:52px}
 body.dsk #ver{position:fixed;top:46px;left:50%;transform:translateX(-50%);margin:0;z-index:11;font-size:10px;opacity:.55}
 body.dsk.inmenu #stats,body.dsk.inmenu #relics,body.dsk.inmenu #panel,body.dsk.inmenu #ver,body.dsk.ovl #stats,body.dsk.ovl #relics,body.dsk.ovl #panel,body.dsk.ovl #ver,body.dsk.ovl #ctl,body.dsk.ovl #opt{display:none}
-#fps{position:absolute;top:8px;right:48px;z-index:3;font:700 12px/1 system-ui,sans-serif;padding:4px 7px;border-radius:6px;background:rgba(20,22,28,.75);pointer-events:none;display:none}
+#fps{position:absolute;top:8px;right:48px;z-index:3;font:700 12px/1 system-ui,sans-serif;padding:4px 7px;border-radius:6px;background:color-mix(in srgb,var(--panel) 75%,transparent);pointer-events:none;display:none}
 body.dsk #fps{position:fixed;top:44px;right:8px}body.dsk.fpsx #zm{top:74px}body.inmenu #fps{display:none!important}
 #stR,#stC{color:var(--fg1)}
 /* miniatura del menú de Opciones (para enseñar la personalización) */
@@ -306,7 +306,7 @@ body.dsk #fps{position:fixed;top:44px;right:8px}body.dsk.fpsx #zm{top:74px}body.
 /* siluetas de recompensas por conseguir */
 .sil{display:inline-block;font-size:22px;line-height:1;filter:brightness(0) invert(.38) drop-shadow(0 0 1px rgba(255,255,255,.7));font-size:26px;cursor:help}
 
-#apan{display:none;position:absolute;top:8px;left:52px;z-index:14;width:min(300px,70vw);max-height:70vh;overflow:auto;padding:10px;background:rgba(20,22,28,.92);border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.4);color:var(--fg);font-size:13px}
+#apan{display:none;position:absolute;top:8px;left:52px;z-index:14;width:min(300px,70vw);max-height:70vh;overflow:auto;padding:10px;background:color-mix(in srgb,var(--panel) 92%,transparent);border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.4);color:var(--fg);font-size:13px}
 #apan.on{display:block}body.inmenu #apan{display:none!important}#apan .apr{padding:6px 0;border-top:1px solid #2c303c}#apan .apr:first-of-type{border-top:0}#apan button{margin:8px 0 0;width:100%}
 .apb{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin:4px 0 2px}.apb span{display:block;height:100%;background:var(--acc);border-radius:3px}.apb.cur span{background:#6fe07a}
 .ast{font-size:12px;margin-top:3px}.ast.ok{color:#6fe07a}.ast.ko{color:var(--red)}.ast.nt{color:var(--fg2)}
@@ -408,7 +408,7 @@ body.mfs #tip{left:auto!important;right:0!important;top:0!important;bottom:0;wid
  #tip::-webkit-scrollbar,#comp::-webkit-scrollbar,#opts::-webkit-scrollbar,#relic::-webkit-scrollbar,#panel::-webkit-scrollbar,#side::-webkit-scrollbar,#menu::-webkit-scrollbar,#endscr::-webkit-scrollbar,.kpanel::-webkit-scrollbar,.evwin::-webkit-scrollbar{width:6px;height:6px}
  #tip::-webkit-scrollbar-thumb,#comp::-webkit-scrollbar-thumb,#opts::-webkit-scrollbar-thumb,#relic::-webkit-scrollbar-thumb,#panel::-webkit-scrollbar-thumb,#side::-webkit-scrollbar-thumb,#menu::-webkit-scrollbar-thumb,#endscr::-webkit-scrollbar-thumb,.kpanel::-webkit-scrollbar-thumb,.evwin::-webkit-scrollbar-thumb{background:#8a90a0;border-radius:3px}
  #tip::-webkit-scrollbar-track,#comp::-webkit-scrollbar-track,#opts::-webkit-scrollbar-track,#relic::-webkit-scrollbar-track,#panel::-webkit-scrollbar-track,#side::-webkit-scrollbar-track,#menu::-webkit-scrollbar-track,#endscr::-webkit-scrollbar-track,.kpanel::-webkit-scrollbar-track,.evwin::-webkit-scrollbar-track{background:rgba(255,255,255,.06)}}
-.smore::after{content:'▼';position:sticky;bottom:0;display:block;height:26px;margin-top:-26px;line-height:30px;text-align:center;font-size:11px;color:var(--fg1);background:linear-gradient(rgba(20,22,28,0),rgba(20,22,28,.92));pointer-events:none;z-index:5}
+.smore::after{content:'▼';position:sticky;bottom:0;display:block;height:26px;margin-top:-26px;line-height:30px;text-align:center;font-size:11px;color:var(--fg1);background:linear-gradient(color-mix(in srgb,var(--panel) 0%,transparent),color-mix(in srgb,var(--panel) 92%,transparent));pointer-events:none;z-index:5}
 
 /* selección de héroe en móvil: pantalla completa, solo se desplaza la tarjeta de información */
 body.mfs #relic{inset:0!important;border-radius:0!important}
@@ -526,7 +526,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v220</div>
+<div id="ver">Towerize v221</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1166,7 +1166,7 @@ const cosOf=aid=>{const r=[];for(const k of['pal','core','dec'])for(const c of C
 const decOn=id=>{const c=COSM.dec.find(d=>d.id===id);return !!c&&cosOwn(c)&&!(OPT.decoff||{})[id];};
 const COL={bg2:'#14161c'};
 try{document.fonts&&document.fonts.load('16px "Noto Color Emoji"','🪙🪨🪵🪶🪽🩸🪦🪺🫗🫠');}catch(e){}
-function applyPal(){setTimeout(()=>{try{const v=getComputedStyle(document.body).getPropertyValue('--bg2').trim();if(v)COL.bg2=v;}catch(e){}},0);const p=COSM.pal.find(x=>x.id===OPT.pal);document.documentElement.dataset.pal=p&&cosOwn(p)?p.id:'amb';}
+function applyPal(){/* el mapa no usa la paleta: siempre el fondo de siempre */const p=COSM.pal.find(x=>x.id===OPT.pal);document.documentElement.dataset.pal=p&&cosOwn(p)?p.id:'amb';}
 // victorias por héroe → marcos
 let HWIN={};try{HWIN=JSON.parse(localStorage.getItem('rt-hwin'))||{};}catch(e){}
 const FRT=[[15,3,'oro'],[5,2,'plata'],[1,1,'bronce']];
