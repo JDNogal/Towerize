@@ -526,7 +526,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v219</div>
+<div id="ver">Towerize v220</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3597,7 +3597,7 @@ setInterval(()=>{try{for(const el of document.querySelectorAll(SMSEL)){const on=
 (()=>{const p=document.createElement('div');p.id='hpop';p.className='tipc';document.body.appendChild(p);let cur=null;
  const show=a=>{const tg=resolve(a);if(!tg)return;p.innerHTML=tg.html();p.style.display='block';const r=a.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight;let l=r.right+8;if(l+w>innerWidth-8)l=r.left-8-w;if(l<8)l=Math.max(8,Math.min(innerWidth-8-w,r.left));let t=r.top;if(t+h>innerHeight-8)t=innerHeight-8-h;if(t<8)t=8;p.style.left=l+'px';p.style.top=t+'px';cur=a;};
  const hide=()=>{p.style.display='none';cur=null;};
- const tgt=e=>e.target.closest&&e.target.closest('#relic [data-tip^="habp:"]');
+ const tgt=e=>e.target.closest&&e.target.closest('#relic [data-tip^="habp:"],[data-tip^="achrw:"]');
  document.addEventListener('click',e=>{const a=tgt(e);if(a){if(cur===a&&TOUCH)hide();else show(a);e.stopPropagation();return;}if(!(e.target.closest&&e.target.closest('#hpop')))hide();},true);
  document.addEventListener('mouseover',e=>{if(TOUCH)return;const a=tgt(e);if(a)show(a);else if(cur&&!(e.target.closest&&e.target.closest('#hpop')))hide();});
  setInterval(()=>{if(cur&&!document.body.contains(cur))hide();},300);})();
