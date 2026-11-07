@@ -71,7 +71,7 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .tst{background:color-mix(in srgb,var(--panel2) 96%,transparent);color:var(--fg);border:1px solid var(--hl);border-radius:10px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:tstin .3s ease-out;transition:opacity .5s,transform .5s;max-width:80vw}
 .tst.out{opacity:0;transform:translateY(-10px)}@keyframes tstin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}#comp.open,#opts.open,#relic.open{display:block}#errb{position:fixed;z-index:99;max-width:min(320px,calc(100vw - 20px));padding:8px 13px;border-radius:12px;background:#b8323f;color:#fff;font-size:13.5px;font-weight:600;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.45);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .18s,transform .18s}#errb.on{opacity:1;transform:none}
 .kcap{position:absolute;top:-9px;left:50%;transform:translateX(-50%);min-width:18px;height:17px;box-sizing:border-box;padding:0 5px;border-radius:5px;background:#1b1e26;border:1px solid #8a92a6;border-bottom-width:2.5px;color:#fff;font:700 10.5px/14px system-ui,sans-serif;white-space:nowrap;pointer-events:none;z-index:3;box-shadow:0 2px 4px rgba(0,0,0,.45);text-align:center}
-#relics,#relics .rl,#mbr .hpan,#mbr .hpb{overflow:visible!important}#relics{padding-top:10px}
+#relics,#relics .rl,#mbr .hpan,#mbr .hpb{overflow:visible!important}#relics{padding-top:12px}.kcap.kc2{background:none;border:0;box-shadow:none;padding:0;min-width:0;height:auto;top:-11px;display:flex;align-items:center;gap:2px;font-size:12px}.kc2 b{display:inline-grid;place-items:center;min-width:20px;height:20px;box-sizing:border-box;padding:0 4px;border-radius:5px;background:#1b1e26;border:1px solid #8a92a6;border-bottom-width:2.5px;color:#fff;font:700 12px/1 system-ui,sans-serif;box-shadow:0 2px 4px rgba(0,0,0,.45)}.kc2 em{font-style:normal;font-weight:800;color:#fff;text-shadow:0 1px 2px #000,0 0 3px #000}
 .hsay{}
 #bmenu{position:absolute;left:0;top:0;width:0;height:0;z-index:12;display:none}
 #bmenu.on{display:block}
@@ -250,7 +250,7 @@ body.inmenu #stats,body.inmenu #relics,body.inmenu #ctl,body.inmenu #opt,body.in
 .pbr span{display:inline-flex;align-items:center;gap:3px}
 .pbr i{display:inline-block;width:8px;height:8px;border-radius:50%}
 .pbg{display:flex;align-items:center;gap:6px}.pbk{border-left:2px solid rgba(255,215,90,.6);padding-left:6px;margin:1px 0}
-.pbm{color:var(--hl);min-width:24px;text-align:right}
+.pbm{color:#f0b429;min-width:24px;text-align:right;font-weight:800}.pbc{color:#fff;opacity:.78;font-weight:600}
 .pbs{color:var(--tffb35a,#ffb35a);font-weight:600}.pbin .pbs{color:#ffb35a}.pbh{font-weight:700;color:#fff;margin-bottom:2px}.pbmore{opacity:.65;font-style:italic}.pbw{flex-wrap:wrap;white-space:normal;max-width:300px;row-gap:0}.pbw>span{white-space:nowrap}
 .pbub span[class^=pd]{display:block;border-radius:50%;background:rgba(12,13,18,.94);border:1px solid rgba(255,255,255,.14);margin-top:3px}
 .pd1{width:7px;height:7px}.pd2{width:5px;height:5px}.pd3{width:3px;height:3px}#focus.open{display:block}
@@ -583,7 +583,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v250</div>
+<div id="ver">Towerize v251</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1379,7 +1379,7 @@ function renderRelics(){
  const hb=S.hero?`<button class="rl hero${S.aim==='hero'?' aim':''}${S.aim&&S.aim!=='hero'?' dim':''}${S.hero.s.hp<=0?' off':''}" data-a="hero" data-tip="hero:x" style="background:${S.hero.def.col}">${portrait(S.hero.id,1)}<span class="bdg">${S.hero.s.hp<=0?Math.ceil(S.hero.s.rt)+'s':S.hero.lvl}</span></button>`:'';
  const vb=Object.keys(VCH).filter(k=>S.vch&&S.vch[k]>0).map(k=>`<button class="rl${S.aim==='vch'&&S.vty===k?' aim':''}${S.aim&&!(S.aim==='vch'&&S.vty===k)?' dim':''}" data-a="vch" data-id="${k}" data-tip="vch:${k}" style="background:#5a4a2a">${VCH[k].ic}<span class="bdg">${S.vch[k]}</span></button>`).join('');
  let rki=0;$('relics').innerHTML=vb+(S.relics.length?S.relics.map(id=>{const kn=++rki;const st=S.rs[id],R=RELIC[id],off=st.cd>0,on=st.t>0,bd=on?Math.ceil(st.t)+'s':off?st.cd:'';
-  const rd=relUsable(id);return `<button class="rl${off?' off':''}${on?' act':''}${rd?' rdy'+(RUSE()<3?' pul':''):''}${RFL[id]&&performance.now()-RFL[id]<900?' rfl':''}${S.aim===id?' aim':''}${S.aim&&S.aim!==id?' dim':''}" data-a="ract" data-id="${id}" data-tip="relic:${id}" style="background:${R.col}">${R.ic}${bd!==''?`<span class="bdg">${bd}</span>`:''}${kn<=9?kcap('⇧+'+kn):''}</button>`;}).join(''):'');
+  const rd=relUsable(id);return `<button class="rl${off?' off':''}${on?' act':''}${rd?' rdy'+(RUSE()<3?' pul':''):''}${RFL[id]&&performance.now()-RFL[id]<900?' rfl':''}${S.aim===id?' aim':''}${S.aim&&S.aim!==id?' dim':''}" data-a="ract" data-id="${id}" data-tip="relic:${id}" style="background:${R.col}">${R.ic}${bd!==''?`<span class="bdg">${bd}</span>`:''}${kn<=9&&kcOn()?`<span class="kcap kc2"><b>⇧</b><em>+</em><b>${kn}</b></span>`:''}</button>`;}).join(''):'');
 }
 let RSIG='';const RFL={},RPCD={};
 // activa usable ahora mismo (para el brillo): recargada, sin efecto en curso y en la fase en que se puede usar
@@ -2779,7 +2779,7 @@ const PSPEC=['mini','elite','wanted','greyw','bigw','momdrg','boss','colossus','
 const portalAt=c=>S.portals.find(p=>Math.abs(c.x-p.x)<=1&&Math.abs(c.y-p.y)<=1)||null;
 function qGroups(list){const gs=[[]];for(const t of list){if(t==='|'){gs.push([]);continue;}gs[gs.length-1].push(t);}return gs.filter(g=>g.length);}
 function rowOf(g){const o=[];for(const t of g){const r=o.find(x=>x[0]===t);if(r)r[1]++;else o.push([t,1]);}return o;}
-function rowHtml(r){return `<div class="pbr">${r.map(([t,c])=>`<span class="${PSPEC.includes(t)?'pbs':''}">${c}× <i style="background:${ET[t==='wanted'?'elite':t].col}"></i>${t==='wanted'?'Élite (encargo)':ET[t].n}</span>`).join('')}</div>`;}
+function rowHtml(r){return `<div class="pbr">${r.map(([t,c])=>`<span class="${PSPEC.includes(t)?'pbs':''}"><i style="background:${ET[t==='wanted'?'elite':t].col}"></i>${t==='wanted'?'Élite (encargo)':ET[t].n} <b class="pbc">×${c}</b></span>`).join('')}</div>`;}
 function portalRows(p,lim){
  let gs;if(S.phase==='wave')gs=qGroups(p.q||[]);else{gs=qGroups(baseQueue(p));const sp=[];for(const t of PSPEC)for(let i=0;i<(p.plan[t]||0);i++)sp.push(t);if(sp.length)gs.push(sp);}
  const tot=gs.reduce((a,g)=>a+g.length,0),pl=(n,s)=>n+' '+s+(n===1?'':'s');
