@@ -70,6 +70,7 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 #toast{position:fixed;top:62px;left:50%;transform:translateX(-50%);z-index:99;display:flex;flex-direction:column;gap:6px;pointer-events:none}
 .tst{background:color-mix(in srgb,var(--panel2) 96%,transparent);color:var(--fg);border:1px solid var(--hl);border-radius:10px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:tstin .3s ease-out;transition:opacity .5s,transform .5s;max-width:80vw}
 .tst.out{opacity:0;transform:translateY(-10px)}@keyframes tstin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}#comp.open,#opts.open,#relic.open{display:block}#errb{position:fixed;z-index:99;max-width:min(320px,calc(100vw - 20px));padding:8px 13px;border-radius:12px;background:#b8323f;color:#fff;font-size:13.5px;font-weight:600;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.45);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .18s,transform .18s}#errb.on{opacity:1;transform:none}
+.fbar{row-gap:6px}.fbar button{margin-bottom:6px!important}#relic .evopts button,#relic .pbot button{margin-bottom:6px}
 .kcap.bkq{position:static;transform:none;align-self:flex-end;margin:0 4px 22px;height:20px;line-height:17px;font-size:12px;min-width:22px}
 .oxb,.bkx{position:relative;overflow:visible!important}.kcap.kesc{top:auto;bottom:-22px;font-size:9.5px;height:15px;line-height:12px;padding:0 4px}
 .kfoc{outline:3px solid #f0b429!important;outline-offset:2px!important;box-shadow:0 0 14px rgba(240,180,41,.55)!important;position:relative;z-index:2}
@@ -103,14 +104,14 @@ body.dsk #comp.bkm,body.mfs #comp.bkm,body.inmenu #comp.bkm{position:fixed!impor
 .bti .bdot{width:28px;height:28px;border-radius:50%;margin:8px;display:block;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2)}
 .bti .bbf{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font:800 18px system-ui;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)}
 .bti canvas{width:44px;height:44px;border-radius:6px;background:#d9c69c}
-.bti.got .bic{box-shadow:0 0 0 2px #2f8a4a}.bti.hid .bic{background:#d9c69c}
+.bti.got .bic{box-shadow:0 0 0 2px #2f8a4a}.bti.pin::before{content:"📌";position:absolute;top:-6px;left:-4px;font-size:13px;z-index:1}.bti.hid .bic{background:#d9c69c}
 .bti.ach:not(.got):not(.hid) .bic i{filter:grayscale(.6);opacity:.75}
 #comp .bkm,.bkp .bti.un{opacity:1}
 .bkglow{animation:bkglow 1.5s ease-out}@keyframes bkglow{0%,40%{box-shadow:0 0 0 3px #e8b04a,0 0 20px 4px rgba(232,176,74,.8)}100%{box-shadow:0 0 0 0 transparent}}
 .bkhl{animation:bkglow 1.5s ease-out}
-.bkflt{margin:2px 0 6px;font-size:12px;line-height:2}.bkflt button{margin:0 3px 0 0!important;padding:1px 9px!important;border-radius:12px!important;background:transparent!important;border:1px solid #c9b183!important;color:#5a3a20!important;font-size:12px}.bkflt button.on{background:#a8581c!important;border-color:#a8581c!important;color:#fbf5e8!important}.bkfl{color:#7a5a3a;margin-right:4px;font-style:italic}
+.bkflt{margin:2px 0 8px;font-size:12px;display:flex;flex-direction:column;gap:7px}.bkfr{display:flex;flex-wrap:wrap;align-items:center;gap:5px}.bkflt button{margin:0!important;padding:1px 9px!important;border-radius:12px!important;background:transparent!important;border:1px solid #c9b183!important;color:#5a3a20!important;font-size:12px}.bkflt button.on{background:#a8581c!important;border-color:#a8581c!important;color:#fbf5e8!important}.bkfl{color:#7a5a3a;margin-right:4px;font-style:italic}
 .bkhd{float:right;margin:0 0 8px 12px}.bkbic{width:92px;height:92px;border-radius:18px;display:grid;place-items:center;font-size:52px;box-shadow:0 6px 14px rgba(90,40,10,.3);background:#d9c69c}.bkach.off{filter:grayscale(.7);opacity:.7}
-.bkpor{display:block;width:110px;height:110px;border-radius:16px;overflow:hidden;box-shadow:0 6px 14px rgba(90,40,10,.3)}.bkpor svg{width:100%;height:100%;display:block}.bkpor.lk svg{filter:brightness(0) opacity(.4)}
+.bkpor{display:block;width:110px;height:110px;border-radius:16px;overflow:hidden;box-shadow:0 6px 14px rgba(90,40,10,.3)}.bkpor svg{width:100%;height:100%;display:block}.bkpor.lk{box-shadow:none;background:transparent;margin:0 auto 4px;width:150px;height:150px}.bkpor.lk svg{filter:brightness(0) opacity(.35)}.bkhun .hbox{text-align:left;margin:12px auto 0;max-width:320px;background:rgba(255,250,235,.55);border:1px solid #d0bb8c;border-radius:10px;padding:8px 12px}
 #comp .bkp .ce.bkce{background:transparent!important;border:0!important;padding:0!important;box-shadow:none!important}
 #comp .bkp .ce{background:rgba(255,250,235,.5)!important;border-color:#d0bb8c!important}
 .bkp .ttl b{font:700 21px Georgia,serif;color:#3b2a18}
@@ -643,7 +644,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v258</div>
+<div id="ver">Towerize v259</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1027,7 +1028,7 @@ const savePins=()=>{try{localStorage.setItem('rt-achpin',JSON.stringify(PINS));}
 // logros que hablan de algo que quizá no has encontrado: se muestran como «logro oculto» hasta encontrarlo
 const PIGS=['straw','wood','brick'],hUnl=id=>HEROES[id]&&!HEROES[id].lockTxt;
 const ACHFND={pigs:()=>PIGS.some(k=>seen('tw',k)),cloink:()=>PIGS.some(k=>seen('tw',k)),dragon:()=>seen('tw','dragon'),faro:()=>seen('tw','faro'),party:()=>seen('tw','guild'),
- bowl:()=>hUnl('reinhart'),jungle:()=>hUnl('sylvana'),bhole:()=>hUnl('radagast'),pure:()=>hUnl('radagast'),zero:()=>hUnl('yrsa'),thermal:()=>hUnl('yrsa'),circuit:()=>seen('tw','tesla')};
+ bowl:()=>hUnl('reinhart'),jungle:()=>hUnl('sylvana'),bhole:()=>hUnl('radagast'),pure:()=>hUnl('radagast'),zero:()=>hUnl('yrsa'),thermal:()=>hUnl('yrsa'),circuit:()=>seen('tw','tesla'),elem:()=>tunl('sala')&&tunl('frost')};
 const achFound=id=>UNLOCK_ALL||!!ACHS[id]||!ACHFND[id]||ACHFND[id]();
 const achReq=id=>ACH[id]?(achFound(id)?'🏆 '+ACH[id].n+': '+ACH[id].d:'🏆 Un logro oculto: sigue jugando para descubrirlo.'):'';
 function lockToast(title,id){toast('🔒 <b>'+title+'</b>'+(id&&ACH[id]?'<br><small>'+achReq(id)+'</small>':''));}
@@ -1181,8 +1182,8 @@ function fitHero(){const el=$('relic'),pk=el&&el.querySelector('.hpk');if(!pk||!
  pk.style.setProperty('--hs',lo.toFixed(3));pk.style.minHeight=H+'px';if(!fitHero.again){fitHero.again=1;requestAnimationFrame(()=>{fitHero.again=0;if(RL.open&&RL.hpick)fitHero2();});}}
 function fitHero2(){const f=fitHero.again;fitHero.again=1;fitHero();fitHero.again=f;}
 addEventListener('resize',()=>{if(RL.open&&RL.hpick)fitHero();});
-const HVIS={yrsa:()=>!!ACHS.elem||OPT.u_hr||tunl('sala')&&tunl('frost')},heroVis=h=>!HVIS[h]||HVIS[h]();
-const ACHVIS={elem:()=>tunl('sala')&&tunl('frost'),marathon:()=>false,circuit:()=>false},achVis=id=>!!ACHS[id]||!ACHVIS[id]||ACHVIS[id]();
+const HVIS={},heroVis=h=>!HVIS[h]||HVIS[h]();
+const ACHVIS={marathon:()=>false,circuit:()=>false},achVis=id=>!!ACHS[id]||!ACHVIS[id]||ACHVIS[id]();
 const HUNL={yrsa:'elem'};
 function heroLockBox(id){const D=HEROES[id],a=HUNL[id]&&ACH[HUNL[id]];return `<div class="hbox"><div class="hbt">🔒 Héroe bloqueado</div><small class="hdesc">${a?achReq(HUNL[id]):D.lockTxt}</small></div>`;}
 const HIDS=()=>S&&S.tut?['reinhart','sylvana']:Object.keys(HEROES).filter(heroVis);
@@ -1191,7 +1192,7 @@ function heroNav(d){RL.hconf=null;const ids=HIDS();let k=ids.indexOf(RL.hsel);k=
 function renderHeroPick(){return renderHeroPickC();}
 function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];const id=RL.hsel,D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;ids.forEach(h=>see('hr',h));
  const bar=(l,v,c)=>`<div class="hbar"><span>${l}</span><span class="bt"><span class="bf" style="width:${Math.round(Math.min(1,v)*100)}%;background:${c}"></span></span></div>`;
- const roster=ids.map(h=>{const L=!!HEROES[h].lockTxt;return `<button class="rt${h===id?' on':''}${L?' lk':''}" data-a="hgo" data-id="${h}" title="${L?'???':HEROES[h].n}">${portrait(h,1)}${L?'<span class="lc">🔒</span>':''}</button>`;}).join('');
+ const roster=ids.map(h=>{const L=!!HEROES[h].lockTxt;return `<button class="rt${h===id?' on':''}${L?' lk':''}" data-a="hgo" data-id="${h}" title="${L?'???':HEROES[h].n}">${portrait(h,1,L)}${L?'<span class="lc">🔒</span>':''}</button>`;}).join('');
  const info=lk?`<div class="hnm">???</div><div class="hcl">???</div><div class="hsec">🔒 Héroe bloqueado</div><small class="hds">${HUNL[id]?achReq(HUNL[id]):D.lockTxt}</small>`:
   `<div class="hnm">${D.n}<small>Récord: Nv ${HLV[id]||1}</small></div><div class="hcl">${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</div><div class="chips">${(D.tags||[]).filter(t=>t!=='Cuerpo a cuerpo'&&t!=='A distancia').map(t=>`<span>${t}</span>`).join('')}</div>`+
   `<p class="hds">${D.d}</p>`+bar('Vida',b.hp/HMX.hp,'#6fe07a')+bar('Daño',b.dmg/b.cd*(D.area?1.3:1)/HMX.dp,'#e0605a')+bar('Alcance',(b.range||.5)/HMX.rg,'#5ab4ff')+
@@ -1720,6 +1721,8 @@ setInterval(()=>{try{const on=kcOn();for(const b of document.querySelectorAll('.
 setInterval(()=>{if(!MN.on)return;const r=mnRoot();if(!r){mnClear();return;}if(!(MN.el&&MN.el.isConnected))mnRefind(r);},150);
 
 // ======================= COMPENDIO EN FORMATO LIBRO =======================
+// pulsar en el fondo oscuro (fuera del libro y de los marcapáginas) lo cierra
+document.addEventListener('click',e=>{const c=$('comp');if(CP.open&&c&&c.classList.contains('bkm')&&e.target===c)toggleComp(false);});
 // marcapáginas arriba (secciones) · página izquierda: fichas en cuadritos · página derecha: detalle de lo elegido
 const CTICO={tw:'🗼',hr:'🦸',pc:'🧩',bf:'✨',rl:'💎',en:'👹',ev:'📜',lg:'🏆'};
 const bkNarrow=()=>innerWidth<760||innerHeight<430;
@@ -1742,17 +1745,18 @@ function bkItems(t){const L=[];
  else if(t==='ev'){for(const id of Object.keys(EVENTS))L.push({id,ic:EVENTS[id].ic||'❔',n:EVENTS[id].n,ok:seen('ev',id)});}
  else if(t==='lg'){CP.af=CP.af||'all';CP.as=CP.as||'all';
   for(const [c,cn] of ACHCATS){const ids=Object.keys(ACH).filter(id=>achVis(id)&&(ACH[id].c||'cl')===c&&(CP.af==='all'||c===CP.af)&&(CP.as==='all'||(CP.as==='ok')===!!ACHS[id]));if(!ids.length)continue;
-   L.push({sec:cn});for(const id of ids){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||'🏅'):'❔',n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd});}}
+   L.push({sec:cn});for(const id of ids){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||'🏅'):'❔',n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd,pin:PINS.includes(id)});}}
+  const pn=PINS.filter(id=>ACH[id]&&achVis(id)&&!ACHS[id]&&achFound(id)&&(CP.as!=='ok'));if(pn.length)L.unshift({sec:'📌 Fijados'},...pn.map(id=>({id,ic:ACH[id].ic||'🏅',n:ACH[id].n,ok:true,pin:true})));
   const rest=Object.keys(ACH).filter(id=>achVis(id)&&!ACHCATS.some(([c])=>(ACH[id].c||'cl')===c)&&(CP.af==='all')&&(CP.as==='all'||(CP.as==='ok')===!!ACHS[id]));
   if(rest.length){L.push({sec:'Otros'});for(const id of rest){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||'🏅'):'❔',n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd});}}}
  return L;}
 function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
- if(it.por)ic=`<span class="bpor">${portrait(it.id,1)}</span>`;
+ if(it.por)ic=`<span class="bpor">${portrait(it.id,1,!it.ok)}</span>`;
  else if(it.pc!=null)ic=`<canvas width="44" height="44" data-bpi="${it.pc}"></canvas>`;
  else if(it.bf)ic=`<span class="bbf" style="background:${BF[it.bf].col}">${BF[it.bf].l||''}</span>`;
  else if(it.dot)ic=`<span class="bdot" style="background:${it.dot}"></span>`;
  else ic=`<span class="bic"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
- return `<button class="bti${t==='lg'?' ach':''}${on?' on':''}${it.ok?'':' un'}${it.got?' got':''}${it.hid?' hid':''}${it.lk&&!it.ok?' lkd':''}" data-a="csel" data-v="${it.id}">${ic}<small>${it.ok?it.n:'???'}</small></button>`;}
+ return `<button class="bti${t==='lg'?' ach':''}${it.pin?' pin':''}${on?' on':''}${it.ok?'':' un'}${it.got?' got':''}${it.hid?' hid':''}${it.lk&&!it.ok?' lkd':''}" data-a="csel" data-v="${it.id}">${ic}<small>${it.ok?it.n:'???'}</small></button>`;}
 const bkPrevBtn=(a,v,l)=>`<button class="bkgo" data-a="${a}" data-v="${v}">▶ ${l||'Ver en acción'}</button>`;
 function bkDetail(t,id){
  const sh=(ic,txt)=>`<div class="bkun"><span class="sil bkbig">${ic}</span><h4>???</h4><p>${txt}</p></div>`;
@@ -1760,7 +1764,7 @@ function bkDetail(t,id){
   if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+`<button class="bklink" data-a="cachgo" data-v="${a}">🏆 ${fn?ACH[a].n:'Logro oculto'}</button>`;}return sh(T.ic,'Aún no descubierto.');}
   if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return `<div class="bkhd"><span class="bkbic" style="background:${T.col}">${T.ic}</span></div><div class="ce bkce">${uniqGlance(id,cur)}</div>`+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   return `<div class="bkhd"><span class="bkbic" style="background:${T.col}">${T.ic}</span></div><div class="ce bkce">${shopInfo(id,1)}</div>`+bkPrevBtn('cprev',id);}
- if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkhd"><span class="bkpor lk">${portrait(id)}</span></div><h4>🔒 ???</h4>${heroLockBox(id)}`;
+ if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;
   return `<div class="bkhd"><span class="bkpor" style="background:${D.col}">${portrait(id)}</span></div><div class="ce bkce">${heroInfo(id,1)}</div>`+bkPrevBtn('chprev',id);}
  if(t==='pc'){const i=+id,o=PIECES[i];if(!o)return'';if(!seen('pc',o.n))return sh('🧩','Aún no descubierta.');
   return `<div class="ce bkce"><div class="ttl">${(SOLARES[o.n]||[]).length>1?`<button class="stbtn lvbtn" data-a="cpcv" data-v="${i}" title="Ver la otra disposición de solares">V${((CP.pcv||{})[i]||0)+1}</button>`:''}<b>${o.n}</b> · ${opens(o.p)} salidas</div><canvas width="168" height="168" data-pi="${i}" style="margin:8px auto"></canvas><small>Solares en partida: <b>${SOLN[o.n]||'—'}</b></small><small>Las piezas pueden salir giradas, con casillas especiales y con otra decoración. Solo se construye en los solares.</small></div>`;}
@@ -1773,9 +1777,14 @@ function bkDetail(t,id){
   const rw=arw(ok,T&&[T.ic,T.n,'tw'],id)+arw(ok,A.rl&&[RELIC[A.rl].ic,RELIC[A.rl].n,'rl'],id)+arw(ok,A.hr&&[HEROES[A.hr].ic,HEROES[A.hr].n,'hr'],id)+arw(ok,A.ux&&['📖','Compendio','cp'],id)+cosOf(id).map(([k,c])=>arw(ok,[CSKIND[k][0],c.n,'cs'],id)).join('');
   return `<div class="bkhd"><span class="bkbic bkach${ok?'':' off'}">${A.ic||'🏅'}</span></div><div class="ce ach bkce${ok?' got':''}${CP.hl===id?' bkhl':''}"><div class="ttl">${ok?'':`<button class="pinb${PINS.includes(id)?' on':''}" data-a="apin" data-id="${id}" title="${PINS.includes(id)?'Quitar de fijados':'Fijar para seguirlo en partida'}">📌</button>`}<b>${A.n}</b></div>${achSec(id)?'<small style="margin:0">??? · <em>'+A.h+'</em></small>':'<small style="margin:0">'+A.d+'</small>'}<div class="abot">${rw}${ok?`<small class="agot">✓ Conseguido el ${dd(ACHS[id])}</small>`:achProg(id,run)}</div></div>`;}
  return '';}
+// filtros: cada opción solo si hay algo descubierto que encaje; una fila con menos de 2 opciones reales no se muestra
 function bkFilters(t){
- if(t==='tw'||t==='en'){const fl=CFILTERS[t];return '<div class="bkflt">'+fl.map(f=>`<span class="bkfl">${f.label}:</span><button class="${CP.flt[f.key]?'':'on'}" data-a="cflt" data-f="${f.key}" data-v="">Todos</button>`+f.opts.map(([v,l])=>`<button class="${CP.flt[f.key]===v?'on':''}" data-a="cflt" data-f="${f.key}" data-v="${v}">${l}</button>`).join('')).join('<br>')+'</div>';}
- if(t==='lg')return '<div class="bkflt">'+[['all','Todos'],['todo','Pendientes'],['ok','Conseguidos']].map(([k,n])=>`<button class="${CP.as===k?'on':''}" data-a="achs" data-v="${k}">${n}</button>`).join('')+'</div>';
+ if(t==='tw'||t==='en'){const fl=CFILTERS[t],pool=t==='tw'?Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k)&&seen('tw',k)):Object.keys(ET).filter(k=>seen('en',k));
+  const rows=fl.map(f=>{const ops=f.opts.filter(([v])=>pool.some(k=>f.test(k,v)));if(ops.length<2){if(CP.flt[f.key])CP.flt[f.key]='';return '';}if(CP.flt[f.key]&&!ops.some(o=>o[0]===CP.flt[f.key]))CP.flt[f.key]='';
+   return `<div class="bkfr"><span class="bkfl">${f.label}:</span><button class="${CP.flt[f.key]?'':'on'}" data-a="cflt" data-f="${f.key}" data-v="">Todos</button>`+ops.map(([v,l])=>`<button class="${CP.flt[f.key]===v?'on':''}" data-a="cflt" data-f="${f.key}" data-v="${v}">${l}</button>`).join('')+'</div>';}).join('');
+  return rows?'<div class="bkflt">'+rows+'</div>':'';}
+ if(t==='lg'){const vis=Object.keys(ACH).filter(id=>achVis(id)),got=vis.some(id=>ACHS[id]),todo=vis.some(id=>!ACHS[id]);if(!(got&&todo)){CP.as='all';return '';}
+  return '<div class="bkflt"><div class="bkfr">'+[['all','Todos'],['todo','Pendientes'],['ok','Conseguidos']].map(([k,n])=>`<button class="${CP.as===k?'on':''}" data-a="achs" data-v="${k}">${n}</button>`).join('')+'</div></div>';}
  return '';}
 const BKSUB={tw:'Las torres que puedes construir',hr:'Quienes defienden el núcleo',pc:'Las piezas del camino',bf:'Las casillas especiales',rl:'Objetos con poder',en:'Lo que sale de los portales',ev:'Encuentros en el camino',lg:'Tus hazañas'};
 function renderComp(){
@@ -1786,7 +1795,7 @@ function renderComp(){
  const nOk=real.filter(x=>x.ok&&!x.hid&&(t!=='lg'||x.got)).length,flip=CP.flipK!==t+'|'+CP.sel[t]+'|'+pvm;CP.flipK=t+'|'+CP.sel[t]+'|'+pvm;
  const tabs=CTABS.filter(([v])=>compOk()||v==='lg');
  const marks=`<div class="bkmarks">${kcOn()&&tabs.length>1?'<span class="kcap bkq">Q</span>':''}${tabs.map(([v,l])=>`<button class="bkmk${v===t?' on':''}" data-a="ctab" data-v="${v}" title="${l}">${CTICO[v]}</button>`).join('')}${kcOn()&&tabs.length>1?'<span class="kcap bkq">E</span>':''}</div>`;
- let left=`<h3>${(CTABS.find(x=>x[0]===t)||[])[1]||''}</h3><div class="bksub">${BKSUB[t]||''} · ${t==='lg'?nOk+' de '+real.length+' conseguidos':nOk+' de '+real.length+' anotados'}</div>`+bkFilters(t)+'<div class="bktiles">';
+ let left=`<h3>${(CTABS.find(x=>x[0]===t)||[])[1]||''}</h3><div class="bksub">${BKSUB[t]||''} · ${t==='lg'?nOk+' de '+real.length+' conseguidos':nOk+' de '+real.length+(['tw','pc','bf','rl'].includes(t)?' descubiertas':' descubiertos')}</div>`+bkFilters(t)+'<div class="bktiles">';
  for(const it of items)left+=it.sec?`</div><div class="bksec">${it.sec}</div><div class="bktiles">`:bkTile(it,t);
  left+='</div>';left=left.replace(/<div class="bktiles"><\/div>/g,'');
  const right=pvm?compBodyOld():bkDetail(t,CP.sel[t]);
