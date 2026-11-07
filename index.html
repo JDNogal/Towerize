@@ -474,7 +474,7 @@ body.mfs #panel:has(.pstrip) #msg{display:none}
 .pstrip button{min-height:40px;margin:0;padding:0 10px;font-size:13px}.pstrip button[data-a="pexp"]{min-width:40px;padding:0}
 /* móvil: reliquias en columna a la izquierda; si hay más de 4, se desplazan */
 body.mfs #relics{left:6px!important;bottom:8px!important;top:auto!important;flex-direction:column-reverse;flex-wrap:nowrap;align-items:center;gap:6px;padding:5px!important;max-height:154px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y}
-body.mfs #relics .rl{width:44px;height:44px;flex:0 0 44px;font-size:24px}
+body.mfs #relics .rl{width:44px;height:44px;flex:0 0 44px;font-size:24px}body.dsk:not(.mfs) #relics .rl{width:64px;height:64px;flex:0 0 64px;font-size:34px;border-radius:12px}body.dsk:not(.mfs) #relics .rl .bdg{font-size:13px;line-height:17px;padding:0 5px;border-radius:9px}body.dsk:not(.mfs) #relics{max-width:min(40vw,330px);gap:8px}@media (max-height:640px){body.dsk:not(.mfs) #relics .rl{width:52px;height:52px;flex:0 0 52px;font-size:28px}}
 .tutnext{text-align:left;margin:10px auto 4px;max-width:440px}.tutnext ul{margin:6px 0 0;padding-left:18px}.tutnext li{margin:3px 0;font-size:13px}
 .sfxg{margin:8px 0 10px}.sfxg>b{display:block;font-size:13px;color:var(--acc);margin-bottom:4px}.sfxr{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:3px 0;border-bottom:1px solid var(--line)}.sfxr>span{width:190px;font-size:13px}.sfxr button{font-size:12px;padding:3px 9px;margin:0}.sfxr button.on{border-color:var(--acc);color:var(--acc)}
 
@@ -529,7 +529,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v238</div>
+<div id="ver">Towerize v239</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
