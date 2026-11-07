@@ -70,6 +70,8 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 #toast{position:fixed;top:62px;left:50%;transform:translateX(-50%);z-index:99;display:flex;flex-direction:column;gap:6px;pointer-events:none}
 .tst{background:color-mix(in srgb,var(--panel2) 96%,transparent);color:var(--fg);border:1px solid var(--hl);border-radius:10px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:tstin .3s ease-out;transition:opacity .5s,transform .5s;max-width:80vw}
 .tst.out{opacity:0;transform:translateY(-10px)}@keyframes tstin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}#comp.open,#opts.open,#relic.open{display:block}#errb{position:fixed;z-index:99;max-width:min(320px,calc(100vw - 20px));padding:8px 13px;border-radius:12px;background:#b8323f;color:#fff;font-size:13.5px;font-weight:600;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.45);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .18s,transform .18s}#errb.on{opacity:1;transform:none}
+.kcap.bkq{position:static;transform:none;align-self:flex-end;margin:0 4px 8px;height:20px;line-height:17px;font-size:12px;min-width:22px}
+.oxb,.bkx{position:relative;overflow:visible!important}.kcap.kesc{top:auto;bottom:-12px;font-size:9.5px;height:15px;line-height:12px;padding:0 4px}
 .kfoc{outline:3px solid #f0b429!important;outline-offset:2px!important;box-shadow:0 0 14px rgba(240,180,41,.55)!important;position:relative;z-index:2}
 
 #comp.bkm{background:rgba(8,9,12,.55)!important;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:0!important;overflow:hidden!important}
@@ -641,7 +643,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v255</div>
+<div id="ver">Towerize v256</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1712,6 +1714,8 @@ addEventListener('keydown',e=>{if(KBC.on)return;if(e.target&&/INPUT|TEXTAREA/.te
 },true);
 addEventListener('mousemove',e=>{if(MN.on&&(Math.abs(e.movementX)+Math.abs(e.movementY)>2))mnClear();},{passive:true});
 addEventListener('pointerdown',()=>{if(MN.on)mnClear();},{passive:true,capture:true});
+// tecla Esc dibujada en los botones de cerrar (solo PC, con «Teclas sobre los botones»)
+setInterval(()=>{try{const on=kcOn();for(const b of document.querySelectorAll('.oxb,.bkx')){const s=b.querySelector('.kesc');if(on&&!s)b.insertAdjacentHTML('beforeend','<span class="kcap kesc">Esc</span>');else if(!on&&s)s.remove();}}catch(e){}},250);
 // tras repintar un menú, el marco vuelve al mismo botón
 setInterval(()=>{if(!MN.on)return;const r=mnRoot();if(!r){mnClear();return;}if(!(MN.el&&MN.el.isConnected))mnRefind(r);},150);
 
@@ -1781,7 +1785,7 @@ function renderComp(){
  if(!real.some(x=>x.id===CP.sel[t]))CP.sel[t]=(real.find(x=>x.ok)||real[0]||{}).id;
  const nOk=real.filter(x=>x.ok&&!x.hid&&(t!=='lg'||x.got)).length,flip=CP.flipK!==t+'|'+CP.sel[t]+'|'+pvm;CP.flipK=t+'|'+CP.sel[t]+'|'+pvm;
  const tabs=CTABS.filter(([v])=>compOk()||v==='lg');
- const marks=`<div class="bkmarks">${tabs.map(([v,l])=>`<button class="bkmk${v===t?' on':''}" data-a="ctab" data-v="${v}" title="${l}">${CTICO[v]}</button>`).join('')}</div>`;
+ const marks=`<div class="bkmarks">${kcOn()&&tabs.length>1?'<span class="kcap bkq">Q</span>':''}${tabs.map(([v,l])=>`<button class="bkmk${v===t?' on':''}" data-a="ctab" data-v="${v}" title="${l}">${CTICO[v]}</button>`).join('')}${kcOn()&&tabs.length>1?'<span class="kcap bkq">E</span>':''}</div>`;
  let left=`<h3>${(CTABS.find(x=>x[0]===t)||[])[1]||''}</h3><div class="bksub">${BKSUB[t]||''} · ${t==='lg'?nOk+' de '+real.length+' conseguidos':nOk+' de '+real.length+' anotados'}</div>`+bkFilters(t)+'<div class="bktiles">';
  for(const it of items)left+=it.sec?`</div><div class="bksec">${it.sec}</div><div class="bktiles">`:bkTile(it,t);
  left+='</div>';left=left.replace(/<div class="bktiles"><\/div>/g,'');
