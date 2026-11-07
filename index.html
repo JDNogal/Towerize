@@ -539,7 +539,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v246</div>
+<div id="ver">Towerize v247</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -2370,17 +2370,24 @@ function borderEnds(){const out=[];
     const nx=bx+(lx<0?-1:lx>=P?1:0),ny=by+(ly<0?-1:ly>=P?1:0);
     if(nx<0||ny<0||nx>=BN||ny>=BN)out.push({x:gx*K+1+a,y:gy*K+1+b,bx,by,dir:[a,b],bd:1});}}}
  return out;}
-// 0 = válida, 1 = no conecta, 2 = cierra el camino
+// 0 = válida, 1 = no conecta, 2 = cierra el camino, 3 = callejón: deja al camino casi sin sitio (menos de 3 bloques libres alcanzables)
 function check(bx,by,p){
  if(bx<0||by<0||bx>=BN||by>=BN||S.blocks[bx+','+by]||!conns(bx,by,p))return 1;
  if(S.round>=ROUNDS||S.allowClose)return 0;
  S.blocks[bx+','+by]=1;
  for(let y=0;y<P;y++)for(let x=0;x<P;x++)S.cc[by*P+y][bx*P+x]=cellOf(p[y][x]);
- const ok=collectEnds(true).length>0;
+ const e=collectEnds(),ok=e.length>0,dead=ok&&!S.allowDead&&endRoom(e)<Math.min(3,ROUNDS-S.round);
  delete S.blocks[bx+','+by];
  for(let y=0;y<P;y++)for(let x=0;x<P;x++)S.cc[by*P+y][bx*P+x]=0;
- return ok?0:2;
+ return !ok?2:dead?3:0;
 }
+// huecos libres alrededor del bloque al que da un extremo (cuántas salidas tendría la siguiente pieza)
+function endFree(e){const gx=Math.floor(e.x/K),gy=Math.floor(e.y/K),sx=Math.floor((gx+e.dir[0])/P),sy=Math.floor((gy+e.dir[1])/P);
+ return D.filter(([a,b])=>{const x=sx+a,y=sy+b;return x>=0&&y>=0&&x<BN&&y<BN&&!S.blocks[x+','+y];}).length;}
+// espacio que le queda al camino: bloques libres conectados a los huecos a los que dan los extremos
+function endRoom(e){const seen={},q=[];for(const x of e){const gx=Math.floor(x.x/K),gy=Math.floor(x.y/K),sx=Math.floor((gx+x.dir[0])/P),sy=Math.floor((gy+x.dir[1])/P),k=sx+','+sy;if(!seen[k]){seen[k]=1;q.push([sx,sy]);}}
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b,k=nx+','+ny;if(nx>=0&&ny>=0&&nx<BN&&ny<BN&&!S.blocks[k]&&!seen[k]){seen[k]=1;q.push([nx,ny]);}}}
+ return q.length;}
 function anyPlace(o){
  let p=o.p;
  for(let r=0;r<4;r++){for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++)if(check(bx,by,p)===0)return true;p=rot(p);}
@@ -2388,8 +2395,11 @@ function anyPlace(o){
 }
 const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+(BF[b.k].sup?BFCS:BFC),0);
 function dealTry(){
+ // rescate: si solo queda un extremo libre, salen sí o sí la Bifurcación y el Cruce, gratis
+ const E1=!S.tut&&S.round<ROUNDS?collectEnds():[],resc=E1.length===1,RN=['Bifurcación','Cruce'];
  for(let t=0;t<40;t++){
-  const pool=shuf([...PIECES]).slice(0,rp('square')?4:3);
+  let pool=shuf([...PIECES]).slice(0,rp('square')?4:3);
+  if(resc){const rest=shuf(PIECES.filter(x=>!RN.includes(x.n)));pool=shuf([...PIECES.filter(x=>RN.includes(x.n)),...rest.slice(0,pool.length-2)]);}
   S.offers=pool.map(o=>{const of={n:o.n,p:o.p,b:[]};solarize(of);decorate(of);
    if(S.round>=BUFFS_FROM&&Math.random()<.6){const cs=[];of.p.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));
     shuf(cs);
@@ -2397,13 +2407,14 @@ function dealTry(){
    for(let i=Math.floor(Math.random()*4);i>0;i--)rotO(of);return of;});
   // siempre hay una pieza gratis (sin casillas especiales) entre las que se pueden colocar, y solo salen casillas que puedas pagar
   if(!S.tut){const okI=S.offers.map((o,i)=>i).filter(i=>anyPlace(S.offers[i]));if(okI.length)S.offers[okI[Math.floor(Math.random()*okI.length)]].b=[];
-   for(const o of S.offers){o.b.sort((a,b)=>(BF[a.k].sup?1:0)-(BF[b.k].sup?1:0));while(o.b.length&&pcost(o)>S.gold)o.b.pop();}}
+   for(const o of S.offers){o.b.sort((a,b)=>(BF[a.k].sup?1:0)-(BF[b.k].sup?1:0));while(o.b.length&&pcost(o)>S.gold)o.b.pop();}
+   if(resc)for(const o of S.offers)if(RN.includes(o.n))o.b=[];}
   if(S.offers.some(anyPlace)){S.offers.forEach(o=>{see('pc',o.n);o.b.forEach(b=>see('bf',bkey(b.k)));});return true;}
  }
  return false;
 }
 // Reparte 3 piezas. Si ninguna puede colocarse dejando un extremo libre, se permite cerrar el camino; si no cabe ninguna, la ronda no trae pieza.
-function deal(){if(S.tut&&tutDeal()){S.allowClose=false;S.noSlot=false;return;}S.allowClose=false;S.noSlot=false;if(dealTry())return;S.allowClose=true;if(dealTry())return;S.noSlot=true;}
+function deal(){if(S.tut&&tutDeal()){S.allowClose=false;S.allowDead=false;S.noSlot=false;return;}S.allowClose=false;S.allowDead=false;S.noSlot=false;if(dealTry())return;S.allowDead=true;if(dealTry())return;S.allowClose=true;if(dealTry())return;S.noSlot=true;}
 function nextRound(){
  mechaEnd();if(S.mecha)S.mecha.cd=0;for(const id in S.rs){if(S.rs[id].cd>0)S.rs[id].cd--;S.rs[id].t=0;}S.aim=null;S.aimT=null;S.orbs=[];S.fury=0;S.summ=[];S.ivy=[];S.runes=[];S.storm=null;S.ice=[];S.cata=null;S.bz=[];S.logs=[];S.hawk=null;if(S.hero){S.hero.bcd=0;S.hero.chg=null;}S.barr=[];S.dbl=[];S.tz=[];S.fz=[];S.merc=null;S.mimFor=null;for(const t of S.list)t.curse=0;for(const t of unitTowers())for(const s of t.sd){const q=slotOf(t,s.i);s.hp=s.max;s.rt=0;s.en=null;s.fight=false;s.lock=false;s.x=q.x;s.y=q.y;}S.round++;heroSync();if(S.round%2===0&&!S.tut)S.towOff=1;S.phase='place';S.pi=null;S.selT=null;S.ends=[];S.portals=[];S.proj=[];S.fx=[];S.rain=[];deal();
  S.msg=S.tut?'':S.round===ROUNDS?'Última ronda: la pieza que coloques invoca al jefe final.':bossRound(S.round)?'Ronda de jefe: la pieza que coloques invoca al jefe.':'';if(S.noSlot){skipPlace();return;}ui();setTimeout(()=>tutPhase('place'),0);
@@ -2465,8 +2476,7 @@ function pieceWarn(p){
  S.nob=opens(p)>=3?0:(S.nob||0)+1;
  const ends=collectEnds();
  // riesgo real: un solo extremo libre y el hueco al que da tiene como mucho otra salida libre (cualquier pieza que no encaje bien cierra el camino)
- let risk=false;if(ends.length===1){const e=ends[0],gx=Math.floor(e.x/K),gy=Math.floor(e.y/K),sx=Math.floor((gx+e.dir[0])/P),sy=Math.floor((gy+e.dir[1])/P);
-  const free=D.filter(([a,b])=>{const x=sx+a,y=sy+b;return x>=0&&y>=0&&x<BN&&y<BN&&!S.blocks[x+','+y];}).length;risk=free<=1;}
+ let risk=false;if(ends.length===1)risk=endFree(ends[0])<=1;
  if(risk){S.lastEnd=ends[0];if(!S.oneEnd){S.oneEnd=true;if(!FO.open)showFocus(ends[0]);}}else{S.oneEnd=false;S.lastEnd=null;}
  if(S.nob===4&&!S.oneEnd)S.msg='⚠ Llevas varias piezas sin bifurcar: tu camino podría cerrarse. Usa bifurcaciones y cruces. '+S.msg;
  ui();
@@ -3936,7 +3946,7 @@ cv.addEventListener('click',e=>{
   S.selT=t;tmOpen(t);ui();return;}
  if(S.phase==='place'){if(S.pi==null)return;if(payOn()&&pcost(S.offers[S.pi])>S.gold){S.msg='No tienes oro suficiente para las casillas especiales de esta pieza.';ui();return;}const bx=Math.floor(c.x/(P*K)),by=Math.floor(c.y/(P*K)),free=bx>=0&&by>=0&&bx<BN&&by<BN&&!S.blocks[bx+','+by],r=free?check(bx,by,S.offers[S.pi].p):1;
   if(r===0)placePiece(bx,by);
-  else{S.pi=null;S.msg=free?(r===2?'Esa pieza cierra el camino: no deja ningún extremo libre para seguir ampliando.':'Ahí no encaja: elige un hueco junto al mapa donde se unan dos caminos.'):'';ui();}}
+  else{S.pi=null;S.msg=free?(r===2?'Esa pieza cierra el camino: no deja ningún extremo libre para seguir ampliando.':r===3?'Ahí te meterías en un callejón sin salida: la siguiente pieza cerraría el camino sí o sí. Prueba en otro sitio, gírala o elige otra pieza.':'Ahí no encaja: elige un hueco junto al mapa donde se unan dos caminos.'):'';ui();}}
  else if(S.phase==='build'||S.phase==='wave')build(c.x,c.y);
 });
 // un toque fuera del mapa (salvo el menú de torres, el zoom y los paneles de información) quita la torre elegida
