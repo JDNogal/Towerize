@@ -105,8 +105,8 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 #bmcard{width:220px}#bmcard .grow{grid-template-columns:86px 1fr 50px;gap:6px;margin:3px 0;font-size:11.5px}#bmcard .gtr{background:var(--line);height:6px}
 #bmcard .bmh{display:flex;align-items:center;gap:6px}#bmcard .bmh .bp{margin-left:auto;color:var(--gold);font-weight:700}
 #bmcard .bmt{display:flex;gap:4px;margin:4px 0 4px;flex-wrap:wrap}#bmcard .bmt em{font-style:normal;font-size:10px;border:1px solid var(--line2);border-radius:9px;padding:0 6px;color:var(--fg1)}
-#bmenu .tmb .p{top:30px;font-size:10px;padding:0 4px;z-index:1}#bmenu .tmb{z-index:0}#bmenu .tmb:hover,#bmenu .tmb.sel,#bmenu .tmb.arm{z-index:2}
-#bmenu .tmb .ic.tw{width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font-size:18px}
+#bmenu{--bs:46px}#bmenu .tmb{width:var(--bs);height:var(--bs);margin:calc(var(--bs)/-2) 0 0 calc(var(--bs)/-2);border-radius:calc(var(--bs)*.24)}#bmenu .tmb .p{top:calc(var(--bs) - 9px);font-size:calc(var(--bs)*.22);padding:1px 6px;z-index:1}#bmenu .tmb.arm{font-size:calc(var(--bs)*.5)}#bmenu .tmb{z-index:0}#bmenu .tmb:hover,#bmenu .tmb.sel,#bmenu .tmb.arm{z-index:2}
+#bmenu .tmb .ic.tw{width:calc(var(--bs)*.78);height:calc(var(--bs)*.78);border-radius:calc(var(--bs)*.18);display:grid;place-items:center;font-size:calc(var(--bs)*.48)}
 #bmenu .tmb.sel{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 3px 10px rgba(0,0,0,.45)}
 #mbr button.go.arm{background:#2f6b3a!important;border-color:#6fdc8c!important;color:#fff!important;box-shadow:0 0 14px rgba(111,220,140,.55)!important}
 #panel.pempty{display:none!important}
@@ -580,7 +580,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v248</div>
+<div id="ver">Towerize v249</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3787,10 +3787,14 @@ function bmBuild(){let m=$('bmenu');if(!m){m=document.createElement('div');m.id=
  m.classList.add('on');bmPos(true);bmCard();}
 function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*r.width;
  const px=((q.x+.5)*CS-CAM.x)*k+(r.left-c.left),py=((q.y+.5)*CS-CAM.y)*k+(r.top-c.top),bs=m.querySelectorAll('.tmb'),n=bs.length;
- const R=Math.max(K*CS*.5*k+30,n*60/(2*Math.PI),n>1?48:0),T0=58;
- // si el anillo se sale de la pantalla, se desplaza hacia dentro (sin dejar de rodear el solar)
- const cx=Math.max(R+26,Math.min(c.width-R-26,px)),cy=Math.max(T0+R+4,Math.min(c.height-R-30,py));
- bs.forEach((b,i)=>{const a=-Math.PI/2+i*2*Math.PI/n,x=n>1?cx+Math.cos(a)*R:cx,y=n>1?cy+Math.sin(a)*R:cy-R;b.style.left=x+'px';b.style.top=y+'px';});
+ // tamaño según el zoom: alejado, compacto; acercándote, crece con el solar
+ const sp=K*CS*k,bz=Math.round(Math.max(48,Math.min(100,sp*.72)));m.style.setProperty('--bs',bz+'px');
+ const gap=bz*1.22,R=Math.max(sp*.5+bz*.8,n>1?gap/(2*Math.sin(Math.min(Math.PI/n,Math.PI/2)/1)):0),T0=58;
+ // el anillo empieza arriba y se va cerrando hacia abajo: con 2 torres, las dos arriba; con 3, una en medio y dos a los lados…
+ const d=Math.min(2*Math.PI/n,gap/R);
+ // si se sale de la pantalla, se desplaza hacia dentro (sin dejar de rodear el solar)
+ const pad=bz/2+6,cx=Math.max(R+pad,Math.min(c.width-R-pad,px)),cy=Math.max(T0+R+pad,Math.min(c.height-pad-bz*.35-(n*d>Math.PI?R:0),py));
+ bs.forEach((b,i)=>{const a=-Math.PI/2+(i-(n-1)/2)*d;b.style.left=cx+Math.cos(a)*R+'px';b.style.top=cy+Math.sin(a)*R+'px';});
  m._p={px:cx,py:cy,R,W:c.width,H:c.height};if(force||BM.hov||BM.arm)bmCardPos();}
 const DTN={phys:'Físico',magic:'Mágico',elem:'Elemental'};
 function bmInfo(k){const T=TW[k],a=twAt(k,1,null),M=twMax(1),src='shop:'+k;
