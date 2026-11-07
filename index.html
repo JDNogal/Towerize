@@ -94,14 +94,14 @@ body.dsk #comp.bkm,body.mfs #comp.bkm,body.inmenu #comp.bkm{position:fixed!impor
 .bti small{font:600 10.5px system-ui,sans-serif;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#5a3a20}
 .bti:hover{border-color:#a8581c!important}.bti.on{border-color:#a8581c!important;box-shadow:0 0 0 2px #a8581c,0 4px 10px rgba(90,40,10,.25)!important;background:#f3e6c4!important}
 .bti .bic{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:24px;background:#d9c69c}
-.bti.un .bic,.bti.un .bpor,.bti.un .bdot,.bti.un .bbf,.bti.un canvas{filter:brightness(0) opacity(.33)}.bti.un .bic{background:#d9c69c!important}.bti.un small{color:#9a8060}
+.bti .bic i{font-style:normal;display:block!important;position:static!important;width:auto!important;height:auto!important;line-height:1!important;background:none!important;margin:0!important;border:0!important;transform:none!important}.bti.un .bic i,.bti.un .bpor,.bti.un .bdot,.bti.un .bbf,.bti.un canvas{filter:brightness(0) opacity(.38)}.bti.un .bic{background:#d9c69c!important}.bti.un small{color:#9a8060}
 .bti.lkd::after{content:"🔒";position:absolute;font-size:12px;transform:translate(16px,-2px)}.bti{position:relative}
 .bti .bpor{width:44px;height:44px;border-radius:10px;overflow:hidden;display:block}.bti .bpor svg{width:100%;height:100%;display:block}
 .bti .bdot{width:28px;height:28px;border-radius:50%;margin:8px;display:block;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2)}
 .bti .bbf{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font:800 18px system-ui;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)}
 .bti canvas{width:44px;height:44px;border-radius:6px;background:#d9c69c}
 .bti.got .bic{box-shadow:0 0 0 2px #2f8a4a}.bti.hid .bic{background:#d9c69c}
-.bti.ach:not(.got):not(.hid) .bic{filter:grayscale(.6);opacity:.75}
+.bti.ach:not(.got):not(.hid) .bic i{filter:grayscale(.6);opacity:.75}
 #comp .bkm,.bkp .bti.un{opacity:1}
 .bkglow{animation:bkglow 1.5s ease-out}@keyframes bkglow{0%,40%{box-shadow:0 0 0 3px #e8b04a,0 0 20px 4px rgba(232,176,74,.8)}100%{box-shadow:0 0 0 0 transparent}}
 .bkhl{animation:bkglow 1.5s ease-out}
@@ -640,7 +640,7 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v253</div>
+<div id="ver">Towerize v254</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1698,7 +1698,7 @@ function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
  else if(it.pc!=null)ic=`<canvas width="44" height="44" data-bpi="${it.pc}"></canvas>`;
  else if(it.bf)ic=`<span class="bbf" style="background:${BF[it.bf].col}">${BF[it.bf].l||''}</span>`;
  else if(it.dot)ic=`<span class="bdot" style="background:${it.dot}"></span>`;
- else ic=`<span class="bic"${it.col&&it.ok?` style="background:${it.col}"`:''}>${it.ic}</span>`;
+ else ic=`<span class="bic"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
  return `<button class="bti${t==='lg'?' ach':''}${on?' on':''}${it.ok?'':' un'}${it.got?' got':''}${it.hid?' hid':''}${it.lk&&!it.ok?' lkd':''}" data-a="csel" data-v="${it.id}">${ic}<small>${it.ok?it.n:'???'}</small></button>`;}
 const bkPrevBtn=(a,v,l)=>`<button class="bkgo" data-a="${a}" data-v="${v}">▶ ${l||'Ver en acción'}</button>`;
 function bkDetail(t,id){
