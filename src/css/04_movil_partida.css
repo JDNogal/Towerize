@@ -1,0 +1,112 @@
+/* ---- móvil en horizontal: mapa a pantalla completa y controles compactos en los bordes ---- */
+body.mfs #game{padding:0!important}
+body.mfs main{display:block!important;height:100%!important}
+body.mfs #cw{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;aspect-ratio:auto!important;max-height:none!important}
+body.mfs canvas#c{width:100%!important;height:100%!important}
+body.mfs #stats{top:4px;gap:14px;padding:3px 14px;font-size:12px;border-radius:16px}
+body.mfs #ver{top:27px;font-size:9px}
+body.mfs #mtl{top:6px;left:6px}
+body.mfs #mtl .gap{height:4px}
+body.mfs .mctl button{min-width:28px;height:28px;font-size:13px}
+body.mfs #mbl{top:4px!important;right:6px!important;left:auto!important;bottom:auto!important}
+body.mfs #mbl button{padding:0 6px;font-size:11px;height:26px;min-width:26px}
+body.mfs #zm{top:36px!important;right:6px;gap:3px}
+body.mfs #zm button{width:28px;height:28px;font-size:14px}
+body.mfs #mbr{bottom:6px;right:6px;gap:4px}
+body.mfs #mbr button.go{padding:6px 12px;font-size:13px}
+body.mfs #relics{left:6px;bottom:6px;max-width:none;padding:4px 5px;border-radius:10px}
+body.mfs #panel{left:64px!important;right:auto;transform:none!important;bottom:6px;width:auto;min-width:0;max-width:calc(100vw - 64px - 210px)!important;max-height:38vh!important;padding:5px 8px;border-radius:10px}
+body.mfs #ctl,body.mfs #opt{left:64px;transform:none;bottom:calc(38vh + 12px)}
+body.mfs #msg{font-size:12px;min-height:0;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+body.mfs #msg.full{white-space:normal}
+body.mfs #ui small{font-size:10.5px;line-height:1.35}
+body.mfs #ui button[data-a="sel"]{font-size:12px;padding:4px 9px;margin:0 4px 4px 0}body.mfs #ui br{display:none}body.mfs #ui small{display:block}
+body.mfs #tip{left:auto!important;right:0!important;top:0!important;bottom:0;width:min(300px,44vw);height:100%;max-height:none!important;border-radius:10px 0 0 10px}
+
+/* paneles con desplazamiento: barra siempre visible en táctil y aviso de que hay más contenido abajo */
+@media (pointer:coarse){#tip,#comp,#opts,#relic,#panel,#side,#menu,#endscr,.kpanel,.evwin{scrollbar-width:thin;scrollbar-color:#8a90a0 rgba(255,255,255,.08)}
+ #tip::-webkit-scrollbar,#comp::-webkit-scrollbar,#opts::-webkit-scrollbar,#relic::-webkit-scrollbar,#panel::-webkit-scrollbar,#side::-webkit-scrollbar,#menu::-webkit-scrollbar,#endscr::-webkit-scrollbar,.kpanel::-webkit-scrollbar,.evwin::-webkit-scrollbar{width:6px;height:6px}
+ #tip::-webkit-scrollbar-thumb,#comp::-webkit-scrollbar-thumb,#opts::-webkit-scrollbar-thumb,#relic::-webkit-scrollbar-thumb,#panel::-webkit-scrollbar-thumb,#side::-webkit-scrollbar-thumb,#menu::-webkit-scrollbar-thumb,#endscr::-webkit-scrollbar-thumb,.kpanel::-webkit-scrollbar-thumb,.evwin::-webkit-scrollbar-thumb{background:#8a90a0;border-radius:3px}
+ #tip::-webkit-scrollbar-track,#comp::-webkit-scrollbar-track,#opts::-webkit-scrollbar-track,#relic::-webkit-scrollbar-track,#panel::-webkit-scrollbar-track,#side::-webkit-scrollbar-track,#menu::-webkit-scrollbar-track,#endscr::-webkit-scrollbar-track,.kpanel::-webkit-scrollbar-track,.evwin::-webkit-scrollbar-track{background:rgba(255,255,255,.06)}}
+.smore::after{content:'▼';position:sticky;bottom:0;display:block;height:26px;margin-top:-26px;line-height:30px;text-align:center;font-size:11px;color:var(--fg1);background:linear-gradient(color-mix(in srgb,var(--panel) 0%,transparent),color-mix(in srgb,var(--panel) 92%,transparent));pointer-events:none;z-index:5}
+
+/* selección de héroe en móvil: pantalla completa, solo se desplaza la tarjeta de información */
+body.mfs #relic{inset:0!important;border-radius:0!important}
+body.mfs #relic:has(.hpc){overflow:hidden!important;padding:12px!important}
+body.mfs .hpc{min-height:0!important;height:calc(100% + 24px)!important}
+body.mfs .hpc .hinfo{max-height:calc(100% - 78px - 18px)!important;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y}
+/* ficha flotante de las habilidades del héroe en la pantalla de selección */
+#hpop{position:fixed;z-index:60;display:none;width:min(300px,calc(100vw - 16px));max-height:calc(100vh - 16px);overflow-y:auto;box-sizing:border-box;box-shadow:0 6px 22px rgba(0,0,0,.55)}
+.habs span{cursor:pointer}
+
+/* ---- menú de pausa ---- */
+#pmenu{position:fixed;inset:0;z-index:17;display:none;align-items:center;justify-content:center;background:rgba(8,9,12,.72);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+#pmenu.open{display:flex}
+#pmenu .pmc{width:min(440px,calc(100vw - 24px));max-height:calc(100vh - 20px);max-height:calc(100dvh - 20px);overflow-y:auto;box-sizing:border-box;background:var(--panel);border:1px solid var(--line2);border-radius:16px;padding:12px 14px 14px;box-shadow:0 10px 40px rgba(0,0,0,.6);color:var(--fg)}
+#pmenu .pmh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}#pmenu .pmh b{font-size:19px}#pmenu .pmh small{color:var(--fg2)}
+#pmenu .pmg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#pmenu button{min-height:46px;margin:0;border-radius:10px;border:1px solid var(--line2);background:var(--btn);color:var(--fg);font-size:15px;font-weight:600;text-align:left;padding:0 14px}
+#pmenu .pmh button{min-height:38px;font-size:13px}
+#pmenu button.pmain{grid-column:1/-1;background:var(--acc);color:var(--panel2);border-color:var(--acc);text-align:center;font-size:16px}
+#pmenu button.pwide{grid-column:1/-1;text-align:center}
+#pmenu button.pquit{grid-column:1/-1;border-color:#7a3b3b;color:#ff8a7a;text-align:center}
+#pmenu button.dim{opacity:.55}
+#pmenu .pmhelp{display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45}#pmenu .pmq .pmt{display:block;color:#f2d27a;font-weight:700;margin-bottom:2px}
+body.inmenu #pmenu{display:none!important}
+/* móvil: botones de juego de 44 puntos (tamaño mínimo cómodo para el dedo) */
+body.mfs .mctl button{min-width:44px;height:44px;font-size:20px;border-radius:10px}
+body.mfs #mtl .gap{height:6px}
+body.mfs #mbl button{min-width:44px;height:44px;padding:0 10px;font-size:15px;font-weight:700}
+body.mfs #zm{top:56px!important;right:0!important}
+body.mfs #zm button{width:44px;height:44px;font-size:20px;border-radius:10px}
+body.mfs #zm button:not([data-z="c"]){display:none}
+body.mfs #mbr button.go{padding:11px 18px;font-size:15px}
+body.mfs #ui button[data-a="sel"]{min-height:40px;font-size:13px;padding:6px 12px}
+body.mfs #panel{left:66px!important}
+
+/* móvil: elección de pieza centrada y sin desplazamiento */
+body.mfs #panel:has(.prow){left:50%!important;transform:translateX(-50%)!important;max-height:none!important;overflow:visible!important;max-width:min(420px,calc(100vw - 2*230px))!important;padding:5px 8px 6px}
+body.mfs #panel:has(.prow) #ui>small:first-child{margin-bottom:4px!important;font-size:10.5px}
+body.mfs #ui .prow .cardw{max-width:78px}
+body.mfs #ui .prow button.card{padding:2px;font-size:10.5px;line-height:1.2}
+body.mfs #ui .rbtn{width:26px;height:26px}
+/* móvil: la ficha lateral solo ocupa lo que necesita */
+body.mfs #tip{height:auto!important;bottom:auto!important;max-height:100vh!important;max-height:100dvh!important}
+/* móvil: las torres ofrecidas, las tres en una fila y sin desplazamiento */
+body.mfs #relic:has(.toff){overflow-y:auto}
+body.mfs #relic:has(.toff){padding:8px 12px!important}body.mfs #relic:has(.toff)>b{font-size:15px!important}body.mfs #relic:has(.toff) small{font-size:11px}body.mfs .tof .tic{margin-bottom:-2px}body.mfs .tof summary{font-size:11px}body.mfs #relic:has(.toff) button[data-a="towskip"]{min-height:36px;margin-top:2px}
+body.mfs .toff{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:5px 0 3px}body.mfs #relic:has(.toff)>b{line-height:1.2}body.mfs #relic:has(.toff)>small{line-height:1.25;display:inline-block}body.mfs .tof .chips{gap:3px}body.mfs .tof{gap:3px!important}
+body.mfs .tof{width:auto;padding:7px 8px;gap:4px;border-radius:10px}
+body.mfs .tof .tic{width:38px;height:38px;font-size:21px;border-radius:9px}
+body.mfs .tof .tnm{font-size:14px}
+body.mfs .tof .chips span{font-size:10px;padding:1px 6px}
+body.mfs .tof button{min-height:38px;font-size:13px}
+body.mfs .tof details[open]{position:fixed;inset:6px;z-index:30;overflow-y:auto;background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:10px}
+
+#lupa{position:fixed;z-index:55;display:none;place-items:center;width:40px;height:40px;margin:0;padding:0;border-radius:50%;background:var(--acc);color:var(--panel2);border:2px solid var(--panel2);box-shadow:0 3px 12px rgba(0,0,0,.5)}
+body:not(.mfs) #lupa{display:none!important}
+body.mfs #panel:has(.pstrip){left:50%!important;transform:translateX(-50%)!important;max-width:calc(100vw - 2*230px)!important;padding:5px 8px}
+body.mfs #panel:has(.pstrip) #msg{display:none}
+.pstrip{display:flex;align-items:center;gap:6px;white-space:nowrap}.pstrip b{font-size:13px}.pstrip .gd{font-size:12px}
+.pstrip button{min-height:40px;margin:0;padding:0 10px;font-size:13px}.pstrip button[data-a="pexp"]{min-width:40px;padding:0}
+/* móvil: reliquias en columna a la izquierda; si hay más de 4, se desplazan */
+body.mfs #relics{left:6px!important;bottom:8px!important;top:auto!important;flex-direction:column-reverse;flex-wrap:nowrap;align-items:center;gap:6px;padding:5px!important;max-height:154px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y}
+body.mfs #relics .rl{width:44px;height:44px;flex:0 0 44px;font-size:24px}body.dsk:not(.mfs) #relics .rl{width:64px;height:64px;flex:0 0 64px;font-size:34px;border-radius:12px}body.dsk:not(.mfs) #relics .rl .bdg{font-size:13px;line-height:17px;padding:0 5px;border-radius:9px}body.dsk:not(.mfs) #relics{max-width:min(40vw,330px);gap:8px}@media (max-height:640px){body.dsk:not(.mfs) #relics .rl{width:52px;height:52px;flex:0 0 52px;font-size:28px}}
+.tutnext{text-align:left;margin:10px auto 4px;max-width:440px}.tutnext ul{margin:6px 0 0;padding-left:18px}.tutnext li{margin:3px 0;font-size:13px}
+.sfxg{margin:8px 0 10px}.sfxg>b{display:block;font-size:13px;color:var(--acc);margin-bottom:4px}.sfxr{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:3px 0;border-bottom:1px solid var(--line)}.sfxr>span{width:190px;font-size:13px}.sfxr button{font-size:12px;padding:3px 9px;margin:0}.sfxr button.on{border-color:var(--acc);color:var(--acc)}
+
+button[data-a="oclose"],button[data-a="cclose"]{background:var(--cxb)!important;border-color:var(--cxl)!important;color:var(--cxf)!important}
+button[data-a="oclose"]:hover,button[data-a="cclose"]:hover{filter:brightness(1.25)}
+button[data-a="mback"],button[data-a="pback"],button[data-a="cback"],button[data-a="ceback"],button[data-a="chback"],button[data-a="qprev"]:not(:disabled),button[data-bk]{background:var(--bkb)!important;border-color:var(--bkl)!important;color:var(--bkf)!important}
+button[data-a="mback"]:hover,button[data-a="pback"]:hover,button[data-a="cback"]:hover,button[data-a="ceback"]:hover,button[data-a="chback"]:hover,button[data-a="qprev"]:hover,button[data-bk]:hover{filter:brightness(1.25)}
+.crd{max-width:520px;margin:0 auto 14px;text-align:center}.crs{margin:0 0 16px}.crs>b{display:block;color:var(--acc);font-size:13px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}.crs div{margin:3px 0}.crs a{color:var(--fg)}.crgd{display:inline-block;margin:2px 0 4px}.crgd img{width:120px;height:auto;display:block}
+
+.cgrid.achg{grid-auto-rows:1fr}.ce.ach{display:flex;flex-direction:column}.ce.ach .abot{margin-top:auto;padding-top:6px}
+.ce.ach.got{border-color:var(--acc)!important;background-image:linear-gradient(rgba(232,176,74,.09),rgba(232,176,74,.09))}.agot{display:block;color:var(--acc);margin-top:4px}
+.achf{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-top:8px}.achf>div{display:flex;flex-wrap:wrap;gap:4px}.achf button{font-size:12px;padding:4px 9px;margin:0}
+.cswr{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.csw{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px;min-width:84px;margin:0}.csw i{display:block;width:44px;height:28px;border-radius:5px;border:1px solid var(--line)}.csw canvas{border-radius:5px}.csw span{font-size:11px}.csw.on{border-color:var(--acc);color:var(--acc)}.csw.lk{opacity:.5}
+.cdec em{font-style:normal;font-size:10px;opacity:.75;min-height:12px}.cdec:not(.on):not(.lk) canvas{filter:grayscale(1) brightness(.7);opacity:.55}.cdec:not(.on):not(.lk){color:var(--fg2)}
+.frl{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.frw{display:flex;align-items:center;gap:8px;min-width:200px}.frw small{display:block}.hfr{display:inline-block;width:40px;height:40px;border-radius:9px;overflow:hidden;border:2px solid var(--line)}.hfr svg{width:100%;height:100%}
+.fr1{box-shadow:0 0 0 2px #b07a3a!important}.fr2{box-shadow:0 0 0 2px #c8ccd6,0 0 6px #c8ccd6!important}.fr3{box-shadow:0 0 0 2px #f1c84b,0 0 10px #f1c84b!important}.hart.fr1,.hart.fr2,.hart.fr3{box-shadow:none!important}.hart.fr1 svg{filter:drop-shadow(0 0 3px #b07a3a)}.hart.fr2 svg{filter:drop-shadow(0 0 5px #c8ccd6)}.hart.fr3 svg{filter:drop-shadow(0 0 8px #f1c84b)}
+.nug{display:flex;flex-direction:column;gap:12px;max-width:560px;margin:0 auto 6px;text-align:left}.nus>b{display:block;color:var(--acc);font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}.nul{display:flex;flex-wrap:wrap;gap:6px}.nui{display:flex;align-items:center;gap:8px;background:var(--btn);border:1px solid var(--line);border-radius:7px;padding:6px 10px}.nui>span{font-size:22px}.nui small{display:block;opacity:.75}
+

@@ -57,7 +57,7 @@ Gana la partida quien sobreviva hasta el jefe final y lo derrote.
 - **Búsqueda de caminos (BFS)** para el movimiento de los enemigos.
 - **localStorage** para guardar el progreso, los logros y las opciones.
 - **Pointer, Touch, Fullscreen y Screen Orientation APIs** para la versión móvil.
-- **Un único archivo HTML** autocontenido: no necesita compilación ni servidor.
+- **Un único archivo HTML** autocontenido para jugar: no necesita servidor. El código fuente vive en `src/`, dividido por sistemas, y un script lo junta.
 
 ## 🤖 Desarrollo asistido por IA
 
@@ -70,6 +70,22 @@ git clone https://github.com/JDNogal/towerize.git
 ```
 
 Después basta con abrir `index.html` en el navegador.
+
+## 🧩 Estructura del código
+
+- `src/index.html` — la cáscara de la página (cabecera, canvas y paneles).
+- `src/css/` — los estilos, en orden: base, móvil, pantallas, partida en móvil y paletas.
+- `src/js/` — el juego, un archivo por sistema (mapa, torres, oleadas, héroes, menús, compendio, sonido…). `src/js/data/` guarda los datos: torres, héroes, enemigos, piezas y retratos.
+- `src/order.json` — el orden en que se juntan los archivos.
+- `version.txt` — el número de versión.
+
+Todo se monta en un solo `<script>`, así que los archivos comparten ámbito como si fueran uno. Para generar `index.html` tras un cambio:
+
+```bash
+node build.js
+```
+
+No necesita dependencias. Con `--out CARPETA` escribe además `CARPETA/towerize-vNNN.html`.
 
 ## 👤 Autor
 
