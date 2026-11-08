@@ -90,8 +90,15 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 #comp .lbstats .hidem{display:table-cell}
 /* créditos dentro del libro */
 #comp .bkp .crd{text-align:left;max-width:none;margin:8px 0}#comp .bkp .crs{margin:0 0 14px}#comp .bkp .crs>b{display:block;font:700 12px Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#8a4a2a;margin-bottom:4px}#comp .bkp .crs a{color:#9a4a1c}
-#comp .bkp .crgd{background:rgba(255,250,235,.6);border:1px solid #d0bb8c;border-radius:10px}#comp .bkp .crgd.crcl{background:#2a2118;border-color:#2a2118}
+#comp .bkp .crgd{background:rgba(255,250,235,.6);border:1px solid #d0bb8c;border-radius:10px}#comp .bkp .crgd.crcl{background:transparent;border:0;padding-left:0}
 /* botón de volver a la portada */
 #comp.narrow .lbribs{display:none}
 /* el libro deja sitio a las cintas de la derecha: si la ventana es estrecha, el libro se encoge en vez de cortarse */
 #comp.bkm:not(.narrow) .bkw{width:min(1080px,calc(100vw - 136px));margin-right:72px}
+/* móvil: el marcapáginas activo lleva su nombre al lado del icono (en PC, el nombre sale en el bocadillo) */
+.bkmk .bkml{display:none}
+#comp.lbtouch .bkmk.on{width:auto!important;padding:0 13px!important;display:flex!important;align-items:center;gap:6px}
+#comp.lbtouch .bkmk.on .bkml{display:inline;font:700 13px Inter,system-ui,sans-serif;color:#fff;white-space:nowrap}
+/* que ni el icono ni el nombre queden pegados al borde del libro */
+#comp.narrow .bkmk{padding-bottom:14px!important;box-sizing:border-box}
+#comp.narrow .bkmk.on{height:50px!important;margin-top:-10px!important;padding-bottom:12px!important}

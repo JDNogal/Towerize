@@ -5,7 +5,8 @@
   "03_pantallas.css",
   "04_movil_partida.css",
   "05_paletas.css",
-  "06_libro.css"
+  "06_libro.css",
+  "07_bocadillo.css"
  ],
  "js": [
   "00_config.js",
@@ -45,6 +46,7 @@
   "towermenu.js",
   "ui_game.js",
   "libro.js",
+  "tooltip.js",
   "hints.js",
   "loop.js",
   "story.js",

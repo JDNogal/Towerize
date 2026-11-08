@@ -24,7 +24,7 @@ function lbClose(resume){
 }
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal
 function lbBack(){if(!LB.open)return;CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
-const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}" data-a="${act}" data-v="${v}" title="${l}">${i}</button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
+const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
 const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
 function lbCoverHTML(){
  const inG=lbInGame(),B=lbMob(),H=inG&&S.hero?HEROES[S.hero.id]:null;
@@ -86,7 +86,7 @@ function credParts(){const ver=($('ver')&&$('ver').textContent)||'Towerize';
 // ---- montaje ----
 function lbRender(){
  const el=$('comp');if(!LB.open){el.classList.remove('open');return;}
- el.classList.add('bkm','open');const nar=bkNarrow();el.classList.toggle('narrow',nar);el.classList.toggle('lbcv0',LB.cover);
+ el.classList.add('bkm','open');el.classList.toggle('lbtouch',!!TOUCH);const nar=bkNarrow();el.classList.toggle('narrow',nar);el.classList.toggle('lbcv0',LB.cover);
  if(LB.cover){CP.open=false;OP.open=false;el.innerHTML=lbCoverHTML();return;}
  if(LB.area==='st'&&!lbInGame())LB.area='cp';
  if(LB.area==='lg')CP.tab='lg';else if(LB.area==='cp'&&CP.tab==='lg')CP.tab=compOk()?'tw':'lg';
