@@ -5,7 +5,7 @@ const RS=id=>{if(!S.st)return {...NODUM};return S.st.rl[id]||(S.st.rl[id]={dmg:0
 // Daño aportado (aproximado) por las reliquias que mejoran el daño de las torres: parte del daño que desaparecería sin la reliquia
 function relDmg(t,dl){
  if(t.hero||!t.cells)return;const sh=(id,m)=>{if(m>1)RS(id).dmg+=dl*(1-1/m);};
- if(ra('horn'))sh('horn',2);else if(rp('horn')&&S.wt>=30)sh('horn',1.2);
+ if(ra('dice')){const v=S.dice||3;sh('dice',v===1?.75:v<=3?1.25:v<=5?1.5:2);}if(ra('horn'))sh('horn',2);else if(rp('horn')&&S.wt>=30)sh('horn',1.2);
  if(rp('map'))sh('map',1+mapDmg()/100);
  if(ra('anvil')&&t.cells.some(([x,y])=>S.buff[y][x]))sh('anvil',1.5);
  if(rp('quiver')&&!TW[t.type].unit)sh('quiver',1/.85);

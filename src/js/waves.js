@@ -56,7 +56,7 @@ function startWave(){
  for(const p of S.portals){p.q=baseQueue(p);
   for(const t of['mini','elite','greyw','bigw','wanted','momdrg'])for(let i=0;i<(p.plan[t]||0);i++)p.q.splice(Math.floor(p.q.length*(.5+Math.random()*.4)),0,t);
   if(p.plan.boss)p.q.push('boss');if(p.plan.colossus)p.q.push('colossus');if(p.esc&&p.esc.length)p.q.push(...p.esc.map(t=>t+'#'));if(p.plan.bob)p.q.push('bob');p.t=0;}
- if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
+ if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.forks={};S.fbag={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
  // duración prevista: lo que tarda en salir toda la cola + lo que tarda el enemigo más lento en recorrer el camino más largo
  {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:(t==='boss'||t==='colossus')?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
    const ds=S.field&&S.field[p.y]?S.field[p.y][p.x]:60,slow=Math.min(...p.q.filter(t=>t!=='|').map(t=>ET[t==='wanted'?'elite':t.replace('#','')].sp),9);if(ds<1e9)tr=Math.max(tr,ds/Math.max(.1,slow));}
@@ -68,7 +68,8 @@ function spawnEnemy(t,p){
  let wanted=0;if(t==='wanted'){t='elite';wanted=1;}
  see('en',t);if(ET[t].fly&&!S.tut)hint('fly','Enemigos voladores','Los enemigos <b>voladores</b> no se pueden bloquear y no les afecta nada que golpee el suelo. El resto de tus ataques sí les dan.');
  const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus')&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=(p.ln=((p.ln||0)+1)%3)-1;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
- S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted});
+ const dest=p.split?p.split[(p.si=(p.si||0)+1)%p.split.length]:null;
+ S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest});
 }
 function compassStep(e){
  // Brújula (pasivo), a nivel de pieza: al entrar en una casilla de pieza nueva puede desviarse por una rama que se aleja del núcleo y seguirla mientras la distancia siga creciendo
@@ -81,6 +82,23 @@ function compassStep(e){
  if(e.away){if(e.aw&&e.aw[0]===cx&&e.aw[1]===cy){if(aw.length)e.aw=aw[Math.floor(Math.random()*aw.length)];else{e.away=false;e.aw=null;}}}
  else if(rp('compass')&&!e.awayUsed&&aw.length&&Math.random()<.5){e.awayUsed=true;RS('compass').n++;e.away=true;e.aw=aw[Math.floor(Math.random()*aw.length)];}
 }
+// ---- cruces: en cada cruce, los enemigos se reparten entre las ramas que llegan al núcleo con poco rodeo (hasta FORKTOL casillas más largas),
+// no solo por la más corta. La ruta alternativa se sigue casilla a casilla (e.wps) ----
+const FORKTOL=6;
+function forkRoutes(cx,cy){const key=cx+','+cy;S.forks=S.forks||{};if(S.forks[key])return S.forks[key];
+ const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2,c0=[Math.floor(S.core.x/K),Math.floor(S.core.y/K)];
+ const d=Array.from({length:NC},()=>Array(NC).fill(1e9)),q=[c0];d[c0[1]][c0[0]]=0;
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(nx===cx&&ny===cy)continue;if(isP(nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
+ const out=[];for(const[a,b]of D){const nx=cx+a,ny=cy+b;if(!isP(nx,ny)||!(d[ny][nx]<1e9))continue;
+  const path=[[nx,ny]];let x=nx,y=ny,g=0;while(d[y][x]>0&&g++<4000){let nb=null;for(const[a2,b2]of D){const px=x+a2,py=y+b2;if(isP(px,py)&&d[py][px]<d[y][x]&&!(px===cx&&py===cy)){nb=[px,py];break;}}if(!nb)break;path.push(nb);x=nb[0];y=nb[1];}
+  out.push({n:[nx,ny],len:1+d[ny][nx],path});}
+ return S.forks[key]=out;}
+function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!S.cc[cy]||!S.cf||ra("compass"))return;
+ const rs=forkRoutes(cx,cy).filter(r=>!(prev&&r.n[0]===prev[0]&&r.n[1]===prev[1]));if(rs.length<2)return;
+ const best=Math.min(...rs.map(r=>r.len)),ok=rs.filter(r=>r.len<=best+FORKTOL);if(ok.length<2)return;
+ const key=cx+','+cy;S.fbag=S.fbag||{};let bag=S.fbag[key];if(!bag||!bag.length)bag=S.fbag[key]=shuf(ok.map((r,i)=>i));const r=ok[bag.pop()];
+ if(r.len===best&&S.cf[r.n[1]][r.n[0]]<S.cf[cy][cx])return;/* la más corta: la sigue el camino normal */
+ e.wps=r.path.slice();}
 function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
  const PBK=.25;let mv=ET[e.t].sp*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
  const go=c=>{(e.trail=e.trail||[]).push([e.tx,e.ty]);if(e.trail.length>3000)e.trail.shift();e.pv=[e.tx,e.ty];e.tx=c[0];e.ty=c[1];};
@@ -90,7 +108,10 @@ function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.
    if(e.tx===S.core.x&&e.ty===S.core.y)return true;
    if(ra('compass')){if(e.trail&&e.trail.length){const c=e.trail.pop();e.pv=null;e.tx=c[0];e.ty=c[1];continue;}return false;}
    compassStep(e);
-   const F=(e.away&&e.aw)?afield(e.aw):S.field;
+   if(e.dest&&Math.floor(e.tx/K)===Math.floor(e.dest[0]/K)&&Math.floor(e.ty/K)===Math.floor(e.dest[1]/K))e.dest=null;
+   {const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K),fk=cx+','+cy;if(e.fk!==fk){const pv=e.fk?e.fk.split(',').map(Number):null;e.fk=fk;forkPick(e,cx,cy,pv);}
+    if(e.wps){while(e.wps.length&&e.wps[0][0]===cx&&e.wps[0][1]===cy)e.wps.shift();if(!e.wps.length)e.wps=null;}}
+   const F=e.dest?afield([Math.floor(e.dest[0]/K),Math.floor(e.dest[1]/K)]):e.wps?afield(e.wps[0]):(e.away&&e.aw)?afield(e.aw):S.field;
    // solo se consideran vecinos que acercan al objetivo; entre varios igual de buenos se prefiere seguir recto (mantiene el carril) y, si no, se reparte con una bolsa barajada por casilla
    let bd=F[e.ty][e.tx],cs=[];
    for(const[a,b]of D){const nx=e.tx+a,ny=e.ty+b;if(!inb(nx,ny))continue;const v=F[ny][nx];

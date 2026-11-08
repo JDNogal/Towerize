@@ -16,5 +16,7 @@ for(const k of ['@@CSS@@','@@JS@@','@@VER@@'])if(!tpl.includes(k))throw new Erro
 const html=tpl.replace('@@CSS@@',()=>css).replace('@@JS@@',()=>js).replace('@@VER@@',ver);
 const outs=[path.join(ROOT,'index.html')];
 const i=process.argv.indexOf('--out');if(i>0&&process.argv[i+1])outs.push(path.join(process.argv[i+1],'towerize-v'+ver+'.html'));
-for(const o of outs)fs.writeFileSync(o,html);
+// música de prueba: solo en las copias de --out (no en el index.html público) y solo si existe musica/tema.mp3 (fuera del repositorio)
+const mp=path.join(ROOT,'musica','tema.mp3'),mus=fs.existsSync(mp)?'<script>window.MUSIC_SRC="data:audio/mpeg;base64,'+fs.readFileSync(mp).toString('base64')+'";</script>':'';
+outs.forEach((o,k)=>fs.writeFileSync(o,k&&mus?html.replace('</body>',()=>mus+'</body>'):html));
 console.log('Towerize v'+ver+' → '+outs.map(o=>path.relative(process.cwd(),o)||'.').join(', ')+' ('+(html.length/1024).toFixed(0)+' KB)');

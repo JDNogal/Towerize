@@ -79,6 +79,7 @@ function draw(){
  g.strokeStyle='rgba(192,57,74,.55)';g.lineWidth=lw(2);
  for(const e of S.ends){g.beginPath();g.arc(e.x*CS+CS/2,e.y*CS+CS/2,CS*.9,0,7);g.stroke();}
  drawShip(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
+ drawMimic(g,CS,lw);
  drawCore(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
  for(const t of S.list)if(t.fl&&S.phase==='wave')drawFlame(g,t,x=>x*CS+CS/2,y=>y*CS+CS/2,CS);
  const mst=fxOn('crown')?masterTw():null;
@@ -89,7 +90,7 @@ function draw(){
   if(t.flash){g.strokeStyle='#fff';g.lineWidth=lw(3);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.flash.x*CS+CS/2,t.flash.y*CS+CS/2);g.stroke();}
   /* galones de nivel en la esquina superior derecha: uno por nivel (Nv 1-3); Nv 4, tres dorados y estrella; con todo al máximo, estrella dorada */
   if(mt)drawCrown(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);
-  if(!T.uniq)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
+  if(!T.uniq||T.glut)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
   if(S.wish&&S.wish.some(w=>w.id===t.id)){g.font=Math.round(BCS*.34)+'px sans-serif';g.fillText('🔖',t.x*CS+CS/2-BCS*.36,t.y*CS+CS/2-BCS*.34);}
   if(t===S.selT){g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.strokeRect((t.x-1)*CS+lw(1),(t.y-1)*CS+lw(1),BCS-lw(2),BCS-lw(2));}
   if(t.rays&&S.phase==='wave'){g.lineWidth=lw(2);for(const r of t.rays)if(r.e.hp>0){g.strokeStyle=r.el.col;g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(r.e.x*CS+CS/2,r.e.y*CS+CS/2);g.stroke();}}
@@ -159,5 +160,5 @@ function draw(){
    g.fillStyle=ok?'rgba(80,220,120,.22)':'rgba(230,70,70,.4)';g.fillRect(bx*P*BCS,by*P*BCS,P*BCS,P*BCS);
    g.strokeStyle=ok?'#50dc78':'#e64646';g.lineWidth=lw(2);g.strokeRect(bx*P*BCS+lw(1),by*P*BCS+lw(1),P*BCS-lw(2),P*BCS-lw(2));}}
  g.setTransform(1,0,0,1,0,0);
- $('sr').textContent='⏳ Ronda '+Math.min(S.round,ROUNDS)+'/'+ROUNDS+((S.phase==='build'||S.phase==='wave')&&S.portals&&S.portals.length?'  ·  ⭕ '+S.portals.length:'')+(S.fury?'  ·  💢 Furia ×'+String(furyM()).replace('.',','):'');$('sr').title=S.fury?'Furia: todos ganan daño mientras dure la oleada':'⭕ Portales activos esta ronda';{const a=$('stR'),b=$('stC');a.style.display=OPT.treal?'':'none';b.style.display=OPT.tcomb?'':'none';if(OPT.treal)a.textContent='🕒 '+fClk(GT.r);if(OPT.tcomb)b.textContent='⚔️ '+fClk(GT.c);}$('sh').textContent=(S.hp<=10?'💔':'❤️')+' Vida '+S.hp;$('sg').textContent='🪙 Oro '+Math.floor(S.gold);
+ $('sr').textContent='⏳ Ronda '+Math.min(S.round,ROUNDS)+'/'+ROUNDS+((S.phase==='build'||S.phase==='wave')&&S.portals&&S.portals.length?'  ·  ⭕ '+S.portals.length:'')+(S.fury?'  ·  💢 Furia ×'+String(furyM()).replace('.',','):'');$('sr').title=S.fury?'Furia: todos ganan daño mientras dure la oleada':'⭕ Portales activos esta ronda';{const a=$('stR'),b=$('stC');a.style.display=OPT.treal?'':'none';b.style.display=OPT.tcomb?'':'none';if(OPT.treal)a.textContent='🕒 '+fClk(GT.r);if(OPT.tcomb)b.textContent='⚔️ '+fClk(GT.c);}$('sh').textContent=(S.hp<=10?'💔':'❤️')+' Vida '+S.hp;{const iv=S.relics&&S.relics.includes('scale')?interest():0,h='🪙 Oro '+Math.floor(S.gold)+(iv>0?' <span class="sgint">+'+iv+'</span>':'');if($('sg')._h!==h){$('sg').innerHTML=h;$('sg')._h=h;}}
 }

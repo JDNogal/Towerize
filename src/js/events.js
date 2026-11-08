@@ -7,7 +7,7 @@ function placeEvents(c,A){const pool=shuf(Object.keys(EVENTS)),n=Math.min(evCoun
  for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k]||(bx===c&&by===c))continue;if(Math.abs(bx-A[0])+Math.abs(by-A[1])<2)continue;cand.push(k);}
  shuf(cand);for(let i=0;i<n&&i<cand.length;i++)S.evts[cand[i]]=pool[i];}
 const rndRelic=()=>{const p=RELICS.filter(r=>!r.ini&&!r.evr&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id));return p.length?p[Math.floor(Math.random()*p.length)].id:null;};
-function gainRelic(id){S.relics.push(id);S.rs[id]={cd:0,t:0};see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
+function gainRelic(id){S.relics.push(id);S.rs[id]={cd:0,t:0};if(id==='mimic')setTimeout(mimPlace,0);see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
 function goldEv(v){S.gold+=v;if(S.st&&v>0)S.st.gEv+=v;}
 function addNow(k,v){const p=S.portals[0];if(p)p.plan[k]=(p.plan[k]||0)+v;}
 function blockBuffs(bk){if(!bk)return false;const[bx,by]=bk.split(',').map(Number),NB=N/BN;for(let y=by*NB;y<(by+1)*NB;y++)for(let x=bx*NB;x<(bx+1)*NB;x++)if(S.buff[y]&&BF[S.buff[y][x]])return true;return false;}
@@ -53,7 +53,8 @@ const EVENTS={
   {l:'Ayudar en la forja',c:'Durante esta oleada tus torres hacen un 20% menos de daño',run:()=>{S.forgeR=S.round;if(!S.relics.includes('hammer'))gainRelic('hammer');return['relic:hammer'];}}]},
  chest:{n:'Cofre sospechoso',ic:'📦',txt:'Un cofre abandonado en mitad del camino. Parece demasiado fácil.',opts:[
   {l:'Abrirlo',run:()=>{if(Math.random()<.5){setTimeout(()=>openRelic(),0);return['relicx'];}moreEnemies(.3);return['more:30'];}},
-  {l:'Alimentar al cofre',c:'Pagas 50 🪙',req:()=>S.gold<50?'Necesitas 50 🪙':'',run:()=>{S.gold-=50;gainRelic('mimic');return['relic:mimic'];}}]},
+  {l:'Alimentar al cofre',c:'Pagas 50 🪙',req:()=>S.gold<50?'Necesitas 50 🪙':'',run:()=>{S.gold-=50;gainRelic('mimic');return['relic:mimic'];}},
+  {l:'Encerrarlo en una jaula',c:'Pierdes 2 de vida (te muerde al cogerlo)',req:()=>S.hp<=2?'Necesitas más de 2 de vida':'',run:()=>{hpLoss(2);S.uq.push({type:'glut',bk:EVK});return['tower:glut'];}}]},
  lighthouse:{n:'Faro en ruinas',ic:'🏚️',txt:'Un viejo faro de piedra, cubierto de hiedra. En lo alto aún brilla débilmente un cristal arcano.',opts:[
   {l:'Restaurar el faro',c:'Desmantelas 2 torres de Nv 1 (o pagas 50 🪙 por cada una que te falte)',req:()=>{const k=Math.min(2,lv1Count());return S.gold<(2-k)*50?'Necesitas '+((2-k)*50)+' 🪙':'';},run:()=>{const k=Math.min(2,lv1Count());S.gold-=(2-k)*50;S.dneed=k;S.dsel=[];S.uq.push({type:'faro',bk:EVK});return['tower:faro'];}},
   {l:'Encender una señal',run:()=>{lessEnemies(.25);return['less:25'];}},
@@ -72,19 +73,48 @@ const EVENTS={
   {l:'Defender la casa de paja',c:'Difícil: la próxima oleada trae a El Lobo',run:()=>{addNow('bigw',1);S.pend.push({r:S.round,bk:EVK,towers:['straw']});return['tower:straw'];}},
   {l:'¡Defender todas las casas!',c:'La próxima oleada trae Lobatos, un Lobo gris y El Lobo',req:()=>pigDone()?'':'Se desbloquea al ganar una partida con cada una de las tres casas',run:()=>{addNow('cub',8);addNow('greyw',1);addNow('bigw',1);S.pend.push({r:S.round,bk:EVK,towers:['brick','wood','straw']});return['tower:brick','tower:wood','tower:straw'];}}]}
 };
+// texto que «resuelve» cada opción (como en Slay the Spire): se lee tras elegir, antes de Continuar. Puede depender del resultado (keys)
+const EVRES={
+ merchant:['El mercader cuenta las monedas dos veces, sonríe y te tiende algo envuelto en tela. «Buena elección. O eso dicen todos.»',
+  'Aprovechas un descuido y te llevas lo primero que pillas. A lo lejos, el mercader silba… y algo grande le responde desde el bosque.',
+  'Tras media hora de discusión, el mercader suspira y te da una balanza vieja. «Quédatela. Ya me cobraré en tu próximo cofre.»'],
+ shrine:['Apoyas la mano en el altar y sientes que algo se te escapa del pecho. Tu héroe, en cambio, se yergue más fuerte que nunca.',
+  'Las monedas desaparecen en cuanto tocan la piedra. Un brillo dorado se extiende por las casillas cercanas.',
+  'En cuanto levantas el ídolo, el suelo tiembla y un frío te recorre la espalda. Pero ya es tuyo.',
+  'Te arrodillas un rato en silencio. Cuando te levantas, el cansancio ha desaparecido.'],
+ smith:['El herrero trabaja toda la noche. Al amanecer, tus torres más modestas lucen piezas nuevas y relucientes.',
+  '«Dime cuál», gruñe el herrero mientras hace girar la piedra de afilar. «Solo me da tiempo para una.»',
+  'Pasas la tarde dándole al fuelle. El herrero, agradecido, te regala su martillo de repuesto… aunque tus torres se quedan un rato sin herramientas.'],
+ chest:[k=>k[0]==='relicx'?'La tapa cede con un chasquido. Dentro, entre telarañas, brilla algo valioso.':'¡Era una trampa! Del cofre sale un humo rojo que atrae a más enemigos hacia tus portales.',
+  'Le echas unas monedas. El cofre se relame, abre un ojo y decide seguirte.',
+  'Le echas una red encima y, tras un buen mordisco, consigues meterlo en una jaula. Gruñe. Tiene hambre.'],
+ lighthouse:['Desmontas un par de torres y usas sus piedras para reparar el faro. El cristal vuelve a brillar con fuerza.',
+  'Enciendes una hoguera en lo alto. Desde lejos, parte de los enemigos ve la luz y da media vuelta.',
+  'Desde lo alto del faro ves un claro que no estaba en tus mapas. Y en él, un cofre.'],
+ nest:['Envuelves el huevo con cuidado. Está caliente… y algo se mueve dentro.',
+  'Un coleccionista paga una fortuna por el huevo. Mientras cuentas el oro, oyes un rugido lejano: alguien lo va a echar de menos.',
+  'Coges la brasa con la mano desnuda. Duele, pero sigue ardiendo sin apagarse.'],
+ guild:['Los aventureros clavan su estandarte y empiezan a levantar la sede. «¡Contad con nosotros!»',
+  'Arrancas un cartel del tablón: «Se busca». Dentro de dos rondas, el buscado vendrá a por ti.',
+  'Un mercenario veterano cuenta tus monedas, asiente y se pone a tus órdenes.'],
+ pigs:['El cerdito de la casa de ladrillo te da las gracias. A lo lejos se oyen aullidos pequeños: vienen los lobatos.',
+  'El cerdito de la casa de madera respira aliviado. Entre los árboles, un lobo gris olfatea el aire.',
+  'El cerdito de la casa de paja te abraza temblando. Un aullido enorme hace vibrar las paredes: El Lobo ya viene.',
+  'Los tres cerditos se ponen detrás de ti. Esta noche vendrá toda la manada.']};
+const evRes=(id,i,keys)=>{const r=(EVRES[id]||[])[i];return typeof r==='function'?r(keys):r||'';};
 let EVK=null;
 function optHtml(id,o,i,live){const known=memOf(id,i),why=live&&o.req?o.req():'';
  const desc=(o.c?`<small>${o.c}</small>`:'')+`<small>Obtienes: ${known.length?known.map(chip).join(' · '):'???'}</small>`;
  // sin spoilers: una opción bloqueada sale como «???» hasta desbloquearla (solo se ve qué hace falta)
  const lk=o.req?o.req():'';
  if(!live)return lk?`<div class="evo lk"><b>???</b><small class="cd">🔒 ${lk}</small></div>`:`<div class="evo"><b>${o.l}</b>${desc}</div>`;
- return `<button class="evo" data-a="evopt" data-i="${i}"${why?' disabled':''}><b>${why?'???':o.l}</b>${why?'':desc}${why?`<small class="cd">🔒 ${why}</small>`:''}</button>`;}
+ return `<button class="evo" data-a="evopt" data-i="${i}"${why?' disabled':''}><b>${why?'???':o.l}</b><span class="evod">${why?`<small class="cd">🔒 ${why}</small>`:desc}</span></button>`;}
 function evBanner(){if(S.tut?TUTHS.event:(!OPT.hints||HSEEN.event))return '';hintSeen('event');return '<div class="hban">💡 Cada opción muestra siempre su coste. Lo que obtienes aparece como <b>???</b> hasta que eliges esa opción una vez; a partir de ahí lo recordarás.</div>';}
 function eventCard(id){const E=EVENTS[id];return `<div class="evhead"><span class="evic">${E.ic}</span><b>${E.n}</b></div><small>${E.txt}</small>`+E.opts.map((o,i)=>optHtml(id,o,i,false)).join('');}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
  el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><p>${E.txt}</p>${evBanner()}<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div><small>Evento · el juego está en pausa.</small></div>'+wcompBtn('ev');}
 function chooseEvent(i){const id=RL.ev,E=EVENTS[id],o=E&&E.opts[i];if(!o||(o.req&&o.req()))return;const keys=o.run()||[];remember(id,i,keys);
- const el=$('relic');el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><p><b>${o.l}</b></p><div class="evres">${keys.map(chip).join('<br>')}</div><button class="go" data-a="evok">Continuar</button></div>`+wcompBtn('ev');
+ const el=$('relic');el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><div class="evchose">${o.l}</div>${evRes(id,i,keys)?`<p class="evtale">${evRes(id,i,keys)}</p>`:''}<div class="evres"><small>Obtienes</small>${keys.map(k=>`<span class="evchip">${chip(k)}</span>`).join('')}</div><button class="go" data-a="evok">Continuar</button></div>`+wcompBtn('ev');
  renderRelics();ui();}
 function closeEvent(){RL.open=false;RL.ev=null;$('relic').classList.remove('open');ui();if(S.sharp)startSharp();else if(S.dneed>0)startDism();else if(S.uq.length&&!RL.open)startUPlace();}
 const sharpOk=t=>!TW[t.type].support&&!TW[t.type].faro;
@@ -106,7 +136,7 @@ if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;
   if(d<=sp*dt+.3){giveXp(H,o.v);return false;}o.x+=dx/d*sp*dt;o.y+=dy/d*sp*dt;return true;});}
 function orbFlush(){if(S.orbs&&S.hero)for(const o of S.orbs)giveXp(S.hero,o.v);S.orbs=[];}
 function hpLoss(n,en){if(S)S.chit=performance.now();if(S.st)S.st.hpL=(S.st.hpL||0)+n;if(en)hint('retry','Reintentar',[['Un enemigo ha llegado al núcleo y has perdido <b>vida</b>.',tgEl('#sh')],['Si una oleada sale mal, puedes repetirla desde el principio con este botón. Tiene cargas limitadas.',tgEl('#mtl [data-a="retry"]')]]);S.hp-=n;S.idolN=(S.idolN||0)+n;if(en)S.hpEn=(S.hpEn||0)+n;}
-const interest=()=>Math.min(30,Math.floor(S.gold*.1/5)*5);
+const INTMAX=100,interest=()=>Math.min(INTMAX,Math.floor(S.gold*.1/5)*5);
 const heroHpM=()=>rp('badge')?1.15:1;
 function heroSync(){const H=S.hero;if(!H)return;const q=H.s,m=hsAt(H.id,H.lvl).hp*heroHpM();if(Math.abs(q.max-m)>.01){const f=q.max>0?q.hp/q.max:1;q.max=m;if(q.hp>0)q.hp=m*f;}}
 const EMR=3*K;
@@ -148,13 +178,49 @@ function uPlaceAt(c){const u=S.uq[0];if(!u)return;const kx=Math.floor(c.x/K),ky=
  const T=TW[u.type],tw={id:++S.tid,type:u.type,lvl:1,x:q.x,y:q.y,cells:[[q.x,q.y]],sq:sqCells(q),inv:0,spec:null,ab:{},acd:{},cd:0,tgt:null,mode:S.dtg[u.type]||'core',rd:S.round};
  see('tw',u.type);hint('uniq','Torres de evento','Las torres de evento solo se consiguen en eventos concretos. Son únicas: no se compran, no se venden y se mejoran a su manera.',tgCell(q.x,q.y,1.4));if(T.guild)mkGuild(tw);if(T.faro){tw.light=0;tw.lz=[{x:q.x,y:q.y}];tw.lzcd=[0,0];}if(T.dragon){tw.born=S.round;tw.stage=0;}
  S.list.push(tw);S.st.all.push(tw);for(const[a,b]of tw.sq)S.occ[a+','+b]=tw;S.uq.shift();
- if(S.uq.length)startUPlace();else{S.aim=null;S.msg='';toast(T.ic+' '+T.n+' colocada.');renderRelics();ui();}}
+ if(S.uq.length)startUPlace();else{S.aim=null;S.msg='';toast(T.ic+' '+T.n+': ya está en su sitio.');renderRelics();ui();}}
 function roundRewards(){
  for(const t of S.list)if(TW[t.type].guild){const v=[10,20,35,50][t.lvl-1]||10;goldEv(v);}
  if(rp('scale')){const v=interest();if(v>0){goldEv(v);if(S.st)S.st.gRel+=v;}}
  const due=(S.pend||[]).filter(p=>p.r===S.round);S.pend=(S.pend||[]).filter(p=>p.r!==S.round);
  for(const p of due)for(const ty of p.towers)S.uq.push({type:ty,bk:p.bk});
  if(due.length)S.msg='¡Has defendido las casas! Coloca tu recompensa.';}
+
+// ---- Mímico: al conseguirlo cae en el mapa, en una zona con solares libres y pocas torres (mejor por dentro del mapa que en el borde).
+// Las bajas a 2,5 casillas o menos lo alimentan; lleno, escupe un cofre al colocar la siguiente pieza y la próxima vez pide más ----
+const MIMR=2.5,MIM0=30,MIMUP=20;
+function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC(x,y)?S.cc[y][x]:-1,NB=P;let best=null,bs=-1e9;
+ for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!S.blocks[Math.floor(x/NB)+','+Math.floor(y/NB)])continue;const v0=cc(x,y);if(v0!==0&&v0!==3)continue;if(!D.some(([a,b])=>cc(x+a,y+b)===2))continue;
+  let sol=0,tw=0;for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){if(i*i+j*j>10)continue;const v=cc(x+i,y+j);if(v===1){if(S.occ[((x+i)*K+1)+','+((y+j)*K+1)])tw++;else sol++;}}
+  const bx=Math.floor(x/NB),by=Math.floor(y/NB),edge=D.filter(([a,b])=>!S.blocks[(bx+a)+','+(by+b)]).length;
+  const sc=sol*2-tw*4+(edge===0?4:edge===1?1:0)+Math.random()*.5;if(sol>=1&&sc>bs){bs=sc;best=[x,y];}}
+ if(!best)return;S.mim={x:best[0]*K+1,y:best[1]*K+1,food:0,need:MIM0,rdy:0,n:0,t0:performance.now()};
+ S.fx.push({x:S.mim.x,y:S.mim.y,r:2*K,t:.8,m:.8,col:'#c9a24a'});
+ if(!S.tut)setTimeout(()=>hint('mimic','El mímico','El mímico ha caído en el mapa, junto al camino. Cada enemigo que muere cerca lo <b>alimenta</b>; cuando se llena, <b>escupe un cofre</b> al colocar la siguiente pieza. Construye cerca para llenarlo antes.',tgCell(S.mim.x,S.mim.y,1.6)),0);}
+function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
+ if(m.food>=m.need){m.food=0;m.rdy++;m.n++;m.need=MIM0+MIMUP*m.n;S.fx.push({x:m.x,y:m.y,r:1.6*K,t:.7,m:.7,col:'#ffd84a'});S.msg='¡El mímico está lleno! Escupirá un cofre al colocar la próxima pieza.';}}
+function mimSpit(){const m=S.mim;if(!m||!(m.rdy>0)||RL.open)return false;m.rdy--;RS('mimic').n2=(RS('mimic').n2||0)+1;openRelic();return true;}
+function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y*CS+CS/2,B=K*CS,now=performance.now(),ch=m.ch&&now-m.ch<350?1-(now-m.ch)/350:0,bob=Math.sin(now/600)*B*.03,op=.12+.25*ch+(m.rdy?.25:0);
+ g.save();g.translate(X,Y+bob);
+ // anillo de llenado
+ g.lineWidth=lw(3);g.strokeStyle='rgba(0,0,0,.35)';g.beginPath();g.arc(0,0,B*.62,0,7);g.stroke();g.strokeStyle=m.rdy?'#ffd84a':'#c9a24a';g.beginPath();g.arc(0,0,B*.62,-Math.PI/2,-Math.PI/2+6.283*(m.rdy?1:m.food/m.need));g.stroke();
+ const w=B*.8,h=B*.42;g.fillStyle='#7a4a1e';g.strokeStyle='#2e1a08';g.lineWidth=lw(1.5);g.fillRect(-w/2,0,w,h);g.strokeRect(-w/2,0,w,h);
+ g.fillStyle='#c9a24a';g.fillRect(-w/2,h*.4,w,h*.16);
+ // boca (se abre al comer)
+ g.fillStyle='#3a0c10';g.beginPath();g.rect(-w/2+lw(1),-h*op*1.4,w-lw(2),h*op*1.4);g.fill();
+ g.fillStyle='#f4ecd8';for(let i=0;i<5;i++){const tx=-w/2+w*(i+.5)/5;g.beginPath();g.moveTo(tx-w*.07,0);g.lineTo(tx,-h*.22);g.lineTo(tx+w*.07,0);g.fill();g.beginPath();g.moveTo(tx-w*.07,-h*op*1.4);g.lineTo(tx,-h*op*1.4+h*.22);g.lineTo(tx+w*.07,-h*op*1.4);g.fill();}
+ // tapa
+ g.translate(0,-h*op*1.4);g.fillStyle='#8a5626';g.beginPath();g.moveTo(-w/2,0);g.lineTo(-w/2,-h*.5);g.quadraticCurveTo(0,-h*1.1,w/2,-h*.5);g.lineTo(w/2,0);g.closePath();g.fill();g.stroke();
+ g.fillStyle='#c9a24a';g.fillRect(-w*.08,-h*.55,w*.16,h*.4);
+ // ojo
+ g.fillStyle='#fff7c8';g.beginPath();g.ellipse(w*.24,-h*.45,w*.09,h*.17,0,0,7);g.fill();g.fillStyle='#1a0a0a';g.beginPath();g.ellipse(w*.25,-h*.45,w*.035,h*.12,0,0,7);g.fill();
+ g.restore();
+ if(m.rdy){g.font='bold '+Math.round(B*.4)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🎁',X+B*.5,Y-B*.55);}}
+function mimInfo(){const m=S.mim;return `<div class="ttl"><b>📦 Mímico</b></div><small style="margin:0">Cada enemigo que muere a ${String(MIMR).replace('.',',')} casillas o menos lo alimenta. Lleno, escupe un cofre al colocar la siguiente pieza.</small>`+R('gd','Comida',m.rdy?'¡Lleno!':m.food+' / '+m.need)+(m.n?R('','Cofres escupidos',m.n):'');}
+
+// ---- Mímico glotón (torre única del evento «Cofre sospechoso»): no se mejora con oro, sube de nivel comiendo (bajas que hace él) ----
+const GLUT=[0,12,35,80];
+function glutEat(t){t.food=(t.food||0)+1;if(t.lvl<4&&t.food>=GLUT[t.lvl]){lvUp(t);S.fx.push({x:t.x,y:t.y,r:1.4*K,t:.6,m:.6,col:'#ffd84a'});S.msg='¡El Mímico glotón sube a Nv '+t.lvl+'!';}}
 // ---- Faro arcano: no ataca, ilumina torres cercanas y sube de nivel con su daño ----
 const FARO=[{r:3,rg:.2,d:0,c:0,need:0},{r:3.5,rg:.25,d:.05,c:0,need:2000},{r:4,rg:.3,d:.1,c:.05,need:6000},{r:4,rg:.3,d:.1,c:.05,need:15000}];
 // zonas de luz del Faro: se proyectan en cualquier punto del mapa (1 zona; 2 en Nv 4). Si se solapan, sus mejoras se suman
@@ -227,13 +293,14 @@ function drawDragons(){for(const t of S.list){if(!t.fly||t.fly.x===undefined)con
  if(t.stage>=3){g.fillStyle='rgba(255,110,40,.25)';g.beginPath();g.arc(px,py,CS*2,0,7);g.fill();}g.font=Math.round(CS*(t.stage>=3?3.3:2.6))+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🐉',px,py);}}
 // ---- ficha de las torres únicas ----
 function uniqInfo(t,k,lvo){const T=TW[k],src=t?'tw:'+t.id:'shop:'+k,X=t?tinfo(t):T,pin=t&&PR.pinned&&PR.key===src,ev=EVENTS[T.ev],CL=lvo||(t?(T.dragon?(t.stage||0)+1:t.lvl||1):1);
- let h=`<div class="ttl"><b>${X.ic} ${X.n}</b>${t&&(T.guild||T.pig)?' · '+kst('lvl','Nv '+t.lvl,src):''}<br><small style="margin:0">Torre única · evento «${ev?ev.n:''}»</small></div>`;
+ let h=`<div class="ttl"><b>${X.ic} ${X.n}</b>${t&&(T.guild||T.pig||T.glut)?' · '+kst('lvl','Nv '+t.lvl,src):''}<br><small style="margin:0">Torre única · evento «${ev?ev.n:''}»</small></div>`;
  if(T.faro){const lv=CL,L=FARO[lv-1];h+=R('cd',kst('dmg','Daño',src),0)+R('ca','Radio',f(L.r)+' casillas')+R('cg','Alcance a torres iluminadas','+'+Math.round(L.rg*100)+'%')+(lv>=2?R('cd','Daño a torres iluminadas','+'+Math.round(L.d*100)+'%'):'')+(lv>=3?R('ccl','Enfriamiento de torres iluminadas','−'+Math.round(L.c*100)+'%'):'');
   h+=t&&lv<4?R('gd','Luz',fi(t.light||0)+' / '+fi(FARO[lv].need)):'';h+='<small>'+['No ataca: proyecta una zona de luz que puedes mover a cualquier parte del mapa (🔦 en su menú). Mejora las torres de dentro y acumula luz con el daño que hacen. Con 2.000 de luz sube a Nv 2.','Ahora también da daño a las torres que ilumina. Con 6.000 de luz sube a Nv 3.','Ahora también reduce el enfriamiento de las torres que ilumina. Con 15.000 de luz sube a Nv 4.','Gana una segunda zona de luz que también puedes mover. Si las pones una encima de otra, sus mejoras se suman.'][lv-1]+'</small>';}
  else if(T.dragon){const sg=CL-1;h+=R('','Forma',DRAG[sg].n)+(sg===0?R('cd',kst('dmg','Daño',src),0):sg===1?R('cd',kst('dmg','Daño',src)+' (fuego)',8)+R('ca','Área','0,4 casillas')+R('cg','Rango','2,5 casillas')+R('cd','Daño con garras','70%')+R('chp','Vida',60):sg===2?R('cd',kst('dmg','Daño',src)+' (bola de fuego)',18)+R('ca','Área','1 casilla')+R('cg','Rango','3,5 casillas'):R('cd',kst('dmg','Daño',src)+' (bola de fuego)',22)+R('ca','Área','1,2 casillas')+R('cg','Rango','3,5 casillas')+R('cd','Llamarada',DBRN+' stacks de '+kw('burn','Quemadura',src))+R('ccl','Enfriamiento de la llamarada',DBRCD+' s')+R('cr',kst('dur','Duración',src)+' de los charcos','4 s'))+
   (t&&sg<3&&!lvo?R('cr','Siguiente fase','ronda '+(t.born+DRGAT[sg+1])):'')+'<small>'+['Todavía no hace nada. '+(()=>{const a=['eclosiona a las 3 rondas'];if(revd('drag2')||revd('drag3'))a.push('es adulto a las 6');if(revd('drag3'))a.push('anciano a las 10');return (a.length>1?a.slice(0,-1).join(', ')+' y '+a[a.length-1]:a[0]).replace(/^e/,'E')+'.';})(),'Se coloca en el camino, bloquea y escupe fuego; si le alcanzan, ataca con garras. Si cae, reaparece.','Vuela en círculos alrededor de su bandera y lanza bolas de fuego con más área. No bloquea, y solo pueden atacarle los enemigos a distancia.','Vuela como el adulto, con bolas de fuego más fuertes y más área. Cada 8 s lanza una llamarada en cono (3 casillas) que aplica mucha quemadura y deja charcos de fuego en el camino durante 4 s.'][sg]+'</small>';
   if(pin&&sg>=1)h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`;}
- else if(T.guild){const lv=CL,Lm=lvMods(k,lv,null),bd=T.dmg*Lm.dmg,bh=T.unit.hp*Lm.hp;h+='<div class="usub"><b>Estadísticas de unidades</b>'+R('','Aventureros',PARTY[lv].length)+PARTY[lv].map((c,i)=>R('','· '+CLS[c].n,`<span class="cd">${f(bd*CLS[c].d)}</span> daño · <span class="chp">${Math.round(bh*CLS[c].hp)}</span> vida`+(t&&!lvo&&t.sd&&t.sd[i]&&t.sd[i].ren?` · <span class="gd">Renombre +${Math.round(t.sd[i].ren*100)}%</span>`:''))).join('')+'</div>'+(lv>=4?'<small><b>Renombre</b>: cuando un aventurero mata a una Mini-élite, una Élite o un Jefe (que no sea el final), todo el grupo gana un 5%, 10% o 15% de daño y vida, sin límite. Quien cae pierde el suyo.</small>':'')+R('gd','Recompensa por ronda',[10,20,35,50][lv-1]+' 🪙')+R('gd','Botín','+25% de oro por baja');
+ else if(T.glut){const lv=CL,L=lvMods(k,lv,null),s=t&&!lvo?stats(t):{dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:0,pen:0};h+=rows(s,T,src,'')+(t&&lv<4&&!lvo?R('gd','Comida',(t.food||0)+' / '+GLUT[lv]):'')+'<small>Muerde a los enemigos que pasan a su lado. No se mejora con oro: sube de nivel con las bajas que hace él mismo ('+GLUT.slice(1).join(', ')+' para Nv 2, 3 y 4).</small>';}
+ else if(T.guild){const lv=CL,Lm=lvMods(k,lv,null),bd=T.dmg*Lm.dmg,bh=T.unit.hp*Lm.hp;h+='<div class="usub"><b>'+unitHead('shop:guild')+'Estadísticas de unidades</b>'+R('','Aventureros',PARTY[lv].length)+PARTY[lv].map((c,i)=>R('','· '+CLS[c].n,`<span class="cd">${f(bd*CLS[c].d)}</span> daño · <span class="chp">${Math.round(bh*CLS[c].hp)}</span> vida`+(t&&!lvo&&t.sd&&t.sd[i]&&t.sd[i].ren?` · <span class="gd">Renombre +${Math.round(t.sd[i].ren*100)}%</span>`:''))).join('')+'</div>'+(lv>=4?'<small><b>Renombre</b>: cuando un aventurero mata a una Mini-élite, una Élite o un Jefe (que no sea el final), todo el grupo gana un 5%, 10% o 15% de daño y vida, sin límite. Quien cae pierde el suyo.</small>':'')+R('gd','Recompensa por ronda',[10,20,35,50][lv-1]+' 🪙')+R('gd','Botín','+25% de oro por baja');
   if(pin){if(lv<4){const c=T.upc[lv+1];h+=`<div class="tgt"><button data-a="gup" data-id="${t.id}">⬆ Subir a rango ${RANKS[lv]} (<span class="gd">−${c} 🪙</span>)</button></div>`;}h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`;}}
  else{const lv=T.pig?CL:Math.min(3,CL),L=lvMods(k,lv,null),s=t&&!lvo?stats(t):{dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:(T.splash||0)*L.area,pen:0,ldur:T.log?logDur(lv):0};
   if(CL>=4&&!T.pig)h+='<small>Nv 4: su habilidad está por definir.</small>';else h+=rows(s,T,src,'');

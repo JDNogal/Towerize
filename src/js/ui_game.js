@@ -48,7 +48,7 @@ function statsHTML(tab){const st=S.st||{},g=n=>`<span class="gd">${fi(n||0)} �
   rows.sort((a,b)=>b.dm-a.dm);const mx=Math.max(1,...rows.map(r=>r.dm));
   return rows.length?`<table><tr><th>Fuente</th><th class="n">Daño</th><th class="hidem"></th><th class="n">%</th><th class="n">Bajas</th><th class="n">DPS</th></tr>`+rows.map(r=>`<tr><td><span class="sic" style="background:${r.col}33">${r.ic}</span>${r.n} <small style="color:var(--fg2)">${r.lv}</small></td><td class="n cd">${fi(r.dm)}</td><td class="hidem" style="width:28%"><div class="sbar"><i style="width:${r.dm/mx*100}%;background:${r.col}"></i></div></td><td class="n">${pc(r.dm)}%</td><td class="n">${r.k}</td><td class="n">${r.dps==null?'—':fi(r.dps)}</td></tr>`).join('')+'</table><div class="snote">Incluye las torres vendidas y el héroe. «Otras fuentes» suma el daño de reliquias, explosiones de veneno, barricadas…</div>':'<div class="snote">Todavía no has hecho daño en esta partida.</div>';}
  if(tab==='rel'){if(!(S.relics||[]).length)return '<div class="snote">Todavía no tienes reliquias.</div>';
-  const rt={coin:()=>`${g(st.gRel)} generado`,venom:r=>`≈ ${d(r.dmg)} de daño`,frost:r=>`${fi(r.n)} ralentizaciones · ${fi(r.n2)} congelados`,barricade:r=>`${fi(r.n)} enemigos detenidos`,compass:r=>`${fi(r.n)} desvíos`,mimic:r=>`${g(r.gold)} generado`};
+  const rt={coin:()=>`${g(st.gRel)} generado`,venom:r=>`≈ ${d(r.dmg)} de daño`,frost:r=>`${fi(r.n)} ralentizaciones · ${fi(r.n2)} congelados`,barricade:r=>`${fi(r.n)} enemigos detenidos`,compass:r=>`${fi(r.n)} desvíos`,mimic:r=>`${fi(r.n)} bajas comidas · ${fi(r.n2||0)} cofres`};
   return S.relics.map(id=>{const Rr=RELIC[id],r=RS(id),v=rt[id]?rt[id](r):r.gold?`${g(r.gold)} generado`:r.dmg?`≈ ${d(r.dmg)} de daño`:r.n?`${fi(r.n)} activaciones`:'—';return `<div class="srl"><div class="ri" style="background:${Rr.col||'#333'}">${Rr.ic}</div><div><b>${Rr.n}</b><small>${S.rs&&S.rs[id]&&S.rs[id].cd>0?'En enfriamiento: '+S.rs[id].cd+' rondas':'Lista'}</small></div><div class="v">${v}</div></div>`;}).join('')+'<div class="snote">El daño de las reliquias es una estimación: la parte del daño que no existiría sin ellas.</div>';}
  if(tab==='hero'){if(!H)return '<div class="snote">No tienes héroe en esta partida.</div>';
   return `<div class="kp"><div><b>${d(H.pt.dmgT||0)}</b><small>Daño</small></div><div><b>${fi(H.pt.kills||0)}</b><small>Bajas</small></div><div><b class="cf">${fi(st.xp||0)} xp</b><small>Experiencia ganada</small></div><div><b>${fi(st.hDie||0)}</b><small>Veces caído</small></div></div>`+
@@ -230,7 +230,7 @@ function exitGame(){LB.exit=0;try{saveRun&&svLive()&&saveRun('exit');}catch(e){}
 function togglePtips(){const on=!(OPT.ptip||OPT.ptipw);OPT.ptip=OPT.ptipw=on;saveOpt();const b=$('ptb');if(b)b.classList.toggle('on',on);try{sfx('ui');}catch(e){}toast(on?'💀 Bocadillos de los portales: siempre visibles':'💀 Bocadillos de los portales: solo al pasar el ratón');}
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
- if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
+ if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim)||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -306,6 +306,7 @@ function act(e){
  else if(a==='opt'){const o=OPTS[+b.dataset.i];OPT[o.key]=!OPT[o.key];saveOpt();if(o.key.startsWith('u_'))applyUnl();renderOpts();}
  else if(a==='cspal'){OPT.pal=b.dataset.v;saveOpt();applyPal();renderOpts();}
  else if(a==='cscore'){OPT.core=b.dataset.v;saveOpt();renderOpts();}
+ else if(a==='dreroll')diceReroll(b.dataset.k);
  else if(a==='csex'){OPT['cs_'+b.dataset.k]=b.dataset.v;saveOpt();renderOpts();}
  else if(a==='csfx'){OPT.fxoff=OPT.fxoff||{};OPT.fxoff[b.dataset.v]=!OPT.fxoff[b.dataset.v];saveOpt();renderOpts();}
  else if(a==='csdec'){OPT.decoff=OPT.decoff||{};OPT.decoff[b.dataset.v]=!OPT.decoff[b.dataset.v];saveOpt();renderOpts();}

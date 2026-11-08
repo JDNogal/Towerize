@@ -159,11 +159,15 @@ function effHtml(T,src){
 }
 // duración del efecto temporal de la torre (los detalles de cada estado están en el tooltip de su palabra clave)
 function durOf(T,s){if(T.log)return f(s.ldur||logDur(1))+' s (rodando)';if(T.wall)return '4 s';if(T.puddle)return f(T.dur)+' s';return '';}
+// icono propio de la unidad (el mismo que en el mapa) delante de «Estadísticas de unidades»
+const USPN={pal:'Paladín',ass:'Asesino',fist:'Monje de batalla',drunk:'Maestro ebrio'};
+function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith('shop:'))k=src.slice(5);else if(src.startsWith('tw:')&&S&&S.list){const t=S.list.find(o=>'tw:'+o.id===src);if(t){k=t.type;sp=t.spec;}}
+ const ic=(sp&&UIC[sp])||(k&&UIC[k]);if(!ic)return '';const T=TW[k]||{};return `<span class="tuic uhic" style="background:${T.col||'#5b8def'}" title="">${icHtml(ic)}</span>`;}
 function rows(s,T,src,extra){
- const dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R('cd',kst('dmg','Daño',src)+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R('cd',kst('dmg','Daño',src)+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*SPLASH)+')'):R('cd',kst('dmg','Daño',src),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
+ const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*SPLASH)+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
-  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>Estadísticas de unidades</b>'+extra.n+dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
+  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
    (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+cr+(ef?R('cf',kst('eff','Efectos',src),ef):'')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`+'</div>'+extra.tail;}
  return dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+(T.puddle?R('ccl',kst('cool','Enfriamiento',src)+' ('+kst('pstk','Acumulación',src)+')',f(1/s.rate)+' s ('+f(PTICK)+' s)'):R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s'))+(du?R('cr',kst('dur','Duración',src),du):'')+R('cg',kst('rng','Rango',src),cas(s.range/K))+objRow(!!T.ground,src)+
   (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(T.burn&&T.cone?R('ca',kst('area','Área',src),'Cono de '+T.cone+'°'):'')+
@@ -247,6 +251,7 @@ function resolve(el){
   if(S.phase==='place'&&S.pi!=null){const bx=Math.floor(kx/P),by=Math.floor(ky/P);
    if(bx<BN&&by<BN&&!S.blocks[bx+','+by]){const b=S.offers[S.pi].b.find(b=>b.x===kx-bx*P&&b.y===ky-by*P);
     if(b)return{key:'gb:'+kx+','+ky+b.k,html:()=>buffInfo(b.k),rect:kr};}}
+  if(S.mim&&Math.floor(S.mim.x/K)===kx&&Math.floor(S.mim.y/K)===ky)return{key:'mim',html:mimInfo,rect:kr};
   {const bx=Math.floor(kx/P),by=Math.floor(ky/P);
    if(S.chests[bx+','+by]&&!S.blocks[bx+','+by]&&Math.abs(kx-bx*P-3)<=1&&Math.abs(ky-by*P-3)<=1)return{key:'ch:'+bx+','+by,html:chestInfo,rect:kr};}
   return null;}

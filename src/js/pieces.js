@@ -51,18 +51,19 @@ function useRelic(id){
  else if(id==='idol'){if(S.hp<=2){S.mimFor=null;S.msg='Necesitas más de 2 de vida.';ui();return;}hpLoss(2);st.t=15;}
  else if(id==='ember'){S.aim='ember';S.msg='Elige el área de la lluvia de fuego.'+CANC();renderRelics();ui();return;}
  else if(id==='badge'){if(S.merc){S.mimFor=null;S.msg='Los mercenarios ya están luchando.';ui();return;}if(!spawnMerc()){S.mimFor=null;return;}S.msg='Los mercenarios del gremio se unen a la batalla.';}
+ else if(id==='dice'){const v=1+Math.floor(Math.random()*6);S.dice=v;st.t=R.dur;S.msg=['','🎲 ¡Pifia! Sale un 1: tus torres hacen menos daño un rato.','🎲 Sale un 2: torres +25% de daño.','🎲 Sale un 3: torres +25% de daño.','🎲 Sale un 4: torres +50% de daño y más rápidas.','🎲 Sale un 5: torres +50% de daño y más rápidas.','🎲 ¡Un 6! Torres +100% de daño y mucho más rápidas.'][v];setCD(id);if(v===1||v===6){const c=v===1?40:80;if(S.mimFor){S.rs.mimic.cd=Math.min(S.rs.mimic.cd,c);}else st.cd=c;}heroSync();renderRelics();ui();return;}
  else st.t=R.dur;
  setCD(id);heroSync();renderRelics();ui();
 }
 function openRelic(){
  if(S.noChest){S.noChest=0;S.msg='El cofre está vacío: el mercader ya se había llevado lo que había dentro.';ui();return;}
  const pool=S.tut?RELICS.filter(r=>['horn','lens','anvil'].includes(r.id)&&!S.relics.includes(r.id)):shuf(RELICS.filter(r=>!r.ini&&!r.evr&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id)));RL.choices=pool.slice(0,S.chest4?4:3);S.chest4=0;RL.choices=RL.choices.map(r=>r.id);RL.choices.forEach(id=>see('rl',id));
- if(!RL.choices.length)return;renderRelicPick();}
+ if(!RL.choices.length)return;(S.drr=S.drr||{}).rl=0;renderRelicPick();}
 function renderRelicPick(){
  closePrim();RL.open=true;$('relic').classList.add('open');$('relic').scrollTop=0;
  $('relic').innerHTML='<b style="font-size:16px">¡Cofre abierto!</b><br><small>Elige una reliquia para esta partida. El juego está en pausa.</small><div class="cgrid">'+
   RL.choices.map(id=>{const r=RELIC[id];return `<div class="ce rcard" style="text-align:left"><div class="ric" style="background:${r.col}">${r.ic}</div><b style="display:block;text-align:center">${r.n}</b>${rdesc(id)}<button data-a="relic" data-id="${id}">Elegir</button></div>`;}).join('')+
-  '</div><small>Pulsa una reliquia de la fila superior para usar su activo (pierdes el pasivo un rato de oleada).</small>'+wcompBtn('rl');
+  '</div>'+diceRr('rl')+'<small>Pulsa una reliquia de la fila superior para usar su activo (pierdes el pasivo un rato de oleada).</small>'+wcompBtn('rl');
 }
 function toggleOpts(v){const on=v===undefined?!(LB.open&&!LB.cover&&OP.open):v;if(on){OP.keepS=0;lbOpen('op');}else lbClose();}
 function heroInfo(id,quiet){

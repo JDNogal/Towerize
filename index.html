@@ -262,6 +262,7 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw[data-kw^="g_"],.kw[data-kw^="tw_"],.kw[data-kw^="en_"],.kw[data-kw^="hr_"]{color:var(--acc)}
 
 .cnf{display:inline-block;width:.95em;height:.95em;border-radius:50%;vertical-align:-.12em;background:radial-gradient(circle at 35% 30%,#fff6c8 0 12%,#f6cf45 35%,#d79b16 75%,#a8700c);box-shadow:inset 0 0 0 .08em #9a6a0e,0 0 0 .02em rgba(0,0,0,.25);font-style:normal}
+.dti{display:inline-block;vertical-align:-.15em;margin-right:3px;font-style:normal;line-height:1}
 /* Móvil en horizontal: mapa a la izquierda (cuadrado a la altura de la pantalla) y columna de controles a la derecha */
 @media (orientation:landscape) and (pointer:coarse) and (max-height:820px){
  #game{flex-wrap:nowrap;padding:6px;align-items:stretch}
@@ -1018,6 +1019,12 @@ body:has(#relic.open) #lstack,body:has(#relic.open) #rstack,body.pcpick #lstack,
 #tmenu .tmb.lk{filter:grayscale(.8);opacity:.6}#tmenu .tmb .tlk{position:absolute;top:-6px;right:-6px;font-size:13px}
 .hpb.hppig{font-size:20px!important;letter-spacing:-4px;padding:0 6px 0 2px!important}
 .hpb.hppig{font-size:16px!important;letter-spacing:-3px;white-space:nowrap;display:flex!important;align-items:center;justify-content:center}
+/* pantallas de decisión (cofres, eventos, ofertas de torres, elegir pieza) más grandes en pantallas grandes, como el HUD */
+@media (min-width:1500px) and (min-height:840px){body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:1.3}}
+@media (min-width:2300px) and (min-height:1250px){body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:1.6}}
+#sg .sgint{font-size:.78em;color:#7fdc6a;font-weight:700;margin-left:2px}
+.hppig .pgps{display:flex;align-items:center;justify-content:center}.hppig .pgp{width:26px;height:26px;border-radius:50%;overflow:hidden;display:inline-grid;place-items:center;box-shadow:0 0 0 2px #2a1a10;font-size:20px}.hppig .pgp+.pgp{margin-left:-12px}.hppig .pgp svg{width:100%;height:100%}
+body.mfs .hppig .pgp{width:24px;height:24px}body.mfs .hppig .pgp+.pgp{margin-left:-9px}
 /* ===== PERGAMINO: ventanas, tarjetas y bocadillos de partida, con marco de cuero como la tapa del libro ===== */
 /* marco de cuero: borde transparente pintado con el cuero, papel dentro y línea fina de remate entre ambos */
 body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#tip,#hpop,#tmcard,#bmcard,.hmsg,#side.tipc{
@@ -1212,6 +1219,23 @@ body.mfs .pcpeek{top:4px;right:8px;width:30px;height:26px;font-size:15px}body.pc
 /* la ventana de elegir pieza tiene prioridad: el bocadillo de ÉTER no se le cruza; mientras sale un diálogo de historia, la ventana espera */
 body.pcpick #eterb{display:none!important}
 body:has(#dlg.on) #panel:has(.prow){visibility:hidden}
+/* paletas oscuras (Noche, Ámbar): el dibujo de la pieza va en tinta clara sobre el papel oscuro, para que se lea */
+:root:is([data-pal="noche"],[data-pal="amb"]) #panel .prow .card canvas{filter:grayscale(1) sepia(.45) brightness(.8) contrast(1.5);mix-blend-mode:screen;opacity:.85}
+/* eventos más grandes: cada opción en su fila (nombre a la izquierda, coste y lo que obtienes a la derecha) y pantalla de resolución con texto */
+#relic .evwin{max-width:min(860px,100%);width:100%;box-sizing:border-box;font-size:15px}body.mfs #relic .evwin{font-size:13px}body.mfs #relic .evwin>p,body.mfs #relic .evtale{font-size:14px}body.mfs #relic .evopts button.evo>b{font-size:14px}body.mfs #relic .evopts button.evo{padding:8px 12px}#relic .evwin>p{font-size:16px;line-height:1.55}
+#relic .evopts{grid-template-columns:1fr;grid-auto-rows:auto;gap:8px}
+#relic .evopts button.evo{display:grid;grid-template-columns:minmax(170px,30%) 1fr;align-items:center;gap:4px 16px;padding:11px 14px;height:auto}
+#relic .evopts button.evo>b{font-size:15.5px;margin:0}#relic .evo .evod small{font-size:13px}
+@media (max-width:620px){#relic .evopts button.evo{grid-template-columns:1fr}}
+#relic .evchose{font-weight:700;font-size:15px;margin:10px 0 4px;color:var(--acc)}
+#relic .evtale{font-style:italic;font-size:16.5px;line-height:1.6;margin:4px 0 14px;padding:10px 14px;border-left:3px solid var(--acc);background:color-mix(in srgb,var(--paper1,#f6ecd3) 70%,transparent);border-radius:0 8px 8px 0}
+#relic .evres{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;line-height:1.4;margin:0 0 14px}#relic .evres small{font-weight:700;opacity:.75;margin-right:2px}
+#relic .evchip{padding:3px 9px;border-radius:12px;border:1px solid var(--pline3,#4a5068)}
+#relic .evo .evod small{color:var(--ink);opacity:.72;font-weight:600}
+.usub b .uhic{width:22px;height:22px;font-size:13px;margin-right:7px;vertical-align:middle}
+button.drr{display:inline-block;margin:6px auto;padding:6px 14px;border-radius:9px;font-weight:700;border:1.5px solid #8a6ac0;background:#efe4ff;color:#3a2a5a;cursor:pointer}button.drr:hover{background:#e2d2ff}
+#panel .pctt~button.drr{position:absolute;top:10px;left:12px;margin:0}
+#relic>button.drr{display:block}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -1226,7 +1250,7 @@ body:has(#dlg.on) #panel:has(.prow){visibility:hidden}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v281</div>
+<div id="ver">Towerize v282</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1251,12 +1275,12 @@ const KEYS=new Set();
 const kcOn=()=>!TOUCH&&OPT.kcap!==false;
 const kcap=t=>kcOn()?`<span class="kcap">${t}</span>`:'';
 // ---- atajos de teclado configurables (los de siempre son los predeterminados) ----
-const KBDEF={up:'w',left:'a',down:'s',right:'d',zin:'e',zout:'q',hab:'f',ult:'g',hero:'h',pause:' ',speed:'v',wave:'enter',upg:'u',flag:'b',ptips:'p',rot:'r',peek:'tab',nu:'w',nl:'a',nd:'s',nr:'d',nok:'enter'};
+const KBDEF={up:'w',left:'a',down:'s',right:'d',zin:'e',zout:'q',hab:'f',ult:'g',hero:'h',pigs:'c',pause:' ',speed:'v',wave:'enter',upg:'u',flag:'b',ptips:'p',rot:'r',peek:'tab',nu:'w',nl:'a',nd:'s',nr:'d',nok:'enter'};
 // segunda tecla (alternativa): solo las lógicas vienen rellenas
 const KB2DEF={up:'arrowup',left:'arrowleft',down:'arrowdown',right:'arrowright',nu:'arrowup',nl:'arrowleft',nd:'arrowdown',nr:'arrowright',nok:' '};
 const KBMENU=['nu','nl','nd','nr','nok'];
 const KBL=[['Mapa',[['up','Mover el mapa arriba','⬆️'],['left','Mover el mapa a la izquierda','⬅️'],['down','Mover el mapa abajo','⬇️'],['right','Mover el mapa a la derecha','➡️'],['zin','Acercar','🔍'],['zout','Alejar','🔭']]],
- ['Héroe',[['hab','Habilidad del héroe','✨'],['ult','Habilidad definitiva','🌟'],['hero','Mover al héroe','🦸']]],
+ ['Héroe',[['hab','Habilidad del héroe','✨'],['ult','Habilidad definitiva','🌟'],['hero','Mover al héroe','🦸'],['pigs','Mover a los cerditos','🐷']]],
  ['Partida',[['pause','Pausar / reanudar','⏯️'],['speed','Cambiar la velocidad','⏩'],['wave','Empezar la oleada','⚔️'],['upg','Mejorar torre (con Mayús: marcar la mejora)','⬆️'],['flag','Mover la bandera de la torre elegida (o su nube / su luz)','🚩'],['ptips','Mostrar u ocultar lo que sale de cada portal','💀'],['rot','Girar la pieza','🔄'],['peek','Ver el mapa en eventos y ofertas','👁']]],
  ['Menús',[['nu','Subir','⬆️'],['nl','Izquierda','⬅️'],['nd','Bajar','⬇️'],['nr','Derecha','➡️'],['nok','Aceptar / pulsar','✅']]]];
 const KBFIX=[['1 – 7','Construir torre (en el solar abierto o con el ratón encima)','🗼'],['Mayús + 1 – 9','Usar reliquia','💎'],['Esc','Pausa / cancelar / volver','⏸️'],['Q / E','Cambiar de sección en el libro (compendio, opciones…)','📖']];
@@ -1286,6 +1310,7 @@ addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.r
  if(kbIs('hab',k)){clickA('[data-a="hab"]');e.preventDefault();}
  else if(kbIs('ult',k)){clickA('[data-a="hult"]');e.preventDefault();}
  else if(kbIs('hero',k)){clickA('[data-a="hero"]');e.preventDefault();}
+ else if(kbIs('pigs',k)){clickA('[data-a="pigs"]');e.preventDefault();}
  else if(kbIs('pause',k)){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
  else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2,3],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(kbIs('wave',k)&&S.phase==='build'){if(document.querySelector('[data-a="wave"]')){WARM=0;startWave();}e.preventDefault();}
@@ -1416,6 +1441,7 @@ guild:{n:'Sede del Gremio',ic:'🏰',dt:'phys',cost:0,range:2.5,dmg:4,rate:1,uni
 straw:{n:'Casa de paja',ic:'🌾',dt:'phys',cost:0,range:2.6,dmg:10,rate:.8,ps:10,splash:.5,slow:.5,slowt:3,slowA:1,col:'#e8cf6a',l:'P',fx:'Ralentización',uniq:1,pig:1,upc:[0,0,40,70,120],ev:'pigs'},
 wood:{n:'Casa de madera',ic:'🪵',dt:'phys',cost:0,range:3,dmg:5,rate:.5,col:'#a8743a',l:'M',fx:'Empuje',uniq:1,pig:1,log:1,upc:[0,0,40,70,120],ev:'pigs'},
 brick:{n:'Casa de ladrillo',ic:'🧱',dt:'phys',cost:0,range:3,dmg:0,rate:1/12,col:'#c0563a',l:'L',fx:'Muro',uniq:1,pig:1,wall:1,upc:[0,0,40,70,120],ev:'pigs'},
+glut:{n:'Mímico glotón',ic:'🧰',dt:'phys',cost:0,range:1.6,dmg:16,rate:.9,col:'#8a5626',l:'X',fx:'Ninguno',uniq:1,glut:1,ev:'chest'},
 bastion:{n:'Baluarte',ic:'🛡️',dt:'phys',cost:80,range:2.5,dmg:4,rate:1,unit:{n:3,hp:40,ap:10,rez:8,spd:2},col:'#5b8def',l:'B',fx:'Ninguno'},
 monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:3.5,rate:1,unit:{n:2,hp:34,ap:0,rez:8,spd:2},col:'#d9a24e',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
 tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:2,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
@@ -1634,6 +1660,9 @@ function chooseHero(id){if(!HEROES[id])return;RL.hconf=null;S.xpT=xpTable(ROUNDS
  RL.open=false;$('relic').classList.remove('open');renderRelics();ui();}
 {let td=null;try{td=localStorage.getItem('rt-tutdone')||localStorage.getItem('rt-win1');}catch(e){}if(!td)HEROES.radagast.lockTxt='Gana tu primera partida (el tutorial cuenta).';}
 HEROES.reinhart.deck=['arrow','bastion'];HEROES.sylvana.deck=['arrow','monk'];HEROES.radagast.deck=['orb','augur'];HEROES.yrsa.deck=['sala','frost'];
+// retratos de los cerditos (unidades de Nv 4 de sus casas): vestidos de su material
+PORT.pig_straw="<defs><radialGradient id=\"pbg@U\" cx=\"50%\" cy=\"35%\" r=\"75%\"><stop offset=\"0\" stop-color=\"#e8cf6a\"/><stop offset=\"1\" stop-color=\"#1b1e27\"/></radialGradient></defs><rect width=\"120\" height=\"120\" fill=\"url(#pbg@U)\"/><path d=\"M47 66 L73 66 L78 92 L42 92 Z\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.8\"/><path d=\"M14 120 C16 96 36 84 60 84 C84 84 104 96 106 120 Z\" fill=\"#e8c860\" stroke=\"#9a7a20\" stroke-width=\"2\"/><path d=\"M20 120 L26 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M27 120 L32 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M34 120 L38 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M41 120 L44 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M48 120 L50 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M55 120 L56 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M62 120 L62 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M69 120 L68 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M76 120 L74 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M83 120 L80 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M90 120 L86 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M97 120 L92 88\" stroke=\"#c9a23a\" stroke-width=\"1.6\"/><path d=\"M36 32 L33 20 L45 29 Z\" fill=\"#e8869c\"/><path d=\"M84 32 L87 20 L75 29 Z\" fill=\"#e8869c\"/>\n<ellipse cx=\"60\" cy=\"52\" rx=\"28\" ry=\"25\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.8\"/><ellipse cx=\"44\" cy=\"60\" rx=\"5\" ry=\"3.2\" fill=\"#ff8aa0\" opacity=\".7\"/><ellipse cx=\"76\" cy=\"60\" rx=\"5\" ry=\"3.2\" fill=\"#ff8aa0\" opacity=\".7\"/>\n<ellipse cx=\"50\" cy=\"47\" rx=\"3.3\" ry=\"3.8\" fill=\"#2a1a20\"/><ellipse cx=\"70\" cy=\"47\" rx=\"3.3\" ry=\"3.8\" fill=\"#2a1a20\"/><circle cx=\"51.2\" cy=\"45.6\" r=\"1.1\" fill=\"#fff\"/><circle cx=\"71.2\" cy=\"45.6\" r=\"1.1\" fill=\"#fff\"/>\n\n<ellipse cx=\"60\" cy=\"61\" rx=\"11\" ry=\"8\" fill=\"#ff9fb4\" stroke=\"#c06a80\" stroke-width=\"1.6\"/><ellipse cx=\"56\" cy=\"61\" rx=\"2\" ry=\"3\" fill=\"#a04a60\"/><ellipse cx=\"64\" cy=\"61\" rx=\"2\" ry=\"3\" fill=\"#a04a60\"/>\n<path d=\"M53 71 Q60 77 67 71\" fill=\"none\" stroke=\"#7a3a48\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><ellipse cx=\"60\" cy=\"31\" rx=\"40\" ry=\"8\" fill=\"#e8c860\" stroke=\"#9a7a20\" stroke-width=\"2\"/><path d=\"M38 31 Q40 10 60 10 Q80 10 82 31 Z\" fill=\"#f0d070\" stroke=\"#9a7a20\" stroke-width=\"2\"/><path d=\"M39 26 H81\" stroke=\"#c0563a\" stroke-width=\"4\"/><path d=\"M24 33 l-3 6\" stroke=\"#c9a23a\" stroke-width=\"1.5\"/><path d=\"M36 33 l-3 6\" stroke=\"#c9a23a\" stroke-width=\"1.5\"/><path d=\"M48 33 l-3 6\" stroke=\"#c9a23a\" stroke-width=\"1.5\"/><path d=\"M60 33 l-3 6\" stroke=\"#c9a23a\" stroke-width=\"1.5\"/><path d=\"M72 33 l-3 6\" stroke=\"#c9a23a\" stroke-width=\"1.5\"/><path d=\"M84 33 l-3 6\" stroke=\"#c9a23a\" stroke-width=\"1.5\"/><path d=\"M96 33 l-3 6\" stroke=\"#c9a23a\" stroke-width=\"1.5\"/>";PORT.pig_wood="<defs><radialGradient id=\"pbg@U\" cx=\"50%\" cy=\"35%\" r=\"75%\"><stop offset=\"0\" stop-color=\"#a8743a\"/><stop offset=\"1\" stop-color=\"#1b1e27\"/></radialGradient></defs><rect width=\"120\" height=\"120\" fill=\"url(#pbg@U)\"/><path d=\"M47 66 L73 66 L78 92 L42 92 Z\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.8\"/><path d=\"M14 120 C16 96 36 84 60 84 C84 84 104 96 106 120 Z\" fill=\"#8a5a2a\" stroke=\"#4a2a10\" stroke-width=\"2\"/><path d=\"M30 102 H90M24 112 H96\" stroke=\"#5a3a18\" stroke-width=\"1.6\"/><circle cx=\"60\" cy=\"96\" r=\"2.5\" fill=\"#3a2410\"/><path d=\"M36 34 L30 14 L50 28 Z\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><path d=\"M84 34 L90 14 L70 28 Z\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><path d=\"M36 32 L33 20 L45 29 Z\" fill=\"#e8869c\"/><path d=\"M84 32 L87 20 L75 29 Z\" fill=\"#e8869c\"/>\n<ellipse cx=\"60\" cy=\"52\" rx=\"28\" ry=\"25\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.8\"/><ellipse cx=\"44\" cy=\"60\" rx=\"5\" ry=\"3.2\" fill=\"#ff8aa0\" opacity=\".7\"/><ellipse cx=\"76\" cy=\"60\" rx=\"5\" ry=\"3.2\" fill=\"#ff8aa0\" opacity=\".7\"/>\n<ellipse cx=\"50\" cy=\"47\" rx=\"3.3\" ry=\"3.8\" fill=\"#2a1a20\"/><ellipse cx=\"70\" cy=\"47\" rx=\"3.3\" ry=\"3.8\" fill=\"#2a1a20\"/><circle cx=\"51.2\" cy=\"45.6\" r=\"1.1\" fill=\"#fff\"/><circle cx=\"71.2\" cy=\"45.6\" r=\"1.1\" fill=\"#fff\"/>\n<path d=\"M45 40 L55 42M75 40 L65 42\" stroke=\"#7a3a48\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n<ellipse cx=\"60\" cy=\"61\" rx=\"11\" ry=\"8\" fill=\"#ff9fb4\" stroke=\"#c06a80\" stroke-width=\"1.6\"/><ellipse cx=\"56\" cy=\"61\" rx=\"2\" ry=\"3\" fill=\"#a04a60\"/><ellipse cx=\"64\" cy=\"61\" rx=\"2\" ry=\"3\" fill=\"#a04a60\"/>\n<path d=\"M53 71 Q60 74 67 71\" fill=\"none\" stroke=\"#7a3a48\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M34 30 L38 14 Q60 6 82 14 L86 30 Z\" fill=\"#b07a40\" stroke=\"#5a3a18\" stroke-width=\"2\"/><path d=\"M40 16 V30M52 11 V30M64 10 V30M76 13 V30\" stroke=\"#8a5a2a\" stroke-width=\"1.5\"/><rect x=\"88\" y=\"70\" width=\"22\" height=\"34\" rx=\"3\" fill=\"#b07a40\" stroke=\"#5a3a18\" stroke-width=\"2\" transform=\"rotate(10 99 87)\"/><path d=\"M92 76 L106 98M106 76 L92 98\" stroke=\"#5a3a18\" stroke-width=\"1.6\" transform=\"rotate(10 99 87)\"/>";PORT.pig_brick="<defs><radialGradient id=\"pbg@U\" cx=\"50%\" cy=\"35%\" r=\"75%\"><stop offset=\"0\" stop-color=\"#c0563a\"/><stop offset=\"1\" stop-color=\"#1b1e27\"/></radialGradient></defs><rect width=\"120\" height=\"120\" fill=\"url(#pbg@U)\"/><path d=\"M47 66 L73 66 L78 92 L42 92 Z\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.8\"/><path d=\"M14 120 C16 96 36 84 60 84 C84 84 104 96 106 120 Z\" fill=\"#9a3a26\" stroke=\"#4a1a10\" stroke-width=\"2\"/><rect x=\"21\" y=\"92\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"41\" y=\"92\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"61\" y=\"92\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"81\" y=\"92\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"31\" y=\"102\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"51\" y=\"102\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"71\" y=\"102\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"11\" y=\"102\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"91\" y=\"102\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"21\" y=\"112\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"41\" y=\"112\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"61\" y=\"112\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><rect x=\"81\" y=\"112\" width=\"18\" height=\"8\" rx=\"1\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"1.2\"/><path d=\"M36 34 L30 22 L50 28 Z\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><path d=\"M84 34 L90 22 L70 28 Z\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><path d=\"M36 32 L33 20 L45 29 Z\" fill=\"#e8869c\"/><path d=\"M84 32 L87 20 L75 29 Z\" fill=\"#e8869c\"/>\n<ellipse cx=\"60\" cy=\"52\" rx=\"28\" ry=\"25\" fill=\"#f6a8b8\" stroke=\"#c06a80\" stroke-width=\"1.8\"/><ellipse cx=\"44\" cy=\"60\" rx=\"5\" ry=\"3.2\" fill=\"#ff8aa0\" opacity=\".7\"/><ellipse cx=\"76\" cy=\"60\" rx=\"5\" ry=\"3.2\" fill=\"#ff8aa0\" opacity=\".7\"/>\n<ellipse cx=\"50\" cy=\"47\" rx=\"3.3\" ry=\"3.8\" fill=\"#2a1a20\"/><ellipse cx=\"70\" cy=\"47\" rx=\"3.3\" ry=\"3.8\" fill=\"#2a1a20\"/><circle cx=\"51.2\" cy=\"45.6\" r=\"1.1\" fill=\"#fff\"/><circle cx=\"71.2\" cy=\"45.6\" r=\"1.1\" fill=\"#fff\"/>\n\n<ellipse cx=\"60\" cy=\"61\" rx=\"11\" ry=\"8\" fill=\"#ff9fb4\" stroke=\"#c06a80\" stroke-width=\"1.6\"/><ellipse cx=\"56\" cy=\"61\" rx=\"2\" ry=\"3\" fill=\"#a04a60\"/><ellipse cx=\"64\" cy=\"61\" rx=\"2\" ry=\"3\" fill=\"#a04a60\"/>\n<path d=\"M53 71 Q60 74 67 71\" fill=\"none\" stroke=\"#7a3a48\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M34 30 Q34 10 60 10 Q86 10 86 30 Z\" fill=\"#c0563a\" stroke=\"#6a2a18\" stroke-width=\"2\"/><path d=\"M34 22 H86M47 10 V22M73 10 V22M60 22 V30M42 22 V30M78 22 V30\" stroke=\"#6a2a18\" stroke-width=\"1.5\"/><g transform=\"translate(92 70) rotate(30)\"><path d=\"M0 0 L14 0 L7 18 Z\" fill=\"#b8c0c8\" stroke=\"#3a3f48\" stroke-width=\"1.5\"/><rect x=\"5\" y=\"-14\" width=\"4\" height=\"14\" fill=\"#8a5a2a\" stroke=\"#3a2410\" stroke-width=\"1\"/></g>";
+Object.assign(PCROP,{pig_straw:'12 6 96 96',pig_wood:'12 6 96 96',pig_brick:'12 6 96 96'});
 // ---- logros (de momento básicos) y torres que se desbloquean con ellos ----
 const ACH={tut_m:{n:'Maestro del tutorial',d:'Completa el tutorial completo sin reintentos.',rl:'notebook'},tut_e:{n:'Experto en Tutoriales',d:'Completa el tutorial completo sin reintentos y sin que ningún enemigo llegue al núcleo (la vida que sacrificas tú no cuenta).'},chest:{n:'Abre un cofre',d:'Llega con tu camino a un cofre y ábrelo.',tw:'frost'},event:{n:'Entra en un evento',d:'Llega con tu camino a una casilla de evento.',tw:'poison'},
  
@@ -1799,7 +1828,7 @@ const DECKMAX=7,SKIPG=[50,30,10];
 const eraOk=k=>!TW[k].era||TW[k].era===1;
 const tPool=()=>Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k)&&tunl(k)&&!S.deck.includes(k));
 function tryTowerOffer(){if(S&&S.tut){const o=S.tut.off;if(o&&!RL.open&&!S.aim&&S.phase==='build'&&!HQ.cur){S.tut.off=null;RL.towP=o.present?1:0;RL.towo=o.present?o.list.slice():o.list.filter(k=>!S.deck.includes(k));RL.towT=o.title;RL.towD=o.txt;RL.towNS=1;if(RL.towo.length)renderTowerOffer();}return;}if(!S||!S.towOff||RL.open||S.aim||!S.deck||!(S.phase==='place'||S.phase==='build'))return;S.towOff=0;
- const p=tPool();if(S.deck.length>=DECKMAX||!p.length)return;RL.towo=shuf(p).slice(0,3);renderTowerOffer();}
+ const p=tPool();if(S.deck.length>=DECKMAX||!p.length)return;RL.towo=shuf(p).slice(0,3);(S.drr=S.drr||{}).tw=0;renderTowerOffer();}
 const twChips=k=>{const T=TW[k],o=[];o.push(T.unit?'Unidades':T.range<=2*K?'Corto alcance':'A distancia');o.push(DT[T.dt]?DT[T.dt].n:'Físico');if(T.splash||T.puddle||T.cone)o.push('Área');if(T.slow)o.push('Ralentiza');if(T.zap)o.push('Rebote');if(T.beam)o.push('Rayo continuo');if(T.burn)o.push('Quemadura');if(T.dot)o.push('Veneno');if(T.monk)o.push('Curación');return o;};
 // botón para consultar el compendio desde una ventana de elección (torre, reliquia, evento); al cerrar el libro se vuelve a la ventana
 const wcompBtn=t=>compOk()?`<button class="wcomp" data-a="wincomp" data-v="${t}" title="Abrir el compendio">📖</button>`:'';
@@ -1813,7 +1842,7 @@ function tofGlance(k){const g=twGlance(k),i=g.indexOf('<div class="gbody">');con
 function renderTowerOffer(){try{(RL.towo||[]).forEach(k=>see('tw',k));}catch(e){}closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.classList.toggle('tdeton',!!RL.tdet);el.scrollTop=0;const g=SKIPG[S.skips||0]||0;
  el.innerHTML=`<div class="pscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap"><b class="ptt">${RL.towT||'Nueva torre para tu mazo'}</b><small class="pst">${RL.towD||'Elige una torre: a partir de ahora podrás construirla en esta partida. Tu mazo: '+S.deck.length+'/'+DECKMAX+'.'} ${RL.towP?'':' El juego está en pausa.'}</small><div class="pdet"><button data-a="tdet">${RL.tdet?'− Ocultar detalles':'+ Ver detalles'}</button></div><div>`+
   '</div><div class="toff">'+RL.towo.map(k=>{const T=TW[k];return `<div class="tof"><div class="tic" style="background:${T.col}">${twIc(k)}</div><div class="tnm">${T.n}</div><div class="chips">${twChips(k).map(c=>`<span>${c}</span>`).join('')}</div><span class="gd">${T.cost} 🪙</span><div class="tgl">${tofGlance(k)}</div><div class="tdt" data-k="${k}"><div class="ce tcard" style="margin:0">${shopInfo(k,1)}</div></div>${RL.towP?'':`<button data-a="towpick" data-k="${k}">Añadir al mazo</button>`}</div>`;}).join('')+
-  `</div>`+(RL.towP?'<div class="pskip"><button class="go" data-a="towok">Entendido ›</button></div>':RL.towNS?'':`<div class="pskip"><button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><small>Conservas el hueco: en 2 rondas te ofrecerán torres otra vez.${g?' El oro que recibes se reduce cada vez.':''}</small></div>`)+'</div></div>'+wcompBtn('tw');try{sfx('page');}catch(e){}}
+  `</div>`+(RL.towP?'<div class="pskip"><button class="go" data-a="towok">Entendido ›</button></div>':RL.towNS?'':`<div class="pskip">${diceRr('tw')}<button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><small>Conservas el hueco: en 2 rondas te ofrecerán torres otra vez.${g?' El oro que recibes se reduce cada vez.':''}</small></div>`)+'</div></div>'+wcompBtn('tw');try{sfx('page');}catch(e){}}
 // cerrar la presentación de las torres del héroe (tutorial): ya están en el mazo
 function towerOk(){RL.towo=null;RL.towP=0;RL.towT=RL.towD=null;RL.towNS=0;RL.open=false;$('relic').classList.remove('open');ui();}
 function towerPick(k){if(!RL.towo||!RL.towo.includes(k))return;if(S.deck.includes(k)){towerOk();return;}RL.towT=RL.towD=null;RL.towNS=0;S.deck.push(k);see('tw',k);RL.towo=null;RL.open=false;$('relic').classList.remove('open','tdeton');S.msg=TW[k].n+' se añade a tu mazo.';ui();}
@@ -1965,12 +1994,11 @@ const OPTS=[
  {tab:'un',type:'toggle',key:'u_cp',def:false,label:'Compendio completo',desc:'Desbloquea el Compendio y muestra todas sus entradas, incluidos los niveles secretos de las torres de evento.'},
  {tab:'un',type:'toggle',key:'u_sec',def:false,label:'Revelar logros secretos',desc:'Muestra la descripción de los logros ocultos.'},
  {tab:'vol',type:'slider',key:'vm',def:80,min:0,max:100,step:5,fmt:v=>v+'%',label:'Volumen general',desc:'Volumen de todo el sonido del juego. Los otros dos se aplican sobre este.'},
- {tab:'vol',type:'slider',key:'vu',def:60,min:0,max:100,step:5,fmt:v=>v+'%',label:'Música',desc:'Volumen de la música. Towerize todavía no tiene música: queda preparado para cuando la tenga.'},
+ {tab:'vol',type:'slider',key:'vu',def:60,min:0,max:100,step:5,fmt:v=>v+'%',label:'Música',desc:'Volumen de la música de fondo. Empieza a sonar con el primer clic o tecla y vuelve a empezar al terminar.'},
  {tab:'vol',type:'slider',key:'vf',def:80,min:0,max:100,step:5,fmt:v=>v+'%',label:'Efectos',desc:'Volumen de los efectos: disparos, impactos, botones, avisos y pasar página.'},
  {tab:'vol',type:'slider',key:'fq_coin',def:100,min:0,max:100,step:25,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · oro por baja',desc:'Cuántas veces suena la moneda al matar a un enemigo. Al 100% suena siempre (con un pequeño límite para que no se amontone); más bajo, solo algunas veces.'},
  {tab:'vol',type:'slider',key:'fq_kill',def:100,min:0,max:100,step:25,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · bajas',desc:'Cuántas veces suena la muerte de los enemigos. Los jefes suenan siempre.'},
  {tab:'vol',type:'slider',key:'fq_hit',def:100,min:0,max:100,step:25,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · ataques',desc:'Cuántas veces suenan los disparos e impactos de torres, unidades y héroe.'},
- {tab:'vol',type:'note',desc:'Todavía no hay música; los efectos ya suenan.'},
  {tab:'vol',type:'sfxt',label:'Probar sonidos',desc:'Escucha cada sonido. Donde hay varias versiones (Nuevo / Actual), la marcada es la que suena en el juego: pulsa otra para cambiarla.'},
  {tab:'gf',type:'toggle',key:'fps',def:false,label:'Mostrar FPS',desc:'Muestra en una esquina los fotogramas por segundo a los que va el juego (verde: 50 o más; amarillo: 30–49; rojo: menos de 30).'},
  {tab:'gf',type:'toggle',key:'fx',def:true,label:'Destellos de impacto y explosiones',desc:'Los círculos que se dibujan al impactar un proyectil o explotar un cañonazo.'},
@@ -2231,26 +2259,27 @@ const RELICS=[
  {id:'coin',n:'Moneda antigua',ic:'🪙',col:'#7a5c14'},{id:'lens',n:'Lente de precisión',ic:'🔭',col:'#1f5a7a'},
  {id:'anvil',n:'Yunque rúnico',ic:'⚒️',col:'#6a3a2a'},{id:'frost',n:'Amuleto de escarcha',ic:'❄️',col:'#2a5f86'},
  {id:'horn',n:'Cuerno de guerra',ic:'📯',col:'#7a4a1a'},{id:'compass',n:'Brújula rota',ic:'🧭',col:'#4a4a6a'},
- {id:'venom',n:'Frasco de veneno',ic:'☠️',col:'#3a6a2a'},{id:'map',n:'Mapa del cartógrafo',ic:'📜',col:'#6a5a2a'},
+ {id:'venom',n:'Frasco de veneno',ic:'☠️',col:'#3a6a2a'},{id:'map',n:'Mapa del cartógrafo',ic:'📜',col:'#6a5a2a'},{id:'dice',n:'Dado de la suerte',ic:'🎲',col:'#5a3a8a'},
  {id:'square',n:'Escuadra del arquitecto',ic:'📐',col:'#5a5a3a',ach:'roma'},{id:'harpoon',n:'Arpón celeste',ic:'🔱',col:'#2a5a7a',ach:'sky'},
  {id:'banner',n:'Estandarte del regimiento',ic:'🏴',col:'#5a2a2a',ach:'untouch'},{id:'crystal',n:'Corazón de cristal',ic:'💎',col:'#2a6a7a',ach:'first'},{id:'trophy',n:'Trofeo de caza',ic:'🦴',col:'#6a5a4a',ach:'hunt'},
  {id:'barricade',n:'Barricada',ic:'🚧',col:'#6a4a2a',ini:1},{id:'quiver',n:'Carcaj',ic:'🎒',col:'#3a5a2a',ini:1},{id:'tome',n:'Tomo arcano',ic:'📘',col:'#3a3f8a',ini:1},{id:'balance',n:'Piedra del equilibrio',ic:'☯️',col:'#6a4a6a',ini:1},{id:'hammer',n:'Martillo del herrero',ic:'🛠️',col:'#6a5a4a',evr:1,ev:'smith'},{id:'scale',n:'Balanza del mercader',ic:'⚖️',col:'#8a7a3a',evr:1,ev:'merchant'},{id:'idol',n:'Ídolo profanado',ic:'🗿',col:'#5a5a6a',evr:1,ev:'shrine'},{id:'mimic',n:'Mímico domesticado',ic:'🦷',col:'#7a4a3a',evr:1,ev:'chest'},{id:'ember',n:'Brasa de dragona',ic:'☄️',col:'#9a3a2a',evr:1,ev:'nest'},{id:'badge',n:'Insignia de mercenario',ic:'🎖️',col:'#4a5a7a',evr:1,ev:'guild'},{id:'notebook',n:'Cuaderno del aprendiz',ic:'📓',col:'#4a6a5a',ach:'tut_m'}];
 // Cada reliquia: pasivo + activo. Al usar el activo se pierde el pasivo durante la recarga (en RDEF, en «rondas»; abajo se pasa a segundos de oleada). dur = segundos de juego que dura el activo.
-const mapN=()=>Math.max(0,Object.keys(S.blocks).length-1),mapDmg=()=>5*mapN(),mapCool=()=>5*Math.floor(mapN()/3);
+const mapN=()=>Math.max(0,Object.keys(S.blocks).length-1),mapDmg=()=>Math.min(75,5*Math.floor(mapN()/2)),mapCool=()=>Math.min(30,5*Math.floor(mapN()/4));
 const RDEF={
  coin:{cd:4,pas:()=>'Los enemigos sueltan <span class="gd">+50% de oro</span>.',act:()=>'<span class="gd">+200 de oro</span> al instante.'},
  lens:{cd:3,dur:20,pas:()=>'Torres: <span class="cc">+10% de crítico</span>.',act:()=>'<b>20 s</b>: <span class="cc">+20% de crítico</span> y críticos <span class="cc">×3</span>.'},
  anvil:{cd:3,dur:20,pas:()=>'Las casillas especiales dan <span class="cf">+50% de su bonus</span>.',act:()=>'<b>20 s</b>: torres sobre casillas especiales con <span class="cr">−50% de enfriamiento</span> y <span class="cd">+50% de daño</span>.'},
  frost:{cd:3,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de <span class="kw" data-kw="slow">ralentizar</span>.',act:()=>'<span class="kw" data-kw="freeze">Congela</span> <b>10 s</b> a los enemigos de un área.'},
+ dice:{cd:3,dur:10,pas:()=>'Puedes <span class="cf">volver a tirar</span> una vez en cada elección: piezas, ofertas de torres y cofres.',act:()=>'Tiras el dado; dura <b>10 s</b>:<br>⚀ Pifia: torres <span class="cd">−25% de daño</span> (recarga de 40 s).<br>⚁⚂ Torres <span class="cd">+25% de daño</span>.<br>⚃⚄ Torres <span class="cd">+50% de daño</span> y <span class="cr">−25% de enfriamiento</span>.<br>⚅ Torres <span class="cd">+100% de daño</span> y <span class="cr">−50% de enfriamiento</span> (recarga de 80 s).'},
  horn:{cd:3,dur:10,pas:()=>'Tras 30 s de oleada: torres <span class="cd">+20% de daño</span>.',act:()=>'<b>10 s</b>: torres <span class="cd">+100% de daño</span>.'},
  compass:{cd:5,dur:10,pas:()=>'En cada cruce, un enemigo tiene un <span class="cf">50%</span> de tomar la rama que se aleja del núcleo (una vez por enemigo).',act:()=>'<b>10 s</b>: los enemigos retroceden por donde han venido.'},
  venom:{cd:4,pas:()=>`Cada impacto de torre: <span class="cc">20%</span> de aplicar 1 de ${kw('poison','veneno','')}.`,act:()=>`Todo el ${kw('poison','veneno','')} explota de golpe; si mata, salta al enemigo más cercano.`},
  barricade:{cd:2,dur:5,pas:()=>'Tus unidades y tu héroe: <span class="cph">+10 de armadura</span>.',act:()=>'Cortas un tramo del camino: los enemigos se detienen <b>5 s</b> (no en cruces).'},
  quiver:{cd:3,dur:10,pas:()=>'Torres: <span class="cr">−15% de enfriamiento</span>.',act:()=>'<b>10 s</b>: las torres de un área disparan <span class="cd">doble</span> (los rayos, doble daño).'},
  hammer:{cd:4,pas:()=>'Mejorar torres cuesta un <span class="gd">15% menos</span>.',act:()=>'Una torre de Nv 1 o 2 sube un nivel gratis.'},
- scale:{cd:3,pas:()=>'Al final de cada ronda, <span class="gd">+10% de interés</span> sobre tu oro (máx. 30).',act:()=>'Cobras ya el interés de 3 rondas.'},
+ scale:{cd:3,pas:()=>'Al final de cada ronda, <span class="gd">+10% de interés</span> sobre tu oro (máx. '+INTMAX+').'+(typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('scale')?' Ahora: <span class="gd">+'+interest()+' 🪙</span>.':''),act:()=>'Cobras ya el interés de 3 rondas.'},
  idol:{cd:3,dur:15,pas:()=>`Torres: <span class="cd">+5% de daño</span> por cada vida perdida en la partida (máx. +50%; ahora: <span class="cd">+${idolPct()}%</span>).`,act:()=>'Pierdes 2 de vida: <b>15 s</b> con <span class="cr">−50% de enfriamiento</span>.'},
- mimic:{cd:4,pas:()=>'<span class="gd">+75% de oro</span> de los enemigos que mueren a 2 casillas de un cofre sin abrir.',act:()=>'Usa el activo de otra reliquia tuya, aunque esté recargando.'},
+ mimic:{cd:4,pas:()=>'Cae en el mapa, junto al camino, donde haya solares libres y pocas torres. Cada enemigo que muere a 2,5 casillas o menos lo <span class="cf">alimenta</span>; lleno ('+MIM0+', y '+MIMUP+' más cada vez), <span class="gd">escupe un cofre</span> al colocar la siguiente pieza.',act:()=>'Usa el activo de otra reliquia tuya, aunque esté recargando.'},
  ember:{cd:3,dur:8,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de aplicar <span class="kw" data-kw="burn">quemadura</span>.',act:()=>'<b>8 s</b>: lluvia de fuego en un área (<span class="kw" data-kw="burn">quemadura</span> cada segundo).'},
  badge:{cd:4,pas:()=>'Tu héroe: <span class="cd">+15% de daño</span> y <span class="chp">+15% de vida</span>.',act:()=>'Un Espadachín y un Sanador del gremio luchan contigo esta oleada.'},
  notebook:{cd:3,pas:()=>`Cada oleada sin perder vida: torres <span class="cd">+2% de daño</span> permanente (máx. +20%; ahora: <span class="cd">+${Math.min(20,2*((typeof S!=='undefined'&&S&&S.nbN)||0))}%</span>).`,act:()=>'Esta oleada, cada baja da <span class="cf">+1 de experiencia</span> a tu héroe.'},
@@ -2261,7 +2290,7 @@ const RDEF={
  banner:{cd:3,dur:10,pas:()=>'Tus soldados reaparecen un <span class="cr">30% más rápido</span>.',act:()=>'<b>10 s</b>: tus soldados <span class="cf">no pueden morir</span>.'},
  crystal:{cd:5,pas:()=>'El primer enemigo que llega al núcleo cada oleada <span class="cf">no quita vida</span> (salvo jefes).',act:()=>'Recuperas <span class="chp">3 de vida</span>.'},
  trophy:{cd:3,dur:10,pas:()=>`Cada élite eliminada: <span class="cg">+5% de rango</span> para tus torres el resto de la partida (máx. +25%; ahora: <span class="cg">+${5*((typeof S!=='undefined'&&S&&S.troN)||0)}%</span>).`,act:()=>'<b>10 s</b>: torres <span class="cg">+50% de rango</span>.'},
- map:{cd:5,pas:()=>`Torres: <span class="cd">+5% de daño</span> por pieza colocada y <span class="cr">−5% de enfriamiento</span> cada 3 piezas (ahora: <span class="cd">+${mapDmg()}%</span>, <span class="cr">−${mapCool()}%</span>).`,act:()=>'Crea un cofre en un hueco sin explorar.'}};
+ map:{cd:5,pas:()=>`Torres: <span class="cd">+5% de daño</span> cada 2 piezas colocadas (máx. +75%) y <span class="cr">−5% de enfriamiento</span> cada 4 (máx. −30%) (ahora: <span class="cd">+${mapDmg()}%</span>, <span class="cr">−${mapCool()}%</span>).`,act:()=>'Crea un cofre en un hueco sin explorar.'}};
 // la recarga de las reliquias es en segundos de oleada (el reloj se para fuera de la oleada); RDEF la da en «rondas» y aquí se convierte
 const RCDS={1:40,2:80,3:120,4:150,5:180};
 RELICS.forEach(r=>{Object.assign(r,RDEF[r.id]);r.cd=RCDS[r.cd]||r.cd*40;});
@@ -2278,7 +2307,7 @@ const chestInfo=()=>'<div class="ttl"><b>Cofre</b></div><small style="margin:0">
 function renderRelics(){
  const hb=S.hero?`<button class="rl hero${S.aim==='hero'?' aim':''}${S.aim&&S.aim!=='hero'?' dim':''}${S.hero.s.hp<=0?' off':''}" data-a="hero" data-tip="hero:x" style="background:${S.hero.def.col}">${portrait(S.hero.id,1)}<span class="bdg">${S.hero.s.hp<=0?Math.ceil(S.hero.s.rt)+'s':S.hero.lvl}</span></button>`:'';
  const vb=Object.keys(VCH).filter(k=>S.vch&&S.vch[k]>0).map(k=>`<button class="rl${S.aim==='vch'&&S.vty===k?' aim':''}${S.aim&&!(S.aim==='vch'&&S.vty===k)?' dim':''}" data-a="vch" data-id="${k}" data-tip="vch:${k}" style="background:#5a4a2a">${VCH[k].ic}<span class="bdg">${S.vch[k]}</span></button>`).join('');
- let rki=0;$('relics').innerHTML=vb+(S.relics.length?S.relics.map(id=>{const kn=++rki;const st=S.rs[id],R=RELIC[id],off=st.cd>0,on=st.t>0,bd=on?Math.ceil(st.t)+'s':off?fmtT(st.cd,1):'';
+ let rki=0;$('relics').innerHTML=vb+(S.relics.length?S.relics.map(id=>{const kn=++rki;const st=S.rs[id],R=RELIC[id],off=st.cd>0,on=st.t>0,bd=on?Math.ceil(st.t)+'s':off?fmtT(st.cd,1):id==='scale'&&interest()>0?'+'+interest():'';
   const rd=relUsable(id);return `<button class="rl${off?' off':''}${on?' act':''}${rd?' rdy'+(RUSE()<3?' pul':''):''}${RFL[id]&&performance.now()-RFL[id]<900?' rfl':''}${S.aim===id?' aim':''}${S.aim&&S.aim!==id?' dim':''}" data-a="ract" data-id="${id}" data-tip="relic:${id}" style="background:${R.col}">${R.ic}${bd!==''?`<span class="bdg">${bd}</span>`:''}${kn<=9&&kcOn()?`<span class="kcap kc2"><b>⇧</b><em>+</em><b>${kn}</b></span>`:''}</button>`;}).join(''):'');
 }
 let RSIG='';const RFL={},RPCD={};
@@ -2313,6 +2342,14 @@ function castFreeze(c){
  S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:FRZR,col:'#9fdcff'});
  setCD('frost');S.aim=null;S.msg='Congelados: '+n+' enemigo'+(n===1?'':'s')+'.';renderRelics();ui();
 }
+
+// ---- Dado de la suerte (pasivo): volver a tirar una vez en cada elección (piezas, ofertas de torres y cofres) ----
+const diceRr=k=>S&&S.relics&&rp('dice')&&!(S.drr||{})[k]?`<button class="drr" data-a="dreroll" data-k="${k}">🎲 Volver a tirar</button>`:'';
+function diceReroll(k){if(!rp('dice')||(S.drr||{})[k])return;
+ if(k==='pc'){if(S.phase!=='place')return;S.pi=null;deal();(S.drr=S.drr||{}).pc=1;}
+ else if(k==='tw'){if(!RL.towo)return;const p=tPool();if(!p.length)return;RL.towo=shuf(p).slice(0,3);(S.drr=S.drr||{}).tw=1;renderTowerOffer();}
+ else if(k==='rl'){if(!RL.choices)return;openRelic();(S.drr=S.drr||{}).rl=1;renderRelicPick();}
+ try{sfx('ui');}catch(e){}ui();}
 // Barricada: corta el camino de lado a lado. Recta: tira de 1x3 perpendicular. Curva: diagonal a 45° recortada al giro. En cruces no se puede poner.
 const clipPoly=(pts,nx,ny,c)=>{const o=[];for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length],da=nx*a[0]+ny*a[1]-c,db=nx*b[0]+ny*b[1]-c;
  if(da<=0)o.push(a);if((da<0&&db>0)||(da>0&&db<0)){const u=da/(da-db);o.push([a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u]);}}return o;};
@@ -2366,18 +2403,19 @@ function useRelic(id){
  else if(id==='idol'){if(S.hp<=2){S.mimFor=null;S.msg='Necesitas más de 2 de vida.';ui();return;}hpLoss(2);st.t=15;}
  else if(id==='ember'){S.aim='ember';S.msg='Elige el área de la lluvia de fuego.'+CANC();renderRelics();ui();return;}
  else if(id==='badge'){if(S.merc){S.mimFor=null;S.msg='Los mercenarios ya están luchando.';ui();return;}if(!spawnMerc()){S.mimFor=null;return;}S.msg='Los mercenarios del gremio se unen a la batalla.';}
+ else if(id==='dice'){const v=1+Math.floor(Math.random()*6);S.dice=v;st.t=R.dur;S.msg=['','🎲 ¡Pifia! Sale un 1: tus torres hacen menos daño un rato.','🎲 Sale un 2: torres +25% de daño.','🎲 Sale un 3: torres +25% de daño.','🎲 Sale un 4: torres +50% de daño y más rápidas.','🎲 Sale un 5: torres +50% de daño y más rápidas.','🎲 ¡Un 6! Torres +100% de daño y mucho más rápidas.'][v];setCD(id);if(v===1||v===6){const c=v===1?40:80;if(S.mimFor){S.rs.mimic.cd=Math.min(S.rs.mimic.cd,c);}else st.cd=c;}heroSync();renderRelics();ui();return;}
  else st.t=R.dur;
  setCD(id);heroSync();renderRelics();ui();
 }
 function openRelic(){
  if(S.noChest){S.noChest=0;S.msg='El cofre está vacío: el mercader ya se había llevado lo que había dentro.';ui();return;}
  const pool=S.tut?RELICS.filter(r=>['horn','lens','anvil'].includes(r.id)&&!S.relics.includes(r.id)):shuf(RELICS.filter(r=>!r.ini&&!r.evr&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id)));RL.choices=pool.slice(0,S.chest4?4:3);S.chest4=0;RL.choices=RL.choices.map(r=>r.id);RL.choices.forEach(id=>see('rl',id));
- if(!RL.choices.length)return;renderRelicPick();}
+ if(!RL.choices.length)return;(S.drr=S.drr||{}).rl=0;renderRelicPick();}
 function renderRelicPick(){
  closePrim();RL.open=true;$('relic').classList.add('open');$('relic').scrollTop=0;
  $('relic').innerHTML='<b style="font-size:16px">¡Cofre abierto!</b><br><small>Elige una reliquia para esta partida. El juego está en pausa.</small><div class="cgrid">'+
   RL.choices.map(id=>{const r=RELIC[id];return `<div class="ce rcard" style="text-align:left"><div class="ric" style="background:${r.col}">${r.ic}</div><b style="display:block;text-align:center">${r.n}</b>${rdesc(id)}<button data-a="relic" data-id="${id}">Elegir</button></div>`;}).join('')+
-  '</div><small>Pulsa una reliquia de la fila superior para usar su activo (pierdes el pasivo un rato de oleada).</small>'+wcompBtn('rl');
+  '</div>'+diceRr('rl')+'<small>Pulsa una reliquia de la fila superior para usar su activo (pierdes el pasivo un rato de oleada).</small>'+wcompBtn('rl');
 }
 function toggleOpts(v){const on=v===undefined?!(LB.open&&!LB.cover&&OP.open):v;if(on){OP.keepS=0;lbOpen('op');}else lbClose();}
 function heroInfo(id,quiet){
@@ -2409,6 +2447,12 @@ const csec=(t,s)=>`<div class="esec" style="margin-top:14px">${t}</div><small>${
 // ---- compendio: vistazo general con barras (lo demás, con números, en la vista de detalle) ----
 const GCOL={cd:'#ff6b5e',ccl:'#f3e7a1',cg:'#5ab4ff',chp:'#9be15d',cph:'#c9ced8',cmg:'#8f9bff',cvl:'#ffe14d',burn:'#ff9a4a',poison:'#5fdc7a'};
 const GICO={burn:'🔥',poison:'🧪',slow:'🐌',ez:'⚡',chain:'🔗',bwall:'🧱',logk:'🪵',mheal:'✚',drunk:'🍺',freeze:'🧊',chill:'❄️',bleed:'🩸',stun:'💫',wet:'💧',root:'🌿',sticky:'🫗'};
+// tipo de daño: color (los de cada tipo) e icono delante de «Daño». Físico 🗡️, mágico báculo azul, elemental llama, rayo, veneno y hielo en cuadro
+GCOL.cel='#4fd6b8';
+const DTSVG={magic:'<svg class="dti" viewBox="0 0 16 16" width="1.05em" height="1.05em" aria-hidden="true"><path d="M3 14.2L10.2 7" stroke="#2c3a8a" stroke-width="3" stroke-linecap="round"/><path d="M3 14.2L10.2 7" stroke="#6f84ff" stroke-width="1.6" stroke-linecap="round"/><path d="M9.2 5.2a3 3 0 1 0 4.4-1.6" fill="none" stroke="#2c3a8a" stroke-width="2.6" stroke-linecap="round"/><path d="M9.2 5.2a3 3 0 1 0 4.4-1.6" fill="none" stroke="#8f9bff" stroke-width="1.3" stroke-linecap="round"/><circle cx="11.6" cy="4.6" r="1.7" fill="#cfe0ff" stroke="#3a4cc0" stroke-width=".7"/></svg>',
+ elem:'<svg class="dti" viewBox="0 0 16 16" width="1.05em" height="1.05em" aria-hidden="true"><g transform="scale(.5)"><path d="M8 1.5c.6 2.2 3.4 3.4 3.4 6.6A3.4 3.4 0 0 1 4.6 8.1c0-1.4.8-2.3 1.5-2.9 0 1.1.5 1.7 1.1 1.9C7 5 7.2 3.2 8 1.5z" fill="#ff8a3a" stroke="#3a1a08" stroke-width=".8"/></g><g transform="translate(8 0) scale(.5)"><path d="M9.4 1.5L4.2 9h3.3l-1 5.5L11.8 7H8.4z" fill="#ffe14d" stroke="#4a3a06" stroke-width=".8" stroke-linejoin="round"/></g><g transform="translate(0 8) scale(.5)"><path d="M8 1.8C9.8 4.6 11.6 6.5 11.6 9a3.6 3.6 0 0 1-7.2 0C4.4 6.5 6.2 4.6 8 1.8z" fill="#6fdc5a" stroke="#16380e" stroke-width=".8"/></g><g transform="translate(8 8) scale(.5)"><g stroke="#0e3a4a" stroke-width="2.6" stroke-linecap="round"><path d="M8 2v12M2.8 5l10.4 6M2.8 11l10.4-6"/></g><g stroke="#9fe4ff" stroke-width="1.3" stroke-linecap="round"><path d="M8 2v12M2.8 5l10.4 6M2.8 11l10.4-6"/></g></g></svg>',
+ phys:'<span class="dti">🗡️</span>'};
+const dtOf=(T,TT)=>(TT&&TT.dt)||(T&&T.dt)||'phys',dtCls=dt=>(DT[dt]||DT.phys).cls,dtLab=(dt,lab)=>(DTSVG[dt]||'')+lab;
 const gRow=(lab,cls,v,m,txt,col)=>`<div class="grow"><span class="${cls}">${lab}</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,m>0?100*v/m:0))}%;background:${col||GCOL[cls]}"></i></div><span class="${cls} gv">${txt}</span></div>`;
 const gTxt=(lab,cls,html)=>`<div class="grow gt"><span class="${cls}">${lab}</span><span class="gv2">${html}</span></div>`;
 const GARM=60,gArm=(ap,am,src)=>ap>0&&!am?gRow(kst('aphys','Armadura',src),'cph',ap,GARM,ap):am>0&&!ap?gRow(kst('umr','Resistencia mágica',src),'cmg',am,GARM,am):(ap>0||am>0)?`<div class="grow"><span>${kst('aphys','Arm.',src)} / ${kst('umr','Res. mág.',src).replace('class="kw st"','class="kw st cmg"')}</span><div class="gtr"><i style="width:${Math.min(50,ap*50/GARM)}%;background:${GCOL.cph}"></i><i style="width:${Math.min(50,am*50/GARM)}%;background:${GCOL.cmg};left:auto;right:0"></i></div><span class="gv"><b class="cph">${ap}</b> / <b class="cmg">${am}</b></span></div>`:'';
@@ -2418,13 +2462,13 @@ function twAt(k,lv,spec){const T=TW[k],L=lvMods(k,lv,spec),TT=twm(k,spec);const 
 // máximos por nivel (Nv 1 se compara con Nv 1, etc.) para llenar las barras
 function twMax(lv){const o={dmg:0,dps:0,rate:0,range:0,uhp:0};for(const k of Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k))){const sp=lv>=4&&SPECS[k]?Object.keys(SPECS[k]):[null];for(const p of sp){const a=twAt(k,lv,p);if(a.st)o.dps=Math.max(o.dps,a.dv);else o.dmg=Math.max(o.dmg,a.dv);o.rate=Math.max(o.rate,a.s.rate);o.range=Math.max(o.range,a.s.range);o.uhp=Math.max(o.uhp,a.uhp);}}return o;}
 function twGlance(k){const st=cpState(k),a=twAt(k,st.lv,st.spec),M=twMax(st.lv),src='shop:'+k,full=shopInfo(k,1),head=full.slice(0,full.indexOf('</div>')+6);
- const dm=a.st?`<div class="grow"><span class="cd">${kst('dps','DPS',src)}</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,100*a.dv/M.dps))}%;background:${GCOL[a.st]}"></i></div><span class="gv ${a.st==='burn'?'cbu':'cpo'}">${f(a.dv)} ${GICO[a.st]}</span></div>`:gRow(kst('dmg','Daño',src),'cd',a.dv,M.dmg,f(a.dv));
+ const dm=a.st?`<div class="grow"><span class="cd">${kst('dps','DPS',src)}</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,100*a.dv/M.dps))}%;background:${GCOL[a.st]}"></i></div><span class="gv ${a.st==='burn'?'cbu':'cpo'}">${f(a.dv)} ${GICO[a.st]}</span></div>`:gRow(dtLab(dtOf(a.T,a.TT),kst('dmg','Daño',src)),dtCls(dtOf(a.T,a.TT)),a.dv,M.dmg,f(a.dv));
  return head+'<div class="gbody">'+dm+gRow(kst('cool','Enfriamiento',src),'ccl',a.s.rate,M.rate,f(1/a.s.rate)+' s')+
   (a.T.unit?gRow(kst('uhp','Vida de unidades',src),'chp',a.uhp,M.uhp,Math.round(a.uhp)):'')+(effHtml(a.TT,src)?gTxt(kst('eff','Efectos',src),'cf',gIcons(a.TT,src)).replace('class="gv2"','class="gv2 gleft"'):'')+'</div>';}
 // tarjeta de vistazo rápido de una torre de evento (barras comparadas con las torres normales del mismo nivel, donde se puede)
 const uPrevOk=(k,cur)=>{const T=TW[k];return !T.faro&&!(T.dragon&&cur<=1);};
 function uniqGlance(k,cur){const T=TW[k],src='shop:'+k,full=uniqInfo(null,k,cur),head=full.slice(0,full.indexOf('</div>')+6),M=twMax(Math.min(3,cur));let b='';
- const D=(v,l)=>gRow(kst('dmg',l||'Daño',src),'cd',v,M.dmg,f(v)),C=r=>gRow(kst('cool','Enfriamiento',src),'ccl',r,M.rate,f(1/r)+' s'),G=v=>'',U=v=>gRow(kst('uhp','Vida de unidades',src),'chp',v,M.uhp,Math.round(v)),I=ids=>gTxt(kst('eff','Efectos',src),'cf',ids.map(id=>`<span class="kw gico" data-kw="${id}" data-src="${src}">${GICO[id]||'✦'}</span>`).join('')).replace('class="gv2"','class="gv2 gleft"');
+ const D=(v,l)=>gRow(dtLab(dtOf(T),kst('dmg',l||'Daño',src)),dtCls(dtOf(T)),v,M.dmg,f(v)),C=r=>gRow(kst('cool','Enfriamiento',src),'ccl',r,M.rate,f(1/r)+' s'),G=v=>'',U=v=>gRow(kst('uhp','Vida de unidades',src),'chp',v,M.uhp,Math.round(v)),I=ids=>gTxt(kst('eff','Efectos',src),'cf',ids.map(id=>`<span class="kw gico" data-kw="${id}" data-src="${src}">${GICO[id]||'✦'}</span>`).join('')).replace('class="gv2"','class="gv2 gleft"');
  if(T.faro){const L=FARO[cur-1];b=gTxt('Alcance a torres iluminadas','cg','+'+Math.round(L.rg*100)+'%')+(L.d?gTxt('Daño a torres iluminadas','cd','+'+Math.round(L.d*100)+'%'):'')+(L.c?gTxt('Enfriamiento de torres iluminadas','ccl','−'+Math.round(L.c*100)+'%'):'')+'<small>No ataca: proyecta una zona de luz movible que mejora las torres de dentro.</small>';}
  else if(T.dragon){const sg=cur-1;b=gTxt('Forma','',DRAG[sg].n)+(sg===0?'<small>Todavía no hace nada: espera a que eclosione.</small>':sg===1?D(8,'Daño (fuego)')+G(2.5*K)+U(60):sg===2?D(18,'Daño (bola de fuego)')+G(3.5*K):D(22,'Daño (bola de fuego)')+G(3.5*K)+I(['burn']));}
  else if(T.guild){const L=lvMods(k,cur,null);b=D(T.dmg*L.dmg,'Daño (cada uno)')+C(T.rate/L.cd)+G(T.range*L.range)+U(T.unit.hp*L.hp)+gTxt('Aventureros','',PARTY[cur].length);}
@@ -2863,7 +2907,7 @@ function drawUnits(c,s,cs,ox,oy,lw){
     c.strokeStyle=q.H.def.col;c.lineWidth=lw(3);c.beginPath();c.arc(px,py,r,0,7);c.stroke();c.strokeStyle='rgba(0,0,0,.55)';c.lineWidth=lw(1);c.beginPath();c.arc(px,py,r+lw(2),0,7);c.stroke();}
    else{c.strokeStyle='#cfe0ff';c.lineWidth=lw(1.5);c.stroke();if(!q.mech&&!q.pig&&!q.beast){const ui=unitIc(t);if(ui){c.fillStyle='#14161c';icDraw(c,ui,px,py+1,r*1.45);}}}
    if(q.mech){const cl=['#e8cf6a','#a8743a','#c0563a'];for(let i=0;i<3;i++){c.fillStyle=cl[i];c.beginPath();c.moveTo(px,py);c.arc(px,py,r,i*2.094-1.571,(i+1)*2.094-1.571);c.closePath();c.fill();}c.strokeStyle='#ffe0b0';c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();c.font=Math.round(r*1.2)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('🐷',px,py+1);}
-   if(q.pig){c.font=Math.round(r*1.6)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(PIGU[q.pig].ic,px,py+1);}
+   if(q.pig){const im=PORT['pig_'+q.pig]?heroImg('pig_'+q.pig):null;if(im&&im.complete&&im.naturalWidth){c.save();c.beginPath();c.arc(px,py,r,0,7);c.clip();c.drawImage(im,px-r,py-r,r*2,r*2);c.restore();c.strokeStyle=tinfo(t).col;c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();}else{c.font=Math.round(r*1.6)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(PIGU[q.pig].ic,px,py+1);}}
    if(q.beast){c.font=Math.round(r*1.9)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff';c.fillText((BEASTS[q.beast]||SPECT[q.beast]).ic,px,py+1);}
    if(q.drunk>0){c.font=Math.round(r*1.1)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('🍶',px+r*.9,py-r*.9);}
    if(q.hp<q.max){const bw=r*2.2,bh=lw(2.5);c.fillStyle='#000';c.fillRect(px-bw/2,py-r-lw(4),bw,bh);c.fillStyle='#6fe07a';c.fillRect(px-bw/2,py-r-lw(4),bw*Math.max(0,q.hp/q.max),bh);}}}
@@ -2952,7 +2996,7 @@ const RS=id=>{if(!S.st)return {...NODUM};return S.st.rl[id]||(S.st.rl[id]={dmg:0
 // Daño aportado (aproximado) por las reliquias que mejoran el daño de las torres: parte del daño que desaparecería sin la reliquia
 function relDmg(t,dl){
  if(t.hero||!t.cells)return;const sh=(id,m)=>{if(m>1)RS(id).dmg+=dl*(1-1/m);};
- if(ra('horn'))sh('horn',2);else if(rp('horn')&&S.wt>=30)sh('horn',1.2);
+ if(ra('dice')){const v=S.dice||3;sh('dice',v===1?.75:v<=3?1.25:v<=5?1.5:2);}if(ra('horn'))sh('horn',2);else if(rp('horn')&&S.wt>=30)sh('horn',1.2);
  if(rp('map'))sh('map',1+mapDmg()/100);
  if(ra('anvil')&&t.cells.some(([x,y])=>S.buff[y][x]))sh('anvil',1.5);
  if(rp('quiver')&&!TW[t.type].unit)sh('quiver',1/.85);
@@ -3122,7 +3166,7 @@ setInterval(()=>{try{habAutoTick();}catch(e){}},250);
 // panel del héroe (abajo a la derecha, encima de «Empezar oleada»)
 const pigsOn=()=>S&&S.list&&pigHouses().some(t=>t&&t.pigT&&!t.pigT.off);
 function heroPanel(){const H=S.hero;if(!H)return '';const A=HAB[H.id],lk=H.lvl<10,bw=habOk('b'),uw=habOk('u');
- return `<div class="hpan">`+(pigsOn()?`<button class="hpb hppig${S.aim==='pigs'?' aim':''}" data-a="pigs" data-tip="pigs:x">${pigHouses().filter(t=>t&&t.pigT).map(t=>PIGU[t.type].ic).join('')}</button>`:'')+`<button class="hpb hpport fr${hTier(H.id)}${S.aim==='hero'?' aim':''}${H.s.hp<=0?' off':''}" data-a="hero" data-tip="hero:x" style="background:${H.def.col}">${portrait(H.id,1)}<span class="bdg">${H.s.hp<=0?Math.ceil(H.s.rt)+'s':H.lvl}</span>${kcap(kbN('hero'))}</button>`+
+ return `<div class="hpan">`+(pigsOn()?`<button class="hpb hppig${S.aim==='pigs'?' aim':''}" data-a="pigs" data-tip="pigs:x"><span class="pgps">${pigHouses().filter(t=>t&&t.pigT).map(t=>`<span class="pgp" style="background:${PIGU[t.type].col}">${PORT['pig_'+t.type]?portrait('pig_'+t.type,1):PIGU[t.type].ic}</span>`).join('')}</span>${kcap(kbN('pigs'))}</button>`:'')+`<button class="hpb hpport fr${hTier(H.id)}${S.aim==='hero'?' aim':''}${H.s.hp<=0?' off':''}" data-a="hero" data-tip="hero:x" style="background:${H.def.col}">${portrait(H.id,1)}<span class="bdg">${H.s.hp<=0?Math.ceil(H.s.rt)+'s':H.lvl}</span>${kcap(kbN('hero'))}</button>`+
   `<button class="hpb${S.aim==='habb'?' aim':''}${bw?' off':''}${OPT.autoB?' auto':''}" data-a="hab" data-tip="hab:b">${A.b.ic}${OPT.autoB?'<span class="hauto">AUTO</span>':''}<span class="hcdv" data-k="b"></span>${kcap(kbN('hab'))}</button>`+
   `<button class="hpb hpult${S.aim==='habu'?' aim':''}${uw?' off':''}${lk?' lock':''}${OPT.autoU&&!lk?' auto':''}" data-a="hult" data-tip="hab:u">${OPT.autoU&&!lk?'<span class="hauto">AUTO</span>':''}${lk?'<span class="hchain">⛓️</span><span class="hlck">🔒</span>':A.u.ic}<span class="hcdv" data-k="u"></span>${lk?'':kcap(kbN('ult'))}</button></div>`;}
 function hpanTick(){if(S&&S.list){const xs=xPanel().replace(/<span class="hcdv"[^>]*><\/span>/,'');if(xs!==hpanTick.xs){hpanTick.xs=xs;const p=document.querySelector('#mbr .xpan');if(p)p.outerHTML=xPanel();}}
@@ -3309,7 +3353,7 @@ function placeEvents(c,A){const pool=shuf(Object.keys(EVENTS)),n=Math.min(evCoun
  for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k]||(bx===c&&by===c))continue;if(Math.abs(bx-A[0])+Math.abs(by-A[1])<2)continue;cand.push(k);}
  shuf(cand);for(let i=0;i<n&&i<cand.length;i++)S.evts[cand[i]]=pool[i];}
 const rndRelic=()=>{const p=RELICS.filter(r=>!r.ini&&!r.evr&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id));return p.length?p[Math.floor(Math.random()*p.length)].id:null;};
-function gainRelic(id){S.relics.push(id);S.rs[id]={cd:0,t:0};see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
+function gainRelic(id){S.relics.push(id);S.rs[id]={cd:0,t:0};if(id==='mimic')setTimeout(mimPlace,0);see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
 function goldEv(v){S.gold+=v;if(S.st&&v>0)S.st.gEv+=v;}
 function addNow(k,v){const p=S.portals[0];if(p)p.plan[k]=(p.plan[k]||0)+v;}
 function blockBuffs(bk){if(!bk)return false;const[bx,by]=bk.split(',').map(Number),NB=N/BN;for(let y=by*NB;y<(by+1)*NB;y++)for(let x=bx*NB;x<(bx+1)*NB;x++)if(S.buff[y]&&BF[S.buff[y][x]])return true;return false;}
@@ -3355,7 +3399,8 @@ const EVENTS={
   {l:'Ayudar en la forja',c:'Durante esta oleada tus torres hacen un 20% menos de daño',run:()=>{S.forgeR=S.round;if(!S.relics.includes('hammer'))gainRelic('hammer');return['relic:hammer'];}}]},
  chest:{n:'Cofre sospechoso',ic:'📦',txt:'Un cofre abandonado en mitad del camino. Parece demasiado fácil.',opts:[
   {l:'Abrirlo',run:()=>{if(Math.random()<.5){setTimeout(()=>openRelic(),0);return['relicx'];}moreEnemies(.3);return['more:30'];}},
-  {l:'Alimentar al cofre',c:'Pagas 50 🪙',req:()=>S.gold<50?'Necesitas 50 🪙':'',run:()=>{S.gold-=50;gainRelic('mimic');return['relic:mimic'];}}]},
+  {l:'Alimentar al cofre',c:'Pagas 50 🪙',req:()=>S.gold<50?'Necesitas 50 🪙':'',run:()=>{S.gold-=50;gainRelic('mimic');return['relic:mimic'];}},
+  {l:'Encerrarlo en una jaula',c:'Pierdes 2 de vida (te muerde al cogerlo)',req:()=>S.hp<=2?'Necesitas más de 2 de vida':'',run:()=>{hpLoss(2);S.uq.push({type:'glut',bk:EVK});return['tower:glut'];}}]},
  lighthouse:{n:'Faro en ruinas',ic:'🏚️',txt:'Un viejo faro de piedra, cubierto de hiedra. En lo alto aún brilla débilmente un cristal arcano.',opts:[
   {l:'Restaurar el faro',c:'Desmantelas 2 torres de Nv 1 (o pagas 50 🪙 por cada una que te falte)',req:()=>{const k=Math.min(2,lv1Count());return S.gold<(2-k)*50?'Necesitas '+((2-k)*50)+' 🪙':'';},run:()=>{const k=Math.min(2,lv1Count());S.gold-=(2-k)*50;S.dneed=k;S.dsel=[];S.uq.push({type:'faro',bk:EVK});return['tower:faro'];}},
   {l:'Encender una señal',run:()=>{lessEnemies(.25);return['less:25'];}},
@@ -3374,19 +3419,48 @@ const EVENTS={
   {l:'Defender la casa de paja',c:'Difícil: la próxima oleada trae a El Lobo',run:()=>{addNow('bigw',1);S.pend.push({r:S.round,bk:EVK,towers:['straw']});return['tower:straw'];}},
   {l:'¡Defender todas las casas!',c:'La próxima oleada trae Lobatos, un Lobo gris y El Lobo',req:()=>pigDone()?'':'Se desbloquea al ganar una partida con cada una de las tres casas',run:()=>{addNow('cub',8);addNow('greyw',1);addNow('bigw',1);S.pend.push({r:S.round,bk:EVK,towers:['brick','wood','straw']});return['tower:brick','tower:wood','tower:straw'];}}]}
 };
+// texto que «resuelve» cada opción (como en Slay the Spire): se lee tras elegir, antes de Continuar. Puede depender del resultado (keys)
+const EVRES={
+ merchant:['El mercader cuenta las monedas dos veces, sonríe y te tiende algo envuelto en tela. «Buena elección. O eso dicen todos.»',
+  'Aprovechas un descuido y te llevas lo primero que pillas. A lo lejos, el mercader silba… y algo grande le responde desde el bosque.',
+  'Tras media hora de discusión, el mercader suspira y te da una balanza vieja. «Quédatela. Ya me cobraré en tu próximo cofre.»'],
+ shrine:['Apoyas la mano en el altar y sientes que algo se te escapa del pecho. Tu héroe, en cambio, se yergue más fuerte que nunca.',
+  'Las monedas desaparecen en cuanto tocan la piedra. Un brillo dorado se extiende por las casillas cercanas.',
+  'En cuanto levantas el ídolo, el suelo tiembla y un frío te recorre la espalda. Pero ya es tuyo.',
+  'Te arrodillas un rato en silencio. Cuando te levantas, el cansancio ha desaparecido.'],
+ smith:['El herrero trabaja toda la noche. Al amanecer, tus torres más modestas lucen piezas nuevas y relucientes.',
+  '«Dime cuál», gruñe el herrero mientras hace girar la piedra de afilar. «Solo me da tiempo para una.»',
+  'Pasas la tarde dándole al fuelle. El herrero, agradecido, te regala su martillo de repuesto… aunque tus torres se quedan un rato sin herramientas.'],
+ chest:[k=>k[0]==='relicx'?'La tapa cede con un chasquido. Dentro, entre telarañas, brilla algo valioso.':'¡Era una trampa! Del cofre sale un humo rojo que atrae a más enemigos hacia tus portales.',
+  'Le echas unas monedas. El cofre se relame, abre un ojo y decide seguirte.',
+  'Le echas una red encima y, tras un buen mordisco, consigues meterlo en una jaula. Gruñe. Tiene hambre.'],
+ lighthouse:['Desmontas un par de torres y usas sus piedras para reparar el faro. El cristal vuelve a brillar con fuerza.',
+  'Enciendes una hoguera en lo alto. Desde lejos, parte de los enemigos ve la luz y da media vuelta.',
+  'Desde lo alto del faro ves un claro que no estaba en tus mapas. Y en él, un cofre.'],
+ nest:['Envuelves el huevo con cuidado. Está caliente… y algo se mueve dentro.',
+  'Un coleccionista paga una fortuna por el huevo. Mientras cuentas el oro, oyes un rugido lejano: alguien lo va a echar de menos.',
+  'Coges la brasa con la mano desnuda. Duele, pero sigue ardiendo sin apagarse.'],
+ guild:['Los aventureros clavan su estandarte y empiezan a levantar la sede. «¡Contad con nosotros!»',
+  'Arrancas un cartel del tablón: «Se busca». Dentro de dos rondas, el buscado vendrá a por ti.',
+  'Un mercenario veterano cuenta tus monedas, asiente y se pone a tus órdenes.'],
+ pigs:['El cerdito de la casa de ladrillo te da las gracias. A lo lejos se oyen aullidos pequeños: vienen los lobatos.',
+  'El cerdito de la casa de madera respira aliviado. Entre los árboles, un lobo gris olfatea el aire.',
+  'El cerdito de la casa de paja te abraza temblando. Un aullido enorme hace vibrar las paredes: El Lobo ya viene.',
+  'Los tres cerditos se ponen detrás de ti. Esta noche vendrá toda la manada.']};
+const evRes=(id,i,keys)=>{const r=(EVRES[id]||[])[i];return typeof r==='function'?r(keys):r||'';};
 let EVK=null;
 function optHtml(id,o,i,live){const known=memOf(id,i),why=live&&o.req?o.req():'';
  const desc=(o.c?`<small>${o.c}</small>`:'')+`<small>Obtienes: ${known.length?known.map(chip).join(' · '):'???'}</small>`;
  // sin spoilers: una opción bloqueada sale como «???» hasta desbloquearla (solo se ve qué hace falta)
  const lk=o.req?o.req():'';
  if(!live)return lk?`<div class="evo lk"><b>???</b><small class="cd">🔒 ${lk}</small></div>`:`<div class="evo"><b>${o.l}</b>${desc}</div>`;
- return `<button class="evo" data-a="evopt" data-i="${i}"${why?' disabled':''}><b>${why?'???':o.l}</b>${why?'':desc}${why?`<small class="cd">🔒 ${why}</small>`:''}</button>`;}
+ return `<button class="evo" data-a="evopt" data-i="${i}"${why?' disabled':''}><b>${why?'???':o.l}</b><span class="evod">${why?`<small class="cd">🔒 ${why}</small>`:desc}</span></button>`;}
 function evBanner(){if(S.tut?TUTHS.event:(!OPT.hints||HSEEN.event))return '';hintSeen('event');return '<div class="hban">💡 Cada opción muestra siempre su coste. Lo que obtienes aparece como <b>???</b> hasta que eliges esa opción una vez; a partir de ahí lo recordarás.</div>';}
 function eventCard(id){const E=EVENTS[id];return `<div class="evhead"><span class="evic">${E.ic}</span><b>${E.n}</b></div><small>${E.txt}</small>`+E.opts.map((o,i)=>optHtml(id,o,i,false)).join('');}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
  el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><p>${E.txt}</p>${evBanner()}<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div><small>Evento · el juego está en pausa.</small></div>'+wcompBtn('ev');}
 function chooseEvent(i){const id=RL.ev,E=EVENTS[id],o=E&&E.opts[i];if(!o||(o.req&&o.req()))return;const keys=o.run()||[];remember(id,i,keys);
- const el=$('relic');el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><p><b>${o.l}</b></p><div class="evres">${keys.map(chip).join('<br>')}</div><button class="go" data-a="evok">Continuar</button></div>`+wcompBtn('ev');
+ const el=$('relic');el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><div class="evchose">${o.l}</div>${evRes(id,i,keys)?`<p class="evtale">${evRes(id,i,keys)}</p>`:''}<div class="evres"><small>Obtienes</small>${keys.map(k=>`<span class="evchip">${chip(k)}</span>`).join('')}</div><button class="go" data-a="evok">Continuar</button></div>`+wcompBtn('ev');
  renderRelics();ui();}
 function closeEvent(){RL.open=false;RL.ev=null;$('relic').classList.remove('open');ui();if(S.sharp)startSharp();else if(S.dneed>0)startDism();else if(S.uq.length&&!RL.open)startUPlace();}
 const sharpOk=t=>!TW[t.type].support&&!TW[t.type].faro;
@@ -3408,7 +3482,7 @@ if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;
   if(d<=sp*dt+.3){giveXp(H,o.v);return false;}o.x+=dx/d*sp*dt;o.y+=dy/d*sp*dt;return true;});}
 function orbFlush(){if(S.orbs&&S.hero)for(const o of S.orbs)giveXp(S.hero,o.v);S.orbs=[];}
 function hpLoss(n,en){if(S)S.chit=performance.now();if(S.st)S.st.hpL=(S.st.hpL||0)+n;if(en)hint('retry','Reintentar',[['Un enemigo ha llegado al núcleo y has perdido <b>vida</b>.',tgEl('#sh')],['Si una oleada sale mal, puedes repetirla desde el principio con este botón. Tiene cargas limitadas.',tgEl('#mtl [data-a="retry"]')]]);S.hp-=n;S.idolN=(S.idolN||0)+n;if(en)S.hpEn=(S.hpEn||0)+n;}
-const interest=()=>Math.min(30,Math.floor(S.gold*.1/5)*5);
+const INTMAX=100,interest=()=>Math.min(INTMAX,Math.floor(S.gold*.1/5)*5);
 const heroHpM=()=>rp('badge')?1.15:1;
 function heroSync(){const H=S.hero;if(!H)return;const q=H.s,m=hsAt(H.id,H.lvl).hp*heroHpM();if(Math.abs(q.max-m)>.01){const f=q.max>0?q.hp/q.max:1;q.max=m;if(q.hp>0)q.hp=m*f;}}
 const EMR=3*K;
@@ -3450,13 +3524,49 @@ function uPlaceAt(c){const u=S.uq[0];if(!u)return;const kx=Math.floor(c.x/K),ky=
  const T=TW[u.type],tw={id:++S.tid,type:u.type,lvl:1,x:q.x,y:q.y,cells:[[q.x,q.y]],sq:sqCells(q),inv:0,spec:null,ab:{},acd:{},cd:0,tgt:null,mode:S.dtg[u.type]||'core',rd:S.round};
  see('tw',u.type);hint('uniq','Torres de evento','Las torres de evento solo se consiguen en eventos concretos. Son únicas: no se compran, no se venden y se mejoran a su manera.',tgCell(q.x,q.y,1.4));if(T.guild)mkGuild(tw);if(T.faro){tw.light=0;tw.lz=[{x:q.x,y:q.y}];tw.lzcd=[0,0];}if(T.dragon){tw.born=S.round;tw.stage=0;}
  S.list.push(tw);S.st.all.push(tw);for(const[a,b]of tw.sq)S.occ[a+','+b]=tw;S.uq.shift();
- if(S.uq.length)startUPlace();else{S.aim=null;S.msg='';toast(T.ic+' '+T.n+' colocada.');renderRelics();ui();}}
+ if(S.uq.length)startUPlace();else{S.aim=null;S.msg='';toast(T.ic+' '+T.n+': ya está en su sitio.');renderRelics();ui();}}
 function roundRewards(){
  for(const t of S.list)if(TW[t.type].guild){const v=[10,20,35,50][t.lvl-1]||10;goldEv(v);}
  if(rp('scale')){const v=interest();if(v>0){goldEv(v);if(S.st)S.st.gRel+=v;}}
  const due=(S.pend||[]).filter(p=>p.r===S.round);S.pend=(S.pend||[]).filter(p=>p.r!==S.round);
  for(const p of due)for(const ty of p.towers)S.uq.push({type:ty,bk:p.bk});
  if(due.length)S.msg='¡Has defendido las casas! Coloca tu recompensa.';}
+
+// ---- Mímico: al conseguirlo cae en el mapa, en una zona con solares libres y pocas torres (mejor por dentro del mapa que en el borde).
+// Las bajas a 2,5 casillas o menos lo alimentan; lleno, escupe un cofre al colocar la siguiente pieza y la próxima vez pide más ----
+const MIMR=2.5,MIM0=30,MIMUP=20;
+function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC(x,y)?S.cc[y][x]:-1,NB=P;let best=null,bs=-1e9;
+ for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!S.blocks[Math.floor(x/NB)+','+Math.floor(y/NB)])continue;const v0=cc(x,y);if(v0!==0&&v0!==3)continue;if(!D.some(([a,b])=>cc(x+a,y+b)===2))continue;
+  let sol=0,tw=0;for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){if(i*i+j*j>10)continue;const v=cc(x+i,y+j);if(v===1){if(S.occ[((x+i)*K+1)+','+((y+j)*K+1)])tw++;else sol++;}}
+  const bx=Math.floor(x/NB),by=Math.floor(y/NB),edge=D.filter(([a,b])=>!S.blocks[(bx+a)+','+(by+b)]).length;
+  const sc=sol*2-tw*4+(edge===0?4:edge===1?1:0)+Math.random()*.5;if(sol>=1&&sc>bs){bs=sc;best=[x,y];}}
+ if(!best)return;S.mim={x:best[0]*K+1,y:best[1]*K+1,food:0,need:MIM0,rdy:0,n:0,t0:performance.now()};
+ S.fx.push({x:S.mim.x,y:S.mim.y,r:2*K,t:.8,m:.8,col:'#c9a24a'});
+ if(!S.tut)setTimeout(()=>hint('mimic','El mímico','El mímico ha caído en el mapa, junto al camino. Cada enemigo que muere cerca lo <b>alimenta</b>; cuando se llena, <b>escupe un cofre</b> al colocar la siguiente pieza. Construye cerca para llenarlo antes.',tgCell(S.mim.x,S.mim.y,1.6)),0);}
+function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
+ if(m.food>=m.need){m.food=0;m.rdy++;m.n++;m.need=MIM0+MIMUP*m.n;S.fx.push({x:m.x,y:m.y,r:1.6*K,t:.7,m:.7,col:'#ffd84a'});S.msg='¡El mímico está lleno! Escupirá un cofre al colocar la próxima pieza.';}}
+function mimSpit(){const m=S.mim;if(!m||!(m.rdy>0)||RL.open)return false;m.rdy--;RS('mimic').n2=(RS('mimic').n2||0)+1;openRelic();return true;}
+function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y*CS+CS/2,B=K*CS,now=performance.now(),ch=m.ch&&now-m.ch<350?1-(now-m.ch)/350:0,bob=Math.sin(now/600)*B*.03,op=.12+.25*ch+(m.rdy?.25:0);
+ g.save();g.translate(X,Y+bob);
+ // anillo de llenado
+ g.lineWidth=lw(3);g.strokeStyle='rgba(0,0,0,.35)';g.beginPath();g.arc(0,0,B*.62,0,7);g.stroke();g.strokeStyle=m.rdy?'#ffd84a':'#c9a24a';g.beginPath();g.arc(0,0,B*.62,-Math.PI/2,-Math.PI/2+6.283*(m.rdy?1:m.food/m.need));g.stroke();
+ const w=B*.8,h=B*.42;g.fillStyle='#7a4a1e';g.strokeStyle='#2e1a08';g.lineWidth=lw(1.5);g.fillRect(-w/2,0,w,h);g.strokeRect(-w/2,0,w,h);
+ g.fillStyle='#c9a24a';g.fillRect(-w/2,h*.4,w,h*.16);
+ // boca (se abre al comer)
+ g.fillStyle='#3a0c10';g.beginPath();g.rect(-w/2+lw(1),-h*op*1.4,w-lw(2),h*op*1.4);g.fill();
+ g.fillStyle='#f4ecd8';for(let i=0;i<5;i++){const tx=-w/2+w*(i+.5)/5;g.beginPath();g.moveTo(tx-w*.07,0);g.lineTo(tx,-h*.22);g.lineTo(tx+w*.07,0);g.fill();g.beginPath();g.moveTo(tx-w*.07,-h*op*1.4);g.lineTo(tx,-h*op*1.4+h*.22);g.lineTo(tx+w*.07,-h*op*1.4);g.fill();}
+ // tapa
+ g.translate(0,-h*op*1.4);g.fillStyle='#8a5626';g.beginPath();g.moveTo(-w/2,0);g.lineTo(-w/2,-h*.5);g.quadraticCurveTo(0,-h*1.1,w/2,-h*.5);g.lineTo(w/2,0);g.closePath();g.fill();g.stroke();
+ g.fillStyle='#c9a24a';g.fillRect(-w*.08,-h*.55,w*.16,h*.4);
+ // ojo
+ g.fillStyle='#fff7c8';g.beginPath();g.ellipse(w*.24,-h*.45,w*.09,h*.17,0,0,7);g.fill();g.fillStyle='#1a0a0a';g.beginPath();g.ellipse(w*.25,-h*.45,w*.035,h*.12,0,0,7);g.fill();
+ g.restore();
+ if(m.rdy){g.font='bold '+Math.round(B*.4)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🎁',X+B*.5,Y-B*.55);}}
+function mimInfo(){const m=S.mim;return `<div class="ttl"><b>📦 Mímico</b></div><small style="margin:0">Cada enemigo que muere a ${String(MIMR).replace('.',',')} casillas o menos lo alimenta. Lleno, escupe un cofre al colocar la siguiente pieza.</small>`+R('gd','Comida',m.rdy?'¡Lleno!':m.food+' / '+m.need)+(m.n?R('','Cofres escupidos',m.n):'');}
+
+// ---- Mímico glotón (torre única del evento «Cofre sospechoso»): no se mejora con oro, sube de nivel comiendo (bajas que hace él) ----
+const GLUT=[0,12,35,80];
+function glutEat(t){t.food=(t.food||0)+1;if(t.lvl<4&&t.food>=GLUT[t.lvl]){lvUp(t);S.fx.push({x:t.x,y:t.y,r:1.4*K,t:.6,m:.6,col:'#ffd84a'});S.msg='¡El Mímico glotón sube a Nv '+t.lvl+'!';}}
 // ---- Faro arcano: no ataca, ilumina torres cercanas y sube de nivel con su daño ----
 const FARO=[{r:3,rg:.2,d:0,c:0,need:0},{r:3.5,rg:.25,d:.05,c:0,need:2000},{r:4,rg:.3,d:.1,c:.05,need:6000},{r:4,rg:.3,d:.1,c:.05,need:15000}];
 // zonas de luz del Faro: se proyectan en cualquier punto del mapa (1 zona; 2 en Nv 4). Si se solapan, sus mejoras se suman
@@ -3529,13 +3639,14 @@ function drawDragons(){for(const t of S.list){if(!t.fly||t.fly.x===undefined)con
  if(t.stage>=3){g.fillStyle='rgba(255,110,40,.25)';g.beginPath();g.arc(px,py,CS*2,0,7);g.fill();}g.font=Math.round(CS*(t.stage>=3?3.3:2.6))+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🐉',px,py);}}
 // ---- ficha de las torres únicas ----
 function uniqInfo(t,k,lvo){const T=TW[k],src=t?'tw:'+t.id:'shop:'+k,X=t?tinfo(t):T,pin=t&&PR.pinned&&PR.key===src,ev=EVENTS[T.ev],CL=lvo||(t?(T.dragon?(t.stage||0)+1:t.lvl||1):1);
- let h=`<div class="ttl"><b>${X.ic} ${X.n}</b>${t&&(T.guild||T.pig)?' · '+kst('lvl','Nv '+t.lvl,src):''}<br><small style="margin:0">Torre única · evento «${ev?ev.n:''}»</small></div>`;
+ let h=`<div class="ttl"><b>${X.ic} ${X.n}</b>${t&&(T.guild||T.pig||T.glut)?' · '+kst('lvl','Nv '+t.lvl,src):''}<br><small style="margin:0">Torre única · evento «${ev?ev.n:''}»</small></div>`;
  if(T.faro){const lv=CL,L=FARO[lv-1];h+=R('cd',kst('dmg','Daño',src),0)+R('ca','Radio',f(L.r)+' casillas')+R('cg','Alcance a torres iluminadas','+'+Math.round(L.rg*100)+'%')+(lv>=2?R('cd','Daño a torres iluminadas','+'+Math.round(L.d*100)+'%'):'')+(lv>=3?R('ccl','Enfriamiento de torres iluminadas','−'+Math.round(L.c*100)+'%'):'');
   h+=t&&lv<4?R('gd','Luz',fi(t.light||0)+' / '+fi(FARO[lv].need)):'';h+='<small>'+['No ataca: proyecta una zona de luz que puedes mover a cualquier parte del mapa (🔦 en su menú). Mejora las torres de dentro y acumula luz con el daño que hacen. Con 2.000 de luz sube a Nv 2.','Ahora también da daño a las torres que ilumina. Con 6.000 de luz sube a Nv 3.','Ahora también reduce el enfriamiento de las torres que ilumina. Con 15.000 de luz sube a Nv 4.','Gana una segunda zona de luz que también puedes mover. Si las pones una encima de otra, sus mejoras se suman.'][lv-1]+'</small>';}
  else if(T.dragon){const sg=CL-1;h+=R('','Forma',DRAG[sg].n)+(sg===0?R('cd',kst('dmg','Daño',src),0):sg===1?R('cd',kst('dmg','Daño',src)+' (fuego)',8)+R('ca','Área','0,4 casillas')+R('cg','Rango','2,5 casillas')+R('cd','Daño con garras','70%')+R('chp','Vida',60):sg===2?R('cd',kst('dmg','Daño',src)+' (bola de fuego)',18)+R('ca','Área','1 casilla')+R('cg','Rango','3,5 casillas'):R('cd',kst('dmg','Daño',src)+' (bola de fuego)',22)+R('ca','Área','1,2 casillas')+R('cg','Rango','3,5 casillas')+R('cd','Llamarada',DBRN+' stacks de '+kw('burn','Quemadura',src))+R('ccl','Enfriamiento de la llamarada',DBRCD+' s')+R('cr',kst('dur','Duración',src)+' de los charcos','4 s'))+
   (t&&sg<3&&!lvo?R('cr','Siguiente fase','ronda '+(t.born+DRGAT[sg+1])):'')+'<small>'+['Todavía no hace nada. '+(()=>{const a=['eclosiona a las 3 rondas'];if(revd('drag2')||revd('drag3'))a.push('es adulto a las 6');if(revd('drag3'))a.push('anciano a las 10');return (a.length>1?a.slice(0,-1).join(', ')+' y '+a[a.length-1]:a[0]).replace(/^e/,'E')+'.';})(),'Se coloca en el camino, bloquea y escupe fuego; si le alcanzan, ataca con garras. Si cae, reaparece.','Vuela en círculos alrededor de su bandera y lanza bolas de fuego con más área. No bloquea, y solo pueden atacarle los enemigos a distancia.','Vuela como el adulto, con bolas de fuego más fuertes y más área. Cada 8 s lanza una llamarada en cono (3 casillas) que aplica mucha quemadura y deja charcos de fuego en el camino durante 4 s.'][sg]+'</small>';
   if(pin&&sg>=1)h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`;}
- else if(T.guild){const lv=CL,Lm=lvMods(k,lv,null),bd=T.dmg*Lm.dmg,bh=T.unit.hp*Lm.hp;h+='<div class="usub"><b>Estadísticas de unidades</b>'+R('','Aventureros',PARTY[lv].length)+PARTY[lv].map((c,i)=>R('','· '+CLS[c].n,`<span class="cd">${f(bd*CLS[c].d)}</span> daño · <span class="chp">${Math.round(bh*CLS[c].hp)}</span> vida`+(t&&!lvo&&t.sd&&t.sd[i]&&t.sd[i].ren?` · <span class="gd">Renombre +${Math.round(t.sd[i].ren*100)}%</span>`:''))).join('')+'</div>'+(lv>=4?'<small><b>Renombre</b>: cuando un aventurero mata a una Mini-élite, una Élite o un Jefe (que no sea el final), todo el grupo gana un 5%, 10% o 15% de daño y vida, sin límite. Quien cae pierde el suyo.</small>':'')+R('gd','Recompensa por ronda',[10,20,35,50][lv-1]+' 🪙')+R('gd','Botín','+25% de oro por baja');
+ else if(T.glut){const lv=CL,L=lvMods(k,lv,null),s=t&&!lvo?stats(t):{dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:0,pen:0};h+=rows(s,T,src,'')+(t&&lv<4&&!lvo?R('gd','Comida',(t.food||0)+' / '+GLUT[lv]):'')+'<small>Muerde a los enemigos que pasan a su lado. No se mejora con oro: sube de nivel con las bajas que hace él mismo ('+GLUT.slice(1).join(', ')+' para Nv 2, 3 y 4).</small>';}
+ else if(T.guild){const lv=CL,Lm=lvMods(k,lv,null),bd=T.dmg*Lm.dmg,bh=T.unit.hp*Lm.hp;h+='<div class="usub"><b>'+unitHead('shop:guild')+'Estadísticas de unidades</b>'+R('','Aventureros',PARTY[lv].length)+PARTY[lv].map((c,i)=>R('','· '+CLS[c].n,`<span class="cd">${f(bd*CLS[c].d)}</span> daño · <span class="chp">${Math.round(bh*CLS[c].hp)}</span> vida`+(t&&!lvo&&t.sd&&t.sd[i]&&t.sd[i].ren?` · <span class="gd">Renombre +${Math.round(t.sd[i].ren*100)}%</span>`:''))).join('')+'</div>'+(lv>=4?'<small><b>Renombre</b>: cuando un aventurero mata a una Mini-élite, una Élite o un Jefe (que no sea el final), todo el grupo gana un 5%, 10% o 15% de daño y vida, sin límite. Quien cae pierde el suyo.</small>':'')+R('gd','Recompensa por ronda',[10,20,35,50][lv-1]+' 🪙')+R('gd','Botín','+25% de oro por baja');
   if(pin){if(lv<4){const c=T.upc[lv+1];h+=`<div class="tgt"><button data-a="gup" data-id="${t.id}">⬆ Subir a rango ${RANKS[lv]} (<span class="gd">−${c} 🪙</span>)</button></div>`;}h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`;}}
  else{const lv=T.pig?CL:Math.min(3,CL),L=lvMods(k,lv,null),s=t&&!lvo?stats(t):{dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:(T.splash||0)*L.area,pen:0,ldur:T.log?logDur(lv):0};
   if(CL>=4&&!T.pig)h+='<small>Nv 4: su habilidad está por definir.</small>';else h+=rows(s,T,src,'');
@@ -3649,6 +3760,7 @@ function dealTry(){
 // Reparte 3 piezas. Si ninguna puede colocarse dejando un extremo libre, se permite cerrar el camino; si no cabe ninguna, la ronda no trae pieza.
 function deal(){if(S.tut&&tutDeal()){S.allowClose=false;S.allowDead=false;S.noSlot=false;return;}S.allowClose=false;S.allowDead=false;S.noSlot=false;if(dealTry())return;S.allowDead=true;if(dealTry())return;S.allowClose=true;if(dealTry())return;S.noSlot=true;}
 function nextRound(){
+ if(S)(S.drr=S.drr||{}).pc=0;
  mechaEnd();if(S.mecha)S.mecha.cd=0;for(const id in S.rs){S.rs[id].t=0;}S.aim=null;S.aimT=null;if(S.gorbs&&S.gorbs.length&&S.hero)for(const o of S.gorbs)giveXp(S.hero,o.v);S.gorbs=[];S.fury=0;S.summ=[];S.ivy=[];S.runes=[];S.storm=null;S.ice=[];S.cata=null;S.bz=[];S.logs=[];S.hawk=null;if(S.hero){S.hero.bcd=0;S.hero.chg=null;}S.barr=[];S.dbl=[];S.tz=[];S.fz=[];S.merc=null;S.mimFor=null;for(const t of S.list)t.curse=0;for(const t of unitTowers())for(const s of t.sd){const q=slotOf(t,s.i);s.hp=s.max;s.rt=0;s.en=null;s.fight=false;s.lock=false;s.x=q.x;s.y=q.y;}S.round++;heroSync();if(S.round%2===0&&!S.tut)S.towOff=1;S.phase='place';S.pi=null;S.selT=null;S.ends=[];S.portals=[];S.proj=[];S.fx=[];S.rain=[];deal();
  S.msg=S.tut?'':S.round===ROUNDS?'Última ronda: la pieza que coloques invoca al jefe final.':bossRound(S.round)?'Ronda de jefe: la pieza que coloques invoca al jefe.':'';if(S.noSlot){skipPlace();return;}ui();setTimeout(()=>tutPhase('place'),0);
  if(!S.tut&&S.offers.some(o=>pcost(o)))setTimeout(()=>hint('bfcost','Casillas de pago',[['Las casillas especiales <b>cuestan oro</b>: <span class="gd">25 🪙</span> cada una (<span class="gd">50 🪙</span> las súper).',tgCard('#ui .pcst:not(.pfree)')],['Siempre habrá una pieza <b>gratis</b>.',tgCard('#ui .pfree')]]),0);
@@ -3682,7 +3794,7 @@ function placePiece(bx,by){
  // primero el extremo más lejano de la pieza nueva; el resto, al azar (antes, siempre los más alejados: los enemigos tardaban mucho en llegar)
  ends.sort((a,b)=>a.nw===b.nw?b.d-a.d:a.nw?-1:1);{const nw=ends.filter(e=>e.nw),rest=shuf(ends.filter(e=>!e.nw));ends.length=0;ends.push(...nw.slice(0,1),...shuf(nw.slice(1).concat(rest)));}
  if(!ends.length)ends.push({...any,nw:true});
- S.ends=ends;
+ S.ends=addMids(ends);
  const boss=bossRound(S.round)?(ends.find(e=>e.nw)||any):null;
  makePortals(boss);S.phase='build';if(solF&&showSolarFocus(bx,by)){S.tut.solf=1;FO.after=()=>setTimeout(()=>tutPhase('build'),0);}else setTimeout(()=>tutPhase('build'),0);
  S.msg=(S.round===ROUNDS&&ROUNDS===30?'¡Se ha abierto un portal enorme… algo peor que el jefe se acerca! ':bossRound(S.round)?'¡Se ha abierto el portal del jefe! ':'')+(ELITES[S.round]&&!bossRound(S.round)?'Esta ronda trae '+Object.entries(ELITES[S.round]).map(([t,n])=>n+' '+ET[t].n.toLowerCase()).join(' y ')+'.':'');ui();
@@ -3690,6 +3802,7 @@ function placePiece(bx,by){
  if(S.hero)hint('hero','Tu héroe',HEROTXT,tgEl('#mbr .hpport'));
  if(S.chests[bx+','+by]){delete S.chests[bx+','+by];S.chOpen=(S.chOpen||0)+1;if(S.chOpen>=3&&S.round<7&&!S.tut)achieve('treasure');openRelic();RL.fromChest=!!(RL.open&&RL.choices&&RL.choices.length);}
  else if(S.evts[bx+','+by]){const id=S.evts[bx+','+by];delete S.evts[bx+','+by];openEvent(id,bx+','+by);}
+ else if(S.mim&&S.mim.rdy>0)setTimeout(mimSpit,0);
 }
 // Ronda sin pieza: los portales salen de los extremos sin salida del camino (los más lejanos del núcleo primero)
 function skipPlace(){
@@ -3697,10 +3810,35 @@ function skipPlace(){
  for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!isP(x,y)||(x===cx&&y===cy))continue;const nb=D.filter(([a,b])=>isP(x+a,y+b));
   if(nb.length===1){const fx=x*K+1,fy=y*K+1;if(d[fy][fx]<1e9)ends.push({x:fx,y:fy,dir:[-nb[0][0],-nb[0][1]],d:d[fy][fx],nw:false});}}
  if(!ends.length){let any=null,ad=-1;for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===2&&d[y][x]<1e9&&d[y][x]>ad){ad=d[y][x];any={x,y,d:ad,dir:[0,0],nw:false};}ends.push(any);}
- ends.sort((a,b)=>b.d-a.d);S.ends=ends;const boss=bossRound(S.round)?ends[0]:null;
+ ends.sort((a,b)=>b.d-a.d);S.ends=addMids(ends);const boss=bossRound(S.round)?ends[0]:null;
  makePortals(boss);S.phase='build';setTimeout(()=>tutPhase('build'),0);
  S.msg=(boss?'¡Se ha abierto el portal del jefe! ':'')+'Mapa completo: ya no hay piezas nuevas. Los enemigos salen de los extremos del camino.';ui();
 }
+
+// ---- tramos muertos: si al unir dos salidas queda un tramo largo de camino por el que no pasaría ningún enemigo
+// (no está en ninguna ruta más corta de una salida al núcleo), se abre un portal en medio y sus enemigos salen
+// mitad hacia un lado y mitad hacia el otro (e.dest: casilla de unión con el camino usado)
+const DEADMIN=7;
+function deadMids(ends){const cf=cfield(),isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2&&cf[y][x]<1e9,used=new Set(),q=[];
+ const c0=[Math.floor(S.core.x/K),Math.floor(S.core.y/K)];used.add(c0[0]+','+c0[1]);
+ for(const e of ends){const cx=Math.floor(e.x/K),cy=Math.floor(e.y/K);if(isP(cx,cy)&&!used.has(cx+','+cy)){used.add(cx+','+cy);q.push([cx,cy]);}}
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(isP(nx,ny)&&cf[ny][nx]<cf[y][x]&&!used.has(nx+','+ny)){used.add(nx+','+ny);q.push([nx,ny]);}}}
+ const seen=new Set(),out=[];
+ for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){const k=x+','+y;if(!isP(x,y)||used.has(k)||seen.has(k))continue;
+  const comp=[[x,y]],J=[];seen.add(k);
+  for(let i=0;i<comp.length;i++){const[cx,cy]=comp[i];for(const[a,b]of D){const nx=cx+a,ny=cy+b,nk=nx+','+ny;if(!isP(nx,ny))continue;
+   if(used.has(nk)){if(!J.some(j=>j[0]===nx&&j[1]===ny))J.push([nx,ny]);}else if(!seen.has(nk)){seen.add(nk);comp.push([nx,ny]);}}}
+  if(comp.length<DEADMIN||!J.length)continue;
+  // casilla del medio: la que queda más lejos de las uniones (por dentro del tramo)
+  const dist=new Map(),bq=[];for(const[cx,cy]of comp)for(const[jx,jy]of J)if(Math.abs(cx-jx)+Math.abs(cy-jy)===1&&!dist.has(cx+','+cy)){dist.set(cx+','+cy,0);bq.push([cx,cy]);}
+  for(let i=0;i<bq.length;i++){const[cx,cy]=bq[i],d0=dist.get(cx+','+cy);for(const[a,b]of D){const nk=(cx+a)+','+(cy+b);if(seen.has(nk)&&!used.has(nk)&&!dist.has(nk)&&comp.some(c=>c[0]===cx+a&&c[1]===cy+b)){dist.set(nk,d0+1);bq.push([cx+a,cy+b]);}}}
+  let m=comp[0],md=-1;for(const c of comp){const v=dist.get(c[0]+','+c[1])||0;if(v>md){md=v;m=c;}}
+  // las dos uniones más alejadas entre sí (si solo hay una, los enemigos salen todos hacia ella)
+  const sp=J.length>1?J.slice(0,2):[J[0]];
+  out.push({x:m[0]*K+1,y:m[1]*K+1,dir:[0,0],d:cf[m[1]][m[0]],nw:false,mid:1,split:sp.map(j=>[j[0]*K+1,j[1]*K+1])});}
+ return out;}
+function addMids(ends){const mids=deadMids(ends);if(!mids.length)return ends;ends.splice(Math.min(1,ends.length),0,...mids);
+ if(!S.tut)setTimeout(()=>hint('midportal','Portal en medio del camino','Un tramo del camino había quedado cerrado y ningún enemigo pasaba por él: se abre un <b>portal en medio</b>'+(mids[0].split.length>1?' y sus enemigos salen <b>mitad hacia cada lado</b>.':'.'),tgCell(mids[0].x,mids[0].y,1.4)),0);return ends;}
 // ---- avisos de camino: pocas salidas libres ----
 // aberturas de una pieza = casillas de camino en su borde; 3 o más = tiene bifurcación
 const opens=p=>{let n=0,o=ch=>cellOf(ch)===2;for(let i=0;i<P;i++){if(o(p[0][i]))n++;if(o(p[P-1][i]))n++;if(o(p[i][0]))n++;if(o(p[i][P-1]))n++;}return n;};
@@ -3740,8 +3878,8 @@ function posFocus(){
 function makePortals(boss){
  if(S.tut)boss=null;const sqs=S.tut?(TUTW[S.round]||['patrol']):waveSquads(S.round),X=sqs.reduce((a,k)=>a+sqN(k),0);
  let k=S.ends.length;while(k>1&&X/k<MINP)k--;
- const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0},q:[],t:0});
- const ps=S.ends.slice(0,k).map(mk);
+ const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],split:e.split||null,si:0,ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0},q:[],t:0});
+ /* los portales de tramo muerto siempre se abren (si no, ese tramo seguiría sin usarse) */const mids=S.ends.filter(e=>e.mid),rest=S.ends.filter(e=>!e.mid),ps=rest.slice(0,Math.max(1,k-mids.length)).concat(mids).map(mk);
  sqs.forEach((sq,i)=>{const q=ps[i%ps.length];(q.sq=q.sq||[]).push(sq);const m={},sm=sqM(sq);for(const t in sm)for(let n=0;n<sm[t];n++){const u=promote(t,S.round);m[u]=(m[u]||0)+1;}(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});
  if(S.tut&&S.round===10)ps[0].plan.bob=1;
  if(!boss&&!S.tut&&ELITES[S.round])for(const t in ELITES[S.round])ps[0].plan[t]+=ELITES[S.round][t];
@@ -3767,7 +3905,7 @@ function stats(t){
  {const fs=abRank(t,'fists');if(fs)r/=1-fs.r;}
  if(rp('idol'))d*=1+idolPct()/100;
  if(rp('notebook'))d*=1+Math.min(.2,.02*(S.nbN||0));if(ra('idol'))r*=2;
- if(rp('horn')&&S.wt>=30)d*=1.2;if(ra('horn'))d*=2;
+ if(rp('horn')&&S.wt>=30)d*=1.2;if(ra('horn'))d*=2;if(ra('dice')){const v=S.dice||3;if(v===1)d*=.75;else if(v<=3)d*=1.25;else if(v<=5){d*=1.5;r/=.75;}else{d*=2;r/=.5;}}
  if(rp('map')){d*=1+mapDmg()/100;r/=1-mapCool()/100;}
  if(rp('quiver')&&!T.unit)r/=.85;
  if(rp('trophy'))rg*=1+.05*(S.troN||0);if(ra('trophy'))rg*=1.5;
@@ -3945,7 +4083,8 @@ function quickFlag(t){if(!t||!S.list.includes(t)||!(S.phase==='build'||S.phase==
  try{tmClose();}catch(e){}S.selT=null;
  if(TW[t.type].faro){const cd=S.phase==='wave'?((t.lzcd||[0,0])[0]||0):0;if(cd>0){errBubble('La luz se podrá mover en '+Math.ceil(cd)+' s.');return true;}S.aim='faroz';S.flzSel={id:t.id,i:0};S.msg='Elige dónde proyectar la luz del Faro (Esc para cancelar).';renderRelics();ui();return true;}
  if(tmHas(t,'flag')){startFlag(t);return true;}return false;}
-function startFlag(t){closePrim();S.aim='flag';S.aimT=t;S.msg='Elige una casilla del camino dentro del rango. Haz clic fuera del círculo para cancelar.';renderRelics();ui();}
+function startFlag(t){/* casas de los cerditos en Nv 4: el cerdito se mueve como un héroe, por todo el mapa (junto a los demás) */if(TW[t.type]&&TW[t.type].pig&&t.pigT&&pigsOn()){closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino a la que mover a los cerditos (Esc o el mismo botón para cancelar).';renderRelics();ui();return;}
+ closePrim();S.aim='flag';S.aimT=t;S.msg='Elige una casilla del camino dentro del rango. Haz clic fuera del círculo para cancelar.';renderRelics();ui();}
 // ---- oleadas ----
 // Reintentar: al empezar la oleada se guarda una copia de la partida; reintentar vuelve a ella (fase de construcción) y gasta una carga
 function retryWave(){if(!S.snap||!(S.rc>0)||(S.phase!=='wave'&&S.phase!=='lost'))return;
@@ -4004,7 +4143,7 @@ function startWave(){
  for(const p of S.portals){p.q=baseQueue(p);
   for(const t of['mini','elite','greyw','bigw','wanted','momdrg'])for(let i=0;i<(p.plan[t]||0);i++)p.q.splice(Math.floor(p.q.length*(.5+Math.random()*.4)),0,t);
   if(p.plan.boss)p.q.push('boss');if(p.plan.colossus)p.q.push('colossus');if(p.esc&&p.esc.length)p.q.push(...p.esc.map(t=>t+'#'));if(p.plan.bob)p.q.push('bob');p.t=0;}
- if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
+ if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.forks={};S.fbag={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
  // duración prevista: lo que tarda en salir toda la cola + lo que tarda el enemigo más lento en recorrer el camino más largo
  {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:(t==='boss'||t==='colossus')?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
    const ds=S.field&&S.field[p.y]?S.field[p.y][p.x]:60,slow=Math.min(...p.q.filter(t=>t!=='|').map(t=>ET[t==='wanted'?'elite':t.replace('#','')].sp),9);if(ds<1e9)tr=Math.max(tr,ds/Math.max(.1,slow));}
@@ -4016,7 +4155,8 @@ function spawnEnemy(t,p){
  let wanted=0;if(t==='wanted'){t='elite';wanted=1;}
  see('en',t);if(ET[t].fly&&!S.tut)hint('fly','Enemigos voladores','Los enemigos <b>voladores</b> no se pueden bloquear y no les afecta nada que golpee el suelo. El resto de tus ataques sí les dan.');
  const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus')&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=(p.ln=((p.ln||0)+1)%3)-1;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
- S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted});
+ const dest=p.split?p.split[(p.si=(p.si||0)+1)%p.split.length]:null;
+ S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest});
 }
 function compassStep(e){
  // Brújula (pasivo), a nivel de pieza: al entrar en una casilla de pieza nueva puede desviarse por una rama que se aleja del núcleo y seguirla mientras la distancia siga creciendo
@@ -4029,6 +4169,23 @@ function compassStep(e){
  if(e.away){if(e.aw&&e.aw[0]===cx&&e.aw[1]===cy){if(aw.length)e.aw=aw[Math.floor(Math.random()*aw.length)];else{e.away=false;e.aw=null;}}}
  else if(rp('compass')&&!e.awayUsed&&aw.length&&Math.random()<.5){e.awayUsed=true;RS('compass').n++;e.away=true;e.aw=aw[Math.floor(Math.random()*aw.length)];}
 }
+// ---- cruces: en cada cruce, los enemigos se reparten entre las ramas que llegan al núcleo con poco rodeo (hasta FORKTOL casillas más largas),
+// no solo por la más corta. La ruta alternativa se sigue casilla a casilla (e.wps) ----
+const FORKTOL=6;
+function forkRoutes(cx,cy){const key=cx+','+cy;S.forks=S.forks||{};if(S.forks[key])return S.forks[key];
+ const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2,c0=[Math.floor(S.core.x/K),Math.floor(S.core.y/K)];
+ const d=Array.from({length:NC},()=>Array(NC).fill(1e9)),q=[c0];d[c0[1]][c0[0]]=0;
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(nx===cx&&ny===cy)continue;if(isP(nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
+ const out=[];for(const[a,b]of D){const nx=cx+a,ny=cy+b;if(!isP(nx,ny)||!(d[ny][nx]<1e9))continue;
+  const path=[[nx,ny]];let x=nx,y=ny,g=0;while(d[y][x]>0&&g++<4000){let nb=null;for(const[a2,b2]of D){const px=x+a2,py=y+b2;if(isP(px,py)&&d[py][px]<d[y][x]&&!(px===cx&&py===cy)){nb=[px,py];break;}}if(!nb)break;path.push(nb);x=nb[0];y=nb[1];}
+  out.push({n:[nx,ny],len:1+d[ny][nx],path});}
+ return S.forks[key]=out;}
+function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!S.cc[cy]||!S.cf||ra("compass"))return;
+ const rs=forkRoutes(cx,cy).filter(r=>!(prev&&r.n[0]===prev[0]&&r.n[1]===prev[1]));if(rs.length<2)return;
+ const best=Math.min(...rs.map(r=>r.len)),ok=rs.filter(r=>r.len<=best+FORKTOL);if(ok.length<2)return;
+ const key=cx+','+cy;S.fbag=S.fbag||{};let bag=S.fbag[key];if(!bag||!bag.length)bag=S.fbag[key]=shuf(ok.map((r,i)=>i));const r=ok[bag.pop()];
+ if(r.len===best&&S.cf[r.n[1]][r.n[0]]<S.cf[cy][cx])return;/* la más corta: la sigue el camino normal */
+ e.wps=r.path.slice();}
 function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
  const PBK=.25;let mv=ET[e.t].sp*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
  const go=c=>{(e.trail=e.trail||[]).push([e.tx,e.ty]);if(e.trail.length>3000)e.trail.shift();e.pv=[e.tx,e.ty];e.tx=c[0];e.ty=c[1];};
@@ -4038,7 +4195,10 @@ function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.
    if(e.tx===S.core.x&&e.ty===S.core.y)return true;
    if(ra('compass')){if(e.trail&&e.trail.length){const c=e.trail.pop();e.pv=null;e.tx=c[0];e.ty=c[1];continue;}return false;}
    compassStep(e);
-   const F=(e.away&&e.aw)?afield(e.aw):S.field;
+   if(e.dest&&Math.floor(e.tx/K)===Math.floor(e.dest[0]/K)&&Math.floor(e.ty/K)===Math.floor(e.dest[1]/K))e.dest=null;
+   {const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K),fk=cx+','+cy;if(e.fk!==fk){const pv=e.fk?e.fk.split(',').map(Number):null;e.fk=fk;forkPick(e,cx,cy,pv);}
+    if(e.wps){while(e.wps.length&&e.wps[0][0]===cx&&e.wps[0][1]===cy)e.wps.shift();if(!e.wps.length)e.wps=null;}}
+   const F=e.dest?afield([Math.floor(e.dest[0]/K),Math.floor(e.dest[1]/K)]):e.wps?afield(e.wps[0]):(e.away&&e.aw)?afield(e.aw):S.field;
    // solo se consideran vecinos que acercan al objetivo; entre varios igual de buenos se prefiere seguir recto (mantiene el carril) y, si no, se reparte con una bolsa barajada por casilla
    let bd=F[e.ty][e.tx],cs=[];
    for(const[a,b]of D){const nx=e.tx+a,ny=e.ty+b;if(!inb(nx,ny))continue;const v=F[ny][nx];
@@ -4414,7 +4574,7 @@ function update(dt){
  wolfTick(dt);dragonAdults(dt);guildHeal(dt);furyTick();orbTick(dt);heroAbTick(dt);mechaTick(dt);achTick(dt);logTick(dt);
  let bossDead=false;
  S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(!e.leak)S.wk=(S.wk||0)+1;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=100)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
-  {const gb=killGoldF(e.t),g1=rndG(gb*(e.src&&e.src.type&&TW[e.src.type]&&TW[e.src.type].guild?1.25:1)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=rp('coin')?rndG(gb*.5):0;S.gold+=g1+g2+g3;if(rp('mimic')&&nearChest(e)){const gm=rndG(gb*.75);S.gold+=gm;RS('mimic').gold+=gm;}if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;{const q=EKS(e.t);q.k++;q.g+=g1+g2+g3;}if(e.src)e.src.kills=(e.src.kills||0)+1;}}
+  {const gb=killGoldF(e.t),g1=rndG(gb*(e.src&&e.src.type&&TW[e.src.type]&&TW[e.src.type].guild?1.25:1)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=rp('coin')?rndG(gb*.5):0;S.gold+=g1+g2+g3;mimFeed(e);if(e.src&&TW[e.src.type]&&TW[e.src.type].glut)glutEat(e.src);if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;{const q=EKS(e.t);q.k++;q.g+=g1+g2+g3;}if(e.src)e.src.kills=(e.src.kills||0)+1;}}
   // experiencia del héroe: si el golpe final es suyo, la experiencia entera le llega directa; si es de otro, recibe directa la parte del daño que hizo y cae una bola del 40 % del resto que recoge al acercarse
   {const X=ET[e.t].xp||1,nb=(S.nbR===S.round&&!S.pvH?1:0);if(e.src&&e.src.hero)orbAdd(e.x,e.y,X+nb);else{/* contribución: la parte del daño que hizo el héroe le llega directa; del resto, bola del 40 % en el suelo */const hx=Math.min(X,e.hx||0);if(hx>0)orbAdd(e.x,e.y,hx);orbGround(e.x,e.y,hx>0?(X-hx)*.4:Math.max(1,X*.4));if(nb)orbAdd(e.x,e.y,nb);}}
   if(isBoss(e)&&S.round===ROUNDS&&!S.tut)bossDead=true;
@@ -4508,6 +4668,7 @@ function draw(){
  g.strokeStyle='rgba(192,57,74,.55)';g.lineWidth=lw(2);
  for(const e of S.ends){g.beginPath();g.arc(e.x*CS+CS/2,e.y*CS+CS/2,CS*.9,0,7);g.stroke();}
  drawShip(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
+ drawMimic(g,CS,lw);
  drawCore(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
  for(const t of S.list)if(t.fl&&S.phase==='wave')drawFlame(g,t,x=>x*CS+CS/2,y=>y*CS+CS/2,CS);
  const mst=fxOn('crown')?masterTw():null;
@@ -4518,7 +4679,7 @@ function draw(){
   if(t.flash){g.strokeStyle='#fff';g.lineWidth=lw(3);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.flash.x*CS+CS/2,t.flash.y*CS+CS/2);g.stroke();}
   /* galones de nivel en la esquina superior derecha: uno por nivel (Nv 1-3); Nv 4, tres dorados y estrella; con todo al máximo, estrella dorada */
   if(mt)drawCrown(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);
-  if(!T.uniq)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
+  if(!T.uniq||T.glut)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
   if(S.wish&&S.wish.some(w=>w.id===t.id)){g.font=Math.round(BCS*.34)+'px sans-serif';g.fillText('🔖',t.x*CS+CS/2-BCS*.36,t.y*CS+CS/2-BCS*.34);}
   if(t===S.selT){g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.strokeRect((t.x-1)*CS+lw(1),(t.y-1)*CS+lw(1),BCS-lw(2),BCS-lw(2));}
   if(t.rays&&S.phase==='wave'){g.lineWidth=lw(2);for(const r of t.rays)if(r.e.hp>0){g.strokeStyle=r.el.col;g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(r.e.x*CS+CS/2,r.e.y*CS+CS/2);g.stroke();}}
@@ -4588,7 +4749,7 @@ function draw(){
    g.fillStyle=ok?'rgba(80,220,120,.22)':'rgba(230,70,70,.4)';g.fillRect(bx*P*BCS,by*P*BCS,P*BCS,P*BCS);
    g.strokeStyle=ok?'#50dc78':'#e64646';g.lineWidth=lw(2);g.strokeRect(bx*P*BCS+lw(1),by*P*BCS+lw(1),P*BCS-lw(2),P*BCS-lw(2));}}
  g.setTransform(1,0,0,1,0,0);
- $('sr').textContent='⏳ Ronda '+Math.min(S.round,ROUNDS)+'/'+ROUNDS+((S.phase==='build'||S.phase==='wave')&&S.portals&&S.portals.length?'  ·  ⭕ '+S.portals.length:'')+(S.fury?'  ·  💢 Furia ×'+String(furyM()).replace('.',','):'');$('sr').title=S.fury?'Furia: todos ganan daño mientras dure la oleada':'⭕ Portales activos esta ronda';{const a=$('stR'),b=$('stC');a.style.display=OPT.treal?'':'none';b.style.display=OPT.tcomb?'':'none';if(OPT.treal)a.textContent='🕒 '+fClk(GT.r);if(OPT.tcomb)b.textContent='⚔️ '+fClk(GT.c);}$('sh').textContent=(S.hp<=10?'💔':'❤️')+' Vida '+S.hp;$('sg').textContent='🪙 Oro '+Math.floor(S.gold);
+ $('sr').textContent='⏳ Ronda '+Math.min(S.round,ROUNDS)+'/'+ROUNDS+((S.phase==='build'||S.phase==='wave')&&S.portals&&S.portals.length?'  ·  ⭕ '+S.portals.length:'')+(S.fury?'  ·  💢 Furia ×'+String(furyM()).replace('.',','):'');$('sr').title=S.fury?'Furia: todos ganan daño mientras dure la oleada':'⭕ Portales activos esta ronda';{const a=$('stR'),b=$('stC');a.style.display=OPT.treal?'':'none';b.style.display=OPT.tcomb?'':'none';if(OPT.treal)a.textContent='🕒 '+fClk(GT.r);if(OPT.tcomb)b.textContent='⚔️ '+fClk(GT.c);}$('sh').textContent=(S.hp<=10?'💔':'❤️')+' Vida '+S.hp;{const iv=S.relics&&S.relics.includes('scale')?interest():0,h='🪙 Oro '+Math.floor(S.gold)+(iv>0?' <span class="sgint">+'+iv+'</span>':'');if($('sg')._h!==h){$('sg').innerHTML=h;$('sg')._h=h;}}
 }
 // ---- paneles de información ----
 const R=(c,a,b)=>`<div class="row ${c}"><span>${a}</span><span>${b}</span></div>`;
@@ -4751,11 +4912,15 @@ function effHtml(T,src){
 }
 // duración del efecto temporal de la torre (los detalles de cada estado están en el tooltip de su palabra clave)
 function durOf(T,s){if(T.log)return f(s.ldur||logDur(1))+' s (rodando)';if(T.wall)return '4 s';if(T.puddle)return f(T.dur)+' s';return '';}
+// icono propio de la unidad (el mismo que en el mapa) delante de «Estadísticas de unidades»
+const USPN={pal:'Paladín',ass:'Asesino',fist:'Monje de batalla',drunk:'Maestro ebrio'};
+function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith('shop:'))k=src.slice(5);else if(src.startsWith('tw:')&&S&&S.list){const t=S.list.find(o=>'tw:'+o.id===src);if(t){k=t.type;sp=t.spec;}}
+ const ic=(sp&&UIC[sp])||(k&&UIC[k]);if(!ic)return '';const T=TW[k]||{};return `<span class="tuic uhic" style="background:${T.col||'#5b8def'}" title="">${icHtml(ic)}</span>`;}
 function rows(s,T,src,extra){
- const dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R('cd',kst('dmg','Daño',src)+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R('cd',kst('dmg','Daño',src)+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*SPLASH)+')'):R('cd',kst('dmg','Daño',src),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
+ const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*SPLASH)+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
-  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>Estadísticas de unidades</b>'+extra.n+dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
+  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
    (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+cr+(ef?R('cf',kst('eff','Efectos',src),ef):'')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`+'</div>'+extra.tail;}
  return dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+(T.puddle?R('ccl',kst('cool','Enfriamiento',src)+' ('+kst('pstk','Acumulación',src)+')',f(1/s.rate)+' s ('+f(PTICK)+' s)'):R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s'))+(du?R('cr',kst('dur','Duración',src),du):'')+R('cg',kst('rng','Rango',src),cas(s.range/K))+objRow(!!T.ground,src)+
   (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(T.burn&&T.cone?R('ca',kst('area','Área',src),'Cono de '+T.cone+'°'):'')+
@@ -4839,6 +5004,7 @@ function resolve(el){
   if(S.phase==='place'&&S.pi!=null){const bx=Math.floor(kx/P),by=Math.floor(ky/P);
    if(bx<BN&&by<BN&&!S.blocks[bx+','+by]){const b=S.offers[S.pi].b.find(b=>b.x===kx-bx*P&&b.y===ky-by*P);
     if(b)return{key:'gb:'+kx+','+ky+b.k,html:()=>buffInfo(b.k),rect:kr};}}
+  if(S.mim&&Math.floor(S.mim.x/K)===kx&&Math.floor(S.mim.y/K)===ky)return{key:'mim',html:mimInfo,rect:kr};
   {const bx=Math.floor(kx/P),by=Math.floor(ky/P);
    if(S.chests[bx+','+by]&&!S.blocks[bx+','+by]&&Math.abs(kx-bx*P-3)<=1&&Math.abs(ky-by*P-3)<=1)return{key:'ch:'+bx+','+by,html:chestInfo,rect:kr};}
   return null;}
@@ -4968,7 +5134,7 @@ function ui(){
  $('mbr').innerHTML=xPanel()+heroPanel()+(S.phase==='build'?`<button class="go${WARM?' arm':''}" data-a="wave" style="position:relative">${WARM?'✓ Pulsa otra vez':'Empezar oleada'}${kcap(kbN('wave'))}</button>`:'');
  if(S.phase==='place'&&(MF||!TOUCH)&&S.pi!=null&&!S.pexp&&S.offers[S.pi]){const o=S.offers[S.pi];h=`<div class="pstrip"><b>${o.n}</b>${payOn()&&pcost(o)?`<span class="gd">${pcost(o)} 🪙</span>`:''}<button data-a="prot" data-i="${S.pi}">⟳ Girar</button><button data-a="pick" data-i="${S.pi}">✕ Cancelar</button><button data-a="pexp" title="Ver las piezas">▲</button></div>`;}
  else if(S.phase==='place'){
-  h=(S.pi==null&&!S.tut?'<div class="pctt">Elige una pieza</div><button class="pcpeek" data-a="ppeek" title="Ver el mapa">👁</button>':'')+'<small style="display:block;margin-bottom:12px">'+(S.pi==null?(S.tut?'Elige una pieza. Puedes girarla antes de colocarla.':'Puedes girarla antes de colocarla. Después podrás cancelar y volver aquí.'):(BARX.pc=1,'Pulsa un hueco marcado que conecte con el camino.'+(HSEEN.barpc?'':' Vuelve a pulsar la pieza para dejar de elegirla.')))+'</small><div class="prow">'+
+  h=(S.pi==null&&!S.tut?'<div class="pctt">Elige una pieza</div><button class="pcpeek" data-a="ppeek" title="Ver el mapa">👁</button>'+diceRr('pc'):'')+'<small style="display:block;margin-bottom:12px">'+(S.pi==null?(S.tut?'Elige una pieza. Puedes girarla antes de colocarla.':'Puedes girarla antes de colocarla. Después podrás cancelar y volver aquí.'):(BARX.pc=1,'Pulsa un hueco marcado que conecte con el camino.'+(HSEEN.barpc?'':' Vuelve a pulsar la pieza para dejar de elegirla.')))+'</small><div class="prow">'+
   S.offers.map((o,i)=>`<div class="cardw"><button class="card ${i===S.pi?'on':''}" data-a="pick" data-i="${i}" data-tip="piece:${i}"><canvas width="98" height="98" data-i="${i}"></canvas>${o.n}${!payOn()?'':pcost(o)?`<span class="pcst gd">${pcost(o)} 🪙</span>`:'<span class="pcst pfree">Gratis</span>'}</button><button class="rbtn${TOUCH?'':' wide'}" data-a="prot" data-i="${i}" title="Girar la pieza${TOUCH?'':' ('+kbN('rot')+')'}"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13.2 8.4A5.2 5.2 0 1 1 11.6 4.3"/><path d="M12.6 1.8v3.4H9.2"/></svg>${TOUCH?'':'R'}</button></div>`).join('')+'</div>';}
  else if(S.phase==='build'||S.phase==='wave'){h='';}
  else h=(S.phase==='lost'&&S.snap&&S.rc>0?`<button class="go" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="go" data-a="results">Ver resultados</button><button data-a="reset">Jugar de nuevo</button><button data-a="menu">Menú principal</button>';
@@ -5061,7 +5227,7 @@ function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getB
 const DTN={phys:'Físico',magic:'Mágico',elem:'Elemental'};
 function bmInfo(k){const T=TW[k],a=twAt(k,1,null),M=twMax(1),src='shop:'+k;
  const tags=[DTN[T.dt]||'',T.unit?'Unidades':T.splash||T.pr?'Área':T.beam||T.chain?'Rayo':'Un objetivo'].filter(Boolean);
- const dm=a.st?`<div class="grow"><span class="cd">DPS</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,100*a.dv/M.dps))}%;background:${GCOL[a.st]}"></i></div><span class="gv ${a.st==='burn'?'cbu':'cpo'}">${f(a.dv)} ${GICO[a.st]}</span></div>`:gRow(T.unit?'Daño (unidad)':'Daño','cd',a.dv,M.dmg,f(a.dv));
+ const dm=a.st?`<div class="grow"><span class="cd">DPS</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,100*a.dv/M.dps))}%;background:${GCOL[a.st]}"></i></div><span class="gv ${a.st==='burn'?'cbu':'cpo'}">${f(a.dv)} ${GICO[a.st]}</span></div>`:gRow(dtLab(dtOf(T,a.TT),T.unit?'Daño (unidad)':'Daño'),dtCls(dtOf(T,a.TT)),a.dv,M.dmg,f(a.dv));
  return `<div class="bmh"><b>${T.ic} ${T.n}</b><span class="bp">${bmCost(k)} 🪙</span></div><div class="bmt">${tags.map(t=>`<em>${t}</em>`).join('')}</div>`+dm+gRow('Enfriamiento','ccl',a.s.rate,M.rate,f(1/a.s.rate)+' s');}
 function bmCard(){const c=$('bmcard');if(!c||!BM.s)return;const k=BM.arm||BM.hov;if(!k){c.classList.remove('on');return;}const cost=bmCost(k),no=S.gold<cost;
  let h=bmInfo(k)+(BM.arm===k?`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':'Pulsa otra vez para construir'}</div>`:`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':(TOUCH?'Toca':'Pulsa')+' otra vez para construir'}</div>`);
@@ -5210,7 +5376,7 @@ function statsHTML(tab){const st=S.st||{},g=n=>`<span class="gd">${fi(n||0)} �
   rows.sort((a,b)=>b.dm-a.dm);const mx=Math.max(1,...rows.map(r=>r.dm));
   return rows.length?`<table><tr><th>Fuente</th><th class="n">Daño</th><th class="hidem"></th><th class="n">%</th><th class="n">Bajas</th><th class="n">DPS</th></tr>`+rows.map(r=>`<tr><td><span class="sic" style="background:${r.col}33">${r.ic}</span>${r.n} <small style="color:var(--fg2)">${r.lv}</small></td><td class="n cd">${fi(r.dm)}</td><td class="hidem" style="width:28%"><div class="sbar"><i style="width:${r.dm/mx*100}%;background:${r.col}"></i></div></td><td class="n">${pc(r.dm)}%</td><td class="n">${r.k}</td><td class="n">${r.dps==null?'—':fi(r.dps)}</td></tr>`).join('')+'</table><div class="snote">Incluye las torres vendidas y el héroe. «Otras fuentes» suma el daño de reliquias, explosiones de veneno, barricadas…</div>':'<div class="snote">Todavía no has hecho daño en esta partida.</div>';}
  if(tab==='rel'){if(!(S.relics||[]).length)return '<div class="snote">Todavía no tienes reliquias.</div>';
-  const rt={coin:()=>`${g(st.gRel)} generado`,venom:r=>`≈ ${d(r.dmg)} de daño`,frost:r=>`${fi(r.n)} ralentizaciones · ${fi(r.n2)} congelados`,barricade:r=>`${fi(r.n)} enemigos detenidos`,compass:r=>`${fi(r.n)} desvíos`,mimic:r=>`${g(r.gold)} generado`};
+  const rt={coin:()=>`${g(st.gRel)} generado`,venom:r=>`≈ ${d(r.dmg)} de daño`,frost:r=>`${fi(r.n)} ralentizaciones · ${fi(r.n2)} congelados`,barricade:r=>`${fi(r.n)} enemigos detenidos`,compass:r=>`${fi(r.n)} desvíos`,mimic:r=>`${fi(r.n)} bajas comidas · ${fi(r.n2||0)} cofres`};
   return S.relics.map(id=>{const Rr=RELIC[id],r=RS(id),v=rt[id]?rt[id](r):r.gold?`${g(r.gold)} generado`:r.dmg?`≈ ${d(r.dmg)} de daño`:r.n?`${fi(r.n)} activaciones`:'—';return `<div class="srl"><div class="ri" style="background:${Rr.col||'#333'}">${Rr.ic}</div><div><b>${Rr.n}</b><small>${S.rs&&S.rs[id]&&S.rs[id].cd>0?'En enfriamiento: '+S.rs[id].cd+' rondas':'Lista'}</small></div><div class="v">${v}</div></div>`;}).join('')+'<div class="snote">El daño de las reliquias es una estimación: la parte del daño que no existiría sin ellas.</div>';}
  if(tab==='hero'){if(!H)return '<div class="snote">No tienes héroe en esta partida.</div>';
   return `<div class="kp"><div><b>${d(H.pt.dmgT||0)}</b><small>Daño</small></div><div><b>${fi(H.pt.kills||0)}</b><small>Bajas</small></div><div><b class="cf">${fi(st.xp||0)} xp</b><small>Experiencia ganada</small></div><div><b>${fi(st.hDie||0)}</b><small>Veces caído</small></div></div>`+
@@ -5392,7 +5558,7 @@ function exitGame(){LB.exit=0;try{saveRun&&svLive()&&saveRun('exit');}catch(e){}
 function togglePtips(){const on=!(OPT.ptip||OPT.ptipw);OPT.ptip=OPT.ptipw=on;saveOpt();const b=$('ptb');if(b)b.classList.toggle('on',on);try{sfx('ui');}catch(e){}toast(on?'💀 Bocadillos de los portales: siempre visibles':'💀 Bocadillos de los portales: solo al pasar el ratón');}
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
- if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
+ if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim)||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -5468,6 +5634,7 @@ function act(e){
  else if(a==='opt'){const o=OPTS[+b.dataset.i];OPT[o.key]=!OPT[o.key];saveOpt();if(o.key.startsWith('u_'))applyUnl();renderOpts();}
  else if(a==='cspal'){OPT.pal=b.dataset.v;saveOpt();applyPal();renderOpts();}
  else if(a==='cscore'){OPT.core=b.dataset.v;saveOpt();renderOpts();}
+ else if(a==='dreroll')diceReroll(b.dataset.k);
  else if(a==='csex'){OPT['cs_'+b.dataset.k]=b.dataset.v;saveOpt();renderOpts();}
  else if(a==='csfx'){OPT.fxoff=OPT.fxoff||{};OPT.fxoff[b.dataset.v]=!OPT.fxoff[b.dataset.v];saveOpt();renderOpts();}
  else if(a==='csdec'){OPT.decoff=OPT.decoff||{};OPT.decoff[b.dataset.v]=!OPT.decoff[b.dataset.v];saveOpt();renderOpts();}
@@ -6321,4 +6488,16 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
  else if(a==='hsbigx'){const el=$('hsbig');if(el)el.classList.remove('on');}
  else return;e.stopPropagation();},true);
 addEventListener('keydown',e=>{const el=$('hsbig');if(e.key==='Escape'&&el&&el.classList.contains('on')){el.classList.remove('on');e.stopImmediatePropagation();e.preventDefault();}},true);
+// ---- música de fondo ----
+// La canción se inyecta solo en las versiones de prueba (build.js --out, si existe musica/tema.mp3, que no va al repositorio).
+// Suena en bucle desde el primer clic o tecla (el navegador no deja sonar antes). Volumen = general × música.
+// Se pausa con la pestaña oculta. Si no hay canción, no hace nada.
+const MUS={el:null,on:false};
+const musVol=()=>Math.max(0,Math.min(1,(OPT.vm??80)/100*(OPT.vu??60)/100*.45));
+function musStart(){if(MUS.on||typeof window==='undefined'||!window.MUSIC_SRC)return;MUS.on=true;
+ try{const a=new Audio(window.MUSIC_SRC);a.loop=true;a.volume=musVol();MUS.el=a;const p=a.play();if(p&&p.catch)p.catch(()=>{MUS.on=false;MUS.el=null;});}catch(e){MUS.on=false;}}
+if(typeof window!=='undefined'){
+ for(const ev of['pointerdown','keydown'])window.addEventListener(ev,musStart,{capture:true});
+ setInterval(()=>{if(MUS.el)MUS.el.volume=musVol();},300);
+ document.addEventListener('visibilitychange',()=>{if(!MUS.el)return;if(document.hidden)MUS.el.pause();else MUS.el.play().catch(()=>{});});}
 </script></body></html>

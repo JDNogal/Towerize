@@ -14,7 +14,7 @@ function stats(t){
  {const fs=abRank(t,'fists');if(fs)r/=1-fs.r;}
  if(rp('idol'))d*=1+idolPct()/100;
  if(rp('notebook'))d*=1+Math.min(.2,.02*(S.nbN||0));if(ra('idol'))r*=2;
- if(rp('horn')&&S.wt>=30)d*=1.2;if(ra('horn'))d*=2;
+ if(rp('horn')&&S.wt>=30)d*=1.2;if(ra('horn'))d*=2;if(ra('dice')){const v=S.dice||3;if(v===1)d*=.75;else if(v<=3)d*=1.25;else if(v<=5){d*=1.5;r/=.75;}else{d*=2;r/=.5;}}
  if(rp('map')){d*=1+mapDmg()/100;r/=1-mapCool()/100;}
  if(rp('quiver')&&!T.unit)r/=.85;
  if(rp('trophy'))rg*=1+.05*(S.troN||0);if(ra('trophy'))rg*=1.5;
@@ -192,4 +192,5 @@ function quickFlag(t){if(!t||!S.list.includes(t)||!(S.phase==='build'||S.phase==
  try{tmClose();}catch(e){}S.selT=null;
  if(TW[t.type].faro){const cd=S.phase==='wave'?((t.lzcd||[0,0])[0]||0):0;if(cd>0){errBubble('La luz se podrá mover en '+Math.ceil(cd)+' s.');return true;}S.aim='faroz';S.flzSel={id:t.id,i:0};S.msg='Elige dónde proyectar la luz del Faro (Esc para cancelar).';renderRelics();ui();return true;}
  if(tmHas(t,'flag')){startFlag(t);return true;}return false;}
-function startFlag(t){closePrim();S.aim='flag';S.aimT=t;S.msg='Elige una casilla del camino dentro del rango. Haz clic fuera del círculo para cancelar.';renderRelics();ui();}
+function startFlag(t){/* casas de los cerditos en Nv 4: el cerdito se mueve como un héroe, por todo el mapa (junto a los demás) */if(TW[t.type]&&TW[t.type].pig&&t.pigT&&pigsOn()){closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino a la que mover a los cerditos (Esc o el mismo botón para cancelar).';renderRelics();ui();return;}
+ closePrim();S.aim='flag';S.aimT=t;S.msg='Elige una casilla del camino dentro del rango. Haz clic fuera del círculo para cancelar.';renderRelics();ui();}

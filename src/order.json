@@ -59,6 +59,7 @@
   "intro.js",
   "audio.js",
   "eter.js",
-  "historial.js"
+  "historial.js",
+  "musica.js"
  ]
 }

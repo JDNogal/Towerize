@@ -64,6 +64,7 @@ function dealTry(){
 // Reparte 3 piezas. Si ninguna puede colocarse dejando un extremo libre, se permite cerrar el camino; si no cabe ninguna, la ronda no trae pieza.
 function deal(){if(S.tut&&tutDeal()){S.allowClose=false;S.allowDead=false;S.noSlot=false;return;}S.allowClose=false;S.allowDead=false;S.noSlot=false;if(dealTry())return;S.allowDead=true;if(dealTry())return;S.allowClose=true;if(dealTry())return;S.noSlot=true;}
 function nextRound(){
+ if(S)(S.drr=S.drr||{}).pc=0;
  mechaEnd();if(S.mecha)S.mecha.cd=0;for(const id in S.rs){S.rs[id].t=0;}S.aim=null;S.aimT=null;if(S.gorbs&&S.gorbs.length&&S.hero)for(const o of S.gorbs)giveXp(S.hero,o.v);S.gorbs=[];S.fury=0;S.summ=[];S.ivy=[];S.runes=[];S.storm=null;S.ice=[];S.cata=null;S.bz=[];S.logs=[];S.hawk=null;if(S.hero){S.hero.bcd=0;S.hero.chg=null;}S.barr=[];S.dbl=[];S.tz=[];S.fz=[];S.merc=null;S.mimFor=null;for(const t of S.list)t.curse=0;for(const t of unitTowers())for(const s of t.sd){const q=slotOf(t,s.i);s.hp=s.max;s.rt=0;s.en=null;s.fight=false;s.lock=false;s.x=q.x;s.y=q.y;}S.round++;heroSync();if(S.round%2===0&&!S.tut)S.towOff=1;S.phase='place';S.pi=null;S.selT=null;S.ends=[];S.portals=[];S.proj=[];S.fx=[];S.rain=[];deal();
  S.msg=S.tut?'':S.round===ROUNDS?'Última ronda: la pieza que coloques invoca al jefe final.':bossRound(S.round)?'Ronda de jefe: la pieza que coloques invoca al jefe.':'';if(S.noSlot){skipPlace();return;}ui();setTimeout(()=>tutPhase('place'),0);
  if(!S.tut&&S.offers.some(o=>pcost(o)))setTimeout(()=>hint('bfcost','Casillas de pago',[['Las casillas especiales <b>cuestan oro</b>: <span class="gd">25 🪙</span> cada una (<span class="gd">50 🪙</span> las súper).',tgCard('#ui .pcst:not(.pfree)')],['Siempre habrá una pieza <b>gratis</b>.',tgCard('#ui .pfree')]]),0);
@@ -97,7 +98,7 @@ function placePiece(bx,by){
  // primero el extremo más lejano de la pieza nueva; el resto, al azar (antes, siempre los más alejados: los enemigos tardaban mucho en llegar)
  ends.sort((a,b)=>a.nw===b.nw?b.d-a.d:a.nw?-1:1);{const nw=ends.filter(e=>e.nw),rest=shuf(ends.filter(e=>!e.nw));ends.length=0;ends.push(...nw.slice(0,1),...shuf(nw.slice(1).concat(rest)));}
  if(!ends.length)ends.push({...any,nw:true});
- S.ends=ends;
+ S.ends=addMids(ends);
  const boss=bossRound(S.round)?(ends.find(e=>e.nw)||any):null;
  makePortals(boss);S.phase='build';if(solF&&showSolarFocus(bx,by)){S.tut.solf=1;FO.after=()=>setTimeout(()=>tutPhase('build'),0);}else setTimeout(()=>tutPhase('build'),0);
  S.msg=(S.round===ROUNDS&&ROUNDS===30?'¡Se ha abierto un portal enorme… algo peor que el jefe se acerca! ':bossRound(S.round)?'¡Se ha abierto el portal del jefe! ':'')+(ELITES[S.round]&&!bossRound(S.round)?'Esta ronda trae '+Object.entries(ELITES[S.round]).map(([t,n])=>n+' '+ET[t].n.toLowerCase()).join(' y ')+'.':'');ui();
@@ -105,6 +106,7 @@ function placePiece(bx,by){
  if(S.hero)hint('hero','Tu héroe',HEROTXT,tgEl('#mbr .hpport'));
  if(S.chests[bx+','+by]){delete S.chests[bx+','+by];S.chOpen=(S.chOpen||0)+1;if(S.chOpen>=3&&S.round<7&&!S.tut)achieve('treasure');openRelic();RL.fromChest=!!(RL.open&&RL.choices&&RL.choices.length);}
  else if(S.evts[bx+','+by]){const id=S.evts[bx+','+by];delete S.evts[bx+','+by];openEvent(id,bx+','+by);}
+ else if(S.mim&&S.mim.rdy>0)setTimeout(mimSpit,0);
 }
 // Ronda sin pieza: los portales salen de los extremos sin salida del camino (los más lejanos del núcleo primero)
 function skipPlace(){
@@ -112,10 +114,35 @@ function skipPlace(){
  for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!isP(x,y)||(x===cx&&y===cy))continue;const nb=D.filter(([a,b])=>isP(x+a,y+b));
   if(nb.length===1){const fx=x*K+1,fy=y*K+1;if(d[fy][fx]<1e9)ends.push({x:fx,y:fy,dir:[-nb[0][0],-nb[0][1]],d:d[fy][fx],nw:false});}}
  if(!ends.length){let any=null,ad=-1;for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===2&&d[y][x]<1e9&&d[y][x]>ad){ad=d[y][x];any={x,y,d:ad,dir:[0,0],nw:false};}ends.push(any);}
- ends.sort((a,b)=>b.d-a.d);S.ends=ends;const boss=bossRound(S.round)?ends[0]:null;
+ ends.sort((a,b)=>b.d-a.d);S.ends=addMids(ends);const boss=bossRound(S.round)?ends[0]:null;
  makePortals(boss);S.phase='build';setTimeout(()=>tutPhase('build'),0);
  S.msg=(boss?'¡Se ha abierto el portal del jefe! ':'')+'Mapa completo: ya no hay piezas nuevas. Los enemigos salen de los extremos del camino.';ui();
 }
+
+// ---- tramos muertos: si al unir dos salidas queda un tramo largo de camino por el que no pasaría ningún enemigo
+// (no está en ninguna ruta más corta de una salida al núcleo), se abre un portal en medio y sus enemigos salen
+// mitad hacia un lado y mitad hacia el otro (e.dest: casilla de unión con el camino usado)
+const DEADMIN=7;
+function deadMids(ends){const cf=cfield(),isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2&&cf[y][x]<1e9,used=new Set(),q=[];
+ const c0=[Math.floor(S.core.x/K),Math.floor(S.core.y/K)];used.add(c0[0]+','+c0[1]);
+ for(const e of ends){const cx=Math.floor(e.x/K),cy=Math.floor(e.y/K);if(isP(cx,cy)&&!used.has(cx+','+cy)){used.add(cx+','+cy);q.push([cx,cy]);}}
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(isP(nx,ny)&&cf[ny][nx]<cf[y][x]&&!used.has(nx+','+ny)){used.add(nx+','+ny);q.push([nx,ny]);}}}
+ const seen=new Set(),out=[];
+ for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){const k=x+','+y;if(!isP(x,y)||used.has(k)||seen.has(k))continue;
+  const comp=[[x,y]],J=[];seen.add(k);
+  for(let i=0;i<comp.length;i++){const[cx,cy]=comp[i];for(const[a,b]of D){const nx=cx+a,ny=cy+b,nk=nx+','+ny;if(!isP(nx,ny))continue;
+   if(used.has(nk)){if(!J.some(j=>j[0]===nx&&j[1]===ny))J.push([nx,ny]);}else if(!seen.has(nk)){seen.add(nk);comp.push([nx,ny]);}}}
+  if(comp.length<DEADMIN||!J.length)continue;
+  // casilla del medio: la que queda más lejos de las uniones (por dentro del tramo)
+  const dist=new Map(),bq=[];for(const[cx,cy]of comp)for(const[jx,jy]of J)if(Math.abs(cx-jx)+Math.abs(cy-jy)===1&&!dist.has(cx+','+cy)){dist.set(cx+','+cy,0);bq.push([cx,cy]);}
+  for(let i=0;i<bq.length;i++){const[cx,cy]=bq[i],d0=dist.get(cx+','+cy);for(const[a,b]of D){const nk=(cx+a)+','+(cy+b);if(seen.has(nk)&&!used.has(nk)&&!dist.has(nk)&&comp.some(c=>c[0]===cx+a&&c[1]===cy+b)){dist.set(nk,d0+1);bq.push([cx+a,cy+b]);}}}
+  let m=comp[0],md=-1;for(const c of comp){const v=dist.get(c[0]+','+c[1])||0;if(v>md){md=v;m=c;}}
+  // las dos uniones más alejadas entre sí (si solo hay una, los enemigos salen todos hacia ella)
+  const sp=J.length>1?J.slice(0,2):[J[0]];
+  out.push({x:m[0]*K+1,y:m[1]*K+1,dir:[0,0],d:cf[m[1]][m[0]],nw:false,mid:1,split:sp.map(j=>[j[0]*K+1,j[1]*K+1])});}
+ return out;}
+function addMids(ends){const mids=deadMids(ends);if(!mids.length)return ends;ends.splice(Math.min(1,ends.length),0,...mids);
+ if(!S.tut)setTimeout(()=>hint('midportal','Portal en medio del camino','Un tramo del camino había quedado cerrado y ningún enemigo pasaba por él: se abre un <b>portal en medio</b>'+(mids[0].split.length>1?' y sus enemigos salen <b>mitad hacia cada lado</b>.':'.'),tgCell(mids[0].x,mids[0].y,1.4)),0);return ends;}
 // ---- avisos de camino: pocas salidas libres ----
 // aberturas de una pieza = casillas de camino en su borde; 3 o más = tiene bifurcación
 const opens=p=>{let n=0,o=ch=>cellOf(ch)===2;for(let i=0;i<P;i++){if(o(p[0][i]))n++;if(o(p[P-1][i]))n++;if(o(p[i][0]))n++;if(o(p[i][P-1]))n++;}return n;};
@@ -155,8 +182,8 @@ function posFocus(){
 function makePortals(boss){
  if(S.tut)boss=null;const sqs=S.tut?(TUTW[S.round]||['patrol']):waveSquads(S.round),X=sqs.reduce((a,k)=>a+sqN(k),0);
  let k=S.ends.length;while(k>1&&X/k<MINP)k--;
- const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0},q:[],t:0});
- const ps=S.ends.slice(0,k).map(mk);
+ const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],split:e.split||null,si:0,ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0},q:[],t:0});
+ /* los portales de tramo muerto siempre se abren (si no, ese tramo seguiría sin usarse) */const mids=S.ends.filter(e=>e.mid),rest=S.ends.filter(e=>!e.mid),ps=rest.slice(0,Math.max(1,k-mids.length)).concat(mids).map(mk);
  sqs.forEach((sq,i)=>{const q=ps[i%ps.length];(q.sq=q.sq||[]).push(sq);const m={},sm=sqM(sq);for(const t in sm)for(let n=0;n<sm[t];n++){const u=promote(t,S.round);m[u]=(m[u]||0)+1;}(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});
  if(S.tut&&S.round===10)ps[0].plan.bob=1;
  if(!boss&&!S.tut&&ELITES[S.round])for(const t in ELITES[S.round])ps[0].plan[t]+=ELITES[S.round][t];

@@ -30,6 +30,7 @@ guild:{n:'Sede del Gremio',ic:'🏰',dt:'phys',cost:0,range:2.5,dmg:4,rate:1,uni
 straw:{n:'Casa de paja',ic:'🌾',dt:'phys',cost:0,range:2.6,dmg:10,rate:.8,ps:10,splash:.5,slow:.5,slowt:3,slowA:1,col:'#e8cf6a',l:'P',fx:'Ralentización',uniq:1,pig:1,upc:[0,0,40,70,120],ev:'pigs'},
 wood:{n:'Casa de madera',ic:'🪵',dt:'phys',cost:0,range:3,dmg:5,rate:.5,col:'#a8743a',l:'M',fx:'Empuje',uniq:1,pig:1,log:1,upc:[0,0,40,70,120],ev:'pigs'},
 brick:{n:'Casa de ladrillo',ic:'🧱',dt:'phys',cost:0,range:3,dmg:0,rate:1/12,col:'#c0563a',l:'L',fx:'Muro',uniq:1,pig:1,wall:1,upc:[0,0,40,70,120],ev:'pigs'},
+glut:{n:'Mímico glotón',ic:'🧰',dt:'phys',cost:0,range:1.6,dmg:16,rate:.9,col:'#8a5626',l:'X',fx:'Ninguno',uniq:1,glut:1,ev:'chest'},
 bastion:{n:'Baluarte',ic:'🛡️',dt:'phys',cost:80,range:2.5,dmg:4,rate:1,unit:{n:3,hp:40,ap:10,rez:8,spd:2},col:'#5b8def',l:'B',fx:'Ninguno'},
 monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:3.5,rate:1,unit:{n:2,hp:34,ap:0,rez:8,spd:2},col:'#d9a24e',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
 tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:2,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
