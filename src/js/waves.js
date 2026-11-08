@@ -50,6 +50,7 @@ function startWave(){
  if(S.phase!=='build'||RL.open||(typeof hintBlocks==='function'&&hintBlocks()))return;
  if(S.tut&&S.tut.off){S.msg='Primero elige tu torre.';ui();return;}
  if(S.tut&&S.tut.lock){S.tut.lock=null;S.tut.lockAsk=null;}
+ S.wk=0;
  if(!S.tut)romaChk();
  {const keep=S.snap;S.snap=null;const dn=S.dn;S.dn=[];try{S.snap=structuredClone(S);}catch(err){S.snap=null;console.warn(err);}S.dn=dn;}
  for(const p of S.portals){p.q=baseQueue(p);

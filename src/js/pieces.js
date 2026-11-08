@@ -29,7 +29,7 @@ function useRelic(id){
  else if(S.aim===id){S.aim=null;S.mimFor=null;S.msg='';renderRelics();ui();return;}
  const R=RELIC[id],st=S.rs[id];
  if(mim&&st.t>0){S.msg=R.n+' ya está activo.';ui();return;}
- if(!mim&&(st.cd>0||st.t>0)){S.msg=R.n+': el pasivo está desactivado '+st.cd+' ronda'+(st.cd>1?'s':'')+' más.';ui();return;}
+ if(!mim&&(st.cd>0||st.t>0)){S.msg=R.n+': el pasivo está desactivado '+fmtT(st.cd)+' más de oleada.';ui();return;}
  if(id==='mimic'){S.aim='mimic';S.msg='Elige la reliquia cuyo activo quieres copiar.'+CANC();renderRelics();ui();return;}
  if(id==='square'&&S.phase!=='place'){S.msg=R.n+': este activo solo se puede usar al elegir pieza.';ui();return;}
  if(!['coin','map','hammer','scale','notebook','square','crystal'].includes(id)&&S.phase!=='wave'){S.msg=R.n+': este activo solo se puede usar durante una oleada.';ui();return;}
@@ -62,7 +62,7 @@ function renderRelicPick(){
  closePrim();RL.open=true;$('relic').classList.add('open');$('relic').scrollTop=0;
  $('relic').innerHTML='<b style="font-size:16px">¡Cofre abierto!</b><br><small>Elige una reliquia para esta partida. El juego está en pausa.</small><div class="cgrid">'+
   RL.choices.map(id=>{const r=RELIC[id];return `<div class="ce rcard" style="text-align:left"><div class="ric" style="background:${r.col}">${r.ic}</div><b style="display:block;text-align:center">${r.n}</b>${rdesc(id)}<button data-a="relic" data-id="${id}">Elegir</button></div>`;}).join('')+
-  '</div><small>Pulsa una reliquia de la fila superior para usar su activo (pierdes el pasivo unas rondas).</small>'+wcompBtn('rl');
+  '</div><small>Pulsa una reliquia de la fila superior para usar su activo (pierdes el pasivo un rato de oleada).</small>'+wcompBtn('rl');
 }
 function toggleOpts(v){const on=v===undefined?!(LB.open&&!LB.cover&&OP.open):v;if(on){OP.keepS=0;lbOpen('op');}else lbClose();}
 function heroInfo(id,quiet){
@@ -76,7 +76,7 @@ function heroInfo(id,quiet){
   (HFX[id]?R('cf','Efectos',HFX[id](src)):'')+R('',kst('hblk','Corpulencia',src),D.w>1?'Bloquea hasta '+D.w:'1')+
   R('cg','Velocidad',cas(D.spd)+'/s')+`<small style="margin:0 0 2px">Fuera de combate se mueve ${HOOC} veces más rápido.</small>`+
   R('cr',kst('hrez','Reaparición',src),x.rez+' s')+
-  (H?R('cf',kst('hxp','Experiencia',src),H.lvl>=HLMAX?'Nivel máximo':Math.floor(H.xp)+' / '+xpNeed(H.lvl+1)):quiet===1?R('cf',kst('hxp','Experiencia por nivel',src),'20 → 119'):'')+
+  (H?R('cf',kst('hxp','Experiencia',src),H.lvl>=HLMAX?'Nivel máximo':Math.floor(H.xp)+' / '+xpNeed(H.lvl+1)):quiet===1?R('cf',kst('hxp','Experiencia por nivel',src),xpNeed(2)+' → '+xpNeed(10)):'')+
   (H&&q&&q.hp<=0?`<small class="cr">Caído: vuelve en ${Math.ceil(q.rt)} s.</small>`:'')+
   (quiet?'':`<div class="tgt"><small>Pulsa su icono y luego una casilla del camino para recolocarlo.</small></div>`)+
   (quiet===2?'':`<div style="margin-top:6px"><span class="cf">${kst('hrel','Reliquia inicial',src)}:</span> ${kw('rl_'+D.relic,R2.ic+' '+R2.n,src,'st')}</div>`)+

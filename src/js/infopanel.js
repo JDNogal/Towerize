@@ -77,7 +77,7 @@ function kwHtml0(id,src){
   if(id==='eorg')return '<b>Origen</b><small><b class="cg">Normales:</b> salen en las oleadas de los portales. <b class="cg">De evento:</b> solo aparecen por opciones de eventos.</small>';
   if(id==='breath')return '<b>Aliento de fuego</b><small>Cada 6 s, la Mamá dragona escupe fuego y hace 15 de daño a tus unidades (soldados y héroe) a 1,5 casillas o menos.</small>';
   if(id==='evn')return '<b>Enemigo de evento</b><small>Solo aparece en un evento concreto, no en las oleadas normales.</small>';
-  if(id==='rcd')return '<b>Enfriamiento de reliquia</b><small>Rondas que pierdes el pasivo de la reliquia al usar su activo (incluida la ronda en la que lo usas).</small>';
+  if(id==='rcd')return '<b>Recarga de reliquia</b><small>Al usar el activo, pierdes el pasivo durante este tiempo de oleada. El reloj solo corre durante las oleadas: en la fase de construcción y en pausa se para.</small>';
   if(id==='eeff')return '<b>Efectos</b><small>Rasgos especiales de este enemigo además de sus estadísticas. Pasa el ratón por cada uno para ver qué hace.</small>';
   if(id==='bres')return `<b>Resistencia a control</b>`+R('','Efectos de control','−50%')+'<small>Los jefes reducen un 50% la fuerza o la duración de cualquier efecto de control: la ralentización hace la mitad de efecto, y las congelaciones y los empujones duran o llegan la mitad.</small>';
   if(id==='penp')return '<b>Penetración</b><small>Armadura plana que ignoran los golpes de esta torre. Si el enemigo tiene menos armadura que la penetración, su armadura efectiva queda negativa y recibe más daño, hasta un máximo del doble (armadura efectiva mínima de −'+MAXPEN+'). No afecta al daño elemental.</small>';
@@ -136,7 +136,7 @@ function kwHtml0(id,src){
  if(id==='cursed')return `<b>Maldito</b>`+R('cr','Dura',HEXT+' s tras el último golpe')+'<small>El enemigo recibe más daño mágico de todas las fuentes, venga de la torre que venga. No se acumula: vale el maleficio más fuerte.</small>';
  if(id==='poly')return `<b>Transformado</b>`+R('cr','Velocidad',Math.round(POLYS*100)+'% de la normal')+'<small>El enemigo se convierte en un animal inofensivo (de momento, una rana): pierde toda su armadura y resistencia mágica, avanza más despacio y no ataca. Las élites duran la mitad; los jefes son inmunes.</small>';
  if(id==='fear')return `<b>Aterrado</b>`+R('cr','Duración',f(FEART)+' s')+'<small>El enemigo huye: retrocede por el camino y no ataca mientras dure. Los jefes, la mitad del tiempo.</small>';
- if(id==='spect')return `<b>Espectro</b>`+'<small>Invocación aliada temporal. Tiene la mitad de la vida máxima del enemigo del que surge y golpea con daño físico según el daño del rayo del orbe. Bloquea como un soldado (corpulencia 1) y avanza por el camino hacia los portales mientras no lucha.</small>';
+ if(id==='spect')return `<b>Espectro</b>`+'<small>Invocación aliada temporal. Tiene la mitad de la vida máxima del enemigo del que surge y golpea con daño físico según el daño del orbe. Bloquea como un soldado (corpulencia 1) y avanza por el camino hacia los portales mientras no lucha.</small>';
  if(id==='sticky')return `<b>Pegajoso</b>`+R('cr','Se despega en',f(STKT)+' s')+'<small>Una ralentización fuerte mientras el enemigo está sobre la sustancia. Al salir se va despegando: la ralentización baja poco a poco hasta desaparecer. No se suma a otras ralentizaciones: vale la más fuerte. Los jefes sufren la mitad.</small>';
  if(id==='brk')return `<b>Armadura rota</b>`+R('cr','Duración de cada golpe',BRKT+' s')+'<small>Reduce la armadura física del enemigo. Cada golpe suma su reducción y caduca por separado, hasta un máximo. Beneficia a todo el daño físico, venga de la torre que venga.</small>';
  if(id==='flam')return `<b>Inflamable</b>`+R('cd','Al arder',TARB+' stacks de quemadura por segundo')+R('cr','Duración del fuego',TARF+' s')+'<small>Si le llega fuego (un enemigo con quemadura o un charco de fuego), arde y se convierte en un charco de fuego que quema a quien esté dentro. Cualquier fuego prende cualquier sustancia inflamable, sea de la torre que sea.</small>';
@@ -186,13 +186,16 @@ function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
  const X=tinfo(t);
- return `<div class="ttl"><b>${X.ic} ${X.n}</b> · ${kst('lvl','Nv '+t.lvl,src)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap):tgtRow(t,src,PR.pinned&&PR.key===src))+
+ return `<div class="ttl ttlg"><b>${X.ic} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap):tgtRow(t,src,PR.pinned&&PR.key===src))+
   (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+upRow(t,PR.pinned&&PR.key===src)+(PR.pinned&&PR.key===src?`<div class="tgt"><button data-a="sell">Vender torre (<span class="gd">+${sellVal(t)} 🪙</span>)</button></div>`:'')+(T.unit?'':dpsRow(s,T,src));
 }
+// pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; las no alcanzadas, apagadas
+function lvTabs(id,sn){let h='';for(let n=1;n<=nStates(id);n++){const ok=tlvOk(id,n),X=n>=4?SPECS[id][Object.keys(SPECS[id])[n-4]]:null;
+  h+=`<button class="stbtn lvbtn lvt${n===sn?' on':''}${ok?'':' off'}" data-a="clvs" data-v="${id}" data-n="${n}" title="${ok?(X?'Nv 4 · '+X.n:'Nv '+n):'No has alcanzado aún ese nivel'}">${galSvg(Math.min(n,4),0,.75,1)}${X?`<span class="lvx">${X.ic}</span>`:''}</button>`;}return `<span class="lvtabs">${h}</span>`;}
 function shopInfo(id,quiet){
  const T=TW[id],src='shop:'+id,st=quiet?cpState(id):{lv:1,spec:null},lv=st.lv,L=lvMods(id,lv,st.spec),X=st.spec?SPECS[id][st.spec]:T,
   s={dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:(T.splash||T.pr||0)*L.area,pen:L.pen||0},sn=CP.lv[id]||1;
- const lb=quiet?`<button class="stbtn lvbtn" data-a="clv" data-v="${id}" title="Ver la torre en otro nivel">${sn>=nStates(id)||(sn===3&&nStates(id)===3)||lv===4?'Nv Max':'Nv '+lv}</button>${sn>=4&&nStates(id)>4?`<button class="stbtn lvbtn" data-a="cbr" data-v="${id}" title="Cambiar a la otra especialización">⇄ ${sn===4?'B':'A'}</button>`:''}`:'';
+ const lb=quiet?lvTabs(id,sn):'';
  return `<div class="ttl">${lb}<b>${X.n}</b> · ${X.ic}<br><span class="gd">${(quiet&&lv>1?kst('upc','Mejora '+upCost(T,lv)+' 🪙',src):kst('cost','Coste '+T.cost+' 🪙',src))}</span></div>`+rows(s,twm(id,st.spec),src,T.unit?unitRows(T,src,null,false,L.hp,X.uap):(quiet?'':R('',kst('tgt','Objetivo',src),TGT[S.dtg[id]||'core'].n)))+(st.spec?'<div style="margin-top:6px"><b>Habilidades</b></div>'+abList(id,st.spec,null):'')+(quiet?'':'<small>Valores base, sin bufos de casilla.</small>')+(T.unit?'':dpsRow(s,T,src));
 }
 
@@ -249,6 +252,7 @@ function resolve(el){
   return null;}
  const d=el.closest('[data-tip]');if(!d)return null;
  const[kind,id]=d.dataset.tip.split(':'),r=d.getBoundingClientRect();
+ if(kind==='nv'){const n=parseInt(id),m=/m$/.test(id);return{key:'nv:'+id,html:()=>`<div class="ttl"><b>Nv ${n}</b>${n>=4?' · especialización':''}</div><small style="margin:0">${m?'Con todas sus habilidades al máximo.':n>=4?'Tres galones dorados y estrella; la estrella se dora con todas sus habilidades al máximo.':'Un galón por nivel.'}</small>`,rect:rr(r),dom:1};}
  if(kind==='shop')return{key:'shop:'+id,html:()=>shopInfo(id),rect:rr(r),dom:1};
  if(kind==='relic')return{key:'relic:'+id,html:()=>relicInfo(id),rect:rr(r),dom:1};
  if(kind==='habp'){const[hi,hk]=id.split('.'),A=HAB[hi]&&HAB[hi][hk];return A?{key:'habp:'+id,html:()=>`<div class="ttl"><b>${A.ic} ${A.n}</b> · ${hk==='b'?'Activa básica · desde el inicio':hk==='u'?'Definitiva · Nv 10':'Pasiva · Nv '+hk.slice(1)}</div><small style="margin:0">${A.t()}</small>`+(hk==='b'||hk==='u'?R('ccl','Enfriamiento',(hk==='u'?HUCD:HBCD)+' s'):'')+((HDUR[hi]||{})[hk]?R('cr','Duración',HDUR[hi][hk]):''),rect:rr(r),dom:1}:null;}

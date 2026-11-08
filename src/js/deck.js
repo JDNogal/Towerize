@@ -7,13 +7,20 @@ function tryTowerOffer(){if(S&&S.tut){const o=S.tut.off;if(o&&!RL.open&&!S.aim&&
 const twChips=k=>{const T=TW[k],o=[];o.push(T.unit?'Unidades':T.range<=2*K?'Corto alcance':'A distancia');o.push(DT[T.dt]?DT[T.dt].n:'Físico');if(T.splash||T.puddle||T.cone)o.push('Área');if(T.slow)o.push('Ralentiza');if(T.zap)o.push('Rebote');if(T.beam)o.push('Rayo continuo');if(T.burn)o.push('Quemadura');if(T.dot)o.push('Veneno');if(T.monk)o.push('Curación');return o;};
 // botón para consultar el compendio desde una ventana de elección (torre, reliquia, evento); al cerrar el libro se vuelve a la ventana
 const wcompBtn=t=>compOk()?`<button class="wcomp" data-a="wincomp" data-v="${t}" title="Abrir el compendio">📖</button>`:'';
-function renderTowerOffer(){try{(RL.towo||[]).forEach(k=>see('tw',k));}catch(e){}closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;const g=SKIPG[S.skips||0]||0;
+// nombre e icono de las unidades de cada torre (para el vistazo rápido)
+const UNAME={bastion:['Soldado'],monk:['Monje'],guild:['Aventurero'],dragon:['Dragón']};
+// vistazo rápido de la oferta: barras de daño, enfriamiento y vida (comparadas con las demás torres) y sus unidades
+function tofGlance(k){const g=twGlance(k),i=g.indexOf('<div class="gbody">');const T=TW[k],u=T.unit&&UNAME[k];let b=i>=0?g.slice(i):'';
+ // torres de unidades: primero qué unidades son y cuántas, y la vida arriba del todo
+ if(T.unit){const v=b.indexOf('Vida de unidades');if(v>0){const a=b.lastIndexOf('<div class="grow">',v),g=b.indexOf(' gv">',v),e=b.indexOf('</span></div>',g)+13;if(a>0&&g>0&&e>13){const row=b.slice(a,e);b=b.slice(0,a)+b.slice(e);b=b.replace('<div class="gbody">','<div class="gbody">'+row);}}}
+ return (T.unit?`<div class="tun">${u?`<span class="tuic" style="background:${T.col}">${icHtml(UIC[k])}</span> `+u[0]:'Unidades'} <b>×${T.unit.n}</b></div>`:'')+b;}
+function renderTowerOffer(){try{(RL.towo||[]).forEach(k=>see('tw',k));}catch(e){}closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.classList.toggle('tdeton',!!RL.tdet);el.scrollTop=0;const g=SKIPG[S.skips||0]||0;
  el.innerHTML=`<div class="pscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap"><b class="ptt">${RL.towT||'Nueva torre para tu mazo'}</b><small class="pst">${RL.towD||'Elige una torre: a partir de ahora podrás construirla en esta partida. Tu mazo: '+S.deck.length+'/'+DECKMAX+'.'} ${RL.towP?'':' El juego está en pausa.'}</small><div class="pdet"><button data-a="tdet">${RL.tdet?'− Ocultar detalles':'+ Ver detalles'}</button></div><div>`+
-  '</div><div class="toff">'+RL.towo.map(k=>{const T=TW[k];return `<div class="tof"><div class="tic" style="background:${T.col}">${T.ic}</div><div class="tnm">${T.n}</div><div class="chips">${twChips(k).map(c=>`<span>${c}</span>`).join('')}</div><span class="gd">${T.cost} 🪙</span><details data-k="${k}"${RL.tdet?' open':''}><summary>+ Ver detalles</summary><div class="ce tcard" style="margin:0">${shopInfo(k,1)}</div></details>${RL.towP?'':`<button data-a="towpick" data-k="${k}">Añadir al mazo</button>`}</div>`;}).join('')+
-  `</div>`+(RL.towP?'<div class="pskip"><button class="go" data-a="towok">Entendido ›</button></div>':RL.towNS?'':`<div class="pskip"><button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><small>Si saltas, no pierdes el hueco: dentro de 2 rondas te volverán a ofrecer torres.${g?' El oro por saltar baja cada vez que saltas.':''}</small></div>`)+'</div></div>'+wcompBtn('tw');try{sfx('page');}catch(e){}}
+  '</div><div class="toff">'+RL.towo.map(k=>{const T=TW[k];return `<div class="tof"><div class="tic" style="background:${T.col}">${twIc(k)}</div><div class="tnm">${T.n}</div><div class="chips">${twChips(k).map(c=>`<span>${c}</span>`).join('')}</div><span class="gd">${T.cost} 🪙</span><div class="tgl">${tofGlance(k)}</div><div class="tdt" data-k="${k}"><div class="ce tcard" style="margin:0">${shopInfo(k,1)}</div></div>${RL.towP?'':`<button data-a="towpick" data-k="${k}">Añadir al mazo</button>`}</div>`;}).join('')+
+  `</div>`+(RL.towP?'<div class="pskip"><button class="go" data-a="towok">Entendido ›</button></div>':RL.towNS?'':`<div class="pskip"><button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><small>Conservas el hueco: en 2 rondas te ofrecerán torres otra vez.${g?' El oro que recibes se reduce cada vez.':''}</small></div>`)+'</div></div>'+wcompBtn('tw');try{sfx('page');}catch(e){}}
 // cerrar la presentación de las torres del héroe (tutorial): ya están en el mazo
 function towerOk(){RL.towo=null;RL.towP=0;RL.towT=RL.towD=null;RL.towNS=0;RL.open=false;$('relic').classList.remove('open');ui();}
-function towerPick(k){if(!RL.towo||!RL.towo.includes(k))return;if(S.deck.includes(k)){towerOk();return;}RL.towT=RL.towD=null;RL.towNS=0;S.deck.push(k);see('tw',k);RL.towo=null;RL.open=false;$('relic').classList.remove('open');S.msg=TW[k].n+' se añade a tu mazo.';ui();}
+function towerPick(k){if(!RL.towo||!RL.towo.includes(k))return;if(S.deck.includes(k)){towerOk();return;}RL.towT=RL.towD=null;RL.towNS=0;S.deck.push(k);see('tw',k);RL.towo=null;RL.open=false;$('relic').classList.remove('open','tdeton');S.msg=TW[k].n+' se añade a tu mazo.';ui();}
 function towerSkip(){const g=SKIPG[S.skips||0]||0;S.skips=(S.skips||0)+1;if(g)goldEv(g);RL.towo=null;RL.open=false;$('relic').classList.remove('open');S.msg=g?'Has saltado la oferta: +'+g+' 🪙.':'Has saltado la oferta.';ui();}
 const HMX=(()=>{const v=Object.values(HEROES);return{hp:Math.max(...v.map(d=>d.base.hp)),dp:Math.max(...v.map(d=>d.base.dmg/d.base.cd*(d.area?1.3:1))),rg:Math.max(...v.map(d=>d.base.range||.5))};})();
 let PREVIEWING=false;
@@ -79,5 +86,5 @@ function renderHeroPickOld(){
  fitHero();
 }
 const abRank=(t,id)=>t.ab&&t.ab[id]?AB[id].ranks[t.ab[id]-1]:null;
-const TRI=.9,ALERT=2*K,SCONTACT=1.1,RANGED_R=3*K,MELR=1.6*K,SREGEN=3,SREGP=.05,SREGT=3;
+const TRI=.9,ALERT=2.75*K,SCONTACT=1.1,RANGED_R=3*K,MELR=1.6*K,SREGEN=3,SREGP=.05,SREGT=3;
 const uRegen=(s,dt)=>{if(S.wt-(s.lh===undefined?-99:s.lh)>=SREGT)s.hp=Math.min(s.max,s.hp+s.max*SREGP*dt);};

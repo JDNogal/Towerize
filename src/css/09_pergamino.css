@@ -51,3 +51,5 @@ body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.k
 #hinfo{position:fixed;z-index:35;width:300px;max-height:calc(100vh - 140px);overflow:auto;padding:10px 12px;font-size:13px;display:none}#hinfo.on{display:block}
 #hinfo .esec{font:700 12px Georgia,serif;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin:10px 0 2px}
 #hinfo .row{display:flex;justify-content:space-between;gap:10px}
+/* bocadillos de portal sobre pergamino: cabecera y textos con la tinta del libro (antes blanco/naranja claro, no se leía) */
+.pbin .pbh{color:var(--ink)!important}.pbin .pbs{color:color-mix(in srgb,#d0701a 75%,var(--ink))!important}.pbin .pbmore{color:var(--ink2)!important;opacity:1}

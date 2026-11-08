@@ -13,6 +13,7 @@ const lbInGame=()=>!document.body.classList.contains('inmenu')&&!!(S&&S.list);
 const lbAreas=()=>LBAREAS.filter(([k])=>k!=='st'||lbInGame());
 const lbMob=()=>TOUCH||bkNarrow();
 function lbOpen(area,cover){
+ LB.exit=0;
  const was=LB.open&&LB.cover;
  LB.open=true;LB.cover=!!cover;if(area)LB.area=area;if(!LB.cover)LB.anim=was;
  closePrim();HV.key=null;HV.t=0;if(document.body.classList.contains('inmenu')){if(typeof closeQuick==='function')closeQuick();$('menu').classList.remove('setup');}
@@ -61,7 +62,7 @@ function lbCoverHTML(){
  const areas=lbAreas();
  const tiles=`<div class="lbtiles">${areas.map(([k,l,i])=>`<button data-a="lbarea" data-v="${k}" class="${k==='cp'&&!compOk()?'dim':''}${lbHasNew(k)?' new':''}"><em>${i}</em>${l}</button>`).join('')}${FSOK&&B?`<button data-a="pfs"><em>⛶</em>${isFS()?'Salir de pantalla completa':'Pantalla completa'}</button>`:''}</div>`;
  const rt=inG&&S.phase==='wave'&&S.snap&&S.rc>0;
- const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}${svOk()?`<button data-a="psave" title="${S.phase==='wave'?'Se guardará el principio de esta oleada':'Guarda la partida tal como está'}">💾 Guardar y salir</button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Se perderá la partida':'🏳 Abandonar partida'}</button></div>`:'';
+ const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}${svOk()?`<button data-a="psave" title="${S.phase==='wave'?'Se guardará el principio de esta oleada':'Guarda la partida tal como está'}">💾 Guardar y salir</button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Se perderá la partida':'🏳 Abandonar partida'}</button></div>`:`<div class="lbbot"><button data-a="pexit" class="pquit">${LB.exit?'¿Seguro? Pulsa otra vez para salir':'🚪 Salir del juego'}</button></div>`;
  return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:'🏰'}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
 }
 // ---- estadísticas: tabla a la izquierda, cifras grandes y resumen a la derecha ----

@@ -52,3 +52,31 @@ body.dsk:not(.mfs) #mbl button{min-width:35px;height:35px}
 /* aviso de avance rápido */
 #ffwd{position:fixed;top:56px;left:50%;transform:translateX(-50%);z-index:30;font:700 12px system-ui,sans-serif;padding:4px 12px;border-radius:12px;border:1px solid var(--lea2);background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2));color:var(--leatxt);box-shadow:0 3px 8px rgba(0,0,0,.45);opacity:0;transition:opacity .3s;pointer-events:none}#ffwd.on{opacity:1}
 body.inmenu #ffwd{display:none}
+
+/* enemigos en el mapa */
+#emap{position:fixed;z-index:30;display:none;min-width:120px;max-width:220px;padding:6px 9px;border-radius:9px;border:1px solid var(--lea2);background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2));color:var(--leatxt);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 3px 8px rgba(0,0,0,.45);font:600 12px system-ui,sans-serif;pointer-events:auto}
+#emap.on{display:block}#emap .emh b{font-size:14px;margin-left:3px}
+#emap .eml{display:flex;flex-wrap:wrap;gap:3px 9px;margin:4px 0}#emap .eml span{display:inline-flex;align-items:center;gap:3px}#emap .eml i{width:10px;height:10px;border-radius:50%;display:inline-block;box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+#emap .emf{font-weight:500;font-size:11px;opacity:.9}
+body.mfs #emap{font-size:10.5px;padding:4px 7px;min-width:0}
+
+/* compras en cola (margen izquierdo) */
+#wishq{width:200px;box-sizing:border-box;display:none;padding:7px 9px 8px;border-radius:10px;border:1px solid var(--lea2);background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2));color:var(--leatxt);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 3px 8px rgba(0,0,0,.45);font:500 12px system-ui,sans-serif}
+#wishq.on{display:block}#wishq .wqt{font-weight:700;font-size:12.5px;margin-bottom:5px;letter-spacing:.02em}
+#wishq .wqr{padding:5px 6px;border-radius:7px;margin-top:4px;background:rgba(0,0,0,.18);opacity:.8}#wishq .wqr.nx{opacity:1;background:rgba(0,0,0,.28);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--trim) 60%,transparent)}
+#wishq .wqh{display:flex;align-items:center;gap:6px}#wishq .wqi{font-size:18px}#wishq .wqn{flex:1;min-width:0;line-height:1.15}#wishq .wqn b{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#wishq .wqn small{font-size:11px;opacity:.85}
+#wishq button{all:unset;cursor:pointer;font-size:11px;opacity:.6;padding:2px 4px}#wishq button:hover{opacity:1}
+#wishq .wqb{height:7px;border-radius:4px;background:rgba(0,0,0,.35);margin:5px 0 3px;overflow:hidden}#wishq .wqb i{display:block;height:100%;background:linear-gradient(90deg,#c99a2e,#ffd84a);border-radius:4px;transition:width .3s}
+#wishq .wqc{display:flex;justify-content:space-between;font-size:11px}#wishq .wqc b{color:#ffd84a}#wishq .wqc span{opacity:.75}
+body.mfs #wishq{left:6px;width:150px;padding:5px 6px;font-size:10.5px}body.mfs #wishq .wqi{font-size:14px}body.mfs #wishq .wqn b{font-size:11px}
+body.lbopen #wishq{display:none}
+#wishq .wqc em{font-style:normal}
+#lstack{position:fixed;z-index:30;left:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;pointer-events:none}
+#lstack>*{pointer-events:auto}#lstack #emap{position:static;width:200px;max-width:none;box-sizing:border-box}
+body.mfs #lstack{left:6px;gap:6px}body.mfs #lstack #emap,body.mfs #wishq{width:150px}body.lbopen #lstack{display:none}
+#rstack{position:fixed;z-index:30;right:6px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;pointer-events:none}#rstack>*{pointer-events:auto}body.lbopen #rstack{display:none}
+.hpb .hauto{position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);font:800 9px/1 system-ui,sans-serif;letter-spacing:.06em;padding:2px 4px;border-radius:4px;background:#3fe8ff;color:#0b2230;box-shadow:0 1px 3px rgba(0,0,0,.5);z-index:3;pointer-events:none}
+.hpb.auto{box-shadow:0 0 0 2px #3fe8ff,0 0 10px #3fe8ff88!important}
+/* pantallas grandes (pantalla completa en PC): los controles alrededor del mapa crecen para clicarlos cómodos */
+@media (min-width:1500px) and (min-height:840px){body.dsk:not(.mfs) #mtl,body.dsk:not(.mfs) #zm,body.dsk:not(.mfs) #mbl,body.dsk:not(.mfs) #mbr,body.dsk:not(.mfs) #stats,body.dsk:not(.mfs) #lstack{zoom:1.4}}
+@media (min-width:2300px) and (min-height:1250px){body.dsk:not(.mfs) #mtl,body.dsk:not(.mfs) #zm,body.dsk:not(.mfs) #mbl,body.dsk:not(.mfs) #mbr,body.dsk:not(.mfs) #stats,body.dsk:not(.mfs) #lstack{zoom:1.75}}

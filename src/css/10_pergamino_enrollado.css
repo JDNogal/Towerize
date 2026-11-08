@@ -48,3 +48,35 @@ body.mfs #relic .ppap .ptt{font-size:15px!important}body.mfs #relic .ppap .toff{
 /* «Ver detalles» general de la oferta (abre todas a la vez); los de cada tarjeta se ocultan */
 #relic .ppap .tof details>summary{display:none}
 #relic .pdet{margin-top:8px}#relic .pdet button{border:1px solid var(--pline2)!important;background:transparent!important;color:var(--ink)!important;border-radius:12px!important;padding:2px 12px!important;font-size:12.5px}
+/* oferta de torres: las etiquetas siempre ocupan dos líneas, para que las fichas de las tres torres empiecen a la misma altura */
+#relic .ppap .tof .chips{min-height:52px;align-content:flex-start}
+body.mfs #relic .ppap .tof .chips{min-height:38px}
+
+/* oferta de torres: vistazo rápido (barras) o detalles completos que llenan la tarjeta, con el DPS abajo del todo */
+#relic .ppap .tof{display:flex;flex-direction:column;align-items:stretch}
+#relic .ppap .tof>.tic,#relic .ppap .tof>.tnm,#relic .ppap .tof>.chips,#relic .ppap .tof>.gd{align-self:center}
+#relic .tdt{display:none}#relic.tdeton .tdt{display:flex;flex:1;flex-direction:column}#relic.tdeton .tgl{display:none}
+#relic .tdt .tcard{flex:1;display:flex;flex-direction:column;text-align:left}#relic .tdt .tcard .dps{margin-top:auto}
+#relic .tgl{flex:1;text-align:left;font-size:12px;margin:2px 0 4px}#relic .tgl .gbody{display:flex;flex-direction:column;gap:3px}
+#relic .tgl .tun{margin-top:6px;font-size:12.5px;color:var(--ink)}#relic .tgl .tun b{color:var(--acc)}
+#relic .ppap .tof button[data-a="towpick"]{margin-top:8px}
+/* paneles flotantes más grandes en PC: salen en el borde sin mapa y se leen mejor (reliquias, habilidades, torres) */
+@media (min-width:1100px) and (min-height:640px){body.dsk:not(.mfs) #tip,body.dsk:not(.mfs) .kpanel{width:310px!important;font-size:15px;line-height:1.5}
+ body.dsk:not(.mfs) #tip b,body.dsk:not(.mfs) .kpanel b{font-size:16.5px}body.dsk:not(.mfs) #tip small,body.dsk:not(.mfs) .kpanel small{font-size:14px}
+ body.dsk:not(.mfs) #tip .rbx{padding:8px 12px}}
+#relic .tgl .grow{grid-template-columns:1fr auto;grid-template-areas:"l v" "b b";gap:2px 8px;margin:0 0 4px;font-size:13px}
+#relic .tgl .grow>span:first-child{grid-area:l;font-weight:600}#relic .tgl .grow>.gv{grid-area:v;font-weight:700}#relic .tgl .grow>.gtr{grid-area:b;height:8px;background:color-mix(in srgb,var(--pline2,#c9b48a) 45%,transparent)}
+#relic .ppap .tof .chips{min-height:30px}
+/* iconos compuestos (uno detrás de otro) */
+.icst{position:relative;display:inline-grid;place-items:center;line-height:1;vertical-align:middle}.icst>span{grid-area:1/1}.icst .icb{transform:translate(8%,-4%) scale(1.05)}.icst .icf{transform:translate(-6%,8%) scale(.72)}
+#relic .tgl .tun{display:flex;align-items:center;gap:6px}.tuic{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-size:15px;box-shadow:0 0 0 1.5px #cfe0ff,0 1px 3px rgba(0,0,0,.35)}
+.gal{display:inline-flex;align-items:center;vertical-align:middle;color:var(--ink,#3b2a17);line-height:0;margin-left:4px}.gal.g4{color:#8a5a14}
+.lvbtn .gal{margin:0}#tip .ttl .gal,.kpanel .ttl .gal{color:var(--fg)}
+#relic .tgl .tun{justify-content:center;margin:0 0 8px}
+.ttl.ttlg{display:flex;align-items:center;gap:6px}.ttl.ttlg>b{flex:1;min-width:0}.ttl.ttlg .gal{margin:0;flex:none}
+.lvt{display:inline-flex!important;align-items:center;justify-content:center;gap:2px;min-width:0!important;width:auto!important;padding:2px 7px!important;margin:0 3px 4px 0!important;height:auto!important;vertical-align:middle}
+.lvt.on{background:#f7d98a!important;border-color:#b5622a!important;box-shadow:inset 0 0 0 1px #b5622a}.lvt.off{opacity:.35;filter:grayscale(1)}.lvt .lvx{font-size:12px}
+.lvtabs{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 6px;width:100%}.lvtabs .lvt{float:none!important;margin:0!important;min-height:30px;padding:2px 8px!important;border-radius:8px!important;background:#fbf2dd;border:1.5px solid #c9a87a!important}
+.lvtabs .lvt.on{background:#f7d98a!important;border-color:#b5622a!important}
+.bksht .lvtabs{display:inline-flex;width:auto;margin:6px 0 0 8px;vertical-align:middle}.bksht .lvtabs .lvt{margin:0!important}
+#relic .lvtabs{gap:3px;flex-wrap:nowrap}#relic .lvtabs .lvt{padding:1px 4px!important;min-height:26px;flex:0 1 auto}#relic .lvtabs .lvt svg{width:13px;height:auto}#relic .lvtabs .lvx{font-size:10px}

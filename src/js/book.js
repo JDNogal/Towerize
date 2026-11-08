@@ -8,8 +8,8 @@ CP.sel=CP.sel||{};
 function bkItems(t){const L=[];
  if(t==='tw'){const fl=CFILTERS.tw,act=fl.filter(f=>CP.flt[f.key]);
   const ids=Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k)&&act.every(f=>seen('tw',k)&&f.test(k,CP.flt[f.key])));
-  L.push({sec:'Torres normales'});for(const k of ids)L.push({id:k,ic:TW[k].ic,col:TW[k].col,n:TW[k].n,ok:seen('tw',k),lk:!tunl(k)&&!seen('tw',k)});
-  L.push({sec:'Torres de evento'});for(const k of Object.keys(TW).filter(k=>TW[k].uniq))L.push({id:k,ic:TW[k].ic,col:TW[k].col,n:TW[k].n,ok:seen('tw',k)});}
+  L.push({sec:'Torres normales'});for(const k of ids)L.push({id:k,ic:twIc(k),col:TW[k].col,n:TW[k].n,ok:seen('tw',k),lk:!tunl(k)&&!seen('tw',k)});
+  L.push({sec:'Torres de evento'});for(const k of Object.keys(TW).filter(k=>TW[k].uniq))L.push({id:k,ic:twIc(k),col:TW[k].col,n:TW[k].n,ok:seen('tw',k)});}
  else if(t==='hr'){for(const id of Object.keys(HEROES).filter(h=>UNLOCK_ALL||heroVis(h)))L.push({id,por:1,col:HEROES[id].col,n:HEROES[id].n,ok:UNLOCK_ALL||!HEROES[id].lockTxt,lk:!UNLOCK_ALL&&!!HEROES[id].lockTxt});}
  else if(t==='pc'){PIECES.forEach((o,i)=>L.push({id:String(i),pc:i,n:o.n,ok:seen('pc',o.n)}));}
  else if(t==='bf'){for(const k of BK)L.push({id:k,bf:k,n:bname?bname(k):BF[k].n,ok:seen('bf',k)});}
@@ -40,7 +40,7 @@ function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
 // ficha de la página derecha: icono y título en una fila; debajo, los datos en dos columnas con puntos («Daño ······ 6,5»)
 function bkSheet(ic,inner,cls){let ttl='',rest=inner;const a='<div class="ttl">';
  if(inner.startsWith(a)){const j=inner.indexOf('</div>');ttl=inner.slice(a.length,j);rest=inner.slice(j+6);}
- const lv=(ttl.match(/<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(lv){ttl=ttl.replace(/<button class="stbtn lvbtn"[\s\S]*?<\/button>/g,'');ttl=ttl.includes('<br>')?ttl+lv:ttl+'<br>'+lv;}
+ const lv=(ttl.match(/<span class="lvtabs">[\s\S]*?<\/button><\/span>|<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(lv){ttl=ttl.replace(/<span class="lvtabs">[\s\S]*?<\/button><\/span>|<button class="stbtn lvbtn"[\s\S]*?<\/button>/g,'');ttl=ttl.includes('<br>')?ttl+lv:ttl+'<br>'+lv;}
  // filas con texto largo (etiqueta + valor) ocupan todo el ancho, para que no se aplasten en media columna
  rest=rest.replace(/<div class="row([^"]*)"><span>([\s\S]*?)<\/span><span>([\s\S]*?)<\/span><\/div>/g,(m,c,a,b)=>(a+b).replace(/<[^>]+>/g,'').length>24?`<div class="row${c} rw"><span>${a}</span><span>${b}</span></div>`:m);
  return `<div class="bksh">${ic||''}<div class="ttl bksht">${ttl}</div></div><div class="ce bkce bkg${cls?' '+cls:''}">${rest}</div>`;}
@@ -49,7 +49,7 @@ function bkDetail(t,id){
  const sh=(ic,txt)=>`<div class="bkun"><span class="sil bkbig">${ic}</span><h4>???</h4><p>${txt}</p></div>`;
  if(t==='tw'){const T=TW[id];if(!T)return'';
   if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+`<button class="bklink" data-a="cachgo" data-v="${a}">🏆 ${fn?ACH[a].n:'Logro oculto'}</button>`;}return sh(T.ic,'Aún no descubierto.');}
-  const bi=`<span class="bkbic" style="background:${T.col}">${T.ic}</span>`;
+  const bi=`<span class="bkbic" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
   if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   return bkSheet(bi,shopInfo(id,1).replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id);}
  if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;
@@ -88,8 +88,8 @@ function bkPreview(){const es=Object.keys(ET).filter(e=>seen('en',e)),enOpts=es.
  if(CP.prev){const k=CP.prev,T=TW[k];
   if(T.uniq){const o=T.dragon?['Huevo','Bebé','Adulto','Anciano']:T.guild?RANKS:['1','2','3','4'],cur=(CP.ulv&&CP.ulv[k])||1;nm=T.n;
    lv=`<button class="stbtn lvbtn" data-a="ulv" data-k="${k}" data-v="${cur>=o.length?1:cur+1}" title="Ver la torre en otro nivel">${cur>=o.length?'Nv Max':'Nv '+cur}</button>`;ok=uPrevOk(k,cur)&&!lvSec(k,cur);}
-  else{const st=cpState(k),X=st.spec?SPECS[k][st.spec]:T;nm=X.n;lv=(shopInfo(k,1).match(/<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(st.spec&&X.d)extra='<div class="ddesc">'+X.d+'</div>';}
-  ic=`<span class="bkbic" style="background:${T.col}">${T.ic}</span>`;
+  else{const st=cpState(k),X=st.spec?SPECS[k][st.spec]:T;nm=X.n;lv=(shopInfo(k,1).match(/<span class="lvtabs">[\s\S]*?<\/button><\/span>|<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(st.spec&&X.d)extra='<div class="ddesc">'+X.d+'</div>';}
+  ic=`<span class="bkbic" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
   ctl=bkPvRow('Enemigo',bkPills('pve',enOpts,CP.pen))+bkPvRow('Velocidad',spd('pvs'));
   note='Estadísticas base del enemigo (ronda 0), sin bufos de casilla ni reliquias. Los enemigos aparecen sin parar.'+(cpState(k).spec?' Las habilidades se muestran al rango máximo.':'');}
  else if(CP.hprev){const id=CP.hprev,D=HEROES[id];back='chback';nm=D.n;ic=`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`;if(!es.includes(CP.hen))CP.hen=es[0]||'norm';

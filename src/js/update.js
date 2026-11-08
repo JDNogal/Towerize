@@ -2,10 +2,10 @@ function update(dt){
  if(!dt)return;
  S.fx=S.fx.filter(q=>(q.t-=dt)>0);
  unitWalk(dt);
- if(S.phase!=='wave')return;
+ if(S.phase!=='wave'){orbTick(dt);return;}/* la experiencia que queda al acabar la oleada vuela hacia el héroe también en construcción */
  DNF++;S.faros=S.list.filter(t=>TW[t.type].faro);for(const f of S.faros)if(f.lzcd)for(let i=0;i<f.lzcd.length;i++)f.lzcd[i]=Math.max(0,f.lzcd[i]-dt);
  if(S.st){S.st.time+=dt;for(const t of S.list)t.act=(t.act||0)+dt;if(S.hero)S.hero.pt.act=(S.hero.pt.act||0)+dt;}
- S.wt+=dt;for(const id of S.relics){const st=S.rs[id];if(st.t>0)st.t=Math.max(0,st.t-dt);}
+ S.wt+=dt;for(const id of S.relics){const st=S.rs[id];if(st.t>0)st.t=Math.max(0,st.t-dt);if(st.cd>0&&S.phase==='wave')st.cd=Math.max(0,st.cd-dt);}
  const iv=Math.max(.3,.7-S.round*.03);
  for(const p of S.portals){p.t-=dt;if(p.q.length&&p.t<=0){const t=p.q.shift();if(t==='|'){p.t=SQGAP;continue;}spawnEnemy(t,p);p.t=(t==='boss'||t==='colossus')?1:iv;}}
  S.pools=S.pools.filter(p=>(p.t-=dt)>0);
@@ -89,7 +89,7 @@ function update(dt){
    if(T.cata){cataShot(t,tg,s,dm,crit,S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1);continue;}
    // el daño, el crítico y el área se fijan al disparar; los efectos se aplican al impactar
    let nb=1;{const bu=abRank(t,'burst');if(bu){t.shc=(t.shc||0)+1;if(t.shc>=bu.n){t.shc=0;nb=bu.a;}}}
-   for(let q=0,nq=(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1)*nb;q<nq;q++)S.proj.push({x:t.x+(nb>1?(q%3-1)*.35:0),y:t.y+(nb>1?(q%3-1)*.35:0),e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm,dt:T.dt,src:t,sp:T.ps,area:T.splash?s.area:0,slow:T.slow||0,slowt:T.slowt||SLOWT,slowA:T.slowA,pen:s.pen,col,crit,pz});
+   for(let q=0,nq=(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1)*nb;q<nq;q++)S.proj.push({x:t.x+(nb>1?(q%3-1)*.35:0),y:t.y+(nb>1?(q%3-1)*.35:0),e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm:T.orb?dm*(1+soulB(t)):dm,orb:T.orb?Math.min(4,t.lvl||1):0,dt:T.dt,src:t,sp:T.ps,area:T.splash?s.area:0,slow:T.slow||0,slowt:T.slowt||SLOWT,slowA:T.slowA,pen:s.pen,col,crit,pz});
   }
  }
  S.proj=S.proj.filter(p=>{
@@ -97,7 +97,7 @@ function update(dt){
   const dx=p.tx-p.x,dy=p.ty-p.y,dd=Math.hypot(dx,dy),st=p.sp*dt;if(dd<=st&&p.crit&&alive(p.e))critMark(p.e);
   if(dd>st){p.vx=dx/dd;p.vy=dy/dd;p.x+=p.vx*st;p.y+=p.vy*st;return true;}
   p.x=p.tx;p.y=p.ty;const hit=alive(p.e),sh=abRank(p.src,'shock'),kd=sh?sh.k*K:0;
-  if(hit){sfxHit(p.src,p.dt);strike(p.e,p.dm,p.src,p.dt,p.pen,p.pz);onHit(p.e,p.src);if(p.slow)slowE(p.e,p.slow,p.slowt||SLOWT);if(kd&&p.e.hp>0&&p.area)knock(p.e,kd);}
+  if(hit){sfxHit(p.src,p.dt);strike(p.e,p.dm,p.src,p.dt,p.pen,p.pz);onHit(p.e,p.src);if(p.orb&&p.src&&p.src.ab)orbHit(p.src,p.e,stats(p.src),p.dm);if(p.slow)slowE(p.e,p.slow,p.slowt||SLOWT);if(kd&&p.e.hp>0&&p.area)knock(p.e,kd);}
   if(p.area){for(const e of S.enemies)if(e!==p.e&&e.hp>0&&!(p.cata&&isFly(e))&&Math.hypot(e.x-p.x,e.y-p.y)<=p.area){hurt(e,p.dm*SPLASH,p.src,p.dt,p.pen);if(p.slowA&&p.slow&&e.hp>0)slowE(e,p.slow,p.slowt||SLOWT);if(kd&&e.hp>0)knock(e,kd);}
    {const cr=p.src&&p.src.ab&&abRank(p.src,'cluster');if(cr)cluster(p,cr);}
    S.fx.push({x:p.x,y:p.y,t:.25,m:.25,r:p.area,col:p.col});}
@@ -113,7 +113,7 @@ function update(dt){
    S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:1.2*K,col:'#c0304a'});}}
  wolfTick(dt);dragonAdults(dt);guildHeal(dt);furyTick();orbTick(dt);heroAbTick(dt);mechaTick(dt);achTick(dt);logTick(dt);
  let bossDead=false;
- S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=100)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
+ S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(!e.leak)S.wk=(S.wk||0)+1;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=100)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
   {const gb=killGoldF(e.t),g1=rndG(gb*(e.src&&e.src.type&&TW[e.src.type]&&TW[e.src.type].guild?1.25:1)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=rp('coin')?rndG(gb*.5):0;S.gold+=g1+g2+g3;if(rp('mimic')&&nearChest(e)){const gm=rndG(gb*.75);S.gold+=gm;RS('mimic').gold+=gm;}if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;{const q=EKS(e.t);q.k++;q.g+=g1+g2+g3;}if(e.src)e.src.kills=(e.src.kills||0)+1;}}
   // experiencia del héroe: si el golpe final es suyo, la experiencia entera le llega directa; si es de otro, cae una bola del 40 % (mín. 1) que el héroe recoge al acercarse
   {const X=ET[e.t].xp||1,nb=(S.nbR===S.round&&!S.pvH?1:0);if(e.src&&e.src.hero)orbAdd(e.x,e.y,X+nb);else{orbGround(e.x,e.y,Math.max(1,X*.4));if(nb)orbAdd(e.x,e.y,nb);}}
@@ -123,7 +123,7 @@ function update(dt){
  if(S.hp<=0&&S.tut&&tutRetry())return;
  if(S.hp<=0){S.hp=0;S.phase='lost';S.proj=[];S.fx=[];S.msg='El núcleo ha caído.';ui();endGame();return;}
  if(bossDead){S.phase='won';S.proj=[];S.fx=[];S.msg='¡Jefe derrotado! Has completado la expedición.';ui();endGame();return;}
- if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){if(S.gorbs&&S.gorbs.length){(S.orbs=S.orbs||[]).push(...S.gorbs);S.gorbs=[];}orbFlush();if(S.relics.includes('notebook')&&S.hp>=(S.hpW||0))S.nbN=Math.min(10,(S.nbN||0)+1);}
+ if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){if(S.gorbs&&S.gorbs.length){(S.orbs=S.orbs||[]).push(...S.gorbs.map(o=>({x:o.x,y:o.y,v:o.v,t:0})));S.gorbs=[];}if(!S.hero||S.hero.s.hp<=0)orbFlush();if(S.relics.includes('notebook')&&S.hp>=(S.hpW||0))S.nbN=Math.min(10,(S.nbN||0)+1);}
  if(!S.portals.some(p=>p.q.length)&&!S.enemies.length&&S.tut&&S.round>=ROUNDS){tutEnd();return;}
  if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){tutPhase('end');S.gold+=50+S.round*10;if(S.st)S.st.gRound+=50+S.round*10;roundRewards();S.pools=[];S.mines=[];S.cz=[];S.rolls=[];nextRound();dragonGrow();if(S.uq&&S.uq.length)startUPlace();}
 }

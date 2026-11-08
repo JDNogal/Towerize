@@ -17,7 +17,7 @@ function bmBuild(){let m=$('bmenu');if(!m){m=document.createElement('div');m.id=
   m.addEventListener('mouseover',e=>{if(TOUCH)return;const b=e.target.closest('.tmb');BM.hov=b?b.dataset.k:null;bmCard();});
   m.addEventListener('mouseleave',()=>{BM.hov=null;bmCard();});}
  const q=BM.s;m.innerHTML=bmDeck().map(k=>{const T=TW[k],arm=BM.arm===k,wish=(S.wish||[]).some(w=>w.a==='build'&&w.v===k&&w.x===q.x&&w.y===q.y);
-  return `<button class="tmb${arm?' arm':''}${wish?' wish':''}" data-k="${k}" data-tm="build" data-v="${k}" data-sx="${q.x}" data-sy="${q.y}">${arm?'✓':`<span class="ic tw" style="background:${T.col}">${T.ic}</span>`}<span class="p">${bmCost(k)} 🪙</span></button>`;}).join('');
+  return `<button class="tmb${arm?' arm':''}${wish?' wish':''}" data-k="${k}" data-tm="build" data-v="${k}" data-sx="${q.x}" data-sy="${q.y}">${arm?'✓':`<span class="ic tw" style="background:${T.col}">${icHtml(twIcO(T))}</span>`}<span class="p">${bmCost(k)} 🪙</span></button>`;}).join('');
  m.classList.add('on');bmPos(true);bmCard();}
 function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*r.width;
  const px=((q.x+.5)*CS-CAM.x)*k+(r.left-c.left),py=((q.y+.5)*CS-CAM.y)*k+(r.top-c.top),bs=m.querySelectorAll('.tmb'),n=bs.length;

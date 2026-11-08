@@ -27,6 +27,8 @@ function svRecord(st,why){let copy;const snap=st.snap,dn=st.dn;st.snap=null;st.d
  return {v:SAVE_FMT,game:($('ver')&&$('ver').textContent)||'',t:Date.now(),why,S:copy,g,meta:{round:Math.min(copy.round,ROUNDS),rounds:ROUNDS,hero:copy.hero.id,heroN:H?H.n:'',heroIc:H?H.ic:'',tut:!!copy.tut,t:Date.now(),why}};}
 // guardar ahora. why: 'wave' (inicio de oleada: se guarda la copia S.snap) · 'round' (fin de ronda) · 'build' (acción en construcción) · 'exit' (guardar y salir)
 function saveRun(why){if(!svOk()||!svLive())return Promise.resolve(false);
+ /* experiencia aún volando hacia el héroe: al salir se entrega ya; si no, se guarda cuando llegue */
+ if(S.phase!=='wave'&&S.orbs&&S.orbs.length){if(why==='exit')orbFlush();else{clearTimeout(SAV.tm);SAV.tm=setTimeout(()=>saveRun(why),700);return Promise.resolve(false);}}
  let st=S;if(S.phase==='wave'){if(!S.snap)return Promise.resolve(false);st=S.snap;why=why==='exit'?'exit':'wave';}
  let rec;try{rec=svRecord(st,why);}catch(e){console.warn('guardado',e);return Promise.resolve(false);}
  SAV.t=Date.now();svMeta(rec.meta);return svPut(rec).then(()=>true).catch(e=>{console.warn('guardado',e);return false;});}
@@ -54,7 +56,7 @@ function saveAndExit(){const p=saveRun('exit');Promise.resolve(p).then(()=>{clos
 addEventListener('pagehide',()=>{try{if(svLive())saveRun('exit');}catch(e){}});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){try{if(svLive())saveRun('exit');}catch(e){}}});
 // ganchos: inicio de oleada, fin de ronda, acciones de construcción, final de partida
-{const _sw=startWave;startWave=function(...a){const r=_sw.apply(this,a);try{if(S.phase==='wave'&&S.snap)saveRun('wave');}catch(e){}return r;};
+{const _sw=startWave;startWave=function(...a){try{if(S&&S.phase!=='wave'&&S.orbs&&S.orbs.length)orbFlush();}catch(e){}const r=_sw.apply(this,a);try{if(S.phase==='wave'&&S.snap)saveRun('wave');}catch(e){}return r;};
  const _nr=nextRound;nextRound=function(...a){const r=_nr.apply(this,a);try{if(svLive())saveRun('round');}catch(e){}return r;};
  const _ui=ui;ui=function(...a){const r=_ui.apply(this,a);try{saveSoon();}catch(e){}return r;};
  const _eg=endGame;endGame=function(...a){try{saveClear();}catch(e){}return _eg.apply(this,a);};

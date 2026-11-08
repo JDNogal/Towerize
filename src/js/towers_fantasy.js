@@ -24,10 +24,16 @@ function heraldDeath(e){for(const t of S.list)if(t.type==='augur'&&t.spec==='her
 const HEXT=3,POLYS=.6,FEART=1.5,SPECSP=1.2*K,KNHP=900;
 const SPECT={spectre:{n:'Espectro',ic:'👻',col:'#c8d4f0',hp:.5,d:.5,w:1,sp:1.4},knight:{n:'Caballero Espectral',ic:'♞',col:'#9fb4d8',w:2,d:1.2,sp:1}};
 const soulB=o=>{const h=abRank(o,'harvest');return h?Math.min(h.max,(o.souls||0)*.01):0;};
-function orbHit(t,tg,s,dmg){const dt1=1/s.rate,hx=abRank(t,'hex'),nv=abRank(t,'nova'),pl=abRank(t,'poly');
+// efectos de cada orbe que impacta (Foco Arcano): maldición, nova cada N impactos y polimorfia
+function orbHit(t,tg,s,dmg){const hx=abRank(t,'hex'),nv=abRank(t,'nova'),pl=abRank(t,'poly');
  if(hx)tg.fx.hex={t:HEXT,m:Math.max(hx.m,tg.fx.hex?tg.fx.hex.m:0)};
- if(nv){t.nvT=(t.nvT||0)+dt1;if(t.nvT>=nv.ch){t.nvT=0;const dm=s.dmg*s.rate*nv.m;for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-tg.x,o.y-tg.y)<=nv.r*K)hurt(o,dm,t,'magic',s.pen);S.fx.push({x:tg.x,y:tg.y,t:.5,m:.5,r:nv.r*K,col:'#a58bff'});}}
- if(pl&&!isBoss(tg)&&!tg.fx.poly&&Math.random()<pl.p*dt1)tg.fx.poly={t:ET[tg.t].el?pl.d/2:pl.d};}
+ if(nv){t.nvN=(t.nvN||0)+1;if(t.nvN>nv.ch){t.nvN=0;const dm=dmg*nv.m,cx=tg.x,cy=tg.y;for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-cx,o.y-cy)<=nv.r*K)hurt(o,dm,t,'magic',s.pen);S.fx.push({x:cx,y:cy,t:.5,m:.5,r:nv.r*K,col:'#a58bff'});}}
+ if(pl&&tg.hp>0&&!isBoss(tg)&&!tg.fx.poly&&Math.random()<pl.p)tg.fx.poly={t:ET[tg.t].el?pl.d/2:pl.d};}
+// un orbe mágico: bola brillante que crece con el nivel de la torre (Nv 1 → Nv 4)
+function drawOrbP(c,px,py,lv,cs,col){const r=cs*(.12+.035*((lv||1)-1)),pu=1+.08*Math.sin(performance.now()/90);
+ c.fillStyle='rgba(165,139,255,.28)';c.beginPath();c.arc(px,py,r*2*pu,0,7);c.fill();
+ const g=c.createRadialGradient(px-r*.3,py-r*.3,r*.1,px,py,r);g.addColorStop(0,'#ffffff');g.addColorStop(.35,'#d8ccff');g.addColorStop(1,col||'#8a7dff');
+ c.fillStyle=g;c.beginPath();c.arc(px,py,r,0,7);c.fill();}
 function orbDeath(e){const s=e.src;if(!s)return;const o=s.spOwner||s;if(o.type!=='orb'||o.spec!=='reap'||!S.list.includes(o))return;
  if(abRank(o,'harvest'))o.souls=(o.souls||0)+1;
  const ra=abRank(o,'raise');if(s!==o||!ra||isBoss(e))return;
@@ -66,9 +72,11 @@ function rollTick(dt){if(!S.rolls||!S.rolls.length)return;
    if(dd<1e-6){const nx=rollNext(r.cx,r.cy);if(!nx){r.left=0;break;}r.cx=nx[0];r.cy=nx[1];continue;}
    const st=Math.min(mv,dd,r.left);r.x+=dx/dd*st;r.y+=dy/dd*st;mv-=st;r.left-=st;}
   if(!r.fire&&S.pools.some(p=>p.tar&&Math.hypot(p.x-r.x,p.y-r.y)<=p.r))r.fire=1;
+  /* también se empapa en los charcos de veneno: envenena a todo lo que arrolla con la fuerza del charco */
+  if(!r.pois){const pp=S.pools.find(p=>!p.el&&Math.hypot(p.x-r.x,p.y-r.y)<=p.r);if(pp)r.pois=pp.n;}
   const cr=abRank(r.src,'crush');
   for(const e of S.enemies){if(e.hp<=0||isFly(e)||r.hit.has(e)||Math.hypot(e.x-r.x,e.y-r.y)>r.r)continue;r.hit.add(e);hurt(e,r.dm,r.src,'phys',r.pen);
-   if(e.hp>0){if(cr)stunE(e,cr.s);if(r.big)knock(e,AVPUSH*K);if(r.fire)addBurn(e,r.src,ROLLB);}}
+   if(e.hp>0){if(cr)stunE(e,cr.s);if(r.big)knock(e,AVPUSH*K);if(r.fire)addBurn(e,r.src,ROLLB);if(r.pois)addPois(e,r.pois,r.src);}}
   return r.left>0;});}
 // zonas: charcos de brea (pegajoso, inflamable), enjambres, panales y cascotes
 function czTick(dt){for(const e of S.enemies)e.stkIn=0;

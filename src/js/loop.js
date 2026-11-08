@@ -1,4 +1,19 @@
 const FF={on:false,t:0};
+// panel de enemigos en el mapa (durante la oleada): tipo → cantidad, eliminados y por salir
+const EMAP={t:0,sg:''};
+function emapTick(raw){EMAP.t-=raw;if(EMAP.t>0)return;EMAP.t=.25;let el=document.getElementById('emap');
+ const on=S&&S.phase==='wave'&&OPT.emap!==false&&!PREVIEWING&&!document.body.classList.contains('inmenu');
+ if(!on){if(el)el.classList.remove('on');EMAP.sg='';return;}
+ if(!el){el=document.createElement('div');el.id='emap';lstack().prepend(el);}
+ const c={};let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak){c[e.t]=(c[e.t]||0)+1;n++;}
+ let q=0;for(const p of S.portals||[])q+=(p.q||[]).filter(x=>x!=='|').length;
+ const ks=Object.keys(c).sort((a,b)=>c[b]-c[a]),sg=ks.map(k=>k+c[k]).join(',')+'|'+(S.wk||0)+'|'+q;
+ if(sg!==EMAP.sg){EMAP.sg=sg;el.innerHTML=`<div class="emh">⚔️ En el mapa <b>${n}</b></div>`+(ks.length?'<div class="eml">'+ks.map(k=>`<span title="${ET[k]?ET[k].n:k}"><i style="background:${ET[k]?ET[k].col:'#888'}"></i>×${c[k]}</span>`).join('')+'</div>':'')+`<div class="emf">💀 ${S.wk||0} eliminados${q?` · ${q} por salir`:''}</div>`;}
+ el.classList.add('on');}
+// columna del margen izquierdo: contador de enemigos arriba y compras en cola debajo, centrados juntos en vertical
+function rstack(){let c=document.getElementById('rstack');if(!c){c=document.createElement('div');c.id='rstack';document.body.appendChild(c);}return c;}
+function lstack(){let c=document.getElementById('lstack');if(!c){c=document.createElement('div');c.id='lstack';document.body.appendChild(c);}return c;}
+
 // ¿hay algún enemigo vivo al alcance de alguna torre, unidad o del héroe? (si no, el avance rápido acelera)
 function ffIdle(){if(!S.enemies||!S.enemies.length){return S.portals&&S.portals.some(p=>p.q&&p.q.length);}
  const live=S.enemies.filter(e=>e.hp>0&&!e.leak);if(!live.length)return false;
@@ -10,7 +25,7 @@ let last=performance.now();
 function loop(t){
  const raw=Math.max(0,(t-last)/1000),rdt=Math.min(.05,raw);last=t;
  FPS.n++;FPS.t+=raw;if(FPS.t>=.5){FPS.v=Math.round(FPS.n/FPS.t);FPS.n=0;FPS.t=0;const fe=$('fps');if(fe){fe.style.display=OPT.fps?'block':'none';fe.innerHTML=`<i style="background:${FPS.v>=50?'#6fe07a':FPS.v>=30?'#f0c040':'#ff6b5e'}"></i>${FPS.v} FPS`;/* junto al botón de menú */const mb=document.querySelector('#mtl button');if(mb&&OPT.fps){const r=mb.getBoundingClientRect();fe.style.left=(r.right+8)+'px';fe.style.top=(r.top+(r.height-fe.offsetHeight)/2)+'px';fe.style.right='auto';}}}
- const gon=S&&(S.hero||S.tut)&&S.round>=1&&S.phase!=='won'&&S.phase!=='lost'&&!document.body.classList.contains('inmenu');if(gon)GT.r+=Math.min(raw,3600);try{heroCard();}catch(e){}if(gon){/* héroe caído con una acción suya activa (moverlo, habilidad): se cancela para no bloquear el resto */const H=S.hero;if(H&&H.s&&H.s.hp<=0&&(S.aim==='hero'||S.aim==='habb'||S.aim==='habu')){S.aim=null;S.aimT=null;S.msg='';renderRelics();ui();}
+ const gon=S&&(S.hero||S.tut)&&S.round>=1&&S.phase!=='won'&&S.phase!=='lost'&&!document.body.classList.contains('inmenu');if(gon)GT.r+=Math.min(raw,3600);try{heroCard();}catch(e){}try{emapTick(raw);}catch(e){}if(gon){/* héroe caído con una acción suya activa (moverlo, habilidad): se cancela para no bloquear el resto */const H=S.hero;if(H&&H.s&&H.s.hp<=0&&(S.aim==='hero'||S.aim==='habb'||S.aim==='habu')){S.aim=null;S.aimT=null;S.msg='';renderRelics();ui();}
  /* un enemigo junto al núcleo con el juego a más de ×1: se baja a ×1 para dar tiempo a reaccionar (una vez por enemigo) */
  if(S.phase==='wave'&&S.speed>1&&S.core&&!PREVIEWING){for(const e of S.enemies){if(e.hp>0&&!e.leak&&!e.nearC&&Math.hypot(e.x-S.core.x,e.y-S.core.y)<=1.6*K){e.nearC=1;S.lspd=1;S.speed=1;ui();toast('🐢 Velocidad ×1: un enemigo está a punto de llegar al núcleo.');break;}}}}hoverTick(rdt);layoutSide();posFocus();ptipTick();$('relic').classList.toggle('blur',!!(RL.open&&!RL.hpick&&(RL.towo||RL.ev||(RL.choices&&RL.choices.length))));{const lk=!compOk();for(const b of document.querySelectorAll('[data-a="comp"]'))b.classList.toggle('lk',lk);}if(APAN.open)apanTick();document.body.classList.toggle('ovl',!!(LB.open||RL.open||PMU.open||FO.open||$('endscr').classList.contains('open')));tryTowerOffer();hintTick(rdt);hpanTick();dnTick(rdt);
  const sp=S.speed,held=LB.open||RL.open||FO.open,forced=held||S.phase!=='wave',slw=(OPT.slow&&S.phase==='wave')?(HV.sl||0):0;

@@ -103,7 +103,7 @@ if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;
  S.orbs=S.orbs.filter(o=>{o.t+=dt;if(q.hp<=0){o.y+=Math.sin(o.t*4)*dt*.6;return true;}const dx=q.x-o.x,dy=q.y-o.y,d=Math.hypot(dx,dy),sp=(8+o.t*18)*(K/3);
   if(d<=sp*dt+.3){giveXp(H,o.v);return false;}o.x+=dx/d*sp*dt;o.y+=dy/d*sp*dt;return true;});}
 function orbFlush(){if(S.orbs&&S.hero)for(const o of S.orbs)giveXp(S.hero,o.v);S.orbs=[];}
-function hpLoss(n,en){if(S.st)S.st.hpL=(S.st.hpL||0)+n;if(en)hint('retry','Reintentar',[['Un enemigo ha llegado al núcleo y has perdido <b>vida</b>.',tgEl('#sh')],['Si una oleada sale mal, puedes repetirla desde el principio con este botón. Tiene cargas limitadas.',tgEl('#mtl [data-a="retry"]')]]);S.hp-=n;S.idolN=(S.idolN||0)+n;if(en)S.hpEn=(S.hpEn||0)+n;}
+function hpLoss(n,en){if(S)S.chit=performance.now();if(S.st)S.st.hpL=(S.st.hpL||0)+n;if(en)hint('retry','Reintentar',[['Un enemigo ha llegado al núcleo y has perdido <b>vida</b>.',tgEl('#sh')],['Si una oleada sale mal, puedes repetirla desde el principio con este botón. Tiene cargas limitadas.',tgEl('#mtl [data-a="retry"]')]]);S.hp-=n;S.idolN=(S.idolN||0)+n;if(en)S.hpEn=(S.hpEn||0)+n;}
 const interest=()=>Math.min(30,Math.floor(S.gold*.1/5)*5);
 const heroHpM=()=>rp('badge')?1.15:1;
 function heroSync(){const H=S.hero;if(!H)return;const q=H.s,m=hsAt(H.id,H.lvl).hp*heroHpM();if(Math.abs(q.max-m)>.01){const f=q.max>0?q.hp/q.max:1;q.max=m;if(q.hp>0)q.hp=m*f;}}

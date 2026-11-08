@@ -7,7 +7,7 @@ const RELICS=[
  {id:'square',n:'Escuadra del arquitecto',ic:'📐',col:'#5a5a3a',ach:'roma'},{id:'harpoon',n:'Arpón celeste',ic:'🔱',col:'#2a5a7a',ach:'sky'},
  {id:'banner',n:'Estandarte del regimiento',ic:'🏴',col:'#5a2a2a',ach:'untouch'},{id:'crystal',n:'Corazón de cristal',ic:'💎',col:'#2a6a7a',ach:'first'},{id:'trophy',n:'Trofeo de caza',ic:'🦴',col:'#6a5a4a',ach:'hunt'},
  {id:'barricade',n:'Barricada',ic:'🚧',col:'#6a4a2a',ini:1},{id:'quiver',n:'Carcaj',ic:'🎒',col:'#3a5a2a',ini:1},{id:'tome',n:'Tomo arcano',ic:'📘',col:'#3a3f8a',ini:1},{id:'balance',n:'Piedra del equilibrio',ic:'☯️',col:'#6a4a6a',ini:1},{id:'hammer',n:'Martillo del herrero',ic:'🛠️',col:'#6a5a4a',evr:1,ev:'smith'},{id:'scale',n:'Balanza del mercader',ic:'⚖️',col:'#8a7a3a',evr:1,ev:'merchant'},{id:'idol',n:'Ídolo profanado',ic:'🗿',col:'#5a5a6a',evr:1,ev:'shrine'},{id:'mimic',n:'Mímico domesticado',ic:'🦷',col:'#7a4a3a',evr:1,ev:'chest'},{id:'ember',n:'Brasa de dragona',ic:'☄️',col:'#9a3a2a',evr:1,ev:'nest'},{id:'badge',n:'Insignia de mercenario',ic:'🎖️',col:'#4a5a7a',evr:1,ev:'guild'},{id:'notebook',n:'Cuaderno del aprendiz',ic:'📓',col:'#4a6a5a',ach:'tut_m'}];
-// Cada reliquia: pasivo + activo. Al usar el activo se pierde el pasivo durante `cd` rondas (incluida la actual). dur = segundos de juego que dura el activo.
+// Cada reliquia: pasivo + activo. Al usar el activo se pierde el pasivo durante la recarga (en RDEF, en «rondas»; abajo se pasa a segundos de oleada). dur = segundos de juego que dura el activo.
 const mapN=()=>Math.max(0,Object.keys(S.blocks).length-1),mapDmg=()=>5*mapN(),mapCool=()=>5*Math.floor(mapN()/3);
 const RDEF={
  coin:{cd:4,pas:()=>'Los enemigos sueltan <span class="gd">+50% de oro</span>.',act:()=>'<span class="gd">+200 de oro</span> al instante.'},
@@ -34,21 +34,23 @@ const RDEF={
  crystal:{cd:5,pas:()=>'El primer enemigo que llega al núcleo cada oleada <span class="cf">no quita vida</span> (salvo jefes).',act:()=>'Recuperas <span class="chp">3 de vida</span>.'},
  trophy:{cd:3,dur:10,pas:()=>`Cada élite eliminada: <span class="cg">+5% de rango</span> para tus torres el resto de la partida (máx. +25%; ahora: <span class="cg">+${5*((typeof S!=='undefined'&&S&&S.troN)||0)}%</span>).`,act:()=>'<b>10 s</b>: torres <span class="cg">+50% de rango</span>.'},
  map:{cd:5,pas:()=>`Torres: <span class="cd">+5% de daño</span> por pieza colocada y <span class="cr">−5% de enfriamiento</span> cada 3 piezas (ahora: <span class="cd">+${mapDmg()}%</span>, <span class="cr">−${mapCool()}%</span>).`,act:()=>'Crea un cofre en un hueco sin explorar.'}};
-RELICS.forEach(r=>{Object.assign(r,RDEF[r.id]);});
+// la recarga de las reliquias es en segundos de oleada (el reloj se para fuera de la oleada); RDEF la da en «rondas» y aquí se convierte
+const RCDS={1:40,2:80,3:120,4:150,5:180};
+RELICS.forEach(r=>{Object.assign(r,RDEF[r.id]);r.cd=RCDS[r.cd]||r.cd*40;});
 const RELIC=Object.fromEntries(RELICS.map(r=>[r.id,r]));
 const RL={open:false,choices:[]};
 // pasivo y activo en dos recuadros, con título grande; el activo lleva su recarga
-const rdesc=id=>{const r=RELIC[id];return `<div class="rbx rps"><div class="rbt">♾ Pasivo</div>${r.pas()}</div><div class="rbx rac"><div class="rbt">⚡ Activo<small>${kw('rcd','⌛ '+r.cd+' rondas','','st')}</small></div>${r.act()}</div>`;};
+const rdesc=id=>{const r=RELIC[id];return `<div class="rbx rps"><div class="rbt">♾ Pasivo</div>${r.pas()}</div><div class="rbx rac"><div class="rbt">⚡ Activo<small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small></div>${r.act()}</div>`;};
 const rcdTag=id=>`<span class="rcdt">${kw('rcd','⏳ '+RELIC[id].cd,'','st')}</span>`;
 const relicInfo=(id,quiet)=>{const r=RELIC[id],st=!quiet&&S.relics&&S.relics.includes(id)&&S.rs[id];
- const state=st?(st.t>0?`<small class="gd">Activo en curso: ${f(st.t)} s.</small>`:st.cd>0?`<small class="cr">Pasivo desactivado: ${st.cd} ronda${st.cd>1?'s':''} más.</small>`:'<small class="cc">Lista: pulsa el icono para usar el activo.</small>'):'';
+ const state=st?(st.t>0?`<small class="gd">Activo en curso: ${f(st.t)} s.</small>`:st.cd>0?`<small class="cr">Pasivo desactivado: ${fmtT(st.cd)} más de oleada.</small>`:'<small class="cc">Lista: pulsa el icono para usar el activo.</small>'):'';
  return `<div class="ttl">${r.evr?`<small style="display:block;margin:0 0 2px">Reliquia de evento · «${EVENTS[r.ev]?EVENTS[r.ev].n:''}»</small>`:''}<b><i style="background:${r.col};border-radius:4px;text-align:center;font-style:normal;font-size:11px;line-height:12px;width:14px;height:14px">${r.ic}</i>${r.n}</b></div>`+rdesc(id)+state;};
 const rp=id=>S.relics.includes(id)&&S.rs[id].cd===0,ra=id=>S.relics.includes(id)&&S.rs[id].t>0;
 const chestInfo=()=>'<div class="ttl"><b>Cofre</b></div><small style="margin:0">Coloca una pieza en este hueco y obtendrás una reliquia para esta partida.</small>';
 function renderRelics(){
  const hb=S.hero?`<button class="rl hero${S.aim==='hero'?' aim':''}${S.aim&&S.aim!=='hero'?' dim':''}${S.hero.s.hp<=0?' off':''}" data-a="hero" data-tip="hero:x" style="background:${S.hero.def.col}">${portrait(S.hero.id,1)}<span class="bdg">${S.hero.s.hp<=0?Math.ceil(S.hero.s.rt)+'s':S.hero.lvl}</span></button>`:'';
  const vb=Object.keys(VCH).filter(k=>S.vch&&S.vch[k]>0).map(k=>`<button class="rl${S.aim==='vch'&&S.vty===k?' aim':''}${S.aim&&!(S.aim==='vch'&&S.vty===k)?' dim':''}" data-a="vch" data-id="${k}" data-tip="vch:${k}" style="background:#5a4a2a">${VCH[k].ic}<span class="bdg">${S.vch[k]}</span></button>`).join('');
- let rki=0;$('relics').innerHTML=vb+(S.relics.length?S.relics.map(id=>{const kn=++rki;const st=S.rs[id],R=RELIC[id],off=st.cd>0,on=st.t>0,bd=on?Math.ceil(st.t)+'s':off?st.cd:'';
+ let rki=0;$('relics').innerHTML=vb+(S.relics.length?S.relics.map(id=>{const kn=++rki;const st=S.rs[id],R=RELIC[id],off=st.cd>0,on=st.t>0,bd=on?Math.ceil(st.t)+'s':off?fmtT(st.cd,1):'';
   const rd=relUsable(id);return `<button class="rl${off?' off':''}${on?' act':''}${rd?' rdy'+(RUSE()<3?' pul':''):''}${RFL[id]&&performance.now()-RFL[id]<900?' rfl':''}${S.aim===id?' aim':''}${S.aim&&S.aim!==id?' dim':''}" data-a="ract" data-id="${id}" data-tip="relic:${id}" style="background:${R.col}">${R.ic}${bd!==''?`<span class="bdg">${bd}</span>`:''}${kn<=9&&kcOn()?`<span class="kcap kc2"><b>⇧</b><em>+</em><b>${kn}</b></span>`:''}</button>`;}).join(''):'');
 }
 let RSIG='';const RFL={},RPCD={};
@@ -58,7 +60,7 @@ function relUsable(id){const st=S.rs&&S.rs[id];if(!st||st.cd>0||st.t>0||RL.open|
 // cuántas veces has usado activos de reliquia (entre partidas): con menos de 3, el brillo late para llamar más la atención
 const RUSE=()=>{try{return +localStorage.getItem('rt-ruse')||0;}catch(e){return 9;}};
 function relicTick(){if(RPCD._S!==S){for(const k in RPCD)delete RPCD[k];RPCD._S=S;}for(const id of S.relics){const st=S.rs[id],c=st.cd,u=c>0||st.t>0,pv=RPCD[id];if(pv&&pv.c>0&&c<=0&&realG()){RFL[id]=performance.now();try{sfx('rready');}catch(e){}setTimeout(()=>{RSIG='';},950);}if(pv&&!pv.u&&u&&realG()){try{localStorage.setItem('rt-ruse',RUSE()+1);}catch(e){}}RPCD[id]={c,u};}
- const sg=S.relics.map(id=>S.rs[id].cd+':'+Math.ceil(S.rs[id].t)+(relUsable(id)?'r':'')+(RFL[id]&&performance.now()-RFL[id]<900?'f':'')).join(',')+'|'+S.aim+'|'+(S.hero?S.hero.lvl+':'+(S.hero.s.hp>0?1:Math.ceil(S.hero.s.rt)):'');if(sg!==RSIG){RSIG=sg;renderRelics();}}
+ const sg=S.relics.map(id=>Math.ceil(S.rs[id].cd)+':'+Math.ceil(S.rs[id].t)+(relUsable(id)?'r':'')+(RFL[id]&&performance.now()-RFL[id]<900?'f':'')).join(',')+'|'+S.aim+'|'+(S.hero?S.hero.lvl+':'+(S.hero.s.hp>0?1:Math.ceil(S.hero.s.rt)):'');if(sg!==RSIG){RSIG=sg;renderRelics();}}
 function nearChest(e){const NB=N/BN,R=2*NB/P;for(const k in S.chests){if(!S.chests[k])continue;const[bx,by]=k.split(',').map(Number),x0=bx*NB,y0=by*NB,dx=Math.max(x0-e.x,0,e.x-(x0+NB)),dy=Math.max(y0-e.y,0,e.y-(y0+NB));if(Math.hypot(dx,dy)<=R)return true;}return false;}
 function freeSlot(){const c=[];for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k])continue;if(D.some(([a,b])=>S.blocks[(bx+a)+','+(by+b)]))c.push(k);}return c.length?c[Math.floor(Math.random()*c.length)]:null;}
 function addPois(e,w,src,rv){(e.ps=e.ps||[]).push({w:w*stkM(e),t:POISD,src,rv});}

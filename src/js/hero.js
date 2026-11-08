@@ -38,6 +38,24 @@ function drawHeroSay(g,lw){const q=S.hsay,H=S.hero;if(!q||!H||H.s.hp<=0)return;c
  g.fillStyle='#1b1e26';g.fillText(q.txt,px,y0+hh/2+lw(.5));g.restore();}
 // retrato del héroe como imagen para dibujarlo en el mapa
 const HIMG={};function heroImg(id){if(HIMG[id])return HIMG[id];const im=new Image();try{const u=++PUID;let s=PORT[id].replace(/@U/g,u);im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="${PCROP[id]||'0 0 120 120'}">${s}</svg>`);}catch(e){}return HIMG[id]=im;}
+// galones de nivel (mapa): cx,top = centro arriba; u = tamaño de la torre
+const twFull=t=>t.lvl>=4&&!!t.spec&&!!SPECS[t.type]&&!!SPECS[t.type][t.spec]&&(SPECS[t.type][t.spec].ab||[]).every(k=>AB[k]&&(t.ab&&t.ab[k]||0)>=AB[k].ranks.length);
+function starPath(c,cx,cy,R){c.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?R*.45:R;c.lineTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);}c.closePath();}
+function drawGal(c,cx,top,u,lv,mx,lw){lw=lw||(v=>v);const n=Math.min(3,lv),w=u*.26,hh=u*.12,gap=u*.11,gold=lv>=4;c.lineJoin='round';c.lineCap='round';
+ for(let i=0;i<n;i++){const y=top+i*gap;c.beginPath();c.moveTo(cx-w/2,y+hh);c.lineTo(cx,y);c.lineTo(cx+w/2,y+hh);c.strokeStyle='#14161c';c.lineWidth=Math.max(lw(2.4),u*.08);c.stroke();c.strokeStyle=gold?'#ffd84a':'#fff';c.lineWidth=Math.max(lw(1.1),u*.04);c.stroke();}
+ if(lv>=4){starPath(c,cx,top+(n-1)*gap+hh+u*.13,u*.12);c.fillStyle=mx?'#ffd84a':'#fff';c.fill();c.strokeStyle='#14161c';c.lineWidth=Math.max(lw(1.1),u*.035);c.stroke();}}
+// galones en la interfaz: dorados con borde oscuro (SVG con margen para que nada se corte), con bocadillo «Nv N»
+function galSvg(lv,mx,sc,notip){sc=sc||1;const n=Math.min(3,Math.max(1,lv)),h=4+6+(n-1)*6+(lv>=4?13:0)+4;let d='';for(let i=0;i<n;i++){const y=4+i*6;d+=`M3 ${y+6} L10 ${y} L17 ${y+6} `;}
+ let st='';if(lv>=4){const sy=4+(n-1)*6+6+7.5;let p=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,r=i%2?2.5:5.6;p.push((10+Math.cos(a)*r).toFixed(1)+','+(sy+Math.sin(a)*r).toFixed(1));}
+  st=`<polygon points="${p.join(' ')}" fill="${mx?'#ffd84a':'#fff3c4'}" stroke="#2a1a0c" stroke-width="1.3" stroke-linejoin="round"/>`;}
+ return `<span class="gal"${notip?'':` data-tip="nv:${lv}${mx?'m':''}"`}><svg viewBox="0 0 20 ${h}" width="${(20*sc).toFixed(1)}" height="${(h*sc).toFixed(1)}"><path d="${d}" fill="none" stroke="#2a1a0c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#ffcf3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>${st}</svg></span>`;}
+// iconos compuestos: uno delante y otro detrás ({f,b}); sirven para torres (icb) y unidades
+function icDraw(c,ic,x,y,sz){c.textAlign='center';c.textBaseline='middle';if(ic&&typeof ic==='object'){c.font=Math.round(sz*1.05)+'px sans-serif';c.fillText(ic.b,x+sz*.08,y-sz*.04);c.font=Math.round(sz*(ic.fs||.72))+'px sans-serif';if(ic.fr){c.save();c.translate(x-sz*.04,y+sz*.04);c.rotate(ic.fr*Math.PI/180);c.fillText(ic.f,0,0);c.restore();}else c.fillText(ic.f,x-sz*.06,y+sz*.08);}else{c.font=Math.round(sz)+'px sans-serif';c.fillText(ic,x,y);}}
+function icHtml(ic){return ic&&typeof ic==='object'?`<span class="icst"><span class="icb">${ic.b}</span><span class="icf"${ic.fs||ic.fr?` style="transform:translate(-6%,8%) scale(${ic.fs||.72})${ic.fr?` rotate(${ic.fr}deg)`:''}"`:''}>${ic.f}</span></span>`:ic;}
+const twIcO=X=>X&&X.icb?{f:X.ic,b:X.icb}:X.ic,twIc=k=>icHtml(twIcO(TW[k]));
+// icono de cada unidad (por torre y especialización): círculo con su icono, como el héroe
+const UIC={bastion:{f:'🗡️',b:'🛡️',fs:.9},monk:'🧘',guild:{b:'🪙',f:'🗡️',fs:.85,fr:180},dragon:'🐲',pal:'⚜️',ass:'🗡️',fist:'🥋',drunk:'🍶'};
+const unitIc=t=>UIC[t.spec]||UIC[t.type]||null;
 function drawUnits(c,s,cs,ox,oy,lw){
  lw=lw||(v=>v);
  for(const t of unitTs(s)){
@@ -54,7 +72,7 @@ function drawUnits(c,s,cs,ox,oy,lw){
    c.fillStyle=q.H?q.H.def.col:tinfo(t).col;c.beginPath();c.arc(px,py,r,0,7);c.fill();
    if(q.H){const im=heroImg(q.H.id);if(im.complete&&im.naturalWidth){c.save();c.beginPath();c.arc(px,py,r,0,7);c.clip();c.drawImage(im,px-r,py-r,r*2,r*2);c.restore();}else{c.font=Math.round(r*1.5)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#14161c';c.fillText(q.H.def.ic,px,py+1);}
     c.strokeStyle=q.H.def.col;c.lineWidth=lw(3);c.beginPath();c.arc(px,py,r,0,7);c.stroke();c.strokeStyle='rgba(0,0,0,.55)';c.lineWidth=lw(1);c.beginPath();c.arc(px,py,r+lw(2),0,7);c.stroke();}
-   else{c.strokeStyle='#cfe0ff';c.lineWidth=lw(1.5);c.stroke();}
+   else{c.strokeStyle='#cfe0ff';c.lineWidth=lw(1.5);c.stroke();if(!q.mech&&!q.pig&&!q.beast){const ui=unitIc(t);if(ui){c.fillStyle='#14161c';icDraw(c,ui,px,py+1,r*1.45);}}}
    if(q.mech){const cl=['#e8cf6a','#a8743a','#c0563a'];for(let i=0;i<3;i++){c.fillStyle=cl[i];c.beginPath();c.moveTo(px,py);c.arc(px,py,r,i*2.094-1.571,(i+1)*2.094-1.571);c.closePath();c.fill();}c.strokeStyle='#ffe0b0';c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();c.font=Math.round(r*1.2)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('🐷',px,py+1);}
    if(q.pig){c.font=Math.round(r*1.6)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(PIGU[q.pig].ic,px,py+1);}
    if(q.beast){c.font=Math.round(r*1.9)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff';c.fillText((BEASTS[q.beast]||SPECT[q.beast]).ic,px,py+1);}
@@ -72,7 +90,7 @@ c.fillStyle="#2e3441";c.fillRect(0,0,PVN*PVC,PVN*PVC);
  for(const p of s.pools){c.fillStyle=p.el==='bleed'?'rgba(224,72,90,.28)':p.el==='fire'?'rgba(255,120,40,.3)':'rgba(123,211,74,.28)';c.strokeStyle=p.el==='bleed'?'rgba(240,100,110,.8)':p.el==='fire'?'rgba(255,160,70,.85)':'rgba(150,230,90,.8)';c.beginPath();c.arc(X(p.x),Y(p.y),p.r*PVC,0,7);c.fill();c.stroke();}
  drawFlame(c,tw,X,Y,PVC);
  c.fillStyle=tinfo(tw).col;c.beginPath();c.arc(X(tw.x),Y(tw.y),PVC*1.35,0,7);c.fill();
- c.font=Math.round(PVC*2)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#14161c';c.fillText(tinfo(tw).ic,X(tw.x),Y(tw.y)+1);
+ c.fillStyle='#14161c';icDraw(c,twIcO(tinfo(tw)),X(tw.x),Y(tw.y)+1,PVC*2);
  if(tw.rays){c.lineWidth=2;for(const r of tw.rays)if(r.e.hp>0){c.strokeStyle=r.el.col;c.beginPath();c.moveTo(X(tw.x),Y(tw.y));c.lineTo(X(r.e.x),Y(r.e.y));c.stroke();}}
  else if(tw.tgt&&tw.tgt.hp>0){c.strokeStyle=T.col;c.lineWidth=3;c.beginPath();c.moveTo(X(tw.x),Y(tw.y));c.lineTo(X(tw.tgt.x),Y(tw.tgt.y));c.stroke();}
  for(const q of s.fx)if(q.bolt)drawBolt(c,q,X,Y,2,3);
@@ -86,6 +104,6 @@ c.fillStyle="#2e3441";c.fillRect(0,0,PVN*PVC,PVN*PVC);
   if(E.el){c.strokeStyle='#f0b429';c.lineWidth=2;c.beginPath();c.arc(px,py,r+2,0,7);c.stroke();}
   c.fillStyle='#000';c.fillRect(px-r,py-r-6,2*r,3);c.fillStyle='#6fe07a';c.fillRect(px-r,py-r-6,2*r*Math.max(0,e.hp/e.max),3);
   {const mk=emarks(e);if(mk){c.fillStyle='#e8f2c8';c.font='bold 10px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textBaseline='bottom';c.fillText(mk,px,py-r-7);}}}
- for(const p of s.proj){const px=X(p.x),py=Y(p.y);c.strokeStyle=p.col;c.lineWidth=3;c.beginPath();c.moveTo(px-p.vx*PVC*.6,py-p.vy*PVC*.6);c.lineTo(px,py);c.stroke();c.fillStyle=p.col;c.beginPath();c.arc(px,py,p.area?4:3,0,7);c.fill();}
+ for(const p of s.proj){const px=X(p.x),py=Y(p.y);if(p.orb){drawOrbP(c,px,py,p.orb,PVC*K,p.col);continue;}c.strokeStyle=p.col;c.lineWidth=3;c.beginPath();c.moveTo(px-p.vx*PVC*.6,py-p.vy*PVC*.6);c.lineTo(px,py);c.stroke();c.fillStyle=p.col;c.beginPath();c.arc(px,py,p.area?4:3,0,7);c.fill();}
 }
 function toggleComp(v){const on=v===undefined?!(LB.open&&!LB.cover&&CP.open):v;CP.solo=false;CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;if(on)lbOpen(CP.tab==='lg'?'lg':'cp');else lbClose();}

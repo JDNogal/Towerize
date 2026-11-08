@@ -180,4 +180,10 @@ function heroShoot(s,dt){const H=s.H,t=s.tw,st=stats(t);s.cd-=dt;let tg=s.fight?
  let n=0;while(s.cd<=0&&n++<4){s.cd+=1/st.rate;const crit=Math.random()<st.crit+mkB(tg),dm=st.dmg*(crit?st.critm:1);
   if(s.fight){hurt(tg,dm*HMELEE,t,H.def.dt||'phys',st.pen);if(crit)critMark(tg);onHit(tg,t);}
   else{const ov=H.id==='radagast'&&H.lvl>=4&&((H.oc=(H.oc||0)+1)%4===0);S.proj.push({x:s.x,y:s.y,e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm:dm*(ov?2:1),dt:H.def.dt||'phys',src:t,sp:14,area:(H.def.area?H.def.area*K:0)*(ov?2:1),slow:0,pen:st.pen,col:ov?'#e2b8ff':H.def.col,crit});}}}
+// atajo para mover la bandera (clic derecho, mantener pulsado en móvil o tecla B): bandera de unidades, nube del Señor de la Tormenta o la luz del Faro
+function quickFlag(t){if(!t||!S.list.includes(t)||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return false;
+ if(S.aim==='flag'&&S.aimT===t){S.aim=null;S.aimT=null;S.msg='';renderRelics();ui();return true;}
+ try{tmClose();}catch(e){}S.selT=null;
+ if(TW[t.type].faro){const cd=S.phase==='wave'?((t.lzcd||[0,0])[0]||0):0;if(cd>0){errBubble('La luz se podrá mover en '+Math.ceil(cd)+' s.');return true;}S.aim='faroz';S.flzSel={id:t.id,i:0};S.msg='Elige dónde proyectar la luz del Faro (Esc para cancelar).';renderRelics();ui();return true;}
+ if(tmHas(t,'flag')){startFlag(t);return true;}return false;}
 function startFlag(t){closePrim();S.aim='flag';S.aimT=t;S.msg='Elige una casilla del camino dentro del rango. Haz clic fuera del círculo para cancelar.';renderRelics();ui();}

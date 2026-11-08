@@ -19,13 +19,13 @@ const KEYS=new Set();
 const kcOn=()=>!TOUCH&&OPT.kcap!==false;
 const kcap=t=>kcOn()?`<span class="kcap">${t}</span>`:'';
 // ---- atajos de teclado configurables (los de siempre son los predeterminados) ----
-const KBDEF={up:'w',left:'a',down:'s',right:'d',zin:'e',zout:'q',hab:'f',ult:'g',hero:'h',pause:' ',speed:'v',wave:'enter',upg:'u',rot:'r',peek:'tab',nu:'w',nl:'a',nd:'s',nr:'d',nok:'enter'};
+const KBDEF={up:'w',left:'a',down:'s',right:'d',zin:'e',zout:'q',hab:'f',ult:'g',hero:'h',pause:' ',speed:'v',wave:'enter',upg:'u',flag:'b',ptips:'p',rot:'r',peek:'tab',nu:'w',nl:'a',nd:'s',nr:'d',nok:'enter'};
 // segunda tecla (alternativa): solo las lógicas vienen rellenas
 const KB2DEF={up:'arrowup',left:'arrowleft',down:'arrowdown',right:'arrowright',nu:'arrowup',nl:'arrowleft',nd:'arrowdown',nr:'arrowright',nok:' '};
 const KBMENU=['nu','nl','nd','nr','nok'];
 const KBL=[['Mapa',[['up','Mover el mapa arriba','⬆️'],['left','Mover el mapa a la izquierda','⬅️'],['down','Mover el mapa abajo','⬇️'],['right','Mover el mapa a la derecha','➡️'],['zin','Acercar','🔍'],['zout','Alejar','🔭']]],
  ['Héroe',[['hab','Habilidad del héroe','✨'],['ult','Habilidad definitiva','🌟'],['hero','Mover al héroe','🦸']]],
- ['Partida',[['pause','Pausar / reanudar','⏯️'],['speed','Cambiar la velocidad','⏩'],['wave','Empezar la oleada','⚔️'],['upg','Mejorar torre (con Mayús: marcar la mejora)','⬆️'],['rot','Girar la pieza','🔄'],['peek','Ver el mapa en eventos y ofertas','👁']]],
+ ['Partida',[['pause','Pausar / reanudar','⏯️'],['speed','Cambiar la velocidad','⏩'],['wave','Empezar la oleada','⚔️'],['upg','Mejorar torre (con Mayús: marcar la mejora)','⬆️'],['flag','Mover la bandera de la torre elegida (o su nube / su luz)','🚩'],['ptips','Mostrar u ocultar lo que sale de cada portal','💬'],['rot','Girar la pieza','🔄'],['peek','Ver el mapa en eventos y ofertas','👁']]],
  ['Menús',[['nu','Subir','⬆️'],['nl','Izquierda','⬅️'],['nd','Bajar','⬇️'],['nr','Derecha','➡️'],['nok','Aceptar / pulsar','✅']]]];
 const KBFIX=[['1 – 7','Construir torre (en el solar abierto o con el ratón encima)','🗼'],['Mayús + 1 – 9','Usar reliquia','💎'],['Esc','Pausa / cancelar / volver','⏸️'],['Q / E','Cambiar de sección en el libro (compendio, opciones…)','📖']];
 let KB=Object.assign({},KBDEF),KB2=Object.assign({},KB2DEF);try{Object.assign(KB,JSON.parse(localStorage.getItem('rt-keys'))||{});Object.assign(KB2,JSON.parse(localStorage.getItem('rt-keys2'))||{});}catch(e){}
@@ -57,6 +57,8 @@ addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.r
  else if(kbIs('pause',k)){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
  else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2,3],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(kbIs('wave',k)&&S.phase==='build'){if(document.querySelector('[data-a="wave"]')){WARM=0;startWave();}e.preventDefault();}
+ else if(kbIs('ptips',k)){togglePtips();e.preventDefault();}
+ else if(kbIs('flag',k)&&S.selT&&!S.aim){quickFlag(S.selT);e.preventDefault();}
  else if(kbIs('upg',k)){if(e.shiftKey){const b=document.querySelector('#tmenu.on [data-tm="up"],#side [data-a="up"],#tip [data-a="up"]');if(b){wishToggle(b);e.preventDefault();}}else{const b=document.querySelector('#tmenu.on [data-tm="up"],#tmenu.on [data-tm="gup"]');if(b){tmDo(b);e.preventDefault();}else if(clickA('[data-a="up"]'))e.preventDefault();}}});
 const keyOK=e=>!(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))&&typeof S!=='undefined'&&S&&!document.body.classList.contains('inmenu')&&!LB.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof INTRO!=='undefined'&&INTRO.on);
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey)return;const mv=['up','left','down','right'].find(a=>kbIs(a,k));if(mv){KEYS.add(mv);e.preventDefault();}
@@ -73,3 +75,6 @@ function fitView(){const r=cv.getBoundingClientRect(),dk=document.body.classList
  if(W!==VIEW||H!==VH){const k0=sc(),cx=CAM.x+VIEW/k0/2,cy=CAM.y+VH/k0/2;VIEW=W;VH=H;cv.width=W;cv.height=H;BS=Math.min(VIEW,VH)/(N*CS);const k=sc();CAM.x=cx-VIEW/k/2;CAM.y=cy-VH/k/2;clampCam();}
  PXR=dk&&r.width>0?1.1*VIEW/r.width:1;}
 function setDsk(){const mf=TOUCH&&innerWidth>innerHeight&&!document.body.classList.contains('vert'),d=mf||!TOUCH||innerWidth>860&&!LSM.matches&&!(TOUCH&&innerHeight>innerWidth);document.body.classList.toggle('dsk',d);document.body.classList.toggle('mfs',mf);fitView();}
+
+// tiempos: en segundos o, con la opción «Tiempos en minutos», como «1 min 30 s»; c = versión corta para insignias («1:30»)
+const fmtT=(sec,c)=>{sec=Math.max(0,Math.ceil(sec));if(typeof OPT==='undefined'||!OPT.tmin||sec<60)return sec+(c?'':' s');const m=Math.floor(sec/60),r=sec%60;return c?m+':'+String(r).padStart(2,'0'):m+' min'+(r?' '+r+' s':'');};

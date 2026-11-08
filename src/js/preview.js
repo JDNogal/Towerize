@@ -63,7 +63,7 @@ function drawEPrev(){
  for(const e of s.enemies){const E=ET[e.t],px=X(e.x),py=Y(e.y),r=E.r*PVC;c.fillStyle=E.col;c.beginPath();c.arc(px,py,r,0,7);c.fill();
   if(E.el){c.strokeStyle='#f0b429';c.lineWidth=2;c.beginPath();c.arc(px,py,r+2,0,7);c.stroke();}
   c.fillStyle='#000';c.fillRect(px-r,py-r-6,2*r,3);c.fillStyle='#6fe07a';c.fillRect(px-r,py-r-6,2*r*Math.max(0,e.hp/e.max),3);}
- for(const p of s.proj){const px=X(p.x),py=Y(p.y);c.fillStyle=p.col;c.beginPath();c.arc(px,py,3,0,7);c.fill();}
+ for(const p of s.proj){const px=X(p.x),py=Y(p.y);if(p.orb){drawOrbP(c,px,py,p.orb,PVC*K,p.col);continue;}c.fillStyle=p.col;c.beginPath();c.arc(px,py,3,0,7);c.fill();}
  if(OPT.dnum)for(const d of s.dn){if(d.sh<.5)continue;const a=d.idle<.6?1:Math.max(0,1-(d.idle-.6)/.5),cr=d.crit>0,txt=fmtD(d.sh)+(cr?'!':'');
   c.globalAlpha=a;c.font='bold '+(cr?17:13)+'px "Trebuchet MS",sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textAlign='center';c.textBaseline='bottom';c.lineWidth=3;c.lineJoin='round';c.strokeStyle='rgba(10,12,16,.9)';
   const px=X(d.x)+(d.u?16:0),py=Y(d.y)-d.r*PVC-10-d.i*14-Math.min(14,d.age*10);c.strokeText(txt,px,py);c.fillStyle=DNC[d.key]||'#fff';c.fillText(txt,px,py);}
