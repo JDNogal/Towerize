@@ -1,0 +1,14 @@
+const OUT=require('path').join(__dirname,'out');require('fs').mkdirSync(OUT,{recursive:true});
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:720}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
+await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OP.tab='jg';lbOpen('op');});await p.waitForTimeout(200);
+const hov=async(sel,n)=>{const e=await p.$(sel);const bb=await e.boundingBox();await p.mouse.move(bb.x+bb.width/2,bb.y+bb.height/2);await p.waitForTimeout(350);
+ const r=await p.evaluate(s=>{const e=document.querySelector(s);return[$('ttb').textContent,$('ttb').classList.contains('on'),e.hasAttribute('title')];},sel);console.log(n,JSON.stringify(r));
+ const t=await p.evaluate(()=>{const r=$('ttb').getBoundingClientRect();return r;});await p.screenshot({path:OUT+'/tt_'+n+'.png',clip:{x:Math.max(0,bb.x-120),y:Math.max(0,bb.y-60),width:300,height:130}});};
+await hov('#comp .bkmk[data-v="kb"]','marca');
+await hov('#comp .bkx','cerrar');
+await p.mouse.move(640,700);await p.waitForTimeout(150);console.log('fuera',await p.evaluate(()=>$('ttb').classList.contains('on')));
+await p.evaluate(()=>{OPT.hints=false;localStorage.setItem('rt-tutchoice','skip');startGame(15);chooseHero('sylvana');RL.open=false;$('relic').classList.remove('open');ui();});await p.waitForTimeout(300);
+await hov('#zm [data-z="+"]','zoom');
+await hov('#mtl [data-a="pause"]','pausa');
+console.log(JSON.stringify(errs));await b.close();})();

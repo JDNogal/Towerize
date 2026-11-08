@@ -87,6 +87,19 @@ node build.js
 
 No necesita dependencias. Con `--out CARPETA` escribe además `CARPETA/towerize-vNNN.html`.
 
+## 🧪 Pruebas
+
+En `tests/` hay una batería de pruebas automáticas que abren el juego en un navegador (escritorio y móvil) y comprueban menús, libro, héroe, anillo de construcción, Faro, etc.
+
+```bash
+npm install
+npx playwright install chromium   # solo la primera vez
+npm test                          # monta index.html y pasa todas las pruebas
+node tests/run.js faro            # solo las que contengan «faro» en el nombre
+```
+
+Las capturas que hacen quedan en `tests/out/`.
+
 ## 👤 Autor
 
 **Javier del Nogal González** · Desarrollador Full Stack

@@ -1,0 +1,20 @@
+const OUT=require('path').join(__dirname,'out');require('fs').mkdirSync(OUT,{recursive:true});
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1280,height:800}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
+await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;localStorage.setItem('rt-tutchoice','skip');startGame(15);chooseHero(Object.keys(HEROES)[1]);S.chests={};
+ for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
+ RL.open=false;$('relic').classList.remove('open');S.gold=200;S.deck=['arrow','frost','orb'];S.msg='';ui();});
+await p.waitForTimeout(300);
+const sol=await p.evaluate(()=>{const out=[];for(let gy=0;gy<NC;gy++)for(let gx=0;gx<NC;gx++)if(S.cc[gy][gx]===1){const r=cellRect(gx*K,gy*K,K);out.push([(r.l+r.r)/2,(r.t+r.b)/2]);}return out.filter(([x,y])=>x>40&&y>70&&x<innerWidth-40&&y<innerHeight-60);});
+console.log('sol',sol.length);
+await p.mouse.move(sol[0][0],sol[0][1]);await p.waitForTimeout(100);await p.keyboard.press('2');await p.waitForTimeout(100);
+console.log('tecla 2',await p.evaluate(()=>S.list.map(t=>t.type).join()));
+await p.mouse.click(sol[1][0],sol[1][1]);await p.waitForTimeout(100);console.log('abierto',await p.evaluate(()=>!!BM.s));await p.keyboard.press('Escape');await p.waitForTimeout(50);console.log('esc cierra',await p.evaluate(()=>!BM.s));
+await p.mouse.click(sol[1][0],sol[1][1]);await p.waitForTimeout(100);
+await p.evaluate(()=>{S.gold=10;});await p.waitForTimeout(100);
+const bt=await p.evaluate(()=>{const q=document.querySelector('#bmenu .tmb[data-k="orb"]').getBoundingClientRect();return[q.x+q.width/2,q.y+q.height/2];});
+await p.mouse.click(bt[0],bt[1],{button:'right'});await p.waitForTimeout(150);console.log('wish',await p.evaluate(()=>JSON.stringify(S.wish)));
+await p.mouse.click(5,400);await p.waitForTimeout(80);console.log('clic fuera cierra',await p.evaluate(()=>!BM.s));
+await p.evaluate(()=>{S.gold=500;});await p.waitForTimeout(500);console.log('wish construida',await p.evaluate(()=>[S.list.map(t=>t.type).join(),S.gold,JSON.stringify(S.wish)]));
+await p.screenshot({path:OUT+'/bm_w.png'});
+console.log(errs);await b.close();})();

@@ -1,0 +1,13 @@
+const OUT=require('path').join(__dirname,'out');require('fs').mkdirSync(OUT,{recursive:true});
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1280,height:800}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.addInitScript(()=>{try{localStorage.setItem('rt-seen',JSON.stringify({tw:{arrow:1,cata:1,orb:1},pc:{},bf:{},en:{norm:1,runner:1,sling:1},rl:{horn:1},hr:{},ev:{}}));localStorage.setItem('rt-opts',JSON.stringify({u_cpa:true}));localStorage.setItem('rt-story',JSON.stringify({intro:1}));localStorage.setItem('rt-achpin',JSON.stringify(['first','sky']));}catch(e){}});
+await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
+await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;});
+const sh=async n=>{await p.waitForTimeout(400);await p.screenshot({path:OUT+'/v259_'+n+'.png'});};
+await p.evaluate(()=>{toggleComp(true);CP.tab='en';renderComp();});await sh('en');
+await p.evaluate(()=>{CP.tab='tw';renderComp();});await sh('tw');
+await p.evaluate(()=>{CP.tab='lg';renderComp();});await sh('lg');
+await p.evaluate(()=>{CP.tab='hr';CP.sel.hr='yrsa';renderComp();});await sh('hr');
+await p.mouse.click(15,400);await p.waitForTimeout(200);console.log('cerrado al pulsar fuera',await p.evaluate(()=>!CP.open));
+await p.evaluate(()=>{toggleComp(true);CP.tab='tw';renderComp();});await p.mouse.click(160,70);await p.waitForTimeout(200);console.log('marcapáginas no cierra',await p.evaluate(()=>CP.open));
+console.log(errs);await b.close();})();

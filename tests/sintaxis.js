@@ -1,0 +1,2 @@
+const OUT=require('path').join(__dirname,'out');require('fs').mkdirSync(OUT,{recursive:true});
+const fs=require('fs');const h=fs.readFileSync(process.argv[2],'utf8');const m=h.match(/<script>([\s\S]*?)<\/script>/g);for(const x of m){const c=x.replace(/<\/?script>/g,'');try{new Function(c);console.log('ok')}catch(e){const vm=require('vm');try{new vm.Script(c)}catch(e2){console.log(e2.stack.split('\n').slice(0,4).join('\n'))}}}
