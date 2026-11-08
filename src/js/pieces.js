@@ -60,7 +60,7 @@ function openRelic(){
 function renderRelicPick(){
  closePrim();RL.open=true;$('relic').classList.add('open');$('relic').scrollTop=0;
  $('relic').innerHTML='<b style="font-size:16px">¡Cofre abierto!</b><br><small>Elige una reliquia para esta partida. El juego está en pausa.</small><div class="cgrid">'+
-  RL.choices.map(id=>{const r=RELIC[id];return `<div class="ce rcard" style="text-align:left"><div class="ric" style="background:${r.col}">${r.ic}</div><b style="display:block;text-align:center">${r.n}</b>${rcdTag(id)}${rdesc(id)}<button data-a="relic" data-id="${id}">Elegir</button></div>`;}).join('')+
+  RL.choices.map(id=>{const r=RELIC[id];return `<div class="ce rcard" style="text-align:left"><div class="ric" style="background:${r.col}">${r.ic}</div><b style="display:block;text-align:center">${r.n}</b>${rdesc(id)}<button data-a="relic" data-id="${id}">Elegir</button></div>`;}).join('')+
   '</div><small>Pulsa una reliquia de la fila superior para usar su activo (pierdes el pasivo unas rondas).</small>'+wcompBtn('rl');
 }
 function toggleOpts(v){const on=v===undefined?!(LB.open&&!LB.cover&&OP.open):v;if(on){OP.keepS=0;lbOpen('op');}else lbClose();}
