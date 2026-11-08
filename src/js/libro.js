@@ -28,6 +28,7 @@ function lbSetOrigin(){const el=$('comp'),c=lbCorePos();if(c){el.style.setProper
 function coreFlash(){const c=lbCorePos();if(!c)return;const d=document.createElement('div');d.className='coreflash';d.style.left=c.x+'px';d.style.top=c.y+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),900);}
 function lbClose(resume,now){
  if(!LB.open){CP.open=false;OP.open=false;return;}
+ if(!now){try{sfx('bkclose');}catch(e){}}
  LB.open=false;LB.cover=false;CP.open=false;OP.open=false;CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;
  const el=$('comp');
  if(!now&&S&&S.core&&!document.body.classList.contains('inmenu')&&el.firstElementChild){// el libro se encoge y se mete en el núcleo
@@ -163,7 +164,7 @@ function lbRender(){
  else pages=`<div class="bkp l">${P.left}</div><div class="bkp r${P.flip?' flip':''}">${P.right}</div>`;
  const hasft=!!(P.footL||P.footR),feet=hasft?`<div class="lbft l">${P.footL||''}</div><div class="lbft r">${P.footR||''}</div>`:'';
  el.innerHTML=`<div class="bkw${LB.anim?' lbanim':''}">${marks}<div class="bk${hasft?' hasft':''}"><div class="bkcover"></div>${pages}${feet}${lbArrows()}${nar||LB.area==='prep'?'':(P.ribs||lbRibs())}${LB.area==='prep'?'':`<button class="bkx" data-a="lbx" title="${LB.area==='end'?'Ver el mapa':lbInGame()?'Volver a la pausa':'Volver al menú'}">✕</button>`}</div></div>`;
- if((LB.anim||(!same&&LB.lastK0))&&!LB.quiet){try{sfx('page');}catch(e){}}LB.lastK0=LB.lastK;LB.quiet=false;LB.anim=false;
+ if((LB.anim||(!same&&LB.lastK0))&&!LB.quiet){try{sfx(LB.anim?'bkopen':'page');}catch(e){}}LB.lastK0=LB.lastK;LB.quiet=false;LB.anim=false;
  const nl=el.querySelector('.bkp.l,.bkp.spread');if(nl&&same)nl.scrollTop=st;
  if(P.after)P.after(el);
 }

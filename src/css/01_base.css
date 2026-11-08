@@ -89,7 +89,7 @@ body.dsk #comp.bkm,body.mfs #comp.bkm,body.inmenu #comp.bkm{position:fixed!impor
 .bksec{font:700 12px Georgia,serif;text-transform:uppercase;letter-spacing:.08em;color:var(--acc);margin:12px 0 6px;border-bottom:1px solid var(--pline);padding-bottom:2px}
 .bktiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px}
 .bti{margin:0!important;padding:6px 3px 4px!important;border-radius:10px!important;background:var(--paper2)!important;border:1.5px solid var(--pline2)!important;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--ink2)!important;min-width:0}
-.bti small{font:600 10.5px system-ui,sans-serif;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink2)}
+.bti small{font:600 11px system-ui,sans-serif;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}.bti.un small,.bti.hid small{color:var(--ink2)}
 .bti:hover{border-color:var(--acc2)!important}.bti.on{border-color:var(--acc2)!important;box-shadow:0 0 0 2px var(--acc2),0 4px 10px rgba(90,40,10,.25)!important;background:var(--paper1)!important}
 .bti .bic{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:24px;background:var(--paper3)}
 .bti .bic i{font-style:normal;display:block!important;position:static!important;width:auto!important;height:auto!important;line-height:1!important;background:none!important;margin:0!important;border:0!important;transform:none!important}.bti.un .bic i,.bti.un .bpor,.bti.un .bdot,.bti.un .bbf,.bti.un canvas{filter:brightness(0) opacity(.38)}.bti.un .bic{background:var(--paper3)!important}.bti.un small{color:var(--pline3)}
