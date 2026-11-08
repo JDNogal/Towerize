@@ -93,3 +93,5 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 #comp .bkp .crgd{background:rgba(255,250,235,.6);border:1px solid #d0bb8c;border-radius:10px}#comp .bkp .crgd.crcl{background:#2a2118;border-color:#2a2118}
 /* botón de volver a la portada */
 #comp.narrow .lbribs{display:none}
+/* el libro deja sitio a las cintas de la derecha: si la ventana es estrecha, el libro se encoge en vez de cortarse */
+#comp.bkm:not(.narrow) .bkw{width:min(1080px,calc(100vw - 190px));margin-right:72px}
