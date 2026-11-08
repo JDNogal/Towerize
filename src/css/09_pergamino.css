@@ -1,6 +1,6 @@
 /* ===== PERGAMINO: ventanas, tarjetas y bocadillos de partida, con marco de cuero como la tapa del libro ===== */
 /* marco de cuero: borde transparente pintado con el cuero, papel dentro y línea fina de remate entre ambos */
-body.dsk #panel,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#tip,#hpop,#tmcard,#bmcard,.hmsg,#side.tipc{
+body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#tip,#hpop,#tmcard,#bmcard,.hmsg,#side.tipc{
  border:7px solid transparent!important;border-radius:14px!important;
  background:linear-gradient(180deg,var(--paper),color-mix(in srgb,var(--paper) 90%,var(--trim))) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2)) border-box!important;
  box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 75%,transparent),0 12px 30px rgba(0,0,0,.55)!important;color:var(--ink)}
@@ -46,3 +46,8 @@ body.dsk #panel,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#
 .rbt small{margin-left:auto;font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px}.rbt small .kw{color:var(--ink2)}
 :root[data-pal="noche"] .rps .rbt,:root[data-pal="amb"] .rps .rbt{color:#c8a0ff}
 #relic .rcard .rac{margin-bottom:10px}
+
+/* panel del héroe en partida */
+#hinfo{position:fixed;z-index:35;width:300px;max-height:calc(100vh - 140px);overflow:auto;padding:10px 12px;font-size:13px;display:none}#hinfo.on{display:block}
+#hinfo .esec{font:700 12px Georgia,serif;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin:10px 0 2px}
+#hinfo .row{display:flex;justify-content:space-between;gap:10px}

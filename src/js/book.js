@@ -41,6 +41,8 @@ function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
 function bkSheet(ic,inner,cls){let ttl='',rest=inner;const a='<div class="ttl">';
  if(inner.startsWith(a)){const j=inner.indexOf('</div>');ttl=inner.slice(a.length,j);rest=inner.slice(j+6);}
  const lv=(ttl.match(/<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(lv){ttl=ttl.replace(/<button class="stbtn lvbtn"[\s\S]*?<\/button>/g,'');ttl=ttl.includes('<br>')?ttl+lv:ttl+'<br>'+lv;}
+ // filas con texto largo (etiqueta + valor) ocupan todo el ancho, para que no se aplasten en media columna
+ rest=rest.replace(/<div class="row([^"]*)"><span>([\s\S]*?)<\/span><span>([\s\S]*?)<\/span><\/div>/g,(m,c,a,b)=>(a+b).replace(/<[^>]+>/g,'').length>24?`<div class="row${c} rw"><span>${a}</span><span>${b}</span></div>`:m);
  return `<div class="bksh">${ic||''}<div class="ttl bksht">${ttl}</div></div><div class="ce bkce bkg${cls?' '+cls:''}">${rest}</div>`;}
 const bkPrevBtn=(a,v,l)=>`<button class="bkgo" data-a="${a}" data-v="${v}">▶ ${l||'Ver en acción'}</button>`;
 function bkDetail(t,id){
@@ -51,7 +53,7 @@ function bkDetail(t,id){
   if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   return bkSheet(bi,shopInfo(id,1).replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id);}
  if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;
-  return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`,heroInfo(id,1).replace(/<b>[^<]*? /,'<b>'))+bkPrevBtn('chprev',id);}
+  return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`,heroInfo(id,1).replace(/<b>[^<]*? /,'<b>'))+bkPrevBtn('chprev',id)+(D.d?'<div class="ddesc">'+D.d+'</div>':'')+`<div class="esec" style="margin-top:12px">Reliquia inicial</div><div class="ce bkce bkg">${relicInfo(D.relic,1)}</div><div class="ce bkce">${heroAbHtml(id)}</div>`;}
  if(t==='pc'){const i=+id,o=PIECES[i];if(!o)return'';if(!seen('pc',o.n))return sh('🧩','Aún no descubierta.');
   return `<div class="ce bkce"><div class="ttl">${(SOLARES[o.n]||[]).length>1?`<button class="stbtn lvbtn" data-a="cpcv" data-v="${i}" title="Ver la otra disposición de solares">V${((CP.pcv||{})[i]||0)+1}</button>`:''}<b>${o.n}</b> · ${opens(o.p)} salidas</div><canvas width="168" height="168" data-pi="${i}" style="margin:8px auto"></canvas><small>Solares en partida: <b>${SOLN[o.n]||'—'}</b></small><small>Las piezas pueden salir giradas, con casillas especiales y con otra decoración. Solo se construye en los solares.</small></div>`;}
  if(t==='bf'){if(!seen('bf',id))return sh('✨','Aún no descubierta.');return `<div class="fbar"><button class="${CP.sup[id]?'on':''}" data-a="csup" data-v="${id}">${CP.sup[id]?'★':'☆'} Versión super</button></div><div class="ce bkce">${buffInfo(CP.sup[id]?id+'+':id,1)}</div>`;}
@@ -93,7 +95,7 @@ function bkPreview(){const es=Object.keys(ET).filter(e=>seen('en',e)),enOpts=es.
  else if(CP.hprev){const id=CP.hprev,D=HEROES[id];back='chback';nm=D.n;ic=`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`;if(!es.includes(CP.hen))CP.hen=es[0]||'norm';
   ctl=bkPvRow('Enemigo',bkPills('pve3',enOpts,CP.hen))+bkPvRow('Nivel',bkPills('pvl',[1,5,10].map(l=>[l,'Nv '+l+(hlvOk(id,l)?'':' 🔒'),!hlvOk(id,l)]),CP.hlv||1))+bkPvRow('Velocidad',spd('pvs3'));
   note='Su vida depende del nivel: ronda 1 con Nv 1, ronda 7 con Nv 5 y ronda 14 con Nv 10. Los niveles con 🔒 se desbloquean al alcanzarlos en una partida. Si cae, reaparece al instante.';
-  extra=(D.d?'<div class="ddesc">'+D.d+'</div>':'')+`<div class="ce bkce bkg">${relicInfo(D.relic,1)}</div><div class="ce bkce">${heroAbHtml(id)}</div>`;}
+  }
  else{const k=CP.eprev,E=ET[k],hs=allyList();back='ceback';if(!hs.some(a=>a[0]===CP.ph))CP.ph='hero:reinhart';nm=E.n;ic=`<span class="bkbic bken"><i style="background:${E.col}"></i></span>`;
   ctl=bkPvRow('Aliado',bkPills('pvh',hs.map(([v,l])=>[v,l]),CP.ph))+bkPvRow('Velocidad',spd('pvs2'));
   note='El enemigo, con su vida de la ronda 1, camina hasta el aliado y pelean. Si cae cualquiera de los dos, reaparece al instante.';}

@@ -40,7 +40,7 @@ function lbClose(resume,now){
  if(typeof ui==='function'&&S)ui();
 }
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal. En la preparación de partida no se sale así
-function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.fromWin){LB.fromWin=0;lbClose(true);return;}if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
+function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.area==='msg'){const f=LB.msg&&LB.msg.onBack;LB.msg=null;if(f)f();else lbClose(true);return;}if(LB.fromWin){LB.fromWin=0;lbClose(true);return;}if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
 const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
 const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
 // flechas de pasar página: al anterior / siguiente de la sección en la que estás (sin fondo, solo trazo)
@@ -136,6 +136,9 @@ function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
   footL:S.tut?'':`<button class="lbbk" data-a="menu" data-bk="1">‹ Menú</button>`,footR:`<button class="gbtn hok2" data-a="pickhero" data-id="${lk?'':id}"${lk?' disabled':''}>${lk?'Bloqueado':'Elegir a '+D.n+' ✓'}</button>`};
 }
 // ---- final de partida: la crónica ----
+// página de mensaje: dos páginas con lo que haya en LB.msg (left/right pueden ser funciones), pie y sin cintas
+function msgParts(){const M=LB.msg||{left:'',right:''},v=x=>typeof x==='function'?x():x||'';
+ return {marks:null,left:v(M.left),right:v(M.right),key:'msg'+M.key+'|'+(M.sel||0),hero:1,flip:true,footL:M.footL,footR:M.footR,ribs:' '};}
 function endParts(){const E=LB.end||{left:'',right:''};
  return {marks:null,left:`<div class="lbend">${E.left}</div>`,right:`<div class="lbend r">${E.right}</div>`,key:'end',hero:1,footL:E.footL,footR:E.footR,
   ribs:`<div class="bkribs"><button class="bkrib on" title="Resumen">📊<span>Resumen</span></button><button class="bkrib" data-a="hideend" title="Ver el mapa">🗺️<span>Ver mapa</span></button><button class="bkrib${lbHasNew('lg')?' new':''}" data-a="lbarea" data-v="lg" title="Logros">🏆<span>Logros</span></button></div>`};
@@ -154,7 +157,7 @@ function lbRender(){
  if(LB.area==='lg')CP.tab='lg';else if(LB.area==='cp'&&CP.tab==='lg')CP.tab=compOk()?'tw':'lg';
  if(LB.area==='cp'&&CP.tab==='lg')LB.area='lg';
  CP.open=LB.area==='cp'||LB.area==='lg';OP.open=LB.area==='op';lbSeenArea(LB.area);
- const P=LB.area==='prep'?prepParts():LB.area==='end'?endParts():CP.open?compParts():LB.area==='op'?optParts():LB.area==='st'?statParts():LB.area==='hp'?helpParts():credParts();
+ const P=LB.area==='prep'?prepParts():LB.area==='end'?endParts():LB.area==='msg'?msgParts():CP.open?compParts():LB.area==='op'?optParts():LB.area==='st'?statParts():LB.area==='hp'?helpParts():credParts();
  const marks=P.marksHTML||(P.marks?lbMarks(P.marks.list,P.marks.cur,P.marks.act):'');
  const sl=el.querySelector('.bkp.l,.bkp.spread'),st=sl?sl.scrollTop:0,same=LB.lastK===LB.area+'|'+P.key;LB.lastK=LB.area+'|'+P.key;
  let pages;

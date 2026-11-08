@@ -5,7 +5,9 @@ const HQ={q:[],cur:null,f:1};
 const realG=()=>S&&S.st&&!S.pvE&&!S.pvH&&S.portals&&(S.phase==='place'||S.phase==='build'||S.phase==='wave');
 // lim: pistas del mapa en la fase de construcción, como mucho 2 por ronda para no saturar (las demás saldrán en rondas siguientes)
 const TSKIP={tile:1,fork:1,speed:1,retry:1,bfcost:1};
-function hint(id,title,txt,tg,lim){if(S&&S.tut&&(TSKIP[id]||(id==='chest'&&S.round<3)||(id==='hab'&&S.round<2)||(id==='hero'&&S.phase!=='wave')||(id==='portal'&&S.round===1&&S.phase!=='wave')))return;if((!OPT.hints&&!(S&&S.tut))||(S&&S.tut?TUTHS[id]:HSEEN[id])||HQ.q.some(h=>h.id===id)||(HQ.cur&&HQ.cur.id===id)||!realG())return;if(lim){if(HQ.limR!==S.round){HQ.limR=S.round;HQ.limN=0;}if(HQ.limN>=2)return;HQ.limN++;}if(Array.isArray(txt))HQ.q.push({id,title,steps:txt,si:0,txt:txt[0][0],tg:txt[0][1],ph:S.phase});else HQ.q.push({id,title,txt,tg,ph:S.phase});}
+// pistas prioritarias: van las primeras de la cola y no cuentan para el límite de pistas seguidas (deben salir con lo primero que las provoca)
+const HPRIO={units:1};
+function hint(id,title,txt,tg,lim){if(S&&S.tut&&(TSKIP[id]||(id==='chest'&&S.round<3)||(id==='hab'&&S.round<2)||(id==='hero'&&S.phase!=='wave')||(id==='portal'&&S.round===1&&S.phase!=='wave')))return;if((!OPT.hints&&!(S&&S.tut))||(S&&S.tut?TUTHS[id]:HSEEN[id])||HQ.q.some(h=>h.id===id)||(HQ.cur&&HQ.cur.id===id)||!realG())return;if(lim){if(HQ.limR!==S.round){HQ.limR=S.round;HQ.limN=0;}if(HQ.limN>=2)return;HQ.limN++;}{const it=Array.isArray(txt)?{id,title,steps:txt,si:0,txt:txt[0][0],tg:txt[0][1],ph:S.phase}:{id,title,txt,tg,ph:S.phase};if(HPRIO[id])HQ.q.unshift(it);else HQ.q.push(it);}}
 const hintL=(id,t,x,g)=>hint(id,t,x,g,1);
 const HOV=()=>TOUCH?'Toca':'Pasa el ratón por',CANC=()=>TOUCH?' Pulsa el mismo botón para cancelar.':' Esc para cancelar.';
 const HEROTXT='Pulsa el retrato de tu héroe y elige una casilla del camino para moverlo, también durante la oleada.';
@@ -30,7 +32,7 @@ function hintPos(){const el=$('hint');if(!el||!HQ.cur)return;const ring=el.first
  mx=Math.max(12,Math.min(W-mw-12,mx));my=Math.max(12,Math.min(H-mh-12,my));msg.style.width=mw+'px';msg.style.left=mx+'px';msg.style.top=my+'px';}
 const HGAP=10,BARX={pc:0,tw:0};
 function hintPace(){const k=S.phase+S.round;if(HQ.pk!==k){if(HQ.pph==='wave')HQ.q=HQ.q.filter(h=>h.ph!=='wave');HQ.pk=k;HQ.pph=S.phase;HQ.pn=0;HQ.nt=2.5;}
- const h=HQ.q[0];if(!h)return false;const tut=h.id.startsWith('tut_');if(!tut&&HQ.pn>=2)return false;if(S.phase==='wave'&&!tut&&(S.wt||0)<HQ.nt)return false;return true;}
+ const h=HQ.q[0];if(!h)return false;const tut=h.id.startsWith('tut_')||!!HPRIO[h.id];if(!tut&&HQ.pn>=2)return false;if(S.phase==='wave'&&!tut&&(S.wt||0)<HQ.nt)return false;return true;}
 function portAuto(){if(!S||S.phase!=='build'||S.round>2||S.portAuto===S.round||PR.open||RL.open||HQ.cur||HQ.q.length||FO.open||LB.open||!realG())return;const pt=S.portals&&S.portals[0];if(!pt)return;S.portAuto=S.round;
  const tg={key:'pt:'+pt.x+','+pt.y+'a',html:()=>portalInfo(pt),rect:cellRect(pt.x-1,pt.y-1,3)};if(MFSQ()){LUPA.tg=tg;LUPA.sticky=true;placeLupa(tg.rect);}else{openPrim(tg);PR.pinned=true;PR.auto=1;}}
 function hintTick(rdt){

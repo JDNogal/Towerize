@@ -44,7 +44,7 @@ const EVENTS={
   {l:'Regatear',c:'El próximo cofre que abras estará vacío',run:()=>{S.noChest=1;gainRelic('scale');return['relic:scale'];}}]},
  shrine:{n:'Santuario olvidado',ic:'⛩️',txt:'Entre la maleza aparece un pequeño santuario. Una inscripción promete favores a cambio de sacrificios.',opts:[
   {l:'Sacrificar la mitad de tu vida',c:'Pierdes la mitad de tu vida actual',req:()=>!S.hero||S.hero.lvl>=HLMAX?'Tu héroe ya está al nivel máximo':S.hp<2?'Necesitas al menos 2 de vida':'',run:()=>{hpLoss(Math.floor(S.hp/2));heroUp();return['lvl'];}},
-  {l:'Hacer una ofrenda',c:'Pagas 100 🪙',req:()=>S.gold<100?'Necesitas 100 🪙':!blockBuffs(EVK)?'La pieza del santuario no tiene casillas especiales':'',run:()=>{S.gold-=100;(S.bless=S.bless||{})[EVK]=1;return['bless'];}},
+  {l:'Hacer una ofrenda',c:'Pagas 100 🪙',req:()=>S.gold<100?'Necesitas 100 🪙':!blockBuffs(EVK)?'La ofrenda bendice las casillas especiales de esta pieza, y no tiene ninguna':'',run:()=>{S.gold-=100;(S.bless=S.bless||{})[EVK]=1;return['bless'];}},
   {l:'Llevarte el ídolo',c:'Pierdes 3 de vida (la maldición del santuario)',req:()=>S.hp<=3?'Necesitas más de 3 de vida':'',run:()=>{hpLoss(3);gainRelic('idol');return['relic:idol'];}},
   {l:'Rezar',run:()=>{S.hp=Math.min(20,S.hp+8);return['hp:+8'];}}]},
  smith:{n:'Herrero errante',ic:'🔨',txt:'Un herrero ambulante ha montado su yunque junto al camino. «Puedo mejorar tus defensas… por un precio.»',opts:[

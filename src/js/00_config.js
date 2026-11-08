@@ -55,7 +55,7 @@ addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.r
  else if(kbIs('ult',k)){clickA('[data-a="hult"]');e.preventDefault();}
  else if(kbIs('hero',k)){clickA('[data-a="hero"]');e.preventDefault();}
  else if(kbIs('pause',k)){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
- else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
+ else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2,3],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(kbIs('wave',k)&&S.phase==='build'){if(document.querySelector('[data-a="wave"]')){WARM=0;startWave();}e.preventDefault();}
  else if(kbIs('upg',k)){if(e.shiftKey){const b=document.querySelector('#tmenu.on [data-tm="up"],#side [data-a="up"],#tip [data-a="up"]');if(b){wishToggle(b);e.preventDefault();}}else{const b=document.querySelector('#tmenu.on [data-tm="up"],#tmenu.on [data-tm="gup"]');if(b){tmDo(b);e.preventDefault();}else if(clickA('[data-a="up"]'))e.preventDefault();}}});
 const keyOK=e=>!(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))&&typeof S!=='undefined'&&S&&!document.body.classList.contains('inmenu')&&!LB.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof INTRO!=='undefined'&&INTRO.on);

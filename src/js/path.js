@@ -94,7 +94,8 @@ function placePiece(bx,by){
  const ends=shuf(collectEnds().concat(borderEnds()));
  for(const e of ends){e.d=d[e.y][e.x];e.nw=e.bx===bx&&e.by===by;}
  for(let i=ends.length-1;i>=0;i--)if(!(ends[i].d<1e9))ends.splice(i,1);
- ends.sort((a,b)=>a.nw===b.nw?b.d-a.d:a.nw?-1:1);
+ // primero el extremo más lejano de la pieza nueva; el resto, al azar (antes, siempre los más alejados: los enemigos tardaban mucho en llegar)
+ ends.sort((a,b)=>a.nw===b.nw?b.d-a.d:a.nw?-1:1);{const nw=ends.filter(e=>e.nw),rest=shuf(ends.filter(e=>!e.nw));ends.length=0;ends.push(...nw.slice(0,1),...shuf(nw.slice(1).concat(rest)));}
  if(!ends.length)ends.push({...any,nw:true});
  S.ends=ends;
  const boss=bossRound(S.round)?(ends.find(e=>e.nw)||any):null;

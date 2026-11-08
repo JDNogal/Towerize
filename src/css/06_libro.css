@@ -257,3 +257,12 @@ body.inmenu.lbsetup canvas#c{filter:none}
 .bkpvs .bknote{font-style:italic;font-size:12px!important}
 #comp .bkp .ddesc{margin-top:10px}
 #comp .lbft.r:has(.pvbk){justify-content:flex-start;padding-left:34px}
+
+/* páginas de mensaje: nuevos desbloqueos y tutorial completado */
+.bti.nut{position:relative}.bti.nut .bic{font-size:28px}.bti.nut small{white-space:normal;line-height:1.2}
+.nunw{position:absolute;top:-7px;right:-7px;background:var(--gbtn);color:var(--gbtnf);font:800 9px system-ui,sans-serif;border-radius:8px;padding:2px 5px;z-index:1}
+.tutbig{text-align:center;padding-top:6px}.tutem{font-size:56px;line-height:1}.tutbig h3{margin:6px 0 2px}
+.tutst{display:flex;gap:10px;margin:12px 0 4px}.tutst div{flex:1;border:1px solid var(--pline2);background:var(--paper2);border-radius:9px;padding:6px 10px;font-size:12px;color:var(--ink2)}.tutst b{display:block;font:700 20px Georgia,serif;color:var(--ink)}
+.tutl{margin:4px 0 0;padding-left:18px;font-size:13.5px}.tutl li{margin:5px 0}
+#comp .bkp .bkg>.row.rw{grid-column:1/-1}
+#comp.narrow .tutem{font-size:34px}#comp.narrow .tutbig h3{font-size:20px}#comp.narrow .tutst{margin:6px 0 2px}

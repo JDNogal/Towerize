@@ -20,9 +20,12 @@ setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.list){MSG0=null;return;}c
  toast(m);S.msg='';ui();}catch(e){}},200);
 // ---- burbuja roja para los errores: sale donde pulsas y siempre dentro de la pantalla ----
 const LPT={x:0,y:0,t:0};addEventListener('pointerdown',e=>{LPT.x=e.clientX;LPT.y=e.clientY;LPT.t=performance.now();},true);
-const ERRRX=/insuficiente|no se puede|solo se puede|no tienes|necesitas|ya tiene|ya est[áa]n|no quedan|primero termina|en enfriamiento|no hay |bloquead|no puedes|todavía no|aún no|no cabe|solo durante|se desbloquea a/i;
+const ERRRX=/insuficiente|no se puede|solo se puede|no tienes|necesitas|ya tiene|ya est[áa]n|no quedan|primero termina|en enfriamiento|no hay |bloquead|no puedes|todavía no|aún no|no cabe|solo durante|se desbloquea a|está caído|enfriamiento: |ya está activo|está desactivado/i;
 let ERRT=0,LMSG='';
+// avisos de un botón concreto (reliquia, habilidad): salen encima de ese botón, también si se ha usado con el teclado
+const ERRA={sel:null,t:0},errAt=sel=>{ERRA.sel=sel;ERRA.t=performance.now();};
 function errBubble(txt){let b=$('errb');if(!b){b=document.createElement('div');b.id='errb';document.body.appendChild(b);}b.textContent=txt;b.classList.add('on');
+ const an=performance.now()-ERRA.t<400&&ERRA.sel?document.querySelector(ERRA.sel):null;if(an){const q=an.getBoundingClientRect();LPT.x=(q.left+q.right)/2;LPT.y=q.top;LPT.t=performance.now();}ERRA.sel=null;
  const recent=performance.now()-LPT.t<1500,W=innerWidth,H=innerHeight,w=b.offsetWidth,h=b.offsetHeight;let x=recent?LPT.x-w/2:W/2-w/2,y=recent?LPT.y-h-16:64;
  if(recent&&y<10)y=LPT.y+22;x=Math.max(10,Math.min(W-w-10,x));y=Math.max(10,Math.min(H-h-10,y));b.style.left=x+'px';b.style.top=y+'px';
  clearTimeout(ERRT);ERRT=setTimeout(()=>b.classList.remove('on'),2200);try{sfx('err');}catch(e){}
@@ -200,7 +203,7 @@ function act(e){
  else if(a==='wave'){if(b.dataset.now||(WARM&&performance.now()-WARM<3000)){WARM=0;startWave();}else{WARM=performance.now();try{sfx('ui');}catch(e){}ui();setTimeout(()=>{if(WARM&&performance.now()-WARM>=3000){WARM=0;ui();}},3050);}}
  else if(a==='spd'){S.speed=+b.dataset.v;ui();}
  else if(a==='spdt'){if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
- else if(a==='spdc'){const L=[.5,1,2],c=S.lspd||1,n=L[(L.indexOf(c)+1)%L.length]||1;S.lspd=n;S.speed=n;ui();}
+ else if(a==='spdc'){const L=[.5,1,2,3],c=S.lspd||1,n=L[(L.indexOf(c)+1)%L.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(a==='pause')openPause();
  else if(a==='pcont')closePause(true);
  else if(a==='phelp')lbOpen('hp');
@@ -263,7 +266,8 @@ function act(e){
  else if(a==='cspal'){OPT.pal=b.dataset.v;saveOpt();applyPal();renderOpts();}
  else if(a==='cscore'){OPT.core=b.dataset.v;saveOpt();renderOpts();}
  else if(a==='csdec'){OPT.decoff=OPT.decoff||{};OPT.decoff[b.dataset.v]=!OPT.decoff[b.dataset.v];saveOpt();renderOpts();}
- else if(a==='nuok'){$('menu').classList.remove('setup');}
+ else if(a==='nuok'){$('menu').classList.remove('setup');lbBack();}
+ else if(a==='nusel'){if(LB.msg){LB.msg.sel=+b.dataset.v;lbRender();}}
  else if(a==='achf'){CP.af=b.dataset.v;renderComp();}
  else if(a==='achs'){CP.as=b.dataset.v;renderComp();}
  else if(a==='sfxt'){sfxTest(b.dataset.v,+b.dataset.i||0);renderOpts();}

@@ -127,7 +127,7 @@ function draw(){
  for(const o of S.orbs||[]){const r=CS*(.35+Math.min(.6,o.v*.05)),px=o.x*CS+CS/2,py=o.y*CS+CS/2;g.fillStyle='rgba(255,215,90,.35)';g.beginPath();g.arc(px,py,r*1.8,0,7);g.fill();g.fillStyle='#ffe27a';g.beginPath();g.arc(px,py,r,0,7);g.fill();}
  if(S.hero){const H=S.hero,q=H.s,sel=S.aim==='hero',now=performance.now(),ga=sel?1:Math.max(0,1-(now-(H.xpT||0))/1100),lf=Math.max(0,1-(now-(H.lvT||0))/700);
   const hov=!sel&&!S.aim&&S.hover&&heroAt(S.hover);/* al pasar el ratón por encima, también: su rango (a distancia) o la distancia a la que sale a pelear (cuerpo a cuerpo) */
-  if((sel&&H.def.ranged||hov)&&q.hp>0){const R=H.def.ranged?hsAt(H.id,H.lvl).range:ALERT;g.fillStyle='rgba(90,180,255,.10)';g.strokeStyle='rgba(110,190,255,.85)';g.lineWidth=lw(1.5);g.beginPath();g.arc(q.x*CS+CS/2,q.y*CS+CS/2,R*CS,0,7);g.fill();g.stroke();}
+  if((sel&&H.def.ranged||hov)&&q.hp>0){const R=H.def.ranged?hsAt(H.id,H.lvl).range:(H.pt&&H.pt.alert||ALERT);g.fillStyle='rgba(90,180,255,.10)';g.strokeStyle='rgba(110,190,255,.85)';g.lineWidth=lw(1.5);g.beginPath();g.arc(q.x*CS+CS/2,q.y*CS+CS/2,R*CS,0,7);g.fill();g.stroke();}
   if((ga>0||lf>0)&&q.hp>0){const r=CS*.85,bw=r*2.2,bh=lw(2.5),px=q.x*CS+CS/2,py=q.y*CS+CS/2-r-lw(4)+bh+lw(1.5),need=H.lvl>=HLMAX?1:xpNeed(H.lvl+1),fr=H.lvl>=HLMAX?1:Math.min(1,H.xp/need);
    g.globalAlpha=Math.max(ga,lf);g.fillStyle='#000';g.fillRect(px-bw/2,py,bw,bh);g.fillStyle=lf>0?'#fff6c0':'#ffd75a';g.fillRect(px-bw/2,py,bw*(lf>0?1:fr),bh);g.globalAlpha=1;}}
  for(const p of S.proj){const px=p.x*CS+CS/2,py=p.y*CS+CS/2;

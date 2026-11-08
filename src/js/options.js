@@ -3,6 +3,7 @@ const OPTS=[
  {tab:'jg',type:'choice',dev:'pc',label:'Posición del panel de información',desc:'Dónde aparece la ficha con los datos de lo que señalas: fija a la derecha, fija a la izquierda o junto al propio elemento.',get:()=>PM,set:v=>setPM(v),choices:[['right','Derecha'],['left','Izquierda'],['near','Junto al elemento']]},
  {tab:'jg',type:'toggle',key:'fs',def:true,dev:'touch',show:()=>FSOK,label:'Pantalla completa al empezar partida',desc:'Al pulsar Nueva partida, el juego ocupa toda la pantalla y se queda en horizontal. Siempre puedes entrar o salir con el botón de las cuatro esquinas, junto al zoom.'},
  {tab:'jg',type:'toggle',key:'kcap',def:true,dev:'pc',label:'Teclas sobre los botones',desc:'Muestra encima de los botones del héroe y de las reliquias la tecla que los activa (las que tengas puestas en Atajos).'},
+ {tab:'jg',type:'toggle',key:'ffwd',def:true,label:'Avance rápido automático',desc:'Mientras ningún enemigo esté al alcance de tus torres ni de tu héroe, el juego va a ×3. En cuanto el primero entra en rango, vuelve a tu velocidad.'},
  {tab:'jg',type:'toggle',key:'dnum',def:true,label:'Números de daño',desc:'Muestra sobre los enemigos el daño que reciben. Los golpes seguidos se suman en un solo número que va subiendo, con el color de su tipo de daño; los críticos salen más grandes y con «!».'},
  {tab:'jg',type:'toggle',key:'hints',def:true,label:'Pistas',desc:'La primera vez que pasa algo nuevo (un enemigo con armadura, un cofre, una reliquia…), una pista corta te lo explica. Si sale en plena oleada, el juego frena poco a poco hasta pararse. Cada pista sale una sola vez.'},
  {tab:'jg',type:'toggle',key:'ptip',def:false,label:'Tooltips de portales abiertos en fase de construcción',desc:'Durante la fase de construcción, los bocadillos con las escuadras de cada portal se quedan siempre abiertos, sin tener que pasar el ratón por encima.',descT:'Durante la fase de construcción, los bocadillos con las escuadras de cada portal se quedan siempre abiertos, sin tener que tocarlos.'},
@@ -70,13 +71,23 @@ const hTierN=v=>['','bronce','plata','oro'][v];
 // nuevos desbloqueos pendientes de enseñar en el menú
 let NEWU=[];try{NEWU=JSON.parse(localStorage.getItem('rt-newu'))||[];}catch(e){}
 const saveNewu=()=>{try{localStorage.setItem('rt-newu',JSON.stringify(NEWU));}catch(e){}};
-function newU(kind,ic,n,extra){NEWU.push({k:kind,ic,n,x:extra||''});saveNewu();}
+function newU(kind,ic,n,extra,id){NEWU.push({k:kind,ic,n,x:extra||'',id:id||null});saveNewu();}
 function heroWinCount(){if(!S||S.tut||!S.hero||S.pvE)return;const id=S.hero.id,t0=hTier(id);HWIN[id]=(HWIN[id]||0)+1;try{localStorage.setItem('rt-hwin',JSON.stringify(HWIN));}catch(e){}
  const t1=hTier(id);if(t1>t0){const H=HEROES[id];newU('frame','🖼️','Marco de '+hTierN(t1)+' · '+H.n,(HWIN[id])+' victorias');toast(`🖼️ <b>Marco de ${hTierN(t1)} para ${H.n}</b><br><small>${HWIN[id]} victoria${HWIN[id]===1?'':'s'} con este héroe.</small>`);}}
-function renderUnlocks(){if(!NEWU.length)return;const KL={tw:'Torres',hr:'Héroes',rl:'Reliquias',ux:'Funciones',pal:'Encuadernaciones',core:'Núcleos',dec:'Decoración del mapa',frame:'Marcos de héroe'};
- const g={};for(const u of NEWU)(g[u.k]=g[u.k]||[]).push(u);
- $('msetup').innerHTML='<h3>🔓 Nuevos desbloqueos</h3><div class="nug">'+Object.keys(KL).filter(k=>g[k]).map(k=>`<div class="nus"><b>${KL[k]}</b><div class="nul">${g[k].map(u=>`<div class="nui"><span>${u.ic}</span><div>${u.n}${u.x?`<small>${u.x}</small>`:''}</div></div>`).join('')}</div></div>`).join('')+
- '</div><small style="display:block;margin:4px 0 12px">Las encuadernaciones, los núcleos y la decoración se configuran en <b>Opciones → Personalización</b>.</small><button class="go" data-a="nuok">Continuar</button>';$('menu').classList.add('setup');NEWU=[];saveNewu();}
+const NUKL={tw:'Torres',hr:'Héroes',rl:'Reliquias',ux:'Funciones',pal:'Encuadernaciones',core:'Núcleos',dec:'Decoración del mapa',frame:'Marcos de héroe'};
+// ficha de un desbloqueo (página derecha)
+function nuDetail(u){if(!u)return '';
+ if(u.k==='tw'&&u.id&&TW[u.id]){const T=TW[u.id];return bkSheet(`<span class="bkbic" style="background:${T.col}">${T.ic}</span>`,(T.uniq?uniqGlance(u.id,1):shopInfo(u.id,1)).replace(/<b>[^<]*? /,'<b>'))+'<p class="bknote">A partir de ahora puede salirte en las ofertas de torres de cada partida.</p>';}
+ if(u.k==='rl'&&u.id&&RELIC[u.id]){const r=RELIC[u.id];return bkSheet(`<span class="bkbic" style="background:${r.col}">${r.ic}</span>`,relicInfo(u.id,1))+'<p class="bknote">A partir de ahora puede salirte en los cofres.</p>';}
+ if(u.k==='hr'&&u.id&&HEROES[u.id]){const D=HEROES[u.id];return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(u.id)}</span>`,heroInfo(u.id,1).replace(/<b>[^<]*? /,'<b>'))+'<p class="bknote">Ya puedes elegirlo al empezar una partida.</p>';}
+ const why={ux:'Ya está disponible en el menú.',pal:'Se elige en Opciones › Personalización.',core:'Se elige en Opciones › Personalización.',dec:'Se activa o desactiva en Opciones › Personalización.',frame:'Se pone solo en el retrato del héroe.'}[u.k]||'';
+ return `<div class="bksh"><span class="bkbic">${u.ic}</span><div class="ttl bksht"><b>${u.n}</b>${u.x?`<br><small>${u.x}</small>`:''}</div></div><p class="bknote">${why}</p>`;}
+function renderUnlocks(){if(!NEWU.length)return;const list=NEWU.slice();NEWU=[];saveNewu();
+ const g={};list.forEach((u,i)=>{u.i=i;(g[u.k]=g[u.k]||[]).push(u);});
+ LB.msg={key:'nu',list,sel:0,onBack:()=>lbOpen(null,true),
+  left:()=>`<h3>🔓 Nuevos desbloqueos</h3><div class="bksub">Lo que has conseguido en tu última partida</div>`+Object.keys(NUKL).filter(k=>g[k]).map(k=>`<div class="bksec">${NUKL[k]}</div><div class="bktiles">`+g[k].map(u=>`<button class="bti nut${LB.msg.sel===u.i?' on':''}" data-a="nusel" data-v="${u.i}"><span class="nunw">NUEVO</span><span class="bic"><i>${u.ic}</i></span><small>${u.n}</small></button>`).join('')+'</div>').join(''),
+  right:()=>nuDetail(LB.msg.list[LB.msg.sel]),footR:`<button class="gbtn" data-a="nuok">Continuar ›</button>`};
+ lbOpen('msg');}
 function cosmHTML(){const lockTxt=c=>c.def?'':cosOwn(c)?'':'🔒 '+achReq(c.ach);
  const pal=COSM.pal.map(c=>{const o=cosOwn(c),on=(OPT.pal||'perg')===c.id;return `<button class="csw${on?' on':''}${o?'':' lk'}" ${o?`data-a="cspal" data-v="${c.id}"`:'disabled'} title="${o?c.n:lockTxt(c).replace(/<[^>]+>/g,'')}"><i class="cswbk" style="background:linear-gradient(90deg,${c.sw[0]} 0 26%,${c.sw[1]} 26%);border-color:${c.sw[0]};box-shadow:inset 0 0 0 2px ${c.sw[0]},inset 0 0 0 3px color-mix(in srgb,${c.sw[1]} 60%,${c.sw[0]})"></i><span>${o?c.n:'🔒 ???'}</span></button>`;}).join('');
  const core=COSM.core.map(c=>{const o=cosOwn(c),on=(OPT.core||'base')===c.id;return `<button class="csw${on?' on':''}${o?'':' lk'}" ${o?`data-a="cscore" data-v="${c.id}"`:'disabled'} title="${o?c.n:lockTxt(c).replace(/<[^>]+>/g,'')}"><canvas width="44" height="44" data-core="${c.id}"></canvas><span>${o?c.n:'🔒 ???'}</span></button>`;}).join('');

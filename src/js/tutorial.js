@@ -8,7 +8,7 @@ function tutDeal(){const r=S.round,names=TUTP[r]||['Recta','Esquina'];let any=nu
  for(let t=0;t<80;t++){const of=names.map((n,i)=>{const P0=PIECES.find(p=>p.n===n),o={n,p:P0.p,b:[]};solarize(o,0,1);decorate(o);
    if(r===2)o.b.push({x:4,y:2,k:['pow','spd','rng'][i]});   // misma pieza, casilla distinta en la esquina interior (cubre los dos tramos)
    else if(r===4&&i===2){}
-   else if(r>=3&&(r===4||r>=6||Math.random()<.5)){const cs=[];o.p.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));const c=cs[Math.floor(Math.random()*cs.length)];o.b.push({x:c[0],y:c[1],k:['pow','spd','rng'][Math.floor(Math.random()*3)]});}
+   else if(r>=3){/* desde la ronda 3, todas con casilla especial (así la pieza que llega al santuario permite la ofrenda) */const cs=[];o.p.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));const c=cs[Math.floor(Math.random()*cs.length)];o.b.push({x:c[0],y:c[1],k:['pow','spd','rng'][Math.floor(Math.random()*3)]});}
    for(let k=Math.floor(Math.random()*4);k>0;k--)rotO(o);return o;});
   if(of.every(anyPlace)){const sk=r>=5&&r<=8?Object.keys(S.evts).find(k=>S.evts[k]==='shrine'):null;
    if(!sk){S.offers=of;break;}

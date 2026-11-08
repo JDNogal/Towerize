@@ -22,6 +22,7 @@ function drawBarr(b,alpha){if(!b||!b.poly||b.poly.length<3)return;g.save();g.glo
  g.strokeStyle='#f0c040';g.lineWidth=CS*.32;for(let k=-hh-w;k<w+hh;k+=CS*.9){g.beginPath();g.moveTo(x+k,y);g.lineTo(x+k+hh,y+hh);g.stroke();}g.restore();
  g.beginPath();b.poly.forEach((p,i)=>i?g.lineTo(p[0]*CS,p[1]*CS):g.moveTo(p[0]*CS,p[1]*CS));g.closePath();g.strokeStyle='#3a2410';g.lineWidth=CS*.12;g.stroke();g.restore();}
 function useRelic(id){
+ errAt('#relics [data-id="'+id+'"]');
  if(!S.relics.includes(id)||RL.open||S.phase==='lost'||S.phase==='won')return;
  let mim=false;
  if(S.aim==='mimic'&&id!=='mimic'){mim=true;S.aim=null;}

@@ -282,11 +282,9 @@ function openKw(a,pl){
  const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.style.setProperty('--kc',getComputedStyle(a).color);
  document.body.appendChild(d);
  const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth,ht=d.offsetHeight;
- // la caja sale hacia el lado libre del panel: derecha si el panel está a la izquierda, izquierda si está a la derecha
- const right=(br.left+br.right)/2<innerWidth/2;
- let l=right?br.right+6:br.left-6-wd;
- if(l+wd>innerWidth-6||l<6){const l2=right?br.left-6-wd:br.right+6;if(l2>=6&&l2+wd<=innerWidth-6)l=l2;else l=Math.max(6,Math.min(innerWidth-6-wd,ar.left));}
- let t=ar.top-8;if(t+ht>innerHeight-6)t=innerHeight-6-ht;if(t<6)t=6;
+ // la caja sale junto a la palabra (debajo; si no cabe, encima), aunque tape parte del panel del que sale: así no se va lejos de donde miras
+ let l=Math.max(6,Math.min(innerWidth-6-wd,ar.left-12));
+ let t=ar.bottom+6;if(t+ht>innerHeight-6)t=ar.top-6-ht;if(t<6)t=Math.max(6,Math.min(innerHeight-6-ht,ar.bottom+6));
  d.style.left=l+'px';d.style.top=t+'px';
  KS.push({el:d,anchor:a,dead:0});KD.el=null;KD.t=0;
 }

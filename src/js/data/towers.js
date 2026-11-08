@@ -20,7 +20,7 @@ const TW={
 arrow:{n:'Arqueros',ic:'🏹',dt:'phys',cost:75,range:2.8,dmg:6.5,rate:2.5,ps:12,col:'#e8b04a',l:'F',fx:'Ninguno'},
 cannon:{n:'Cañoneros',ic:'💣',dt:'phys',era:2,cost:90,range:2.6,dmg:30,rate:.7,ps:6,splash:1.1,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#e07a3d',l:'N',fx:'Ninguno'},
  cata:{n:'Catapulta',ic:'🪨',dt:'phys',cata:1,ground:1,cost:90,range:2.8,dmg:38,rate:.55,ps:5,splash:1.15,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#a8977c',l:'C',fx:'Ninguno'},
-frost:{n:'Cryomago',ic:'🧊',dt:'magic',cost:70,range:2.4,dmg:3,rate:1.5,ps:9,slow:.5,col:'#6cc5ff',l:'H',fx:'Ralentiza 50% (1,5 s)'},
+frost:{n:'Cryomago',ic:'🧊',dt:'elem',cost:70,range:2.4,dmg:3,rate:1.5,ps:9,slow:.5,col:'#6cc5ff',l:'H',fx:'Ralentiza 50% (1,5 s)'},
 laser:{n:'Láser',ic:'⚡',dt:'magic',era:2,cost:110,range:2.8,dmg:3,rate:8,beam:1,col:'#d66bff',l:'L',fx:'Rayo continuo'},
  orb:{n:'Orbe arcano',ic:'🧿',dt:'magic',cost:110,range:2.8,dmg:3,rate:8,beam:1,orb:1,col:'#8a7dff',l:'I',fx:'Rayo continuo'},
 poison:{n:'Envenenadora',ground:1,ic:'🧪',dt:'elem',cost:100,range:3,dmg:3,rate:.5,puddle:1,dot:1,dur:4,pr:1,shape:'Charco',areaTxt:'Todos los enemigos dentro del círculo reciben el efecto.',col:'#7bd34a',l:'V',fx:'Veneno acumulable'},

@@ -23,5 +23,5 @@ function giveXp(H,x){if(H.lvl>=HLMAX||!(x>0))return;if(S&&S.st)S.st.xp=(S.st.xp|
 function mkHero(id){const D=HEROES[id],H={id,def:D,lvl:1,xp:0},st=hsAt(id,1);
  let b=null,bd=1e9;for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(S.cells[y][x]!==2||(x===S.core.x&&y===S.core.y))continue;const d=Math.hypot(x-S.core.x,y-S.core.y);if(d<bd){bd=d;b={x,y};}}
  b=b||{x:S.core.x,y:S.core.y};
- H.pt={hero:H,type:'hero',x:S.core.x,y:S.core.y,flag:{x:b.x,y:b.y},ab:{},acd:{},sd:[]};
+ H.pt={hero:H,type:'hero',x:S.core.x,y:S.core.y,flag:{x:b.x,y:b.y},ab:{},acd:{},sd:[],alert:HEROES[id]&&!HEROES[id].ranged?2.75*K:undefined};/* cuerpo a cuerpo: va a por los enemigos desde algo más lejos (2,75 casillas en vez de 2) */
  H.s={i:0,x:b.x,y:b.y,hp:st.hp,max:st.hp,en:null,cd:0,rt:0,tw:H.pt,lock:false,fight:false,H};H.pt.sd.push(H.s);S.hero=H;}

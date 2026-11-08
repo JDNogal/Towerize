@@ -41,7 +41,7 @@ function heroSheet(id){const D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt
   `<div class="hnm">${D.n}<small>Récord: Nv ${HLV[id]||1}</small></div><div class="chips">${(D.tags||[]).filter(t=>t!=='Cuerpo a cuerpo'&&t!=='A distancia').map(t=>`<span>${t}</span>`).join('')}</div><div class="hcl">${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</div>`+
   `<p class="hds">${D.d}</p>`+bar('Vida',b.hp/HMX.hp,'#6fe07a')+bar('Daño',b.dmg/b.cd*(D.area?1.3:1)/HMX.dp,'#e0605a')+bar('Alcance',(b.range||.5)/HMX.rg,'#5ab4ff')+
   (HAB[id]?`<div class="hsec">Habilidades</div><div class="habs">${[['b',1],['p4',4],['p8',8],['u',10]].map(([k2,l])=>`<span data-tip="habp:${id}.${k2}">${HAB[id][k2].ic}<em>${l}</em></span>`).join('')}</div>`:'')+
-  `<div class="hsec">Reliquia inicial</div><div class="hrl"><span class="ri" style="background:${R.col}">${R.ic}</span><div><b>${R.n}</b><small><span class="cf">Pasivo:</span> ${R.pas()}</small>${R.act?`<small style="margin-top:3px"><span class="ccl">Activo:</span> ${R.act()}</small>`:''}</div></div>`+
+  `<div class="hsec">Reliquia inicial</div><div class="hrl"><span class="ri" style="background:${R.col}">${R.ic}</span><div style="flex:1;min-width:0"><b>${R.n}</b>${rdesc(R.id)}</div></div>`+
   (`<div class="hsec">Mazo inicial</div><div class="hdk2">${(D.deck||[]).map(k=>{const T=TW[k];return `<span data-tip="shop:${k}"><i style="background:${T.col}">${T.ic}</i>${T.n}</span>`;}).join('')}</div>`)+
   `<details><summary>+ Ver estadísticas</summary><div class="hst">${heroInfo(id,2)}</div></details>`;}
 function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];const id=RL.hsel,D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;ids.forEach(h=>see('hr',h));
@@ -51,7 +51,7 @@ function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hs
   `<div class="hnm">${D.n}<small>Récord: Nv ${HLV[id]||1}</small></div><div class="chips">${(D.tags||[]).filter(t=>t!=='Cuerpo a cuerpo'&&t!=='A distancia').map(t=>`<span>${t}</span>`).join('')}</div><div class="hcl">${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</div>`+
   `<p class="hds">${D.d}</p>`+bar('Vida',b.hp/HMX.hp,'#6fe07a')+bar('Daño',b.dmg/b.cd*(D.area?1.3:1)/HMX.dp,'#e0605a')+bar('Alcance',(b.range||.5)/HMX.rg,'#5ab4ff')+
   (HAB[id]?`<div class="hsec">Habilidades</div><div class="habs">${[['b',1],['p4',4],['p8',8],['u',10]].map(([k2,l])=>`<span data-tip="habp:${id}.${k2}">${HAB[id][k2].ic}<em>${l}</em></span>`).join('')}</div>`:'')+
-  `<div class="hsec">Reliquia inicial</div><div class="hrl"><span class="ri" style="background:${R.col}">${R.ic}</span><div><b>${R.n}</b><small><span class="cf">Pasivo:</span> ${R.pas()}</small>${R.act?`<small style="margin-top:3px"><span class="ccl">Activo:</span> ${R.act()}</small>`:''}</div></div>`+
+  `<div class="hsec">Reliquia inicial</div><div class="hrl"><span class="ri" style="background:${R.col}">${R.ic}</span><div style="flex:1;min-width:0"><b>${R.n}</b>${rdesc(R.id)}</div></div>`+
   (`<div class="hsec">Mazo inicial</div><div class="hdk2">${(D.deck||[]).map(k=>{const T=TW[k];return `<span data-tip="shop:${k}"><i style="background:${T.col}">${T.ic}</i>${T.n}</span>`;}).join('')}</div>`)+
   `<details><summary>+ Ver estadísticas</summary><div class="hst">${heroInfo(id,2)}</div></details>`;
  el.innerHTML=`<div class="hpc" style="--hc:${D.col}"><div class="hart${lk?' lk':''} fr${hTier(id)}">${portrait(id,0,1)}</div><div class="hinfo">${info}</div>`+
@@ -70,7 +70,7 @@ function renderHeroPickOld(){
     `</div>`+
    `<div class="hright">`+(lk?heroLockBox(id):
     `<div class="hbox"><div class="hbt">Detalles <small class="hrec">· récord: Nv ${HLV[id]||1}</small></div><div class="htags">${(D.tags||[]).map(t=>`<span>${t}</span>`).join('')}</div><small class="hdesc">${lk?'🔒 '+lk:D.d}</small><div class="hst">${heroInfo(id,2)}</div></div>`+(HMOB()?`<details class="hbox hpvd"${RL.hpvo?' open':''}><summary>Ver a ${D.n} en acción</summary><div class="hpvc"><canvas id="pvc" width="288" height="288"></canvas></div></details>`:`<div class="hbox hpvb"><canvas id="pvc" width="288" height="288"></canvas></div>`)+
-    `<div class="hbox"><div class="hbt">Reliquia inicial</div><div style="display:flex;gap:8px;align-items:flex-start"><span class="hric" style="background:${R.col}">${R.ic}</span><div style="flex:1;min-width:0"><b>${R.n}</b><div class="hrt"><span class="cf">Pasivo:</span> ${R.pas()}</div><div class="hrt"><span class="cf">Activo:</span> ${R.act()}</div></div></div></div>`+
+    `<div class="hbox"><div class="hbt">Reliquia inicial</div><div style="display:flex;gap:8px;align-items:flex-start"><span class="hric" style="background:${R.col}">${R.ic}</span><div style="flex:1;min-width:0"><b>${R.n}</b>${rdesc(R.id)}</div></div></div>`+
     `<div class="hbox"><div class="hbt">Mazo inicial <small>· cada 2 rondas podrás añadir torres, hasta ${DECKMAX}</small></div><div class="hdeck">${(D.deck||[]).map(k=>{const T=TW[k];return `<div class="hdk" data-tip="shop:${k}"><span class="hdi" style="background:${T.col}">${T.ic}</span><div><b>${T.n}</b> <small class="${DT[T.dt].cls}">${DT[T.dt].n}</small>${T.unit?' <small>· unidades</small>':''}</div></div>`;}).join('')}</div></div>`)+
    `</div></div>`+
   `<button class="harr" data-a="hnav" data-v="1" aria-label="Héroe siguiente">›</button></div>`+

@@ -2,7 +2,7 @@
 function ui(){
  try{if(S.msg){const t=String(S.msg).replace(/<[^>]+>/g,'');if(ERRRX.test(t)&&!/^(Elige|Pulsa)/.test(t)){S.msg='';LMSG='';errBubble(t);}}}catch(e){}
  $('panel').style.display=S.hero?'':'none';$('msg').textContent=S.msg;let h='';$('ui').classList.toggle('lock',!!S.aim);
- const sp=[[0,'Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2']];
+ const sp=[[0,'Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2'],[3,'×3']];
  $('ctl').innerHTML='';
  const sl=S.speed;const MF=document.body.classList.contains('mfs');if(S.speed>0)S.lspd=S.speed;
  $('mbl').innerHTML=MF?`<button data-a="spdt" class="${sl===0?'on':''}" title="${sl===0?'Reanudar':'Pausa'}">${sl===0?'<i class="pplay"></i>':'<i class="pbar"></i>'}</button><button data-a="spdc" title="Cambiar velocidad">×${String(S.lspd||1).replace('.',',')}</button>`:sp.map(([v,l])=>`<button class="${sl===v?'on':''}" data-a="spd" data-v="${v}" title="${v===0?'Pausa':'Velocidad '+l}">${v===0?'<i class="pbar"></i>':l}</button>`).join('');
