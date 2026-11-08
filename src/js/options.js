@@ -15,6 +15,7 @@ const OPTS=[
  {tab:'hs',type:'toggle',key:'dauto',def:false,label:'Avance automático',desc:'Los diálogos pasan solos tras una pausa, sin tener que pulsar.'},
  {tab:'hs',type:'slider',key:'dwait',def:2,min:1,max:5,step:.5,fmt:v=>String(v).replace('.',',')+' s',label:'Pausa del avance automático',desc:'Lo que espera cada diálogo, además de un poco más cuanto más largo es el texto.'},
  {tab:'hs',type:'toggle',key:'dglitch',def:true,label:'Efectos de fallo de ÉTER',desc:'Caracteres corruptos y parpadeos mientras el núcleo está dañado. Desactívalo si te molestan o usas lector de pantalla.'},
+ {tab:'hs',type:'toggle',key:'eter',def:true,label:'ÉTER habla en partida',desc:'De vez en cuando, ÉTER comenta lo que pasa desde el núcleo con un bocadillo corto: al ganar una oleada sin daños, cuando se cuela un enemigo, al ver un jefe… No para el juego.'},
  {tab:'hs',type:'toggle',key:'dbig',def:false,label:'Texto de diálogos grande',desc:'Letra más grande en los diálogos de la historia, para leerlos con más comodidad.'},
  {tab:'hs',type:'cname',label:'Nombre del capitán'},
  {tab:'un',type:'note',desc:'Para quien quiera probarlo todo sin pasar por el progreso: streaming, pruebas o simplemente jugar a tu aire. Cada sección se puede desactivar cuando quieras: vuelve a bloquearse lo que no hayas conseguido jugando. Los logros siguen funcionando con normalidad.'},

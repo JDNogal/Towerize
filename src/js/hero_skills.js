@@ -112,6 +112,7 @@ function tutPhase(ph){if(!S||!S.tut)return;const r=S.round,T=S.tut;
  if(ph==='place'){
   if(r===1)hint('tut_welcome','Bienvenido a Towerize',[['Defiende tu <b>núcleo</b>: si un enemigo llega a él, pierdes vida.',()=>tgCell(S.core.x,S.core.y,1.2)()],['Cada ronda eliges una <b>pieza</b> de abajo para alargar el camino. Puedes girarla antes de colocarla.',tgEl('#ui [data-a="pick"]')]]);
   if(r===2)hint('tut_tiles','Casillas especiales',[['Estas piezas traen una <b>casilla especial</b>. '+HOV()+' cada una para ver su bonus y elige la que prefieras.',tgEl('#ui [data-a="pick"]')],['Las casillas especiales <b>cuestan oro</b>: <span class="gd">25 🪙</span> cada una (<span class="gd">50 🪙</span> las súper). Esta vez te regalamos <span class="gd">25 🪙</span>.',tgEl('#ui .pcst')]]);
+  if(r===3)hint('tut_kw','Palabras en negrita','Las palabras en negrita y de color, como '+kw('slow','ralentiza','')+', tienen su propia explicación. '+HOV()+' cualquiera de ellas para leerla: así puedes consultar cualquier cosa que no entiendas.',null);
   if(S.offers.some(o=>opens(o.p)>=3))hint('tut_fork','Dividir el camino','Dividir el camino te da más sitios para colocar piezas, pero los enemigos podrán salir por más portales.',tgEl('#ui [data-a="pick"]'));}
  if(ph==='build'){
   if(r===1)tutOffer(['arrow','cata'],'Elige tu primera torre','De momento será la única torre que puedas construir. <b>Arqueros</b>: disparos rápidos a un solo enemigo. <b>Catapulta</b>: disparos lentos con daño en área.');

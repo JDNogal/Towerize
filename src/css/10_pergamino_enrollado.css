@@ -1,0 +1,42 @@
+/* ===== PERGAMINO ENROLLADO: elegir torre (ventana) y elegir pieza (panel de abajo) =====
+   Papel con rodillos de cuero a los lados y remaches en las puntas; toma los colores de la encuadernación.
+   Al aparecer se desenrolla desde el centro. */
+.prod{position:absolute;top:-10px;bottom:-10px;width:30px;border-radius:15px;z-index:2;pointer-events:none;
+ background:linear-gradient(90deg,var(--lea2),var(--lea) 32%,color-mix(in srgb,var(--lea) 70%,#fff 30%) 50%,var(--lea) 68%,var(--lea2));box-shadow:0 4px 10px rgba(0,0,0,.45)}
+.prod::before,.prod::after{content:'';position:absolute;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;
+ background:radial-gradient(circle at 35% 35%,color-mix(in srgb,var(--trim) 60%,#fff),var(--trim) 55%,color-mix(in srgb,var(--trim) 60%,#000));box-shadow:0 1px 3px rgba(0,0,0,.5)}
+.prod::before{top:-6px}.prod::after{bottom:-6px}
+.prod.l{left:0}.prod.r{right:0}
+#relic .pscr i.prod{width:30px!important;height:auto!important;top:-10px!important;bottom:-10px!important;margin:0!important;display:block!important;font-size:0!important}
+.ppaper,.ppap{background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 78%,var(--lea)),var(--paper) 6%,color-mix(in srgb,var(--paper) 92%,#fff) 50%,var(--paper) 94%,color-mix(in srgb,var(--paper) 78%,var(--lea)));
+ border-top:3px solid var(--lea);border-bottom:3px solid var(--lea);color:var(--ink)}
+/* ---- elegir torre ---- */
+#relic .pscr{position:relative;margin:0 auto;max-width:900px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.55))}
+#relic .ppap{margin:0 22px;padding:18px 36px 14px;text-align:center;animation:punroll .5s cubic-bezier(.3,.7,.3,1) both}
+#relic .pscr .prod.l{animation:prodl .5s cubic-bezier(.3,.7,.3,1) both}#relic .pscr .prod.r{animation:prodr .5s cubic-bezier(.3,.7,.3,1) both}
+@keyframes punroll{from{clip-path:inset(0 50%)}to{clip-path:inset(0 0)}}
+@keyframes prodl{from{left:calc(50% - 30px)}to{left:0}}@keyframes prodr{from{right:calc(50% - 30px)}to{right:0}}
+#relic .ppap .ptt{display:block;font:700 20px Georgia,"Times New Roman",serif!important;color:var(--inkh)!important;text-shadow:none!important}
+#relic .ppap .pst{display:block;margin-top:2px;color:var(--ink)!important;opacity:.85;text-shadow:none!important}
+#relic .ppap .toff{margin:14px 0 6px;gap:16px}
+#relic .ppap .tof{border:1.5px dashed color-mix(in srgb,var(--pline3) 70%,transparent)!important;background:transparent!important;box-shadow:none!important;border-radius:12px!important;transition:background .15s,border-color .15s}
+#relic .ppap .tof:hover,#relic .ppap .tof:focus-within,#relic .ppap .tof.kf{border:2px solid var(--acc2)!important;background:color-mix(in srgb,var(--paper1) 70%,transparent)!important}
+#relic .ppap .tof .tnm{color:var(--inkh)}
+#relic .pskip{margin-top:6px}#relic .pskip small{display:block;margin-top:5px;color:var(--ink)!important;opacity:.85;text-shadow:none!important}
+#relic .pskip button{border:1.5px solid var(--pline3)!important;background:var(--paper2)!important;color:var(--ink)!important}
+/* ---- elegir pieza (panel de abajo en PC) ---- */
+body.dsk #panel:has(.prow){border-width:3px 0!important;border-style:solid!important;border-color:var(--lea)!important;border-radius:2px!important;
+ background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 78%,var(--lea)),var(--paper) 6%,color-mix(in srgb,var(--paper) 92%,#fff) 50%,var(--paper) 94%,color-mix(in srgb,var(--paper) 78%,var(--lea)))!important;
+ box-shadow:0 12px 26px rgba(0,0,0,.5)!important;overflow:visible!important;padding-left:40px!important;padding-right:40px!important}
+body.dsk #panel:has(.prow)::before,body.dsk #panel:has(.prow)::after{content:'';position:absolute;top:-12px;bottom:-12px;width:28px;border-radius:14px;z-index:2;pointer-events:none;
+ background:radial-gradient(circle at 50% 10px,color-mix(in srgb,var(--trim) 60%,#fff) 0 4px,var(--trim) 5px 8px,transparent 9px),radial-gradient(circle at 50% calc(100% - 10px),color-mix(in srgb,var(--trim) 60%,#fff) 0 4px,var(--trim) 5px 8px,transparent 9px),linear-gradient(90deg,var(--lea2),var(--lea) 32%,color-mix(in srgb,var(--lea) 70%,#fff 30%) 50%,var(--lea) 68%,var(--lea2));
+ box-shadow:0 4px 10px rgba(0,0,0,.45)}
+body.dsk #panel:has(.prow)::before{left:-14px}body.dsk #panel:has(.prow)::after{right:-14px}
+/* las piezas, como dibujadas a tinta sobre el papel */
+#panel .prow .card{background:transparent!important;border:1.5px dashed color-mix(in srgb,var(--pline3) 70%,transparent)!important;box-shadow:none!important}
+#panel .prow .card.on,#panel .prow .card:hover{border:2px solid var(--acc2)!important;background:color-mix(in srgb,var(--paper1) 70%,transparent)!important}
+#panel .prow .card canvas{filter:invert(1) grayscale(1) sepia(.55) contrast(1.35) brightness(1.05);mix-blend-mode:multiply;border-radius:4px}
+@media (prefers-reduced-motion:reduce){#relic .ppap,#relic .pscr .prod{animation:none}}
+/* móvil: más compacto para que quepa entero */
+body.mfs #relic .pscr{margin-top:12px}body.mfs #relic .ppap{padding:8px 26px 8px;margin:0 16px}body.mfs #relic .pscr i.prod{width:22px!important}
+body.mfs #relic .ppap .ptt{font-size:15px!important}body.mfs #relic .ppap .toff{margin:6px 0 4px;gap:8px}body.mfs #relic .pskip{margin-top:2px}body.mfs #relic .pskip small{display:none}

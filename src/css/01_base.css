@@ -207,8 +207,10 @@ small{opacity:.75}
 .tipc button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .tgt{margin-top:8px}.tgt .tsel{display:block;width:100%;margin:3px 0;font-size:12px;padding:4px 8px;color:var(--fg);background:var(--btn);border:1px solid var(--line);color-scheme:dark}.tgt .tcp{margin-top:10px}.tgt button{display:block;width:100%;text-align:left;margin:3px 0;padding:4px 8px;font-size:12px}
 button.dim{border-color:var(--acc);opacity:.55}
-.kw{font-weight:700;border-bottom:1px dashed currentColor;cursor:help}
-.kw.st{font-weight:inherit;border-bottom:1px dotted currentColor}
+/* palabras clave: en negrita (y con su color); tienen bocadillo con su explicación. Sin subrayado: al pasar el ratón, sí */
+.kw{font-weight:700;cursor:help}
+.kw.st{font-weight:700}
+.kw:not(.gico):hover{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 .kw:not(.st)[data-kw="burn"],.kw:not(.st)[data-kw="flam"],.kw:not(.st)[data-kw="breath"]{color:var(--tff9a4a,#ff9a4a)}
 .kw:not(.st)[data-kw="poison"]{color:var(--t5fdc7a,#5fdc7a)}
 .kw:not(.st)[data-kw="sticky"]{color:var(--tc8a060,#c8a060)}

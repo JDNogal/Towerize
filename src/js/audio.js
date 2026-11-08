@@ -47,7 +47,8 @@ const SFXG=[
  ['Recompensas',[
   ['relic','Reliquia',[{s:'glass1',sr:.8,y:'relic',v:.55,cd:.3,mx:1}]],
   ['ach','Logro',[{y:'tada',v:.55,cd:.3,mx:1}]],
-  ['rready','Reliquia recargada',[{y:'sparkle',v:.4,cd:.5,mx:1}]]]]];
+  ['rready','Reliquia recargada',[{y:'sparkle',v:.4,cd:.5,mx:1}]],
+  ['eter','ÉTER habla',[{y:'eter',v:.35,cd:.5,mx:1}]]]]];
 // Reserva para otros momentos (no salen en Probar sonidos): synth 'clrA' (fanfarria), 'clrB' (campanillas), 'nv4B' (mágico), 'sparkle', 'wind', 'bubB', 'bubC', 'rock', 'gravel', 'coinB', 'coinC', 'bopA', 'bopB', 'bossA', 'bossB'; muestras 'wclear', 'coin', 'rock_wood'.
 const SFXK={};for(const[,rows]of SFXG)for(const[k,n,vs]of rows)SFXK[k]={n,vs};
 const sfxDef=k=>{const e=SFXK[k];if(!e)return null;const i=Math.min(SV[k]||0,e.vs.length-1);return e.vs[i];};
@@ -89,6 +90,7 @@ function synth(kind,t0,out,v,r){const c=SND.ctx;
  case 'zip':noise('highpass',2500,7000,1,0,.005,.05,.25);break;
  case 'gravel':for(let i=0;i<6;i++)noise('bandpass',700+Math.random()*900,500,2,.03+i*.025+Math.random()*.015,.003,.04,.25);break;
  case 'rock':tone('sine',95,42,0,.004,.22,.9);noise('lowpass',700,250,1,0,.004,.18,.5);for(let i=0;i<5;i++)noise('bandpass',600+Math.random()*800,500,2,.06+i*.03,.003,.04,.2);break;
+ case 'eter':tone('sine',1320,1320,0,.004,.07,.18);tone('sine',1760,1760,.075,.004,.09,.14);break;
  case 'sparkle':[1568,2093,2637,3136].forEach((f,i)=>tone('sine',f,f,i*.022,.003,.22,.22));noise('highpass',6000,6000,1,0,.003,.08,.12);break;
  case 'arcane':{const m=c.createOscillator(),mg=c.createGain();m.frequency.value=40;mg.gain.value=60;m.connect(mg);const o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.setValueAtTime(330*r,t0);o.frequency.exponentialRampToValueAtTime(660*r,t0+.15);mg.connect(o.frequency);g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.4*v,t0+.01);g.gain.exponentialRampToValueAtTime(.0001,t0+.28);o.connect(g);g.connect(out);o.start(t0);m.start(t0);o.stop(t0+.3);m.stop(t0+.3);break;}
  case 'wind':noise('bandpass',700,2600,1.2,0,.08,.3,.5);noise('highpass',3000,5000,.7,0,.06,.25,.15);break;

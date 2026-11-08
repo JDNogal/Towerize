@@ -213,8 +213,10 @@ small{opacity:.75}
 .tipc button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .tgt{margin-top:8px}.tgt .tsel{display:block;width:100%;margin:3px 0;font-size:12px;padding:4px 8px;color:var(--fg);background:var(--btn);border:1px solid var(--line);color-scheme:dark}.tgt .tcp{margin-top:10px}.tgt button{display:block;width:100%;text-align:left;margin:3px 0;padding:4px 8px;font-size:12px}
 button.dim{border-color:var(--acc);opacity:.55}
-.kw{font-weight:700;border-bottom:1px dashed currentColor;cursor:help}
-.kw.st{font-weight:inherit;border-bottom:1px dotted currentColor}
+/* palabras clave: en negrita (y con su color); tienen bocadillo con su explicación. Sin subrayado: al pasar el ratón, sí */
+.kw{font-weight:700;cursor:help}
+.kw.st{font-weight:700}
+.kw:not(.gico):hover{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 .kw:not(.st)[data-kw="burn"],.kw:not(.st)[data-kw="flam"],.kw:not(.st)[data-kw="breath"]{color:var(--tff9a4a,#ff9a4a)}
 .kw:not(.st)[data-kw="poison"]{color:var(--t5fdc7a,#5fdc7a)}
 .kw:not(.st)[data-kw="sticky"]{color:var(--tc8a060,#c8a060)}
@@ -426,7 +428,7 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 .toff{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:12px 0}
 .tof{background:color-mix(in srgb,var(--panel) 95%,transparent);border:1px solid var(--line2);border-radius:12px;padding:14px;width:220px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
 .tof .tic{width:64px;height:64px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:36px}
-.tof .tnm{font-size:17px;font-weight:700}.tof .chips{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}.tof .chips span{font-size:11px;padding:2px 7px;border-radius:9px;border:1px solid var(--line2);background:var(--panel)}
+.tof .tnm{font-size:17px;font-weight:700}.tof .chips{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}.tof .chips>span{font-size:11px;padding:2px 7px;border-radius:9px;border:1px solid var(--line2);background:var(--panel)}
 .tof details{width:100%;text-align:left}.tof summary{cursor:pointer;font-size:12px;color:var(--fg1);text-align:center;list-style:none}.tof summary::-webkit-details-marker{display:none}.tof details[open] summary{margin-bottom:6px}
 .tof button{width:100%;margin:0}
 
@@ -441,7 +443,7 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 .hpc .hnm{font:700 40px/1.05 Georgia,"Times New Roman",serif;color:#f2d27a;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .hpc .hnm small{font:400 12px system-ui,sans-serif;color:var(--fg2)}
 .hpc .hcl{color:var(--fg1);margin:4px 0 8px}
-.hpc .chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}.hpc .chips span{font-size:11.5px;padding:2px 8px;border-radius:9px;border:1px solid var(--line2);background:var(--panel)}
+.hpc .chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}.hpc .chips>span{font-size:11.5px;padding:2px 8px;border-radius:9px;border:1px solid var(--line2);background:var(--panel)}
 .hpc .hds{color:#d8d6cf;font-size:13.5px;line-height:1.45;margin:0 0 12px}
 .hpc .hbar{font-size:12px;margin:5px 0}.hpc .hbar>span:first-child{width:62px}
 .hpc .hsec{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);margin:14px 0 6px}
@@ -491,6 +493,14 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 #dlg .dbx.sys .dsp{color:#e8b04a;font-family:ui-monospace,Consolas,monospace}
 #dlg .dbx.sys .dtx{font:500 15.5px/1.6 ui-monospace,Consolas,monospace;color:#f3e3b8;min-height:1.6em}
 #dlg .dbx.sys .dtx::before{content:"> ";color:#e8b04a}
+/* ÉTER habla en partida: bocadillo cian que sale del núcleo */
+#eterb{position:fixed;z-index:40;max-width:260px;padding:7px 11px;border-radius:10px;background:rgba(8,26,36,.93);border:1.5px solid #3fe8ff;color:#8ff0ff;font:13px/1.3 ui-monospace,Menlo,Consolas,monospace;box-shadow:0 0 12px rgba(63,232,255,.4);pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s}
+#eterb.on{opacity:1;transform:none}
+#eterb b{display:block;font-size:10px;letter-spacing:.14em;color:rgba(63,232,255,.7);margin-bottom:2px}
+#eterb::after{content:'';position:absolute;right:26px;bottom:-9px;border:8px solid transparent;border-top-color:#3fe8ff;border-bottom:0}
+#eterb .eg{color:#ff6ad5;text-shadow:1px 0 #3fe8ff}
+#eterb.on.g3,#eterb.on.g2{animation:eterfl 2.2s steps(1) infinite}@keyframes eterfl{0%,92%,100%{opacity:1}94%{opacity:.55}96%{opacity:.9}}
+@media (prefers-reduced-motion:reduce){#eterb.on.g3,#eterb.on.g2{animation:none}}
 /* ---- móvil en horizontal: mapa a pantalla completa y controles compactos en los bordes ---- */
 body.mfs #game{padding:0!important}
 body.mfs main{display:block!important;height:100%!important}
@@ -572,7 +582,7 @@ body.mfs .toff{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8p
 body.mfs .tof{width:auto;padding:7px 8px;gap:4px;border-radius:10px}
 body.mfs .tof .tic{width:38px;height:38px;font-size:21px;border-radius:9px}
 body.mfs .tof .tnm{font-size:14px}
-body.mfs .tof .chips span{font-size:10px;padding:1px 6px}
+body.mfs .tof .chips>span{font-size:10px;padding:1px 6px}
 body.mfs .tof button{min-height:38px;font-size:13px}
 body.mfs .tof details[open]{position:fixed;inset:6px;z-index:30;overflow-y:auto;background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:10px}
 
@@ -764,13 +774,13 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 .lbhpc{--bg:var(--paper);--bgg:var(--paper);--bg2:var(--paper);--panel:var(--paper2);--panel2:var(--paper1);--btn:var(--paper2);--line:var(--pline2);--line2:var(--pline3);--fg:var(--ink);--fg1:var(--ink);--fg2:var(--ink2);--acc:var(--acc2);--accfg:var(--paper1);--hl:var(--acc2);color-scheme:inherit;position:static;background:none;padding:0;min-height:0!important;height:auto!important;display:block}
 .lbhpc .hnm{color:var(--inkh);font-size:30px}.lbhpc .hnm small{font:500 12px Inter,system-ui;color:var(--ink2)}.lbhpc .hds{color:var(--ink)}.lbhpc .hcl{color:var(--ink2)}
 .lbhpc .hbar .bt{background:var(--paper3)}.lbhpc .hbar{display:flex;align-items:center;gap:10px;font-weight:600}.lbhpc .hbar>span:first-child{width:64px}
-.lbhpc .habs span,.lbhpc .hdk2 span,.lbhpc .chips span{background:var(--paper1);border-color:var(--pline2);color:var(--ink)}.lbhpc .habs em{background:var(--lea);color:var(--leatxt)}
+.lbhpc .habs span,.lbhpc .hdk2 span,.lbhpc .chips>span{background:var(--paper1);border-color:var(--pline2);color:var(--ink)}.lbhpc .habs em{background:var(--lea);color:var(--leatxt)}
 .lbhpc .hrl .ri{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-size:20px;flex:none}.lbhpc .hrl small{display:block;color:var(--ink2)}
 .lbhpc details summary{color:var(--acc);cursor:pointer}
 .bkp.r:has(.lbhpc){padding-bottom:84px}.bkp.l:has(.lbhero){padding-bottom:70px}
 #comp.narrow .bkp.one.hero .lbhart{width:140px;margin-bottom:6px}#comp.narrow .bkp.one.hero .lbfoot{position:static;margin:12px 0}
 .lbeter b{display:block;font-size:12px;letter-spacing:.12em;margin-bottom:4px}
-.lbhpc .chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}.lbhpc .chips span{font-size:11.5px;padding:2px 8px;border-radius:9px;border:1px solid var(--pline2);background:var(--paper1)}
+.lbhpc .chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}.lbhpc .chips>span{font-size:11.5px;padding:2px 8px;border-radius:9px;border:1px solid var(--pline2);background:var(--paper1)}
 .lbhpc .hsec{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin:14px 0 6px;font-weight:700}
 .lbhpc .habs{display:flex;gap:8px}.lbhpc .habs span{position:relative;width:42px;height:42px;border-radius:10px;background:var(--paper1);border:1px solid var(--pline2);display:flex;align-items:center;justify-content:center;font-size:21px;cursor:help}
 .lbhpc .habs em{position:absolute;bottom:-6px;right:-6px;font:700 10px system-ui;font-style:normal;background:var(--lea);color:var(--leatxt);border-radius:7px;padding:1px 5px}
@@ -843,6 +853,47 @@ body.inmenu.lbsetup canvas#c{filter:none}
 /* ÉTER: línea de sistema bajo la nota */
 .lbsys{margin-top:10px;padding:8px 12px;border-radius:8px;background:var(--paper1);border:1px dashed color-mix(in srgb,#3fa7c9 70%,var(--pline2));font:600 12px/1.45 ui-monospace,Consolas,monospace;color:var(--ink)}
 .lbsys b{color:#1f7f9e;letter-spacing:.12em}:root[data-pal="noche"] .lbsys b,:root[data-pal="amb"] .lbsys b{color:#6fd3f0}
+/* ---- ficha del compendio: cabecera en una fila y datos en dos columnas con puntos ---- */
+.bksh{display:flex;align-items:center;gap:14px;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--pline2)}
+.bksh .bkbic{width:68px;height:68px;border-radius:14px;font-size:38px;flex:none}
+.bksh .bkpor{width:76px;height:76px;flex:none;border-radius:14px}
+.bksh .bken i{display:block;width:38px;height:38px;border-radius:50%;box-shadow:inset -4px -5px 0 rgba(0,0,0,.18)}
+.bksht{flex:1;min-width:0;margin:0!important}.bksht b>i{display:none!important}
+.bksht .gd{display:inline-block;vertical-align:middle;margin-top:5px;font-size:12.5px;line-height:1.3;border:1px solid var(--pline2);background:var(--paper2);border-radius:11px;padding:2px 10px 5px}
+.bksht .lvbtn{float:none!important;display:inline-block;vertical-align:middle;margin:5px 0 0 8px!important;font-size:13px!important;line-height:22px!important}
+.bksht small{margin:0}
+/* rayita delante de cada dato de la ficha, como un marcapáginas (solo en las filas, nunca en mitad de una frase) */
+#comp .bkp .bkg>.row>span:first-child::before,#comp .bkp .bkg>.usub>.row>span:first-child::before{content:'';display:inline-block;width:3px;height:.85em;border-radius:2px;background:currentColor;opacity:.55;margin-right:6px;vertical-align:-1px}
+#comp .bkp .bkg>.row>span:first-child .kw,#comp .bkp .bkg>.row>span:first-child{color:inherit}
+#comp .bkp .bkg>.row.dps>span:first-child::before{display:none}
+#comp .bkp .bkg{display:grid;grid-template-columns:1fr 1fr;column-gap:22px;row-gap:1px;align-items:baseline}
+#comp .bkp .bkg>*{grid-column:1/-1}
+#comp .bkp .bkg>.row{grid-column:auto;display:flex;align-items:baseline;gap:0;margin:0;padding:3px 0;min-width:0}
+#comp .bkp .bkg>.row>span:first-child{white-space:nowrap}
+#comp .bkp .bkg>.row::after{content:'';order:1;flex:1;min-width:8px;margin:0 5px;border-bottom:1.5px dotted var(--pline2);transform:translateY(-3px)}
+#comp .bkp .bkg>.row>span:last-child{order:2;text-align:right}
+#comp .bkp .bkg>.row.cf{grid-column:1/-1}
+#comp .bkp .bkg>.row.dps{grid-column:1/-1;margin-top:8px;padding:6px 10px;border-radius:8px;background:color-mix(in srgb,var(--paper2) 80%,transparent);font-weight:700}
+#comp .bkp .bkg>.row.dps::after{border:0}
+#comp .bkp .bkg>.usub{display:grid;grid-template-columns:1fr 1fr;column-gap:22px}#comp .bkp .bkg>.usub>*{grid-column:1/-1}
+#comp .bkp .bkg>.usub>.row{grid-column:auto;display:flex;align-items:baseline;padding:3px 0}#comp .bkp .bkg>.usub>.row::after{content:'';order:1;flex:1;min-width:8px;margin:0 5px;border-bottom:1.5px dotted var(--pline2)}#comp .bkp .bkg>.usub>.row>span:last-child{order:2;text-align:right}
+#comp .bkp .bkg>.usub>.row.dps{grid-column:1/-1}
+#comp .bkp .bkg.ach .abot{margin-top:8px}
+/* ---- «Ver en acción» dentro del libro ---- */
+.bksh.bksm .bkbic{width:48px;height:48px;font-size:27px;border-radius:11px}.bksh.bksm .bkpor{width:52px;height:52px}.bksh.bksm .bken i{width:28px;height:28px}
+.bksh.bksm .bksht b{font-size:18px!important}.bksh.bksm .bksht small{color:var(--ink2);font-style:italic}
+.bkpv{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
+#comp .bkp canvas.bkpvc{width:min(100%,256px);aspect-ratio:1;height:auto;border-radius:10px;border:2px solid var(--pline2);box-shadow:0 3px 8px rgba(60,30,10,.25);flex:none}
+.bkpvs{flex:1;min-width:150px}
+.bkpvr{margin:0 0 10px}.bkpvr>b{display:block;font:700 12px Georgia,serif;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin-bottom:4px}
+.bkpvr>div{display:flex;flex-wrap:wrap;gap:5px}
+#comp .bkpill{margin:0!important;padding:2px 10px!important;border-radius:12px!important;background:transparent!important;border:1px solid var(--pline2)!important;color:var(--ink)!important;font-size:12.5px;display:inline-flex;align-items:center;gap:5px}
+#comp .bkpill i{width:9px;height:9px;border-radius:50%;display:inline-block}
+#comp .bkpill.on{background:var(--acc2)!important;border-color:var(--acc2)!important;color:var(--paper1)!important}
+#comp .bkpill:disabled{opacity:.5}
+.bkpvs .bknote{font-style:italic;font-size:12px!important}
+#comp .bkp .ddesc{margin-top:10px}
+#comp .lbft.r:has(.pvbk){justify-content:flex-start;padding-left:34px}
 /* ---- bocadillo de pergamino (sustituye a la etiqueta del navegador) ---- */
 #ttb{position:fixed;left:0;top:0;z-index:200;pointer-events:none;max-width:260px;padding:5px 11px;border-radius:9px;background:var(--paper);border:1.5px solid var(--trim);color:var(--ink);font:600 12.5px/1.35 Inter,system-ui,sans-serif;box-shadow:0 6px 16px rgba(30,15,5,.4);opacity:0;transform:translateY(3px);transition:opacity .1s,transform .1s;white-space:normal;text-align:center}
 #ttb.on{opacity:1;transform:none}
@@ -912,7 +963,7 @@ body.dsk #panel,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#
 #relic .ce.rcard button:hover,.tof button:hover,.evopts button:hover{border-color:var(--acc2);background:var(--paper1)}
 #relic button.go,.tof button.go,#panel button.go{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;border-color:var(--lea2)!important;box-shadow:0 3px 0 var(--lea2)}
 .evopts button{text-align:left;background:var(--paper1)}
-.tof .chips span,#relic .chips span{background:var(--paper1);border-color:var(--pline2)}
+.tof .chips>span,#relic .chips>span{background:var(--paper1);border-color:var(--pline2)}
 .tof .tic,#relic .ric{box-shadow:0 3px 8px rgba(60,30,10,.25)}
 /* las tarjetas de pieza: papel sobre papel */
 #ui .prow button.card{background:var(--paper1)!important;border:1.5px solid var(--pline2)!important;border-radius:10px!important;color:var(--ink)!important}
@@ -928,6 +979,48 @@ body.dsk #panel,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#
 #relic.blur>small,#relic.blur>p,#relic.blur>div:not(.evwin):not(.toff):not(.cgrid):not(.rlbar):not(.hpc):not(.towpk)>small{color:rgba(243,230,200,.8);text-shadow:0 1px 3px rgba(0,0,0,.6)}
 #relic.blur>button,#relic.blur>div>button[data-a="towskip"]{border:1.5px solid var(--trim);background:var(--paper2);color:var(--ink);border-radius:9px;font-weight:700}
 #hpop{z-index:70!important}
+/* ===== PERGAMINO ENROLLADO: elegir torre (ventana) y elegir pieza (panel de abajo) =====
+   Papel con rodillos de cuero a los lados y remaches en las puntas; toma los colores de la encuadernación.
+   Al aparecer se desenrolla desde el centro. */
+.prod{position:absolute;top:-10px;bottom:-10px;width:30px;border-radius:15px;z-index:2;pointer-events:none;
+ background:linear-gradient(90deg,var(--lea2),var(--lea) 32%,color-mix(in srgb,var(--lea) 70%,#fff 30%) 50%,var(--lea) 68%,var(--lea2));box-shadow:0 4px 10px rgba(0,0,0,.45)}
+.prod::before,.prod::after{content:'';position:absolute;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;
+ background:radial-gradient(circle at 35% 35%,color-mix(in srgb,var(--trim) 60%,#fff),var(--trim) 55%,color-mix(in srgb,var(--trim) 60%,#000));box-shadow:0 1px 3px rgba(0,0,0,.5)}
+.prod::before{top:-6px}.prod::after{bottom:-6px}
+.prod.l{left:0}.prod.r{right:0}
+#relic .pscr i.prod{width:30px!important;height:auto!important;top:-10px!important;bottom:-10px!important;margin:0!important;display:block!important;font-size:0!important}
+.ppaper,.ppap{background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 78%,var(--lea)),var(--paper) 6%,color-mix(in srgb,var(--paper) 92%,#fff) 50%,var(--paper) 94%,color-mix(in srgb,var(--paper) 78%,var(--lea)));
+ border-top:3px solid var(--lea);border-bottom:3px solid var(--lea);color:var(--ink)}
+/* ---- elegir torre ---- */
+#relic .pscr{position:relative;margin:0 auto;max-width:900px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.55))}
+#relic .ppap{margin:0 22px;padding:18px 36px 14px;text-align:center;animation:punroll .5s cubic-bezier(.3,.7,.3,1) both}
+#relic .pscr .prod.l{animation:prodl .5s cubic-bezier(.3,.7,.3,1) both}#relic .pscr .prod.r{animation:prodr .5s cubic-bezier(.3,.7,.3,1) both}
+@keyframes punroll{from{clip-path:inset(0 50%)}to{clip-path:inset(0 0)}}
+@keyframes prodl{from{left:calc(50% - 30px)}to{left:0}}@keyframes prodr{from{right:calc(50% - 30px)}to{right:0}}
+#relic .ppap .ptt{display:block;font:700 20px Georgia,"Times New Roman",serif!important;color:var(--inkh)!important;text-shadow:none!important}
+#relic .ppap .pst{display:block;margin-top:2px;color:var(--ink)!important;opacity:.85;text-shadow:none!important}
+#relic .ppap .toff{margin:14px 0 6px;gap:16px}
+#relic .ppap .tof{border:1.5px dashed color-mix(in srgb,var(--pline3) 70%,transparent)!important;background:transparent!important;box-shadow:none!important;border-radius:12px!important;transition:background .15s,border-color .15s}
+#relic .ppap .tof:hover,#relic .ppap .tof:focus-within,#relic .ppap .tof.kf{border:2px solid var(--acc2)!important;background:color-mix(in srgb,var(--paper1) 70%,transparent)!important}
+#relic .ppap .tof .tnm{color:var(--inkh)}
+#relic .pskip{margin-top:6px}#relic .pskip small{display:block;margin-top:5px;color:var(--ink)!important;opacity:.85;text-shadow:none!important}
+#relic .pskip button{border:1.5px solid var(--pline3)!important;background:var(--paper2)!important;color:var(--ink)!important}
+/* ---- elegir pieza (panel de abajo en PC) ---- */
+body.dsk #panel:has(.prow){border-width:3px 0!important;border-style:solid!important;border-color:var(--lea)!important;border-radius:2px!important;
+ background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 78%,var(--lea)),var(--paper) 6%,color-mix(in srgb,var(--paper) 92%,#fff) 50%,var(--paper) 94%,color-mix(in srgb,var(--paper) 78%,var(--lea)))!important;
+ box-shadow:0 12px 26px rgba(0,0,0,.5)!important;overflow:visible!important;padding-left:40px!important;padding-right:40px!important}
+body.dsk #panel:has(.prow)::before,body.dsk #panel:has(.prow)::after{content:'';position:absolute;top:-12px;bottom:-12px;width:28px;border-radius:14px;z-index:2;pointer-events:none;
+ background:radial-gradient(circle at 50% 10px,color-mix(in srgb,var(--trim) 60%,#fff) 0 4px,var(--trim) 5px 8px,transparent 9px),radial-gradient(circle at 50% calc(100% - 10px),color-mix(in srgb,var(--trim) 60%,#fff) 0 4px,var(--trim) 5px 8px,transparent 9px),linear-gradient(90deg,var(--lea2),var(--lea) 32%,color-mix(in srgb,var(--lea) 70%,#fff 30%) 50%,var(--lea) 68%,var(--lea2));
+ box-shadow:0 4px 10px rgba(0,0,0,.45)}
+body.dsk #panel:has(.prow)::before{left:-14px}body.dsk #panel:has(.prow)::after{right:-14px}
+/* las piezas, como dibujadas a tinta sobre el papel */
+#panel .prow .card{background:transparent!important;border:1.5px dashed color-mix(in srgb,var(--pline3) 70%,transparent)!important;box-shadow:none!important}
+#panel .prow .card.on,#panel .prow .card:hover{border:2px solid var(--acc2)!important;background:color-mix(in srgb,var(--paper1) 70%,transparent)!important}
+#panel .prow .card canvas{filter:invert(1) grayscale(1) sepia(.55) contrast(1.35) brightness(1.05);mix-blend-mode:multiply;border-radius:4px}
+@media (prefers-reduced-motion:reduce){#relic .ppap,#relic .pscr .prod{animation:none}}
+/* móvil: más compacto para que quepa entero */
+body.mfs #relic .pscr{margin-top:12px}body.mfs #relic .ppap{padding:8px 26px 8px;margin:0 16px}body.mfs #relic .pscr i.prod{width:22px!important}
+body.mfs #relic .ppap .ptt{font-size:15px!important}body.mfs #relic .ppap .toff{margin:6px 0 4px;gap:8px}body.mfs #relic .pskip{margin-top:2px}body.mfs #relic .pskip small{display:none}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="inogal">Nogal<span>Dev</span></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -942,7 +1035,7 @@ body.dsk #panel,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v269</div>
+<div id="ver">Towerize v270</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1465,9 +1558,9 @@ function tryTowerOffer(){if(S&&S.tut){const o=S.tut.off;if(o&&!RL.open&&!S.aim&&
  const p=tPool();if(S.deck.length>=DECKMAX||!p.length)return;RL.towo=shuf(p).slice(0,3);renderTowerOffer();}
 const twChips=k=>{const T=TW[k],o=[];o.push(T.unit?'Unidades':T.range<=2*K?'Corto alcance':'A distancia');o.push(DT[T.dt]?DT[T.dt].n:'Físico');if(T.splash||T.puddle||T.cone)o.push('Área');if(T.slow)o.push('Ralentiza');if(T.zap)o.push('Rebote');if(T.beam)o.push('Rayo continuo');if(T.burn)o.push('Quemadura');if(T.dot)o.push('Veneno');if(T.monk)o.push('Curación');return o;};
 function renderTowerOffer(){try{(RL.towo||[]).forEach(k=>see('tw',k));}catch(e){}closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;const g=SKIPG[S.skips||0]||0;
- el.innerHTML=`<b style="font-size:16px">${RL.towT||'Nueva torre para tu mazo'}</b><br><small>${RL.towD||'Elige una torre: a partir de ahora podrás construirla en esta partida. Tu mazo: '+S.deck.length+'/'+DECKMAX+'.'} El juego está en pausa.</small><div>`+
+ el.innerHTML=`<div class="pscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap"><b class="ptt">${RL.towT||'Nueva torre para tu mazo'}</b><small class="pst">${RL.towD||'Elige una torre: a partir de ahora podrás construirla en esta partida. Tu mazo: '+S.deck.length+'/'+DECKMAX+'.'} El juego está en pausa.</small><div>`+
   '</div><div class="toff">'+RL.towo.map(k=>{const T=TW[k];return `<div class="tof"><div class="tic" style="background:${T.col}">${T.ic}</div><div class="tnm">${T.n}</div><div class="chips">${twChips(k).map(c=>`<span>${c}</span>`).join('')}</div><span class="gd">${T.cost} 🪙</span><details data-k="${k}"><summary>+ Ver detalles</summary><div class="ce tcard" style="margin:0">${shopInfo(k,1)}</div></details><button data-a="towpick" data-k="${k}">Añadir al mazo</button></div>`;}).join('')+
-  `</div>`+(RL.towNS?'':`<div style="text-align:center;margin-top:10px"><button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><br><small>Si saltas, no pierdes el hueco: dentro de 2 rondas te volverán a ofrecer torres.${g?' El oro por saltar baja cada vez que saltas.':''}</small></div>`);}
+  `</div>`+(RL.towNS?'':`<div class="pskip"><button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><small>Si saltas, no pierdes el hueco: dentro de 2 rondas te volverán a ofrecer torres.${g?' El oro por saltar baja cada vez que saltas.':''}</small></div>`)+'</div></div>';try{sfx('page');}catch(e){}}
 function towerPick(k){if(!RL.towo||!RL.towo.includes(k))return;RL.towT=RL.towD=null;RL.towNS=0;S.deck.push(k);see('tw',k);RL.towo=null;RL.open=false;$('relic').classList.remove('open');S.msg=TW[k].n+' se añade a tu mazo.';ui();}
 function towerSkip(){const g=SKIPG[S.skips||0]||0;S.skips=(S.skips||0)+1;if(g)goldEv(g);RL.towo=null;RL.open=false;$('relic').classList.remove('open');S.msg=g?'Has saltado la oferta: +'+g+' 🪙.':'Has saltado la oferta.';ui();}
 const HMX=(()=>{const v=Object.values(HEROES);return{hp:Math.max(...v.map(d=>d.base.hp)),dp:Math.max(...v.map(d=>d.base.dmg/d.base.cd*(d.area?1.3:1))),rg:Math.max(...v.map(d=>d.base.range||.5))};})();
@@ -1596,6 +1689,7 @@ const OPTS=[
  {tab:'hs',type:'toggle',key:'dauto',def:false,label:'Avance automático',desc:'Los diálogos pasan solos tras una pausa, sin tener que pulsar.'},
  {tab:'hs',type:'slider',key:'dwait',def:2,min:1,max:5,step:.5,fmt:v=>String(v).replace('.',',')+' s',label:'Pausa del avance automático',desc:'Lo que espera cada diálogo, además de un poco más cuanto más largo es el texto.'},
  {tab:'hs',type:'toggle',key:'dglitch',def:true,label:'Efectos de fallo de ÉTER',desc:'Caracteres corruptos y parpadeos mientras el núcleo está dañado. Desactívalo si te molestan o usas lector de pantalla.'},
+ {tab:'hs',type:'toggle',key:'eter',def:true,label:'ÉTER habla en partida',desc:'De vez en cuando, ÉTER comenta lo que pasa desde el núcleo con un bocadillo corto: al ganar una oleada sin daños, cuando se cuela un enemigo, al ver un jefe… No para el juego.'},
  {tab:'hs',type:'toggle',key:'dbig',def:false,label:'Texto de diálogos grande',desc:'Letra más grande en los diálogos de la historia, para leerlos con más comodidad.'},
  {tab:'hs',type:'cname',label:'Nombre del capitán'},
  {tab:'un',type:'note',desc:'Para quien quiera probarlo todo sin pasar por el progreso: streaming, pruebas o simplemente jugar a tu aire. Cada sección se puede desactivar cuando quieras: vuelve a bloquearse lo que no hayas conseguido jugando. Los logros siguen funcionando con normalidad.'},
@@ -2081,25 +2175,31 @@ function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
  else if(it.dot)ic=`<span class="bdot" style="background:${it.dot}"></span>`;
  else ic=`<span class="bic"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
  return `<button class="bti${t==='lg'?' ach':''}${it.pin?' pin':''}${on?' on':''}${it.ok?'':' un'}${it.got?' got':''}${it.hid?' hid':''}${it.lk&&!it.ok?' lkd':''}" data-a="csel" data-v="${it.id}">${ic}<small>${it.ok?it.n:'???'}</small></button>`;}
+// ficha de la página derecha: icono y título en una fila; debajo, los datos en dos columnas con puntos («Daño ······ 6,5»)
+function bkSheet(ic,inner,cls){let ttl='',rest=inner;const a='<div class="ttl">';
+ if(inner.startsWith(a)){const j=inner.indexOf('</div>');ttl=inner.slice(a.length,j);rest=inner.slice(j+6);}
+ const lv=(ttl.match(/<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(lv){ttl=ttl.replace(/<button class="stbtn lvbtn"[\s\S]*?<\/button>/g,'');ttl=ttl.includes('<br>')?ttl+lv:ttl+'<br>'+lv;}
+ return `<div class="bksh">${ic||''}<div class="ttl bksht">${ttl}</div></div><div class="ce bkce bkg${cls?' '+cls:''}">${rest}</div>`;}
 const bkPrevBtn=(a,v,l)=>`<button class="bkgo" data-a="${a}" data-v="${v}">▶ ${l||'Ver en acción'}</button>`;
 function bkDetail(t,id){
  const sh=(ic,txt)=>`<div class="bkun"><span class="sil bkbig">${ic}</span><h4>???</h4><p>${txt}</p></div>`;
  if(t==='tw'){const T=TW[id];if(!T)return'';
   if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+`<button class="bklink" data-a="cachgo" data-v="${a}">🏆 ${fn?ACH[a].n:'Logro oculto'}</button>`;}return sh(T.ic,'Aún no descubierto.');}
-  if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return `<div class="bkhd"><span class="bkbic" style="background:${T.col}">${T.ic}</span></div><div class="ce bkce">${uniqGlance(id,cur)}</div>`+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
-  return `<div class="bkhd"><span class="bkbic" style="background:${T.col}">${T.ic}</span></div><div class="ce bkce">${shopInfo(id,1)}</div>`+bkPrevBtn('cprev',id);}
+  const bi=`<span class="bkbic" style="background:${T.col}">${T.ic}</span>`;
+  if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
+  return bkSheet(bi,shopInfo(id,1).replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id);}
  if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;
-  return `<div class="bkhd"><span class="bkpor" style="background:${D.col}">${portrait(id)}</span></div><div class="ce bkce">${heroInfo(id,1)}</div>`+bkPrevBtn('chprev',id);}
+  return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`,heroInfo(id,1).replace(/<b>[^<]*? /,'<b>'))+bkPrevBtn('chprev',id);}
  if(t==='pc'){const i=+id,o=PIECES[i];if(!o)return'';if(!seen('pc',o.n))return sh('🧩','Aún no descubierta.');
   return `<div class="ce bkce"><div class="ttl">${(SOLARES[o.n]||[]).length>1?`<button class="stbtn lvbtn" data-a="cpcv" data-v="${i}" title="Ver la otra disposición de solares">V${((CP.pcv||{})[i]||0)+1}</button>`:''}<b>${o.n}</b> · ${opens(o.p)} salidas</div><canvas width="168" height="168" data-pi="${i}" style="margin:8px auto"></canvas><small>Solares en partida: <b>${SOLN[o.n]||'—'}</b></small><small>Las piezas pueden salir giradas, con casillas especiales y con otra decoración. Solo se construye en los solares.</small></div>`;}
  if(t==='bf'){if(!seen('bf',id))return sh('✨','Aún no descubierta.');return `<div class="fbar"><button class="${CP.sup[id]?'on':''}" data-a="csup" data-v="${id}">${CP.sup[id]?'★':'☆'} Versión super</button></div><div class="ce bkce">${buffInfo(CP.sup[id]?id+'+':id,1)}</div>`;}
- if(t==='rl'){const r=RELIC[id];if(!r)return'';if(!seen('rl',id))return sh(r.ic,'Aún no descubierta.');return `<div class="bkhd"><span class="bkbic" style="background:${r.col}">${r.ic}</span></div><div class="ce bkce">${relicInfo(id,1)}</div>`;}
- if(t==='en'){if(!ET[id])return'';if(!seen('en',id))return sh('<span class="lsd bkdot"></span>','Aún no descubierto.');return `<div class="ce bkce">${enemyInfo(id)}</div>`+bkPrevBtn('ceprev',id);}
+ if(t==='rl'){const r=RELIC[id];if(!r)return'';if(!seen('rl',id))return sh(r.ic,'Aún no descubierta.');return bkSheet(`<span class="bkbic" style="background:${r.col}">${r.ic}</span>`,relicInfo(id,1));}
+ if(t==='en'){if(!ET[id])return'';if(!seen('en',id))return sh('<span class="lsd bkdot"></span>','Aún no descubierto.');return bkSheet(`<span class="bkbic bken"><i style="background:${ET[id].col}"></i></span>`,enemyInfo(id))+bkPrevBtn('ceprev',id);}
  if(t==='ev'){const E=EVENTS[id];if(!E)return'';if(!seen('ev',id))return sh(E.ic||'❔','Aún no descubierto.');return `<div class="ce bkce">${eventCard(id)}</div><small class="bknote">Las opciones que nunca has elegido aparecen como ???.</small>`;}
  if(t==='lg'){const A=ACH[id];if(!A)return'';if(!achFound(id))return sh('🏆','Logro oculto. Sigue jugando para descubrirlo.');
   const T=TW[A.tw],ok=!!ACHS[id],run=inRun(),dd=t=>{const d=new Date(t);return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();};
   const rw=arw(ok,T&&[T.ic,T.n,'tw'],id)+arw(ok,A.rl&&[RELIC[A.rl].ic,RELIC[A.rl].n,'rl'],id)+arw(ok,A.hr&&[HEROES[A.hr].ic,HEROES[A.hr].n,'hr'],id)+arw(ok,A.ux&&['📖','Compendio','cp'],id)+cosOf(id).map(([k,c])=>arw(ok,[CSKIND[k][0],c.n,'cs'],id)).join('');
-  return `<div class="bkhd"><span class="bkbic bkach${ok?'':' off'}">${A.ic||'🏅'}</span></div><div class="ce ach bkce${ok?' got':''}${CP.hl===id?' bkhl':''}"><div class="ttl">${ok?'':`<button class="pinb${PINS.includes(id)?' on':''}" data-a="apin" data-id="${id}" title="${PINS.includes(id)?'Quitar de fijados':'Fijar para seguirlo en partida'}">📌</button>`}<b>${A.n}</b></div>${achSec(id)?'<small style="margin:0">??? · <em>'+A.h+'</em></small>':'<small style="margin:0">'+A.d+'</small>'}<div class="abot">${rw}${ok?`<small class="agot">✓ Conseguido el ${dd(ACHS[id])}</small>`:achProg(id,run)}</div></div>`;}
+  return bkSheet(`<span class="bkbic bkach${ok?'':' off'}">${A.ic||'🏅'}</span>`,`<div class="ttl">${ok?'':`<button class="pinb${PINS.includes(id)?' on':''}" data-a="apin" data-id="${id}" title="${PINS.includes(id)?'Quitar de fijados':'Fijar para seguirlo en partida'}">📌</button>`}<b>${A.n}</b></div>${achSec(id)?'<small style="margin:0">??? · <em>'+A.h+'</em></small>':'<small style="margin:0">'+A.d+'</small>'}<div class="abot">${rw}${ok?`<small class="agot">✓ Conseguido el ${dd(ACHS[id])}</small>`:achProg(id,run)}</div>`,'ach'+(ok?' got':'')+(CP.hl===id?' bkhl':''));}
  return '';}
 // filtros: cada opción solo si hay algo descubierto que encaje; una fila con menos de 2 opciones reales no se muestra
 function bkFilters(t){
@@ -2114,6 +2214,29 @@ const BKSUB={tw:'Las torres que puedes construir',hr:'Quienes defienden el núcl
 // iconos de los marcapáginas de Logros (por categoría)
 const LGICO={all:'🏆',tu:'🎓',jg:'🎲',hr:'🦸',st:'🧪',ev:'📜',mp:'🗺️',vet:'🎖️'};
 // el compendio (y Logros) como piezas del libro: marcapáginas, página izquierda, página derecha y retoques tras pintar
+// «Ver en acción» dentro del libro: cabecera pequeña, el mapa y, al lado, los controles en pergamino (botones en vez de desplegables).
+// Los <select> siguen existiendo ocultos: los botones cambian su valor y disparan «change», así la lógica de la previsualización es la misma.
+function bkPills(sel,opts,cur){return `<select id="${sel}" hidden>${opts.map(([v,l])=>`<option value="${v}"${String(v)===String(cur)?' selected':''}>${l}</option>`).join('')}</select>`+
+ opts.map(([v,l,dis,col])=>`<button class="bkpill${String(v)===String(cur)?' on':''}" data-a="pvpill" data-s="${sel}" data-v="${v}"${dis?' disabled':''}>${col?`<i style="background:${col}"></i>`:''}${l}</button>`).join('');}
+const bkPvRow=(l,h)=>`<div class="bkpvr"><b>${l}</b><div>${h}</div></div>`;
+function bkPreview(){const es=Object.keys(ET).filter(e=>seen('en',e)),enOpts=es.map(e=>[e,ET[e].n,0,ET[e].col]),spd=sel=>bkPills(sel,[1,2,3].map(v=>[v,'×'+v]),CP.spd||1);
+ let ic,nm,lv='',ctl='',note='',extra='',ok=true,back='cback';
+ if(CP.prev){const k=CP.prev,T=TW[k];
+  if(T.uniq){const o=T.dragon?['Huevo','Bebé','Adulto','Anciano']:T.guild?RANKS:['1','2','3','4'],cur=(CP.ulv&&CP.ulv[k])||1;nm=T.n;
+   lv=`<button class="stbtn lvbtn" data-a="ulv" data-k="${k}" data-v="${cur>=o.length?1:cur+1}" title="Ver la torre en otro nivel">${cur>=o.length?'Nv Max':'Nv '+cur}</button>`;ok=uPrevOk(k,cur)&&!lvSec(k,cur);}
+  else{const st=cpState(k),X=st.spec?SPECS[k][st.spec]:T;nm=X.n;lv=(shopInfo(k,1).match(/<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(st.spec&&X.d)extra='<div class="ddesc">'+X.d+'</div>';}
+  ic=`<span class="bkbic" style="background:${T.col}">${T.ic}</span>`;
+  ctl=bkPvRow('Enemigo',bkPills('pve',enOpts,CP.pen))+bkPvRow('Velocidad',spd('pvs'));
+  note='Estadísticas base del enemigo (ronda 0), sin bufos de casilla ni reliquias. Los enemigos aparecen sin parar.'+(cpState(k).spec?' Las habilidades se muestran al rango máximo.':'');}
+ else if(CP.hprev){const id=CP.hprev,D=HEROES[id];back='chback';nm=D.n;ic=`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`;if(!es.includes(CP.hen))CP.hen=es[0]||'norm';
+  ctl=bkPvRow('Enemigo',bkPills('pve3',enOpts,CP.hen))+bkPvRow('Nivel',bkPills('pvl',[1,5,10].map(l=>[l,'Nv '+l+(hlvOk(id,l)?'':' 🔒'),!hlvOk(id,l)]),CP.hlv||1))+bkPvRow('Velocidad',spd('pvs3'));
+  note='Su vida depende del nivel: ronda 1 con Nv 1, ronda 7 con Nv 5 y ronda 14 con Nv 10. Los niveles con 🔒 se desbloquean al alcanzarlos en una partida. Si cae, reaparece al instante.';
+  extra=(D.d?'<div class="ddesc">'+D.d+'</div>':'')+`<div class="ce bkce bkg">${relicInfo(D.relic,1)}</div><div class="ce bkce">${heroAbHtml(id)}</div>`;}
+ else{const k=CP.eprev,E=ET[k],hs=allyList();back='ceback';if(!hs.some(a=>a[0]===CP.ph))CP.ph='hero:reinhart';nm=E.n;ic=`<span class="bkbic bken"><i style="background:${E.col}"></i></span>`;
+  ctl=bkPvRow('Aliado',bkPills('pvh',hs.map(([v,l])=>[v,l]),CP.ph))+bkPvRow('Velocidad',spd('pvs2'));
+  note='El enemigo, con su vida de la ronda 1, camina hasta el aliado y pelean. Si cae cualquiera de los dos, reaparece al instante.';}
+ const body=ok?`<div class="bkpv"><canvas id="pvc" width="288" height="288" class="dpv bkpvc"></canvas><div class="bkpvs">${ctl}<small class="bknote">${note}</small></div></div>${extra}`:'<small class="bknote">??? · Sigue jugando para descubrir este nivel.</small>';
+ return {html:`<div class="bksh bksm">${ic}<div class="ttl bksht"><b>${nm}</b><br><small>en acción</small>${lv}</div></div>${body}`,back:`<button class="lbbk pvbk" data-a="${back}">‹ Volver a la ficha</button>`};}
 function compParts(){
  setTimeout(()=>{if(!ALKNEW.size)return;for(const id of ALKNEW)ALKS[id]=1;ALKNEW.clear();try{localStorage.setItem('rt-alks',JSON.stringify(ALKS));}catch(e){}},0);
  closeKS();if(!compOk())CP.tab='lg';
@@ -2127,12 +2250,12 @@ function compParts(){
  let left=`<h3>${title}</h3><div class="bksub">${BKSUB[t]||''} · ${t==='lg'?nOk+' de '+real.length+' conseguidos':nOk+' de '+real.length+(['tw','pc','bf','rl'].includes(t)?' descubiertas':' descubiertos')}</div>`+bkFilters(t)+'<div class="bktiles">';
  for(const it of items)left+=it.sec?`</div><div class="bksec">${it.sec}</div><div class="bktiles">`:bkTile(it,t);
  left+='</div>';left=left.replace(/<div class="bktiles"><\/div>/g,'');
- const right=pvm?compBodyOld():bkDetail(t,CP.sel[t]);
+ const pv=pvm?bkPreview():null,right=pv?pv.html:bkDetail(t,CP.sel[t]),nar=bkNarrow();
  const after=el=>{
   el.querySelectorAll('canvas[data-pi]').forEach(cn=>drawPat(cn.getContext('2d'),(()=>{const P0=PIECES[+cn.dataset.pi],o={n:P0.n,p:P0.p,b:[]};solarize(o,(CP.pcv||{})[+cn.dataset.pi]||0,1);return o;})(),24,0,0,1));
   el.querySelectorAll('canvas[data-bpi]').forEach(cn=>{const P0=PIECES[+cn.dataset.bpi];if(!seen('pc',P0.n))return;const o={n:P0.n,p:P0.p,b:[]};solarize(o,0,1);drawPat(cn.getContext('2d'),o,6.2,0,0,1);});
   if(CP.hl){const hl=CP.hl;setTimeout(()=>{const b=el.querySelector(`.bti[data-v="${hl}"]`);if(b){b.scrollIntoView({block:'center'});b.classList.add('bkglow');}},30);setTimeout(()=>{if(CP.hl===hl){CP.hl=null;const c=el.querySelector('.bkhl');if(c)c.classList.remove('bkhl');}},1600);}};
- return {marks,left,right,flip,pvm,after,key:t};
+ return {marks,left,right,flip,pvm,after,key:t,footL:pv&&nar?pv.back:'',footR:pv&&!nar?pv.back:''};
 }
 function renderComp(){if(typeof lbRender==='function')lbRender();}
 
@@ -2559,6 +2682,7 @@ function tutPhase(ph){if(!S||!S.tut)return;const r=S.round,T=S.tut;
  if(ph==='place'){
   if(r===1)hint('tut_welcome','Bienvenido a Towerize',[['Defiende tu <b>núcleo</b>: si un enemigo llega a él, pierdes vida.',()=>tgCell(S.core.x,S.core.y,1.2)()],['Cada ronda eliges una <b>pieza</b> de abajo para alargar el camino. Puedes girarla antes de colocarla.',tgEl('#ui [data-a="pick"]')]]);
   if(r===2)hint('tut_tiles','Casillas especiales',[['Estas piezas traen una <b>casilla especial</b>. '+HOV()+' cada una para ver su bonus y elige la que prefieras.',tgEl('#ui [data-a="pick"]')],['Las casillas especiales <b>cuestan oro</b>: <span class="gd">25 🪙</span> cada una (<span class="gd">50 🪙</span> las súper). Esta vez te regalamos <span class="gd">25 🪙</span>.',tgEl('#ui .pcst')]]);
+  if(r===3)hint('tut_kw','Palabras en negrita','Las palabras en negrita y de color, como '+kw('slow','ralentiza','')+', tienen su propia explicación. '+HOV()+' cualquiera de ellas para leerla: así puedes consultar cualquier cosa que no entiendas.',null);
   if(S.offers.some(o=>opens(o.p)>=3))hint('tut_fork','Dividir el camino','Dividir el camino te da más sitios para colocar piezas, pero los enemigos podrán salir por más portales.',tgEl('#ui [data-a="pick"]'));}
  if(ph==='build'){
   if(r===1)tutOffer(['arrow','cata'],'Elige tu primera torre','De momento será la única torre que puedas construir. <b>Arqueros</b>: disparos rápidos a un solo enemigo. <b>Catapulta</b>: disparos lentos con daño en área.');
@@ -4714,6 +4838,7 @@ function act(e){
  else if(a==='cachgo'){CP.tab='lg';CP.af='all';CP.as='all';CP.sel.lg=b.dataset.v;CP.hl=b.dataset.v;CP.prev=null;CP.eprev=null;CP.hprev=null;PE=null;PHV=null;CP.pageR=true;renderComp();}
  else if(a==='cprev'){const es=Object.keys(ET).filter(e=>seen('en',e));if(!es.includes(CP.pen))CP.pen=es[0]||'norm';CP.prev=b.dataset.v;newPrev(CP.prev,CP.pen);$('comp').scrollTop=0;renderComp();}
  else if(a==='cflt'){const sc=$('comp').scrollTop;if(b.dataset.v)CP.flt[b.dataset.f]=b.dataset.v;else delete CP.flt[b.dataset.f];renderComp();$('comp').scrollTop=sc;}
+ else if(a==='pvpill'){const sl=$(b.dataset.s);if(sl){sl.value=b.dataset.v;sl.dispatchEvent(new Event('change',{bubbles:true}));}b.parentElement.querySelectorAll('.bkpill').forEach(x=>x.classList.toggle('on',x===b));}
  else if(a==='cback'){CP.prev=null;PV=null;renderComp();}
  else if(a==='cpcv'){const sc=$('comp').scrollTop,i=+b.dataset.v,n=(SOLARES[PIECES[i].n]||[1]).length;CP.pcv=CP.pcv||{};CP.pcv[i]=((CP.pcv[i]||0)+1)%n;renderComp();$('comp').scrollTop=sc;}
  else if(a==='ceprev'){CP.eprev=b.dataset.v;newEPrev(CP.eprev,CP.ph||'hero:reinhart');$('comp').scrollTop=0;renderComp();}
@@ -5289,7 +5414,8 @@ const SFXG=[
  ['Recompensas',[
   ['relic','Reliquia',[{s:'glass1',sr:.8,y:'relic',v:.55,cd:.3,mx:1}]],
   ['ach','Logro',[{y:'tada',v:.55,cd:.3,mx:1}]],
-  ['rready','Reliquia recargada',[{y:'sparkle',v:.4,cd:.5,mx:1}]]]]];
+  ['rready','Reliquia recargada',[{y:'sparkle',v:.4,cd:.5,mx:1}]],
+  ['eter','ÉTER habla',[{y:'eter',v:.35,cd:.5,mx:1}]]]]];
 // Reserva para otros momentos (no salen en Probar sonidos): synth 'clrA' (fanfarria), 'clrB' (campanillas), 'nv4B' (mágico), 'sparkle', 'wind', 'bubB', 'bubC', 'rock', 'gravel', 'coinB', 'coinC', 'bopA', 'bopB', 'bossA', 'bossB'; muestras 'wclear', 'coin', 'rock_wood'.
 const SFXK={};for(const[,rows]of SFXG)for(const[k,n,vs]of rows)SFXK[k]={n,vs};
 const sfxDef=k=>{const e=SFXK[k];if(!e)return null;const i=Math.min(SV[k]||0,e.vs.length-1);return e.vs[i];};
@@ -5331,6 +5457,7 @@ function synth(kind,t0,out,v,r){const c=SND.ctx;
  case 'zip':noise('highpass',2500,7000,1,0,.005,.05,.25);break;
  case 'gravel':for(let i=0;i<6;i++)noise('bandpass',700+Math.random()*900,500,2,.03+i*.025+Math.random()*.015,.003,.04,.25);break;
  case 'rock':tone('sine',95,42,0,.004,.22,.9);noise('lowpass',700,250,1,0,.004,.18,.5);for(let i=0;i<5;i++)noise('bandpass',600+Math.random()*800,500,2,.06+i*.03,.003,.04,.2);break;
+ case 'eter':tone('sine',1320,1320,0,.004,.07,.18);tone('sine',1760,1760,.075,.004,.09,.14);break;
  case 'sparkle':[1568,2093,2637,3136].forEach((f,i)=>tone('sine',f,f,i*.022,.003,.22,.22));noise('highpass',6000,6000,1,0,.003,.08,.12);break;
  case 'arcane':{const m=c.createOscillator(),mg=c.createGain();m.frequency.value=40;mg.gain.value=60;m.connect(mg);const o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.setValueAtTime(330*r,t0);o.frequency.exponentialRampToValueAtTime(660*r,t0+.15);mg.connect(o.frequency);g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.4*v,t0+.01);g.gain.exponentialRampToValueAtTime(.0001,t0+.28);o.connect(g);g.connect(out);o.start(t0);m.start(t0);o.stop(t0+.3);m.stop(t0+.3);break;}
  case 'wind':noise('bandpass',700,2600,1.2,0,.08,.3,.5);noise('highpass',3000,5000,.7,0,.06,.25,.15);break;
@@ -5381,4 +5508,50 @@ function sfxTest(k,i){const e=SFXK[k];if(!e)return;if(e.vs.length>1){SV[k]=i;try
  const _g=gainRelic;gainRelic=function(...a){sfx('relic');return _g.apply(this,a);};
  const _a=achieve;achieve=function(id,...a){const nw=ACH[id]&&!ACHS[id];const r=_a.call(this,id,...a);if(nw)sfx('ach');return r;};
  const _h=hpLoss;hpLoss=function(...a){sfx('core');return _h.apply(this,a);};}
+// ======================= ÉTER HABLA EN PARTIDA =======================
+// De vez en cuando, un bocadillo corto sale del núcleo. No para el juego.
+// Un vigilante mira el estado cada cuarto de segundo (vida del núcleo, fase, jefes, torres, héroe) en lugar de engancharse a cada función.
+// Reglas: como mucho una frase cada ~40 s (los momentos seguros, cada 8 s), nunca la misma dos veces seguidas,
+// no habla en el tutorial ni con una ventana abierta. Cómo habla depende de lo reparado que está el núcleo (STO.p).
+const ETERL={
+ clean:{p:.25,l:['Bien hecho, Piloto.','Ni un rasguño.','Sensores despejados.','Así se hace.']},
+ leak:{p:.4,l:['¡Ay! Núcleo dañado.','Eso ha dolido.','Brecha detectada.','¡Cuidado, Piloto!']},
+ low:{p:1,l:['Integridad crítica. No me deje caer aquí.']},
+ boss:{p:1,l:['Firma de energía enorme. Es un jefe.','Ese lleva un fragmento. Lo noto.']},
+ bossk:{p:1,l:['Fragmento a la vista. Buen trabajo.']},
+ nv4:{p:1,l:['Lecturas de poder muy altas en esa torre.']},
+ better:{p:.3,l:['Mejor. Mucho mejor.']},
+ last:{p:1,l:['Última oleada. Aguante, Piloto.']},
+ hero:{p:.3,l:['Su héroe ha caído.']}};
+const ETER={last:'',t:-1e9,el:null,hide:0,prev:null};
+// fallos de texto según la reparación: 0-1 piezas tartamudea y corrompe letras; 2, algún fallo suelto; 3, limpio y con tu nombre
+function eterGlitch(txt){const p=STO.p||0,nm=STO.name;if(p>=3)return nm?txt.replace(/Piloto/g,nm):txt;if(OPT.dglitch===false)return txt;
+ const G='▒░▓',lv=p>=2?1:p>=1?2:3;let w=txt.split(' ');
+ if(lv>=2)w=w.map((x,i)=>i<2&&/^[A-Za-zÁÉÍÓÚáéíóúÑñ]{3,}/.test(x)&&Math.random()<.5?x.slice(0,2)+'-'+x:x);
+ const ch=[...w.join(' ')],n=lv===1?1:lv;for(let k=0;k<n;k++){const i=1+Math.floor(Math.random()*(ch.length-2));if(/[a-záéíóúñ]/i.test(ch[i]))ch[i]=`<span class="eg">${G[k%3]}</span>`;}
+ return ch.join('');}
+function eterSay(k,force){if(!OPT.eter||!S||S.tut||PREVIEWING||RL.open||(LB&&LB.open)||document.body.classList.contains('inmenu'))return false;
+ const D=ETERL[k];if(!D)return false;const now=performance.now();
+ if(now-ETER.t<(D.p>=1?8000:40000))return false;if(!force&&Math.random()>D.p)return false;
+ const opts=D.l.filter(x=>x!==ETER.last),txt=(opts.length?opts:D.l)[Math.floor(Math.random()*(opts.length||D.l.length))];
+ ETER.last=txt;ETER.t=now;let el=ETER.el;if(!el){el=ETER.el=document.createElement('div');el.id='eterb';document.body.appendChild(el);}
+ el.className='g'+Math.max(0,3-(STO.p||0));el.innerHTML=`<b>ÉTER</b>${eterGlitch(txt)}`;el.classList.add('on');eterPos();
+ clearTimeout(ETER.hide);ETER.hide=setTimeout(()=>el.classList.remove('on'),3200);try{sfx('eter');}catch(e){}return true;}
+function eterPos(){const el=ETER.el;if(!el||!el.classList.contains('on')||!S||!S.core)return;try{const r=cellRect(S.core.x,S.core.y,1),x=(r.l+r.r)/2,y=r.t;
+ el.style.left=Math.max(12,Math.min(innerWidth-el.offsetWidth-12,x-el.offsetWidth+34))+'px';el.style.top=Math.max(54,y-el.offsetHeight-14)+'px';}catch(e){}}
+// el vigilante: compara con lo que vio la última vez
+setInterval(()=>{try{
+ if(!S||!S.hero||PREVIEWING||document.body.classList.contains('inmenu')||S.phase==='won'||S.phase==='lost'){ETER.prev=null;if(ETER.el)ETER.el.classList.remove('on');return;}
+ eterPos();
+ const E=S.eter=S.eter||{},P=ETER.prev,bosses=S.enemies?S.enemies.filter(e=>e.hp>0&&isBoss(e)).length:0,hhp=S.hero.s?S.hero.s.hp:1,nv4=S.list?S.list.some(t=>t.lvl>=4&&!TW[t.type].uniq):false;
+ const cur={ph:S.phase,hp:S.hp,round:S.round,bosses,hhp,nv4};ETER.prev=cur;if(!P||P.round!==cur.round&&P.ph!=='wave')return;
+ if(cur.ph==='wave'&&P.ph!=='wave'){E.hp0=S.hp;E.leak=0;if(S.round===ROUNDS)eterSay('last');}
+ if(cur.ph==='wave'){
+  if(cur.hp<P.hp){if(cur.hp>0&&cur.hp<=6&&!E.low){E.low=1;eterSay('low');}else if(!E.leak){E.leak=1;eterSay('leak');}}
+  if(cur.bosses>P.bosses)eterSay('boss');
+  if(cur.bosses<P.bosses&&cur.hp>0&&cur.hp===P.hp)eterSay('bossk');
+  if(P.hhp>0&&cur.hhp<=0)eterSay('hero');}
+ if(P.ph==='wave'&&cur.ph!=='wave'&&cur.hp>0){const clean=E.hp0!=null&&S.hp>=E.hp0;if(clean&&E.hurt)eterSay('better');else if(clean)eterSay('clean');E.hurt=!clean;}
+ if(cur.nv4&&!E.nv4){E.nv4=1;eterSay('nv4');}
+}catch(e){}},250);
 </script></body></html>

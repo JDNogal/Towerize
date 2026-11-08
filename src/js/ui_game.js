@@ -231,6 +231,7 @@ function act(e){
  else if(a==='cachgo'){CP.tab='lg';CP.af='all';CP.as='all';CP.sel.lg=b.dataset.v;CP.hl=b.dataset.v;CP.prev=null;CP.eprev=null;CP.hprev=null;PE=null;PHV=null;CP.pageR=true;renderComp();}
  else if(a==='cprev'){const es=Object.keys(ET).filter(e=>seen('en',e));if(!es.includes(CP.pen))CP.pen=es[0]||'norm';CP.prev=b.dataset.v;newPrev(CP.prev,CP.pen);$('comp').scrollTop=0;renderComp();}
  else if(a==='cflt'){const sc=$('comp').scrollTop;if(b.dataset.v)CP.flt[b.dataset.f]=b.dataset.v;else delete CP.flt[b.dataset.f];renderComp();$('comp').scrollTop=sc;}
+ else if(a==='pvpill'){const sl=$(b.dataset.s);if(sl){sl.value=b.dataset.v;sl.dispatchEvent(new Event('change',{bubbles:true}));}b.parentElement.querySelectorAll('.bkpill').forEach(x=>x.classList.toggle('on',x===b));}
  else if(a==='cback'){CP.prev=null;PV=null;renderComp();}
  else if(a==='cpcv'){const sc=$('comp').scrollTop,i=+b.dataset.v,n=(SOLARES[PIECES[i].n]||[1]).length;CP.pcv=CP.pcv||{};CP.pcv[i]=((CP.pcv[i]||0)+1)%n;renderComp();$('comp').scrollTop=sc;}
  else if(a==='ceprev'){CP.eprev=b.dataset.v;newEPrev(CP.eprev,CP.ph||'hero:reinhart');$('comp').scrollTop=0;renderComp();}

@@ -8,7 +8,8 @@
   "06_libro.css",
   "07_bocadillo.css",
   "08_cuero.css",
-  "09_pergamino.css"
+  "09_pergamino.css",
+  "10_pergamino_enrollado.css"
  ],
  "js": [
   "00_config.js",
@@ -54,6 +55,7 @@
   "loop.js",
   "story.js",
   "intro.js",
-  "audio.js"
+  "audio.js",
+  "eter.js"
  ]
 }

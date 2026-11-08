@@ -20,7 +20,7 @@ body.dsk #panel,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#
 #relic .ce.rcard button:hover,.tof button:hover,.evopts button:hover{border-color:var(--acc2);background:var(--paper1)}
 #relic button.go,.tof button.go,#panel button.go{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;border-color:var(--lea2)!important;box-shadow:0 3px 0 var(--lea2)}
 .evopts button{text-align:left;background:var(--paper1)}
-.tof .chips span,#relic .chips span{background:var(--paper1);border-color:var(--pline2)}
+.tof .chips>span,#relic .chips>span{background:var(--paper1);border-color:var(--pline2)}
 .tof .tic,#relic .ric{box-shadow:0 3px 8px rgba(60,30,10,.25)}
 /* las tarjetas de pieza: papel sobre papel */
 #ui .prow button.card{background:var(--paper1)!important;border:1.5px solid var(--pline2)!important;border-radius:10px!important;color:var(--ink)!important}
