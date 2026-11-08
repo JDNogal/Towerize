@@ -70,7 +70,7 @@ function wishOk(w){if(w.a==='build'){const q=sqOf(w.x,w.y);return bmFree(q)&&bmD
  const t=S.list.find(o=>o.id===w.id);if(!t)return null;const T=TW[t.type];
  if(w.a==='up')return t.lvl===w.lv&&t.lvl<(T.pig?4:3)?{t,c:upCost(T,t.lvl+1)}:null;
  if(w.a==='spec')return t.lvl===3&&SPECS[t.type]&&SPECS[t.type][w.v]?{t,c:upCost(T,4)}:null;
- if(w.a==='abuy'){const D=AB[w.v],rk=t.ab&&t.ab[w.v]||0;return t.lvl===4&&D&&rk===w.rk&&rk<D.ranks.length?{t,c:D.ranks[rk].c}:null;}
+ if(w.a==='abuy'){const D=AB[w.v],rk=t.ab&&t.ab[w.v]||0;return t.lvl===4&&D&&rk===w.rk&&rk<D.ranks.length&&!abReq(t,w.v)?{t,c:D.ranks[rk].c}:null;}
  return null;}
 function wishToggle(b){if(!S||!S.list||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  if((b.dataset.tm||b.dataset.a)==='build'){const v=b.dataset.v,x=+b.dataset.sx,y=+b.dataset.sy;S.wish=S.wish||[];const i=S.wish.findIndex(w=>w.a==='build'&&w.x===x&&w.y===y);
@@ -83,7 +83,7 @@ function wishDeco(){const L=(typeof S!=='undefined'&&S&&S.wish)||[];for(const b 
  const tt=on?(TOUCH?'Marcada: se comprará sola cuando tengas oro. Mantén pulsado para desmarcar.':'Marcada: se comprará sola cuando tengas oro. Clic derecho para desmarcar.'):(TOUCH?'Mantén pulsado para marcarla y comprarla sola cuando tengas oro.':'Clic derecho: marcar para comprarla sola cuando tengas oro.');if(b.dataset.a&&b.title!==tt)b.title=tt;}}
 function wishTick(){if(typeof S==='undefined'||!S||!S.wish||!S.wish.length)return;
  S.wish=S.wish.filter(w=>wishOk(w));if(!S.wish.length){wishDeco();return;}
- if(RL.open||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
+ if(RL.open||!(S.phase==='build'||S.phase==='wave'))return;
  const w=S.wish[0],o=wishOk(w);if(!o||S.gold<o.c)return;
  if(w.a==='build'){const n=S.list.length;bmBuildNow(w.v,o.q);S.wish.shift();if(S.list.length>n)toast('🔖 <b>'+TW[w.v].n+'</b>: construida');return;}
  const t=o.t,T=TW[t.type],lv=t.lvl,rk=t.ab&&t.ab[w.v]||0;
@@ -164,17 +164,18 @@ cv.addEventListener('click',e=>{
  if(S.aim==='frost'){if(inb(c.x,c.y))castFreeze(c);return;}
  if(S.aim==='harpoon'){if(inb(c.x,c.y))castHarpoon(c);return;}
  if(S.aim==='faroz'){const f=S.list.find(o=>o.id===S.flzSel.id);if(f&&inb(c.x,c.y)){faroZones(f);f.lz[S.flzSel.i]={x:c.x,y:c.y};f.lzcd=f.lzcd||[0,0];f.lzcd[S.flzSel.i]=S.phase==='wave'?FCD[(f.lvl||1)-1]:0;try{sfx('ui');}catch(er){}}S.aim=null;S.msg='';renderRelics();ui();return;}
+ if(S.aim==='pigs'){if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2){for(const t of pigHouses())if(t&&t.pigT)setFlag(t,c);S.aim=null;S.msg='';try{sfx('ui');}catch(e){}}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(S.aim==='hero'){const H=S.hero;if(H&&heroAt(c)){S.aim=null;S.msg='';renderRelics();ui();return;}if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);S.aim=null;S.msg='';heroSay(fr,c);}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(!S.aim&&heroAt(c)&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')){bmClose();S.selT=null;try{tmClose();}catch(er){}clickA('[data-a="hero"]');return;}
  if(S.aim==='barricade'){const bp=barrPick(c.x,c.y);if(bp){S.barr.push({t:5,...bp});const st=S.rs.barricade;setCD('barricade');st.t=5;S.aim=null;S.msg='';}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(S.aim==='uplace'){uPlaceAt(c);return;}
  if(S.aim==='dism'){dismAt(c);return;}
- if(S.aim==='sharp'){sharpAt(c);return;}
- if(S.aim==='vch'){vchAt(c);return;}
+ if(S.aim==='sharp'){if(aimConfirm(c))return;sharpAt(c);S.acf=null;return;}
+ if(S.aim==='vch'){if(aimConfirm(c))return;vchAt(c);S.acf=null;return;}
  if(S.aim==='mecha'){if(mechaOk()){S.aim=null;ui();return;}castMecha(c);return;}
  if(S.aim==='habb'||S.aim==='habu'){if(habOk(S.aim.slice(3))){S.aim=null;ui();return;}castHab(c,S.aim.slice(3));return;}
  if(S.aim==='ember'){if(inb(c.x,c.y))castEmber(c);return;}
- if(S.aim==='hammer'){hammerAt(c);return;}
+ if(S.aim==='hammer'){if(aimConfirm(c))return;hammerAt(c);S.acf=null;return;}
  if(S.aim==='balance'){if(inb(c.x,c.y)){(S.bz=S.bz||[]).push({x:c.x,y:c.y,r:3*K,t:8,tk:0});const st=S.rs.balance;setCD('balance');st.t=8;S.aim=null;S.msg='';renderRelics();ui();}return;}
  if(S.aim==='tome'){if(inb(c.x,c.y)){S.tz.push({x:c.x,y:c.y,r:TZR,t:8});const st=S.rs.tome;setCD('tome');st.t=8;S.aim=null;S.msg='';renderRelics();ui();}return;}
  if(S.aim==='quiver'){if(inb(c.x,c.y)){S.dbl.push({x:c.x,y:c.y,r:QR,t:10});const st=S.rs.quiver;setCD('quiver');st.t=10;S.aim=null;S.msg='';renderRelics();ui();}return;}
@@ -215,6 +216,10 @@ document.addEventListener('click',e=>{
 },true);
 function rotate(){if(S.phase==='place'&&S.pi!=null){rotO(S.offers[S.pi]);ui();}}
 addEventListener('keydown',e=>{if(RL.open&&RL.hpick&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){heroNav(e.key==='ArrowLeft'?-1:1);e.preventDefault();return;}if(RL.open&&RL.hpick&&e.key==='Enter'&&!HEROES[RL.hsel].lockTxt){chooseHero(RL.hsel);return;}if(RL.open&&RL.hpick&&e.key==='Escape'&&RL.hconf){RL.hconf=null;renderHeroPick();return;}if(e.key==='Escape'&&LB.open&&LB.fromWin){lbBack();return;}if(RL.open)return;if(e.key==='Escape'&&S.aim&&S.aim!=='uplace'&&S.aim!=='dism'&&S.aim!=='sharp'){S.aim=null;S.mimFor=null;S.aimT=null;S.msg='';renderRelics();ui();return;}if(e.key==='Escape'&&LB.open&&!LB.cover){lbBack();}else if(e.key==='Escape'&&LB.open&&LB.cover&&document.body.classList.contains('inmenu')&&!e.repeat){if(!LB.exit){LB.exit=1;lbRender();}else exitGame();}else if(e.key==='Escape'&&PR.pinned)closePrim();else if(kbIs('rot',e.key.toLowerCase())&&!LB.open&&!S.aim&&keyOK(e))rotate();});
+// elegir torre para un efecto que no se puede deshacer (afilar, vale, martillo): primero se marca, después se confirma pulsando otra vez la misma torre
+function aimConfirm(c){const t=S.occ[c.x+','+c.y];const ok=t&&(S.aim==='sharp'?sharpOk(t):S.aim==='vch'?vchOk(S.vty,t):(t.lvl<3&&!TW[t.type].uniq));if(!ok)return false;
+ if(S.acf&&S.acf.t===t&&S.acf.aim===S.aim)return false;S.acf={t,aim:S.aim};try{sfx('ui');}catch(e){}
+ const w=S.aim==='sharp'?'afilar':S.aim==='hammer'?'subir de nivel':'usar el vale en';toast('¿Seguro que quieres '+w+' <b>'+tinfo(t).n+'</b>? Pulsa otra vez la misma torre para confirmar.');return true;}
 const AIMLOCK=['pick','rot','prot','sel','wave','sell','up','spec','abuy','pin4','close','tgt','tgtall','tgtdef','flag'];
 // botón Nv de una torre: siguiente nivel que el jugador ya ha visto; si no lo ha alcanzado, aviso
 function nextLv(k){const cur=CP.lv[k]||1;let nx=cur>=4?1:cur+1;if(nx===4&&!tlvOk(k,4)&&tlvOk(k,5))nx=5;if(!tlvOk(k,nx)){errBubble('No has alcanzado aún ese nivel.');return 1;}return nx;}
@@ -222,10 +227,10 @@ function otherSpec(k){const cur=CP.lv[k]||1,nx=cur===4?5:4;if(!tlvOk(k,nx)){errB
 // salir del juego: de momento cierra la pestaña (solo funciona si el navegador lo permite; si no, se avisa)
 function exitGame(){LB.exit=0;try{saveRun&&svLive()&&saveRun('exit');}catch(e){}try{window.close();}catch(e){}setTimeout(()=>{if(!window.closed){lbRender();toast('🚪 Tu navegador no deja cerrar la pestaña desde el juego: ciérrala tú (Ctrl+W).');}},250);}
 // bocadillos de los portales siempre visibles: se encienden y apagan con un botón del mapa (o la tecla P)
-function togglePtips(){const on=!(OPT.ptip||OPT.ptipw);OPT.ptip=OPT.ptipw=on;saveOpt();const b=$('ptb');if(b)b.classList.toggle('on',on);try{sfx('ui');}catch(e){}toast(on?'💬 Bocadillos de los portales: siempre visibles':'💬 Bocadillos de los portales: solo al pasar el ratón');}
+function togglePtips(){const on=!(OPT.ptip||OPT.ptipw);OPT.ptip=OPT.ptipw=on;saveOpt();const b=$('ptb');if(b)b.classList.toggle('on',on);try{sfx('ui');}catch(e){}toast(on?'💀 Bocadillos de los portales: siempre visibles':'💀 Bocadillos de los portales: solo al pasar el ratón');}
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
- if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','wincomp','tdet','clv','cbr','menuask','menu','peek'].includes(a))return;
+ if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim)||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -295,7 +300,7 @@ function act(e){
  else if(a==='kbreset'){KB=Object.assign({},KBDEF);KB2=Object.assign({},KB2DEF);kbSave();KBC.on=null;KBC.note='Atajos restablecidos.';renderOpts();}
  else if(a==='otab'){KBC.on=null;KBC.note='';OP.tab=b.dataset.v;OP.keepS=0;renderOpts();}
  else if(a==='sname'){const v=($('cname').value||'').trim().slice(0,16);if(v){STO.name=v;saveSto();toast('ÉTER te llamará <b>'+escH(v)+'</b>.');}renderOpts();}
- else if(a==='preset'){if(!OP.rst){OP.rst=1;renderOpts();return;}for(const k of['rt-alks','rt-story','rt-ach','rt-seen','rt-hlv','rt-evmem','rt-rev','rt-runl','rt-rounds','rt-tutdone','rt-tutchoice','rt-qdone','rt-hints','rt-lasthero','rt-achpin','rt-achbest','rt-cur','rt-hwin','rt-newu','rt-ruse','rt-tlv'])try{localStorage.removeItem(k);}catch(e){}
+ else if(a==='preset'){if(!OP.rst){OP.rst=1;renderOpts();return;}for(const k of['rt-alks','rt-story','rt-ach','rt-seen','rt-hlv','rt-evmem','rt-rev','rt-runl','rt-rounds','rt-tutdone','rt-win1','rt-tutchoice','rt-qdone','rt-hints','rt-lasthero','rt-achpin','rt-achbest','rt-cur','rt-hwin','rt-newu','rt-ruse','rt-tlv'])try{localStorage.removeItem(k);}catch(e){}
   // también lo que es progreso dentro de las opciones: desbloqueos y personalización
   for(const k of Object.keys(OPT))if(k.startsWith('u_'))OPT[k]=false;OPT.pal='perg';OPT.core='base';OPT.decoff={};saveOpt();location.reload();}
  else if(a==='opt'){const o=OPTS[+b.dataset.i];OPT[o.key]=!OPT[o.key];saveOpt();if(o.key.startsWith('u_'))applyUnl();renderOpts();}
@@ -322,6 +327,7 @@ function act(e){
  else if(a==='hab'){if(S.hero&&!RL.open)startHab('b');}
  else if(a==='mecha'){if(!RL.open)startMecha();}
  else if(a==='hult'){if(S.hero&&!RL.open)startHab('u');}
+ else if(a==='pigs'){if(RL.open||!pigsOn())return;if(S.aim==='pigs'){S.aim=null;S.msg='';}else{closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino a la que mover a los cerditos (Esc o el mismo botón para cancelar).';}renderRelics();ui();}
  else if(a==='hero'){if(!S.hero||RL.open)return;if(S.aim==='hero'){S.aim=null;S.msg='';}else{closePrim();S.aim='hero';S.aimT=null;S.msg='Elige una casilla del camino donde colocar a '+S.hero.def.n+' (clic; Esc o el mismo icono para cancelar).';}renderRelics();ui();}
  else if(a==='pickhero'){if(b.dataset.id)chooseHero(b.dataset.id);}
  else if(a==='hdet'){RL.hdet=!RL.hdet;RL.dman={};RL.rman={};const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
@@ -329,6 +335,7 @@ function act(e){
  else if(a==='towpick'){towerPick(b.dataset.k);}
  else if(a==='towskip'){towerSkip();}
  else if(a==='towok'){towerOk();}
+ else if(a==='ppeek'){S.ppk=S.ppk?0:1;ui();}
  else if(a==='tdet'){/* detalles de todas las torres de la oferta a la vez */RL.tdet=!RL.tdet;$('relic').classList.toggle('tdeton',!!RL.tdet);b.textContent=RL.tdet?'− Ocultar detalles':'+ Ver detalles';}
  else if(a==='wincomp'){CP.tab=b.dataset.v||'tw';CP.pageR=false;LB.fromWin=1;lbOpen('cp');}
  else if(a==='hnav'){heroNav(+b.dataset.v);}

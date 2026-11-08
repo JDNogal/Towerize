@@ -80,3 +80,10 @@ body.mfs #lstack{left:6px;gap:6px}body.mfs #lstack #emap,body.mfs #wishq{width:1
 /* pantallas grandes (pantalla completa en PC): los controles alrededor del mapa crecen para clicarlos cómodos */
 @media (min-width:1500px) and (min-height:840px){body.dsk:not(.mfs) #mtl,body.dsk:not(.mfs) #zm,body.dsk:not(.mfs) #mbl,body.dsk:not(.mfs) #mbr,body.dsk:not(.mfs) #stats,body.dsk:not(.mfs) #lstack{zoom:1.4}}
 @media (min-width:2300px) and (min-height:1250px){body.dsk:not(.mfs) #mtl,body.dsk:not(.mfs) #zm,body.dsk:not(.mfs) #mbl,body.dsk:not(.mfs) #mbr,body.dsk:not(.mfs) #stats,body.dsk:not(.mfs) #lstack{zoom:1.75}}
+/* botón de bocadillos de portal con el mismo icono que el portal (calavera en círculo rojo) */
+#ptb .ptbi{display:inline-grid;place-items:center;width:1.25em;height:1.25em;border-radius:50%;background:#e8344a;box-shadow:0 0 0 2px #fff,0 0 0 3px #7a1020;font-size:.8em;line-height:1}
+#ptb:not(.on) .ptbi{filter:grayscale(.6);opacity:.75}
+body:has(#relic.open) #lstack,body:has(#relic.open) #rstack,body.pcpick #lstack,body.pcpick #rstack{display:none}
+#tmenu .tmb.lk{filter:grayscale(.8);opacity:.6}#tmenu .tmb .tlk{position:absolute;top:-6px;right:-6px;font-size:13px}
+.hpb.hppig{font-size:20px!important;letter-spacing:-4px;padding:0 6px 0 2px!important}
+.hpb.hppig{font-size:16px!important;letter-spacing:-3px;white-space:nowrap;display:flex!important;align-items:center;justify-content:center}

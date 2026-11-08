@@ -42,16 +42,33 @@ const HIMG={};function heroImg(id){if(HIMG[id])return HIMG[id];const im=new Imag
 const twFull=t=>t.lvl>=4&&!!t.spec&&!!SPECS[t.type]&&!!SPECS[t.type][t.spec]&&(SPECS[t.type][t.spec].ab||[]).every(k=>AB[k]&&(t.ab&&t.ab[k]||0)>=AB[k].ranks.length);
 function starPath(c,cx,cy,R){c.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?R*.45:R;c.lineTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);}c.closePath();}
 function drawGal(c,cx,top,u,lv,mx,lw){lw=lw||(v=>v);const n=Math.min(3,lv),w=u*.26,hh=u*.12,gap=u*.11,gold=lv>=4;c.lineJoin='round';c.lineCap='round';
- for(let i=0;i<n;i++){const y=top+i*gap;c.beginPath();c.moveTo(cx-w/2,y+hh);c.lineTo(cx,y);c.lineTo(cx+w/2,y+hh);c.strokeStyle='#14161c';c.lineWidth=Math.max(lw(2.4),u*.08);c.stroke();c.strokeStyle=gold?'#ffd84a':'#fff';c.lineWidth=Math.max(lw(1.1),u*.04);c.stroke();}
- if(lv>=4){starPath(c,cx,top+(n-1)*gap+hh+u*.13,u*.12);c.fillStyle=mx?'#ffd84a':'#fff';c.fill();c.strokeStyle='#14161c';c.lineWidth=Math.max(lw(1.1),u*.035);c.stroke();}}
+ for(let i=0;i<n;i++){const y=top+i*gap;c.beginPath();c.moveTo(cx-w/2,y+hh);c.lineTo(cx,y);c.lineTo(cx+w/2,y+hh);c.strokeStyle='#14161c';c.lineWidth=Math.max(lw(2.4),u*.08);c.stroke();c.strokeStyle='#ffd84a';c.lineWidth=Math.max(lw(1.1),u*.04);c.stroke();}
+ if(lv>=4){const sy=top+(n-1)*gap+hh+u*.13;if(mx){const pu=.5+.5*Math.sin(performance.now()/260);c.fillStyle=`rgba(255,216,74,${.25+.25*pu})`;c.beginPath();c.arc(cx,sy,u*.2,0,7);c.fill();}starPath(c,cx,sy,u*.12);c.fillStyle='#ffd84a';c.fill();c.strokeStyle='#14161c';c.lineWidth=Math.max(lw(1.1),u*.035);c.stroke();}}
 // galones en la interfaz: dorados con borde oscuro (SVG con margen para que nada se corte), con bocadillo «Nv N»
 function galSvg(lv,mx,sc,notip){sc=sc||1;const n=Math.min(3,Math.max(1,lv)),h=4+6+(n-1)*6+(lv>=4?13:0)+4;let d='';for(let i=0;i<n;i++){const y=4+i*6;d+=`M3 ${y+6} L10 ${y} L17 ${y+6} `;}
  let st='';if(lv>=4){const sy=4+(n-1)*6+6+7.5;let p=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,r=i%2?2.5:5.6;p.push((10+Math.cos(a)*r).toFixed(1)+','+(sy+Math.sin(a)*r).toFixed(1));}
-  st=`<polygon points="${p.join(' ')}" fill="${mx?'#ffd84a':'#fff3c4'}" stroke="#2a1a0c" stroke-width="1.3" stroke-linejoin="round"/>`;}
+  st=`<polygon points="${p.join(' ')}" fill="#ffd84a" stroke="#2a1a0c" stroke-width="1.3" stroke-linejoin="round"/>`;}
  return `<span class="gal"${notip?'':` data-tip="nv:${lv}${mx?'m':''}"`}><svg viewBox="0 0 20 ${h}" width="${(20*sc).toFixed(1)}" height="${(h*sc).toFixed(1)}"><path d="${d}" fill="none" stroke="#2a1a0c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#ffcf3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>${st}</svg></span>`;}
 // iconos compuestos: uno delante y otro detrás ({f,b}); sirven para torres (icb) y unidades
-function icDraw(c,ic,x,y,sz){c.textAlign='center';c.textBaseline='middle';if(ic&&typeof ic==='object'){c.font=Math.round(sz*1.05)+'px sans-serif';c.fillText(ic.b,x+sz*.08,y-sz*.04);c.font=Math.round(sz*(ic.fs||.72))+'px sans-serif';if(ic.fr){c.save();c.translate(x-sz*.04,y+sz*.04);c.rotate(ic.fr*Math.PI/180);c.fillText(ic.f,0,0);c.restore();}else c.fillText(ic.f,x-sz*.06,y+sz*.08);}else{c.font=Math.round(sz)+'px sans-serif';c.fillText(ic,x,y);}}
-function icHtml(ic){return ic&&typeof ic==='object'?`<span class="icst"><span class="icb">${ic.b}</span><span class="icf"${ic.fs||ic.fr?` style="transform:translate(-6%,8%) scale(${ic.fs||.72})${ic.fr?` rotate(${ic.fr}deg)`:''}"`:''}>${ic.f}</span></span>`:ic;}
+function icDraw(c,ic,x,y,sz){c.textAlign='center';c.textBaseline='middle';
+ if(ic&&typeof ic==='object'){const o=ic,bx=o.bx!=null?o.bx:.08,by=o.by!=null?o.by:-.04,fx=o.fx!=null?o.fx:-.06,fy=o.fy!=null?o.fy:.08;
+  if(o.w2){/* dos alas oscuras, una a cada lado */for(const sd of[-1,1]){c.save();c.translate(x+sd*sz*.3,y-sz*.06);c.scale(-sd,1);try{c.filter='brightness(.3)';}catch(e){}c.font=Math.round(sz*.8)+'px sans-serif';c.fillText(o.b,0,0);c.restore();}}
+  else{c.save();c.translate(x+bx*sz,y+by*sz);if(o.br)c.rotate(o.br*Math.PI/180);c.font=Math.round(sz*1.05*(o.bs||1))+'px sans-serif';c.fillText(o.b,0,0);c.restore();}
+  c.save();c.translate(x+fx*sz,y+fy*sz);if(o.fr)c.rotate(o.fr*Math.PI/180);c.font=Math.round(sz*(o.fs||.72))+'px sans-serif';c.fillText(o.f,0,0);c.restore();}
+ else{c.font=Math.round(sz)+'px sans-serif';c.fillText(ic,x,y);}}
+function icHtml(ic){if(!ic||typeof ic!=='object')return ic;const o=ic,bx=o.bx!=null?o.bx:.08,by=o.by!=null?o.by:-.04,fx=o.fx!=null?o.fx:-.06,fy=o.fy!=null?o.fy:.08,P=v=>(v*100).toFixed(0)+'%';
+ const back=o.w2?`<span style="transform:translate(-30%,-6%) scale(.8,.8) scaleX(1);filter:brightness(.3)">${o.b}</span><span style="transform:translate(30%,-6%) scale(-.8,.8);filter:brightness(.3)">${o.b}</span>`:`<span class="icb" style="transform:translate(${P(bx)},${P(by)})${o.br?` rotate(${o.br}deg)`:''} scale(${1.05*(o.bs||1)})">${o.b}</span>`;
+ return `<span class="icst">${back}<span class="icf" style="transform:translate(${P(fx)},${P(fy)})${o.fr?` rotate(${o.fr}deg)`:''} scale(${o.fs||.72})">${o.f}</span></span>`;}
+// iconos de los enemigos (era Fantástica): monstruos dentro de un círculo de su color con borde oscuro
+const EIC={norm:'👺',fast:'🐀',runner:'🐗',vet:'👹',champ:{b:'⚔️',f:'👹',bs:1.1,bx:0,by:0,fs:.8,fx:0,fy:.04},armored:{b:'🧌',f:'🛡️',bx:0,by:0,fs:.55,fx:.3,fy:.24},tank:'🦣',custodian:'🗿',sling:'🐒',
+ javelin:{b:'🔱',f:'👺',bs:1.15,br:40,bx:.05,by:-.05,fs:.75,fx:-.1,fy:.1},raider:{b:'🥷',f:'💰',bx:0,by:0,fs:.55,fx:.32,fy:.28},acolyte:'💀',warlock:'😈',shaman:{b:'💀',f:'🌿',bx:0,by:0,fs:.55,fx:.3,fy:.28},bat:'🦇',
+ harpy:{b:'🪽',f:'🧝‍♀️',w2:1,fs:.75,fx:0,fy:.04},griffin:'🦅',mini:{b:'😈',f:'🔥',bx:0,by:0,fs:.55,fx:.3,fy:.24},elite:{b:'🧌',f:'🔥',bx:0,by:0,fs:.55,fx:.3,fy:.24},cub:'🐺',greyw:{b:'🐺',f:'🌙',bx:0,by:0,fs:.55,fx:.3,fy:.24},
+ bigw:{b:'🐺',f:'👑',bx:0,by:.04,fs:.5,fx:0,fy:-.5},momdrg:'🐲',boss:{b:'👹',f:'👑',bx:0,by:.04,fs:.5,fx:0,fy:-.5},bob:'🐷',colossus:{b:'🗿',f:'👑',bx:0,by:.04,fs:.5,fx:0,fy:-.64}};
+const enIc=k=>EIC[k]||(ET[k]&&ET[k].ic)||null;
+// caché de iconos ya dibujados (muchos enemigos a la vez): un lienzo por tipo y tamaño
+const ENC={};function enIcDraw(c,k,x,y,sz){const ic=enIc(k);if(!ic)return;const s=Math.max(8,Math.round(sz*2)),key=k+':'+s;let cv=ENC[key];
+ if(!cv){try{cv=document.createElement('canvas');cv.width=cv.height=s*2;const g=cv.getContext('2d');if(!g||!g.fillText)throw 0;icDraw(g,ic,s,s,s*1.45);ENC[key]=cv;}catch(e){ENC[key]=cv=null;}}
+ if(cv&&c.drawImage)try{c.drawImage(cv,x-sz,y-sz,sz*2,sz*2);return;}catch(e){}icDraw(c,ic,x,y,sz*1.45);}
 const twIcO=X=>X&&X.icb?{f:X.ic,b:X.icb}:X.ic,twIc=k=>icHtml(twIcO(TW[k]));
 // icono de cada unidad (por torre y especialización): círculo con su icono, como el héroe
 const UIC={bastion:{f:'🗡️',b:'🛡️',fs:.9},monk:'🧘',guild:{b:'🪙',f:'🗡️',fs:.85,fr:180},dragon:'🐲',pal:'⚜️',ass:'🗡️',fist:'🥋',drunk:'🍶'};
@@ -67,7 +84,7 @@ function drawUnits(c,s,cs,ox,oy,lw){
      if(im.complete&&im.naturalWidth){c.beginPath();c.arc(px,py,r,0,7);c.clip();try{c.filter='grayscale(1) brightness(.75)';}catch(e){}c.drawImage(im,px-r,py-r,r*2,r*2);try{c.filter='none';}catch(e){}}c.restore();
      c.strokeStyle='#8a8f9c';c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();
      const n=Math.ceil(q.H.s.rt||q.rt||0);if(n>0){c.font='800 '+Math.round(r*1.1)+'px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.lineWidth=lw(3);c.strokeStyle='rgba(0,0,0,.8)';c.strokeText(n,px,py+1);c.fillStyle='#fff';c.fillText(n,px,py+1);}}
-    continue;}const wb=q.drunk>0?Math.sin(performance.now()/110+q.i)*cs*.18:0,px=ox+q.x*cs+cs/2+wb,py=oy+q.y*cs+cs/2,r=q.H?cs*1.05:q.mech?cs*1.5:q.pig?cs*.75:q.beast?cs*(q.beast==='bear'?.95:.75):cs*.5;
+    continue;}const wb=q.drunk>0?Math.sin(performance.now()/110+q.i)*cs*.18:0,px=ox+q.x*cs+cs/2+wb,py=oy+q.y*cs+cs/2,r=q.H?cs*1.05:q.mech?cs*1.5:q.pig?cs*1.0:q.beast?cs*(q.beast==='bear'?.95:.75):cs*.5;
    if(MK){c.fillStyle=tinfo(t).col;for(const sd of[-1,1]){c.beginPath();c.moveTo(px+sd*r*.55,py-r*.45);c.lineTo(px+sd*r*1.45,py-r*.95);c.lineTo(px+sd*r*.85,py-r*.05);c.closePath();c.fill();}}
    c.fillStyle=q.H?q.H.def.col:tinfo(t).col;c.beginPath();c.arc(px,py,r,0,7);c.fill();
    if(q.H){const im=heroImg(q.H.id);if(im.complete&&im.naturalWidth){c.save();c.beginPath();c.arc(px,py,r,0,7);c.clip();c.drawImage(im,px-r,py-r,r*2,r*2);c.restore();}else{c.font=Math.round(r*1.5)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#14161c';c.fillText(q.H.def.ic,px,py+1);}

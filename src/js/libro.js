@@ -8,7 +8,7 @@ try{LB.news=JSON.parse(localStorage.getItem('rt-lbnew'))||{};}catch(e){}
 function lbNew(area){if(LB.open&&!LB.cover&&LB.area===area)return;LB.news[area]=1;try{localStorage.setItem('rt-lbnew',JSON.stringify(LB.news));}catch(e){}if(LB.open)lbRender();}
 function lbSeenArea(area){if(!LB.news[area])return;delete LB.news[area];try{localStorage.setItem('rt-lbnew',JSON.stringify(LB.news));}catch(e){}}
 const lbHasNew=k=>!!LB.news[k]||(k==='op'&&typeof NEWU!=='undefined'&&NEWU.length>0);
-const LBAREAS=[['cp','Compendio','📖'],['lg','Logros','🏆'],['st','Estadísticas','📊'],['op','Opciones','⚙️'],['hp','Ayuda','❓'],['cr','Créditos','📜']];
+const LBAREAS=[['cp','Compendio','📖'],['lg','Logros','🏆'],['st','Estadísticas','📊'],['pt','Partidas','📚'],['op','Opciones','⚙️'],['hp','Ayuda','❓'],['cr','Créditos','📜']];
 const lbInGame=()=>!document.body.classList.contains('inmenu')&&!!(S&&S.list);
 const lbAreas=()=>LBAREAS.filter(([k])=>k!=='st'||lbInGame());
 const lbMob=()=>TOUCH||bkNarrow();
@@ -158,7 +158,7 @@ function lbRender(){
  if(LB.area==='lg')CP.tab='lg';else if(LB.area==='cp'&&CP.tab==='lg')CP.tab=compOk()?'tw':'lg';
  if(LB.area==='cp'&&CP.tab==='lg')LB.area='lg';
  CP.open=LB.area==='cp'||LB.area==='lg';OP.open=LB.area==='op';lbSeenArea(LB.area);
- const P=LB.area==='prep'?prepParts():LB.area==='end'?endParts():LB.area==='msg'?msgParts():CP.open?compParts():LB.area==='op'?optParts():LB.area==='st'?statParts():LB.area==='hp'?helpParts():credParts();
+ const P=LB.area==='prep'?prepParts():LB.area==='end'?endParts():LB.area==='msg'?msgParts():CP.open?compParts():LB.area==='op'?optParts():LB.area==='st'?statParts():LB.area==='pt'?histParts():LB.area==='hp'?helpParts():credParts();
  const marks=P.marksHTML||(P.marks?lbMarks(P.marks.list,P.marks.cur,P.marks.act):'');
  const sl=el.querySelector('.bkp.l,.bkp.spread'),st=sl?sl.scrollTop:0,same=LB.lastK===LB.area+'|'+P.key;LB.lastK=LB.area+'|'+P.key;
  let pages;

@@ -7,7 +7,7 @@ function update(dt){
  if(S.st){S.st.time+=dt;for(const t of S.list)t.act=(t.act||0)+dt;if(S.hero)S.hero.pt.act=(S.hero.pt.act||0)+dt;}
  S.wt+=dt;for(const id of S.relics){const st=S.rs[id];if(st.t>0)st.t=Math.max(0,st.t-dt);if(st.cd>0&&S.phase==='wave')st.cd=Math.max(0,st.cd-dt);}
  const iv=Math.max(.3,.7-S.round*.03);
- for(const p of S.portals){p.t-=dt;if(p.q.length&&p.t<=0){const t=p.q.shift();if(t==='|'){p.t=SQGAP;continue;}spawnEnemy(t,p);p.t=(t==='boss'||t==='colossus')?1:iv;}}
+ for(const p of S.portals){p.t-=dt;if(p.q.length&&p.t<=0){let t=p.q.shift();if(t==='|'){p.t=SQGAP;continue;}const esc=t.endsWith('#');if(esc)t=t.slice(0,-1);spawnEnemy(t,p);p.t=(t==='boss'||t==='colossus')?.25:esc?.22:iv;}}
  S.pools=S.pools.filter(p=>(p.t-=dt)>0);
  for(const q of S.rain){if(!S.list.includes(q.src)){q.left=0;continue;}q.tk-=dt;while(q.tk<=0&&q.left>0){q.tk+=.12;q.left--;const c=S.enemies.filter(e=>e.hp>0&&Math.hypot(e.x-q.x,e.y-q.y)<=q.r);if(c.length){const e=c[Math.floor(Math.random()*c.length)],ty=q.ty||'phys',hit=[e];strike(e,q.dm,q.src,ty,q.pen);
    if(q.ar)for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=q.ar){hurt(o,q.dm*(q.af||1),q.src,ty,q.pen);hit.push(o);}
@@ -36,7 +36,7 @@ function update(dt){
   if(!S.tut&&!S.pvE&&(e.bn>0||e.ps&&e.ps.length||e.bl&&e.bl.length||e.cs&&e.cs.length||e.ez)){const n=BL(e);recBest('bar',n);if(n>=5)achieve('bar');}
   if(e.mk){e.mk.t-=dt;if(e.mk.t<=0)e.mk=null;}
   const ox=e.x,oy=e.y;
-  if(move(e,dt)){e.leak=true;if(e.hx>0){orbAdd(e.x,e.y,e.hx);e.hx=0;}if(rp('crystal')&&!isBoss(e)&&S.cryR!==S.round){S.cryR=S.round;RS('crystal').n++;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:1.2*K,col:'#8fe3ff'});S.msg='💎 El Corazón de cristal ha absorbido un golpe.';}else{EKS(e.t).l++;hpLoss(isBoss(e)?Math.max(S.hp,ET[e.t].dmg):ET[e.t].dmg,1);}if(ET[e.t].steal){const v=Math.min(S.gold,ET[e.t].steal);S.gold-=v;if(v)S.msg='Un Saqueador te ha robado '+v+' de oro.';}}
+  if(move(e,dt)){e.leak=true;if(e.hx>0){orbAdd(e.x,e.y,e.hx);e.hx=0;}if(rp('crystal')&&!isBoss(e)&&S.cryR!==S.round){S.cryR=S.round;RS('crystal').n++;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:1.2*K,col:'#8fe3ff'});S.msg='💎 El Corazón de cristal ha absorbido un golpe.';}else{EKS(e.t).l++;histLeak(e.t,isBoss(e)?Math.max(S.hp,ET[e.t].dmg):ET[e.t].dmg);hpLoss(isBoss(e)?Math.max(S.hp,ET[e.t].dmg):ET[e.t].dmg,1);}if(ET[e.t].steal){const v=Math.min(S.gold,ET[e.t].steal);S.gold-=v;if(v)S.msg='Un Saqueador te ha robado '+v+' de oro.';}}
   else if(e.bl&&e.bl.length){const d=Math.hypot(e.x-ox,e.y-oy);if(d>0){DNK='bleed';hurt(e,e.bl.length*BLEEDD/K*d,e.bl[e.bl.length-1].src,'elem');DNK=null;}}}
  S.enemies=S.enemies.filter(e=>!e.leak);
  const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y);
@@ -115,8 +115,8 @@ function update(dt){
  let bossDead=false;
  S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(!e.leak)S.wk=(S.wk||0)+1;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=100)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
   {const gb=killGoldF(e.t),g1=rndG(gb*(e.src&&e.src.type&&TW[e.src.type]&&TW[e.src.type].guild?1.25:1)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=rp('coin')?rndG(gb*.5):0;S.gold+=g1+g2+g3;if(rp('mimic')&&nearChest(e)){const gm=rndG(gb*.75);S.gold+=gm;RS('mimic').gold+=gm;}if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;{const q=EKS(e.t);q.k++;q.g+=g1+g2+g3;}if(e.src)e.src.kills=(e.src.kills||0)+1;}}
-  // experiencia del héroe: si el golpe final es suyo, la experiencia entera le llega directa; si es de otro, cae una bola del 40 % (mín. 1) que el héroe recoge al acercarse
-  {const X=ET[e.t].xp||1,nb=(S.nbR===S.round&&!S.pvH?1:0);if(e.src&&e.src.hero)orbAdd(e.x,e.y,X+nb);else{orbGround(e.x,e.y,Math.max(1,X*.4));if(nb)orbAdd(e.x,e.y,nb);}}
+  // experiencia del héroe: si el golpe final es suyo, la experiencia entera le llega directa; si es de otro, recibe directa la parte del daño que hizo y cae una bola del 40 % del resto que recoge al acercarse
+  {const X=ET[e.t].xp||1,nb=(S.nbR===S.round&&!S.pvH?1:0);if(e.src&&e.src.hero)orbAdd(e.x,e.y,X+nb);else{/* contribución: la parte del daño que hizo el héroe le llega directa; del resto, bola del 40 % en el suelo */const hx=Math.min(X,e.hx||0);if(hx>0)orbAdd(e.x,e.y,hx);orbGround(e.x,e.y,hx>0?(X-hx)*.4:Math.max(1,X*.4));if(nb)orbAdd(e.x,e.y,nb);}}
   if(isBoss(e)&&S.round===ROUNDS&&!S.tut)bossDead=true;
   if(e.t==='boss'&&S.round===15&&ROUNDS>15){const before=S.rc||0;S.rc=Math.min(3,before+2);if(S.rc>before)S.msg='¡Jefe derrotado! Recuperas '+(S.rc-before)+' carga'+(S.rc-before===1?'':'s')+' de Reintentar.';}
   return false;});

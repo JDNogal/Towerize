@@ -14,7 +14,7 @@ function relDmg(t,dl){
  if(c>CRIT)sh('lens',(1+c*(cm-1))/(1+CRIT));
 }
 const fi=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.'),bj=n=>fi(n)+(Math.round(n)===1?' baja':' bajas'),fT=s=>{s=Math.round(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
-function showMenu(){
+function showMenu(){document.body.classList.remove('pcpick','pcpeek');{const pb=document.getElementById('pcback');if(pb)pb.remove();}
  S.mask=0;closeFocus();RL.open=false;$('relic').classList.remove('open');$('endscr').classList.remove('open');
  lbClose(false,true);closePrim();
  $('menu').classList.remove('setup');document.body.classList.add('inmenu');

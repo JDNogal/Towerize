@@ -24,7 +24,7 @@ function svRecord(st,why){let copy;const snap=st.snap,dn=st.dn;st.snap=null;st.d
  copy.selT=null;copy.aim=null;copy.aimT=null;copy.tsel=null;copy.hover=null;copy.msg='';copy.mask=0;copy.rask=0;copy.pexp=false;copy.speed=copy.speed||1;
  const g=svGlobals();if(why==='wave'){g.RL={open:false,choices:[],towo:null,towT:null,towD:null,towNS:0,ev:null,peek:false};g.EVK=null;}
  const H=HEROES[copy.hero.id];
- return {v:SAVE_FMT,game:($('ver')&&$('ver').textContent)||'',t:Date.now(),why,S:copy,g,meta:{round:Math.min(copy.round,ROUNDS),rounds:ROUNDS,hero:copy.hero.id,heroN:H?H.n:'',heroIc:H?H.ic:'',tut:!!copy.tut,t:Date.now(),why}};}
+ return {v:SAVE_FMT,game:($('ver')&&$('ver').textContent)||'',t:Date.now(),why,S:copy,g,meta:{runId:copy.runId||null,round:Math.min(copy.round,ROUNDS),rounds:ROUNDS,hero:copy.hero.id,heroN:H?H.n:'',heroIc:H?H.ic:'',tut:!!copy.tut,t:Date.now(),why}};}
 // guardar ahora. why: 'wave' (inicio de oleada: se guarda la copia S.snap) · 'round' (fin de ronda) · 'build' (acción en construcción) · 'exit' (guardar y salir)
 function saveRun(why){if(!svOk()||!svLive())return Promise.resolve(false);
  /* experiencia aún volando hacia el héroe: al salir se entrega ya; si no, se guarda cuando llegue */

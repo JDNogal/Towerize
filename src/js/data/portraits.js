@@ -4,5 +4,5 @@ const PCROP={yrsa:'28 22 64 64',reinhart:'28 8 64 64',sylvana:'26 24 68 68',rada
 const portrait=(id,crop,nobg)=>{const u=++PUID;let s=PORT[id].replace(/@U/g,u);if(nobg)s=s.replace(/<rect width="120" height="120" fill="url\(#pbg\d+\)"\/>/,'');return `<svg viewBox="${crop?PCROP[id]:'0 0 120 120'}" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;};
 function chooseHero(id){if(!HEROES[id])return;RL.hconf=null;S.xpT=xpTable(ROUNDS);mkHero(id);S.deck=[...(HEROES[id].deck||[])];S.skips=0;RL.hpick=false;try{localStorage.setItem('rt-lasthero',id);}catch(e){}const rid=HEROES[id].relic;S.relics.push(rid);S.rs[rid]={cd:0,t:0};see('rl',rid);see('hr',id);
  RL.open=false;$('relic').classList.remove('open');renderRelics();ui();}
-{let td=null;try{td=localStorage.getItem('rt-tutdone');}catch(e){}if(!td)HEROES.radagast.lockTxt='Completa el tutorial completo.';}
+{let td=null;try{td=localStorage.getItem('rt-tutdone')||localStorage.getItem('rt-win1');}catch(e){}if(!td)HEROES.radagast.lockTxt='Gana tu primera partida (el tutorial cuenta).';}
 HEROES.reinhart.deck=['arrow','bastion'];HEROES.sylvana.deck=['arrow','monk'];HEROES.radagast.deck=['orb','augur'];HEROES.yrsa.deck=['sala','frost'];

@@ -45,7 +45,7 @@ raider:{n:'Saqueador',gold:6,hp:.8,sp:1.6,r:.22,col:'#d8b04a',dmg:1,ap:0,am:0,do
 acolyte:{n:'Acólito',gold:5,hp:.9,sp:.9,r:.26,col:'#9a7ae0',dmg:1,ap:0,am:30,dt:'magic'},
 warlock:{n:'Brujo',gold:10,hp:1.4,sp:.8,r:.3,col:'#5a2a7a',dmg:2,ap:5,am:30,dt:'magic',curse:1},
 shaman:{n:'Chamán',gold:8,hp:1.2,sp:.8,r:.28,col:'#4aa07a',dmg:1,ap:5,am:20,dt:'magic',eheal:1},
-mini:{n:'Mini-élite',hp:6,sp:.8,r:.4,col:'#e08a2e',dmg:3,gold:25,el:1,ap:15,am:15},elite:{n:'Élite',hp:12,sp:.6,r:.48,col:'#7a4be0',dmg:5,gold:50,el:1,ap:25,am:25},
+mini:{n:'Mini-élite',hp:6,sp:.8,r:.4,col:'#e08a2e',dmg:5,gold:25,el:1,ap:15,am:15},elite:{n:'Élite',hp:12,sp:.6,r:.48,col:'#7a4be0',dmg:8,gold:50,el:1,ap:25,am:25},
 boss:{n:'Jefe',hp:30,sp:.5,r:.55,col:'#8f1f2e',dmg:10,gold:60,ap:40,am:40},
 bob:{n:'Bob',hp:14,sp:.5,r:.52,col:'#c0607a',dmg:5,gold:60,ap:20,am:20},
 momdrg:{n:'Mamá dragona',hp:17,sp:.6,r:.55,col:'#a8402e',dmg:5,gold:60,el:1,ap:25,am:25,evn:1,breath:1},
@@ -137,7 +137,7 @@ const AB={
  nova:{n:'Nova Arcana',ranks:[{c:45,ch:5,m:3,r:1.5},{c:55,ch:4,m:4,r:2}],txt:r=>`Cada <b>${r.ch}</b> orbes que impactan, el siguiente estalla en una nova: <span class="cmg">${r.m}×</span> el daño del orbe como daño mágico a todos en <span class="ca">${f(r.r)} casillas</span>.`},
  poly:{n:'Polimorfia',ranks:[{c:50,p:.1,d:3},{c:60,p:.15,d:4}],txt:r=>`Cada orbe tiene un <span class="cc">${Math.round(r.p*100)}%</span> de dejar ${kw('poly','transformado','')} (en rana) a su objetivo durante <span class="cr">${r.d} s</span>. Las élites, la mitad; los jefes son inmunes.`},
  raise:{n:'Alzar a los caídos',ranks:[{c:45,d:5,n:3},{c:55,d:7,n:5}],txt:r=>`Los enemigos que mata el orbe (salvo jefes) se alzan como ${kw('spect','espectros','')} durante <span class="cr">${r.d} s</span>, hasta <b>${r.n}</b> a la vez. Caminan hacia los portales y bloquean y golpean a los enemigos que encuentran.`},
- knight:{n:'Caballero Espectral',ranks:[{c:150,n:10,d:12}],txt:r=>`Cada <b>${r.n}</b> espectros alzados aparece un <b>Caballero Espectral</b> durante <span class="cr">${r.d} s</span>: mucho más resistente, bloquea por completo a todo lo que no sea jefe (a los jefes, en parte) y golpea en área. Al desvanecerse lanza un grito de ultratumba: los enemigos a 2 casillas quedan ${kw('fear','aterrados','')} ${f(FEART)} s.`},
+ knight:{n:'Caballero Espectral',req:'raise',ranks:[{c:150,n:10,d:12}],txt:r=>`Cada <b>${r.n}</b> espectros alzados aparece un <b>Caballero Espectral</b> durante <span class="cr">${r.d} s</span>: mucho más resistente, bloquea por completo a todo lo que no sea jefe (a los jefes, en parte) y golpea en área. Al desvanecerse lanza un grito de ultratumba: los enemigos a 2 casillas quedan ${kw('fear','aterrados','')} ${f(FEART)} s.`},
  harvest:{n:'Cosecha de almas',ranks:[{c:40,max:.3},{c:50,max:.5}],txt:r=>`Cada enemigo que muere por el orbe o por sus espectros entrega su alma: <span class="cd">+1%</span> de daño del orbe y de los espectros durante el resto de la partida, hasta <span class="cd">+${Math.round(r.max*100)}%</span>.`},
  erupt:{n:'Erupción',ranks:[{c:45,b:8,r:1.5,cd:6},{c:55,b:12,r:2,cd:5}],txt:r=>`Mientras el Calor está lleno, cada <span class="cr">${r.cd} s</span> estalla un anillo de fuego alrededor de la torre: aplica <span class="cbu">${r.b} stacks</span> de ${kw('burn','quemadura','')} a todos los enemigos a <span class="ca">${f(r.r)} casillas</span> o menos. No gasta Calor.`},
  flare:{n:'Llamarada',ranks:[{c:35,g:.5},{c:45,g:1}],txt:r=>`Con el Calor alto, el cono también llega más lejos: hasta <span class="cg">+${f(r.g)} ${r.g===1?'casilla':'casillas'}</span> de alcance con el Calor lleno.`},
@@ -201,8 +201,8 @@ const lvMods=(type,lv,spec)=>lv>=4&&TW[type].uniq?{dmg:1.8*1.2,cd:.7,range:1.2,a
 const twm=(k,sp)=>{const T=TW[k];if(!sp)return T;const X=SPECS[k][sp];return{...T,...(X.dt?{dt:X.dt}:{}),...(X.o||{})};};
 const DRAG=[{n:'Huevo de dragón',ic:'🥚',col:'#d9c9a8'},{n:'Dragón bebé',ic:'🐲',col:'#d0603a'},{n:'Dragón adulto',ic:'🐉',col:'#b8402a'},{n:'Dragón anciano',ic:'👑',col:'#8a2a1a'}];
 const DRGAT=[0,3,6,10],DRGST=r=>r>=10?3:r>=6?2:r>=3?1:0,DBRCD=8,DBRN=8;
-const PIGU={brick:{n:'Cerdito albañil',ic:'🐖',col:'#c0563a',hp:220,ap:40,dmg:6,rate:1,d:'Pelea cuerpo a cuerpo. Hace poco daño, pero tiene mucha vida y armadura.'},
- wood:{n:'Cerdito leñador',ic:'🐗',col:'#a8743a',hp:150,ap:20,dmg:14,rate:.9,push:.6,d:'Cuerpo a cuerpo con hacha: más daño que el albañil, y cada 3 golpes empuja al enemigo.'},
- straw:{n:'Cerdito espantapájaros',ic:'🐽',col:'#e8cf6a',hp:90,ap:0,dmg:10,rate:1,rng:1,range:3,slow:.3,slowt:2,d:'Lanza paja desde lejos: daña en un área pequeña y ralentiza un 30%. Si le alcanzan, bloquea y pega a mitad de daño.'},
+const PIGU={brick:{n:'Cerdito albañil',ic:'🐖',col:'#c0563a',hp:290,ap:40,dmg:6,rate:1,d:'Pelea cuerpo a cuerpo. Hace poco daño, pero tiene mucha vida y armadura.'},
+ wood:{n:'Cerdito leñador',ic:'🐗',col:'#a8743a',hp:200,ap:20,dmg:14,rate:.9,push:.6,d:'Cuerpo a cuerpo con hacha: más daño que el albañil, y cada 3 golpes empuja al enemigo.'},
+ straw:{n:'Cerdito espantapájaros',ic:'🐽',col:'#e8cf6a',hp:120,ap:0,dmg:10,rate:1,rng:1,range:3,slow:.3,slowt:2,d:'Lanza paja desde lejos: daña en un área pequeña y ralentiza un 30%. Si le alcanzan, bloquea y pega a mitad de daño.'},
  mech:{n:'Mecha Cerdito',ic:'🤖',col:'#d08a5a',hp:700,ap:50,dmg:20,rate:.8,st:30}};
 const tinfo=t=>t.pigU?{...TW.bastion,...PIGU[t.pigU]}:t.beast?{...TW.bastion,...(BEASTS[t.beast]||SPECT[t.beast])}:t.hero?t.hero.def:TW[t.type]&&TW[t.type].dragon?{...TW[t.type],...DRAG[t.stage||0]}:t.spec?SPECS[t.type][t.spec]:TW[t.type];

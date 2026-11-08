@@ -13,6 +13,7 @@
  ],
  "js": [
   "00_config.js",
+  "emojifix.js",
   "data/map.js",
   "data/towers.js",
   "data/heroes.js",
@@ -56,6 +57,7 @@
   "story.js",
   "intro.js",
   "audio.js",
-  "eter.js"
+  "eter.js",
+  "historial.js"
  ]
 }

@@ -1,4 +1,4 @@
-// ---- pantallas de entrada: Claude → NogalDev → título (con el menú desenfocado detrás) ----
+// ---- pantallas de entrada: Claude → GigaDrill Studios → título (con el menú desenfocado detrás) ----
 const INTRO={i:-1,t:0,on:true,fs:false};
 function introGo(i){const el=$('intro');INTRO.i=i;INTRO.t=0;for(const s of el.querySelectorAll('.ist'))s.classList.toggle('on',+s.dataset.i===i);
  el.classList.toggle('dark',i<2);el.classList.toggle('ttl',i===2);el.querySelector('.iskip').style.display=i<2?'':'none';}

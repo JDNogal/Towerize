@@ -2,13 +2,18 @@ const FF={on:false,t:0};
 // panel de enemigos en el mapa (durante la oleada): tipo → cantidad, eliminados y por salir
 const EMAP={t:0,sg:''};
 function emapTick(raw){EMAP.t-=raw;if(EMAP.t>0)return;EMAP.t=.25;let el=document.getElementById('emap');
- const on=S&&S.phase==='wave'&&OPT.emap!==false&&!PREVIEWING&&!document.body.classList.contains('inmenu');
+ const bld=S&&S.phase==='build'&&!S.tut,on=S&&(S.phase==='wave'||bld)&&OPT.emap!==false&&!PREVIEWING&&!document.body.classList.contains('inmenu');
  if(!on){if(el)el.classList.remove('on');EMAP.sg='';return;}
  if(!el){el=document.createElement('div');el.id='emap';lstack().prepend(el);}
+ // en construcción: resumen de lo que saldrá en la próxima oleada (suma de los portales)
+ if(bld){const c={};let n=0;for(const p of S.portals||[])for(const t in (p.plan||{})){const k=t==='wanted'?'elite':t;c[k]=(c[k]||0)+p.plan[t];n+=p.plan[t];}
+  const ks=Object.keys(c).filter(k=>c[k]>0).sort((a,b)=>c[b]-c[a]),sg='B'+ks.map(k=>k+c[k]).join(',');if(!n){el.classList.remove('on');EMAP.sg='';return;}
+  if(sg!==EMAP.sg){EMAP.sg=sg;el.innerHTML=`<div class="emh">⚔️ Próxima oleada <b>${n}</b></div>`+(ks.length?'<div class="eml">'+ks.map(k=>`<span title="${ET[k]?ET[k].n:k}"><i class="emi" style="background:${ET[k]?ET[k].col:'#888'}">${enIc(k)?icHtml(enIc(k)):''}</i>×${c[k]}</span>`).join('')+'</div>':'')+'<div class="emf">Saldrán por los portales al empezar.</div>';}
+  el.classList.add('on');return;}
  const c={};let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak){c[e.t]=(c[e.t]||0)+1;n++;}
  let q=0;for(const p of S.portals||[])q+=(p.q||[]).filter(x=>x!=='|').length;
  const ks=Object.keys(c).sort((a,b)=>c[b]-c[a]),sg=ks.map(k=>k+c[k]).join(',')+'|'+(S.wk||0)+'|'+q;
- if(sg!==EMAP.sg){EMAP.sg=sg;el.innerHTML=`<div class="emh">⚔️ En el mapa <b>${n}</b></div>`+(ks.length?'<div class="eml">'+ks.map(k=>`<span title="${ET[k]?ET[k].n:k}"><i style="background:${ET[k]?ET[k].col:'#888'}"></i>×${c[k]}</span>`).join('')+'</div>':'')+`<div class="emf">💀 ${S.wk||0} eliminados${q?` · ${q} por salir`:''}</div>`;}
+ if(sg!==EMAP.sg){EMAP.sg=sg;el.innerHTML=`<div class="emh">⚔️ En el mapa <b>${n}</b></div>`+(ks.length?'<div class="eml">'+ks.map(k=>`<span title="${ET[k]?ET[k].n:k}"><i class="emi" style="background:${ET[k]?ET[k].col:'#888'}">${enIc(k)?icHtml(enIc(k)):''}</i>×${c[k]}</span>`).join('')+'</div>':'')+`<div class="emf">💀 ${S.wk||0} eliminados${q?` · ${q} por salir`:''}</div>`;}
  el.classList.add('on');}
 // columna del margen izquierdo: contador de enemigos arriba y compras en cola debajo, centrados juntos en vertical
 function rstack(){let c=document.getElementById('rstack');if(!c){c=document.createElement('div');c.id='rstack';document.body.appendChild(c);}return c;}
@@ -39,8 +44,14 @@ function loop(t){
 }
 $('game').className='pm-'+PM;
 setDsk();addEventListener('resize',setDsk);
-function applyUnl(){let td=null;try{td=localStorage.getItem('rt-tutdone');}catch(e){}
- if(OPT.u_hr||td)delete HEROES.radagast.lockTxt;else HEROES.radagast.lockTxt='Completa el tutorial completo.';
+// Radagast: se desbloquea al ganar la primera partida, sea el tutorial o una partida normal (quien se salta el tutorial también lo consigue)
+const RADLOCK='Gana tu primera partida (el tutorial cuenta).';
+function radOk(){try{if(localStorage.getItem('rt-tutdone')||localStorage.getItem('rt-win1'))return true;
+ /* quien ya ganó antes de existir este registro (victorias por héroe, logro «Primera victoria» o más rondas desbloqueadas) también lo tiene */
+ const old=(typeof HWIN!=='undefined'&&Object.values(HWIN).some(v=>v>0))||(typeof ACHS!=='undefined'&&ACHS.first)||(typeof RUNL!=='undefined'&&RUNL>15);
+ if(old){localStorage.setItem('rt-win1','1');return true;}return false;}catch(e){return false;}}
+function applyUnl(){
+ if(OPT.u_hr||radOk())delete HEROES.radagast.lockTxt;else HEROES.radagast.lockTxt=RADLOCK;
  if(OPT.u_hr||ACHS.elem)delete HEROES.yrsa.lockTxt;else HEROES.yrsa.lockTxt=YLOCK;
  if(!OPT.u_rd)MR=Math.min(MR,rMax());}
 applyUnl();

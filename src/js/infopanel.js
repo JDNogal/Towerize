@@ -189,8 +189,8 @@ function towerInfo(t){
  return `<div class="ttl ttlg"><b>${X.ic} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap):tgtRow(t,src,PR.pinned&&PR.key===src))+
   (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+upRow(t,PR.pinned&&PR.key===src)+(PR.pinned&&PR.key===src?`<div class="tgt"><button data-a="sell">Vender torre (<span class="gd">+${sellVal(t)} 🪙</span>)</button></div>`:'')+(T.unit?'':dpsRow(s,T,src));
 }
-// pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; las no alcanzadas, apagadas
-function lvTabs(id,sn){let h='';for(let n=1;n<=nStates(id);n++){const ok=tlvOk(id,n),X=n>=4?SPECS[id][Object.keys(SPECS[id])[n-4]]:null;
+// pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
+function lvTabs(id,sn){let h='';for(let n=1;n<=nStates(id);n++){const ok=tlvOk(id,n);if(!ok)continue;/* sin spoilers: solo los niveles alcanzados */const X=n>=4?SPECS[id][Object.keys(SPECS[id])[n-4]]:null;
   h+=`<button class="stbtn lvbtn lvt${n===sn?' on':''}${ok?'':' off'}" data-a="clvs" data-v="${id}" data-n="${n}" title="${ok?(X?'Nv 4 · '+X.n:'Nv '+n):'No has alcanzado aún ese nivel'}">${galSvg(Math.min(n,4),0,.75,1)}${X?`<span class="lvx">${X.ic}</span>`:''}</button>`;}return `<span class="lvtabs">${h}</span>`;}
 function shopInfo(id,quiet){
  const T=TW[id],src='shop:'+id,st=quiet?cpState(id):{lv:1,spec:null},lv=st.lv,L=lvMods(id,lv,st.spec),X=st.spec?SPECS[id][st.spec]:T,
@@ -260,6 +260,7 @@ function resolve(el){
  if(kind==='xab')return{key:'xab:'+id,html:mechaInfo,rect:rr(r),dom:1};
  if(kind==='hab')return S.hero?{key:'hab:'+id,html:()=>habInfo(id),rect:rr(r),dom:1}:null;
  if(kind==='vch')return{key:'vch:'+id,html:()=>vchInfo(id),rect:rr(r),dom:1};
+ if(kind==='pigs')return{key:'pigs',html:()=>'<div class="ttl"><b>🐷 Los tres cerditos</b></div><small style="margin:0">Pulsa y elige una casilla del camino: los cerditos van juntos, como un héroe más de la partida.</small>',rect:rr(r),dom:1};
  if(kind==='hero')return S.hero?{key:'hero',html:()=>heroInfo(S.hero.id),rect:rr(r),dom:1}:null;
  if(kind==='piece'){const o=S.offers[+id];if(!o)return null;
   const cr=d.querySelector('canvas').getBoundingClientRect();

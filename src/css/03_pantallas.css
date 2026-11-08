@@ -130,3 +130,14 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 #eterb .eg{color:#ff6ad5;text-shadow:1px 0 #3fe8ff}
 #eterb.on.g3,#eterb.on.g2{animation:eterfl 2.2s steps(1) infinite}@keyframes eterfl{0%,92%,100%{opacity:1}94%{opacity:.55}96%{opacity:.9}}
 @media (prefers-reduced-motion:reduce){#eterb.on.g3,#eterb.on.g2{animation:none}}
+#intro .igd{display:flex;align-items:center;justify-content:center;gap:clamp(14px,2.5vw,26px)}
+#intro .igdi{width:clamp(80px,13vw,140px);height:auto;filter:drop-shadow(0 0 22px rgba(63,232,255,.4));transform:rotate(-8deg)}
+/* al entrar, el taladro gira (las espirales suben) y frena; con un pequeño empujón hacia delante */
+#intro .igdb{transform:translateY(-60px)}
+#intro .ist.on .igdb{animation:gdspin 1.6s cubic-bezier(.15,.7,.3,1) both}
+#intro .ist.on .igdi{animation:gdpush 1.6s cubic-bezier(.2,.8,.3,1) both}
+@keyframes gdspin{from{transform:translateY(0)}to{transform:translateY(-60px)}}
+@keyframes gdpush{0%{transform:rotate(-8deg) translateY(14px) scale(.85);filter:drop-shadow(0 0 0 rgba(63,232,255,0))}60%{transform:rotate(-8deg) translateY(-3px) scale(1.04)}100%{transform:rotate(-8deg) translateY(0) scale(1);filter:drop-shadow(0 0 22px rgba(63,232,255,.4))}}
+@media (prefers-reduced-motion:reduce){#intro .ist.on .igdb,#intro .ist.on .igdi{animation:none}}
+#intro .igdt{text-align:left;line-height:1}#intro .igdw{font:900 clamp(38px,8vw,72px)/1 system-ui,sans-serif;letter-spacing:.02em;color:#e8f2f6}
+#intro .igdt{display:inline-flex;flex-direction:column}#intro .igds{font:700 clamp(14px,2.6vw,24px)/1 system-ui,sans-serif;color:#3fe8ff;margin-top:8px;display:flex;justify-content:space-between;padding:0 .1em}

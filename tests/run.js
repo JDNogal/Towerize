@@ -38,6 +38,8 @@ const T=[
  ['tutorial_evento.js','El tutorial trae 2 eventos (santuario y mercader) y 2 cofres'],
  ['eter_habla.js','ÉTER habla en partida: fallos, nombre, enfriamiento, opción',['pc','m']],
  ['guardar_ventanas_tutorial.js','Guardar con cofre, evento u oferta abiertos; fin de ronda; tutorial'],
+ ['radagast_primera.js','Radagast se desbloquea al ganar la primera partida (aunque se salte el tutorial)'],
+ ['registro_partidas.js','Registro de partidas: se apunta al empezar, se cierra al acabar y se ve en el libro'],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);

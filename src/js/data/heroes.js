@@ -12,9 +12,9 @@ const hsAt=(id,l)=>{const D=HEROES[id],b=D.base;return{hp:b.hp*Math.pow(1.12,l-1
 // Nv 2-4 rápidos; un héroe sin usar llega al Nv 8 hacia el 60 % de la partida y no llega al Nv 10; usándolo bien, la definitiva llega en las últimas rondas.
 const XPDEF=[0,0,20,25,31,67,127,238,448,2068,6611];
 function xpTable(n){try{let cum=0;const c=[];for(let R=1;R<=n;R++){let x=0;for(const sq of waveSquads(R)){const m=sqM(sq);for(const t in m)for(let k=0;k<m[t];k++){const u=promote(t,R);x+=Math.max(1,((ET[u]&&ET[u].xp)||1)*.4);}}cum+=x;c.push(cum);}
- const at=r=>c[Math.max(0,Math.min(n,Math.round(r))-1)],L4=76,L8=Math.max(L4*3,at(n*.6)),L10=Math.max(L8*3,at(n)*1.05),C=[0,0,20,45,76];
+ const at=r=>c[Math.max(0,Math.min(n,Math.round(r))-1)],L4=76,L8=Math.max(L4*2,at(n*.58)*.6),L10=Math.max(L8*1.6,at(n*.92)*.6),C=[0,0,20,45,76];
  for(let l=5;l<=8;l++)C[l]=L4*Math.pow(L8/L4,(l-4)/4);C[9]=Math.sqrt(L8*L10);C[10]=L10;
- const T=[0,0];for(let l=2;l<=10;l++)T[l]=Math.round(C[l]-(C[l-1]||0));return T;}catch(e){return XPDEF.slice();}}
+ const T=[0,0];for(let l=2;l<=10;l++)T[l]=Math.max(T[l-1]||0,Math.round(C[l]-(C[l-1]||0)));return T;}catch(e){return XPDEF.slice();}}
 const xpNeed=l=>{const T=(typeof S!=='undefined'&&S&&S.xpT)||XPDEF;return T[Math.max(2,Math.min(10,l))]||XPDEF[l];};
 const RELARM=()=>S&&S.relics&&rp('barricade')?10:0;
 const unitTs=s=>s.list.filter(t=>t.sd).concat(s.list.filter(t=>t.pigT&&!t.pigT.off).map(t=>t.pigT)).concat(s.mecha&&s.mecha.on?[s.mecha.on]:[]).concat(s.hero?[s.hero.pt]:[]).concat(s.merc?[s.merc]:[]).concat(s.summ||[]),unitTowers=()=>unitTs(S);

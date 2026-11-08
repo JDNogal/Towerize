@@ -34,7 +34,7 @@ function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
  if(it.por)ic=`<span class="bpor">${portrait(it.id,1,!it.ok)}</span>`;
  else if(it.pc!=null)ic=`<canvas width="44" height="44" data-bpi="${it.pc}"></canvas>`;
  else if(it.bf)ic=`<span class="bbf" style="background:${BF[it.bf].col}">${BF[it.bf].l||''}</span>`;
- else if(it.dot)ic=`<span class="bdot" style="background:${it.dot}"></span>`;
+ else if(it.dot)ic=`<span class="bdot${it.ok&&enIc(it.id)?' beic':''}" style="background:${it.dot}">${it.ok&&enIc(it.id)?icHtml(enIc(it.id)):''}</span>`;
  else ic=`<span class="bic"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
  return `<button class="bti${t==='lg'?' ach':''}${it.pin?' pin':''}${on?' on':''}${it.ok?'':' un'}${it.got?' got':''}${it.hid?' hid':''}${it.lk&&!it.ok?' lkd':''}" data-a="csel" data-v="${it.id}">${ic}<small>${it.ok?it.n:'???'}</small></button>`;}
 // ficha de la página derecha: icono y título en una fila; debajo, los datos en dos columnas con puntos («Daño ······ 6,5»)
@@ -58,7 +58,7 @@ function bkDetail(t,id){
   return `<div class="ce bkce"><div class="ttl">${(SOLARES[o.n]||[]).length>1?`<button class="stbtn lvbtn" data-a="cpcv" data-v="${i}" title="Ver la otra disposición de solares">V${((CP.pcv||{})[i]||0)+1}</button>`:''}<b>${o.n}</b> · ${opens(o.p)} salidas</div><canvas width="168" height="168" data-pi="${i}" style="margin:8px auto"></canvas><small>Solares en partida: <b>${SOLN[o.n]||'—'}</b></small><small>Las piezas pueden salir giradas, con casillas especiales y con otra decoración. Solo se construye en los solares.</small></div>`;}
  if(t==='bf'){if(!seen('bf',id))return sh('✨','Aún no descubierta.');return `<div class="fbar"><button class="${CP.sup[id]?'on':''}" data-a="csup" data-v="${id}">${CP.sup[id]?'★':'☆'} Versión super</button></div><div class="ce bkce">${buffInfo(CP.sup[id]?id+'+':id,1)}</div>`;}
  if(t==='rl'){const r=RELIC[id];if(!r)return'';if(!seen('rl',id))return sh(r.ic,'Aún no descubierta.');return bkSheet(`<span class="bkbic" style="background:${r.col}">${r.ic}</span>`,relicInfo(id,1));}
- if(t==='en'){if(!ET[id])return'';if(!seen('en',id))return sh('<span class="lsd bkdot"></span>','Aún no descubierto.');return bkSheet(`<span class="bkbic bken"><i style="background:${ET[id].col}"></i></span>`,enemyInfo(id))+bkPrevBtn('ceprev',id);}
+ if(t==='en'){if(!ET[id])return'';if(!seen('en',id))return sh('<span class="lsd bkdot"></span>','Aún no descubierto.');return bkSheet(`<span class="bkbic bken"><i style="background:${ET[id].col}">${enIc(id)?icHtml(enIc(id)):''}</i></span>`,enemyInfo(id))+bkPrevBtn('ceprev',id);}
  if(t==='ev'){const E=EVENTS[id];if(!E)return'';if(!seen('ev',id))return sh(E.ic||'❔','Aún no descubierto.');return `<div class="ce bkce">${eventCard(id)}</div><small class="bknote">Las opciones que nunca has elegido aparecen como ???.</small>`;}
  if(t==='lg'){const A=ACH[id];if(!A)return'';if(!achFound(id))return sh('🏆','Logro oculto. Sigue jugando para descubrirlo.');
   const T=TW[A.tw],ok=!!ACHS[id],run=inRun(),dd=t=>{const d=new Date(t);return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();};
@@ -96,7 +96,7 @@ function bkPreview(){const es=Object.keys(ET).filter(e=>seen('en',e)),enOpts=es.
   ctl=bkPvRow('Enemigo',bkPills('pve3',enOpts,CP.hen))+bkPvRow('Nivel',bkPills('pvl',[1,5,10].map(l=>[l,'Nv '+l+(hlvOk(id,l)?'':' 🔒'),!hlvOk(id,l)]),CP.hlv||1))+bkPvRow('Velocidad',spd('pvs3'));
   note='Su vida depende del nivel: ronda 1 con Nv 1, ronda 7 con Nv 5 y ronda 14 con Nv 10. Los niveles con 🔒 se desbloquean al alcanzarlos en una partida. Si cae, reaparece al instante.';
   }
- else{const k=CP.eprev,E=ET[k],hs=allyList();back='ceback';if(!hs.some(a=>a[0]===CP.ph))CP.ph='hero:reinhart';nm=E.n;ic=`<span class="bkbic bken"><i style="background:${E.col}"></i></span>`;
+ else{const k=CP.eprev,E=ET[k],hs=allyList();back='ceback';if(!hs.some(a=>a[0]===CP.ph))CP.ph='hero:reinhart';nm=E.n;ic=`<span class="bkbic bken"><i style="background:${E.col}">${enIc(k)?icHtml(enIc(k)):''}</i></span>`;
   ctl=bkPvRow('Aliado',bkPills('pvh',hs.map(([v,l])=>[v,l]),CP.ph))+bkPvRow('Velocidad',spd('pvs2'));
   note='El enemigo, con su vida de la ronda 1, camina hasta el aliado y pelean. Si cae cualquiera de los dos, reaparece al instante.';}
  const body=ok?`<div class="bkpv"><canvas id="pvc" width="288" height="288" class="dpv bkpvc"></canvas><div class="bkpvs">${ctl}<small class="bknote">${note}</small></div></div>${extra}`:'<small class="bknote">??? · Sigue jugando para descubrir este nivel.</small>';

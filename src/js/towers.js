@@ -25,7 +25,10 @@ const sqOf=(x,y)=>{const kx=Math.floor(x/K),ky=Math.floor(y/K);return{kx,ky,x:kx
 const sqCells=q=>{const a=[];for(let j=0;j<K;j++)for(let i=0;i<K;i++)a.push([q.kx*K+i,q.ky*K+j]);return a;};
 // quita la torre elegida en el menú de construcción
 function unsel(){if(!S.tsel)return;S.tsel=null;ui();}
-function build(fx,fy){
+// mientras eliges y colocas la pieza no se puede gastar oro en torres (así no te quedas sin oro para sus casillas especiales)
+const placeLock=()=>typeof S!=='undefined'&&S&&S.phase==='place'&&!PREVIEWING&&!S.pvE&&!S.pvH;
+function plMsg(){S.msg='Primero elige y coloca la pieza.';try{errBubble('Primero elige y coloca la pieza.');}catch(e){}ui();}
+function build(fx,fy){if(placeLock()){plMsg();return;}
  const t=TW[S.tsel];if(!t||(S.deck&&!S.deck.includes(S.tsel)))return;if(!inb(fx,fy)){unsel();return;}
  const q=sqOf(fx,fy),x=q.x,y=q.y;
  if(!inbc(q.kx,q.ky)||S.cc[q.ky][q.kx]!==1||S.occ[x+','+y]){unsel();return;}
@@ -37,7 +40,7 @@ function build(fx,fy){
  S.gold-=cost0;S.st.spent+=cost0;if(!(S.built=S.built||[]).includes(tw.type))S.built.push(tw.type);if(!TW[tw.type].uniq)(S.bcnt=S.bcnt||{})[tw.type]=(S.bcnt[tw.type]||0)+1;if(S.half&&t.cost>0){S.half=0;tw.inv=cost0;}tw.rd=S.round;S.st.all.push(tw);S.msg='';S.selT=null;if(TOUCH){M.has=false;HV.key=null;HV.t=0;}ui();
 }
 const upLbl=c=>c?`<span class="gd">−${c} 🪙</span>`:'<span class="gd">gratis</span>';
-function upgrade(t){
+function upgrade(t){if(placeLock()){plMsg();return;}
  if(t&&TW[t.type].uniq&&!TW[t.type].upc)return;
  if(!t||!S.list.includes(t)||t.lvl>=(TW[t.type].pig?4:3)||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  const T=TW[t.type],c=upCost(T,t.lvl+1);
@@ -66,7 +69,7 @@ function abList(type,sp,t,pinned){
   if(!t)return head;
   const show=D.ranks[Math.max(0,Math.min(rk,n-1))];
   let btn='';
-  if(rk<n)btn=pinned?`<div class="tgt"><button data-a="abuy" data-id="${t.id}" data-v="${id}">${rk?'Mejorar a rango '+(rk+1):'Comprar'} (<span class="gd">−${D.ranks[rk].c} 🪙</span>)</button></div>`:'';
+  const rq=abReq(t,id);if(rk<n&&rq)btn=`<small class="cd">🔒 ${rq}</small>`;else if(rk<n)btn=pinned?`<div class="tgt"><button data-a="abuy" data-id="${t.id}" data-v="${id}">${rk?'Mejorar a rango '+(rk+1):'Comprar'} (<span class="gd">−${D.ranks[rk].c} 🪙</span>)</button></div>`:'';
   return head+`<small>${rk>=n?D.txt(D.ranks[n-1]):(rk?'Siguiente: ':'')+D.txt(show)}</small>`+btn;}).join('');
 }
 function upRow(t,pinned){
@@ -81,14 +84,16 @@ function upRow(t,pinned){
  if(t.lvl===4)return '<small>Nivel máximo.</small><div style="margin-top:6px"><b>Habilidades</b></div>'+abList(t.type,t.spec,t,pinned);
  return '<small>Nivel máximo.</small>';
 }
-function chooseSpec(t,sp){
+function chooseSpec(t,sp){if(placeLock()){plMsg();return;}
  if(!t||!S.list.includes(t)||t.lvl!==3||!SPECS[t.type]||!SPECS[t.type][sp]||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  const T=TW[t.type],c=upCost(T,4);
  if(S.gold<c){S.msg='Oro insuficiente para mejorar.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.lvl=4;t.spec=sp;t.inv=(t.inv||T.cost)+c;if(undoOk(t))t.undo+=c;t.ab={};t.acd={};if(t.type==='augur'&&sp==='lord'&&!t.flag)autoFlag(t);
  if(t.sd){const m=sdHp(t);for(const q of t.sd){const dd=m-q.max;q.max=m;if(q.hp>0)q.hp=Math.min(m,Math.max(1,q.hp+dd));}}S.msg='';refreshPrim();ui();
 }
-function buyAb(t,id){
+// habilidades que necesitan otra antes (p. ej. el Caballero Espectral sale de los espectros de «Alzar a los caídos»)
+const abReq=(t,id)=>{const r=AB[id]&&AB[id].req;return r&&!(t&&t.ab&&t.ab[r])?'Primero compra «'+AB[r].n+'».':'';};
+function buyAb(t,id){if(placeLock()){plMsg();return;}{const w=abReq(t,id);if(w){S.msg=w;try{errBubble(w);}catch(e){}ui();return;}}
  if(!t||!S.list.includes(t)||t.lvl!==4||!SPECS[t.type][t.spec].ab.includes(id)||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  const D=AB[id],rk=t.ab[id]||0;if(rk>=D.ranks.length)return;const c=D.ranks[rk].c;
  if(S.gold<c){S.msg='Oro insuficiente para la habilidad.'+WISHTXT();ui();return;}
@@ -104,7 +109,8 @@ function sell(t){
 // Cada soldado ocupa un vértice de un triángulo alrededor de la bandera; si un enemigo entra en el radio de alerta de la bandera, va a por él y al acabar vuelve a su vértice.
 const SOFF=[0,1,2].map(i=>{const a=-Math.PI/2+i*2*Math.PI/3;return[Math.cos(a)*TRI,Math.sin(a)*TRI];});
 const SOFF4=[[-TRI*.75,-TRI*.75],[TRI*.75,-TRI*.75],[TRI*.75,TRI*.75],[-TRI*.75,TRI*.75]];
-const slotOf=(t,i)=>{const b=t.flag||{x:t.x,y:t.y};if(t.hero||(t.sd&&t.sd.length===1))return{x:b.x,y:b.y};const o=t.sd&&t.sd.length===4?SOFF4[i]:SOFF[i];return{x:b.x+o[0],y:b.y+o[1]};};
+const PIGOFF={brick:[0,-.9],wood:[.9,.6],straw:[-.9,.6]};
+const slotOf=(t,i)=>{const b=t.flag||{x:t.x,y:t.y};if(t.pigU&&PIGOFF[t.pigU]){const o=PIGOFF[t.pigU];return{x:b.x+o[0],y:b.y+o[1]};}if(t.hero||(t.sd&&t.sd.length===1))return{x:b.x,y:b.y};const o=t.sd&&t.sd.length===4?SOFF4[i]:SOFF[i];return{x:b.x+o[0],y:b.y+o[1]};};
 const sdHp=t=>TW[t.type].unit.hp*lvMods(t.type,t.lvl,t.spec).hp,uapOf=t=>(t.uov?t.uov.ap:t.hero?hsAt(t.hero.id,t.hero.lvl).ap:TW[t.type].unit.ap+(tinfo(t).uap||0)+(t.xap||0))+RELARM();
 function mkSoldiers(t){const U=TW[t.type].unit;t.sd=[];for(let i=0;i<U.n;i++)t.sd.push({i,x:t.x,y:t.y,hp:sdHp(t),max:sdHp(t),en:null,cd:0,rt:0,tw:t,lock:true,fight:false});}
 function autoFlag(t){const R2=stats(t).range,r=Math.ceil(R2);let b=null,bd=1e9;
@@ -123,7 +129,7 @@ function unitWalk(dt){
     if(dd>r){tx=e.x-dx/dd*r;ty=e.y-dy/dd*r;}else{tx=s.x;ty=s.y;}}
    else{const q=slotOf(t,s.i);tx=q.x;ty=q.y;}
    const dx=tx-s.x,dy=ty-s.y,dd=Math.hypot(dx,dy);
-   if(dd>.02){const ooc=s.H&&!s.en&&!(S.phase==='wave'&&S.wt-(s.lh??-99)<2);const st=Math.min(dd,U.spd*(t.uspdx||tinfo(t).uspd||1)*(ooc?HOOC:1)*dt);s.x+=dx/dd*st;s.y+=dy/dd*st;}
+   if(dd>.02){/* fuera de combate = no está atacando ni le están atacando (no basta con que haya oleada o un objetivo lejos) */const ooc=s.H&&(S.phase!=='wave'||(!s.fight&&S.wt-(s.lh??-99)>=2&&S.wt-(s.la??-99)>=1.5));const st=Math.min(dd,U.spd*(t.uspdx||tinfo(t).uspd||1)*(ooc?HOOC:1)*dt);s.x+=dx/dd*st;s.y+=dy/dd*st;}
    if(s.lock&&Math.hypot(tx-s.x,ty-s.y)<=.15)s.lock=false;}}
 }
 // ---- Monasterio: curación al grupo, trago de calabaza y embriaguez ----
@@ -164,7 +170,7 @@ function unitCombat(dt){
   if(e.hp<=0||e.fx.freeze||e.fx.poly||e.fx.fear){e.acd=E.ac;continue;}
   if(E.rg==='ranged'){if(e.rw>0)e.rw-=dt;else{let bd=RANGED_R;for(const s of SL){const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;tg=s;}}
    if(tg){if(e.rsH===undefined||e.hp<e.rsH-.01){e.rsH=e.hp;e.rsT=0;}else e.rsT=(e.rsT||0)+dt;if(e.rsT>20){e.rsT=0;e.rw=3;tg=null;}else{e.stopped=true;if(!tg.en&&!tg.lock&&!(tg.H&&tg.H.def.ranged)&&!tg.rng&&!isFly(e)){tg.en=e;tg.enR=e;e.nb=(e.nb||0)+tg.w;}}}else e.rsT=0;}}
-  else if(e.ct>0){tg=SL.find(s=>s.fight&&s.en===e)||SL.find(s=>s.en2===e)||null;if(tg&&Math.hypot(tg.x-e.x,tg.y-e.y)>MELR)tg=null;e.stopped=e.ct>=(E.need||1);}
+  else if(e.ct>0){/* cuerpo a cuerpo: a cada unidad solo le pega el enemigo con el que está peleando (los que retiene de más esperan) */tg=SL.find(s=>s.fight&&s.en===e)||null;if(tg&&Math.hypot(tg.x-e.x,tg.y-e.y)>MELR)tg=null;e.stopped=e.ct>=(E.need||1);}
   if(tg){const U=unitOf(tg.tw);e.acd=(e.acd===undefined?E.ac:e.acd)-dt;
    while(e.acd<=0&&tg.hp>0){e.acd+=E.ac;if(E.rg==='ranged')S.fx.push({x:tg.x,y:tg.y,t:.25,m:.25,r:.35*K,col:E.dt==='magic'?'#a58bff':'#d9c08a'});const sg=tg.drunk>0&&abRank(tg.tw,'stagger');if(sg&&Math.random()<sg.p){if(S.pvE&&S.dn)dnAdd(tg,0,'taken');continue;}
     {const co=abRank(tg.tw,'counter');if(co&&Math.random()<co.p){const cs=stats(tg.tw),cd=cs.dmg;hurt(e,cd,tg.tw,'phys');const MT=TW[tg.tw.type],ch=abRank(tg.tw,'chi');if(MT&&MT.monk){DNK='magic';hurt(e,cd*(ch?ch.m:MT.mhit),tg.tw,'magic');DNK=null;}S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.4*K,col:'#ffd27a'});}}

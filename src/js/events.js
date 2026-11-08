@@ -30,7 +30,7 @@ function chip(k){const[a,b]=k.split(':');
  if(a==='tower')return TW[b]?`<span class="gd">${TW[b].ic} ${TW[b].n}</span>`:'';
  if(a==='wanted')return '📜 Élite de encargo en 2 rondas';
  if(a==='temper')return '⚒ torres de Nv 1 → 2';if(a==='bless')return '✨ las casillas especiales de la pieza dan el doble de bonus';if(a==='less')return '🕯 −'+b+'% enemigos en la próxima oleada';
- if(a==='sharpen')return '🗡 +25% de daño a la torre que elijas';
+ if(a==='sharpen')return '🗡 +25% de daño (o de stacks, en torres de veneno y fuego) a la torre que elijas';
  if(a==='half')return '🏷 próxima torre a mitad de precio';
  if(a==='cubs')return '🐺 Lobatos';if(a==='grey')return '🐺 Lobo gris';if(a==='wolf')return '🐺 El Lobo';
  if(a==='chest4')return '🎁 el próximo cofre ofrece 4 reliquias';if(a==='scout')return '🗺 un cofre nuevo en un hueco sin explorar';
@@ -75,8 +75,10 @@ const EVENTS={
 let EVK=null;
 function optHtml(id,o,i,live){const known=memOf(id,i),why=live&&o.req?o.req():'';
  const desc=(o.c?`<small>${o.c}</small>`:'')+`<small>Obtienes: ${known.length?known.map(chip).join(' · '):'???'}</small>`;
- if(!live)return `<div class="evo"><b>${o.l}</b>${desc}</div>`;
- return `<button class="evo" data-a="evopt" data-i="${i}"${why?' disabled':''}><b>${o.l}</b>${desc}${why?`<small class="cd">🔒 ${why}</small>`:''}</button>`;}
+ // sin spoilers: una opción bloqueada sale como «???» hasta desbloquearla (solo se ve qué hace falta)
+ const lk=o.req?o.req():'';
+ if(!live)return lk?`<div class="evo lk"><b>???</b><small class="cd">🔒 ${lk}</small></div>`:`<div class="evo"><b>${o.l}</b>${desc}</div>`;
+ return `<button class="evo" data-a="evopt" data-i="${i}"${why?' disabled':''}><b>${why?'???':o.l}</b>${why?'':desc}${why?`<small class="cd">🔒 ${why}</small>`:''}</button>`;}
 function evBanner(){if(S.tut?TUTHS.event:(!OPT.hints||HSEEN.event))return '';hintSeen('event');return '<div class="hban">💡 Cada opción muestra siempre su coste. Lo que obtienes aparece como <b>???</b> hasta que eliges esa opción una vez; a partir de ahí lo recordarás.</div>';}
 function eventCard(id){const E=EVENTS[id];return `<div class="evhead"><span class="evic">${E.ic}</span><b>${E.n}</b></div><small>${E.txt}</small>`+E.opts.map((o,i)=>optHtml(id,o,i,false)).join('');}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
@@ -86,8 +88,8 @@ function chooseEvent(i){const id=RL.ev,E=EVENTS[id],o=E&&E.opts[i];if(!o||(o.req
  renderRelics();ui();}
 function closeEvent(){RL.open=false;RL.ev=null;$('relic').classList.remove('open');ui();if(S.sharp)startSharp();else if(S.dneed>0)startDism();else if(S.uq.length&&!RL.open)startUPlace();}
 const sharpOk=t=>!TW[t.type].support&&!TW[t.type].faro;
-function startSharp(){closePrim();S.aim='sharp';S.msg='Elige la torre que quieres afilar (+25% de daño permanente).';renderRelics();ui();}
-function sharpAt(c){const t=S.occ[c.x+','+c.y];if(!t||!sharpOk(t)){S.msg='Elige una de las torres marcadas.';ui();return;}t.xd=(t.xd||1)*1.25;S.sharp=0;S.aim=null;S.msg=tinfo(t).n+' afilada: +25% de daño.';S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.5*K,col:'#e8e8f0'});renderRelics();ui();if(S.dneed>0)startDism();else if(S.uq.length)startUPlace();}
+function startSharp(){closePrim();S.aim='sharp';S.acf=null;S.msg='Elige la torre que quieres afilar (+25% de daño permanente; en torres de veneno y fuego, +25% de stacks).';renderRelics();ui();}
+function sharpAt(c){const t=S.occ[c.x+','+c.y];if(!t||!sharpOk(t)){S.msg='Elige una de las torres marcadas.';ui();return;}t.xd=(t.xd||1)*1.25;S.sharp=0;S.aim=null;const T0=TW[t.type];S.msg=tinfo(t).n+' afilada: +25% '+(T0.unit?'de daño de sus unidades':T0.dot||T0.burn||T0.puddle?'de stacks':'de daño')+'.';S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.5*K,col:'#e8e8f0'});renderRelics();ui();if(S.dneed>0)startDism();else if(S.uq.length)startUPlace();}
 // Restaurar el faro: eliges torres de Nv 1 para desmantelar (no devuelven oro)
 const lv1Ok=t=>t.lvl===1&&!TW[t.type].uniq,lv1Count=()=>S.list.filter(lv1Ok).length;
 function setCD(id){S.usedAct=1;if((S.chestRel||[]).includes(id)){S.chestUsed=1;achieve('chest');}if(S.mimFor===id){S.rs.mimic.cd=RELIC.mimic.cd;S.mimFor=null;}else S.rs[id].cd=RELIC[id].cd;}
@@ -139,12 +141,14 @@ function dismAt(c){const t=S.occ[c.x+','+c.y];if(!t||!lv1Ok(t)){S.msg='Elige una
 // ---- colocar torres únicas dentro de la pieza del evento ----
 function uSpots(bk){const[bx,by]=bk.split(',').map(Number),o=[];for(let j=0;j<P;j++)for(let i=0;i<P;i++){const kx=bx*P+i,ky=by*P+j;if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+1,y:ky*K+1};if(!S.occ[q.x+','+q.y])o.push(q);}
  if(o.length)return o;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+1,y:ky*K+1};if(!S.occ[q.x+','+q.y])o.push(q);}return o;}
-function startUPlace(){if(!S.uq.length)return;closePrim();S.aim='uplace';S.selT=null;S.tsel=null;S.msg='Coloca la torre «'+TW[S.uq[0].type].n+'» en uno de los huecos marcados de la pieza del evento.';renderRelics();ui();}
-function uPlaceAt(c){const u=S.uq[0];if(!u)return;const kx=Math.floor(c.x/K),ky=Math.floor(c.y/K),q=uSpots(u.bk).find(q=>q.kx===kx&&q.ky===ky);if(!q){S.msg='Elige uno de los huecos marcados.';ui();return;}
+function startUPlace(){if(!S.uq.length)return;closePrim();S.aim='uplace';S.upc=null;S.selT=null;S.tsel=null;S.msg='';toast(TW[S.uq[0].type].ic+' Elige uno de los huecos marcados para «'+TW[S.uq[0].type].n+'».');renderRelics();ui();}
+function uPlaceAt(c){const u=S.uq[0];if(!u)return;const kx=Math.floor(c.x/K),ky=Math.floor(c.y/K),q=uSpots(u.bk).find(q=>q.kx===kx&&q.ky===ky);if(!q){S.upc=null;try{errBubble('Elige uno de los huecos marcados.');}catch(e){}return;}
+ /* confirmación: el primer toque marca el hueco; el segundo, en el mismo hueco, construye */
+ if(!S.upc||S.upc.kx!==kx||S.upc.ky!==ky){S.upc={kx,ky};try{sfx('ui');}catch(e){}toast('¿Construir «'+TW[u.type].n+'» aquí? Pulsa otra vez el mismo hueco para confirmar.');return;}S.upc=null;
  const T=TW[u.type],tw={id:++S.tid,type:u.type,lvl:1,x:q.x,y:q.y,cells:[[q.x,q.y]],sq:sqCells(q),inv:0,spec:null,ab:{},acd:{},cd:0,tgt:null,mode:S.dtg[u.type]||'core',rd:S.round};
  see('tw',u.type);hint('uniq','Torres de evento','Las torres de evento solo se consiguen en eventos concretos. Son únicas: no se compran, no se venden y se mejoran a su manera.',tgCell(q.x,q.y,1.4));if(T.guild)mkGuild(tw);if(T.faro){tw.light=0;tw.lz=[{x:q.x,y:q.y}];tw.lzcd=[0,0];}if(T.dragon){tw.born=S.round;tw.stage=0;}
  S.list.push(tw);S.st.all.push(tw);for(const[a,b]of tw.sq)S.occ[a+','+b]=tw;S.uq.shift();
- if(S.uq.length)startUPlace();else{S.aim=null;S.msg=T.n+' colocada.';renderRelics();ui();}}
+ if(S.uq.length)startUPlace();else{S.aim=null;S.msg='';toast(T.ic+' '+T.n+' colocada.');renderRelics();ui();}}
 function roundRewards(){
  for(const t of S.list)if(TW[t.type].guild){const v=[10,20,35,50][t.lvl-1]||10;goldEv(v);}
  if(rp('scale')){const v=interest();if(v>0){goldEv(v);if(S.st)S.st.gRel+=v;}}
