@@ -164,7 +164,7 @@ function lbRender(){
  else pages=`<div class="bkp l">${P.left}</div><div class="bkp r${P.flip?' flip':''}">${P.right}</div>`;
  const hasft=!!(P.footL||P.footR),feet=hasft?`<div class="lbft l">${P.footL||''}</div><div class="lbft r">${P.footR||''}</div>`:'';
  el.innerHTML=`<div class="bkw${LB.anim?' lbanim':''}">${marks}<div class="bk${hasft?' hasft':''}"><div class="bkcover"></div>${pages}${feet}${lbArrows()}${nar||LB.area==='prep'?'':(P.ribs||lbRibs())}${LB.area==='prep'?'':`<button class="bkx" data-a="lbx" title="${LB.area==='end'?'Ver el mapa':lbInGame()?'Volver a la pausa':'Volver al menú'}">✕</button>`}</div></div>`;
- if((LB.anim||(!same&&LB.lastK0))&&!LB.quiet){try{sfx(LB.anim?'bkopen':'page');}catch(e){}}LB.lastK0=LB.lastK;LB.quiet=false;LB.anim=false;
+ if((LB.anim||(!same&&LB.lastK0)||(same&&P.flip))&&!LB.quiet){try{sfx(LB.anim?'bkopen':'page');}catch(e){}}LB.lastK0=LB.lastK;LB.quiet=false;LB.anim=false;
  const nl=el.querySelector('.bkp.l,.bkp.spread');if(nl&&same)nl.scrollTop=st;
  if(P.after)P.after(el);
 }

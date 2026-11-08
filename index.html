@@ -81,9 +81,9 @@ body.dsk #comp.bkm,body.mfs #comp.bkm,body.inmenu #comp.bkm{position:fixed!impor
 .bkw{position:relative;width:min(1080px,calc(100vw - 40px));height:min(640px,calc(100vh - 80px));margin-top:40px;filter:drop-shadow(0 22px 40px rgba(0,0,0,.6))}
 .bk{position:relative;width:100%;height:100%;display:flex;color:var(--ink)}
 .bkcover{position:absolute;inset:-10px -12px;border-radius:18px;background:var(--inkh);box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--trim) 55%,var(--lea)),inset 0 0 0 6px var(--lea2);z-index:0}
-.bkp{position:relative;z-index:1;flex:1;min-width:0;overflow:auto;padding:22px 26px;background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 90%,var(--trim)),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--trim)));scrollbar-width:thin;scrollbar-color:var(--pline2) transparent}
-.bkp.l{border-radius:14px 0 0 14px;box-shadow:inset -18px 0 24px -14px rgba(90,60,20,.45)}
-.bkp.r{border-radius:0 14px 14px 0;background:linear-gradient(270deg,color-mix(in srgb,var(--paper) 90%,var(--trim)),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--trim)));box-shadow:inset 18px 0 24px -14px rgba(90,60,20,.45);padding-right:54px}
+.bkp{position:relative;z-index:1;flex:1;min-width:0;overflow:auto;padding:22px 26px;background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 90%,var(--pedge,var(--trim))),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--pedge,var(--trim))));scrollbar-width:thin;scrollbar-color:var(--pline2) transparent}
+.bkp.l{border-radius:14px 0 0 14px;box-shadow:inset -18px 0 24px -14px var(--gut,rgba(90,60,20,.45))}
+.bkp.r{border-radius:0 14px 14px 0;background:linear-gradient(270deg,color-mix(in srgb,var(--paper) 90%,var(--pedge,var(--trim))),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--pedge,var(--trim))));box-shadow:inset 18px 0 24px -14px var(--gut,rgba(90,60,20,.45));padding-right:54px}
 #comp.narrow .bkp.l,#comp.narrow .bkp.r{border-radius:14px}
 .bkp.flip{animation:bkflip .32s ease-out}
 @keyframes bkflip{0%{transform:perspective(1400px) rotateY(-14deg);transform-origin:left center;opacity:.25}100%{transform:none;opacity:1}}
@@ -635,6 +635,9 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 .toff{align-items:stretch}.tof>button[data-a="towpick"]{margin-top:auto}
 .tof details .lvbtn{width:auto!important;display:inline-block;padding:1px 8px!important;font-size:12px;margin:0 6px 0 0!important;vertical-align:middle}
 .tof details .tcard{max-width:560px;margin:0 auto!important;columns:2 230px;column-gap:28px;text-align:left}.tof details .tcard>*{break-inside:avoid}.tof details .tcard .ttl{column-span:all}
+
+/* lomo y bordes de las páginas: en las encuadernaciones oscuras, la sombra va hacia el negro (con el remate dorado o marrón se veía un brillo) */
+:root[data-pal="noche"],:root[data-pal="amb"]{--pedge:#000;--gut:rgba(0,0,0,.55)}
 /* ===== EL LIBRO: portada y áreas (pausa, menú principal, opciones, estadísticas, ayuda, créditos) ===== */
 #mmain{display:none!important}
 body.inmenu.lbsetup #comp.bkm{display:none!important}
@@ -1035,7 +1038,7 @@ body.mfs #relic .ppap .ptt{font-size:15px!important}body.mfs #relic .ppap .toff{
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v271</div>
+<div id="ver">Towerize v272</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -5098,7 +5101,7 @@ function lbRender(){
  else pages=`<div class="bkp l">${P.left}</div><div class="bkp r${P.flip?' flip':''}">${P.right}</div>`;
  const hasft=!!(P.footL||P.footR),feet=hasft?`<div class="lbft l">${P.footL||''}</div><div class="lbft r">${P.footR||''}</div>`:'';
  el.innerHTML=`<div class="bkw${LB.anim?' lbanim':''}">${marks}<div class="bk${hasft?' hasft':''}"><div class="bkcover"></div>${pages}${feet}${lbArrows()}${nar||LB.area==='prep'?'':(P.ribs||lbRibs())}${LB.area==='prep'?'':`<button class="bkx" data-a="lbx" title="${LB.area==='end'?'Ver el mapa':lbInGame()?'Volver a la pausa':'Volver al menú'}">✕</button>`}</div></div>`;
- if((LB.anim||(!same&&LB.lastK0))&&!LB.quiet){try{sfx(LB.anim?'bkopen':'page');}catch(e){}}LB.lastK0=LB.lastK;LB.quiet=false;LB.anim=false;
+ if((LB.anim||(!same&&LB.lastK0)||(same&&P.flip))&&!LB.quiet){try{sfx(LB.anim?'bkopen':'page');}catch(e){}}LB.lastK0=LB.lastK;LB.quiet=false;LB.anim=false;
  const nl=el.querySelector('.bkp.l,.bkp.spread');if(nl&&same)nl.scrollTop=st;
  if(P.after)P.after(el);
 }
@@ -5501,7 +5504,9 @@ function sndWatch(){if(typeof S==='undefined'||!S)return;const ph=S.phase;
  if((S.fury||0)>SND.fury&&!SND.fury)sfx('fury');SND.fury=S.fury||0;
  if(S.msg!==SND.msg){SND.msg=S.msg;if(/insuficiente|No tienes oro|no puedes|No se puede/i.test(S.msg||''))sfx('err');}}
 setInterval(sndWatch,100);
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(b&&!b.disabled&&b.dataset.a!=='sfxt')sfx(/^(oclose|cclose|mback|pback|cback|ceback|chback|qprev|pcont|qskip)$/.test(b.dataset.a||'')||b.dataset.bk?'uix':'ui');},true);
+// los botones que pasan la página del libro (casillas, marcapáginas, ver en acción, volver) no hacen «bloop»: ya suena la página
+const PAGEBTN=b=>b.classList.contains('bti')||b.classList.contains('bkmk')||b.classList.contains('hmk')||/^(cprev|chprev|ceprev|cback|chback|ceback|cbkl|hgo)$/.test(b.dataset.a||'');
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(b&&!b.disabled&&b.dataset.a!=='sfxt'&&!PAGEBTN(b))sfx(/^(oclose|cclose|mback|pback|cback|ceback|chback|qprev|pcont|qskip)$/.test(b.dataset.a||'')||b.dataset.bk?'uix':'ui');},true);
 function sfxTestHTML(){return SFXG.map(([g,rows])=>`<div class="sfxg"><b>${g}</b>`+rows.map(([k,n,vs])=>`<div class="sfxr"><span>${n}</span>`+vs.map((d,i)=>`<button data-a="sfxt" data-v="${k}" data-i="${i}" class="${vs.length>1&&(SV[k]||0)===i?'on':''}">▶ ${d.n||'Probar'}</button>`).join('')+'</div>').join('')+'</div>').join('')+'<small>Si un sonido tiene varias versiones, la última que pruebes es la que suena en la partida (marcada en amarillo).</small>';}
 function sfxTest(k,i){const e=SFXK[k];if(!e)return;if(e.vs.length>1){SV[k]=i;try{localStorage.setItem('rt-sv',JSON.stringify(SV));}catch(x){}}sfx(k,{force:1,def:e.vs[i]});}
 {const _b=build;build=function(...a){const n=S.list.length;const r=_b.apply(this,a);if(S.list.length>n)sfx('build');return r;};

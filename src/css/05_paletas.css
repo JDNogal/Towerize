@@ -20,3 +20,6 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 .toff{align-items:stretch}.tof>button[data-a="towpick"]{margin-top:auto}
 .tof details .lvbtn{width:auto!important;display:inline-block;padding:1px 8px!important;font-size:12px;margin:0 6px 0 0!important;vertical-align:middle}
 .tof details .tcard{max-width:560px;margin:0 auto!important;columns:2 230px;column-gap:28px;text-align:left}.tof details .tcard>*{break-inside:avoid}.tof details .tcard .ttl{column-span:all}
+
+/* lomo y bordes de las páginas: en las encuadernaciones oscuras, la sombra va hacia el negro (con el remate dorado o marrón se veía un brillo) */
+:root[data-pal="noche"],:root[data-pal="amb"]{--pedge:#000;--gut:rgba(0,0,0,.55)}

@@ -133,7 +133,9 @@ function sndWatch(){if(typeof S==='undefined'||!S)return;const ph=S.phase;
  if((S.fury||0)>SND.fury&&!SND.fury)sfx('fury');SND.fury=S.fury||0;
  if(S.msg!==SND.msg){SND.msg=S.msg;if(/insuficiente|No tienes oro|no puedes|No se puede/i.test(S.msg||''))sfx('err');}}
 setInterval(sndWatch,100);
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(b&&!b.disabled&&b.dataset.a!=='sfxt')sfx(/^(oclose|cclose|mback|pback|cback|ceback|chback|qprev|pcont|qskip)$/.test(b.dataset.a||'')||b.dataset.bk?'uix':'ui');},true);
+// los botones que pasan la página del libro (casillas, marcapáginas, ver en acción, volver) no hacen «bloop»: ya suena la página
+const PAGEBTN=b=>b.classList.contains('bti')||b.classList.contains('bkmk')||b.classList.contains('hmk')||/^(cprev|chprev|ceprev|cback|chback|ceback|cbkl|hgo)$/.test(b.dataset.a||'');
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(b&&!b.disabled&&b.dataset.a!=='sfxt'&&!PAGEBTN(b))sfx(/^(oclose|cclose|mback|pback|cback|ceback|chback|qprev|pcont|qskip)$/.test(b.dataset.a||'')||b.dataset.bk?'uix':'ui');},true);
 function sfxTestHTML(){return SFXG.map(([g,rows])=>`<div class="sfxg"><b>${g}</b>`+rows.map(([k,n,vs])=>`<div class="sfxr"><span>${n}</span>`+vs.map((d,i)=>`<button data-a="sfxt" data-v="${k}" data-i="${i}" class="${vs.length>1&&(SV[k]||0)===i?'on':''}">▶ ${d.n||'Probar'}</button>`).join('')+'</div>').join('')+'</div>').join('')+'<small>Si un sonido tiene varias versiones, la última que pruebes es la que suena en la partida (marcada en amarillo).</small>';}
 function sfxTest(k,i){const e=SFXK[k];if(!e)return;if(e.vs.length>1){SV[k]=i;try{localStorage.setItem('rt-sv',JSON.stringify(SV));}catch(x){}}sfx(k,{force:1,def:e.vs[i]});}
 {const _b=build;build=function(...a){const n=S.list.length;const r=_b.apply(this,a);if(S.list.length>n)sfx('build');return r;};
