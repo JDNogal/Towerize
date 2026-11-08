@@ -26,11 +26,11 @@ function hintPos(){const el=$('hint');if(!el||!HQ.cur)return;const ring=el.first
 const HGAP=10,BARX={pc:0,tw:0};
 function hintPace(){const k=S.phase+S.round;if(HQ.pk!==k){if(HQ.pph==='wave')HQ.q=HQ.q.filter(h=>h.ph!=='wave');HQ.pk=k;HQ.pph=S.phase;HQ.pn=0;HQ.nt=2.5;}
  const h=HQ.q[0];if(!h)return false;const tut=h.id.startsWith('tut_');if(!tut&&HQ.pn>=2)return false;if(S.phase==='wave'&&!tut&&(S.wt||0)<HQ.nt)return false;return true;}
-function portAuto(){if(!S||S.phase!=='build'||S.round>2||S.portAuto===S.round||PR.open||RL.open||HQ.cur||HQ.q.length||FO.open||CP.open||OP.open||!realG())return;const pt=S.portals&&S.portals[0];if(!pt)return;S.portAuto=S.round;
+function portAuto(){if(!S||S.phase!=='build'||S.round>2||S.portAuto===S.round||PR.open||RL.open||HQ.cur||HQ.q.length||FO.open||LB.open||!realG())return;const pt=S.portals&&S.portals[0];if(!pt)return;S.portAuto=S.round;
  const tg={key:'pt:'+pt.x+','+pt.y+'a',html:()=>portalInfo(pt),rect:cellRect(pt.x-1,pt.y-1,3)};if(MFSQ()){LUPA.tg=tg;LUPA.sticky=true;placeLupa(tg.rect);}else{openPrim(tg);PR.pinned=true;PR.auto=1;}}
 function hintTick(rdt){
  portAuto();
- const busy=RL.open||CP.open||OP.open||FO.open||!realG();
+ const busy=RL.open||LB.open||FO.open||!realG();
  if(!HQ.cur&&!busy&&HQ.q.length&&hintPace())hintShow(HQ.q.shift());
  if(HQ.cur&&!realG())hintClose();
  const el=$('hint');if(el&&HQ.cur){el.classList.toggle('hid',busy);el.classList.toggle('dim',HQ.f<.35||S.phase!=='wave');}

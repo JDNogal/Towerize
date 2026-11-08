@@ -5,20 +5,18 @@ function mnRoot(){const vis=e=>e&&e.getClientRects().length>0&&getComputedStyle(
  const H=$('hint');if(H&&H.classList.contains('open')&&H.querySelector('button'))return H;
  const F=$('focus');if(F&&F.classList.contains('open'))return F;
  if(typeof DLG!=='undefined'&&DLG.on)return null;
- const sw=$('stw');if(sw&&sw.classList.contains('open'))return sw;
- if(CP.open)return $('comp');if(OP.open)return $('opts');
- const pm=$('pmenu');if(pm&&pm.classList.contains('open'))return pm;
+ if(LB.open)return $('comp');
  if(RL.open)return $('relic');
  const es=$('endscr');if(es&&es.classList.contains('open'))return es;
  if(document.body.classList.contains('inmenu')){const m=$('menu');if(vis(m))return m;}
  return null;}
 function mnItems(r){return [...r.querySelectorAll('button,select,[data-a]')].filter(b=>!b.disabled&&b.getClientRects().length&&!b.closest('[hidden]')&&getComputedStyle(b).visibility!=='hidden'&&!(b.tagName!=='BUTTON'&&b.tagName!=='SELECT'&&b.querySelector('button')));}
 const mnKey=b=>b?[b.dataset.a||'',b.dataset.v||'',b.dataset.k||'',b.dataset.i||'',b.dataset.id||'',b.id||'',(b.textContent||'').trim().slice(0,24)].join('|'):null;
-function mnSet(b){if(MN.el&&MN.el!==b)MN.el.classList.remove('kfoc');MN.el=b;MN.key=mnKey(b);MN.on=true;if(b){b.classList.add('kfoc');try{b.scrollIntoView({block:'nearest',inline:'nearest'});}catch(e){}}}
+function mnSet(b){if(MN.el&&MN.el!==b)MN.el.classList.remove('kfoc');MN.el=b;MN.key=mnKey(b);MN.on=true;if(b){b.classList.add('kfoc');try{b.scrollIntoView({block:'nearest',inline:'nearest'});}catch(e){}if(typeof lbFocus==='function')lbFocus(b);}}
 function mnClear(){if(MN.el)MN.el.classList.remove('kfoc');MN.el=null;MN.on=false;}
 function mnRefind(r){if(MN.el&&MN.el.isConnected&&r.contains(MN.el))return MN.el;const L=mnItems(r);const b=L.find(x=>mnKey(x)===MN.key)||null;if(b){MN.el=b;b.classList.add('kfoc');}return b;}
 function mnMove(r,dx,dy){const L=mnItems(r);if(!L.length)return;let cur=mnRefind(r);
- if(!cur){const pick=['.bti.on','.oside button.on','button.pmain','.hok','button.go:not([disabled])','button.on'].map(s=>r.querySelector(s)).find(x=>x&&L.includes(x))||L.find(x=>!x.classList.contains('oxb')&&!/close|cclose|oclose/.test(x.dataset.a||''))||L[0];mnSet(L.includes(pick)?pick:L[0]);return;}
+ if(!cur){const pick=['.bti.on','.lbmain','.bkrib.on','.hok','button.go:not([disabled])','button.on'].map(s=>r.querySelector(s)).find(x=>x&&L.includes(x))||L.find(x=>!x.classList.contains('oxb')&&!/close|cclose|oclose/.test(x.dataset.a||''))||L[0];mnSet(L.includes(pick)?pick:L[0]);return;}
  const a=cur.getBoundingClientRect(),ax=a.left+a.width/2,ay=a.top+a.height/2;let best=null,bs=1e9;
  for(const b of L){if(b===cur)continue;const q=b.getBoundingClientRect(),bx=q.left+q.width/2,by=q.top+q.height/2,vx=bx-ax,vy=by-ay;
   const pr=vx*dx+vy*dy;if(pr<=4)continue;const ort=Math.abs(vx*dy-vy*dx);if(ort>pr*2.5+30)continue;const s=pr+ort*2.2;if(s<bs){bs=s;best=b;}}

@@ -1,6 +1,6 @@
 // ======================= COMPENDIO EN FORMATO LIBRO =======================
 // pulsar en el fondo oscuro (fuera del libro y de los marcapáginas) lo cierra
-document.addEventListener('click',e=>{const c=$('comp');if(CP.open&&c&&c.classList.contains('bkm')&&e.target===c)toggleComp(false);});
+document.addEventListener('click',e=>{const c=$('comp');if(LB.open&&c&&e.target===c){if(LB.cover){if(lbInGame())lbClose(true);}else lbBack();}});
 // marcapáginas arriba (secciones) · página izquierda: fichas en cuadritos · página derecha: detalle de lo elegido
 const CTICO={tw:'🗼',hr:'🦸',pc:'🧩',bf:'✨',rl:'💎',en:'👹',ev:'📜',lg:'🏆'};
 const bkNarrow=()=>innerWidth<760||innerHeight<430;
@@ -65,27 +65,28 @@ function bkFilters(t){
   return '<div class="bkflt"><div class="bkfr">'+[['all','Todos'],['todo','Pendientes'],['ok','Conseguidos']].map(([k,n])=>`<button class="${CP.as===k?'on':''}" data-a="achs" data-v="${k}">${n}</button>`).join('')+'</div></div>';}
  return '';}
 const BKSUB={tw:'Las torres que puedes construir',hr:'Quienes defienden el núcleo',pc:'Las piezas del camino',bf:'Las casillas especiales',rl:'Objetos con poder',en:'Lo que sale de los portales',ev:'Encuentros en el camino',lg:'Tus hazañas'};
-function renderComp(){
+// iconos de los marcapáginas de Logros (por categoría)
+const LGICO={all:'🏆',tu:'🎓',jg:'🎲',hr:'🦸',st:'🧪',ev:'📜',mp:'🗺️',vet:'🎖️'};
+// el compendio (y Logros) como piezas del libro: marcapáginas, página izquierda, página derecha y retoques tras pintar
+function compParts(){
  setTimeout(()=>{if(!ALKNEW.size)return;for(const id of ALKNEW)ALKS[id]=1;ALKNEW.clear();try{localStorage.setItem('rt-alks',JSON.stringify(ALKS));}catch(e){}},0);
  closeKS();if(!compOk())CP.tab='lg';
  const t=CP.tab,items=bkItems(t),real=items.filter(x=>x.id!=null),pvm=!!(CP.prev||CP.hprev||CP.eprev);
  if(!real.some(x=>x.id===CP.sel[t]))CP.sel[t]=(real.find(x=>x.ok)||real[0]||{}).id;
  const nOk=real.filter(x=>x.ok&&!x.hid&&(t!=='lg'||x.got)).length,flip=CP.flipK!==t+'|'+CP.sel[t]+'|'+pvm;CP.flipK=t+'|'+CP.sel[t]+'|'+pvm;
- const tabs=CTABS.filter(([v])=>compOk()||v==='lg');
- const marks=`<div class="bkmarks">${kcOn()&&tabs.length>1?'<span class="kcap bkq">Q</span>':''}${tabs.map(([v,l])=>`<button class="bkmk${v===t?' on':''}" data-a="ctab" data-v="${v}" title="${l}">${CTICO[v]}</button>`).join('')}${kcOn()&&tabs.length>1?'<span class="kcap bkq">E</span>':''}</div>`;
- let left=`<h3>${(CTABS.find(x=>x[0]===t)||[])[1]||''}</h3><div class="bksub">${BKSUB[t]||''} · ${t==='lg'?nOk+' de '+real.length+' conseguidos':nOk+' de '+real.length+(['tw','pc','bf','rl'].includes(t)?' descubiertas':' descubiertos')}</div>`+bkFilters(t)+'<div class="bktiles">';
+ let marks;
+ if(t==='lg'){CP.af=CP.af||'all';const cats=[['all','Todos']].concat(ACHCATS.filter(([c])=>Object.keys(ACH).some(id=>achVis(id)&&(ACH[id].c||'cl')===c)));if(!cats.some(([c])=>c===CP.af))CP.af='all';marks={list:cats.map(([c,n])=>[c,n,LGICO[c]||'🏅']),cur:CP.af,act:'achf'};}
+ else marks={list:CTABS.filter(([v])=>v!=='lg').map(([v,l])=>[v,l,CTICO[v]]),cur:t,act:'ctab'};
+ const title=t==='lg'?'Logros':(CTABS.find(x=>x[0]===t)||[])[1]||'';
+ let left=`<h3>${title}</h3><div class="bksub">${BKSUB[t]||''} · ${t==='lg'?nOk+' de '+real.length+' conseguidos':nOk+' de '+real.length+(['tw','pc','bf','rl'].includes(t)?' descubiertas':' descubiertos')}</div>`+bkFilters(t)+'<div class="bktiles">';
  for(const it of items)left+=it.sec?`</div><div class="bksec">${it.sec}</div><div class="bktiles">`:bkTile(it,t);
  left+='</div>';left=left.replace(/<div class="bktiles"><\/div>/g,'');
  const right=pvm?compBodyOld():bkDetail(t,CP.sel[t]);
- const nar=bkNarrow(),showR=!nar||CP.pageR||pvm;
- const el=$('comp');el.classList.add('bkm');el.classList.toggle('narrow',nar);
- const sl=el.querySelector('.bkp.l'),st=sl?sl.scrollTop:0,same=CP.lastT===t;CP.lastT=t;
- el.innerHTML=`<div class="bkw">${marks}<div class="bk"><div class="bkcover"></div>`+
-  (!nar||!showR?`<div class="bkp l">${left}</div>`:'')+(showR?`<div class="bkp r${flip?' flip':''}">${nar&&!pvm?'<button class="bkback" data-a="cbkl">‹ Volver</button>':''}${right}</div>`:'')+
-  `<button class="bkx" data-a="cclose" title="Cerrar">✕</button></div></div>`;
- const nl=el.querySelector('.bkp.l');if(nl&&same)nl.scrollTop=st;
- el.querySelectorAll('canvas[data-pi]').forEach(cn=>drawPat(cn.getContext('2d'),(()=>{const P0=PIECES[+cn.dataset.pi],o={n:P0.n,p:P0.p,b:[]};solarize(o,(CP.pcv||{})[+cn.dataset.pi]||0,1);return o;})(),24,0,0,1));
- el.querySelectorAll('canvas[data-bpi]').forEach(cn=>{const P0=PIECES[+cn.dataset.bpi];if(!seen('pc',P0.n))return;const o={n:P0.n,p:P0.p,b:[]};solarize(o,0,1);drawPat(cn.getContext('2d'),o,6.2,0,0,1);});
- if(CP.hl){const hl=CP.hl;setTimeout(()=>{const b=el.querySelector(`.bti[data-v="${hl}"]`);if(b){b.scrollIntoView({block:'center'});b.classList.add('bkglow');}},30);setTimeout(()=>{if(CP.hl===hl){CP.hl=null;const c=el.querySelector('.bkhl');if(c)c.classList.remove('bkhl');}},1600);}
+ const after=el=>{
+  el.querySelectorAll('canvas[data-pi]').forEach(cn=>drawPat(cn.getContext('2d'),(()=>{const P0=PIECES[+cn.dataset.pi],o={n:P0.n,p:P0.p,b:[]};solarize(o,(CP.pcv||{})[+cn.dataset.pi]||0,1);return o;})(),24,0,0,1));
+  el.querySelectorAll('canvas[data-bpi]').forEach(cn=>{const P0=PIECES[+cn.dataset.bpi];if(!seen('pc',P0.n))return;const o={n:P0.n,p:P0.p,b:[]};solarize(o,0,1);drawPat(cn.getContext('2d'),o,6.2,0,0,1);});
+  if(CP.hl){const hl=CP.hl;setTimeout(()=>{const b=el.querySelector(`.bti[data-v="${hl}"]`);if(b){b.scrollIntoView({block:'center'});b.classList.add('bkglow');}},30);setTimeout(()=>{if(CP.hl===hl){CP.hl=null;const c=el.querySelector('.bkhl');if(c)c.classList.remove('bkhl');}},1600);}};
+ return {marks,left,right,flip,pvm,after,key:t};
 }
+function renderComp(){if(typeof lbRender==='function')lbRender();}
 

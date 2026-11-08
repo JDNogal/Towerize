@@ -81,8 +81,8 @@ function cosmHTML(){const lockTxt=c=>c.def?'':cosOwn(c)?'':'🔒 '+achReq(c.ach)
  const dec=COSM.dec.map(c=>{const o=cosOwn(c),on=o&&!(OPT.decoff||{})[c.id];return `<button class="csw cdec${on?' on':''}${o?'':' lk'}" ${o?`data-a="csdec" data-v="${c.id}" aria-pressed="${on}"`:'disabled'} title="${o?c.n+(on?' · activada':' · apagada'):lockTxt(c).replace(/<[^>]+>/g,'')}"><canvas width="44" height="44" data-dec="${c.ch}"></canvas><span>${o?c.n:'🔒 ???'}</span><em>${o?(on?'Activada':'Apagada'):''}</em></button>`;}).join('');
  const fr=Object.keys(HEROES).filter(h=>UNLOCK_ALL||heroVis(h)).map(id=>{const t=hTier(id),n=HWIN[id]||0,nx=FRT.slice().reverse().find(([a])=>n<a);return `<div class="frw"><span class="hfr fr${t}" style="background:${HEROES[id].col}">${portrait(id,1)}</span><div><b>${HEROES[id].n}</b><small>${n} victoria${n===1?'':'s'}${t?' · marco de '+hTierN(t):''}${nx?' · siguiente marco a las '+nx[0]:''}</small></div></div>`;}).join('');
  return `<div class="orow"><div>Paleta de la interfaz</div><div class="cswr">${pal}</div></div><div class="orow"><div>Núcleo</div><div class="cswr">${core}</div></div><div class="orow"><div>Decoración del mapa</div><small>Las decoraciones aparecen al azar en las piezas nuevas. Pulsa una para activarla o apagarla.</small><div class="cswr">${dec}</div></div><div class="orow"><div>Marcos de héroe</div><small>Se consiguen solos al ganar con cada héroe: bronce con 1 victoria, plata con 5 y oro con 10.</small><div class="frl">${fr}</div></div>`;}
-function cosmPaint(){document.querySelectorAll('#opts canvas[data-core]').forEach(cv=>{const g=cv.getContext('2d');g.clearRect(0,0,44,44);g.fillStyle='#22301f';g.fillRect(0,0,44,44);drawCore(g,22,22,30,cv.dataset.core);});
- document.querySelectorAll('#opts canvas[data-dec]').forEach(cv=>{const g=cv.getContext('2d');g.clearRect(0,0,44,44);g.fillStyle='#2b3d29';g.fillRect(0,0,44,44);drawObs(g,cv.dataset.dec,4,4,36);});}
+function cosmPaint(){document.querySelectorAll('#comp canvas[data-core]').forEach(cv=>{const g=cv.getContext('2d');g.clearRect(0,0,44,44);g.fillStyle='#22301f';g.fillRect(0,0,44,44);drawCore(g,22,22,30,cv.dataset.core);});
+ document.querySelectorAll('#comp canvas[data-dec]').forEach(cv=>{const g=cv.getContext('2d');g.clearRect(0,0,44,44);g.fillStyle='#2b3d29';g.fillRect(0,0,44,44);drawObs(g,cv.dataset.dec,4,4,36);});}
 // núcleo
 function drawCore(g,cx,cy,b,skin){skin=skin||OPT.core||'base';const c=COSM.core.find(x=>x.id===skin);if(!c||!cosOwn(c))skin='base';const t=(typeof performance!=='undefined'?performance.now():0)/1000,h=b*.35;
  const sq=(col,s)=>{g.fillStyle=col;g.fillRect(cx-s,cy-s,s*2,s*2);};
@@ -113,22 +113,35 @@ const saveOpt=()=>{try{localStorage.setItem('rt-opts',JSON.stringify(OPT));}catc
 // Opciones por dispositivo: dev:'touch' solo en móvil/tablet, dev:'pc' solo con ratón, show:()=>bool para condiciones extra; descT sustituye a desc en táctil.
 const optVis=o=>!(o.dev==='touch'&&!TOUCH||o.dev==='pc'&&TOUCH||o.show&&!o.show());
 const OP={open:false,tab:'jg'};
-function renderOpts(){
- const om=document.querySelector('#opts .omain'),keep=om?om.scrollTop:0,inG=!document.body.classList.contains('inmenu');
- const d=o=>{const t=TOUCH&&o.descT?o.descT:o.desc;return t?`<small>${t}</small>`:'';},ic=o=>{const k=oKey(o);return OIC[k]?`<span class="oic">${OIC[k]}</span>`:'';};
+// cuerpo de la pestaña actual: filas (en el libro, sin la descripción: va en la página derecha)
+function optBody(book){
+ const inG=!document.body.classList.contains('inmenu');
+ const d=o=>{const t=TOUCH&&o.descT?o.descT:o.desc;return t&&!book?`<small>${t}</small>`:'';},ic=o=>{const k=oKey(o);return OIC[k]?`<span class="oic">${OIC[k]}</span>`:'';};
  let sec='',danger='';
+ const R=(o,i,cls,inner)=>`<div class="orow otg${cls}" data-ok="${oKey(o)}" data-oi="${i}">${inner}</div>`;
  const body=OPTS.map((o,i)=>{if(o.tab!==OP.tab||!optVis(o))return '';const k=oKey(o),sh=OP.tab==='jg'&&OSEC[k]&&OSEC[k]!==sec?(sec=OSEC[k],`<h3 class="osec">${sec}</h3>`):'';
-  if(o.type==='toggle')return sh+`<div class="orow otg">${ic(o)}<div class="otl"><div>${o.label}</div>${d(o)}</div><button class="sw${OPT[o.key]?' on':''}" role="switch" aria-checked="${!!OPT[o.key]}" aria-label="${o.label}" data-a="opt" data-i="${i}"><i></i></button></div>`;
-  if(o.type==='slider')return sh+`<div class="orow otg osl">${ic(o)}<div class="otl"><div>${o.label}</div>${d(o)}</div><label class="osr"><input type="range" data-o="${i}" min="${o.min}" max="${o.max}" step="${o.step}" value="${OPT[o.key]}"><output>${o.fmt(OPT[o.key])}</output></label></div>`;
-  if(o.type==='cname')return sh+(STO.name?`<div class="orow otg">${ic(o)}<div class="otl"><div>${o.label}</div><small>Cómo te llama ÉTER.</small></div><div class="ocn"><input id="cname" maxlength="16" value="${escH(STO.name)}"><button data-a="sname">Guardar</button></div></div>`:`<div class="orow otg">${ic(o)}<div class="otl"><div>${o.label}</div><small>ÉTER aún no recuerda tu nombre. Sigue jugando…</small></div></div>`);
+  if(o.type==='toggle')return sh+R(o,i,'',`${ic(o)}<div class="otl"><div>${o.label}</div>${d(o)}</div><button class="sw${OPT[o.key]?' on':''}" role="switch" aria-checked="${!!OPT[o.key]}" aria-label="${o.label}" data-a="opt" data-i="${i}"><i></i></button>`);
+  if(o.type==='slider')return sh+R(o,i,' osl',`${ic(o)}<div class="otl"><div>${o.label}</div>${d(o)}</div><label class="osr"><input type="range" data-o="${i}" min="${o.min}" max="${o.max}" step="${o.step}" value="${OPT[o.key]}"><output>${o.fmt(OPT[o.key])}</output></label>`);
+  if(o.type==='cname')return sh+(STO.name?R(o,i,'',`${ic(o)}<div class="otl"><div>${o.label}</div>${book?'':'<small>Cómo te llama ÉTER.</small>'}</div><div class="ocn"><input id="cname" maxlength="16" value="${escH(STO.name)}"><button data-a="sname">Guardar</button></div>`):R(o,i,'',`${ic(o)}<div class="otl"><div>${o.label}</div><small>ÉTER aún no recuerda tu nombre. Sigue jugando…</small></div>`));
   if(o.type==='reset'){danger=`<div class="odanger"><div><b>⚠️ ${o.label}</b>${d(o)}</div><button data-a="preset" class="${OP.rst?'warn':''}">${OP.rst?'¿Seguro? Pulsa otra vez':'Borrar…'}</button></div>`;return '';}
   if(o.type==='cosm')return cosmHTML();
   if(o.type==='keys')return kbHTML();
   if(o.type==='sfxt')return `<div class="orow"><div>${o.label}</div>${sfxTestHTML()}</div>`;
-  if(o.type==='choice')return sh+`<div class="orow otg och">${ic(o)}<div class="otl"><div>${o.label}</div>${d(o)}</div><div class="oseg">${o.choices.map(([v,l])=>`<button class="${o.get()===v?'on':''}" data-a="optc" data-i="${i}" data-v="${v}">${l}</button>`).join('')}</div></div>`;
+  if(o.type==='choice')return sh+R(o,i,' och',`${ic(o)}<div class="otl"><div>${o.label}</div>${d(o)}</div><div class="oseg">${o.choices.map(([v,l])=>`<button class="${o.get()===v?'on':''}" data-a="optc" data-i="${i}" data-v="${v}">${l}</button>`).join('')}</div>`);
   return `<div class="orow onote">ℹ️ ${(TOUCH&&o.descT)||o.desc||''}</div>`;}).join('');
- const T=OTABS.find(t=>t[0]===OP.tab)||OTABS[0];
- $('opts').innerHTML=`<div class="omod" role="dialog" aria-label="Opciones"><div class="oside"><h2>Opciones</h2>${OTABS.filter(t=>t[0]!=='kb'||!TOUCH).map(([v,l,i])=>`<button class="${OP.tab===v?'on':''}" data-a="otab" data-v="${v}"><span>${i}</span><em>${l}</em></button>`).join('')}</div>`+
-  `<div class="omain"><div class="otop"><div><b>${T[2]} ${T[1]}</b><small>${inG?'El juego está en pausa mientras miras las opciones.':'Los cambios se guardan solos.'}</small></div><button class="oxb" data-a="oclose" title="Cerrar">✕</button></div>${body}${danger}</div></div>`;
- const nm=document.querySelector('#opts .omain');if(nm&&OP.keepS)nm.scrollTop=keep;OP.keepS=1;
+ return {body,danger,inG};
 }
+// página derecha: ficha de la opción señalada (o la descripción de la pestaña)
+const LBOPTXT={jg:'Ajustes generales del juego. Señala una opción para leer qué hace.',kb:'Pulsa la tecla de un atajo y luego la nueva tecla. La columna Alternativa admite una segunda tecla; Supr la borra. Las teclas de Menús mueven el marco dorado por los menús.',ps:'Paletas, núcleos y decoración que vas desbloqueando al jugar. Lo que aún no tienes sale con candado.',hs:'Cómo se muestran los diálogos de la historia.',vol:'Volumen y sonidos. Pulsa un sonido para escucharlo; si tiene variantes, la última que pruebes es la que se queda.',gf:'Rendimiento y calidad gráfica.',ac:'Ayudas de lectura y accesibilidad.',un:'Atajos para desbloquear contenido sin jugar, pensados para probar el juego. Lo que desbloquees así no cuenta como progreso.'};
+function optDetail(o){const T=OTABS.find(t=>t[0]===OP.tab)||OTABS[0];
+ if(!o)return `<div class="lbdet"><span class="lbdic">${T[2]}</span><h4>${T[1]}</h4><p>${LBOPTXT[OP.tab]||''}</p></div>`;
+ const k=oKey(o),desc=(TOUCH&&o.descT)||o.desc||'';let cur='';
+ if(o.type==='toggle')cur=OPT[o.key]?'Activado':'Desactivado';else if(o.type==='slider')cur=o.fmt(OPT[o.key]);else if(o.type==='choice'){const c=o.choices.find(([v])=>v===o.get());cur=c?c[1]:'';}else if(o.type==='reset')cur='';
+ return `<div class="lbdet"><span class="lbdic">${OIC[k]||T[2]}</span><h4>${o.label}</h4><p>${desc}</p>${cur?`<div class="lbcur">Ahora: <b>${cur}</b></div>`:''}</div>`;}
+function optParts(){const {body,danger,inG}=optBody(true),T=OTABS.find(t=>t[0]===OP.tab)||OTABS[0];
+ const o=LB.op!=null&&OPTS[LB.op]&&OPTS[LB.op].tab===OP.tab&&optVis(OPTS[LB.op])?OPTS[LB.op]:null;
+ const marks={list:OTABS.filter(t=>t[0]!=='kb'||!TOUCH).map(([v,l,i])=>[v,l,i]),cur:OP.tab,act:'otab'};
+ const left=`<h3>Opciones</h3><div class="bksub">${T[2]} ${T[1]} · ${inG?'el juego está en pausa':'los cambios se guardan solos'}</div><div class="lbopts">${body}${danger}</div>`;
+ return {marks,left,right:optDetail(o),key:'op'+OP.tab,after:()=>{if(OP.tab==='ps'&&typeof cosmPaint==='function')cosmPaint();}};
+}
+function renderOpts(){if(typeof LB!=='undefined'&&LB.open&&LB.area==='op'&&typeof lbRender==='function')lbRender();}

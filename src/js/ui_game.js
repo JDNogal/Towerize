@@ -53,15 +53,12 @@ function statsHTML(tab){const st=S.st||{},g=n=>`<span class="gd">${fi(n||0)} �
  if(tab==='en'){const ek=st.ek||{},ks=Object.keys(ek).sort((a,b)=>ek[b].k-ek[a].k);
   return ks.length?`<table><tr><th>Enemigo</th><th class="n">Eliminados</th><th class="n">Llegaron al núcleo</th><th class="n">Oro dado</th></tr>`+ks.map(k=>{const E=ET[k],q=ek[k];return `<tr><td><span class="sic" style="background:${E.col||'#888'}44">${E.ic||'👾'}</span>${E.n}</td><td class="n">${fi(q.k)}</td><td class="n${q.l?' cd':''}">${fi(q.l)}</td><td class="n">${g(q.g)}</td></tr>`;}).join('')+'</table>':'<div class="snote">Todavía no te has cruzado con ningún enemigo en esta partida.</div>';}
  return '';}
-function renderStats(){let el=$('stw');if(!el){el=document.createElement('div');el.id='stw';document.body.appendChild(el);el.addEventListener('click',e=>{if(e.target===el){closeStats();return;}const b=e.target.closest('[data-st]');if(b){STW.tab=b.dataset.st;renderStats();return;}if(e.target.closest('[data-a="stclose"]'))closeStats();});}
- const T=STABS.find(t=>t[0]===STW.tab)||STABS[0];
- el.innerHTML=`<div class="omod" role="dialog" aria-label="Estadísticas"><div class="oside"><h2>Estadísticas</h2>${STABS.map(([v,l,i])=>`<button class="${STW.tab===v?'on':''}" data-st="${v}"><span>${i}</span><em>${l}</em></button>`).join('')}</div><div class="omain"><div class="otop"><div><b>${T[2]} ${T[1]}</b><small>Ronda ${Math.min(S.round,ROUNDS)}/${ROUNDS} · se actualiza con cada oleada.</small></div><button class="oxb" data-a="stclose" title="Cerrar">✕</button></div>${statsHTML(STW.tab)}</div></div>`;
- el.classList.add('open');}
-function closeStats(){const el=$('stw');if(el)el.classList.remove('open');}
+function renderStats(){STW.tab=STW.tab||'run';lbOpen('st');}
+function closeStats(){lbBack();}
 // Esc: si no hay nada que cancelar, abre o cierra la pausa (en PC)
 let ESCIDLE=false;
-addEventListener('keydown',e=>{if(e.key!=='Escape')return;const sw=$('stw');if(sw&&sw.classList.contains('open')){closeStats();e.stopImmediatePropagation();e.preventDefault();return;}
- ESCIDLE=!!(S&&S.list&&!document.body.classList.contains('inmenu')&&!S.aim&&!S.tsel&&!BM.s&&(S.phase!=='place'||S.pi==null)&&!S.selT&&!PR.pinned&&!RL.open&&!CP.open&&!OP.open&&!FO.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(HQ&&HQ.cur)&&(S.phase==='build'||S.phase==='wave'||S.phase==='place'));},true);
+addEventListener('keydown',e=>{if(e.key!=='Escape')return;
+ ESCIDLE=!!(S&&S.list&&!document.body.classList.contains('inmenu')&&!S.aim&&!S.tsel&&!BM.s&&(S.phase!=='place'||S.pi==null)&&!S.selT&&!PR.pinned&&!RL.open&&!(LB.open&&!LB.cover)&&!FO.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(HQ&&HQ.cur)&&(S.phase==='build'||S.phase==='wave'||S.phase==='place'));},true);
 addEventListener('keydown',e=>{if(e.key!=='Escape'||!ESCIDLE)return;ESCIDLE=false;if(PMU.open)closePause(true);else openPause();});
 
 // ---- compra marcada: clic derecho (o mantener pulsado) en una mejora para comprarla sola cuando haya oro ----
@@ -112,18 +109,11 @@ setInterval(()=>{try{rlBar();}catch(e){}},150);
 try{new MutationObserver(()=>{try{rlBar();}catch(e){}}).observe($('relic'),{childList:true});}catch(e){}
 addEventListener('keydown',e=>{if(!kbIs('peek',e.key.toLowerCase())||!RL.open||RL.hpick||!$('relic').querySelector('.rlbar'))return;e.preventDefault();setPeek(!RL.peek);});
 
-// ---- menú de pausa (móvil): reúne lo que no hace falta tener siempre en pantalla ----
-const PMU={open:false,view:'main',ask:0,spd:1};
-(()=>{const d=document.createElement('div');d.id='pmenu';d.innerHTML='<div class="pmc"></div>';($('comp').parentElement||document.body).appendChild(d);d.addEventListener('click',e=>{if(e.target===d){closePause(true);return;}act(e);});})();
-function openPause(){if(!S)return;PMU.open=true;PMU.view='main';PMU.ask=0;PMU.spd=S.speed>0?S.speed:(S.lspd||1);S.speed=0;renderPause();ui();}
-function closePause(resume){PMU.open=false;$('pmenu').classList.remove('open');if(resume&&S)S.speed=PMU.spd||1;ui();}
-function renderPause(){const el=$('pmenu'),c=el.firstChild;if(!PMU.open){el.classList.remove('open');return;}el.classList.add('open');
- const H=S&&S.hero?HEROES[S.hero.id]:null,info=S?('Ronda '+S.round+'/'+ROUNDS+(H?' · '+H.n:'')):'';
- if(PMU.view==='help'){c.innerHTML=`<div class="pmh"><b>❓ Ayuda</b><button data-a="pback">← Volver</button></div><div class="pmhelp">`+QSL.filter(q=>!q.mock).map(q=>`<div class="pmq"><span class="pmt">${q.t}</span><div>${q.d}</div></div>`).join('')+`<div class="pmq"><button data-a="hreset">💡 Volver a mostrar las pistas</button></div></div>`;return;}
- const ch=S?[`⏳ Ronda ${Math.min(S.round,ROUNDS)}/${ROUNDS}`,`❤️ ${S.hp}`,`🪙 ${Math.floor(S.gold)}`,H?`${H.ic} ${H.n} · Nv ${S.hero.lvl}`:'',`🕒 ${fClk(GT.r)}`].filter(Boolean):[],rt=S&&S.phase==='wave'&&S.snap&&S.rc>0;
- c.innerHTML=`<div class="pmh2"><b>⏸ Pausa</b><button class="oxb" data-a="pcont" title="Continuar">✕</button></div><div class="pchips">${ch.map(x=>`<span>${x}</span>`).join('')}</div><button class="pmain" data-a="pcont">▶ Continuar</button>`+
-  `<div class="ptiles"><button data-a="pstats"><em>📊</em>Estadísticas</button><button data-a="pcomp"${compOk()?'':' class="dim"'}><em>📖</em>Compendio</button><button data-a="pach"><em>🏆</em>Logros</button><button data-a="popts"><em>⚙️</em>Opciones</button><button data-a="phelp"><em>❓</em>Ayuda</button>`+(FSOK?`<button data-a="pfs"><em>⛶</em>${isFS()?'Salir de pantalla completa':'Pantalla completa'}</button>`:'')+`</div>`+
-  `<div class="pbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Pulsa otra vez para abandonar':'🏳 Abandonar partida'}</button></div>`;}
+// ---- menú de pausa: es la portada del libro (ver libro.js) ----
+const PMU={open:false,ask:0,spd:1};
+function openPause(){if(!S)return;PMU.ask=0;lbOpen(null,true);}
+function closePause(resume){lbClose(resume);}
+function renderPause(){lbRender();}
 
 // botón de lupa (móvil)
 (()=>{const b=document.createElement('button');b.id='lupa';b.dataset.a='lupa';b.title='Ver detalles';b.innerHTML='<svg viewBox="0 0 16 16" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="6.8" cy="6.8" r="4.6"/><path d="M10.3 10.3L14 14"/></svg>';document.body.appendChild(b);b.addEventListener('click',e=>{e.stopPropagation();act(e);});
@@ -189,7 +179,7 @@ document.addEventListener('click',e=>{
  closePrim();
 },true);
 function rotate(){if(S.phase==='place'&&S.pi!=null){rotO(S.offers[S.pi]);ui();}}
-addEventListener('keydown',e=>{if(RL.open&&RL.hpick&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){heroNav(e.key==='ArrowLeft'?-1:1);e.preventDefault();return;}if(RL.open&&RL.hpick&&e.key==='Enter'&&!HEROES[RL.hsel].lockTxt){chooseHero(RL.hsel);return;}if(RL.open&&RL.hpick&&e.key==='Escape'&&RL.hconf){RL.hconf=null;renderHeroPick();return;}if(RL.open)return;if(e.key==='Escape'&&S.aim&&S.aim!=='uplace'&&S.aim!=='dism'&&S.aim!=='sharp'){S.aim=null;S.mimFor=null;S.aimT=null;S.msg='';renderRelics();ui();return;}if(e.key==='Escape'&&(CP.open||OP.open)){if(CP.open)toggleComp(false);if(OP.open)toggleOpts(false);}else if(e.key==='Escape'&&PR.pinned)closePrim();else if(kbIs('rot',e.key.toLowerCase())&&!CP.open&&!OP.open&&!S.aim&&keyOK(e))rotate();});
+addEventListener('keydown',e=>{if(RL.open&&RL.hpick&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){heroNav(e.key==='ArrowLeft'?-1:1);e.preventDefault();return;}if(RL.open&&RL.hpick&&e.key==='Enter'&&!HEROES[RL.hsel].lockTxt){chooseHero(RL.hsel);return;}if(RL.open&&RL.hpick&&e.key==='Escape'&&RL.hconf){RL.hconf=null;renderHeroPick();return;}if(RL.open)return;if(e.key==='Escape'&&S.aim&&S.aim!=='uplace'&&S.aim!=='dism'&&S.aim!=='sharp'){S.aim=null;S.mimFor=null;S.aimT=null;S.msg='';renderRelics();ui();return;}if(e.key==='Escape'&&LB.open&&!LB.cover){lbBack();}else if(e.key==='Escape'&&PR.pinned)closePrim();else if(kbIs('rot',e.key.toLowerCase())&&!LB.open&&!S.aim&&keyOK(e))rotate();});
 const AIMLOCK=['pick','rot','prot','sel','wave','sell','up','spec','abuy','pin4','close','tgt','tgtall','tgtdef','flag'];
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
@@ -207,15 +197,20 @@ function act(e){
  else if(a==='spdc'){const L=[.5,1,2],c=S.lspd||1,n=L[(L.indexOf(c)+1)%L.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(a==='pause')openPause();
  else if(a==='pcont')closePause(true);
- else if(a==='phelp'){PMU.view='help';renderPause();}
- else if(a==='pstats'){STW.tab=STW.tab||'run';renderStats();}
+ else if(a==='phelp')lbOpen('hp');
+ else if(a==='pstats'){STW.tab=STW.tab||'run';lbOpen('st');}
  else if(a==='pretry'){closePause(true);retryWave();}
- else if(a==='pback'){PMU.view='main';PMU.ask=0;renderPause();}
+ else if(a==='lbarea'){const v=b.dataset.v;if(v==='cp'&&!compOk()){lockToast('Compendio bloqueado','curious');return;}PMU.ask=0;lbOpen(v);}
+ else if(a==='lbx')lbBack();
+ else if(a==='lbcont')lbClose(true);
+ else if(a==='stab'){STW.tab=b.dataset.v;CP.pageR=false;lbRender();}
+ else if(a==='lbhp'){LB.hp=b.dataset.v;LB.note='';CP.pageR=false;lbRender();}
+ else if(a==='lbgo'){const [ar,tb]=b.dataset.v.split(':');if(ar==='op'&&tb)OP.tab=tb;lbOpen(ar);}
  else if(a==='pfs'){toggleFS();setTimeout(renderPause,200);}
  else if(a==='pquit'){if(PMU.ask){closePause(false);showMenu();}else{PMU.ask=1;renderPause();}}
- else if(a==='pcomp'){if(!compOk()){lockToast('Compendio bloqueado','curious');return;}toggleComp(true);}
- else if(a==='pach'){toggleComp(true);CP.tab='lg';CP.solo=true;renderComp();}
- else if(a==='popts')toggleOpts(true);
+ else if(a==='pcomp'){if(!compOk()){lockToast('Compendio bloqueado','curious');return;}lbOpen('cp');}
+ else if(a==='pach')lbOpen('lg');
+ else if(a==='popts')lbOpen('op');
  else if(a==='sell')sell(S.selT);
  else if(a==='peek'){setPeek(true);}
  else if(a==='up'){const t=S.list.find(o=>o.id===+b.dataset.id);upgrade(t);}
@@ -224,8 +219,8 @@ function act(e){
  else if(a==='pin4'){const t=S.list.find(o=>o.id===+b.dataset.id);if(t)pinTower(t);}
  else if(a==='close'){S.selT=null;ui();}
  else if(a==='pm')setPM(b.dataset.v);
- else if(a==='comp'){if(!compOk()&&!CP.open){lockToast('Compendio bloqueado','curious');return;}toggleComp();}
- else if(a==='cclose')toggleComp(false);
+ else if(a==='comp'){if(!compOk()&&!CP.open){lockToast('Compendio bloqueado','curious');return;}if(LB.open&&!LB.cover&&CP.open)lbBack();else lbOpen('cp');}
+ else if(a==='cclose')lbBack();
  else if(a==='ctab'){CP.tab=b.dataset.v;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;renderComp();}
  else if(a==='csel'){CP.sel[CP.tab]=b.dataset.v;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=true;renderComp();}
  else if(a==='cbkl'){CP.pageR=false;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;renderComp();}
@@ -243,8 +238,8 @@ function act(e){
  else if(a==='clv'){const sc=$('comp').scrollTop,k=b.dataset.v;CP.lv[k]=(CP.lv[k]||1)>=4?1:(CP.lv[k]||1)+1;if(CP.prev===k)newPrev(k,CP.pen);renderComp();$('comp').scrollTop=sc;}
  else if(a==='csupall'){const sc=$('comp').scrollTop,all=BK.every(k=>CP.sup[k]);for(const k of BK)CP.sup[k]=!all;renderComp();$('comp').scrollTop=sc;}
  else if(a==='csup'){const sc=$('comp').scrollTop;CP.sup[b.dataset.v]=!CP.sup[b.dataset.v];renderComp();$('comp').scrollTop=sc;}
- else if(a==='opts')toggleOpts();
- else if(a==='oclose')toggleOpts(false);
+ else if(a==='opts'){if(LB.open&&!LB.cover&&OP.open)lbBack();else lbOpen('op');}
+ else if(a==='oclose')lbBack();
  else if(a==='kbset'){const s=+(b.dataset.s||0);if(KBC.on===b.dataset.v&&KBC.s===s)KBC.on=null;else{KBC.on=b.dataset.v;KBC.s=s;}KBC.note='';renderOpts();}
  else if(a==='kbreset'){KB=Object.assign({},KBDEF);KB2=Object.assign({},KB2DEF);kbSave();KBC.on=null;KBC.note='Atajos restablecidos.';renderOpts();}
  else if(a==='otab'){KBC.on=null;KBC.note='';OP.tab=b.dataset.v;OP.keepS=0;renderOpts();}
@@ -299,7 +294,7 @@ function act(e){
  else if(a==='help')renderHelp();
  else if(a==='credits')renderCredits();
  else if(a==='ulv'){CP.ulv=CP.ulv||{};CP.ulv[b.dataset.k]=+b.dataset.v;if(CP.prev===b.dataset.k)newPrev(CP.prev,CP.pen);const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}
- else if(a==='achm'){APAN.open=false;apanTick();toggleComp(true);CP.tab='lg';CP.solo=true;renderComp();}
+ else if(a==='achm'){APAN.open=false;apanTick();lbOpen('lg');}
  else if(a==='apan'){APAN.open=!APAN.open;apanTick();}
  else if(a==='apin'){const id=b.dataset.id;if(PINS.includes(id))PINS=PINS.filter(x=>x!==id);else if(PINS.length>=3){toast('📌 Ya tienes 3 logros fijados: quita uno para fijar este.');return;}else PINS.push(id);savePins();if(CP.open){const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}apanTick(1);}
  else if(a==='tutfull'){try{localStorage.setItem('rt-tutchoice','full');}catch(e){}closeQuick();startTut();}
@@ -307,11 +302,11 @@ function act(e){
  else if(a==='qprev'){if(QS.i>0){QS.i--;renderQuick();}}
  else if(a==='qnext'){if(QS.i<QSL.length-1){QS.i++;renderQuick();}}
  else if(a==='qend'||a==='qskip'){if(QS.on)quickSeen();if(a==='qend'){try{localStorage.setItem('rt-qdone','1');}catch(e){}}closeQuick();if(QS.after==='setup'){renderEra();}else renderHelp();}
- else if(a==='hreset'){HSEEN={};try{localStorage.removeItem('rt-hints');}catch(e){}const b2=$('msetup').querySelector('[data-a="hreset"]');if(b2)b2.textContent='💡 Pistas restablecidas ✓';}
+ else if(a==='hreset'){HSEEN={};try{localStorage.removeItem('rt-hints');}catch(e){}LB.note='Pistas restablecidas ✓';lbRender();}
  else if(a==='begin')startGame();
  else if(a==='tutskip'){try{localStorage.setItem('rt-tutchoice','skip');}catch(e){}OPT.hints=false;saveOpt();renderSkip();}
  else if(a==='skipok')renderEra();
- else if(a==='htog'){OPT.hints=!OPT.hints;saveOpt();renderHelp();}
+ else if(a==='htog'){OPT.hints=!OPT.hints;saveOpt();lbRender();}
  else if(a==='mback'){closeQuick();$('menu').classList.remove('setup');}
  else if(a==='rnd')setRounds(MR+ +b.dataset.v);
  else if(a==='menu')showMenu();
@@ -321,5 +316,5 @@ function act(e){
  else if(a==='hideend')$('endscr').classList.remove('open');
 }
 $('ui').addEventListener('click',act);$('apan').addEventListener('click',act);$('mtl').addEventListener('click',act);$('mbl').addEventListener('click',act);$('mbr').addEventListener('click',act);$('relic').addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.k&&d.open)curSeen(d.dataset.k);if(d.classList&&d.classList.contains('hpvd')){RL.hpvo=d.open;fitHero();}if(d.classList&&d.classList.contains('hdet')&&d.dataset.id){RL.dman=RL.dman||{};RL.dman[d.dataset.id]=d.open;}if(d.classList&&d.classList.contains('rdet')&&d.dataset.id){RL.rman=RL.rman||{};RL.rman[d.dataset.id]=d.open;}},true);$('menu').addEventListener('click',act);$('focus').addEventListener('click',act);$('menu').addEventListener('input',e=>{if(e.target.id==='rrange')setRounds(+e.target.value);});$('endscr').addEventListener('click',act);$('ctl').addEventListener('click',act);$('opt').addEventListener('click',act);$('comp').addEventListener('click',act);document.addEventListener('change',e=>{const el=e.target;if(el.classList&&el.classList.contains('tsel')){const t=S.list.find(o=>o.id===+el.dataset.id);if(t&&!S.aim){t.mode=el.value;t.tgt=null;refreshPrim();ui();}}});$('comp').addEventListener('change',e=>{if(e.target.id==='pvs'){CP.spd=+e.target.value;if(PV&&PV.S)PV.S.espd=CP.spd;}if(e.target.id==='pve'){CP.pen=e.target.value;newPrev(CP.prev,CP.pen);}if(e.target.id==='pvs2'){CP.spd=+e.target.value;if(PE&&PE.S)PE.S.espd=CP.spd;}if(e.target.id==='pve2'){CP.eprev=e.target.value;newEPrev(CP.eprev,CP.ph||'hero:reinhart');renderComp();}if(e.target.id==='pvh'){CP.ph=e.target.value;newEPrev(CP.eprev,CP.ph);}if(e.target.id==='pve3'){CP.hen=e.target.value;newHPrev(CP.hprev,CP.hen,CP.hlv);}if(e.target.id==='pvl'){CP.hlv=+e.target.value;newHPrev(CP.hprev,CP.hen,CP.hlv);}if(e.target.id==='pvs3'){CP.spd=+e.target.value;if(PHV&&PHV.S)PHV.S.espd=CP.spd;}});$('relic').addEventListener('click',act);$('relics').addEventListener('click',act);$('tip').addEventListener('click',act);$('side').addEventListener('click',act);$('opts').addEventListener('click',act);
-$('opts').addEventListener('input',e=>{if(e.target.dataset.o===undefined)return;const o=OPTS[+e.target.dataset.o];OPT[o.key]=+e.target.value;saveOpt();e.target.closest('label').querySelector('output').textContent=o.fmt(OPT[o.key]);});
+for(const _el of [$('opts'),$('comp')])_el.addEventListener('input',e=>{if(e.target.dataset.o===undefined)return;const o=OPTS[+e.target.dataset.o];OPT[o.key]=+e.target.value;saveOpt();e.target.closest('label').querySelector('output').textContent=o.fmt(OPT[o.key]);});
 

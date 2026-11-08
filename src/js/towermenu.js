@@ -11,7 +11,7 @@ function tmOpts(t){const T=TW[t.type],top=[],bot=[];let side=null;
  if(tmHas(t,'flag'))side={k:'flag',ic:'🚩'};
  return{top,bot,side};}
 const tmKey=o=>o.k+(o.v?':'+o.v:'');
-function tmVis(){const t=TM.t;return !!(t&&S&&S.list&&S.list.includes(t)&&S.selT===t&&!RL.open&&!PR.pinned&&!S.aim&&!FO.open&&!CP.open&&!OP.open&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof PMU!=='undefined'&&PMU.open));}
+function tmVis(){const t=TM.t;return !!(t&&S&&S.list&&S.list.includes(t)&&S.selT===t&&!RL.open&&!PR.pinned&&!S.aim&&!FO.open&&!LB.open&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof PMU!=='undefined'&&PMU.open));}
 function tmClose(){TM.t=null;TM.arm=null;TM.hov=null;TM.sig='';const m=$('tmenu');if(m)m.classList.remove('on');const c=$('tmcard');if(c)c.classList.remove('on');}
 function tmOpen(t){TM.t=t;TM.arm=null;TM.hov=null;TM.sig='';}
 function tmBuild(){let m=$('tmenu');if(!m){m=document.createElement('div');m.id='tmenu';$('cw').appendChild(m);const c=document.createElement('div');c.id='tmcard';$('cw').appendChild(c);

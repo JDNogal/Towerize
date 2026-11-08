@@ -299,7 +299,7 @@ function hoverTick(rdt){
  const inPrim=!!(el&&(el.closest('#tip')||el.closest('#side'))),inComp=!!(el&&(el.closest('#comp')||el.closest('#opts')||el.closest('#relic')));
  const lvl=kpEl?+kpEl.dataset.level:(inPrim||inComp?0:-1);
  const tg=(!inPrim&&!kpEl&&!inComp)?resolve(el):null;
- if(MFSQ()){const onL=el&&el.closest&&el.closest('#lupa');if(PR.pinned||RL.open||CP.open||OP.open||(typeof PMU!=='undefined'&&PMU.open))hideLupa();else if(tg&&!LUPA.sticky){LUPA.tg=tg;placeLupa(tg.rect);}else if(LUPA.tg&&LUPA.sticky){const r=LUPA.tg.rect;if(r)placeLupa(r);else hideLupa();}else if(!onL)hideLupa();}
+ if(MFSQ()){const onL=el&&el.closest&&el.closest('#lupa');if(PR.pinned||RL.open||LB.open||(typeof PMU!=='undefined'&&PMU.open))hideLupa();else if(tg&&!LUPA.sticky){LUPA.tg=tg;placeLupa(tg.rect);}else if(LUPA.tg&&LUPA.sticky){const r=LUPA.tg.rect;if(r)placeLupa(r);else hideLupa();}else if(!onL)hideLupa();}
  // panel principal: se abre tras la rueda y aguanta mientras el ratón esté en el elemento o en los paneles
  if(PR.pinned){HV.key=null;HV.t=0;}
  else if(tg&&!MFSQ()&&!(TM.t&&tg.key==='tw:'+TM.t.id&&tmVis())){

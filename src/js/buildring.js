@@ -3,7 +3,7 @@ const BM={s:null,arm:null,hov:null,sig:''};
 const bmDeck=()=>Object.keys(TW).filter(k=>!TW[k].uniq&&(!S.deck||S.deck.includes(k)));
 const bmCost=k=>S.half?Math.ceil(TW[k].cost/2):TW[k].cost;
 function bmFree(q){return q&&inbc(q.kx,q.ky)&&S.cc[q.ky][q.kx]===1&&!S.occ[q.x+','+q.y];}
-function bmVis(){return !!(BM.s&&S&&(S.phase==='build'||S.phase==='wave')&&bmFree(BM.s)&&!RL.open&&!PR.pinned&&!S.aim&&!FO.open&&!CP.open&&!OP.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof PMU!=='undefined'&&PMU.open));}
+function bmVis(){return !!(BM.s&&S&&(S.phase==='build'||S.phase==='wave')&&bmFree(BM.s)&&!RL.open&&!PR.pinned&&!S.aim&&!FO.open&&!LB.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof PMU!=='undefined'&&PMU.open));}
 function bmClose(){BM.s=null;BM.arm=null;BM.hov=null;BM.sig='';const m=$('bmenu');if(m)m.classList.remove('on');const c=$('bmcard');if(c)c.classList.remove('on');}
 function bmOpen(q){S.selT=null;try{tmClose();}catch(e){}if(PR.pinned)closePrim();BM.s=q;BM.arm=null;BM.hov=null;BM.sig='';try{sfx('ui');}catch(e){}}
 function bmTap(c){const q=sqOf(c.x,c.y);if(!inb(c.x,c.y)||!bmFree(q)){if(BM.s){bmClose();}return false;}

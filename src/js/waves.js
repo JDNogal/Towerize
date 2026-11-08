@@ -32,7 +32,7 @@ function portalRows(p,lim){
  const mc=out.some(b=>b.n>1);
  return out.map(b=>`<div class="pbg">${mc?`<b class="pbm">${b.n>1?'×'+b.n:''}</b>`:''}<div class="${b.n>1&&b.rows.length>1?'pbk':''}">${b.rows.map(x=>rowHtml(x.r)).join('')}</div></div>`).join('');}
 function ptipTick(){const el=$('ptips');if(!el)return;
- const on=S&&(S.phase==='build'||S.phase==='wave')&&S.portals&&S.portals.length&&!RL.open&&!CP.open&&!OP.open;
+ const on=S&&(S.phase==='build'||S.phase==='wave')&&S.portals&&S.portals.length&&!RL.open&&!LB.open;
  let hv=null;if(on){if(M.has&&!M.touch){const r=cv.getBoundingClientRect();if(M.x>=r.left&&M.x<=r.right&&M.y>=r.top&&M.y<=r.bottom)hv=portalAt(cell({clientX:M.x,clientY:M.y}));}else if(PTAP&&S.portals.includes(PTAP))hv=PTAP;}
  const all=on&&(S.phase==='build'?OPT.ptip:OPT.ptipw),list=on?S.portals.filter(p=>p===hv||all):[];
  const r=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*r.width;

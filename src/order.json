@@ -4,7 +4,8 @@
   "02_movil.css",
   "03_pantallas.css",
   "04_movil_partida.css",
-  "05_paletas.css"
+  "05_paletas.css",
+  "06_libro.css"
  ],
  "js": [
   "00_config.js",
@@ -43,6 +44,7 @@
   "buildring.js",
   "towermenu.js",
   "ui_game.js",
+  "libro.js",
   "hints.js",
   "loop.js",
   "story.js",

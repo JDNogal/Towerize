@@ -62,8 +62,7 @@ function openRelic(){
   RL.choices.map(id=>{const r=RELIC[id];return `<div class="ce rcard" style="text-align:left"><div class="ric" style="background:${r.col}">${r.ic}</div><b style="display:block;text-align:center">${r.n}</b>${rcdTag(id)}${rdesc(id)}<button data-a="relic" data-id="${id}">Elegir</button></div>`;}).join('')+
   '</div><small>Pulsa una reliquia de la fila superior para usar su activo (pierdes el pasivo unas rondas).</small>';
 }
-document.addEventListener('click',e=>{if(OP.open&&e.target&&e.target.id==='opts')toggleOpts(false);});
-function toggleOpts(v){OP.open=v===undefined?!OP.open:v;$('opts').classList.toggle('open',OP.open);HV.key=null;HV.t=0;closePrim();if(OP.open){if(CP.open)toggleComp(false);OP.keepS=0;renderOpts();}}
+function toggleOpts(v){const on=v===undefined?!(LB.open&&!LB.cover&&OP.open):v;if(on){OP.keepS=0;lbOpen('op');}else lbClose();}
 function heroInfo(id,quiet){
  const D=HEROES[id],H=!quiet&&S.hero&&S.hero.id===id?S.hero:null,l=H?H.lvl:1,x=hsAt(id,l),x10=hsAt(id,HLMAX),src='hero:'+id,R2=RELIC[D.relic],q=H?H.s:null;
  const arm=x.ap+(H?RELARM()+auraAP(H.s):0),amr=H?auraAP(H.s):0;
