@@ -20,7 +20,7 @@ function eterGlitch(txt){const p=STO.p||0,nm=STO.name;if(p>=3)return nm?txt.repl
  if(lv>=2)w=w.map((x,i)=>i<2&&/^[A-Za-zÁÉÍÓÚáéíóúÑñ]{3,}/.test(x)&&Math.random()<.5?x.slice(0,2)+'-'+x:x);
  const ch=[...w.join(' ')],n=lv===1?1:lv;for(let k=0;k<n;k++){const i=1+Math.floor(Math.random()*(ch.length-2));if(/[a-záéíóúñ]/i.test(ch[i]))ch[i]=`<span class="eg">${G[k%3]}</span>`;}
  return ch.join('');}
-function eterSay(k,force){if(!OPT.eter||!S||S.tut||PREVIEWING||RL.open||(LB&&LB.open)||document.body.classList.contains('inmenu'))return false;
+function eterSay(k,force){if(!OPT.eter||!S||S.tut||PREVIEWING||RL.open||(LB&&LB.open)||document.body.classList.contains('inmenu')||document.body.classList.contains('pcpick')||(typeof DLG!=='undefined'&&DLG.on))return false;
  const D=ETERL[k];if(!D)return false;const now=performance.now();
  if(now-ETER.t<(D.p>=1?8000:40000))return false;if(!force&&Math.random()>D.p)return false;
  const opts=D.l.filter(x=>x!==ETER.last),txt=(opts.length?opts:D.l)[Math.floor(Math.random()*(opts.length||D.l.length))];
@@ -32,6 +32,7 @@ function eterPos(){const el=ETER.el;if(!el||!el.classList.contains('on')||!S||!S
 // el vigilante: compara con lo que vio la última vez
 setInterval(()=>{try{
  if(!S||!S.hero||PREVIEWING||document.body.classList.contains('inmenu')||S.phase==='won'||S.phase==='lost'){ETER.prev=null;if(ETER.el)ETER.el.classList.remove('on');return;}
+ if(document.body.classList.contains('pcpick')&&ETER.el)ETER.el.classList.remove('on');
  eterPos();
  const E=S.eter=S.eter||{},P=ETER.prev,bosses=S.enemies?S.enemies.filter(e=>e.hp>0&&isBoss(e)).length:0,hhp=S.hero.s?S.hero.s.hp:1,nv4=S.list?S.list.some(t=>t.lvl>=4&&!TW[t.type].uniq):false;
  const cur={ph:S.phase,hp:S.hp,round:S.round,bosses,hhp,nv4};ETER.prev=cur;if(!P||P.round!==cur.round&&P.ph!=='wave')return;

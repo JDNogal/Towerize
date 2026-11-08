@@ -134,3 +134,6 @@ body.mfs .pcpeek{top:4px;right:8px;width:30px;height:26px;font-size:15px}body.pc
 #hsbig{position:fixed;inset:0;z-index:200;background:rgba(8,6,4,.82);display:none;align-items:center;justify-content:center}#hsbig.on{display:flex}
 #hsbig .hsbw{background:#2a1a10;border:3px solid #6b3a1f;border-radius:12px;padding:10px}#hsbig .hsbt{display:flex;align-items:center;gap:12px;color:#f3e6c4;margin-bottom:8px}#hsbig .hsbt small{opacity:.7;flex:1}#hsbig .hsbt button{min-width:34px}
 #hsbig .hsbm{position:relative;line-height:0}#hsbig .hsbtip{display:none;position:absolute;pointer-events:none;background:#f6ead0;color:#3b2a17;border:2px solid #6b3a1f;border-radius:8px;padding:6px 9px;font:13px/1.4 system-ui;white-space:nowrap}
+/* la ventana de elegir pieza tiene prioridad: el bocadillo de ÉTER no se le cruza; mientras sale un diálogo de historia, la ventana espera */
+body.pcpick #eterb{display:none!important}
+body:has(#dlg.on) #panel:has(.prow){visibility:hidden}

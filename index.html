@@ -1209,6 +1209,9 @@ body.mfs .pcpeek{top:4px;right:8px;width:30px;height:26px;font-size:15px}body.pc
 #hsbig{position:fixed;inset:0;z-index:200;background:rgba(8,6,4,.82);display:none;align-items:center;justify-content:center}#hsbig.on{display:flex}
 #hsbig .hsbw{background:#2a1a10;border:3px solid #6b3a1f;border-radius:12px;padding:10px}#hsbig .hsbt{display:flex;align-items:center;gap:12px;color:#f3e6c4;margin-bottom:8px}#hsbig .hsbt small{opacity:.7;flex:1}#hsbig .hsbt button{min-width:34px}
 #hsbig .hsbm{position:relative;line-height:0}#hsbig .hsbtip{display:none;position:absolute;pointer-events:none;background:#f6ead0;color:#3b2a17;border:2px solid #6b3a1f;border-radius:8px;padding:6px 9px;font:13px/1.4 system-ui;white-space:nowrap}
+/* la ventana de elegir pieza tiene prioridad: el bocadillo de ÉTER no se le cruza; mientras sale un diálogo de historia, la ventana espera */
+body.pcpick #eterb{display:none!important}
+body:has(#dlg.on) #panel:has(.prow){visibility:hidden}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -1223,7 +1226,7 @@ body.mfs .pcpeek{top:4px;right:8px;width:30px;height:26px;font-size:15px}body.pc
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v279</div>
+<div id="ver">Towerize v280</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -4835,7 +4838,7 @@ function ui(){
  else if(S.phase==='build'||S.phase==='wave'){h='';}
  else h=(S.phase==='lost'&&S.snap&&S.rc>0?`<button class="go" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="go" data-a="results">Ver resultados</button><button data-a="reset">Jugar de nuevo</button><button data-a="menu">Menú principal</button>';
  $('ui').innerHTML=h;$('panel').classList.toggle('pempty',!h&&!S.msg);
- {/* elegir pieza: ventana centrada y grande, sin poder hacer nada más; 👁 para mirar el mapa */const pk=S.phase==='place'&&S.pi==null&&!S.tut&&!document.body.classList.contains('inmenu');if(!pk)S.ppk=0;document.body.classList.toggle('pcpick',pk&&!S.ppk);document.body.classList.toggle('pcpeek',pk&&!!S.ppk);
+ {/* elegir pieza: ventana centrada y grande, sin poder hacer nada más; 👁 para mirar el mapa */const pk=S.phase==='place'&&S.pi==null&&!S.tut&&!document.body.classList.contains('inmenu')&&!(typeof DLG!=='undefined'&&DLG.on);if(!pk)S.ppk=0;document.body.classList.toggle('pcpick',pk&&!S.ppk);document.body.classList.toggle('pcpeek',pk&&!!S.ppk);
   let pb=$('pcback');if(pk&&S.ppk&&!pb){pb=document.createElement('button');pb.id='pcback';pb.innerHTML='🧩 Volver a las piezas';document.body.appendChild(pb);pb.addEventListener('click',e=>{e.stopPropagation();S.ppk=0;ui();});}if(pb&&!(pk&&S.ppk))pb.remove();}
  {let ch=0;if(BARX.pc&&S.pi==null){BARX.pc=0;if(!HSEEN.barpc){HSEEN.barpc=1;ch=1;}}if(BARX.tw&&!S.tsel){BARX.tw=0;if(!HSEEN.bartw){HSEEN.bartw=1;ch=1;}}if(ch)try{localStorage.setItem('rt-hints',JSON.stringify(HSEEN));}catch(e){}}
  $('ui').querySelectorAll('canvas[data-i]').forEach(cn=>drawPat(cn.getContext('2d'),S.offers[+cn.dataset.i],14,0,0,1));
@@ -5846,7 +5849,7 @@ function dlgShow(){const L0=DLG.lines[DLG.i],L=L0.sys?{...L0,sp:'SISTEMA',g:0,gt
  dlgRender();if(L.input)setTimeout(()=>{const i=$('dname');if(i)i.focus();},50);}
 function dlgRender(){const el=$('dlg'),t=el.querySelector('.dtx');if(!t)return;const sh=DLG.full.slice(0,Math.floor(DLG.n)),gx=DLG.gx;if(gx&&gx.i<sh.length&&performance.now()<gx.u){t.textContent='';t.append(sh.slice(0,gx.i));const sp=document.createElement('span');sp.className='gch';sp.textContent=gx.c;t.append(sp,sh.slice(gx.i+gx.c.length));}else t.textContent=sh;const fin=DLG.n>=DLG.full.length,L=DLG.lines[DLG.i];el.querySelector('.dnx').classList.toggle('on',fin&&!L.input);}
 function dlgNext(){const L=DLG.lines[DLG.i];if(L&&L.input&&!STO.name)return;DLG.i++;if(DLG.i>=DLG.lines.length){dlgEnd();return;}dlgShow();}
-function dlgEnd(){DLG.on=false;$('dlg').classList.remove('on');$('dlg').innerHTML='';const d=DLG.done;DLG.done=null;if(d)d();}
+function dlgEnd(){DLG.on=false;$('dlg').classList.remove('on');$('dlg').innerHTML='';const d=DLG.done;DLG.done=null;if(d)d();try{if(S&&S.phase==='place')ui();}catch(e){}}
 function dlgTap(){if(!DLG.on)return;if(DLG.n<DLG.full.length){DLG.n=DLG.full.length;dlgRender();return;}dlgNext();}
 function dlgName(){const i=$('dname'),v=i&&(i.value||'').trim().slice(0,16);if(!v){if(i)i.focus();return;}STO.name=v;saveSto();dlgNext();}
 $('dlg').addEventListener('click',e=>{const b=e.target.closest('[data-dlg]');if(b){e.stopPropagation();if(b.dataset.dlg==='skip'){if(DLG.lines.some((l,i)=>i>DLG.i&&l.input)&&!STO.name){DLG.i=DLG.lines.findIndex(l=>l.input)-1;dlgNext();}else dlgEnd();}else if(b.dataset.dlg==='name')dlgName();return;}if(e.target.tagName==='INPUT')return;dlgTap();});
@@ -6071,7 +6074,7 @@ function eterGlitch(txt){const p=STO.p||0,nm=STO.name;if(p>=3)return nm?txt.repl
  if(lv>=2)w=w.map((x,i)=>i<2&&/^[A-Za-zÁÉÍÓÚáéíóúÑñ]{3,}/.test(x)&&Math.random()<.5?x.slice(0,2)+'-'+x:x);
  const ch=[...w.join(' ')],n=lv===1?1:lv;for(let k=0;k<n;k++){const i=1+Math.floor(Math.random()*(ch.length-2));if(/[a-záéíóúñ]/i.test(ch[i]))ch[i]=`<span class="eg">${G[k%3]}</span>`;}
  return ch.join('');}
-function eterSay(k,force){if(!OPT.eter||!S||S.tut||PREVIEWING||RL.open||(LB&&LB.open)||document.body.classList.contains('inmenu'))return false;
+function eterSay(k,force){if(!OPT.eter||!S||S.tut||PREVIEWING||RL.open||(LB&&LB.open)||document.body.classList.contains('inmenu')||document.body.classList.contains('pcpick')||(typeof DLG!=='undefined'&&DLG.on))return false;
  const D=ETERL[k];if(!D)return false;const now=performance.now();
  if(now-ETER.t<(D.p>=1?8000:40000))return false;if(!force&&Math.random()>D.p)return false;
  const opts=D.l.filter(x=>x!==ETER.last),txt=(opts.length?opts:D.l)[Math.floor(Math.random()*(opts.length||D.l.length))];
@@ -6083,6 +6086,7 @@ function eterPos(){const el=ETER.el;if(!el||!el.classList.contains('on')||!S||!S
 // el vigilante: compara con lo que vio la última vez
 setInterval(()=>{try{
  if(!S||!S.hero||PREVIEWING||document.body.classList.contains('inmenu')||S.phase==='won'||S.phase==='lost'){ETER.prev=null;if(ETER.el)ETER.el.classList.remove('on');return;}
+ if(document.body.classList.contains('pcpick')&&ETER.el)ETER.el.classList.remove('on');
  eterPos();
  const E=S.eter=S.eter||{},P=ETER.prev,bosses=S.enemies?S.enemies.filter(e=>e.hp>0&&isBoss(e)).length:0,hhp=S.hero.s?S.hero.s.hp:1,nv4=S.list?S.list.some(t=>t.lvl>=4&&!TW[t.type].uniq):false;
  const cur={ph:S.phase,hp:S.hp,round:S.round,bosses,hhp,nv4};ETER.prev=cur;if(!P||P.round!==cur.round&&P.ph!=='wave')return;
