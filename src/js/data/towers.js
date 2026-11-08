@@ -3,7 +3,7 @@ const BF={
 rng:{n:'Alcance',l:'A',col:'#4cc9a0',rg:1.35,t:'<span class="cg">+35% rango</span>'},
 pow:{n:'Potencia',l:'P',col:'#e0605a',d:1.5,r:1/1.5,t:'<span class="cd">+50% daño</span>, <span class="cr">+50% enfriamiento</span>'},
 spd:{n:'Frenesí',l:'R',col:'#a15cff',d:.75,r:1/.75,t:'<span class="cr">−25% enfriamiento</span>, <span class="cd">−25% daño</span>'},
-gold:{n:'Codicia',l:'$',col:'#f0b429',gold:.75,t:'<span class="gd">+75% de oro</span> por baja'},
+gold:{n:'Codicia',l:'$',col:'#f0b429',gold:.5,t:'<span class="gd">+50% de oro</span> por baja'},
 aoe:{n:'Expansión',l:'E',col:'#ff9a3c',ar:1.4,t:'<span class="ca">+40% área de efecto</span>',note:'Solo tiene efecto en torres que hacen daño en área.'}};
 const BK=Object.keys(BF);
 // Super casillas: mismas casillas con los bonus x2 (clave = base+'+'). Probabilidad base 20%, +SUPUP cada vez que sale una normal, se reinicia al salir una super.
@@ -11,7 +11,7 @@ const SUP0=.2,SUPUP=.05;
 const BFSUP={rng:{rg:1.7,t:'<span class="cg">+70% rango</span>'},
  pow:{d:2,r:1/2,t:'<span class="cd">+100% daño</span>, <span class="cr">+100% enfriamiento</span>'},
  spd:{d:.5,r:2,t:'<span class="cr">−50% enfriamiento</span>, <span class="cd">−50% daño</span>'},
- gold:{gold:1.5,t:'<span class="gd">+150% de oro</span> por baja'},aoe:{ar:1.8,t:'<span class="ca">+80% área de efecto</span>'}};
+ gold:{gold:1,t:'<span class="gd">+100% de oro</span> por baja'},aoe:{ar:1.8,t:'<span class="ca">+80% área de efecto</span>'}};
 for(const k of BK)BF[k+'+']={...BF[k],...BFSUP[k],sup:1,base:k};
 const bkey=k=>BF[k].base||k,bname=k=>BF[k].n+(BF[k].sup?' <span class="stg">★</span>':'');
 function rollBuff(){const k=BK[Math.floor(Math.random()*BK.length)];

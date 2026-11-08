@@ -253,6 +253,7 @@ function resolve(el){
  const d=el.closest('[data-tip]');if(!d)return null;
  const[kind,id]=d.dataset.tip.split(':'),r=d.getBoundingClientRect();
  if(kind==='nv'){const n=parseInt(id),m=/m$/.test(id);return{key:'nv:'+id,html:()=>`<div class="ttl"><b>Nv ${n}</b>${n>=4?' · especialización':''}</div><small style="margin:0">${m?'Con todas sus habilidades al máximo.':n>=4?'Tres galones dorados y estrella; la estrella se dora con todas sus habilidades al máximo.':'Un galón por nivel.'}</small>`,rect:rr(r),dom:1};}
+ if(kind==='emap'){if(!ET[id])return null;const ok=seen('en',id);return{key:'emap:'+id+(ok?'':'?'),html:()=>ok?enemyInfo(id):'<div class="ttl"><b>???</b></div><small style="margin:0">Aún no te has cruzado con este enemigo. Cuando lo veas en el camino, aquí saldrán sus estadísticas.</small>',rect:rr(r),dom:1};}
  if(kind==='shop')return{key:'shop:'+id,html:()=>shopInfo(id),rect:rr(r),dom:1};
  if(kind==='relic')return{key:'relic:'+id,html:()=>relicInfo(id),rect:rr(r),dom:1};
  if(kind==='habp'){const[hi,hk]=id.split('.'),A=HAB[hi]&&HAB[hi][hk];return A?{key:'habp:'+id,html:()=>`<div class="ttl"><b>${A.ic} ${A.n}</b> · ${hk==='b'?'Activa básica · desde el inicio':hk==='u'?'Definitiva · Nv 10':'Pasiva · Nv '+hk.slice(1)}</div><small style="margin:0">${A.t()}</small>`+(hk==='b'||hk==='u'?R('ccl','Enfriamiento',(hk==='u'?HUCD:HBCD)+' s'):'')+((HDUR[hi]||{})[hk]?R('cr','Duración',HDUR[hi][hk]):''),rect:rr(r),dom:1}:null;}

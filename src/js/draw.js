@@ -21,9 +21,10 @@ function draw(){
   for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){if(S.blocks[bx+','+by])continue;
    if(sl.has(bx+','+by))g.strokeRect(bx*P*BCS+lw(2),by*P*BCS+lw(2),P*BCS-lw(4),P*BCS-lw(4));}
   g.setLineDash([]);}
+ const cob=pathSkin()==='cob';
  for(const key in S.blocks){const[bx,by]=key.split(',').map(Number);
   for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;
-   const cv0=S.cc[gy][gx];g.fillStyle=cv0===2?'#a8854a':'#2c3a2f';g.fillRect(gx*BCS,gy*BCS,BCS,BCS);if(cv0===3&&S.obs)drawObs(g,S.obs[gx+','+gy]||'#',gx*BCS,gy*BCS,BCS);else if(cv0===1)drawSolar(g,gx*BCS,gy*BCS,BCS);
+   const cv0=S.cc[gy][gx];g.fillStyle=cv0===2?'#a8854a':'#2c3a2f';g.fillRect(gx*BCS,gy*BCS,BCS,BCS);if(cv0===2&&cob)drawCob(g,gx,gy,BCS);if(cv0===3&&S.obs)drawObs(g,S.obs[gx+','+gy]||'#',gx*BCS,gy*BCS,BCS);else if(cv0===1)drawSolar(g,gx*BCS,gy*BCS,BCS);
    const bk=S.buff[gy*K][gx*K];if(bk)mark(g,bk,gx*BCS,gy*BCS,BCS);}}
  for(const key in S.evts||{}){if(S.blocks[key])continue;const[bx,by]=key.split(',').map(Number),cx=(bx*P+P/2)*BCS,cy=(by*P+P/2)*BCS;
   g.fillStyle='rgba(160,120,255,.14)';g.beginPath();g.arc(cx,cy,BCS*2.2,0,7);g.fill();g.fillStyle='#5a3f9e';g.strokeStyle='#c9b8ff';g.lineWidth=lw(2.5);g.beginPath();g.arc(cx,cy,BCS*1.05,0,7);g.fill();g.stroke();
@@ -77,13 +78,17 @@ function draw(){
  for(const p of S.pools){g.fillStyle=(p.el==='bleed'?'rgba(224,72,90,':p.el==='fire'?'rgba(255,120,40,':'rgba(123,211,74,')+Math.min(.55,p.t/2)+')';g.beginPath();g.arc(p.x*CS+CS/2,p.y*CS+CS/2,p.r*CS,0,7);g.fill();}
  g.strokeStyle='rgba(192,57,74,.55)';g.lineWidth=lw(2);
  for(const e of S.ends){g.beginPath();g.arc(e.x*CS+CS/2,e.y*CS+CS/2,CS*.9,0,7);g.stroke();}
+ drawShip(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
  drawCore(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
  for(const t of S.list)if(t.fl&&S.phase==='wave')drawFlame(g,t,x=>x*CS+CS/2,y=>y*CS+CS/2,CS);
+ const mst=fxOn('crown')?masterTw():null;
  for(const t of S.list){const T=TW[t.type];
-  const X=tinfo(t);g.fillStyle=X.col;g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,BCS*.44,0,7);g.fill();
+  const fr=t.hero||t.summ?'none':tfrSkin(),mt=t===mst;if(mt)drawHalo(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);if(fr!=='none')drawTFr(g,t,t.x*CS+CS/2,t.y*CS+CS/2,BCS,fr);
+  const X=tinfo(t);g.fillStyle=X.col;g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,BCS*(fr!=='none'?.4:.44),0,7);g.fill();
   g.fillStyle='#14161c';icDraw(g,twIcO(X),t.x*CS+CS/2,t.y*CS+CS/2+1,BCS*.7);
   if(t.flash){g.strokeStyle='#fff';g.lineWidth=lw(3);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.flash.x*CS+CS/2,t.flash.y*CS+CS/2);g.stroke();}
   /* galones de nivel en la esquina superior derecha: uno por nivel (Nv 1-3); Nv 4, tres dorados y estrella; con todo al máximo, estrella dorada */
+  if(mt)drawCrown(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);
   if(!T.uniq)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
   if(S.wish&&S.wish.some(w=>w.id===t.id)){g.font=Math.round(BCS*.34)+'px sans-serif';g.fillText('🔖',t.x*CS+CS/2-BCS*.36,t.y*CS+CS/2-BCS*.34);}
   if(t===S.selT){g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.strokeRect((t.x-1)*CS+lw(1),(t.y-1)*CS+lw(1),BCS-lw(2),BCS-lw(2));}

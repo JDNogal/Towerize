@@ -165,7 +165,7 @@ cv.addEventListener('click',e=>{
  if(S.aim==='harpoon'){if(inb(c.x,c.y))castHarpoon(c);return;}
  if(S.aim==='faroz'){const f=S.list.find(o=>o.id===S.flzSel.id);if(f&&inb(c.x,c.y)){faroZones(f);f.lz[S.flzSel.i]={x:c.x,y:c.y};f.lzcd=f.lzcd||[0,0];f.lzcd[S.flzSel.i]=S.phase==='wave'?FCD[(f.lvl||1)-1]:0;try{sfx('ui');}catch(er){}}S.aim=null;S.msg='';renderRelics();ui();return;}
  if(S.aim==='pigs'){if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2){for(const t of pigHouses())if(t&&t.pigT)setFlag(t,c);S.aim=null;S.msg='';try{sfx('ui');}catch(e){}}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
- if(S.aim==='hero'){const H=S.hero;if(H&&heroAt(c)){S.aim=null;S.msg='';renderRelics();ui();return;}if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);S.aim=null;S.msg='';heroSay(fr,c);}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
+ if(S.aim==='hero'){const H=S.hero;if(H&&heroAt(c)){S.aim=null;S.msg='';renderRelics();ui();return;}if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);if(S.st)S.st.hmv=1;S.aim=null;S.msg='';heroSay(fr,c);}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(!S.aim&&heroAt(c)&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')){bmClose();S.selT=null;try{tmClose();}catch(er){}clickA('[data-a="hero"]');return;}
  if(S.aim==='barricade'){const bp=barrPick(c.x,c.y);if(bp){S.barr.push({t:5,...bp});const st=S.rs.barricade;setCD('barricade');st.t=5;S.aim=null;S.msg='';}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(S.aim==='uplace'){uPlaceAt(c);return;}
@@ -306,6 +306,8 @@ function act(e){
  else if(a==='opt'){const o=OPTS[+b.dataset.i];OPT[o.key]=!OPT[o.key];saveOpt();if(o.key.startsWith('u_'))applyUnl();renderOpts();}
  else if(a==='cspal'){OPT.pal=b.dataset.v;saveOpt();applyPal();renderOpts();}
  else if(a==='cscore'){OPT.core=b.dataset.v;saveOpt();renderOpts();}
+ else if(a==='csex'){OPT['cs_'+b.dataset.k]=b.dataset.v;saveOpt();renderOpts();}
+ else if(a==='csfx'){OPT.fxoff=OPT.fxoff||{};OPT.fxoff[b.dataset.v]=!OPT.fxoff[b.dataset.v];saveOpt();renderOpts();}
  else if(a==='csdec'){OPT.decoff=OPT.decoff||{};OPT.decoff[b.dataset.v]=!OPT.decoff[b.dataset.v];saveOpt();renderOpts();}
  else if(a==='nuok'){$('menu').classList.remove('setup');lbBack();}
  else if(a==='nusel'){if(LB.msg){LB.msg.sel=+b.dataset.v;lbRender();}}

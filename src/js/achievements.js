@@ -55,7 +55,12 @@ Object.assign(ACH,{
  party:{c:'ev',n:'El grupo del héroe',d:'Sube la Sede del Gremio a Nv 4 y gana sin que caiga ningún aventurero después.'},
  roma:{c:'mp',n:'Todos los caminos llevan a Roma',d:'Haz que un camino salga de tu base por un lado y que su portal acabe en el lado opuesto del mapa.',rl:'square'},
  treasure:{c:'mp',n:'Cazatesoros',d:'Abre 3 cofres antes de la ronda 7.'},
- nobuild:{c:'vet',n:'Sin obras',d:'Gana sin construir ninguna torre desde el menú de torres: solo con tu héroe, torres de evento e invocaciones.'}});
+ onepath:{c:'vet',n:'Un solo camino',d:'Gana una partida de 20 rondas o más sin colocar ninguna Bifurcación ni ningún Cruce.'},
+ austere:{c:'vet',n:'Austeridad',d:'Gana sin pagar ninguna casilla especial: solo piezas gratis.'},
+ master:{c:'vet',n:'Torre maestra',d:'Gana con una sola torre que haga al menos el 60% del daño total de la partida.'},
+ rear:{c:'vet',n:'Retaguardia',d:'Gana una partida de 20 rondas o más sin mover a tu héroe del núcleo.'},
+ clean:{c:'vet',n:'Ni un rasguño',d:'Gana una partida de 20 rondas o más sin que ningún enemigo llegue a tu núcleo.'},
+ nonet:{c:'vet',n:'Sin red',d:'Gana una partida de 30 rondas sin usar ningún reintento.'}});
 // ---- progreso de logros: mejor marca histórica (barra) y estado de la partida actual ----
 const inRun=()=>typeof S!=='undefined'&&S&&S.round>=1&&(S.hero||S.tut)&&S.phase!=='won'&&S.phase!=='lost'&&!document.body.classList.contains('inmenu');
 function recBest(id,v){if(typeof S==='undefined'||!S||S.pvE)return;S.gbest=S.gbest||{};if(v>(S.gbest[id]||0))S.gbest[id]=v;if(v>(ACHBEST[id]||0)){ACHBEST[id]=v;try{localStorage.setItem('rt-achbest',JSON.stringify(ACHBEST));}catch(e){}}}
@@ -68,7 +73,12 @@ function achState(id){const H=S.hero,B=S.built||[];const ok=t=>['ok','✓ En cur
   case 'tut_e':return S.tut?(TUTR>0||S.hpEn>0?ko():ok()):['nt','Solo en el tutorial completo'];
   case 'perfect':return S.hpEn>0?ko('un enemigo golpeó el núcleo'):ok('vida '+S.hp+', debes acabar con 1');
   case 'minimal':return H&&B.some(k=>!(HEROES[H.id].deck||[]).includes(k))?ko('construiste una torre fuera del mazo inicial'):ok();
-  case 'nobuild':return B.length?ko('has construido una torre'):ok();
+  case 'onepath':return ROUNDS<20?['nt','Solo en partidas de 20 rondas o más']:S.st&&S.st.fork?ko('has colocado una Bifurcación o un Cruce'):ok();
+  case 'austere':return S.st&&S.st.paid?ko('has pagado una casilla especial'):ok();
+  case 'master':return win('una torre con el 60% del daño');
+  case 'rear':return ROUNDS<20?['nt','Solo en partidas de 20 rondas o más']:S.st&&S.st.hmv?ko('has movido a tu héroe'):ok();
+  case 'clean':return ROUNDS<20?['nt','Solo en partidas de 20 rondas o más']:S.st&&S.st.lkN?ko('un enemigo ha llegado al núcleo'):ok();
+  case 'nonet':return ROUNDS<30?['nt','Solo en partidas de 30 rondas']:S.st&&S.st.retries?ko('has usado un reintento'):ok();
   case 'collector':{const bc=S.bcnt||{},tot=Object.values(bc).reduce((a,v)=>a+v,0);return ROUNDS<15?ko('la partida dura menos de 15 rondas'):Object.values(bc).some(v=>v>1)?ko('has construido dos torres del mismo tipo'):tot>7?ko('has construido más de 7 torres'):ok(tot+' de 7 tipos distintos; se comprueba al ganar');}
   case 'close':return win('1 de vida por golpes y el jefe final a 2 casillas o menos');
   case 'noact':return S.usedAct?ko('usaste una activa'):ok();
@@ -118,7 +128,8 @@ function achWin(){roundUnlock();const H=S.hero,B=S.built||[],nm=S.list.filter(t=
  if(S.hp===1&&!(S.hpEn>0))achieve('perfect');
  if(S.hp===1&&S.hpEn>0&&S.lastBossD!=null&&S.lastBossD<=2*K+1)achieve('close');
  if(H&&B.length&&B.every(k=>(HEROES[H.id].deck||[]).includes(k)))achieve('minimal');
- if(!B.length)achieve('nobuild');
+ {const st=S.st||{};if(ROUNDS>=20&&!st.fork)achieve('onepath');if(!st.paid)achieve('austere');if(ROUNDS>=20&&!st.hmv)achieve('rear');if(ROUNDS>=20&&!st.lkN)achieve('clean');if(ROUNDS>=30&&!st.retries)achieve('nonet');
+  const all=(st.all||[]).concat(S.hero?[S.hero.pt]:[]),tot=all.reduce((a,t)=>a+(t.dmgT||0),0);if(tot>0&&all.some(t=>!t.hero&&(t.dmgT||0)>=.6*tot))achieve('master');}
  if(ROUNDS>=15&&nm.length===7&&new Set(nm.map(t=>t.type)).size===7&&!Object.values(S.bcnt||{}).some(v=>v>1))achieve('collector');
  if(!S.usedAct)achieve('noact');
  if(!S.unitDied)achieve('untouch');
