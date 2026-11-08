@@ -94,4 +94,4 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 /* botón de volver a la portada */
 #comp.narrow .lbribs{display:none}
 /* el libro deja sitio a las cintas de la derecha: si la ventana es estrecha, el libro se encoge en vez de cortarse */
-#comp.bkm:not(.narrow) .bkw{width:min(1080px,calc(100vw - 190px));margin-right:72px}
+#comp.bkm:not(.narrow) .bkw{width:min(1080px,calc(100vw - 136px));margin-right:72px}
