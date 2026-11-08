@@ -117,7 +117,7 @@ function compParts(){
   el.querySelectorAll('canvas[data-pi]').forEach(cn=>drawPat(cn.getContext('2d'),(()=>{const P0=PIECES[+cn.dataset.pi],o={n:P0.n,p:P0.p,b:[]};solarize(o,(CP.pcv||{})[+cn.dataset.pi]||0,1);return o;})(),24,0,0,1));
   el.querySelectorAll('canvas[data-bpi]').forEach(cn=>{const P0=PIECES[+cn.dataset.bpi];if(!seen('pc',P0.n))return;const o={n:P0.n,p:P0.p,b:[]};solarize(o,0,1);drawPat(cn.getContext('2d'),o,6.2,0,0,1);});
   if(CP.hl){const hl=CP.hl;setTimeout(()=>{const b=el.querySelector(`.bti[data-v="${hl}"]`);if(b){b.scrollIntoView({block:'center'});b.classList.add('bkglow');}},30);setTimeout(()=>{if(CP.hl===hl){CP.hl=null;const c=el.querySelector('.bkhl');if(c)c.classList.remove('bkhl');}},1600);}};
- return {marks,left,right,flip,pvm,after,key:t,footL:pv&&nar?pv.back:'',footR:pv&&!nar?pv.back:''};
+ return {marks,left,right,flip,pvm,after,key:t==='lg'?'lg|'+CP.af:t,footL:pv&&nar?pv.back:'',footR:pv&&!nar?pv.back:''};
 }
 function renderComp(){if(typeof lbRender==='function')lbRender();}
 
