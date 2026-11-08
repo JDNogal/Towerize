@@ -6,7 +6,9 @@
   "04_movil_partida.css",
   "05_paletas.css",
   "06_libro.css",
-  "07_bocadillo.css"
+  "07_bocadillo.css",
+  "08_cuero.css",
+  "09_pergamino.css"
  ],
  "js": [
   "00_config.js",

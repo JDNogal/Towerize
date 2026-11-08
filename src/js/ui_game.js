@@ -202,6 +202,8 @@ function act(e){
  else if(a==='pretry'){closePause(true);retryWave();}
  else if(a==='lbarea'){const v=b.dataset.v;if(v==='cp'&&!compOk()){lockToast('Compendio bloqueado','curious');return;}PMU.ask=0;lbOpen(v);}
  else if(a==='lbx')lbBack();
+ else if(a==='lbprev')lbStep(-1);
+ else if(a==='lbnext')lbStep(1);
  else if(a==='lbcont')lbClose(true);
  else if(a==='stab'){STW.tab=b.dataset.v;CP.pageR=false;lbRender();}
  else if(a==='lbhp'){LB.hp=b.dataset.v;LB.note='';CP.pageR=false;lbRender();}
@@ -246,7 +248,7 @@ function act(e){
  else if(a==='sname'){const v=($('cname').value||'').trim().slice(0,16);if(v){STO.name=v;saveSto();toast('ÉTER te llamará <b>'+escH(v)+'</b>.');}renderOpts();}
  else if(a==='preset'){if(!OP.rst){OP.rst=1;renderOpts();return;}for(const k of['rt-alks','rt-story','rt-ach','rt-seen','rt-hlv','rt-evmem','rt-rev','rt-runl','rt-rounds','rt-tutdone','rt-tutchoice','rt-qdone','rt-hints','rt-lasthero','rt-achpin','rt-achbest','rt-cur','rt-hwin','rt-newu','rt-ruse'])try{localStorage.removeItem(k);}catch(e){}
   // también lo que es progreso dentro de las opciones: desbloqueos y personalización
-  for(const k of Object.keys(OPT))if(k.startsWith('u_'))OPT[k]=false;OPT.pal='amb';OPT.core='base';OPT.decoff={};saveOpt();location.reload();}
+  for(const k of Object.keys(OPT))if(k.startsWith('u_'))OPT[k]=false;OPT.pal='perg';OPT.core='base';OPT.decoff={};saveOpt();location.reload();}
  else if(a==='opt'){const o=OPTS[+b.dataset.i];OPT[o.key]=!OPT[o.key];saveOpt();if(o.key.startsWith('u_'))applyUnl();renderOpts();}
  else if(a==='cspal'){OPT.pal=b.dataset.v;saveOpt();applyPal();renderOpts();}
  else if(a==='cscore'){OPT.core=b.dataset.v;saveOpt();renderOpts();}
@@ -284,13 +286,15 @@ function act(e){
  else if(a==='hconf'){if(b.dataset.id){RL.hconf=b.dataset.id;renderHeroPick();}}
  else if(a==='hcancel'){RL.hconf=null;renderHeroPick();}
  else if(a==='relic'){if(RL.fromChest){(S.chestRel=S.chestRel||[]).push(b.dataset.id);RL.fromChest=false;}S.relics.push(b.dataset.id);S.rs[b.dataset.id]={cd:0,t:0};relicHints(b.dataset.id);RL.open=false;$('relic').classList.remove('open');renderRelics();ui();}
- else if(a==='reset'){init();$('endscr').classList.remove('open');}
+ else if(a==='reset'){LB.end=null;lbClose(false,true);init();}
  else if(a==='focusok'){closeFocus();ui();}
  else if(a==='evopt')chooseEvent(+b.dataset.i);
  else if(a==='evok')closeEvent();
  else if(a==='gup')guildUp(S.list.find(o=>o.id===+b.dataset.id));
  else if(a==='newgame'){const go=()=>{if(!tutChosen())renderTutPick();else renderEra();};if(!STO.intro){STO.intro=1;saveSto();playDialog(STORY.intro,go);}else go();}
- else if(a==='erago'){renderSetup();$('menu').classList.add('setup');}
+ else if(a==='erago')renderSetup();
+ else if(a==='lbprep'){LB.step=b.dataset.v;lbRender();}
+ else if(a==='lbcover'){closeQuick();lbOpen(null,true);}
  else if(a==='help')renderHelp();
  else if(a==='credits')renderCredits();
  else if(a==='ulv'){CP.ulv=CP.ulv||{};CP.ulv[b.dataset.k]=+b.dataset.v;if(CP.prev===b.dataset.k)newPrev(CP.prev,CP.pen);const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}
@@ -307,14 +311,14 @@ function act(e){
  else if(a==='tutskip'){try{localStorage.setItem('rt-tutchoice','skip');}catch(e){}OPT.hints=false;saveOpt();renderSkip();}
  else if(a==='skipok')renderEra();
  else if(a==='htog'){OPT.hints=!OPT.hints;saveOpt();lbRender();}
- else if(a==='mback'){closeQuick();$('menu').classList.remove('setup');}
+ else if(a==='mback'){closeQuick();$('menu').classList.remove('setup');if(document.body.classList.contains('inmenu'))lbOpen(null,true);}
  else if(a==='rnd')setRounds(MR+ +b.dataset.v);
  else if(a==='menu')showMenu();
  else if(a==='menuask'){if(S.mask){S.mask=0;showMenu();}else{S.mask=1;S.msg='Pulsa ⏻ otra vez para abandonar la partida.';ui();setTimeout(()=>{if(S.mask){S.mask=0;if(S.msg.startsWith('Pulsa ⏻'))S.msg='';ui();}},3000);}}
  else if(a==='retry'){if(b.dataset.now||S.rask){S.rask=0;retryWave();}else if(S.phase==='wave'&&S.snap&&S.rc>0){S.rask=1;S.msg='Pulsa ↺ otra vez para reintentar la oleada (gasta 1 carga).';ui();setTimeout(()=>{if(S.rask){S.rask=0;if(S.msg.startsWith('Pulsa ↺'))S.msg='';ui();}},3000);}}
- else if(a==='results')$('endscr').classList.add('open');
- else if(a==='hideend')$('endscr').classList.remove('open');
+ else if(a==='results'){if(LB.end)lbOpen('end');}
+ else if(a==='hideend'){if(LB.open&&LB.area==='end')lbClose(true);}
 }
-$('ui').addEventListener('click',act);$('apan').addEventListener('click',act);$('mtl').addEventListener('click',act);$('mbl').addEventListener('click',act);$('mbr').addEventListener('click',act);$('relic').addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.k&&d.open)curSeen(d.dataset.k);if(d.classList&&d.classList.contains('hpvd')){RL.hpvo=d.open;fitHero();}if(d.classList&&d.classList.contains('hdet')&&d.dataset.id){RL.dman=RL.dman||{};RL.dman[d.dataset.id]=d.open;}if(d.classList&&d.classList.contains('rdet')&&d.dataset.id){RL.rman=RL.rman||{};RL.rman[d.dataset.id]=d.open;}},true);$('menu').addEventListener('click',act);$('focus').addEventListener('click',act);$('menu').addEventListener('input',e=>{if(e.target.id==='rrange')setRounds(+e.target.value);});$('endscr').addEventListener('click',act);$('ctl').addEventListener('click',act);$('opt').addEventListener('click',act);$('comp').addEventListener('click',act);document.addEventListener('change',e=>{const el=e.target;if(el.classList&&el.classList.contains('tsel')){const t=S.list.find(o=>o.id===+el.dataset.id);if(t&&!S.aim){t.mode=el.value;t.tgt=null;refreshPrim();ui();}}});$('comp').addEventListener('change',e=>{if(e.target.id==='pvs'){CP.spd=+e.target.value;if(PV&&PV.S)PV.S.espd=CP.spd;}if(e.target.id==='pve'){CP.pen=e.target.value;newPrev(CP.prev,CP.pen);}if(e.target.id==='pvs2'){CP.spd=+e.target.value;if(PE&&PE.S)PE.S.espd=CP.spd;}if(e.target.id==='pve2'){CP.eprev=e.target.value;newEPrev(CP.eprev,CP.ph||'hero:reinhart');renderComp();}if(e.target.id==='pvh'){CP.ph=e.target.value;newEPrev(CP.eprev,CP.ph);}if(e.target.id==='pve3'){CP.hen=e.target.value;newHPrev(CP.hprev,CP.hen,CP.hlv);}if(e.target.id==='pvl'){CP.hlv=+e.target.value;newHPrev(CP.hprev,CP.hen,CP.hlv);}if(e.target.id==='pvs3'){CP.spd=+e.target.value;if(PHV&&PHV.S)PHV.S.espd=CP.spd;}});$('relic').addEventListener('click',act);$('relics').addEventListener('click',act);$('tip').addEventListener('click',act);$('side').addEventListener('click',act);$('opts').addEventListener('click',act);
+$('ui').addEventListener('click',act);$('apan').addEventListener('click',act);$('mtl').addEventListener('click',act);$('mbl').addEventListener('click',act);$('mbr').addEventListener('click',act);$('relic').addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.k&&d.open)curSeen(d.dataset.k);if(d.classList&&d.classList.contains('hpvd')){RL.hpvo=d.open;fitHero();}if(d.classList&&d.classList.contains('hdet')&&d.dataset.id){RL.dman=RL.dman||{};RL.dman[d.dataset.id]=d.open;}if(d.classList&&d.classList.contains('rdet')&&d.dataset.id){RL.rman=RL.rman||{};RL.rman[d.dataset.id]=d.open;}},true);$('menu').addEventListener('click',act);$('focus').addEventListener('click',act);$('menu').addEventListener('input',e=>{if(e.target.id==='rrange')setRounds(+e.target.value);});$('comp').addEventListener('input',e=>{if(e.target.id==='rrange')setRounds(+e.target.value);});$('endscr').addEventListener('click',act);$('ctl').addEventListener('click',act);$('opt').addEventListener('click',act);$('comp').addEventListener('click',act);document.addEventListener('change',e=>{const el=e.target;if(el.classList&&el.classList.contains('tsel')){const t=S.list.find(o=>o.id===+el.dataset.id);if(t&&!S.aim){t.mode=el.value;t.tgt=null;refreshPrim();ui();}}});$('comp').addEventListener('change',e=>{if(e.target.id==='pvs'){CP.spd=+e.target.value;if(PV&&PV.S)PV.S.espd=CP.spd;}if(e.target.id==='pve'){CP.pen=e.target.value;newPrev(CP.prev,CP.pen);}if(e.target.id==='pvs2'){CP.spd=+e.target.value;if(PE&&PE.S)PE.S.espd=CP.spd;}if(e.target.id==='pve2'){CP.eprev=e.target.value;newEPrev(CP.eprev,CP.ph||'hero:reinhart');renderComp();}if(e.target.id==='pvh'){CP.ph=e.target.value;newEPrev(CP.eprev,CP.ph);}if(e.target.id==='pve3'){CP.hen=e.target.value;newHPrev(CP.hprev,CP.hen,CP.hlv);}if(e.target.id==='pvl'){CP.hlv=+e.target.value;newHPrev(CP.hprev,CP.hen,CP.hlv);}if(e.target.id==='pvs3'){CP.spd=+e.target.value;if(PHV&&PHV.S)PHV.S.espd=CP.spd;}});$('relic').addEventListener('click',act);$('relics').addEventListener('click',act);$('tip').addEventListener('click',act);$('side').addEventListener('click',act);$('opts').addEventListener('click',act);
 for(const _el of [$('opts'),$('comp')])_el.addEventListener('input',e=>{if(e.target.dataset.o===undefined)return;const o=OPTS[+e.target.dataset.o];OPT[o.key]=+e.target.value;saveOpt();e.target.closest('label').querySelector('output').textContent=o.fmt(OPT[o.key]);});
 

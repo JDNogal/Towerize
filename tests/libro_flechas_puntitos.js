@@ -1,0 +1,15 @@
+const OUT=require('path').join(__dirname,'out');require('fs').mkdirSync(OUT,{recursive:true});
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:720}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
+await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.u_cpa=true;OPT.u_cp=true;});
+await p.evaluate(()=>{lbNew('lg');lbNew('cp');});await p.waitForTimeout(200);await p.screenshot({path:OUT+'/b3_cover.png'});
+console.log('puntitos portada',await p.evaluate(()=>[...document.querySelectorAll('.bkrib.new')].map(b=>b.dataset.v)));
+await p.evaluate(()=>{OP.tab='jg';lbOpen('op');});await p.waitForTimeout(300);await p.screenshot({path:OUT+'/b3_op.png'});
+console.log('puntitos dentro',await p.evaluate(()=>[...document.querySelectorAll('.bkrib.new')].map(b=>b.dataset.v)));
+await p.click('#comp .bkarr.r');await p.waitForTimeout(150);console.log('flecha → pestaña',await p.evaluate(()=>OP.tab));
+await p.keyboard.press('ArrowLeft');await p.waitForTimeout(150);console.log('← → pestaña',await p.evaluate(()=>OP.tab));
+await p.evaluate(()=>{CP.tab='tw';lbOpen('cp');});await p.waitForTimeout(200);const s0=await p.evaluate(()=>CP.sel.tw);await p.click('#comp .bkarr.r');await p.waitForTimeout(150);console.log('compendio siguiente',s0,'→',await p.evaluate(()=>CP.sel.tw));
+console.log('puntito cp quitado',await p.evaluate(()=>!LB.news.cp));
+await p.evaluate(()=>lbOpen('cr'));await p.waitForTimeout(150);console.log('créditos sin flechas',await p.evaluate(()=>!document.querySelector('.bkarr')));
+await p.screenshot({path:OUT+'/b3_cp.png'});
+console.log(JSON.stringify(errs));await b.close();})();

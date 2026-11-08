@@ -1,0 +1,17 @@
+const OUT=require('path').join(__dirname,'out');require('fs').mkdirSync(OUT,{recursive:true});
+const {chromium,devices}=require('playwright');(async()=>{const b=await chromium.launch();const mob=process.argv[3]==='m';
+const ctx=await b.newContext(mob?{...devices['iPhone 13 landscape']}:{viewport:{width:1280,height:720}});const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);const sfx=mob?'m_':'';
+await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;localStorage.removeItem('rt-tutchoice');});
+await p.click('#comp [data-a="newgame"]');await p.waitForTimeout(300);console.log('learn',await p.evaluate(()=>[LB.area,LB.step]));await p.screenshot({path:OUT+'/b4_'+sfx+'learn.png'});
+await p.click('#comp [data-a="tutskip"]');await p.waitForTimeout(200);console.log('skip',await p.evaluate(()=>[LB.step,OPT.hints]));
+await p.click('#comp [data-a="skipok"]');await p.waitForTimeout(200);console.log('era',await p.evaluate(()=>LB.step));await p.screenshot({path:OUT+'/b4_'+sfx+'era.png'});
+await p.click('#comp [data-a="erago"]');await p.waitForTimeout(200);console.log('rounds',await p.evaluate(()=>[LB.step,$('rnum').textContent]));
+await p.click('#comp [data-a="rnd"][data-v="1"]');await p.waitForTimeout(100);console.log('rnd+',await p.evaluate(()=>[MR,$('rnum').textContent,rMax()]));await p.screenshot({path:OUT+'/b4_'+sfx+'rounds.png'});
+await p.click('#comp [data-a="begin"]');await p.waitForTimeout(500);console.log('hero',await p.evaluate(()=>[LB.area,LB.step,RL.hsel,document.body.classList.contains('inmenu'),S.round,S.speed,PMU.open]));await p.screenshot({path:OUT+'/b4_'+sfx+'hero.png'});
+await p.keyboard.press('e');await p.waitForTimeout(250);console.log('E → héroe',await p.evaluate(()=>RL.hsel));await p.screenshot({path:OUT+'/b4_'+sfx+'hero2.png'});
+await p.click('#comp .bkarr.r');await p.waitForTimeout(250);console.log('› → héroe',await p.evaluate(()=>RL.hsel));
+await p.keyboard.press('Escape');await p.waitForTimeout(100);console.log('Esc no cierra prep',await p.evaluate(()=>[LB.open,LB.area]));
+await p.evaluate(()=>{RL.hsel='sylvana';renderHeroPick();});await p.waitForTimeout(200);await p.click('#comp [data-a="pickhero"]');await p.waitForTimeout(400);
+console.log('elegido',await p.evaluate(()=>[LB.open,S.hero&&S.hero.id,S.speed,PMU.open,RL.open]));await p.screenshot({path:OUT+'/b4_'+sfx+'game.png'});
+console.log(JSON.stringify(errs));await b.close();})();

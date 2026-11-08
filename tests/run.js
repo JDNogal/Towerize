@@ -27,6 +27,11 @@ const T=[
  ['libro_menus.js','Libro: portada, áreas, Esc, Q/E, clic fuera',['pc','m']],
  ['bocadillo.js','Bocadillo de pergamino en lugar del title del navegador'],
  ['libro_bordes.js','El libro y sus cintas caben en ventanas de varios tamaños'],
+ ['encuadernaciones.js','Las 8 encuadernaciones cargan sus colores; la inicial es Pergamino'],
+ ['libro_flechas_puntitos.js','Flechas de pasar página y puntito de novedad en las cintas'],
+ ['preparacion_partida.js','Nueva partida en el libro: aprender, era, duración y héroe',['pc','m']],
+ ['libro_nucleo.js','El libro sale del núcleo y vuelve a él; menú sobre el tablero',['pc','m']],
+ ['final_partida.js','Victoria/Derrota como libro: ver mapa, logros, jugar de nuevo',['pc','m']],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);

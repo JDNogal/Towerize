@@ -25,6 +25,7 @@ addEventListener('keydown',e=>{if(KBC.on)return;if(e.target&&/INPUT|TEXTAREA/.te
  const r=mnRoot();if(!r){if(MN.on)mnClear();return;}const k=e.key.toLowerCase();
  // selección de héroe: izquierda/derecha cambian de héroe (ya lo hacen las flechas)
  if(RL.open&&RL.hpick&&(kbIs('nl',k)||kbIs('nr',k))){if(k!=='arrowleft'&&k!=='arrowright'){heroNav(kbIs('nl',k)?-1:1);e.preventDefault();}return;}
+ if(r.id==='comp'&&!MN.on&&(k==='arrowleft'||k==='arrowright')&&typeof LB!=='undefined'&&LB.open&&!LB.cover&&!(e.target&&/INPUT|SELECT/.test(e.target.tagName))){lbStep(k==='arrowright'?1:-1);e.preventDefault();e.stopImmediatePropagation();return;}
  if(r.id==='comp'&&(k==='q'||k==='e')){const ms=[...r.querySelectorAll('.bkmk')],i=ms.findIndex(m=>m.classList.contains('on'));const n=ms[(i+(k==='e'?1:-1)+ms.length)%ms.length];if(n){mnClear();n.click();}e.preventDefault();e.stopImmediatePropagation();return;}
  const d=kbIs('nu',k)?[0,-1]:kbIs('nd',k)?[0,1]:kbIs('nl',k)?[-1,0]:kbIs('nr',k)?[1,0]:null;
  if(d){if(e.target&&e.target.tagName==='SELECT'&&(k==='arrowup'||k==='arrowdown'))return;e.preventDefault();e.stopImmediatePropagation();mnMove(r,d[0],d[1]);return;}

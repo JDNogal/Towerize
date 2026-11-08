@@ -1,0 +1,40 @@
+/* ===== CUERO: lo que está siempre sobre el mapa va en cuero con remate, como la tapa del libro ===== */
+/* botón de cuero (base) */
+.mctl button,#zm button,.hpb,#relics .rl,#lupa,#fsmb{border:1px solid var(--lea2)!important;background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2))!important;color:var(--leatxt)!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 3px 8px rgba(0,0,0,.45)!important;border-radius:9px!important}
+.mctl button:hover,#zm button:hover,.hpb:hover,#relics .rl:hover{box-shadow:inset 0 0 0 1.5px var(--trim),0 3px 8px rgba(0,0,0,.45)!important}
+/* activo: el ×1 elegido brilla con el remate; la pausa se rellena con el color del botón principal */
+.mctl button.on,#zm button.on{color:#fff!important;box-shadow:inset 0 0 0 2px var(--trim),0 0 10px color-mix(in srgb,var(--trim) 55%,transparent),0 3px 8px rgba(0,0,0,.45)!important}
+#mbl button.on[data-a="spdt"],#mtl button.on[data-a="spdt"],.mctl button.on[data-v="0"]{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;box-shadow:inset 0 0 0 1px var(--lea2),0 3px 8px rgba(0,0,0,.45)!important}
+.mctl button.warn{color:#ffb0a0!important;box-shadow:inset 0 0 0 2px var(--cxl),0 3px 8px rgba(0,0,0,.45)!important}
+.mctl button.dim{opacity:.6}.mctl button:disabled{opacity:.45}
+/* tira de ronda · vida · oro */
+#stats{background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 50%,var(--lea2))!important;border:1px solid var(--lea2)!important;color:var(--leatxt);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 4px 12px rgba(0,0,0,.5)!important}
+#stats>span{position:relative}#stats>span+span::before{content:"";position:absolute;left:-13px;top:2px;bottom:2px;width:1px;background:color-mix(in srgb,var(--trim) 45%,transparent)}
+body.dsk #stats>span+span::before{left:-13px}
+#stats #sh{color:#ff9a8a!important}#stats #sg{color:#ffd56a!important}#stats #sr,#stats #stR,#stats #stC{color:var(--leatxt)}
+/* héroe y reliquias */
+.hpb.aim{box-shadow:inset 0 0 0 2px var(--gbtn),0 0 12px color-mix(in srgb,var(--gbtn) 60%,transparent),0 3px 8px rgba(0,0,0,.45)!important}
+.hpb.off{filter:grayscale(.7) brightness(.8)}
+.hpport{padding:4px!important}.hpport svg{border-radius:7px!important}
+body:not(.mfs) #mbr .hpan .hpport svg{border-radius:8px!important}
+.hpult.lock,.xpb.lock{background:repeating-linear-gradient(45deg,var(--lea) 0 6px,var(--lea2) 6px 12px)!important}
+.xpan{border-color:var(--trim);background:color-mix(in srgb,var(--lea2) 60%,transparent)}
+#relics{background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 50%,var(--lea2))!important;border:1px solid var(--lea2)!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 4px 12px rgba(0,0,0,.5)!important}
+#relics .rl{background:color-mix(in srgb,var(--lea2) 70%,transparent)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--trim) 50%,transparent)!important}
+#relics .rl.ready,#relics .rl.on{box-shadow:inset 0 0 0 2px var(--gbtn),0 0 10px color-mix(in srgb,var(--gbtn) 55%,transparent)!important}
+/* Empezar oleada = el botón dorado de la portada */
+#mbr button.go{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;border:1px solid var(--lea2)!important;border-radius:10px!important;box-shadow:0 4px 0 var(--lea2),0 6px 14px rgba(0,0,0,.45)!important;font-weight:800}
+#mbr button.go:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 96%,#fff),color-mix(in srgb,var(--gbtn) 96%,#000))!important}
+#mbr button.go.arm{background:linear-gradient(180deg,#4f9a5a,#2f6b3a)!important;color:#fff!important;border-color:#1f4a28!important}
+/* teclas dibujadas y distintivos: de papel */
+.kcap{background:var(--paper1)!important;color:var(--ink)!important;border:1px solid var(--pline3)!important;box-shadow:0 1.5px 0 var(--pline3)!important}
+.mctl .bdg{background:var(--paper1)!important;color:var(--ink)!important;border:1px solid var(--pline3)!important}
+.hcdv{color:#fff}
+/* el texto de versión, discreto sobre el mapa */
+#ver{color:rgba(243,230,200,.45)}
+/* teclas de las reliquias (⇧ + 1): las mismas teclas de papel que H y F; el «+» sin fondo */
+.kcap.kc2{background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
+.kc2 b{background:var(--paper1)!important;color:var(--ink)!important;border:1px solid var(--pline3)!important;border-bottom-width:1px!important;box-shadow:0 1.5px 0 var(--pline3)!important;min-width:17px!important;height:17px!important;font:700 10.5px/15px system-ui,sans-serif!important;border-radius:5px!important}
+.kc2 em{color:var(--leatxt)!important;text-shadow:0 1px 2px #000,0 0 3px #000}
+/* velocidad: los botones del mismo tamaño que los de zoom, para que la columna quede alineada */
+body.dsk:not(.mfs) #mbl button{min-width:35px;height:35px}

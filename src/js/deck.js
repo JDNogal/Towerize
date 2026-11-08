@@ -12,7 +12,8 @@ function renderTowerOffer(){try{(RL.towo||[]).forEach(k=>see('tw',k));}catch(e){
 function towerPick(k){if(!RL.towo||!RL.towo.includes(k))return;RL.towT=RL.towD=null;RL.towNS=0;S.deck.push(k);see('tw',k);RL.towo=null;RL.open=false;$('relic').classList.remove('open');S.msg=TW[k].n+' se añade a tu mazo.';ui();}
 function towerSkip(){const g=SKIPG[S.skips||0]||0;S.skips=(S.skips||0)+1;if(g)goldEv(g);RL.towo=null;RL.open=false;$('relic').classList.remove('open');S.msg=g?'Has saltado la oferta: +'+g+' 🪙.':'Has saltado la oferta.';ui();}
 const HMX=(()=>{const v=Object.values(HEROES);return{hp:Math.max(...v.map(d=>d.base.hp)),dp:Math.max(...v.map(d=>d.base.dmg/d.base.cd*(d.area?1.3:1))),rg:Math.max(...v.map(d=>d.base.range||.5))};})();
-function openHero(){closePrim();RL.open=true;RL.hpick=true;RL.hconf=null;let lh=null;try{lh=localStorage.getItem('rt-lasthero');}catch(e){}RL.hsel=RL.hsel&&HEROES[RL.hsel]?RL.hsel:HEROES[lh]?lh:'reinhart';RL.dman={};RL.rman={};const el=$('relic');el.classList.add('open');el.scrollTop=0;renderHeroPick();}
+let PREVIEWING=false;
+function openHero(){if(PREVIEWING)return;closePrim();RL.open=false;RL.hpick=true;RL.hconf=null;let lh=null;try{lh=localStorage.getItem('rt-lasthero');}catch(e){}RL.hsel=RL.hsel&&HEROES[RL.hsel]?RL.hsel:HEROES[lh]?lh:'reinhart';RL.dman={};RL.rman={};const ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];ids.forEach(h=>see('hr',h));LB.step='hero';lbOpen('prep');}
 {let tx=null;addEventListener('touchstart',e=>{if(RL.open&&RL.hpick&&e.target.closest&&e.target.closest('.hcar'))tx=e.touches[0].clientX;else tx=null;},{passive:true});addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>45)heroNav(dx<0?1:-1);},{passive:true});}
 function fitHero(){const el=$('relic'),pk=el&&el.querySelector('.hpk');if(!pk||!RL.hpick||el.clientHeight<200)return;const H=el.clientHeight;pk.style.minHeight=H+'px';
  // la vista previa intenta ocupar ~1/3 de la altura; si no cabe, se reduce y, como último recurso, se oculta
@@ -27,13 +28,23 @@ const HUNL={yrsa:'elem'};
 function heroLockBox(id){const D=HEROES[id],a=HUNL[id]&&ACH[HUNL[id]];return `<div class="hbox"><div class="hbt">🔒 Héroe bloqueado</div><small class="hdesc">${a?achReq(HUNL[id]):D.lockTxt}</small></div>`;}
 const HIDS=()=>S&&S.tut?['reinhart','sylvana']:Object.keys(HEROES).filter(heroVis);
 const HMOB=()=>innerWidth<=640||(TOUCH&&innerHeight<520);
-function heroNav(d){RL.hconf=null;const ids=HIDS();let k=ids.indexOf(RL.hsel);k=(k+d+ids.length)%ids.length;RL.hsel=ids[k];RL.hdir=d;renderHeroPick();}
-function renderHeroPick(){return renderHeroPickC();}
+function heroNav(d){RL.hconf=null;const ids=HIDS();let k=ids.indexOf(RL.hsel);k=(k+d+ids.length)%ids.length;RL.hsel=ids[k];RL.hdir=d;try{sfx('page');}catch(e){}renderHeroPick();}
+function renderHeroPick(){if(typeof LB!=='undefined'&&LB.open&&LB.area==='prep'){lbRender();return;}return renderHeroPickC();}
+// ficha de un héroe (texto de la página derecha); se usa en la ventana antigua y en el libro
+function heroSheet(id){const D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;
+ const bar=(l,v,c)=>`<div class="hbar"><span>${l}</span><span class="bt"><span class="bf" style="width:${Math.round(Math.min(1,v)*100)}%;background:${c}"></span></span></div>`;
+ return lk?`<div class="hnm">???</div><div class="hcl">???</div><div class="hsec">🔒 Héroe bloqueado</div><small class="hds">${HUNL[id]?achReq(HUNL[id]):D.lockTxt}</small>`:
+  `<div class="hnm">${D.n}<small>Récord: Nv ${HLV[id]||1}</small></div><div class="chips">${(D.tags||[]).filter(t=>t!=='Cuerpo a cuerpo'&&t!=='A distancia').map(t=>`<span>${t}</span>`).join('')}</div><div class="hcl">${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</div>`+
+  `<p class="hds">${D.d}</p>`+bar('Vida',b.hp/HMX.hp,'#6fe07a')+bar('Daño',b.dmg/b.cd*(D.area?1.3:1)/HMX.dp,'#e0605a')+bar('Alcance',(b.range||.5)/HMX.rg,'#5ab4ff')+
+  (HAB[id]?`<div class="hsec">Habilidades</div><div class="habs">${[['b',1],['p4',4],['p8',8],['u',10]].map(([k2,l])=>`<span data-tip="habp:${id}.${k2}">${HAB[id][k2].ic}<em>${l}</em></span>`).join('')}</div>`:'')+
+  `<div class="hsec">Reliquia inicial</div><div class="hrl"><span class="ri" style="background:${R.col}">${R.ic}</span><div><b>${R.n}</b><small><span class="cf">Pasivo:</span> ${R.pas()}</small>${R.act?`<small style="margin-top:3px"><span class="ccl">Activo:</span> ${R.act()}</small>`:''}</div></div>`+
+  (S.tut?'':`<div class="hsec">Mazo inicial</div><div class="hdk2">${(D.deck||[]).map(k=>{const T=TW[k];return `<span data-tip="shop:${k}"><i style="background:${T.col}">${T.ic}</i>${T.n}</span>`;}).join('')}</div>`)+
+  `<details><summary>+ Ver estadísticas</summary><div class="hst">${heroInfo(id,2)}</div></details>`;}
 function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];const id=RL.hsel,D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;ids.forEach(h=>see('hr',h));
  const bar=(l,v,c)=>`<div class="hbar"><span>${l}</span><span class="bt"><span class="bf" style="width:${Math.round(Math.min(1,v)*100)}%;background:${c}"></span></span></div>`;
  const roster=ids.map(h=>{const L=!!HEROES[h].lockTxt;return `<button class="rt${h===id?' on':''}${L?' lk':''}" data-a="hgo" data-id="${h}" title="${L?'???':HEROES[h].n}">${portrait(h,1,L)}${L?'<span class="lc">🔒</span>':''}</button>`;}).join('');
  const info=lk?`<div class="hnm">???</div><div class="hcl">???</div><div class="hsec">🔒 Héroe bloqueado</div><small class="hds">${HUNL[id]?achReq(HUNL[id]):D.lockTxt}</small>`:
-  `<div class="hnm">${D.n}<small>Récord: Nv ${HLV[id]||1}</small></div><div class="hcl">${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</div><div class="chips">${(D.tags||[]).filter(t=>t!=='Cuerpo a cuerpo'&&t!=='A distancia').map(t=>`<span>${t}</span>`).join('')}</div>`+
+  `<div class="hnm">${D.n}<small>Récord: Nv ${HLV[id]||1}</small></div><div class="chips">${(D.tags||[]).filter(t=>t!=='Cuerpo a cuerpo'&&t!=='A distancia').map(t=>`<span>${t}</span>`).join('')}</div><div class="hcl">${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</div>`+
   `<p class="hds">${D.d}</p>`+bar('Vida',b.hp/HMX.hp,'#6fe07a')+bar('Daño',b.dmg/b.cd*(D.area?1.3:1)/HMX.dp,'#e0605a')+bar('Alcance',(b.range||.5)/HMX.rg,'#5ab4ff')+
   (HAB[id]?`<div class="hsec">Habilidades</div><div class="habs">${[['b',1],['p4',4],['p8',8],['u',10]].map(([k2,l])=>`<span data-tip="habp:${id}.${k2}">${HAB[id][k2].ic}<em>${l}</em></span>`).join('')}</div>`:'')+
   `<div class="hsec">Reliquia inicial</div><div class="hrl"><span class="ri" style="background:${R.col}">${R.ic}</span><div><b>${R.n}</b><small><span class="cf">Pasivo:</span> ${R.pas()}</small>${R.act?`<small style="margin-top:3px"><span class="ccl">Activo:</span> ${R.act()}</small>`:''}</div></div>`+

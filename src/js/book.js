@@ -1,6 +1,6 @@
 // ======================= COMPENDIO EN FORMATO LIBRO =======================
 // pulsar en el fondo oscuro (fuera del libro y de los marcapáginas) lo cierra
-document.addEventListener('click',e=>{const c=$('comp');if(LB.open&&c&&e.target===c){if(LB.cover){if(lbInGame())lbClose(true);}else lbBack();}});
+document.addEventListener('click',e=>{const c=$('comp');if(LB.open&&c&&e.target===c&&LB.area!=='prep'){if(LB.cover){if(lbInGame())lbClose(true);}else lbBack();}});
 // marcapáginas arriba (secciones) · página izquierda: fichas en cuadritos · página derecha: detalle de lo elegido
 const CTICO={tw:'🗼',hr:'🦸',pc:'🧩',bf:'✨',rl:'💎',en:'👹',ev:'📜',lg:'🏆'};
 const bkNarrow=()=>innerWidth<760||innerHeight<430;

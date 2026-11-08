@@ -9,6 +9,7 @@ const SFXG=[
   ['ui','Botón',[{y:'bopD',v:.55,cd:.04,mx:2,pv:.04}]],
   ['uih','Pasar el ratón (menús)',[{y:'hov',v:.35,cd:.015,mx:6,pv:.05}]],
   ['uix','Cerrar / volver',[{y:'bopDx',v:.5,cd:.04,mx:2,pv:.04}]],
+  ['page','Pasar página',[{y:'pageA',v:.5,cd:.08,mx:2,pv:.06},{y:'pageB',v:.5,cd:.08,mx:2,pv:.06}]],
   ['err','Error',[{s:'ui_err',v:.5,cd:.3,mx:1}]]]],
  ['Construcción',[
   ['build','Construir',[{s:'build',v:.7,cd:.1,mx:2,pv:.06}]],
@@ -65,6 +66,8 @@ function synth(kind,t0,out,v,r){const c=SND.ctx;
  case 'bopA':bop(320,640,.09,.7);bop(640,1280,.06,.12);break;
  case 'bopB':bop(420,980,.11,.6);bop(840,1960,.07,.08,'triangle');break;
  case 'hov':tone('sine',1150,1350,0,.004,.04,.35);break;
+ case 'pageA':noise('bandpass',600,2800,.9,0,.03,.13,.55);noise('highpass',2500,6000,.7,.07,.01,.07,.2);break;
+ case 'pageB':noise('bandpass',900,2200,1.2,0,.02,.09,.45);noise('bandpass',1800,3600,.8,.05,.015,.1,.35);break;
    case 'bopD':bop(260,520,.07,.6);tone('sine',520,880,.045,.008,.08,.45);break;
  case 'bopDx':bop(880,520,.07,.5);tone('sine',520,260,.045,.008,.08,.55);break;
  case 'upArp':[523,659,784].forEach((f,i)=>tone('triangle',f,f,.04+i*.05,.01,.22,.26));break;

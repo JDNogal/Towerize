@@ -16,8 +16,10 @@ function relDmg(t,dl){
 const fi=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.'),bj=n=>fi(n)+(Math.round(n)===1?' baja':' bajas'),fT=s=>{s=Math.round(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
 function showMenu(){
  S.mask=0;closeFocus();RL.open=false;$('relic').classList.remove('open');$('endscr').classList.remove('open');
- lbClose(false);closePrim();
+ lbClose(false,true);closePrim();
  $('menu').classList.remove('setup');document.body.classList.add('inmenu');
+ // tablero nuevo de fondo, con el libro cerrado encima del núcleo
+ PREVIEWING=true;try{init();S.chests={};S.evts={};CAM.z=ZMIN;camCenter(S.core.x,S.core.y);clampCam();}catch(e){}PREVIEWING=false;
  lbOpen(null,true);
  if(NEWU.length)setTimeout(renderUnlocks,60);
 }

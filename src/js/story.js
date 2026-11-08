@@ -49,7 +49,8 @@ const STORY={
   {t:'Próxima era: tu tiempo · Próximamente'}]};
 const ERALINE=()=>STO.p>=3?['¿Listos para el salto, {N}? La Era Fantástica ya no tiene más que darnos… por ahora. Sigo calibrando las coordenadas.',0]:
  [['Núcleo dañado. Necesito los fragmentos que dejan los jefes de esta era para repararme. Gane, Piloto.',3],['Una pieza integrada. Siga así, Piloto.',2],['Solo falta una pieza. Puedo sentirlo.',1]][STO.p];
-function renderEra(){const [ln]=ERALINE(),nm=STO.name||'Piloto',done=STO.p>=3;
+function renderEra(){LB.step='era';lbOpen('prep');}
+function renderEraOld(){const [ln]=ERALINE(),nm=STO.name||'Piloto',done=STO.p>=3;
  $('msetup').innerHTML=`<div class="era"><h3>Era Fantástica</h3><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small>`+
   `<div class="eter"><b>ÉTER</b>${escH(ln.replace(/\{N\}/g,nm))}</div>${done?'<div class="eline"><span class="on">Fantástica</span><span title="Próximamente">???</span></div>':''}`+
   `<div style="display:flex;gap:10px;justify-content:center"><button class="go" data-a="erago">Continuar</button><button data-a="mback">Volver</button></div></div>`;$('menu').classList.add('setup');}
