@@ -17,6 +17,18 @@ function kctx(src){
 const STACKS={burn:1,poison:1,bleed:1,chill:1,ez:1,brk:1,slow:0,freeze:0,stun:0,root:0,sticky:0,cursed:0,poly:0,fear:0,wet:0};
 function kwHtml(id,src){const h=kwHtml0(id,src);if(h&&id in STACKS){const i=h.indexOf('</b>');if(i>=0){const j=h.indexOf('<small>');const row=R('',kst('stk','Acumulable',''),STACKS[id]?'Sí':'No');return j>=0?h.slice(0,j)+row+h.slice(j):h+row;}}return h;}
 function kwHtml0(id,src){
+ if(id.startsWith('bf_')&&BF[id.slice(3)])return buffInfo(id.slice(3));
+ // conceptos básicos del juego (los usa el tutorial) y fichas por nombre: torre, enemigo, héroe
+ const GK={g_solar:['Solar','Las casillas de piedra de cada pieza. Solo puedes construir torres en los solares.'],
+  g_core:['Núcleo','Lo que defiendes. Cada enemigo que llega a él te quita vida; si la vida llega a 0, pierdes.'],
+  g_piece:['Pieza','Un trozo de camino de '+P+'×'+P+' casillas. Cada ronda eliges una y la colocas en un extremo libre del camino para alargarlo; puedes girarla antes.'],
+  g_portal:['Portal','Por donde salen los enemigos: se abre en cada extremo libre del camino. Pasa el ratón por encima para ver qué viene.'],
+  g_tile:['Casilla especial','Una casilla de color sobre un solar. La torre que construyas encima gana su bonus (más rango, más daño…). Cuestan oro al colocar la pieza.'],
+  g_hab:['Habilidad del héroe','Cada héroe tiene una habilidad que se usa durante la oleada con su botón (o su tecla). Después tarda un rato en recargarse.']};
+ if(GK[id])return '<b>'+GK[id][0]+'</b><small>'+GK[id][1]+'</small>';
+ if(id.startsWith('tw_')&&TW[id.slice(3)])return shopInfo(id.slice(3),1);
+ if(id.startsWith('en_')&&ET[id.slice(3)])return enemyInfo(id.slice(3));
+ if(id.startsWith('hr_')&&HEROES[id.slice(3)])return heroInfo(id.slice(3),2);
  const c=kctx(src);
  if(c&&c.E){const E=c.E;
   if(id==='ehp')return '<b>Vida</b><small>Daño que aguanta el enemigo antes de morir. Es siempre la misma: los enemigos no se hacen más fuertes con las rondas, pero aparecen versiones más duras de cada familia (solo en partidas de más de 15 rondas crece un poco a partir de la ronda 16). El daño que recibe se reduce antes por su armadura o su resistencia mágica, según el tipo de daño; el elemental no lo reduce nada.</small>';
@@ -30,9 +42,9 @@ function kwHtml0(id,src){
   if(id.startsWith('rl_')&&RELIC[id.slice(3)])return relicInfo(id.slice(3),CP.open);
   if(id==='hrez')return '<b>Reaparición</b>'+R('cr','Tiempo',HREZ+' s')+'<small>Tiempo que tarda un héroe caído en volver a aparecer en el núcleo, el mismo para todos los héroes. Después camina hasta la posición en la que lo habías colocado. Al terminar la ronda se restaura por completo.</small>';
   if(id==='hrel')return '<b>Reliquia inicial</b><small>Todos los héroes van acompañados de una reliquia inicial única, que recibes al elegirlos y que no se puede obtener por ningún otro medio. Como el resto de reliquias, tiene un pasivo y un activo; pasa el ratón por su nombre para verlos.</small>';
-  if(id==='hlv')return '<b>Nivel de héroe</b>'+R('chp','Vida por nivel','+12%')+R('cd','Daño por nivel','+10%')+(HEROES[(src||'').slice(5)]?R('cph','Armadura por nivel','+'+f(HEROES[src.slice(5)].apLv)):'')+'<small>Los héroes ganan experiencia con el daño que hacen a los enemigos y suben hasta el Nv '+HLMAX+'. Cada nivel mejora sus estadísticas. La experiencia necesaria sube un 25% por nivel.</small>';
-  if(id==='hxp')return '<b>Experiencia</b><small>Cada enemigo vale una cantidad fija de experiencia (la puedes ver en su ficha del compendio). Tu héroe recibe la parte proporcional al daño que le hace él mismo; el daño de las torres no cuenta. La experiencia viaja en una bolita dorada cuando el enemigo muere o escapa, y se suma al llegar al héroe.</small>'+'<div style="margin-top:6px"><b>Experiencia por nivel</b></div>'+[2,3,4,5,6,7,8,9,10].map(l=>R('','Nv '+l,xpNeed(l))).join('');
-  if(id==='exv')return '<b>Experiencia</b><small>La experiencia que da este enemigo a tu héroe si lo mata él solo. Si solo le hace parte del daño, recibe la parte proporcional.</small>';
+  if(id==='hlv')return '<b>Nivel de héroe</b>'+R('chp','Vida por nivel','+12%')+R('cd','Daño por nivel','+10%')+(HEROES[(src||'').slice(5)]?R('cph','Armadura por nivel','+'+f(HEROES[src.slice(5)].apLv)):'')+'<small>Los héroes ganan experiencia con cada enemigo que cae (más si lo rematan ellos) y suben hasta el Nv '+HLMAX+'. Cada nivel mejora sus estadísticas. La experiencia necesaria sube un 25% por nivel.</small>';
+  if(id==='hxp')return '<b>Experiencia</b><small>Cada enemigo vale una cantidad fija de experiencia (la puedes ver en su ficha del compendio). Si lo remata tu héroe, la recibe entera y le llega volando en una bolita dorada. Si lo remata una torre, deja en el suelo una bolita con el 40% (como mínimo 1): tu héroe la recoge al pasar a 2 casillas o menos, y las que queden se le suman al acabar la oleada.</small>'+'<div style="margin-top:6px"><b>Experiencia por nivel</b></div>'+[2,3,4,5,6,7,8,9,10].map(l=>R('','Nv '+l,xpNeed(l))).join('');
+  if(id==='exv')return '<b>Experiencia</b><small>La experiencia que da este enemigo a tu héroe si lo remata él. Si lo remata una torre, deja en el suelo una bolita con el 40% (como mínimo 1) que el héroe recoge al acercarse.</small>';
   if(id==='hhp')return '<b>Vida</b><small>Daño que aguanta el héroe antes de caer. Se regenera poco a poco fuera de combate y se restaura al terminar la ronda. Cada nivel la aumenta un 12%.</small>';
   if(id==='hdmg')return '<b>Daño</b><small>Lo que hace cada golpe o disparo del héroe. Su tipo (físico o mágico) se indica en su ficha. Cada nivel lo aumenta un 10%. Los críticos lo multiplican.</small>';
   if(id==='hcd')return '<b>Enfriamiento</b><small>Tiempo que espera el héroe entre un golpe o disparo y el siguiente.</small>';
@@ -175,7 +187,7 @@ function towerInfo(t){
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
  const X=tinfo(t);
  return `<div class="ttl"><b>${X.ic} ${X.n}</b> · ${kst('lvl','Nv '+t.lvl,src)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap):tgtRow(t,src,PR.pinned&&PR.key===src))+
-  (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bname(k)}: ${BF[k].t}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+upRow(t,PR.pinned&&PR.key===src)+(PR.pinned&&PR.key===src?`<div class="tgt"><button data-a="sell">Vender torre (<span class="gd">+${sellVal(t)} 🪙</span>)</button></div>`:'')+(T.unit?'':dpsRow(s,T,src));
+  (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+upRow(t,PR.pinned&&PR.key===src)+(PR.pinned&&PR.key===src?`<div class="tgt"><button data-a="sell">Vender torre (<span class="gd">+${sellVal(t)} 🪙</span>)</button></div>`:'')+(T.unit?'':dpsRow(s,T,src));
 }
 function shopInfo(id,quiet){
  const T=TW[id],src='shop:'+id,st=quiet?cpState(id):{lv:1,spec:null},lv=st.lv,L=lvMods(id,lv,st.spec),X=st.spec?SPECS[id][st.spec]:T,
@@ -184,12 +196,19 @@ function shopInfo(id,quiet){
  return `<div class="ttl">${lb}<b>${X.n}</b> · ${X.ic}<br><span class="gd">${(quiet&&lv>1?kst('upc','Mejora '+upCost(T,lv)+' 🪙',src):kst('cost','Coste '+T.cost+' 🪙',src))}</span></div>`+rows(s,twm(id,st.spec),src,T.unit?unitRows(T,src,null,false,L.hp,X.uap):(quiet?'':R('',kst('tgt','Objetivo',src),TGT[S.dtg[id]||'core'].n)))+(st.spec?'<div style="margin-top:6px"><b>Habilidades</b></div>'+abList(id,st.spec,null):'')+(quiet?'':'<small>Valores base, sin bufos de casilla.</small>')+(T.unit?'':dpsRow(s,T,src));
 }
 
-function buffInfo(k,cmp){
+// texto del bonus de una casilla con los multiplicadores que están activos ahora (valores reales: el jugador no tiene que calcular)
+function bfMul(kx,ky){let m=1,why=[];try{if(S&&S.relics&&rp('anvil')){m*=1.5;why.push('⚒️ Yunque');}if(kx!=null&&S.bless&&S.bless[Math.floor(kx/(N/BN))+','+Math.floor(ky/(N/BN))]){m*=2;why.push('✨ bendecida');}}catch(e){}return{m,why};}
+const bfFmt=v=>{const r=Math.round(v*10)/10;return String(r).replace('.',',');};
+function bfT(k,kx,ky){const B=BF[k],{m,why}=bfMul(kx,ky);if(m===1)return B.t;
+ return B.t.replace(/([+−-])(\d+(?:[.,]\d+)?)%/g,(x,sg,n)=>sg+bfFmt(parseFloat(n.replace(',','.'))*m)+'%')+` <small class="cf">(${why.join(', ')})</small>`;}
+function buffInfo(k,cmp,kx,ky){
  const B=BF[k],bt=cmp?`<button class="stbtn${B.sup?' on':''}" data-a="csup" data-v="${bkey(k)}" title="Mostrar versión ${B.sup?'normal':'super'}">${B.sup?'★':'☆'}</button>`:'';
- return `${bt}<b><i style="background:${B.col}"></i>${cmp?B.n:bname(k)}</b><div>${B.t}</div><small>Solo afecta a la torre construida encima.${B.note?' '+B.note:''}</small>`;
+ return `${bt}<b><i style="background:${B.col}"></i>${cmp?B.n:bname(k)}</b><div>${cmp?B.t:bfT(k,kx,ky)}</div><small>Solo afecta a la torre construida encima.${B.note?' '+B.note:''}</small>`;
 }
+// casilla especial como palabra clave: negrita, su color (algo oscurecido para leerse sobre el papel) y bocadillo con su explicación
+const bfkw=k=>`<span class="kw" data-kw="bf_${k}" data-src="" style="color:color-mix(in srgb,${BF[k].col} 70%,var(--ink))">${bname(k)}</span>`;
 function pieceInfo(o){
- return `<b>${o.n}</b> · pieza ${P}×${P}`+(o.b.length?'<small>Casillas especiales'+(payOn()&&S.offers&&S.offers.includes(o)?' · cuestan <span class="gd">'+pcost(o)+' 🪙</span> al colocar la pieza':'')+':</small>'+o.b.map(b=>`<div><i style="background:${BF[b.k].col}"></i>${bname(b.k)}: ${BF[b.k].t}</div>`).join(''):'<small>Sin casillas especiales.'+(payOn()&&S.offers&&S.offers.includes(o)?' Colocarla es gratis.':'')+'</small>');
+ return `<b>${o.n}</b> · pieza ${P}×${P}`+(o.b.length?'<small>Casillas especiales'+(payOn()&&S.offers&&S.offers.includes(o)?' · cuestan <span class="gd">'+pcost(o)+' 🪙</span> al colocar la pieza':'')+':</small>'+o.b.map(b=>`<div><i style="background:${BF[b.k].col}"></i>${bfkw(b.k)}: ${bfT(b.k)}</div>`).join(''):'<small>Sin casillas especiales.'+(payOn()&&S.offers&&S.offers.includes(o)?' Colocarla es gratis.':'')+'</small>');
 }
 function portalInfo(p){
  if(!p)return '<b>Extremo inactivo</b><small>Esta ronda no saldrán enemigos por aquí. Se usan primero los extremos de la pieza nueva y luego los más lejanos a la base.</small>';
@@ -221,7 +240,7 @@ function resolve(el){
   if(t)return{key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:c};
   const k=S.buff[c.y][c.x];
   const kx=Math.floor(c.x/K),ky=Math.floor(c.y/K),kr=cellRect(kx*K,ky*K,K);
-  if(k)return{key:'bf:'+kx+','+ky,html:()=>buffInfo(k),rect:kr};
+  if(k)return{key:'bf:'+kx+','+ky,html:()=>buffInfo(k,0,c.x,c.y),rect:kr};
   if(S.phase==='place'&&S.pi!=null){const bx=Math.floor(kx/P),by=Math.floor(ky/P);
    if(bx<BN&&by<BN&&!S.blocks[bx+','+by]){const b=S.offers[S.pi].b.find(b=>b.x===kx-bx*P&&b.y===ky-by*P);
     if(b)return{key:'gb:'+kx+','+ky+b.k,html:()=>buffInfo(b.k),rect:kr};}}
@@ -262,7 +281,7 @@ function openKw(a,pl){
  closeKS(pl);
  const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.style.setProperty('--kc',getComputedStyle(a).color);
  document.body.appendChild(d);
- const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth,ht=d.offsetHeight;
+ const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth,ht=d.offsetHeight;
  // la caja sale hacia el lado libre del panel: derecha si el panel está a la izquierda, izquierda si está a la derecha
  const right=(br.left+br.right)/2<innerWidth/2;
  let l=right?br.right+6:br.left-6-wd;
@@ -296,7 +315,7 @@ function hoverTick(rdt){
  S.hover=null;
  const el=M.has?document.elementFromPoint(M.x,M.y):null;
  const kpEl=el&&el.closest('.kpanel'),kwEl=el&&el.closest('.kw');
- const inPrim=!!(el&&(el.closest('#tip')||el.closest('#side'))),inComp=!!(el&&(el.closest('#comp')||el.closest('#opts')||el.closest('#relic')));
+ const inPrim=!!(el&&(el.closest('#tip')||el.closest('#side'))),inComp=!!(el&&(el.closest('#comp')||el.closest('#opts')||el.closest('#relic')||el.closest('#hint')||el.closest('#hpop')||el.closest('#focus')||el.closest('#tmcard')||el.closest('#bmcard')));
  const lvl=kpEl?+kpEl.dataset.level:(inPrim||inComp?0:-1);
  const tg=(!inPrim&&!kpEl&&!inComp)?resolve(el):null;
  if(MFSQ()){const onL=el&&el.closest&&el.closest('#lupa');if(PR.pinned||RL.open||LB.open||(typeof PMU!=='undefined'&&PMU.open))hideLupa();else if(tg&&!LUPA.sticky){LUPA.tg=tg;placeLupa(tg.rect);}else if(LUPA.tg&&LUPA.sticky){const r=LUPA.tg.rect;if(r)placeLupa(r);else hideLupa();}else if(!onL)hideLupa();}
@@ -329,7 +348,9 @@ function hoverTick(rdt){
  const tip=$('tip');
  if(PMN()&&PR.open&&!(HQ.cur&&document.body.classList.contains('mfs'))){
   tip.style.display='block';
-  const wd=tip.offsetWidth,ht=tip.offsetHeight,r=PR.rect;
+  const wd=tip.offsetWidth,ht=tip.offsetHeight;let r=PR.rect;
+  /* si el anillo de controles de la torre (o del solar) está abierto, el panel se coloca fuera de él para no taparlo */
+  for(const id of ['tmenu','bmenu']){const m=$(id);if(m&&m.classList.contains('on')&&m.offsetParent!==null){let u=null;m.querySelectorAll('button').forEach(b=>{const q=b.getBoundingClientRect();if(!q.width)return;u=u?{l:Math.min(u.l,q.left),t:Math.min(u.t,q.top),r:Math.max(u.r,q.right),b:Math.max(u.b,q.bottom)}:{l:q.left,t:q.top,r:q.right,b:q.bottom};});if(u)r={l:Math.min(r.l,u.l),t:r.t,r:Math.max(r.r,u.r),b:r.b};}}
   let l=r.r+8;if(l+wd>innerWidth-6)l=r.l-8-wd;if(l<6)l=6;
   let t=PR.dom?(r.t+r.b)/2-ht/2:r.t;if(t+ht>innerHeight-6)t=innerHeight-6-ht;if(t<6)t=6;
   tip.style.left=l+'px';tip.style.top=t+'px';

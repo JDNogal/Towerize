@@ -8,7 +8,7 @@ function bmClose(){BM.s=null;BM.arm=null;BM.hov=null;BM.sig='';const m=$('bmenu'
 function bmOpen(q){S.selT=null;try{tmClose();}catch(e){}if(PR.pinned)closePrim();BM.s=q;BM.arm=null;BM.hov=null;BM.sig='';try{sfx('ui');}catch(e){}}
 function bmTap(c){const q=sqOf(c.x,c.y);if(!inb(c.x,c.y)||!bmFree(q)){if(BM.s){bmClose();}return false;}
  if(BM.s&&BM.s.x===q.x&&BM.s.y===q.y){bmClose();return true;}
- if(S.tut&&S.tut.lock&&!S.tut.lock.some(l=>l.x===q.x&&l.y===q.y)){S.msg='En esta ronda, construye tu torre en la casilla especial resaltada.';ui();return true;}
+ if(tutLockBlock(q.x,q.y))return true;
  if(!bmDeck().length)return false;
  bmOpen(q);return true;}
 function bmBuildNow(k,q){q=q||BM.s;if(!q)return;const pt=S.tsel;S.tsel=k;const n=S.list.length;build(q.x,q.y);S.tsel=pt&&pt!==k?pt:null;if(S.list.length>n)bmClose();else{BM.arm=null;BM.sig='';}}

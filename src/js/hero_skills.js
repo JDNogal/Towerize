@@ -2,21 +2,21 @@
 // b = activa básica (desde el inicio), p4 = pasiva de Nv 4, p8 = pasiva de Nv 8 (mejora la básica), u = ultimate (Nv 10). Las activas solo en combate y con el héroe vivo.
 const HBCD=20,HUCD=90,HDUR={yrsa:{b:'1,5 s (congelación)',p8:'3 s (charco)',u:'1,5 s (congelación)'},reinhart:{b:'15 s',u:'2 s (aturdimiento)'},sylvana:{b:'4 s',p4:'4 s (presa)',u:'25 s'},radagast:{b:'1,5 s hasta explotar',u:'6 s'}};
 const HAB={
- reinhart:{b:{n:'Llamada a las armas',ic:'📯',t:()=>'Eliges un punto del camino: aparecen <b>2 soldados</b> que bloquean y luchan durante 15 s.'},
-  p4:{n:'Provocación',ic:'🛡️',t:()=>'Reinhart atrae la atención de los enemigos: tiene <b>corpulencia 3</b> (bloquea hasta 3 enemigos a la vez) y recibe un <span class="chp">15% menos de daño</span>.'},
-  p8:{n:'Veteranos',ic:'⚜️',t:()=>'Los soldados de Llamada a las armas pasan a ser <b>soldados pesados</b>: más vida, más daño y más armadura.'},
-  u:{n:'Carga Heroica',ic:'⚔️',t:()=>'Eliges un punto del camino y Reinhart carga hasta él sin recibir daño: hace un <span class="cd">300% de su daño</span> a los enemigos que atraviesa y a los que hay a 1,5 casillas de donde llega, los empuja y los <b>aturde 2 s</b> (los jefes, 1 s).'}},
+ reinhart:{b:{n:'Llamada a las armas',ic:'📯',t:()=>'Eliges un punto del camino: aparecen 2 soldados que bloquean y luchan durante 15 s.'},
+  p4:{n:'Provocación',ic:'🛡️',t:()=>'Reinhart atrae la atención de los enemigos: tiene <span class="kw" data-kw="eblk" data-src="">corpulencia 3</span> (bloquea hasta 3 enemigos a la vez) y recibe un <span class="chp">15% menos de daño</span>.'},
+  p8:{n:'Veteranos',ic:'⚜️',t:()=>'Los soldados de Llamada a las armas pasan a ser soldados pesados: más vida, más daño y más armadura.'},
+  u:{n:'Carga Heroica',ic:'⚔️',t:()=>'Eliges un punto del camino y Reinhart carga hasta él sin recibir daño: hace un <span class="cd">300% de su daño</span> a los enemigos que atraviesa y a los que hay a 1,5 casillas de donde llega, los empuja y los <span class="kw" data-kw="stun" data-src="">aturde 2 s</span> (los jefes, 1 s).'}},
  sylvana:{b:{n:'Hiedra enredadora',ic:'🌿',t:()=>`Eliges un punto: brota una zona de hiedra (1,5 casillas de radio) durante 4 s. Los enemigos dentro quedan ${kw('root','enredados','')}: no se mueven, pero sí atacan.`},
   p4:{n:'Halcón de caza',ic:'🦅',t:()=>`Cada 6 s, un halcón baja en picado sobre el enemigo con más vida cerca de Sylvana, le hace daño y lo marca como ${kw('prey','presa','')} durante 4 s.`},
   p8:{n:'Hiedra venenosa',ic:'☘️',t:()=>'La hiedra enredadora además envenena cada segundo a los enemigos atrapados.'},
-  u:{n:'Llamada salvaje',ic:'🐾',t:()=>'Eliges un punto e invocas al azar una bestia durante 25 s: 🐻 <b>Oso pardo</b> (aguanta y bloquea a 3), 🐺 <b>Huargo plateado</b> (rápido, va de enemigo en enemigo) o 🐆 <b>Pantera de sombra</b> (caza a los enemigos de retaguardia con mucho daño).'}},
+  u:{n:'Llamada salvaje',ic:'🐾',t:()=>'Eliges un punto e invocas al azar una bestia durante 25 s: 🐻 Oso pardo (aguanta y bloquea a 3), 🐺 Huargo plateado (rápido, va de enemigo en enemigo) o 🐆 Pantera de sombra (caza a los enemigos de retaguardia con mucho daño).'}},
  yrsa:{b:{n:'Prisión de hielo',ic:'🥶',t:()=>`Eliges un punto: los enemigos a 1,2 casillas quedan ${kw('freeze','congelados','')} 1,5 s. A los jefes, en vez de congelarlos, los ${kw('slow','ralentiza','')} un 50%.`},
   p4:{n:'Combustión lenta',ic:'🌡️',t:()=>`Los enemigos ralentizados o parados reciben un <span class="cbu">50% más de stacks</span> de ${kw('burn','quemadura','')}, vengan de donde vengan.`},
   p8:{n:'Piroescarcha',ic:'♨️',t:()=>`Al romperse la prisión de hielo, deja un charco de fuego (1,2 casillas) durante 3 s que aplica ${kw('burn','quemadura','')}.`},
   u:{n:'Cataclismo',ic:'🌠',t:()=>`Eliges un punto: cae un meteoro que hace el <span class="cd">300% de su daño</span> (elemental) a 1,5 casillas, aplica 10 stacks de ${kw('burn','quemadura','')} y deja fuego 4 s. Un segundo después, una onda de hielo congela 1,5 s a los supervivientes (a los jefes los ralentiza) y les aplica 5 stacks de ${kw('chill','hipotermia','')}.`}},
  radagast:{b:{n:'Runa arcana',ic:'🔯',t:()=>'Eliges un punto: aparece una runa que a los 1,5 s explota con <span class="cmg">daño mágico</span> en área (1,2 casillas).'},
   p4:{n:'Orbe sobrecargado',ic:'🔮',t:()=>'Cada 4.º orbe de Radagast va sobrecargado: hace el <span class="cd">doble de daño</span> y tiene el doble de área.'},
-  p8:{n:'Pulso arcano',ic:'🌀',t:()=>'Al lanzar la runa, primero sale un pulso arcano (2,4 casillas) que <b>atrae a los enemigos</b> hacia el centro, justo donde explota la runa. Los jefes resisten la mitad.'},
+  p8:{n:'Pulso arcano',ic:'🌀',t:()=>'Al lanzar la runa, primero sale un pulso arcano (2,4 casillas) que atrae a los enemigos hacia el centro, justo donde explota la runa. Los jefes resisten la mitad.'},
   u:{n:'Tormenta arcana',ic:'⛈️',t:()=>'Eliges un punto: durante 6 s una tormenta (3 casillas de radio) lanza rayos sobre los enemigos de dentro, con <span class="cmg">daño mágico</span> y un poco de área.'}}};
 const BEASTS={bear:{n:'Oso pardo',ic:'🐻',col:'#8a5a3a',hp:2.6,d:1.2,r:1,w:3,ap:25,sp:1},wolf:{n:'Huargo plateado',ic:'🐺',col:'#b8c0cc',hp:1.4,d:1,r:1.7,w:1,ap:10,sp:2.2,al:3.2},panther:{n:'Pantera de sombra',ic:'🐆',col:'#3a3448',hp:1.1,d:2.4,r:1,w:1,ap:5,sp:2.2,al:4.2,pref:1}};
 const hdm=()=>stats(S.hero.pt).dmg;
@@ -104,23 +104,28 @@ function hpanTick(){if(S&&S.list){const xs=xPanel().replace(/<span class="hcdv"[
 function habInfo(k){const H=S.hero;if(!H)return '';const A=HAB[H.id][k],w=habOk(k);return `<div class="ttl"><b>${A.ic} ${A.n}</b> · ${k==='u'?'Definitiva (Nv 10)':'Activa básica'}</div><small style="margin:0">${A.t()}</small>`+R('ccl','Enfriamiento',(k==='u'?HUCD:HBCD)+' s')+((HDUR[H.id]||{})[k]?R('cr',kst('dur','Duración',''),HDUR[H.id][k]):'')+(w?`<small class="cr" style="margin-top:4px">${w}</small>`:'');}
 function heroAbHtml(id){const A=HAB[id];if(!A)return '';const row=(lv,a,tp,dk)=>`<div class="hab"><span class="habi">${a.ic}</span><div><b>${a.n}</b> <small style="display:inline">· ${tp}${(HDUR[id]||{})[dk]?' · duración '+HDUR[id][dk]:''}</small><div class="hrt">${a.t()}</div></div></div>`;
  return `<div class="esec" style="margin-top:12px">Habilidades</div>`+row(1,A.b,'Activa básica · desde el inicio · 20 s','b')+row(4,A.p4,'Pasiva · Nv 4','p4')+row(8,A.p8,'Pasiva · Nv 8','p8')+row(10,A.u,'Definitiva · Nv 10 · 90 s','u')+'<small>Las activas solo se pueden usar durante la oleada y con el héroe vivo.</small>';}
-function startTut(){SEEOK=true;saveClear();TUTON=true;TUTR=0;TUTHS={};ROUNDS=10;CHESTS=1;setSize(5);$('menu').classList.remove('setup');
+function startTut(){SEEOK=true;saveClear();TUTON=true;TUTR=0;TUTHS={};ROUNDS=10;CHESTS=2;setSize(5);$('menu').classList.remove('setup');
  if(TOUCH&&OPT.fs)enterFS();lbClose(false);document.body.classList.remove('inmenu');$('endscr').classList.remove('open');init();}
 function lockSquares(bk){if(!bk)return[];const[bx,by]=bk.split(',').map(Number),o=[];for(let j=0;j<P;j++)for(let i=0;i<P;i++){const kx=bx*P+i,ky=by*P+j;if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+1,y:ky*K+1};if(S.buff[q.y]&&S.buff[q.y][q.x]&&!S.occ[q.x+','+q.y])o.push(q);}return o;}
-function tutOffer(list,title,txt){S.tut.off={list,title,txt};}
+// tutorial, ronda 2: se recomienda construir en la casilla especial, pero nunca deja al jugador sin poder construir:
+// la primera vez que intenta otro solar, avisa; si insiste (mismo solar), construye ahí. Al empezar la oleada se quita.
+function tutLockBlock(x,y){const T=S&&S.tut;if(!T||!T.lock||T.lock.some(l=>l.x===x&&l.y===y))return false;
+ if(T.lockAsk===x+','+y){T.lock=null;T.lockAsk=null;return false;}
+ T.lockAsk=x+','+y;S.msg='Te recomendamos la casilla especial resaltada. Pulsa otra vez este solar para construir aquí de todos modos.';ui();return true;}
+function tutOffer(list,title,txt,present){S.tut.off={list,title,txt,present:!!present};}
 function tutPhase(ph){if(!S||!S.tut)return;const r=S.round,T=S.tut;
  if(ph==='place'){
-  if(r===1)hint('tut_welcome','Bienvenido a Towerize',[['Defiende tu <b>núcleo</b>: si un enemigo llega a él, pierdes vida.',()=>tgCell(S.core.x,S.core.y,1.2)()],['Cada ronda eliges una <b>pieza</b> de abajo para alargar el camino. Puedes girarla antes de colocarla.',tgEl('#ui [data-a="pick"]')]]);
-  if(r===2)hint('tut_tiles','Casillas especiales',[['Estas piezas traen una <b>casilla especial</b>. '+HOV()+' cada una para ver su bonus y elige la que prefieras.',tgEl('#ui [data-a="pick"]')],['Las casillas especiales <b>cuestan oro</b>: <span class="gd">25 🪙</span> cada una (<span class="gd">50 🪙</span> las súper). Esta vez te regalamos <span class="gd">25 🪙</span>.',tgEl('#ui .pcst')]]);
+  if(r===1)hint('tut_welcome','Bienvenido a Towerize',[['Defiende tu <span class="kw" data-kw="g_core" data-src="">núcleo</span>: si un enemigo llega a él, pierdes vida.',()=>tgCell(S.core.x,S.core.y,1.2)()],['Cada ronda eliges una <span class="kw" data-kw="g_piece" data-src="">pieza</span> de abajo para alargar el camino. Puedes girarla antes de colocarla.',tgEl('#ui [data-a="pick"]')]]);
+  if(r===2)hint('tut_tiles','Casillas especiales',[['Estas piezas traen una <span class="kw" data-kw="g_tile" data-src="">casilla especial</span>. '+HOV()+' cada una para ver su bonus y elige la que prefieras.',tgEl('#ui [data-a="pick"]')],['Las casillas especiales cuestan oro: <span class="gd">25 🪙</span> cada una (<span class="gd">50 🪙</span> las súper). Esta vez te regalamos <span class="gd">25 🪙</span>.',tgEl('#ui .pcst')]]);
   if(r===3)hint('tut_kw','Palabras en negrita','Las palabras en negrita y de color, como '+kw('slow','ralentiza','')+', tienen su propia explicación. '+HOV()+' cualquiera de ellas para leerla: así puedes consultar cualquier cosa que no entiendas.',null);
   if(S.offers.some(o=>opens(o.p)>=3))hint('tut_fork','Dividir el camino','Dividir el camino te da más sitios para colocar piezas, pero los enemigos podrán salir por más portales.',tgEl('#ui [data-a="pick"]'));}
  if(ph==='build'){
-  if(r===1)tutOffer(['arrow','cata'],'Elige tu primera torre','De momento será la única torre que puedas construir. <b>Arqueros</b>: disparos rápidos a un solo enemigo. <b>Catapulta</b>: disparos lentos con daño en área.');
+  if(r===1&&S.hero){const H=HEROES[S.hero.id];tutOffer(S.deck.slice(),'Las torres de '+H.n,'Cada héroe empieza todas las partidas con dos torres propias en su mazo. Estas son las de '+H.n+': ya puedes construirlas. Cada pocas rondas podrás añadir más.',1);}
   if(r===2){T.lock=lockSquares(S.lastBk);if(T.lock.length)hint('tut_tile2','Construye en la casilla especial','Esta ronda, coloca tu torre en la casilla especial de la pieza nueva. Al acabar la oleada verás la diferencia con la torre de la ronda 1.',tgCell(T.lock[0].x,T.lock[0].y,1.3));else T.lock=null;}
-  if(r===4){const sp=S.list.find(t=>t.id===T.t2id)||S.list[0];T.freeUp=1;hint('tut_gold','Mejorar torres','Pulsa una torre y luego ⬆ para <b>mejorarla</b>. Esta primera te sale <b>gratis</b>: elige la que quieras.',sp?tgCell(sp.x,sp.y,1.3):null);}
-  if(r===5)tutOffer(['orb','frost'],'Nueva torre','Se acercan enemigos más duros. Elige: <b>Orbe arcano</b> (rayo mágico concentrado en un enemigo) o <b>Cryomago</b> (daño mágico que ralentiza, para que tus torres disparen más veces).');
-  if(r===7)tutOffer(['bastion','monk'],'Torres de unidades','Elige una torre de unidades: <b>Baluarte</b> (soldados con armadura que bloquean el paso) o <b>Monasterio</b> (monjes élficos que golpean, se curan y curan a otras unidades).');
-  if(r===10)hint('tut_final','Última oleada','Llega tu primer jefe: <b>Bob</b>. Aguanta mucho más que cualquier enemigo que hayas visto. Usa todo lo que has aprendido. ¡Suerte!',null);}
+  if(r===4){const sp=S.list.find(t=>t.id===T.t2id)||S.list[0];T.freeUp=1;hint('tut_gold','Mejorar torres','Pulsa una torre y luego ⬆ para mejorarla. Esta primera te sale gratis: elige la que quieras.',sp?tgCell(sp.x,sp.y,1.3):null);}
+  if(r===3)tutOffer(['orb','frost'],'Nueva torre','Cada pocas rondas puedes añadir una torre a tu mazo. Elige: <span class="kw" data-kw="tw_orb" data-src="">Orbe arcano</span> (rayo mágico concentrado en un enemigo) o <span class="kw" data-kw="tw_frost" data-src="">Cryomago</span> (daño mágico que ralentiza, para que tus torres disparen más veces).');
+  if(r===7)tutOffer(['bastion','monk','cata'],'Nueva torre','Elige otra torre para tu mazo. <span class="kw" data-kw="tw_bastion" data-src="">Baluarte</span>: soldados con armadura que bloquean el paso. <span class="kw" data-kw="tw_monk" data-src="">Monasterio</span>: monjes que golpean y curan. <span class="kw" data-kw="tw_cata" data-src="">Catapulta</span>: disparos lentos con daño en área.');
+  if(r===10)hint('tut_final','Última oleada','Llega tu primer jefe: <span class="kw" data-kw="en_bob" data-src="">Bob</span>. Aguanta mucho más que cualquier enemigo que hayas visto. Usa todo lo que has aprendido. ¡Suerte!',null);}
  if(ph==='wave'&&r===2){T.d0={};for(const t of S.list)T.d0[t.id]=t.dmgT||0;}
  if(ph==='end'&&r===2)tutCompare();}
 function tutCompare(){const T=S.tut,t2=S.list.find(t=>t.id===T.t2id),t1=S.list.find(t=>t!==t2&&!TW[t.type].uniq&&t.rd===1)||S.list.find(t=>t!==t2&&!TW[t.type].uniq);if(!t1||!t2)return;
@@ -139,7 +144,7 @@ function tutEnd(){const clean=TUTR===0,perfect=clean&&!(S.hpEn>0);try{localStora
  closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
  el.innerHTML=`<div class="evwin" style="text-align:center"><b style="font-size:20px">🎓 ¡Tutorial completado!</b><p>Ya conoces lo básico: piezas, torres, casillas especiales, mejoras, reliquias, unidades y eventos. Lo demás lo irás descubriendo: las pistas te avisarán la primera vez que veas algo nuevo.</p>`+
   `<div class="esum" style="justify-content:center">${R('','Reintentos',TUTR)}${R('','Vida perdida por enemigos',S.hpEn||0)}</div>`+
-  `<p>🔓 <b>Radagast</b> ya está disponible.${clean?'<br>🏆 Maestro del tutorial':''}${perfect?'<br>🏆 Experto en Tutoriales':''}</p>`+
+  `<p>🔓 <span class="kw" data-kw="hr_radagast" data-src="">Radagast</span> ya está disponible.${clean?'<br>🏆 Maestro del tutorial':''}${perfect?'<br>🏆 Experto en Tutoriales':''}</p>`+
   `<div class="tutnext"><b>Cosas que puedes probar en tu primera partida</b><ul>`+
   `<li>⏩ <b>Velocidad</b>: pausa el juego o acelera la oleada. En pausa puedes construir, mejorar y mover a tu héroe con calma.</li>`+
   `<li>↺ <b>Reintentar</b>: si una oleada sale mal, puedes repetirla desde el principio. Tiene cargas limitadas.</li>`+

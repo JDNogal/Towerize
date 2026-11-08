@@ -40,3 +40,11 @@ body.dsk #panel:has(.prow)::before{left:-14px}body.dsk #panel:has(.prow)::after{
 /* móvil: más compacto para que quepa entero */
 body.mfs #relic .pscr{margin-top:12px}body.mfs #relic .ppap{padding:8px 26px 8px;margin:0 16px}body.mfs #relic .pscr i.prod{width:22px!important}
 body.mfs #relic .ppap .ptt{font-size:15px!important}body.mfs #relic .ppap .toff{margin:6px 0 4px;gap:8px}body.mfs #relic .pskip{margin-top:2px}body.mfs #relic .pskip small{display:none}
+
+/* botón del compendio en las ventanas de elección */
+#relic .wcomp{position:fixed;top:14px;left:14px;z-index:5;width:44px;height:44px;font-size:22px;border-radius:10px;border:1px solid var(--lea2);background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 3px 8px rgba(0,0,0,.45);cursor:pointer}
+#relic .wcomp:hover{box-shadow:inset 0 0 0 1.5px var(--trim),0 3px 8px rgba(0,0,0,.45)}
+
+/* «Ver detalles» general de la oferta (abre todas a la vez); los de cada tarjeta se ocultan */
+#relic .ppap .tof details>summary{display:none}
+#relic .pdet{margin-top:8px}#relic .pdet button{border:1px solid var(--pline2)!important;background:transparent!important;color:var(--ink)!important;border-radius:12px!important;padding:2px 12px!important;font-size:12.5px}

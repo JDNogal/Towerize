@@ -21,7 +21,7 @@ await p.click('#comp [data-a="lbload"]');await p.waitForTimeout(900);
 const after=await p.evaluate(()=>({gold:S.gold,towers:S.list.length,round:S.round,phase:S.phase,blocks:Object.keys(S.blocks).length,cam:[Math.round(CAM.x),Math.round(CAM.y),CAM.z],bn:BN,rounds:ROUNDS,hero:S.hero&&S.hero.id,inmenu:document.body.classList.contains('inmenu'),lb:LB.open}));
 console.log('antes ',JSON.stringify(before));console.log('después',JSON.stringify(after));await p.screenshot({path:OUT+'/sv_loaded.png'});
 // oleada: guardar y salir en plena oleada → vuelve al principio
-await p.evaluate(()=>{startWave();});await p.waitForTimeout(1500);
+await p.evaluate(()=>{HQ.q=[];if(HQ.cur)hintClose();startWave();});await p.waitForTimeout(1500);
 const mid=await p.evaluate(()=>[S.phase,S.enemies.length,SAV.meta&&SAV.meta.why]);console.log('en oleada',mid);
 await p.evaluate(()=>openPause());await p.waitForTimeout(300);await p.click('#comp [data-a="psave"]');await p.waitForTimeout(300);console.log('aviso primera pulsación',await p.evaluate(()=>[PMU.svask,document.body.classList.contains('inmenu')]));
 await p.click('#comp [data-a="psave"]');await p.waitForTimeout(900);console.log('tras guardar y salir',await p.evaluate(()=>[document.body.classList.contains('inmenu'),LB.cover,SAV.meta&&SAV.meta.why]));

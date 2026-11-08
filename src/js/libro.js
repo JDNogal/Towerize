@@ -28,6 +28,7 @@ function lbSetOrigin(){const el=$('comp'),c=lbCorePos();if(c){el.style.setProper
 function coreFlash(){const c=lbCorePos();if(!c)return;const d=document.createElement('div');d.className='coreflash';d.style.left=c.x+'px';d.style.top=c.y+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),900);}
 function lbClose(resume,now){
  if(!LB.open){CP.open=false;OP.open=false;return;}
+ LB.fromWin=0;
  if(!now){try{sfx('bkclose');}catch(e){}}
  LB.open=false;LB.cover=false;CP.open=false;OP.open=false;CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;
  const el=$('comp');
@@ -39,7 +40,7 @@ function lbClose(resume,now){
  if(typeof ui==='function'&&S)ui();
 }
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal. En la preparación de partida no se sale así
-function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
+function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.fromWin){LB.fromWin=0;lbClose(true);return;}if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
 const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
 const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
 // flechas de pasar página: al anterior / siguiente de la sección en la que estás (sin fondo, solo trazo)

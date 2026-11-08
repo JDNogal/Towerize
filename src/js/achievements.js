@@ -15,6 +15,12 @@ const achFound=id=>UNLOCK_ALL||!!ACHS[id]||!ACHFND[id]||ACHFND[id]();
 const achReq=id=>ACH[id]?(achFound(id)?'🏆 '+ACH[id].n+': '+ACH[id].d:'🏆 Un logro oculto: sigue jugando para descubrirlo.'):'';
 function lockToast(title,id){toast('🔒 <b>'+title+'</b>'+(id&&ACH[id]?'<br><small>'+achReq(id)+'</small>':''));}
 const compOk=()=>UNLOCK_ALL||OPT.u_cp||OPT.u_cpa||!!ACHS.curious;
+// niveles de torre vistos (sin spoilers): nivel más alto alcanzado con cada torre y especializaciones elegidas, entre partidas
+let TLV={};try{TLV=JSON.parse(localStorage.getItem('rt-tlv'))||{};}catch(e){}
+const tlvOk=(k,n)=>{if(UNLOCK_ALL||OPT.u_cp||n<=1||!TW[k]||TW[k].uniq)return true;const r=TLV[k]||{};if(n<=3)return (r.lv||1)>=n;const sp=Object.keys(SPECS[k]||{})[n-4];return !!(r.sp&&r.sp[sp]);};
+setInterval(()=>{try{if(!S||!S.list||PREVIEWING||S.pvE||S.pvH||document.body.classList.contains('inmenu'))return;let ch=0;
+ for(const t of S.list){if(!TW[t.type]||TW[t.type].uniq)continue;const r=TLV[t.type]=TLV[t.type]||{lv:1};const l=Math.min(t.lvl||1,4);if(l>r.lv){r.lv=l;ch=1;}if(t.spec&&!(r.sp&&r.sp[t.spec])){r.sp=r.sp||{};r.sp[t.spec]=1;ch=1;}}
+ if(ch)localStorage.setItem('rt-tlv',JSON.stringify(TLV));}catch(e){}},1000);
 function curSeen(k){if(ACHS.curious||!TW[k]||CUR.includes(k)||typeof S==='undefined'||!S||S.pvE)return;CUR.push(k);try{localStorage.setItem('rt-cur',JSON.stringify(CUR));}catch(e){}if(CUR.length>=3)achieve('curious');}
 // logros secretos: se revelan al ver por primera vez lo que destriparían
 let REV={};try{REV=JSON.parse(localStorage.getItem('rt-rev'))||{};}catch(e){}

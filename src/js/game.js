@@ -10,12 +10,12 @@ function init(){GT.r=0;GT.c=0;
  // Cofres: recorrido de bloques contiguos que empieza en el hueco de salida de la base (donde va la pieza de la ronda 1).
  // El primero va a 2 pasos de ese hueco y ninguno está en él ni a su lado, así que como pronto se abre uno en la ronda 3. Los demás, cada 3 pasos más.
  const ex=(()=>{for(let y=0;y<P;y++)for(let x=0;x<P;x++)if(b[y][x]==='.'&&(x===0||y===0||x===P-1||y===P-1))return x===0?[-1,0]:x===P-1?[1,0]:y===0?[0,-1]:[0,1];return[1,0];})();
- const A=[c+ex[0],c+ex[1]],L=3*CHESTS;let best=[];
+ const A=[c+ex[0],c+ex[1]],L=Math.max(3*CHESTS,S.tut?11:0)/* el tutorial necesita un recorrido largo para sus dos eventos (santuario a 5 pasos o más, mercader a 8 o más) */;let best=[];
  for(let t=0;t<4000&&best.length<L;t++){const seen={[c+','+c]:1,[A[0]+','+A[1]]:1},w=[A[0]+','+A[1]];let x=A[0],y=A[1];
   for(let i=1;i<L;i++){const nb=shuf(D.map(d=>[x+d[0],y+d[1]]).filter(q=>q[0]>=0&&q[1]>=0&&q[0]<BN&&q[1]<BN&&!seen[q[0]+','+q[1]]&&Math.abs(q[0]-A[0])+Math.abs(q[1]-A[1])>=(i>=2?2:1)));if(!nb.length)break;[x,y]=nb[0];seen[x+','+y]=1;w.push(x+','+y);}
   if(w.length>best.length)best=w;}
  for(let k=0;k<CHESTS;k++){const a=k?3*k:2,z=k?Math.min(3*k+2,best.length-1):2;if(a<best.length)S.chests[best[a+Math.floor(Math.random()*(z-a+1))]]=1;}
- if(S.tut){S.rc=99;const k=best.find((v,i)=>i>=5&&!S.chests[v]);if(k)S.evts[k]='shrine';}else placeEvents(c,A);
+ if(S.tut){S.rc=99;const k=best.find((v,i)=>i>=5&&!S.chests[v]);if(k)S.evts[k]='shrine';const k2=best.find((v,i)=>i>=8&&!S.chests[v]&&!S.evts[v]);if(k2)S.evts[k2]='merchant';}else placeEvents(c,A);
  CAM.z=ZINI;camCenter(S.core.x,S.core.y);
  RL.open=false;$('relic').classList.remove('open');renderRelics();nextRound();openHero();
 }

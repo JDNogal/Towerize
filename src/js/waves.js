@@ -45,7 +45,12 @@ function ptipTick(){const el=$('ptips');if(!el)return;
  const W=c.width;for(const b of el.children){const inn=b.firstChild,w=inn.offsetWidth,h=b.offsetHeight,x=parseFloat(b.style.left),py=+b.dataset.py,of=+b.dataset.of;
   let dx=0;if(x-w/2<4)dx=4-(x-w/2);else if(x+w/2>W-4)dx=W-4-(x+w/2);inn.style.transform=dx?`translateX(${dx.toFixed(0)}px)`:'';
   const dn=py-of-h<4;b.classList.toggle('dn',dn);b.style.top=(dn?py+of:py-of)+'px';}}
-function startWave(){if(!S.tut)romaChk();
+function startWave(){
+ // nunca con una pista abierta, una ventana abierta o, en el tutorial, una torre por elegir
+ if(S.phase!=='build'||RL.open||(typeof hintBlocks==='function'&&hintBlocks()))return;
+ if(S.tut&&S.tut.off){S.msg='Primero elige tu torre.';ui();return;}
+ if(S.tut&&S.tut.lock){S.tut.lock=null;S.tut.lockAsk=null;}
+ if(!S.tut)romaChk();
  {const keep=S.snap;S.snap=null;const dn=S.dn;S.dn=[];try{S.snap=structuredClone(S);}catch(err){S.snap=null;console.warn(err);}S.dn=dn;}
  for(const p of S.portals){p.q=baseQueue(p);
   for(const t of['mini','elite','greyw','bigw','wanted','momdrg'])for(let i=0;i<(p.plan[t]||0);i++)p.q.splice(Math.floor(p.q.length*(.5+Math.random()*.4)),0,t);

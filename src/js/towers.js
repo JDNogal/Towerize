@@ -29,10 +29,10 @@ function build(fx,fy){
  const t=TW[S.tsel];if(!t||(S.deck&&!S.deck.includes(S.tsel)))return;if(!inb(fx,fy)){unsel();return;}
  const q=sqOf(fx,fy),x=q.x,y=q.y;
  if(!inbc(q.kx,q.ky)||S.cc[q.ky][q.kx]!==1||S.occ[x+','+y]){unsel();return;}
- if(S.tut&&S.tut.lock&&!S.tut.lock.some(l=>l.x===x&&l.y===y)){S.msg='En esta ronda, construye tu torre en la casilla especial resaltada.';ui();return;}
+ if(tutLockBlock(x,y))return;
  const cost0=S.half?Math.ceil(t.cost/2):t.cost;if(S.gold<cost0){S.msg='Oro insuficiente.';ui();return;}
  const tw={id:++S.tid,type:S.tsel,lvl:1,x,y,cells:[[x,y]],sq:sqCells(q),inv:t.cost,bph:phKey(),undo:cost0,spec:null,ab:{},acd:{},cd:0,tgt:null,mode:S.dtg[S.tsel]||'core'};
- if(S.tut&&S.tut.lock){S.tut.t2id=tw.id;S.tut.lock=null;}
+ if(S.tut&&S.tut.lock){if(S.tut.lock.some(l=>l.x===x&&l.y===y))S.tut.t2id=tw.id;S.tut.lock=null;S.tut.lockAsk=null;}
  see('tw',tw.type);if(t.dt==='elem')hint('elem','Daño elemental','Esta torre hace <b>daño elemental</b>: ignora tanto la armadura como la resistencia mágica.',tgCell(x,y,1.4));if(t.unit)hint('units','Torres de unidades',[['Esta torre no dispara: manda <b>unidades</b> a pelear y bloquear.',tgCell(x,y,1.4)],['Pulsa la torre y luego 🚩 para mover su <b>bandera</b>.',()=>tw.flag?tgCell(tw.flag.x,tw.flag.y,1.2)():tgCell(x,y,1.4)()]]);if(t.unit)mkSoldiers(tw);S.list.push(tw);for(const[a,b]of tw.sq)S.occ[a+','+b]=tw;
  S.gold-=cost0;S.st.spent+=cost0;if(!(S.built=S.built||[]).includes(tw.type))S.built.push(tw.type);if(!TW[tw.type].uniq)(S.bcnt=S.bcnt||{})[tw.type]=(S.bcnt[tw.type]||0)+1;if(S.half&&t.cost>0){S.half=0;tw.inv=cost0;}tw.rd=S.round;S.st.all.push(tw);S.msg='';S.selT=null;if(TOUCH){M.has=false;HV.key=null;HV.t=0;}ui();
 }

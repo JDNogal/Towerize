@@ -2,14 +2,14 @@
 function ui(){
  try{if(S.msg){const t=String(S.msg).replace(/<[^>]+>/g,'');if(ERRRX.test(t)&&!/^(Elige|Pulsa)/.test(t)){S.msg='';LMSG='';errBubble(t);}}}catch(e){}
  $('panel').style.display=S.hero?'':'none';$('msg').textContent=S.msg;let h='';$('ui').classList.toggle('lock',!!S.aim);
- const sp=[[0,'⏸ Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2']];
+ const sp=[[0,'Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2']];
  $('ctl').innerHTML='';
  const sl=S.speed;const MF=document.body.classList.contains('mfs');if(S.speed>0)S.lspd=S.speed;
- $('mbl').innerHTML=MF?`<button data-a="spdt" class="${sl===0?'on':''}" title="${sl===0?'Reanudar':'Pausa'}">${sl===0?'▶':'⏸'}</button><button data-a="spdc" title="Cambiar velocidad">×${String(S.lspd||1).replace('.',',')}</button>`:sp.map(([v,l])=>`<button class="${sl===v?'on':''}" data-a="spd" data-v="${v}" title="${v===0?'Pausa':'Velocidad '+l}">${v===0?'⏸':l}</button>`).join('');
+ $('mbl').innerHTML=MF?`<button data-a="spdt" class="${sl===0?'on':''}" title="${sl===0?'Reanudar':'Pausa'}">${sl===0?'<i class="pplay"></i>':'<i class="pbar"></i>'}</button><button data-a="spdc" title="Cambiar velocidad">×${String(S.lspd||1).replace('.',',')}</button>`:sp.map(([v,l])=>`<button class="${sl===v?'on':''}" data-a="spd" data-v="${v}" title="${v===0?'Pausa':'Velocidad '+l}">${v===0?'<i class="pbar"></i>':l}</button>`).join('');
  const rcOk=S.phase==='wave'&&S.snap&&(S.rc||0)>0;
  $('mtl').innerHTML=`<button data-a="pause" title="Menú de pausa (Esc)">☰</button><div class="gap"></div>`+
   `<button data-a="retry" class="${S.rask?'warn':''}"${rcOk?'':' disabled'} title="${S.rask?'Pulsa otra vez para reintentar la oleada (gasta 1 carga)':'Reintentar la oleada desde el principio'}">↺<span class="bdg">${S.tut?'∞':S.rc||0}</span></button>`;
- $('mbr').innerHTML=xPanel()+heroPanel()+(S.phase==='build'?`<button class="go${WARM?' arm':''}" data-a="wave">${WARM?'✓ Pulsa otra vez':'Empezar oleada'}</button>`:'');
+ $('mbr').innerHTML=xPanel()+heroPanel()+(S.phase==='build'?`<button class="go${WARM?' arm':''}" data-a="wave" style="position:relative">${WARM?'✓ Pulsa otra vez':'Empezar oleada'}${kcap(kbN('wave'))}</button>`:'');
  if(S.phase==='place'&&(MF||!TOUCH)&&S.pi!=null&&!S.pexp&&S.offers[S.pi]){const o=S.offers[S.pi];h=`<div class="pstrip"><b>${o.n}</b>${payOn()&&pcost(o)?`<span class="gd">${pcost(o)} 🪙</span>`:''}<button data-a="prot" data-i="${S.pi}">⟳ Girar</button><button data-a="pick" data-i="${S.pi}">✕ Cancelar</button><button data-a="pexp" title="Ver las piezas">▲</button></div>`;}
  else if(S.phase==='place'){
   h='<small style="display:block;margin-bottom:12px">'+(S.pi==null?'Elige una pieza. Puedes girarla antes de colocarla.':(BARX.pc=1,'Pulsa un hueco marcado que conecte con el camino.'+(HSEEN.barpc?'':' Vuelve a pulsar la pieza para dejar de elegirla.')))+'</small><div class="prow">'+

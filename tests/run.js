@@ -33,6 +33,9 @@ const T=[
  ['libro_nucleo.js','El libro sale del núcleo y vuelve a él; menú sobre el tablero',['pc','m']],
  ['final_partida.js','Victoria/Derrota como libro: ver mapa, logros, jugar de nuevo',['pc','m']],
  ['guardar_partida.js','Guardar y continuar: construcción, en oleada (vuelve al inicio), borrar al perder, formato antiguo'],
+ ['niveles_vistos.js','Niveles de torre sin spoilers: solo los alcanzados, con aviso'],
+ ['pista_bloquea.js','Con una pista abierta no se puede hacer nada más (ni empezar la oleada)'],
+ ['tutorial_evento.js','El tutorial trae 2 eventos (santuario y mercader) y 2 cofres'],
  ['eter_habla.js','ÉTER habla en partida: fallos, nombre, enfriamiento, opción',['pc','m']],
  ['guardar_ventanas_tutorial.js','Guardar con cofre, evento u oferta abiertos; fin de ronda; tutorial'],
 ];

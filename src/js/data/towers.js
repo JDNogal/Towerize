@@ -196,7 +196,7 @@ const GLV=[['1','Nv 1'],['2','Nv 2'],['3','Nv 3'],['4a','Nv 4 · A'],['4b','Nv 4
 // Estado de una torre en el compendio para un botón global: 1-3 = nivel; 4a/4b = primera/segunda especialización (si no tiene, se queda en su nivel máximo)
 const glState=(k,v)=>v==='4a'?(SPECS[k]?4:3):v==='4b'?(SPECS[k]&&Object.keys(SPECS[k]).length>1?5:3):+v;
 const MAXL=t=>SPECS[t.type]?4:3,nStates=id=>3+(SPECS[id]?Object.keys(SPECS[id]).length:0);
-const cpState=id=>{const n=CP.lv[id]||1;return n<=3?{lv:n,spec:null}:{lv:4,spec:Object.keys(SPECS[id])[n-4]};};
+const cpState=id=>{let n=CP.lv[id]||1;if(typeof tlvOk==='function'&&!tlvOk(id,n))n=1;return n<=3?{lv:n,spec:null}:{lv:4,spec:Object.keys(SPECS[id])[n-4]};};
 const lvMods=(type,lv,spec)=>lv>=4&&TW[type].uniq?{dmg:1.8*1.2,cd:.7,range:1.2,area:1.3,hp:1.8*1.25,pen:0}:lv>=4&&spec?SPECS[type][spec].lv:{...(LV[lv]||LV[1]),pen:0};
 const twm=(k,sp)=>{const T=TW[k];if(!sp)return T;const X=SPECS[k][sp];return{...T,...(X.dt?{dt:X.dt}:{}),...(X.o||{})};};
 const DRAG=[{n:'Huevo de dragón',ic:'🥚',col:'#d9c9a8'},{n:'Dragón bebé',ic:'🐲',col:'#d0603a'},{n:'Dragón adulto',ic:'🐉',col:'#b8402a'},{n:'Dragón anciano',ic:'👑',col:'#8a2a1a'}];

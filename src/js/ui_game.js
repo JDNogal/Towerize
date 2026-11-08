@@ -20,7 +20,7 @@ setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.list){MSG0=null;return;}c
  toast(m);S.msg='';ui();}catch(e){}},200);
 // ---- burbuja roja para los errores: sale donde pulsas y siempre dentro de la pantalla ----
 const LPT={x:0,y:0,t:0};addEventListener('pointerdown',e=>{LPT.x=e.clientX;LPT.y=e.clientY;LPT.t=performance.now();},true);
-const ERRRX=/insuficiente|no se puede|solo se puede|no tienes|necesitas|ya tiene|ya est[áa]n|no quedan|primero termina|en enfriamiento|no hay |bloquead|no puedes|todavía no|aún no|no cabe/i;
+const ERRRX=/insuficiente|no se puede|solo se puede|no tienes|necesitas|ya tiene|ya est[áa]n|no quedan|primero termina|en enfriamiento|no hay |bloquead|no puedes|todavía no|aún no|no cabe|solo durante|se desbloquea a/i;
 let ERRT=0,LMSG='';
 function errBubble(txt){let b=$('errb');if(!b){b=document.createElement('div');b.id='errb';document.body.appendChild(b);}b.textContent=txt;b.classList.add('on');
  const recent=performance.now()-LPT.t<1500,W=innerWidth,H=innerHeight,w=b.offsetWidth,h=b.offsetHeight;let x=recent?LPT.x-w/2:W/2-w/2,y=recent?LPT.y-h-16:64;
@@ -159,6 +159,8 @@ cv.addEventListener('click',e=>{
   bmClose();
   if(S.selT===t&&TM.t===t){S.selT=null;tmClose();ui();return;}
   S.selT=t;tmOpen(t);ui();return;}
+ // con una torre seleccionada, un clic en cualquier otra casilla solo cierra su menú
+ if(S.selT&&!S.aim&&!S.tsel){S.selT=null;try{tmClose();}catch(er){}ui();return;}
  if(S.phase==='place'){if(S.pi==null)return;if(payOn()&&pcost(S.offers[S.pi])>S.gold){S.msg='No tienes oro suficiente para las casillas especiales de esta pieza.';ui();return;}const bx=Math.floor(c.x/(P*K)),by=Math.floor(c.y/(P*K)),free=bx>=0&&by>=0&&bx<BN&&by<BN&&!S.blocks[bx+','+by],r=free?check(bx,by,S.offers[S.pi].p):1;
   if(r===0)placePiece(bx,by);
   else{S.pi=null;S.msg=free?(r===2?'Esa pieza cierra el camino: no deja ningún extremo libre para seguir ampliando.':r===3?'Ahí te meterías en un callejón sin salida: la siguiente pieza cerraría el camino sí o sí. Prueba en otro sitio, gírala o elige otra pieza.':'Ahí no encaja: elige un hueco junto al mapa donde se unan dos caminos.'):'';ui();}}
@@ -166,6 +168,7 @@ cv.addEventListener('click',e=>{
 });
 // un toque fuera del mapa (salvo el menú de torres, el zoom y los paneles de información) quita la torre elegida
 document.addEventListener('click',e=>{
+ if(S&&S.selT&&!S.aim&&e.target!==cv&&e.target.closest&&!e.target.closest('#tmenu,#tip,#side,.kpanel,#zm,#comp,#relic,#hint,#mbr,#mbl,#mtl,#relics')){S.selT=null;try{tmClose();}catch(er){}ui();}
  if(S&&BM.s&&e.target!==cv&&!(e.target.closest&&(e.target.closest('#bmenu')||e.target.closest('#zm'))))bmClose();
  if(!S||(!S.tsel&&S.pi==null))return;const tg=e.target;if(tg===cv)return;
  if(tg.closest&&(tg.closest('[data-a="sel"]')||tg.closest('[data-a="pick"]')||tg.closest('[data-a="prot"]')||tg.closest('#zm')||tg.closest('#tip')||tg.closest('.kpanel')||tg.closest('#side')))return;
@@ -179,11 +182,14 @@ document.addEventListener('click',e=>{
  closePrim();
 },true);
 function rotate(){if(S.phase==='place'&&S.pi!=null){rotO(S.offers[S.pi]);ui();}}
-addEventListener('keydown',e=>{if(RL.open&&RL.hpick&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){heroNav(e.key==='ArrowLeft'?-1:1);e.preventDefault();return;}if(RL.open&&RL.hpick&&e.key==='Enter'&&!HEROES[RL.hsel].lockTxt){chooseHero(RL.hsel);return;}if(RL.open&&RL.hpick&&e.key==='Escape'&&RL.hconf){RL.hconf=null;renderHeroPick();return;}if(RL.open)return;if(e.key==='Escape'&&S.aim&&S.aim!=='uplace'&&S.aim!=='dism'&&S.aim!=='sharp'){S.aim=null;S.mimFor=null;S.aimT=null;S.msg='';renderRelics();ui();return;}if(e.key==='Escape'&&LB.open&&!LB.cover){lbBack();}else if(e.key==='Escape'&&PR.pinned)closePrim();else if(kbIs('rot',e.key.toLowerCase())&&!LB.open&&!S.aim&&keyOK(e))rotate();});
+addEventListener('keydown',e=>{if(RL.open&&RL.hpick&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){heroNav(e.key==='ArrowLeft'?-1:1);e.preventDefault();return;}if(RL.open&&RL.hpick&&e.key==='Enter'&&!HEROES[RL.hsel].lockTxt){chooseHero(RL.hsel);return;}if(RL.open&&RL.hpick&&e.key==='Escape'&&RL.hconf){RL.hconf=null;renderHeroPick();return;}if(e.key==='Escape'&&LB.open&&LB.fromWin){lbBack();return;}if(RL.open)return;if(e.key==='Escape'&&S.aim&&S.aim!=='uplace'&&S.aim!=='dism'&&S.aim!=='sharp'){S.aim=null;S.mimFor=null;S.aimT=null;S.msg='';renderRelics();ui();return;}if(e.key==='Escape'&&LB.open&&!LB.cover){lbBack();}else if(e.key==='Escape'&&PR.pinned)closePrim();else if(kbIs('rot',e.key.toLowerCase())&&!LB.open&&!S.aim&&keyOK(e))rotate();});
 const AIMLOCK=['pick','rot','prot','sel','wave','sell','up','spec','abuy','pin4','close','tgt','tgtall','tgtdef','flag'];
+// botón Nv de una torre: siguiente nivel que el jugador ya ha visto; si no lo ha alcanzado, aviso
+function nextLv(k){const cur=CP.lv[k]||1;let nx=cur>=4?1:cur+1;if(nx===4&&!tlvOk(k,4)&&tlvOk(k,5))nx=5;if(!tlvOk(k,nx)){errBubble('No has alcanzado aún ese nivel.');return 1;}return nx;}
+function otherSpec(k){const cur=CP.lv[k]||1,nx=cur===4?5:4;if(!tlvOk(k,nx)){errBubble('No has alcanzado aún ese nivel.');return cur;}return nx;}
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
- if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','menuask','menu','peek'].includes(a))return;
+ if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','wincomp','tdet','clv','cbr','menuask','menu','peek'].includes(a))return;
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim)||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -239,8 +245,9 @@ function act(e){
  else if(a==='chprev'){CP.hprev=b.dataset.v;if(!hlvOk(CP.hprev,CP.hlv||1))CP.hlv=1;CP.hlv=CP.hlv||1;const es=Object.keys(ET).filter(e=>seen('en',e));if(!es.includes(CP.hen))CP.hen=es[0]||'norm';newHPrev(CP.hprev,CP.hen,CP.hlv);$('comp').scrollTop=0;renderComp();}
  else if(a==='chback'){CP.hprev=null;PHV=null;renderComp();}
  else if(a==='glv'){const sc=$('comp').scrollTop;for(const k in TW)if(!TW[k].uniq)CP.lv[k]=glState(k,b.dataset.v);renderComp();$('comp').scrollTop=sc;}
- else if(a==='cbr'){const sc=$('comp').scrollTop,k=b.dataset.v;CP.lv[k]=(CP.lv[k]||1)===4?5:4;if(CP.prev===k)newPrev(k,CP.pen);renderComp();$('comp').scrollTop=sc;}
- else if(a==='clv'){const sc=$('comp').scrollTop,k=b.dataset.v;CP.lv[k]=(CP.lv[k]||1)>=4?1:(CP.lv[k]||1)+1;if(CP.prev===k)newPrev(k,CP.pen);renderComp();$('comp').scrollTop=sc;}
+ else if((a==='clv'||a==='cbr')&&RL.open&&b.closest('#relic')){/* Nv dentro de «Ver detalles» de la oferta de torres: se cambia ahí mismo */const k=b.dataset.v;CP.lv[k]=a==='cbr'?otherSpec(k):nextLv(k);const c=b.closest('.tcard');if(c)c.innerHTML=shopInfo(k,1);}
+ else if(a==='cbr'){const sc=$('comp').scrollTop,k=b.dataset.v;CP.lv[k]=otherSpec(k);if(CP.prev===k)newPrev(k,CP.pen);renderComp();$('comp').scrollTop=sc;}
+ else if(a==='clv'){const sc=$('comp').scrollTop,k=b.dataset.v;CP.lv[k]=nextLv(k);if(CP.prev===k)newPrev(k,CP.pen);renderComp();$('comp').scrollTop=sc;}
  else if(a==='csupall'){const sc=$('comp').scrollTop,all=BK.every(k=>CP.sup[k]);for(const k of BK)CP.sup[k]=!all;renderComp();$('comp').scrollTop=sc;}
  else if(a==='csup'){const sc=$('comp').scrollTop;CP.sup[b.dataset.v]=!CP.sup[b.dataset.v];renderComp();$('comp').scrollTop=sc;}
  else if(a==='opts'){if(LB.open&&!LB.cover&&OP.open)lbBack();else lbOpen('op');}
@@ -249,7 +256,7 @@ function act(e){
  else if(a==='kbreset'){KB=Object.assign({},KBDEF);KB2=Object.assign({},KB2DEF);kbSave();KBC.on=null;KBC.note='Atajos restablecidos.';renderOpts();}
  else if(a==='otab'){KBC.on=null;KBC.note='';OP.tab=b.dataset.v;OP.keepS=0;renderOpts();}
  else if(a==='sname'){const v=($('cname').value||'').trim().slice(0,16);if(v){STO.name=v;saveSto();toast('ÉTER te llamará <b>'+escH(v)+'</b>.');}renderOpts();}
- else if(a==='preset'){if(!OP.rst){OP.rst=1;renderOpts();return;}for(const k of['rt-alks','rt-story','rt-ach','rt-seen','rt-hlv','rt-evmem','rt-rev','rt-runl','rt-rounds','rt-tutdone','rt-tutchoice','rt-qdone','rt-hints','rt-lasthero','rt-achpin','rt-achbest','rt-cur','rt-hwin','rt-newu','rt-ruse'])try{localStorage.removeItem(k);}catch(e){}
+ else if(a==='preset'){if(!OP.rst){OP.rst=1;renderOpts();return;}for(const k of['rt-alks','rt-story','rt-ach','rt-seen','rt-hlv','rt-evmem','rt-rev','rt-runl','rt-rounds','rt-tutdone','rt-tutchoice','rt-qdone','rt-hints','rt-lasthero','rt-achpin','rt-achbest','rt-cur','rt-hwin','rt-newu','rt-ruse','rt-tlv'])try{localStorage.removeItem(k);}catch(e){}
   // también lo que es progreso dentro de las opciones: desbloqueos y personalización
   for(const k of Object.keys(OPT))if(k.startsWith('u_'))OPT[k]=false;OPT.pal='perg';OPT.core='base';OPT.decoff={};saveOpt();location.reload();}
  else if(a==='opt'){const o=OPTS[+b.dataset.i];OPT[o.key]=!OPT[o.key];saveOpt();if(o.key.startsWith('u_'))applyUnl();renderOpts();}
@@ -281,6 +288,9 @@ function act(e){
  else if(a==='hsel'){if(RL.hsel!==b.dataset.id&&!RL.hdet)RL.dman={};RL.rman={};RL.hsel=b.dataset.id;const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
  else if(a==='towpick'){towerPick(b.dataset.k);}
  else if(a==='towskip'){towerSkip();}
+ else if(a==='towok'){towerOk();}
+ else if(a==='tdet'){/* detalles de todas las torres de la oferta a la vez */RL.tdet=!RL.tdet;document.querySelectorAll('#relic .tof details').forEach(d=>d.open=!!RL.tdet);b.textContent=RL.tdet?'− Ocultar detalles':'+ Ver detalles';}
+ else if(a==='wincomp'){CP.tab=b.dataset.v||'tw';CP.pageR=false;LB.fromWin=1;lbOpen('cp');}
  else if(a==='hnav'){heroNav(+b.dataset.v);}
  else if(a==='tutok'){RL.open=false;$('relic').classList.remove('open');ui();}
  else if(a==='tutmenu'){showMenu();}
@@ -300,7 +310,7 @@ function act(e){
  else if(a==='lbcover'){closeQuick();lbOpen(null,true);}
  else if(a==='help')renderHelp();
  else if(a==='credits')renderCredits();
- else if(a==='ulv'){CP.ulv=CP.ulv||{};CP.ulv[b.dataset.k]=+b.dataset.v;if(CP.prev===b.dataset.k)newPrev(CP.prev,CP.pen);const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}
+ else if(a==='ulv'){CP.ulv=CP.ulv||{};if(lvSec(b.dataset.k,+b.dataset.v)){errBubble('No has alcanzado aún ese nivel.');CP.ulv[b.dataset.k]=1;}else CP.ulv[b.dataset.k]=+b.dataset.v;if(CP.prev===b.dataset.k)newPrev(CP.prev,CP.pen);const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}
  else if(a==='achm'){APAN.open=false;apanTick();lbOpen('lg');}
  else if(a==='apan'){APAN.open=!APAN.open;apanTick();}
  else if(a==='apin'){const id=b.dataset.id;if(PINS.includes(id))PINS=PINS.filter(x=>x!==id);else if(PINS.length>=3){toast('📌 Ya tienes 3 logros fijados: quita uno para fijar este.');return;}else PINS.push(id);savePins();if(CP.open){const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}apanTick(1);}

@@ -21,7 +21,7 @@ await om();await p.waitForTimeout(200);console.log('dbg',await p.evaluate(()=>{t
 console.log('buff',await p.evaluate(([x,y])=>{const t=S.list.filter(o=>!TW[o.type].faro).sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y))[0];return JSON.stringify([t.type,faroBuff(t)]);},[r.t1.x,r.t1.y]));
 await p.evaluate(()=>{S.selT=null;});await p.waitForTimeout(150);await p.screenshot({path:OUT+'/faro3.png'});
 // enfriamiento en oleada
-await p.evaluate(()=>{startWave();});await om();await p.waitForTimeout(200);await p.click('#tmenu .tmb[data-k="flz:0"]');await p.waitForTimeout(100);let t2=await sc(r.t2.x,r.t2.y);await p.mouse.click(t2[0],t2[1]);await p.waitForTimeout(150);
+await p.evaluate(()=>{HQ.q=[];if(HQ.cur)hintClose();startWave();});await om();await p.waitForTimeout(200);await p.click('#tmenu .tmb[data-k="flz:0"]');await p.waitForTimeout(100);let t2=await sc(r.t2.x,r.t2.y);await p.mouse.click(t2[0],t2[1]);await p.waitForTimeout(150);
 console.log('cd',await p.evaluate(id=>JSON.stringify(S.list.find(o=>o.id===id).lzcd),r.id));
 await om();await p.waitForTimeout(250);await p.screenshot({path:OUT+'/faro4.png'});
 console.log(errs);await b.close();})();

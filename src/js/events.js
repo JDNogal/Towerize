@@ -80,9 +80,9 @@ function optHtml(id,o,i,live){const known=memOf(id,i),why=live&&o.req?o.req():''
 function evBanner(){if(S.tut?TUTHS.event:(!OPT.hints||HSEEN.event))return '';hintSeen('event');return '<div class="hban">💡 Cada opción muestra siempre su coste. Lo que obtienes aparece como <b>???</b> hasta que eliges esa opción una vez; a partir de ahí lo recordarás.</div>';}
 function eventCard(id){const E=EVENTS[id];return `<div class="evhead"><span class="evic">${E.ic}</span><b>${E.n}</b></div><small>${E.txt}</small>`+E.opts.map((o,i)=>optHtml(id,o,i,false)).join('');}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
- el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><p>${E.txt}</p>${evBanner()}<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div><small>Evento · el juego está en pausa.</small></div>';}
+ el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><p>${E.txt}</p>${evBanner()}<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div><small>Evento · el juego está en pausa.</small></div>'+wcompBtn('ev');}
 function chooseEvent(i){const id=RL.ev,E=EVENTS[id],o=E&&E.opts[i];if(!o||(o.req&&o.req()))return;const keys=o.run()||[];remember(id,i,keys);
- const el=$('relic');el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><p><b>${o.l}</b></p><div class="evres">${keys.map(chip).join('<br>')}</div><button class="go" data-a="evok">Continuar</button></div>`;
+ const el=$('relic');el.innerHTML=`<div class="evwin"><div class="evhead big"><span class="evic">${E.ic}</span><b>${E.n}</b></div><p><b>${o.l}</b></p><div class="evres">${keys.map(chip).join('<br>')}</div><button class="go" data-a="evok">Continuar</button></div>`+wcompBtn('ev');
  renderRelics();ui();}
 function closeEvent(){RL.open=false;RL.ev=null;$('relic').classList.remove('open');ui();if(S.sharp)startSharp();else if(S.dneed>0)startDism();else if(S.uq.length&&!RL.open)startUPlace();}
 const sharpOk=t=>!TW[t.type].support&&!TW[t.type].faro;
@@ -96,7 +96,10 @@ const furyM=()=>S&&S.fury?1+.25*S.fury:1;
 function furyTick(){if(S.phase!=='wave'||!S.furyAt)return;const F=S.wt>S.furyAt?Math.floor((S.wt-S.furyAt)/10)+1:0;if(F>(S.fury||0)){if(!S.fury){S.msg='¡Furia! Cada 10 s todos ganan +25% de daño.';hint('fury','Furia',[['Cuando una oleada se alarga demasiado, entra en juego la <b>Furia</b>, que hace que <b>todos</b> reciban un <span class="cd">+25% de daño</span> cada 10 s.',tgEl('#sr')],['Así ninguna oleada se atasca.',null]]);}S.fury=F;}}
 // la experiencia viaja en bolitas desde el enemigo (al morir o al escapar) hasta el héroe, y se suma al llegar
 function orbAdd(x,y,v){if(!(v>0)||!S.hero)return;(S.orbs=S.orbs||[]).push({x,y,v,t:0});}
-function orbTick(dt){if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;
+function orbGround(x,y,v){if(!(v>0)||!S.hero||S.pvH||S.pvE)return;(S.gorbs=S.gorbs||[]).push({x,y,v,t:0});}
+const ORBPICK=2*K;// distancia a la que el héroe recoge las bolas del suelo
+function orbTick(dt){if(S.gorbs&&S.gorbs.length&&S.hero&&S.hero.s.hp>0){const q=S.hero.s;S.gorbs=S.gorbs.filter(o=>{o.t+=dt;if(Math.hypot(q.x-o.x,q.y-o.y)<=ORBPICK){(S.orbs=S.orbs||[]).push({x:o.x,y:o.y,v:o.v,t:0});return false;}return true;});}
+if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;
  S.orbs=S.orbs.filter(o=>{o.t+=dt;if(q.hp<=0){o.y+=Math.sin(o.t*4)*dt*.6;return true;}const dx=q.x-o.x,dy=q.y-o.y,d=Math.hypot(dx,dy),sp=(8+o.t*18)*(K/3);
   if(d<=sp*dt+.3){giveXp(H,o.v);return false;}o.x+=dx/d*sp*dt;o.y+=dy/d*sp*dt;return true;});}
 function orbFlush(){if(S.orbs&&S.hero)for(const o of S.orbs)giveXp(S.hero,o.v);S.orbs=[];}
