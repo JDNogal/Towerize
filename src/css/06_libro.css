@@ -213,3 +213,6 @@ body.inmenu.lbsetup canvas#c{filter:none}
 .lbcv .lbnew{margin:0;border:1px solid var(--trim)!important;background:rgba(0,0,0,.22)!important;color:var(--leatxt)!important;border-radius:9px;padding:8px 16px;font-weight:700;font-size:14px}
 .lbcv .lbnew.warn{border-color:#ffb0a0!important;color:#ffb0a0!important}
 .lbcv .lbnew:hover{background:rgba(0,0,0,.35)!important}
+/* ÉTER: línea de sistema bajo la nota */
+.lbsys{margin-top:10px;padding:8px 12px;border-radius:8px;background:var(--paper1);border:1px dashed color-mix(in srgb,#3fa7c9 70%,var(--pline2));font:600 12px/1.45 ui-monospace,Consolas,monospace;color:var(--ink)}
+.lbsys b{color:#1f7f9e;letter-spacing:.12em}:root[data-pal="noche"] .lbsys b,:root[data-pal="amb"] .lbsys b{color:#6fd3f0}

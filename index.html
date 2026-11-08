@@ -486,6 +486,11 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 .sw:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.sw,.sw i{transition:none}}
 
+/* ÉTER: mensajes de sistema en los diálogos (terminal, siempre bien escritos) */
+#dlg .dbx.sys{background:rgba(6,10,14,.96);border-color:#e8b04a;box-shadow:0 0 0 1px rgba(232,176,74,.25),0 10px 30px rgba(0,0,0,.6)}
+#dlg .dbx.sys .dsp{color:#e8b04a;font-family:ui-monospace,Consolas,monospace}
+#dlg .dbx.sys .dtx{font:500 15.5px/1.6 ui-monospace,Consolas,monospace;color:#f3e3b8;min-height:1.6em}
+#dlg .dbx.sys .dtx::before{content:"> ";color:#e8b04a}
 /* ---- móvil en horizontal: mapa a pantalla completa y controles compactos en los bordes ---- */
 body.mfs #game{padding:0!important}
 body.mfs main{display:block!important;height:100%!important}
@@ -835,6 +840,9 @@ body.inmenu.lbsetup canvas#c{filter:none}
 .lbcv .lbnew{margin:0;border:1px solid var(--trim)!important;background:rgba(0,0,0,.22)!important;color:var(--leatxt)!important;border-radius:9px;padding:8px 16px;font-weight:700;font-size:14px}
 .lbcv .lbnew.warn{border-color:#ffb0a0!important;color:#ffb0a0!important}
 .lbcv .lbnew:hover{background:rgba(0,0,0,.35)!important}
+/* ÉTER: línea de sistema bajo la nota */
+.lbsys{margin-top:10px;padding:8px 12px;border-radius:8px;background:var(--paper1);border:1px dashed color-mix(in srgb,#3fa7c9 70%,var(--pline2));font:600 12px/1.45 ui-monospace,Consolas,monospace;color:var(--ink)}
+.lbsys b{color:#1f7f9e;letter-spacing:.12em}:root[data-pal="noche"] .lbsys b,:root[data-pal="amb"] .lbsys b{color:#6fd3f0}
 /* ---- bocadillo de pergamino (sustituye a la etiqueta del navegador) ---- */
 #ttb{position:fixed;left:0;top:0;z-index:200;pointer-events:none;max-width:260px;padding:5px 11px;border-radius:9px;background:var(--paper);border:1.5px solid var(--trim);color:var(--ink);font:600 12.5px/1.35 Inter,system-ui,sans-serif;box-shadow:0 6px 16px rgba(30,15,5,.4);opacity:0;transform:translateY(3px);transition:opacity .1s,transform .1s;white-space:normal;text-align:center}
 #ttb.on{opacity:1;transform:none}
@@ -934,7 +942,7 @@ body.dsk #panel,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v268</div>
+<div id="ver">Towerize v269</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1573,7 +1581,7 @@ function see(t,k){if(!SEEOK||SEEN[t][k])return;SEEN[t][k]=1;try{localStorage.set
 const CP={open:false,tab:'tw',sup:{},prev:null,pen:'norm',flt:{},lv:{},spd:1};
 // Para añadir una opción basta una línea aquí: tab, type (toggle | slider | choice | note), key, def, label y desc.
 const OPTS=[
- {tab:'jg',type:'choice',dev:'pc',label:'Posición del panel de información',get:()=>PM,set:v=>setPM(v),choices:[['right','Derecha'],['left','Izquierda'],['near','Junto al elemento']]},
+ {tab:'jg',type:'choice',dev:'pc',label:'Posición del panel de información',desc:'Dónde aparece la ficha con los datos de lo que señalas: fija a la derecha, fija a la izquierda o junto al propio elemento.',get:()=>PM,set:v=>setPM(v),choices:[['right','Derecha'],['left','Izquierda'],['near','Junto al elemento']]},
  {tab:'jg',type:'toggle',key:'fs',def:true,dev:'touch',show:()=>FSOK,label:'Pantalla completa al empezar partida',desc:'Al pulsar Nueva partida, el juego ocupa toda la pantalla y se queda en horizontal. Siempre puedes entrar o salir con el botón de las cuatro esquinas, junto al zoom.'},
  {tab:'jg',type:'toggle',key:'kcap',def:true,dev:'pc',label:'Teclas sobre los botones',desc:'Muestra encima de los botones del héroe y de las reliquias la tecla que los activa (las que tengas puestas en Atajos).'},
  {tab:'jg',type:'toggle',key:'dnum',def:true,label:'Números de daño',desc:'Muestra sobre los enemigos el daño que reciben. Los golpes seguidos se suman en un solo número que va subiendo, con el color de su tipo de daño; los críticos salen más grandes y con «!».'},
@@ -1583,12 +1591,12 @@ const OPTS=[
  {tab:'jg',type:'toggle',key:'treal',def:false,label:'Mostrar tiempo real',desc:'Muestra arriba el tiempo real que llevas de partida, contando todo: pausas, menús y lo que tardes en pensar.'},
  {tab:'jg',type:'toggle',key:'tcomb',def:false,label:'Mostrar tiempo de combate',desc:'Muestra arriba el tiempo de juego: solo avanza con el juego en marcha y va al ritmo de la velocidad (a ×2 cuenta el doble de rápido; en pausa se detiene).'},
  {tab:'jg',type:'toggle',key:'slow',def:true,label:'Ralentizar el juego al consultar información',desc:'Al mantener el ratón sobre un elemento o un panel, el juego baja hasta ×0,25.',descT:'Al mantener pulsado un elemento o mientras tienes un panel abierto, el juego baja hasta ×0,25.'},
- {tab:'hs',type:'choice',label:'Velocidad de escritura',get:()=>OPT.dspd||'n',set:v=>{OPT.dspd=v;saveOpt();},choices:[['l','Lenta'],['n','Normal'],['r','Rápida']]},
+ {tab:'hs',type:'choice',label:'Velocidad de escritura',desc:'A qué ritmo aparecen las letras en los diálogos de la historia. Puedes pulsar en cualquier momento para ver la frase entera.',get:()=>OPT.dspd||'n',set:v=>{OPT.dspd=v;saveOpt();},choices:[['l','Lenta'],['n','Normal'],['r','Rápida']]},
  {tab:'hs',type:'toggle',key:'dtype',def:true,label:'Efecto máquina de escribir',desc:'El texto de los diálogos aparece letra a letra. Desactivado, aparece de golpe.'},
  {tab:'hs',type:'toggle',key:'dauto',def:false,label:'Avance automático',desc:'Los diálogos pasan solos tras una pausa, sin tener que pulsar.'},
  {tab:'hs',type:'slider',key:'dwait',def:2,min:1,max:5,step:.5,fmt:v=>String(v).replace('.',',')+' s',label:'Pausa del avance automático',desc:'Lo que espera cada diálogo, además de un poco más cuanto más largo es el texto.'},
  {tab:'hs',type:'toggle',key:'dglitch',def:true,label:'Efectos de fallo de ÉTER',desc:'Caracteres corruptos y parpadeos mientras el núcleo está dañado. Desactívalo si te molestan o usas lector de pantalla.'},
- {tab:'hs',type:'toggle',key:'dbig',def:false,label:'Texto de diálogos grande'},
+ {tab:'hs',type:'toggle',key:'dbig',def:false,label:'Texto de diálogos grande',desc:'Letra más grande en los diálogos de la historia, para leerlos con más comodidad.'},
  {tab:'hs',type:'cname',label:'Nombre del capitán'},
  {tab:'un',type:'note',desc:'Para quien quiera probarlo todo sin pasar por el progreso: streaming, pruebas o simplemente jugar a tu aire. Cada sección se puede desactivar cuando quieras: vuelve a bloquearse lo que no hayas conseguido jugando. Los logros siguen funcionando con normalidad.'},
  {tab:'un',type:'toggle',key:'u_tw',def:false,label:'Desbloquear todas las torres',desc:'Todas las torres pueden salirte en las ofertas desde la primera partida.'},
@@ -1602,9 +1610,9 @@ const OPTS=[
  {tab:'un',type:'toggle',key:'u_cpa',def:false,label:'Abrir el Compendio',desc:'Solo da acceso al Compendio, como al conseguir Mente curiosa: verás lo que hayas descubierto y el resto en sombra.'},
  {tab:'un',type:'toggle',key:'u_cp',def:false,label:'Compendio completo',desc:'Desbloquea el Compendio y muestra todas sus entradas, incluidos los niveles secretos de las torres de evento.'},
  {tab:'un',type:'toggle',key:'u_sec',def:false,label:'Revelar logros secretos',desc:'Muestra la descripción de los logros ocultos.'},
- {tab:'vol',type:'slider',key:'vm',def:80,min:0,max:100,step:5,fmt:v=>v+'%',label:'Volumen general'},
- {tab:'vol',type:'slider',key:'vu',def:60,min:0,max:100,step:5,fmt:v=>v+'%',label:'Música'},
- {tab:'vol',type:'slider',key:'vf',def:80,min:0,max:100,step:5,fmt:v=>v+'%',label:'Efectos'},
+ {tab:'vol',type:'slider',key:'vm',def:80,min:0,max:100,step:5,fmt:v=>v+'%',label:'Volumen general',desc:'Volumen de todo el sonido del juego. Los otros dos se aplican sobre este.'},
+ {tab:'vol',type:'slider',key:'vu',def:60,min:0,max:100,step:5,fmt:v=>v+'%',label:'Música',desc:'Volumen de la música. Towerize todavía no tiene música: queda preparado para cuando la tenga.'},
+ {tab:'vol',type:'slider',key:'vf',def:80,min:0,max:100,step:5,fmt:v=>v+'%',label:'Efectos',desc:'Volumen de los efectos: disparos, impactos, botones, avisos y pasar página.'},
  {tab:'vol',type:'note',desc:'Todavía no hay música; los efectos ya suenan.'},
  // {tab:'vol',type:'sfxt',label:'Probar sonidos'}, // pruebas de sonido ocultas: descomentar para volver a mostrarlas
  {tab:'gf',type:'toggle',key:'fps',def:false,label:'Mostrar FPS',desc:'Muestra en una esquina los fotogramas por segundo a los que va el juego (verde: 50 o más; amarillo: 30–49; rojo: menos de 30).'},
@@ -2058,7 +2066,9 @@ function bkItems(t){const L=[];
   if(ev.length){L.push({sec:'De evento'});for(const k of ev)L.push({id:k,dot:ET[k].col,n:ET[k].n,ok:seen('en',k)});}}
  else if(t==='ev'){for(const id of Object.keys(EVENTS))L.push({id,ic:EVENTS[id].ic||'❔',n:EVENTS[id].n,ok:seen('ev',id)});}
  else if(t==='lg'){CP.af=CP.af||'all';CP.as=CP.as||'all';
-  for(const [c,cn] of ACHCATS){const ids=Object.keys(ACH).filter(id=>achVis(id)&&(ACH[id].c||'cl')===c&&(CP.af==='all'||c===CP.af)&&(CP.as==='all'||(CP.as==='ok')===!!ACHS[id]));if(!ids.length)continue;
+  // orden: fijados → en progreso (más avanzados primero) → resto → conseguidos (más recientes primero)
+  const run=inRun(),frac=id=>{const M=APM[id];if(!M)return 0;const v=M.best&&!M.cur?(ACHBEST[id]||0):M.cur&&(run||id==='curious')?M.cur():0;return Math.min(1,v/M.max);},rk=id=>ACHS[id]?3:PINS.includes(id)?0:!achFound(id)?2.5:frac(id)>0?1:2,ord=(a,b)=>rk(a)-rk(b)||(rk(a)===1?frac(b)-frac(a):0)||(rk(a)===3?ACHS[b]-ACHS[a]:0);
+  for(const [c,cn] of ACHCATS){const ids=Object.keys(ACH).filter(id=>achVis(id)&&(ACH[id].c||'cl')===c&&(CP.af==='all'||c===CP.af)&&(CP.as==='all'||(CP.as==='ok')===!!ACHS[id])).sort(ord);if(!ids.length)continue;
    L.push({sec:cn});for(const id of ids){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||'🏅'):'❔',n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd,pin:PINS.includes(id)});}}
   const pn=PINS.filter(id=>ACH[id]&&achVis(id)&&!ACHS[id]&&achFound(id)&&(CP.as!=='ok'));if(pn.length)L.unshift({sec:'📌 Fijados'},...pn.map(id=>({id,ic:ACH[id].ic||'🏅',n:ACH[id].n,ok:true,pin:true})));
   const rest=Object.keys(ACH).filter(id=>achVis(id)&&!ACHCATS.some(([c])=>(ACH[id].c||'cl')===c)&&(CP.af==='all')&&(CP.as==='all'||(CP.as==='ok')===!!ACHS[id]));
@@ -4904,7 +4914,7 @@ function helpParts(){
  const marks={list:LBHELP.map(([k,l,i])=>[k,l,i]),cur:LB.hp,act:'lbhp'};
  return {marks,spread:`<h3>${sec[2]} ${sec[1]}</h3><div class="bksub">Ayuda</div><div class="lbcols">${h}</div>`,key:'hp'+LB.hp};
 }
-// ---- preparación de la partida: cómo aprender → era → duración → héroe (opción B: un marcapáginas por héroe) ----
+// ---- preparación de la partida: cómo aprender → era (marcapáginas = eras) → duración (sin marcapáginas) → héroe (un marcapáginas por héroe) ----
 const LBSTEPS=[['era','Era','🌍'],['rounds','Duración','⏳']];
 function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
  const toMenu=`<button class="lbbk" data-a="lbcover">‹ Menú</button>`;
@@ -4915,12 +4925,12 @@ function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
  if(st==='skip')return {marks:null,key:'skip',left:`<h3>Tutorial saltado</h3><div class="bksub">Las pistas están desactivadas</div><p>Si quieres aprender el juego, puedes ver cualquiera de los dos tutoriales o activar las pistas cuando quieras desde <b>Ayuda</b>.</p>`,
   right:`<div class="lbdet"><span class="lbdic">⏭</span><h4>Listo</h4><p>Vamos a preparar tu primera partida.</p></div>`,footL:toMenu,footR:`<button class="gbtn" data-a="skipok">Continuar ›</button>`};
  if(st==='era'){const [ln]=ERALINE(),done=STO.p>=3;
-  return {marks:{list:LBSTEPS,cur:'era',act:'lbprep'},key:'era',
+  return {marksHTML:`<div class="bkmarks"><button class="bkmk on" title="Era Fantástica">🐉</button></div>`,key:'era',
    left:`<h3>Era Fantástica</h3><div class="bksub">Nueva partida · 1 de 3</div><div class="era lbera"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small><p style="margin-top:16px">Cada era trae sus propios héroes, torres, enemigos, reliquias y eventos. Gana partidas para reparar el núcleo y abrir el camino a la siguiente.</p>${done?'<div class="eline"><span class="on">Fantástica</span><span title="Próximamente">???</span></div>':''}</div>`,
-   right:`<div class="lbeter"><div class="lbeh"><span class="lbei">💠</span><b>ÉTER</b></div><p>${escH(ln.replace(/\{N\}/g,nm))}</p></div>`,
+   right:`<div class="lbeter"><div class="lbeh"><span class="lbei">💠</span><b>ÉTER</b></div><p>${escH(ln.replace(/\{N\}/g,nm))}</p></div><div class="lbsys"><b>SISTEMA</b> · Integridad del núcleo: ${[9,38,71,100][Math.min(3,STO.p)]} %${STO.p>=3?' · Navegación parcial operativa':' · Fragmentos integrados: '+Math.min(3,STO.p)+' de 3'}</div>`,
    footL:toMenu,footR:`<button class="gbtn" data-a="erago">Continuar ›</button>`};}
  if(st==='rounds'){const mx=rMax();
-  return {marks:{list:LBSTEPS,cur:'rounds',act:'lbprep'},key:'rounds',after:()=>updSetup(),
+  return {marks:null,key:'rounds',after:()=>updSetup(),
    left:`<h3>Duración</h3><div class="bksub">Nueva partida · 2 de 3</div><div class="rsel lbrsel"><button data-a="rnd" data-v="-1">−</button><div><b id="rnum"></b><small>rondas</small></div><button data-a="rnd" data-v="1">+</button></div><input type="range" id="rrange" min="15" max="${mx}" step="1"${mx<=15?' disabled':''}><div class="rinfo" id="rinfo"></div>`,
    right:`<div class="lbdet"><span class="lbdic">⏳</span><h4>¿Cuánto quieres aguantar?</h4><p>Más rondas: mapa más grande, más cofres y un segundo jefe al final. La duración se desbloquea de 5 en 5 ganando partidas.</p></div>`,
    footL:`<button class="lbbk" data-a="lbprep" data-v="era">‹ Era</button>`,footR:`<button class="gbtn" data-a="begin">Elegir héroe ›</button>`};}
@@ -5171,8 +5181,8 @@ setInterval(()=>{try{if(!DLG.on||!OPT.dglitch)return;const L=DLG.lines&&DLG.line
   if(ix.length){const i=ix[Math.floor(Math.random()*ix.length)],n=Math.random()<.3?Math.min(3,sh.length-i):1,G='▒░▓█';let c='';for(let k=0;k<n;k++)c+=G[Math.floor(Math.random()*G.length)];DLG.gx={i,c,u:performance.now()+90+Math.random()*120};dlgRender();}}
  if(L.g>=2&&Math.random()<(L.g===3?.018:.009)){const b=el.querySelector('.dbx');if(b){b.classList.remove('gk');void b.offsetWidth;b.classList.add('gk');}}}catch(e){}},110);
 function playDialog(lines,done){DLG.lines=lines;DLG.i=-1;DLG.done=done;DLG.on=true;const el=$('dlg');el.classList.add('on');el.classList.toggle('big',!!OPT.dbig);dlgNext();}
-function dlgShow(){const L=DLG.lines[DLG.i],el=$('dlg'),nm=STO.name||'Piloto',txt=(OPT.dglitch&&L.gt?L.gt:L.t).replace(/\{N\}/g,nm);DLG.full=txt;DLG.n=OPT.dtype===false?txt.length:0;DLG.t=0;DLG.wait=0;
- el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}<div class="dnx">▶ continuar</div></div>`;
+function dlgShow(){const L0=DLG.lines[DLG.i],L=L0.sys?{...L0,sp:'SISTEMA',g:0,gt:null}:L0,el=$('dlg'),nm=STO.name||'Piloto',txt=(OPT.dglitch&&L.gt?L.gt:L.t).replace(/\{N\}/g,nm);DLG.full=txt;DLG.n=OPT.dtype===false?txt.length:0;DLG.t=0;DLG.wait=0;
+ el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L0.sys?' sys':''}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}<div class="dnx">▶ continuar</div></div>`;
  dlgRender();if(L.input)setTimeout(()=>{const i=$('dname');if(i)i.focus();},50);}
 function dlgRender(){const el=$('dlg'),t=el.querySelector('.dtx');if(!t)return;const sh=DLG.full.slice(0,Math.floor(DLG.n)),gx=DLG.gx;if(gx&&gx.i<sh.length&&performance.now()<gx.u){t.textContent='';t.append(sh.slice(0,gx.i));const sp=document.createElement('span');sp.className='gch';sp.textContent=gx.c;t.append(sp,sh.slice(gx.i+gx.c.length));}else t.textContent=sh;const fin=DLG.n>=DLG.full.length,L=DLG.lines[DLG.i];el.querySelector('.dnx').classList.toggle('on',fin&&!L.input);}
 function dlgNext(){const L=DLG.lines[DLG.i];if(L&&L.input&&!STO.name)return;DLG.i++;if(DLG.i>=DLG.lines.length){dlgEnd();return;}dlgShow();}
@@ -5188,14 +5198,15 @@ addEventListener('keydown',e=>{if(!DLG.on)return;if(e.target&&e.target.id==='dna
 // textos (g = nivel de fallo; {N} = nombre del capitán)
 const STORY={
  intro:[{t:'El salto debía durar un parpadeo. Duró una eternidad.'},
+  {sys:1,t:'Salto temporal interrumpido. Integridad del núcleo: 9 %. Navegación: sin señal.'},
   {sp:'ÉTER',g:3,gt:'Pi-Piloto, ¿me recibe? Daños crít▒cos en el núcleo. No reconozco esta fe░ha… ni este siglo. [ERR 0x3F]',t:'Piloto, ¿me recibe? Daños críticos en el núcleo. No reconozco esta fecha… ni este siglo.'},
   {sp:'ÉTER',g:3,gt:'Hay algo más. Mi energía está atrayendo a… cri-criaturas. Nos han locali▓ado.',t:'Hay algo más. Mi energía está atrayendo a… criaturas. Nos han localizado.'},
   {sp:'ÉTER',g:3,gt:'Si el nú-núcleo cae, nos quedaremos aquí para siempre. Defiéndalo. Yo me encargaré de repar░rme… pieza a pieza.',t:'Si el núcleo cae, nos quedaremos aquí para siempre. Defiéndalo. Yo me encargaré de repararme… pieza a pieza.'}],
- p1:[{sp:'ÉTER',g:2,gt:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circ▒itos, Pi-Piloto. Pieza integrada: 1 de 3. [ERR 0x1C]',t:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circuitos, Piloto. Pieza integrada: 1 de 3.'},
+ p1:[{sys:1,t:'Fragmento cristalino detectado. Integración 1 de 3 completada. Integridad del núcleo: 38 %.'},{sp:'ÉTER',g:2,gt:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circ▒itos, Pi-Piloto. Pieza integrada: 1 de 3. [ERR 0x1C]',t:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circuitos, Piloto. Pieza integrada: 1 de 3.'},
   {sp:'ÉTER',g:2,gt:'Sistemas de memoria restau▓ados al 12%. Re-recuerdo… una ciudad. Nuestro hogar. Y un destello que lo cubría todo.',t:'Sistemas de memoria restaurados al 12%. Recuerdo… una ciudad. Nuestro hogar. Y un destello que lo cubría todo.'}],
- p2:[{sp:'ÉTER',g:1,gt:'Segunda pieza integrada. Mis sens░res vuelven a funcionar, Piloto.',t:'Segunda pieza integrada. Mis sensores vuelven a funcionar, Piloto.'},
+ p2:[{sys:1,t:'Integración 2 de 3 completada. Integridad del núcleo: 71 %. Sensores: en línea.'},{sp:'ÉTER',g:1,gt:'Segunda pieza integrada. Mis sens░res vuelven a funcionar, Piloto.',t:'Segunda pieza integrada. Mis sensores vuelven a funcionar, Piloto.'},
   {sp:'ÉTER',g:1,gt:'Estas criaturas no pertenecen a esta era. Lle▒an por grietas. Algo ha roto el tiempo.',t:'Estas criaturas no pertenecen a esta era. Llegan por grietas. Algo ha roto el tiempo.'}],
- p3:[{sp:'ÉTER',g:0,t:'Tercera pieza integrada. Núcleo estable.'},
+ p3:[{sys:1,t:'Integración 3 de 3 completada. Integridad del núcleo: 100 %. Memoria: recuperación parcial.'},{sp:'ÉTER',g:0,t:'Tercera pieza integrada. Núcleo estable.'},
   {sp:'ÉTER',g:0,t:'Registros de tripulación restaurados. Rango: Capitán. Nombre: [datos corruptos]…'},
   {sp:'ÉTER',g:0,t:'Lo siento, Capitán. Hay huecos en mi memoria. ¿Cómo debo llamarle?',input:1},
   {sp:'ÉTER',g:0,t:'{N}… Sí. Ahora lo recuerdo.'},

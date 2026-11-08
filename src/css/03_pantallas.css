@@ -117,3 +117,8 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 .sw:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.sw,.sw i{transition:none}}
 
+/* ÉTER: mensajes de sistema en los diálogos (terminal, siempre bien escritos) */
+#dlg .dbx.sys{background:rgba(6,10,14,.96);border-color:#e8b04a;box-shadow:0 0 0 1px rgba(232,176,74,.25),0 10px 30px rgba(0,0,0,.6)}
+#dlg .dbx.sys .dsp{color:#e8b04a;font-family:ui-monospace,Consolas,monospace}
+#dlg .dbx.sys .dtx{font:500 15.5px/1.6 ui-monospace,Consolas,monospace;color:#f3e3b8;min-height:1.6em}
+#dlg .dbx.sys .dtx::before{content:"> ";color:#e8b04a}

@@ -105,7 +105,7 @@ function helpParts(){
  const marks={list:LBHELP.map(([k,l,i])=>[k,l,i]),cur:LB.hp,act:'lbhp'};
  return {marks,spread:`<h3>${sec[2]} ${sec[1]}</h3><div class="bksub">Ayuda</div><div class="lbcols">${h}</div>`,key:'hp'+LB.hp};
 }
-// ---- preparación de la partida: cómo aprender → era → duración → héroe (opción B: un marcapáginas por héroe) ----
+// ---- preparación de la partida: cómo aprender → era (marcapáginas = eras) → duración (sin marcapáginas) → héroe (un marcapáginas por héroe) ----
 const LBSTEPS=[['era','Era','🌍'],['rounds','Duración','⏳']];
 function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
  const toMenu=`<button class="lbbk" data-a="lbcover">‹ Menú</button>`;
@@ -116,12 +116,12 @@ function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
  if(st==='skip')return {marks:null,key:'skip',left:`<h3>Tutorial saltado</h3><div class="bksub">Las pistas están desactivadas</div><p>Si quieres aprender el juego, puedes ver cualquiera de los dos tutoriales o activar las pistas cuando quieras desde <b>Ayuda</b>.</p>`,
   right:`<div class="lbdet"><span class="lbdic">⏭</span><h4>Listo</h4><p>Vamos a preparar tu primera partida.</p></div>`,footL:toMenu,footR:`<button class="gbtn" data-a="skipok">Continuar ›</button>`};
  if(st==='era'){const [ln]=ERALINE(),done=STO.p>=3;
-  return {marks:{list:LBSTEPS,cur:'era',act:'lbprep'},key:'era',
+  return {marksHTML:`<div class="bkmarks"><button class="bkmk on" title="Era Fantástica">🐉</button></div>`,key:'era',
    left:`<h3>Era Fantástica</h3><div class="bksub">Nueva partida · 1 de 3</div><div class="era lbera"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small><p style="margin-top:16px">Cada era trae sus propios héroes, torres, enemigos, reliquias y eventos. Gana partidas para reparar el núcleo y abrir el camino a la siguiente.</p>${done?'<div class="eline"><span class="on">Fantástica</span><span title="Próximamente">???</span></div>':''}</div>`,
-   right:`<div class="lbeter"><div class="lbeh"><span class="lbei">💠</span><b>ÉTER</b></div><p>${escH(ln.replace(/\{N\}/g,nm))}</p></div>`,
+   right:`<div class="lbeter"><div class="lbeh"><span class="lbei">💠</span><b>ÉTER</b></div><p>${escH(ln.replace(/\{N\}/g,nm))}</p></div><div class="lbsys"><b>SISTEMA</b> · Integridad del núcleo: ${[9,38,71,100][Math.min(3,STO.p)]} %${STO.p>=3?' · Navegación parcial operativa':' · Fragmentos integrados: '+Math.min(3,STO.p)+' de 3'}</div>`,
    footL:toMenu,footR:`<button class="gbtn" data-a="erago">Continuar ›</button>`};}
  if(st==='rounds'){const mx=rMax();
-  return {marks:{list:LBSTEPS,cur:'rounds',act:'lbprep'},key:'rounds',after:()=>updSetup(),
+  return {marks:null,key:'rounds',after:()=>updSetup(),
    left:`<h3>Duración</h3><div class="bksub">Nueva partida · 2 de 3</div><div class="rsel lbrsel"><button data-a="rnd" data-v="-1">−</button><div><b id="rnum"></b><small>rondas</small></div><button data-a="rnd" data-v="1">+</button></div><input type="range" id="rrange" min="15" max="${mx}" step="1"${mx<=15?' disabled':''}><div class="rinfo" id="rinfo"></div>`,
    right:`<div class="lbdet"><span class="lbdic">⏳</span><h4>¿Cuánto quieres aguantar?</h4><p>Más rondas: mapa más grande, más cofres y un segundo jefe al final. La duración se desbloquea de 5 en 5 ganando partidas.</p></div>`,
    footL:`<button class="lbbk" data-a="lbprep" data-v="era">‹ Era</button>`,footR:`<button class="gbtn" data-a="begin">Elegir héroe ›</button>`};}

@@ -16,8 +16,8 @@ setInterval(()=>{try{if(!DLG.on||!OPT.dglitch)return;const L=DLG.lines&&DLG.line
   if(ix.length){const i=ix[Math.floor(Math.random()*ix.length)],n=Math.random()<.3?Math.min(3,sh.length-i):1,G='▒░▓█';let c='';for(let k=0;k<n;k++)c+=G[Math.floor(Math.random()*G.length)];DLG.gx={i,c,u:performance.now()+90+Math.random()*120};dlgRender();}}
  if(L.g>=2&&Math.random()<(L.g===3?.018:.009)){const b=el.querySelector('.dbx');if(b){b.classList.remove('gk');void b.offsetWidth;b.classList.add('gk');}}}catch(e){}},110);
 function playDialog(lines,done){DLG.lines=lines;DLG.i=-1;DLG.done=done;DLG.on=true;const el=$('dlg');el.classList.add('on');el.classList.toggle('big',!!OPT.dbig);dlgNext();}
-function dlgShow(){const L=DLG.lines[DLG.i],el=$('dlg'),nm=STO.name||'Piloto',txt=(OPT.dglitch&&L.gt?L.gt:L.t).replace(/\{N\}/g,nm);DLG.full=txt;DLG.n=OPT.dtype===false?txt.length:0;DLG.t=0;DLG.wait=0;
- el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}<div class="dnx">▶ continuar</div></div>`;
+function dlgShow(){const L0=DLG.lines[DLG.i],L=L0.sys?{...L0,sp:'SISTEMA',g:0,gt:null}:L0,el=$('dlg'),nm=STO.name||'Piloto',txt=(OPT.dglitch&&L.gt?L.gt:L.t).replace(/\{N\}/g,nm);DLG.full=txt;DLG.n=OPT.dtype===false?txt.length:0;DLG.t=0;DLG.wait=0;
+ el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L0.sys?' sys':''}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}<div class="dnx">▶ continuar</div></div>`;
  dlgRender();if(L.input)setTimeout(()=>{const i=$('dname');if(i)i.focus();},50);}
 function dlgRender(){const el=$('dlg'),t=el.querySelector('.dtx');if(!t)return;const sh=DLG.full.slice(0,Math.floor(DLG.n)),gx=DLG.gx;if(gx&&gx.i<sh.length&&performance.now()<gx.u){t.textContent='';t.append(sh.slice(0,gx.i));const sp=document.createElement('span');sp.className='gch';sp.textContent=gx.c;t.append(sp,sh.slice(gx.i+gx.c.length));}else t.textContent=sh;const fin=DLG.n>=DLG.full.length,L=DLG.lines[DLG.i];el.querySelector('.dnx').classList.toggle('on',fin&&!L.input);}
 function dlgNext(){const L=DLG.lines[DLG.i];if(L&&L.input&&!STO.name)return;DLG.i++;if(DLG.i>=DLG.lines.length){dlgEnd();return;}dlgShow();}
@@ -33,14 +33,15 @@ addEventListener('keydown',e=>{if(!DLG.on)return;if(e.target&&e.target.id==='dna
 // textos (g = nivel de fallo; {N} = nombre del capitán)
 const STORY={
  intro:[{t:'El salto debía durar un parpadeo. Duró una eternidad.'},
+  {sys:1,t:'Salto temporal interrumpido. Integridad del núcleo: 9 %. Navegación: sin señal.'},
   {sp:'ÉTER',g:3,gt:'Pi-Piloto, ¿me recibe? Daños crít▒cos en el núcleo. No reconozco esta fe░ha… ni este siglo. [ERR 0x3F]',t:'Piloto, ¿me recibe? Daños críticos en el núcleo. No reconozco esta fecha… ni este siglo.'},
   {sp:'ÉTER',g:3,gt:'Hay algo más. Mi energía está atrayendo a… cri-criaturas. Nos han locali▓ado.',t:'Hay algo más. Mi energía está atrayendo a… criaturas. Nos han localizado.'},
   {sp:'ÉTER',g:3,gt:'Si el nú-núcleo cae, nos quedaremos aquí para siempre. Defiéndalo. Yo me encargaré de repar░rme… pieza a pieza.',t:'Si el núcleo cae, nos quedaremos aquí para siempre. Defiéndalo. Yo me encargaré de repararme… pieza a pieza.'}],
- p1:[{sp:'ÉTER',g:2,gt:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circ▒itos, Pi-Piloto. Pieza integrada: 1 de 3. [ERR 0x1C]',t:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circuitos, Piloto. Pieza integrada: 1 de 3.'},
+ p1:[{sys:1,t:'Fragmento cristalino detectado. Integración 1 de 3 completada. Integridad del núcleo: 38 %.'},{sp:'ÉTER',g:2,gt:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circ▒itos, Pi-Piloto. Pieza integrada: 1 de 3. [ERR 0x1C]',t:'El jefe ha dejado un fragmento cristalino. Es compatible con mis circuitos, Piloto. Pieza integrada: 1 de 3.'},
   {sp:'ÉTER',g:2,gt:'Sistemas de memoria restau▓ados al 12%. Re-recuerdo… una ciudad. Nuestro hogar. Y un destello que lo cubría todo.',t:'Sistemas de memoria restaurados al 12%. Recuerdo… una ciudad. Nuestro hogar. Y un destello que lo cubría todo.'}],
- p2:[{sp:'ÉTER',g:1,gt:'Segunda pieza integrada. Mis sens░res vuelven a funcionar, Piloto.',t:'Segunda pieza integrada. Mis sensores vuelven a funcionar, Piloto.'},
+ p2:[{sys:1,t:'Integración 2 de 3 completada. Integridad del núcleo: 71 %. Sensores: en línea.'},{sp:'ÉTER',g:1,gt:'Segunda pieza integrada. Mis sens░res vuelven a funcionar, Piloto.',t:'Segunda pieza integrada. Mis sensores vuelven a funcionar, Piloto.'},
   {sp:'ÉTER',g:1,gt:'Estas criaturas no pertenecen a esta era. Lle▒an por grietas. Algo ha roto el tiempo.',t:'Estas criaturas no pertenecen a esta era. Llegan por grietas. Algo ha roto el tiempo.'}],
- p3:[{sp:'ÉTER',g:0,t:'Tercera pieza integrada. Núcleo estable.'},
+ p3:[{sys:1,t:'Integración 3 de 3 completada. Integridad del núcleo: 100 %. Memoria: recuperación parcial.'},{sp:'ÉTER',g:0,t:'Tercera pieza integrada. Núcleo estable.'},
   {sp:'ÉTER',g:0,t:'Registros de tripulación restaurados. Rango: Capitán. Nombre: [datos corruptos]…'},
   {sp:'ÉTER',g:0,t:'Lo siento, Capitán. Hay huecos en mi memoria. ¿Cómo debo llamarle?',input:1},
   {sp:'ÉTER',g:0,t:'{N}… Sí. Ahora lo recuerdo.'},
