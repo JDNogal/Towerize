@@ -830,6 +830,11 @@ body.inmenu.lbsetup canvas#c{filter:none}
 .lbhpc .hnm{font:700 30px/1.1 Georgia,"Times New Roman",serif;color:var(--inkh);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 /* logo de Claude: letras oscuras sobre papel claro, letras blancas sobre papel oscuro (Noche, Ámbar) */
 .crcl .lgd{display:none}:root[data-pal="noche"] .crcl .lgl,:root[data-pal="amb"] .crcl .lgl{display:none}:root[data-pal="noche"] .crcl .lgd,:root[data-pal="amb"] .crcl .lgd{display:inline}
+/* ---- partida guardada en la portada ---- */
+.lbsv{margin:8px 0 10px;font:600 12.5px Inter,system-ui,sans-serif;color:color-mix(in srgb,var(--leatxt) 80%,var(--lea))}
+.lbcv .lbnew{margin:0;border:1px solid var(--trim)!important;background:rgba(0,0,0,.22)!important;color:var(--leatxt)!important;border-radius:9px;padding:8px 16px;font-weight:700;font-size:14px}
+.lbcv .lbnew.warn{border-color:#ffb0a0!important;color:#ffb0a0!important}
+.lbcv .lbnew:hover{background:rgba(0,0,0,.35)!important}
 /* ---- bocadillo de pergamino (sustituye a la etiqueta del navegador) ---- */
 #ttb{position:fixed;left:0;top:0;z-index:200;pointer-events:none;max-width:260px;padding:5px 11px;border-radius:9px;background:var(--paper);border:1.5px solid var(--trim);color:var(--ink);font:600 12.5px/1.35 Inter,system-ui,sans-serif;box-shadow:0 6px 16px rgba(30,15,5,.4);opacity:0;transform:translateY(3px);transition:opacity .1s,transform .1s;white-space:normal;text-align:center}
 #ttb.on{opacity:1;transform:none}
@@ -929,7 +934,7 @@ body.dsk #panel,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v267</div>
+<div id="ver">Towerize v268</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1856,7 +1861,8 @@ function useRelic(id){
 function openRelic(){
  if(S.noChest){S.noChest=0;S.msg='El cofre está vacío: el mercader ya se había llevado lo que había dentro.';ui();return;}
  const pool=S.tut?RELICS.filter(r=>['horn','lens','anvil'].includes(r.id)&&!S.relics.includes(r.id)):shuf(RELICS.filter(r=>!r.ini&&!r.evr&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id)));RL.choices=pool.slice(0,S.chest4?4:3);S.chest4=0;RL.choices=RL.choices.map(r=>r.id);RL.choices.forEach(id=>see('rl',id));
- if(!RL.choices.length)return;
+ if(!RL.choices.length)return;renderRelicPick();}
+function renderRelicPick(){
  closePrim();RL.open=true;$('relic').classList.add('open');$('relic').scrollTop=0;
  $('relic').innerHTML='<b style="font-size:16px">¡Cofre abierto!</b><br><small>Elige una reliquia para esta partida. El juego está en pausa.</small><div class="cgrid">'+
   RL.choices.map(id=>{const r=RELIC[id];return `<div class="ce rcard" style="text-align:left"><div class="ric" style="background:${r.col}">${r.ic}</div><b style="display:block;text-align:center">${r.n}</b>${rcdTag(id)}${rdesc(id)}<button data-a="relic" data-id="${id}">Elegir</button></div>`;}).join('')+
@@ -2535,7 +2541,7 @@ function hpanTick(){if(S&&S.list){const xs=xPanel().replace(/<span class="hcdv"[
 function habInfo(k){const H=S.hero;if(!H)return '';const A=HAB[H.id][k],w=habOk(k);return `<div class="ttl"><b>${A.ic} ${A.n}</b> · ${k==='u'?'Definitiva (Nv 10)':'Activa básica'}</div><small style="margin:0">${A.t()}</small>`+R('ccl','Enfriamiento',(k==='u'?HUCD:HBCD)+' s')+((HDUR[H.id]||{})[k]?R('cr',kst('dur','Duración',''),HDUR[H.id][k]):'')+(w?`<small class="cr" style="margin-top:4px">${w}</small>`:'');}
 function heroAbHtml(id){const A=HAB[id];if(!A)return '';const row=(lv,a,tp,dk)=>`<div class="hab"><span class="habi">${a.ic}</span><div><b>${a.n}</b> <small style="display:inline">· ${tp}${(HDUR[id]||{})[dk]?' · duración '+HDUR[id][dk]:''}</small><div class="hrt">${a.t()}</div></div></div>`;
  return `<div class="esec" style="margin-top:12px">Habilidades</div>`+row(1,A.b,'Activa básica · desde el inicio · 20 s','b')+row(4,A.p4,'Pasiva · Nv 4','p4')+row(8,A.p8,'Pasiva · Nv 8','p8')+row(10,A.u,'Definitiva · Nv 10 · 90 s','u')+'<small>Las activas solo se pueden usar durante la oleada y con el héroe vivo.</small>';}
-function startTut(){SEEOK=true;TUTON=true;TUTR=0;TUTHS={};ROUNDS=10;CHESTS=1;setSize(5);$('menu').classList.remove('setup');
+function startTut(){SEEOK=true;saveClear();TUTON=true;TUTR=0;TUTHS={};ROUNDS=10;CHESTS=1;setSize(5);$('menu').classList.remove('setup');
  if(TOUCH&&OPT.fs)enterFS();lbClose(false);document.body.classList.remove('inmenu');$('endscr').classList.remove('open');init();}
 function lockSquares(bk){if(!bk)return[];const[bx,by]=bk.split(',').map(Number),o=[];for(let j=0;j<P;j++)for(let i=0;i<P;i++){const kx=bx*P+i,ky=by*P+j;if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+1,y:ky*K+1};if(S.buff[q.y]&&S.buff[q.y][q.x]&&!S.occ[q.x+','+q.y])o.push(q);}return o;}
 function tutOffer(list,title,txt){S.tut.off={list,title,txt};}
@@ -2640,7 +2646,7 @@ function drawQuick(now){const cv=document.getElementById('qsc');if(!cv)return;co
  if(i===5){const p=Math.min(1,(t%4)/2);path([[20,110],[lerp(60,300,p),110]]);c.font='34px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textAlign='center';c.textBaseline='middle';c.fillText(p>=1?'🎁':'📦',330,110);if(p>=1){const q=Math.min(1,((t%4)-2)/.6);['🔭','📯','❄️'].forEach((ic,k)=>{c.globalAlpha=q;c.font='24px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.fillText(ic,330+(k-1)*45*q,60-20*q);c.globalAlpha=1;});}txt('?',120,40,'#c9a0ff',26);}
  if(i===6){path([[20,140],[400,140]]);const p=((t*.12)%1),ex=lerp(20,400,p);dot(ex,140,13,'#a04a7a');c.strokeStyle='#cfd5e0';c.lineWidth=3;c.beginPath();c.arc(ex,140,16,0,7);c.stroke();tower(120,70,'🏹');tower(300,70,'⚡','#c27aff');if((t*2)%1<.3)txt('4',ex-14,112,'#fff',12);if((t*1)%1<.35)txt('12',ex+14,108,'#c9a0ff',16);txt('Físico: la armadura lo reduce',120,30,'#d8d8d8',12);txt('Mágico: la ignora',300,30,'#c9a0ff',12);}
 }
-function startGame(n){SEEOK=true;
+function startGame(n){SEEOK=true;saveClear();
  TUTON=false;
  if(n)MR=n;ROUNDS=MR;CHESTS=chestsFor(ROUNDS);setSize(mapFor(ROUNDS));$('menu').classList.remove('setup');
  if(TOUCH&&OPT.fs)enterFS();
@@ -4578,7 +4584,7 @@ addEventListener('keydown',e=>{if(!kbIs('peek',e.key.toLowerCase())||!RL.open||R
 
 // ---- menú de pausa: es la portada del libro (ver libro.js) ----
 const PMU={open:false,ask:0,spd:1};
-function openPause(){if(!S)return;PMU.ask=0;lbOpen(null,true);}
+function openPause(){if(!S)return;PMU.ask=0;PMU.svask=0;lbOpen(null,true);}
 function closePause(resume){lbClose(resume);}
 function renderPause(){lbRender();}
 
@@ -4676,7 +4682,9 @@ function act(e){
  else if(a==='lbhp'){LB.hp=b.dataset.v;LB.note='';CP.pageR=false;lbRender();}
  else if(a==='lbgo'){const [ar,tb]=b.dataset.v.split(':');if(ar==='op'&&tb)OP.tab=tb;lbOpen(ar);}
  else if(a==='pfs'){toggleFS();setTimeout(renderPause,200);}
- else if(a==='pquit'){if(PMU.ask){closePause(false);showMenu();}else{PMU.ask=1;renderPause();}}
+ else if(a==='pquit'){if(PMU.ask){closePause(false);saveClear();showMenu();}else{PMU.ask=1;renderPause();}}
+ else if(a==='psave'){if(S.phase==='wave'&&!PMU.svask){PMU.svask=1;toast('💾 La partida se reanudará al principio de esta oleada (ronda '+Math.min(S.round,ROUNDS)+'). Pulsa otra vez para guardar y salir.');return;}PMU.svask=0;saveAndExit();}
+ else if(a==='lbload'){LB.ask=0;continueRun();}
  else if(a==='pcomp'){if(!compOk()){lockToast('Compendio bloqueado','curious');return;}lbOpen('cp');}
  else if(a==='pach')lbOpen('lg');
  else if(a==='popts')lbOpen('op');
@@ -4758,7 +4766,7 @@ function act(e){
  else if(a==='evopt')chooseEvent(+b.dataset.i);
  else if(a==='evok')closeEvent();
  else if(a==='gup')guildUp(S.list.find(o=>o.id===+b.dataset.id));
- else if(a==='newgame'){const go=()=>{if(!tutChosen())renderTutPick();else renderEra();};if(!STO.intro){STO.intro=1;saveSto();playDialog(STORY.intro,go);}else go();}
+ else if(a==='newgame'){if(SAV.meta&&!LB.ask){LB.ask=1;lbRender();return;}LB.ask=0;const go=()=>{if(!tutChosen())renderTutPick();else renderEra();};if(!STO.intro){STO.intro=1;saveSto();playDialog(STORY.intro,go);}else go();}
  else if(a==='erago')renderSetup();
  else if(a==='lbprep'){LB.step=b.dataset.v;lbRender();}
  else if(a==='lbcover'){closeQuick();lbOpen(null,true);}
@@ -4829,7 +4837,7 @@ function lbClose(resume,now){
  if(typeof ui==='function'&&S)ui();
 }
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal. En la preparación de partida no se sale así
-function lbBack(){if(!LB.open||LB.area==='prep')return;if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
+function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
 const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
 const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
 // flechas de pasar página: al anterior / siguiente de la sección en la que estás (sin fondo, solo trazo)
@@ -4845,11 +4853,12 @@ function lbStep(d){const s=lbStepList();if(!s)return;const i=s.L.indexOf(s.cur),
 function lbCoverHTML(){
  const inG=lbInGame(),B=lbMob(),H=inG&&S.hero?HEROES[S.hero.id]:null;
  const chips=inG?[`⏳ Ronda ${Math.min(S.round,ROUNDS)}/${ROUNDS}`,`❤️ ${S.hp}`,`🪙 ${Math.floor(S.gold)}`,H?`${H.ic} ${H.n} · Nv ${S.hero.lvl}`:'',`🕒 ${fClk(GT.r)}`].filter(Boolean).map(x=>`<span>${x}</span>`).join(''):'';
- const main=inG?`<button class="lbmain" data-a="lbcont">▶ Continuar</button>`:`<button class="lbmain" data-a="newgame">▶ Nueva partida</button>`;
+ const sv=!inG&&SAV.meta;
+ const main=inG?`<button class="lbmain" data-a="lbcont">▶ Continuar</button>`:sv?`<button class="lbmain" data-a="lbload">▶ Continuar partida</button><div class="lbsv">${sv.tut?'🎓 Tutorial':'⏳ Ronda '+sv.round+'/'+sv.rounds}${sv.heroN?' · '+sv.heroIc+' '+sv.heroN:''} · ${svWhen(sv.t)}</div><button class="lbnew${LB.ask?' warn':''}" data-a="newgame">${LB.ask?'¿Seguro? Se perderá la partida guardada':'Nueva partida'}</button>`:`<button class="lbmain" data-a="newgame">▶ Nueva partida</button>`;
  const areas=lbAreas();
  const tiles=`<div class="lbtiles">${areas.map(([k,l,i])=>`<button data-a="lbarea" data-v="${k}" class="${k==='cp'&&!compOk()?'dim':''}${lbHasNew(k)?' new':''}"><em>${i}</em>${l}</button>`).join('')}${FSOK&&B?`<button data-a="pfs"><em>⛶</em>${isFS()?'Salir de pantalla completa':'Pantalla completa'}</button>`:''}</div>`;
  const rt=inG&&S.phase==='wave'&&S.snap&&S.rc>0;
- const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Pulsa otra vez para abandonar':'🏳 Abandonar partida'}</button></div>`:'';
+ const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}${svOk()?`<button data-a="psave" title="${S.phase==='wave'?'Se guardará el principio de esta oleada':'Guarda la partida tal como está'}">💾 Guardar y salir</button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Se perderá la partida':'🏳 Abandonar partida'}</button></div>`:'';
  return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:'🏰'}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
 }
 // ---- estadísticas: tabla a la izquierda, cifras grandes y resumen a la derecha ----
@@ -5002,6 +5011,66 @@ addEventListener('keydown',ttbHide,true);
 new MutationObserver(ms=>{for(const m of ms){const e=m.target;if(e.nodeType!==1||!e.hasAttribute('title'))continue;if(e===TTB.cur||e.matches(':hover')){ttbTake(e);if(e===TTB.cur&&TTB.el.classList.contains('on'))ttbShow(e);}}}).observe(document.body,{subtree:true,attributes:true,attributeFilter:['title']});
 // si el botón desaparece (se repinta el menú), el bocadillo se va con él
 setInterval(()=>{if(TTB.cur&&!TTB.cur.isConnected)ttbHide();},200);
+// ======================= GUARDAR PARTIDA =======================
+// Una sola partida guardada, en IndexedDB (admite la copia completa del estado, igual que «Reintentar oleada»).
+// Se guarda: al empezar cada oleada (el estado justo antes), al terminar cada ronda, en cada acción de la fase de
+// construcción (con retardo), al pulsar «Guardar y salir» y al cerrar la página. Al ganar o perder, se borra.
+// En localStorage queda un resumen (rt-save) para pintar «Continuar partida» en la portada sin esperar a la base de datos.
+const SAVE_FMT=1;                      // formato del guardado: si cambia, las partidas antiguas no se cargan (se avisa)
+const SAV={meta:null,t:0,busy:false,db:null};
+try{SAV.meta=JSON.parse(localStorage.getItem('rt-save'))||null;}catch(e){}
+const svOk=()=>typeof indexedDB!=='undefined';
+function svDB(){return new Promise((res,rej)=>{if(SAV.db)return res(SAV.db);const r=indexedDB.open('towerize',1);r.onupgradeneeded=()=>{r.result.createObjectStore('save');};r.onsuccess=()=>{SAV.db=r.result;res(SAV.db);};r.onerror=()=>rej(r.error);});}
+function svPut(rec){return svDB().then(db=>new Promise((res,rej)=>{const tx=db.transaction('save','readwrite');tx.objectStore('save').put(rec,'run');tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);}));}
+function svGet(){return svDB().then(db=>new Promise((res,rej)=>{const tx=db.transaction('save','readonly'),q=tx.objectStore('save').get('run');q.onsuccess=()=>res(q.result||null);q.onerror=()=>rej(q.error);}));}
+function svDel(){return svDB().then(db=>new Promise((res,rej)=>{const tx=db.transaction('save','readwrite');tx.objectStore('save').delete('run');tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);}));}
+const svMeta=m=>{SAV.meta=m;try{if(m)localStorage.setItem('rt-save',JSON.stringify(m));else localStorage.removeItem('rt-save');}catch(e){}};
+// ¿hay una partida en marcha que merezca guardarse?
+const svLive=()=>!!(S&&S.hero&&S.round>=1&&S.phase!=='won'&&S.phase!=='lost'&&!document.body.classList.contains('inmenu')&&!PREVIEWING);
+// el estado que vive fuera de S y hace falta para reanudar
+function svGlobals(){return {ROUNDS,CHESTS,MR,BN,CAM:{x:CAM.x,y:CAM.y,z:CAM.z},GT:{r:GT.r,c:GT.c},TUTON,TUTR,TUTHS:{...TUTHS},
+ RL:{open:!!RL.open,choices:(RL.choices||[]).slice(),towo:RL.towo?RL.towo.slice():null,towT:RL.towT||null,towD:RL.towD||null,towNS:RL.towNS||0,ev:RL.ev||null,peek:false},EVK:EVK||null};}
+// construye el registro a guardar a partir de un estado (S o su copia de inicio de oleada)
+function svRecord(st,why){let copy;const snap=st.snap,dn=st.dn;st.snap=null;st.dn=[];try{copy=structuredClone(st);}finally{st.snap=snap;st.dn=dn;}
+ copy.selT=null;copy.aim=null;copy.aimT=null;copy.tsel=null;copy.hover=null;copy.msg='';copy.mask=0;copy.rask=0;copy.pexp=false;copy.speed=copy.speed||1;
+ const g=svGlobals();if(why==='wave'){g.RL={open:false,choices:[],towo:null,towT:null,towD:null,towNS:0,ev:null,peek:false};g.EVK=null;}
+ const H=HEROES[copy.hero.id];
+ return {v:SAVE_FMT,game:($('ver')&&$('ver').textContent)||'',t:Date.now(),why,S:copy,g,meta:{round:Math.min(copy.round,ROUNDS),rounds:ROUNDS,hero:copy.hero.id,heroN:H?H.n:'',heroIc:H?H.ic:'',tut:!!copy.tut,t:Date.now(),why}};}
+// guardar ahora. why: 'wave' (inicio de oleada: se guarda la copia S.snap) · 'round' (fin de ronda) · 'build' (acción en construcción) · 'exit' (guardar y salir)
+function saveRun(why){if(!svOk()||!svLive())return Promise.resolve(false);
+ let st=S;if(S.phase==='wave'){if(!S.snap)return Promise.resolve(false);st=S.snap;why=why==='exit'?'exit':'wave';}
+ let rec;try{rec=svRecord(st,why);}catch(e){console.warn('guardado',e);return Promise.resolve(false);}
+ SAV.t=Date.now();svMeta(rec.meta);return svPut(rec).then(()=>true).catch(e=>{console.warn('guardado',e);return false;});}
+// con retardo, para las acciones de la fase de construcción (cada ui() de la partida llama aquí)
+function saveSoon(){if(!svOk()||!svLive()||S.phase==='wave')return;clearTimeout(SAV.tm);SAV.tm=setTimeout(()=>saveRun('build'),400);}
+function saveClear(){clearTimeout(SAV.tm);svMeta(null);if(svOk())svDel().catch(()=>{});}
+// reanudar: deja el juego exactamente como estaba (o al principio de la oleada si se guardó en plena oleada)
+function loadRun(rec){if(!rec||rec.v!==SAVE_FMT||!rec.S||!rec.g){toast('⚠️ La partida guardada es de una versión anterior y no se puede continuar.');saveClear();return false;}
+ const g=rec.g;TUTON=!!g.TUTON;TUTR=g.TUTR||0;TUTHS=g.TUTHS||{};MR=g.MR||MR;ROUNDS=g.ROUNDS;CHESTS=g.CHESTS;setSize(g.BN);
+ closePrim();closeFocus();lbClose(false,true);$('menu').classList.remove('setup');document.body.classList.remove('inmenu');$('endscr').classList.remove('open');
+ S=rec.S;if(S.hero){S.hero.def=HEROES[S.hero.id]||S.hero.def;}S.snap=null;S.dn=S.dn||[];S.selT=null;S.aim=null;S.tsel=null;S.msg='';
+ CAM.x=g.CAM.x;CAM.y=g.CAM.y;CAM.z=g.CAM.z;clampCam();GT.r=g.GT.r||0;GT.c=g.GT.c||0;
+ RL.open=false;RL.hpick=false;RL.choices=g.RL.choices||[];RL.towo=g.RL.towo||null;RL.towT=g.RL.towT||null;RL.towD=g.RL.towD||null;RL.towNS=g.RL.towNS||0;RL.ev=g.RL.ev||null;EVK=g.EVK||null;
+ $('relic').classList.remove('open');renderRelics();ui();
+ // ventanas que estaban abiertas al guardar (cofre, evento, oferta de torres)
+ if(g.RL.open){if(RL.ev&&EVENTS[RL.ev])openEvent(RL.ev,EVK);else if(RL.towo&&RL.towo.length)renderTowerOffer();else if(RL.choices.length)renderRelicPick();}
+ if(TOUCH&&OPT.fs)enterFS();fsMark();
+ S.msg=rec.why==='wave'||rec.why==='exit'&&rec.S.phase!=='wave'?'':S.msg;
+ toast('💾 Partida reanudada · ronda '+Math.min(S.round,ROUNDS)+'/'+ROUNDS+(rec.why==='wave'?' · al principio de la oleada':''));
+ return true;}
+function continueRun(){if(!svOk()||!SAV.meta)return;svGet().then(rec=>{if(!rec){saveClear();lbRender();return;}if(loadRun(rec)){try{sfx('page');}catch(e){}}}).catch(e=>{console.warn('cargar',e);toast('⚠️ No se ha podido leer la partida guardada.');});}
+// guardar y salir (desde la pausa): en plena oleada se guarda el inicio de la oleada
+function saveAndExit(){const p=saveRun('exit');Promise.resolve(p).then(()=>{closePause(false);showMenu();});}
+// cerrar la página sin guardar: se guarda igual, con la misma regla
+addEventListener('pagehide',()=>{try{if(svLive())saveRun('exit');}catch(e){}});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){try{if(svLive())saveRun('exit');}catch(e){}}});
+// ganchos: inicio de oleada, fin de ronda, acciones de construcción, final de partida
+{const _sw=startWave;startWave=function(...a){const r=_sw.apply(this,a);try{if(S.phase==='wave'&&S.snap)saveRun('wave');}catch(e){}return r;};
+ const _nr=nextRound;nextRound=function(...a){const r=_nr.apply(this,a);try{if(svLive())saveRun('round');}catch(e){}return r;};
+ const _ui=ui;ui=function(...a){const r=_ui.apply(this,a);try{saveSoon();}catch(e){}return r;};
+ const _eg=endGame;endGame=function(...a){try{saveClear();}catch(e){}return _eg.apply(this,a);};}
+// la fecha del guardado, para la portada
+const svWhen=t=>{const d=new Date(t),now=new Date(),same=d.toDateString()===now.toDateString();const hm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');return same?'hoy a las '+hm:String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+' '+hm;};
 // ==================== PISTAS ====================
 // Saltan la primera vez que pasa algo (se recuerda entre partidas). Si salen en plena oleada, el juego frena poco a poco hasta pararse.
 let HSEEN={};try{HSEEN=JSON.parse(localStorage.getItem('rt-hints'))||{};}catch(e){}

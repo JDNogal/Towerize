@@ -49,6 +49,7 @@
   "ui_game.js",
   "libro.js",
   "tooltip.js",
+  "guardado.js",
   "hints.js",
   "loop.js",
   "story.js",

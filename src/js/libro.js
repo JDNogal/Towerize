@@ -38,7 +38,7 @@ function lbClose(resume,now){
  if(typeof ui==='function'&&S)ui();
 }
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal. En la preparación de partida no se sale así
-function lbBack(){if(!LB.open||LB.area==='prep')return;if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
+function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
 const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
 const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
 // flechas de pasar página: al anterior / siguiente de la sección en la que estás (sin fondo, solo trazo)
@@ -54,11 +54,12 @@ function lbStep(d){const s=lbStepList();if(!s)return;const i=s.L.indexOf(s.cur),
 function lbCoverHTML(){
  const inG=lbInGame(),B=lbMob(),H=inG&&S.hero?HEROES[S.hero.id]:null;
  const chips=inG?[`⏳ Ronda ${Math.min(S.round,ROUNDS)}/${ROUNDS}`,`❤️ ${S.hp}`,`🪙 ${Math.floor(S.gold)}`,H?`${H.ic} ${H.n} · Nv ${S.hero.lvl}`:'',`🕒 ${fClk(GT.r)}`].filter(Boolean).map(x=>`<span>${x}</span>`).join(''):'';
- const main=inG?`<button class="lbmain" data-a="lbcont">▶ Continuar</button>`:`<button class="lbmain" data-a="newgame">▶ Nueva partida</button>`;
+ const sv=!inG&&SAV.meta;
+ const main=inG?`<button class="lbmain" data-a="lbcont">▶ Continuar</button>`:sv?`<button class="lbmain" data-a="lbload">▶ Continuar partida</button><div class="lbsv">${sv.tut?'🎓 Tutorial':'⏳ Ronda '+sv.round+'/'+sv.rounds}${sv.heroN?' · '+sv.heroIc+' '+sv.heroN:''} · ${svWhen(sv.t)}</div><button class="lbnew${LB.ask?' warn':''}" data-a="newgame">${LB.ask?'¿Seguro? Se perderá la partida guardada':'Nueva partida'}</button>`:`<button class="lbmain" data-a="newgame">▶ Nueva partida</button>`;
  const areas=lbAreas();
  const tiles=`<div class="lbtiles">${areas.map(([k,l,i])=>`<button data-a="lbarea" data-v="${k}" class="${k==='cp'&&!compOk()?'dim':''}${lbHasNew(k)?' new':''}"><em>${i}</em>${l}</button>`).join('')}${FSOK&&B?`<button data-a="pfs"><em>⛶</em>${isFS()?'Salir de pantalla completa':'Pantalla completa'}</button>`:''}</div>`;
  const rt=inG&&S.phase==='wave'&&S.snap&&S.rc>0;
- const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Pulsa otra vez para abandonar':'🏳 Abandonar partida'}</button></div>`:'';
+ const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}${svOk()?`<button data-a="psave" title="${S.phase==='wave'?'Se guardará el principio de esta oleada':'Guarda la partida tal como está'}">💾 Guardar y salir</button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Se perderá la partida':'🏳 Abandonar partida'}</button></div>`:'';
  return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:'🏰'}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
 }
 // ---- estadísticas: tabla a la izquierda, cifras grandes y resumen a la derecha ----

@@ -56,7 +56,8 @@ function useRelic(id){
 function openRelic(){
  if(S.noChest){S.noChest=0;S.msg='El cofre está vacío: el mercader ya se había llevado lo que había dentro.';ui();return;}
  const pool=S.tut?RELICS.filter(r=>['horn','lens','anvil'].includes(r.id)&&!S.relics.includes(r.id)):shuf(RELICS.filter(r=>!r.ini&&!r.evr&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id)));RL.choices=pool.slice(0,S.chest4?4:3);S.chest4=0;RL.choices=RL.choices.map(r=>r.id);RL.choices.forEach(id=>see('rl',id));
- if(!RL.choices.length)return;
+ if(!RL.choices.length)return;renderRelicPick();}
+function renderRelicPick(){
  closePrim();RL.open=true;$('relic').classList.add('open');$('relic').scrollTop=0;
  $('relic').innerHTML='<b style="font-size:16px">¡Cofre abierto!</b><br><small>Elige una reliquia para esta partida. El juego está en pausa.</small><div class="cgrid">'+
   RL.choices.map(id=>{const r=RELIC[id];return `<div class="ce rcard" style="text-align:left"><div class="ric" style="background:${r.col}">${r.ic}</div><b style="display:block;text-align:center">${r.n}</b>${rcdTag(id)}${rdesc(id)}<button data-a="relic" data-id="${id}">Elegir</button></div>`;}).join('')+

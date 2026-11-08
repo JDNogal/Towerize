@@ -111,7 +111,7 @@ addEventListener('keydown',e=>{if(!kbIs('peek',e.key.toLowerCase())||!RL.open||R
 
 // ---- menú de pausa: es la portada del libro (ver libro.js) ----
 const PMU={open:false,ask:0,spd:1};
-function openPause(){if(!S)return;PMU.ask=0;lbOpen(null,true);}
+function openPause(){if(!S)return;PMU.ask=0;PMU.svask=0;lbOpen(null,true);}
 function closePause(resume){lbClose(resume);}
 function renderPause(){lbRender();}
 
@@ -209,7 +209,9 @@ function act(e){
  else if(a==='lbhp'){LB.hp=b.dataset.v;LB.note='';CP.pageR=false;lbRender();}
  else if(a==='lbgo'){const [ar,tb]=b.dataset.v.split(':');if(ar==='op'&&tb)OP.tab=tb;lbOpen(ar);}
  else if(a==='pfs'){toggleFS();setTimeout(renderPause,200);}
- else if(a==='pquit'){if(PMU.ask){closePause(false);showMenu();}else{PMU.ask=1;renderPause();}}
+ else if(a==='pquit'){if(PMU.ask){closePause(false);saveClear();showMenu();}else{PMU.ask=1;renderPause();}}
+ else if(a==='psave'){if(S.phase==='wave'&&!PMU.svask){PMU.svask=1;toast('💾 La partida se reanudará al principio de esta oleada (ronda '+Math.min(S.round,ROUNDS)+'). Pulsa otra vez para guardar y salir.');return;}PMU.svask=0;saveAndExit();}
+ else if(a==='lbload'){LB.ask=0;continueRun();}
  else if(a==='pcomp'){if(!compOk()){lockToast('Compendio bloqueado','curious');return;}lbOpen('cp');}
  else if(a==='pach')lbOpen('lg');
  else if(a==='popts')lbOpen('op');
@@ -291,7 +293,7 @@ function act(e){
  else if(a==='evopt')chooseEvent(+b.dataset.i);
  else if(a==='evok')closeEvent();
  else if(a==='gup')guildUp(S.list.find(o=>o.id===+b.dataset.id));
- else if(a==='newgame'){const go=()=>{if(!tutChosen())renderTutPick();else renderEra();};if(!STO.intro){STO.intro=1;saveSto();playDialog(STORY.intro,go);}else go();}
+ else if(a==='newgame'){if(SAV.meta&&!LB.ask){LB.ask=1;lbRender();return;}LB.ask=0;const go=()=>{if(!tutChosen())renderTutPick();else renderEra();};if(!STO.intro){STO.intro=1;saveSto();playDialog(STORY.intro,go);}else go();}
  else if(a==='erago')renderSetup();
  else if(a==='lbprep'){LB.step=b.dataset.v;lbRender();}
  else if(a==='lbcover'){closeQuick();lbOpen(null,true);}

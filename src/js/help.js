@@ -60,7 +60,7 @@ function drawQuick(now){const cv=document.getElementById('qsc');if(!cv)return;co
  if(i===5){const p=Math.min(1,(t%4)/2);path([[20,110],[lerp(60,300,p),110]]);c.font='34px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textAlign='center';c.textBaseline='middle';c.fillText(p>=1?'🎁':'📦',330,110);if(p>=1){const q=Math.min(1,((t%4)-2)/.6);['🔭','📯','❄️'].forEach((ic,k)=>{c.globalAlpha=q;c.font='24px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.fillText(ic,330+(k-1)*45*q,60-20*q);c.globalAlpha=1;});}txt('?',120,40,'#c9a0ff',26);}
  if(i===6){path([[20,140],[400,140]]);const p=((t*.12)%1),ex=lerp(20,400,p);dot(ex,140,13,'#a04a7a');c.strokeStyle='#cfd5e0';c.lineWidth=3;c.beginPath();c.arc(ex,140,16,0,7);c.stroke();tower(120,70,'🏹');tower(300,70,'⚡','#c27aff');if((t*2)%1<.3)txt('4',ex-14,112,'#fff',12);if((t*1)%1<.35)txt('12',ex+14,108,'#c9a0ff',16);txt('Físico: la armadura lo reduce',120,30,'#d8d8d8',12);txt('Mágico: la ignora',300,30,'#c9a0ff',12);}
 }
-function startGame(n){SEEOK=true;
+function startGame(n){SEEOK=true;saveClear();
  TUTON=false;
  if(n)MR=n;ROUNDS=MR;CHESTS=chestsFor(ROUNDS);setSize(mapFor(ROUNDS));$('menu').classList.remove('setup');
  if(TOUCH&&OPT.fs)enterFS();
