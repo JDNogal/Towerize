@@ -44,9 +44,9 @@ function update(dt){
  const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y);
  for(const t of S.list){
   const T=TW[t.type],s=stats(t);if(T.unit||T.support||T.swarm||T.custom||t.jam>0)continue;t.cd=Math.max(-.1,t.cd-dt);if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);if(t.flash&&(t.flash.t-=dt)<=0)t.flash=null;if(t.fl&&(t.fl.ttl-=dt)<=0)t.fl=null;
-  let tg=alive(t.tgt||{})&&Math.hypot(t.tgt.x-t.x,t.tgt.y-t.y)<=s.range?t.tgt:null;
+  let tg=alive(t.tgt||{})&&Math.hypot(t.tgt.x-t.x,t.tgt.y-t.y)<=s.range&&!(typeof camoHid==='function'&&camoHid(t.tgt,t))?t.tgt:null;
   if(!tg){const md=TGT[t.mode]||TGT.core;let bs=0;
-   for(const e of S.enemies){if(Math.hypot(e.x-t.x,e.y-t.y)>s.range||(T.ground&&isFly(e)))continue;const sc=md.score(e,prog);
+   for(const e of S.enemies){if(Math.hypot(e.x-t.x,e.y-t.y)>s.range||(T.ground&&isFly(e))||(typeof camoHid==='function'&&camoHid(e,t)))continue;const sc=md.score(e,prog);
     if(!tg||sc>bs||(sc===bs&&prog(e)<prog(tg))){tg=e;bs=sc;}}}
   t.tgt=T.beam?tg:null;
   volcHeat(t,!!tg,dt);
