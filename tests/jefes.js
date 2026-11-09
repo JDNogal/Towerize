@@ -16,9 +16,9 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
  for(const q of S.enemies)if(q.t==='porter')q.hp=0;bossTick(.05);out.fell=k.fall>0&&!!k.fx.stun;
  const g0=S.gold;achDeath(k);out.gold=S.gold>g0&&(S.treas||[]).length===0;
  // ARGOS
- setup(2,'vega');S.phase='wave';spawnEnemy('boss',S.portals[0],null);const A=S.enemies.find(e=>e.t==='argos');out.argos=!!A;const gs=S.enemies.filter(e=>e.t==='gen');out.gens=gs.length===3;
+ {const so=setup(2,'vega');S.phase='build';S.tsel='arrow';for(const q of so.slice(0,4))build(q[0],q[1]);}S.phase='wave';spawnEnemy('boss',S.portals[0],null);const A=S.enemies.find(e=>e.t==='argos');out.argos=!!A;const gs=S.enemies.filter(e=>e.t==='gen');out.gens=gs.length===3;
  const h0=A.hp;hurt(A,500,null,'phys');out.inv=A.hp===h0;
- for(let i=0;i<400&&!gs.every(g=>g.anch);i++)update(.05);out.anch=gs.some(g=>g.anch);
+ for(let i=0;i<900&&!gs.some(g=>g.anch);i++)update(.05);out.anch=gs.some(g=>g.anch);
  for(const g of gs)g.hp=0;bossTick(.05);out.down=A.sh===0;hurt(A,500,null,'phys');out.hurt=A.hp<h0;
  A.shT=59.99;bossTick(.05);out.call=S.enemies.filter(e=>e.t==='gen'&&e.hp>0).length>=1;
  // orden según la historia
