@@ -8,12 +8,13 @@ const ESVG3={"troll": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6
 {const D={troll:['mini','Troll','#3e6a5a','g',1,{regen:1}],hknight:['mini','Caballero infernal','#5a0f18','d',1,{shield:6}],warlord:['elite','Señor de la guerra orco','#3e6a28','g',1,{banner:1}],wander:['elite','Demonio errante','#3a1a4a','d',1,{tele:1}],
  infil:['mini','Infiltrador óptico','#22303e','m',2,{camo:1}],mutant:['mini','Mutante adaptativo','#3a2e4a','a',2,{adapt:1}],brood:['elite','Matriarca incubadora','#1e4a46','a',2,{burst:8}],carrier:['elite','Nodriza','#3e4654','m',2,{launch:2}]};
  for(const k in D){const[b,n,col,fac,era,x]=D[k],B=ET[b],E=Object.assign({},B,{n,col,fac,gen:0},x);if(era===2){E.era=2;E.hf=Math.round(B.hf*1.15);E.hp=B.hp*1.15;}ET[k]=E;EIC[k]={esvg:ESVG3[k]};}
- ET.mini.gen=1;ET.elite.gen=1;}
+ ET.mini.gen=1;ET.elite.gen=1;
+ ET.banner={n:'Estandarte orco',gold:0,hp:3,hf:140,sp:0,r:ET.norm.r,col:'#c0392b',dmg:0,ap:0,am:0,ud:0,ac:9,need:1,rg:'melee',xp:0,gen:1,fac:'g',flag:1};EIC.banner='🚩';}
 const ELV={1:{mini:['troll','hknight'],elite:['warlord','wander']},2:{mini:['infil','mutant'],elite:['brood','carrier']}};
 {const _s=spawnEnemy;spawnEnemy=function(t,p,fo){if((t==='mini'||t==='elite')&&!S.tut){const L=ELV[S.era===2?2:1][t];t=L[Math.floor(Math.random()*L.length)];}return _s.call(this,t,p,fo);};}
 {const i=EFAM.findIndex(x=>x[0]==='Élites');if(i>=0)EFAM.splice(i,1,['Mini-élites',['troll','hknight']],['Élites',['warlord','wander']],['Mini-élites · Distópica',['infil','mutant']],['Élites · Distópica',['brood','carrier']]);}
 for(const k of['troll','hknight','warlord','wander','infil','mutant','brood','carrier'])DNIMP.add(k);
-const BANCD=12,BANT=15,BANR=1.5*K,TELECD=10,TELEW=1,TELED=3*K,CAMOR=1.5*K,CAMOREV=3,ADMAX=.3,LAUNCHCD=6;
+const BANCD=12,BANT=12,BANR=1.5*K,TELECD=10,TELEW=1,TELED=3*K,CAMOR=1.5*K,CAMOREV=3,ADMAX=.3,LAUNCHCD=6;
 // ---- aparición de enemigos desde otro (crías de la Matriarca, drones de la Nodriza) ----
 function spawnAt(t,src,n){const hp=ehpOf(t,S.round);for(let i=0;i<n;i++){const a=Math.random()*6.28,j=.4;(S.espw=S.espw||[]).push({t,x:src.x+Math.cos(a)*j,y:src.y+Math.sin(a)*j,tx:src.tx,ty:src.ty,hp,max:hp,fx:{},src:null,pv:[src.x,src.y],fln:src.fln,fd:src.fd});}}
 // ---- daño: escudo, adaptación y revelado del camuflaje ----
@@ -23,36 +24,38 @@ function eHurtMod(e,a,src,ty){const E=ET[e.t];if(!E)return a;
  if(E.adapt){const r=e.res||(e.res={phys:0,magic:0,elem:0});a*=1-(r[ty]||0);(e.adT=e.adT||{phys:0,magic:0,elem:0})[ty]=(e.adT[ty]||0)+a;}
  return a;}
 // ---- camuflaje: las torres solo le apuntan de cerca o si está revelado ----
-const camoHid=(e,t)=>{const E=ET[e.t];if(!E||!E.camo||e.rev>0||e.ct>0)return false;return !t||Math.hypot(e.x-t.x,e.y-t.y)>CAMOR;};
-// los tics de las torres de la era 2 y desbloqueables no miran torre a torre: no ven a los camuflados que no estén a 1,5 casillas de alguna torre
+const camoHid=e=>{const E=ET[e.t];return !!(E&&E.camo&&!(e.rev>0)&&!(e.ct>0));};
+// regla única para todas las torres: el camuflado se revela (para todas) mientras pase a 1,5 casillas de alguna torre, al recibir daño o al chocar con tus unidades
 {const _t=e2TowersTick;e2TowersTick=function(dt){if(!S||!S.enemies.some(e=>ET[e.t]&&ET[e.t].camo))return _t.apply(this,arguments);
- const all=S.enemies,vis=all.filter(e=>!camoHid(e)||S.list.some(t=>Math.hypot(e.x-t.x,e.y-t.y)<=CAMOR));S.enemies=vis;try{return _t.apply(this,arguments);}finally{const add=S.enemies.filter(e=>!all.includes(e));S.enemies=all.concat(add);}};}
+ const all=S.enemies,vis=all.filter(e=>!camoHid(e));S.enemies=vis;try{return _t.apply(this,arguments);}finally{const add=S.enemies.filter(e=>!all.includes(e));S.enemies=all.concat(add);}};}
 // ---- tic ----
 function eliteTick(dt){
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];
-  if(E.camo&&e.rev>0)e.rev-=dt;
+  if(E.camo){if(e.rev>0)e.rev-=dt;if(S.list.some(t=>Math.hypot(e.x-t.x,e.y-t.y)<=CAMOR))e.rev=Math.max(e.rev||0,.3);}
   if(E.regen){e.rgT=(e.rgT||0)+dt;if(e.rgT>=1){e.rgT-=1;const blk=e.bn>=.5||(e.ps&&e.ps.length)||(e.bl&&e.bl.length);e.rgOff=!!blk;if(!blk&&e.hp<e.max){e.hp=Math.min(e.max,e.hp+e.max*.03);S.fx.push({x:e.x,y:e.y,t:.3,m:.3,r:.3*K,col:'#6fe07a'});}}}
   if(E.adapt){e.adC=(e.adC||0)+dt;if(e.adC>=1){e.adC-=1;const T=e.adT||{},top=['phys','magic','elem'].reduce((b,k)=>(T[k]||0)>(T[b]||0)?k:b,'phys'),r=e.res||(e.res={phys:0,magic:0,elem:0});if((T[top]||0)>0){for(const k in r)r[k]=k===top?Math.min(ADMAX,r[k]+.03):Math.max(0,r[k]-.01);e.adTop=top;}e.adT={phys:0,magic:0,elem:0};}}
   if(E.tele&&e.tw>0&&(e.fx.stun||e.fx.freeze||e.fx.fear||e.kbN)){e.tw=0;e.tlc=TELECD;S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:.6*K,col:'#c070ff'});}
   if(e.fx.stun||e.fx.freeze||e.fx.poly)continue;
-  if(E.banner){e.bnc=(e.bnc===undefined?4:e.bnc)-dt;if(e.bnc<=0){e.bnc=BANCD;(S.banners=S.banners||[]).push({x:e.x,y:e.y,t:BANT});S.msg=E.n+' planta un estandarte.';}}
+  if(E.banner){e.bnc=(e.bnc===undefined?4:e.bnc)-dt;if(e.bnc<=0){e.bnc=BANCD;{const hp=ehpOf('banner',S.round);(S.espw=S.espw||[]).push({t:'banner',x:e.x,y:e.y,tx:e.tx,ty:e.ty,hp,max:hp,fx:{},src:null,pv:[e.x,e.y],life:BANT});}S.msg=E.n+' planta un estandarte.';}}
   if(E.tele){if(e.tw>0){if(e.fx.stun||e.fx.freeze||e.fx.fear||e.kbN){e.tw=0;e.tlc=TELECD;S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:.6*K,col:'#c070ff'});}else{e.tw-=dt;if(e.tw<=0){teleFwd(e);e.tlc=TELECD;}}}
    else{e.tlc=(e.tlc===undefined?6:e.tlc)-dt;const fv=S.field[e.ty]&&S.field[e.ty][e.tx];if(e.tlc<=0&&fv!=null&&fv>TELED*1.6){e.tw=TELEW;e.kbN=0;}else if(e.tlc<=0)e.tlc=1;}}
   if(E.launch){e.lnc=(e.lnc===undefined?3:e.lnc)-dt;if(e.lnc<=0){e.lnc=LAUNCHCD;spawnAt('swarm',e,E.launch);}}}
- // estandartes: aceleran a los enemigos que pasan cerca
- if(S.banners){S.banners=S.banners.filter(b=>(b.t-=dt)>0);for(const b of S.banners)for(const e of S.enemies)if(e.hp>0&&!isFly(e)&&Math.hypot(e.x-b.x,e.y-b.y)<=BANR&&!(e.fx.haste&&e.fx.haste.m>1.25))e.fx.haste={m:1.25,t:.4};}
- if(S.espw&&S.espw.length){for(const n of S.espw){S.enemies.push(n);see('en',n.t);}S.espw=[];}}
+ // estandartes: son enemigos quietos que se pueden destruir; aceleran a los que pasan cerca y se caen solos al acabar su tiempo (o si ya no queda nadie más)
+ {const bs=S.enemies.filter(b=>b.t==='banner'&&b.hp>0);if(bs.length){const others=S.enemies.some(e=>e.t!=='banner'&&e.hp>0)||S.portals.some(p=>p.q&&p.q.length);
+  for(const b of bs){b.life-=dt;if(b.life<=0||!others){S.enemies.splice(S.enemies.indexOf(b),1);continue;}for(const e of S.enemies)if(e.hp>0&&e!==b&&e.t!=='banner'&&!isFly(e)&&Math.hypot(e.x-b.x,e.y-b.y)<=BANR&&!(e.fx.haste&&e.fx.haste.m>1.25))e.fx.haste={m:1.25,t:.4};}}}
+ if(S.espw&&S.espw.length){for(const n of S.espw){S.enemies.push(n);if(!ET[n.t].gen)see('en',n.t);}S.espw=[];}}
 function teleFwd(e){const x0=e.x,y0=e.y;e.fsp=0;let d=0;for(let i=0;i<300&&d<TELED;i++){const px=e.x,py=e.y;if(move(e,.05)){e.leak=true;break;}d+=Math.hypot(e.x-px,e.y-py);}
  S.fx.push({x:x0,y:y0,t:.5,m:.5,r:.7*K,col:'#c070ff'});S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:.7*K,col:'#c070ff'});}
 // el empuje cancela el teletransporte: se marca al empujar
 {const _k=knock;knock=function(e,d){if(e)e.kbN=1;return _k.apply(this,arguments);};}
 {const _a=achDeath;achDeath=function(e){if(e&&!e.leak&&ET[e.t]&&ET[e.t].burst&&!e.burstD){e.burstD=1;spawnAt('stalk',e,ET[e.t].burst);}return _a.apply(this,arguments);};}
-{const _u=update;update=function(dt){_u(dt);if(S&&S.phase==='wave')eliteTick(dt);else if(S&&S.banners)S.banners=[];};}
+{const _u=update;update=function(dt){_u(dt);if(S&&S.phase==='wave')eliteTick(dt);};}
+{const _m=move;move=function(e,dt){if(ET[e.t]&&ET[e.t].flag)return false;return _m(e,dt);};}
+{const _a=achDeath;achDeath=function(e){if(e&&e.t==='banner')return;return _a.apply(this,arguments);};}
 // ---- dibujo ----
 const eAlpha=e=>camoHid(e)?.32:1;
 function eEliteDraw(g,lw){if(!S)return;
- for(const b of S.banners||[]){const x=b.x*CS+CS/2,y=b.y*CS+CS/2,h=CS*1.4;g.fillStyle='rgba(192,57,43,.12)';g.strokeStyle='rgba(192,57,43,.45)';g.lineWidth=lw(1);g.beginPath();g.arc(x,y,BANR*CS,0,7);g.fill();g.stroke();
-  g.strokeStyle='#6a4a2a';g.lineWidth=lw(3);g.beginPath();g.moveTo(x,y+h*.3);g.lineTo(x,y-h);g.stroke();g.fillStyle='#c0392b';g.beginPath();g.moveTo(x,y-h);g.lineTo(x+h*.7,y-h*.85);g.lineTo(x+h*.55,y-h*.6);g.lineTo(x+h*.7,y-h*.35);g.lineTo(x,y-h*.35);g.closePath();g.fill();}
+ for(const b of S.enemies)if(b.t==='banner'&&b.hp>0){const x=b.x*CS+CS/2,y=b.y*CS+CS/2;g.fillStyle='rgba(192,57,43,.10)';g.strokeStyle='rgba(192,57,43,.5)';g.lineWidth=lw(1.2);g.beginPath();g.arc(x,y,BANR*CS,0,7);g.fill();g.stroke();}
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t],px=e.x*CS+CS/2,py=e.y*CS+CS/2,r=E.r*CS*EVS;
   if(e.tw>0){const p=.5+.5*Math.sin(performance.now()/60);g.strokeStyle='rgba(192,112,255,'+(.5+.5*p)+')';g.lineWidth=lw(3);g.beginPath();g.arc(px,py,r*(1.4+.4*p),0,7);g.stroke();}
   if(E.shield&&(e.shq===undefined||e.shq>0)){const n=e.shq===undefined?E.shield:e.shq;g.strokeStyle='#c9d4e0';g.lineWidth=lw(3);g.beginPath();g.arc(px,py,r+lw(5),-Math.PI/2-n*.25,-Math.PI/2+n*.25);g.stroke();}
@@ -62,9 +65,9 @@ function eEliteDraw(g,lw){if(!S)return;
 {const _k=kwHtml0;kwHtml0=function(id,src){
  if(id==='regen')return '<b>Regeneración</b><small>Recupera un 3 % de su vida máxima cada segundo, salvo mientras sufra quemadura, veneno o sangrado.</small>';
  if(id==='shield')return '<b>Escudo frontal</b><small>Su escudo para por completo los primeros golpes que recibe (6). Los estados (quemadura, veneno…) no lo gastan y le hacen daño igual.</small>';
- if(id==='banner')return '<b>Estandarte</b><small>Cada '+BANCD+' s planta un estandarte que dura '+BANT+' s: los enemigos de tierra que pasen a '+f(BANR/K)+' casillas o menos van un 25 % más rápido.</small>';
+ if(id==='banner')return '<b>Estandarte</b><small>Cada '+BANCD+' s planta un estandarte: los enemigos de tierra que pasen a '+f(BANR/K)+' casillas o menos van un 25 % más rápido. El estandarte se puede destruir como un enemigo más (no se mueve ni ataca) y se cae solo a los '+BANT+' s.</small>';
  if(id==='tele')return '<b>Teletransporte</b><small>Cada '+TELECD+' s brilla en violeta durante '+TELEW+' s y salta '+f(TELED/K)+' casillas hacia delante por el camino. Si lo aturdes, congelas, aterras o empujas mientras brilla, el salto se cancela.</small>';
- if(id==='camo')return '<b>Camuflaje</b><small>Casi invisible: tus torres solo pueden apuntarle si pasa a '+f(CAMOR/K)+' casillas o menos. Se revela '+CAMOREV+' s al recibir cualquier daño (de área, de estados…) o al chocar con tus unidades o tu héroe, que sí lo bloquean.</small>';
+ if(id==='camo')return '<b>Camuflaje</b><small>Casi invisible: tus torres no pueden apuntarle. Se revela para todas mientras pase a '+f(CAMOR/K)+' casillas o menos de alguna torre, durante '+CAMOREV+' s al recibir cualquier daño (de área, de estados…) y al chocar con tus unidades o tu héroe, que sí lo bloquean.</small>';
  if(id==='adapt')return '<b>Adaptación</b><small>Gana poco a poco resistencia al tipo de daño que más recibe (hasta un 30 %) y la pierde en los demás. El anillo de color muestra a qué se está adaptando: mezcla tipos de daño.</small>';
  if(id==='burst')return '<b>Puesta</b><small>Al morir suelta '+ET.brood.burst+' Acechadores.</small>';
  if(id==='launch')return '<b>Hangar</b><small>Cada '+LAUNCHCD+' s lanza '+ET.carrier.launch+' Drones enjambre.</small>';
@@ -72,6 +75,6 @@ function eEliteDraw(g,lw){if(!S)return;
 {const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(['regen','Regeneración','💚'],['shield','Escudo frontal','🛡️'],['banner','Estandarte','🚩'],['tele','Teletransporte','🌀'],['camo','Camuflaje','👻'],['adapt','Adaptación','🧬'],['burst','Puesta','🥚'],['launch','Hangar','🛸']);}
 Object.assign(MECUSE,{regen:['en:troll'],shield:['en:hknight'],banner:['en:warlord'],tele:['en:wander'],camo:['en:infil'],adapt:['en:mutant'],burst:['en:brood'],launch:['en:carrier']});
 Object.assign(ETIP,{troll:'Se regenera sin parar: quémalo, envenénalo o hazle sangrar para cortarlo.',hknight:'Su escudo para los primeros golpes: gástalo con torres rápidas o usa estados.',
- warlord:'Sus estandartes aceleran a los que pasan: mátalo pronto o frena a los acelerados.',wander:'Salta hacia delante cada 10 s: aturdirlo, congelarlo o empujarlo mientras brilla cancela el salto.',
+ warlord:'Sus estandartes aceleran a los que pasan: destrúyelos y mátalo pronto.',wander:'Salta hacia delante cada 10 s: aturdirlo, congelarlo o empujarlo mientras brilla cancela el salto.',
  infil:'Camuflado: revélalo con daño en área o estados, o bloquéalo con tus unidades.',mutant:'Se adapta al daño que más recibe: mezcla tipos de daño.',
  brood:'Al morir suelta Acechadores: ten daño en área cerca de donde vaya a caer.',carrier:'Lanza drones sin parar: mátala pronto y ten torres que den al aire.'});

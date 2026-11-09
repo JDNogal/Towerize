@@ -35,15 +35,20 @@ function skTick(e,E,dt,SL){e.skc=(e.skc===undefined?8:e.skc)-dt;if(e.skc>0)retur
   hitUnit(s,dmg,e);if(K0.st&&s.hp>0)s.cd=Math.max(s.cd||0,K0.st);}
  (S.efx=S.efx||[]).push({k:E.sk,x:e.x,y:e.y,a:ang,r:R,arc:K0.a||0,col:K0.col,t:.6,m:.6});S.msg=E.n+': '+K0.n+'.';}
 // ---- Súcubo: embeleso ----
+// El soldado embelesado se convierte un rato en un enemigo de verdad («Soldado embelesado»): camina por el camino con el grupo, pelea contra tus unidades
+// y, si llega al núcleo, quita 1 de vida. Mientras tanto el soldado original queda fuera de juego. Al acabar el efecto vuelve a ser tuyo donde esté;
+// si matas al embelesado, el soldado cae y reaparece en su torre como siempre. Sirve de base para futuras mecánicas de «cambiar de bando».
+ET.thrall={n:'Soldado embelesado',gold:0,hp:1,hf:30,sp:ET.minion.sp,r:ET.minion.r,col:'#ff7ac8',dmg:1,ap:0,am:0,ud:6,ac:1,need:1,rg:'melee',xp:0,gen:1,fac:'d',thrall:1};EIC.thrall='💂';
+function pathCellNear(x,y){if(!S.field||!S.cells)return null;let b=null,bd=1e9;const cx=Math.round(x),cy=Math.round(y);for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){const px=cx+dx,py=cy+dy;if(!inb(px,py)||S.cells[py][px]!==2)continue;const f=S.field[py]&&S.field[py][px];if(f==null||!isFinite(f)||f<0)continue;const d=Math.hypot(px-x,py-y);if(d<bd){bd=d;b=[px,py];}}return b;}
+function turnCoat(s,by,T){const c=pathCellNear(s.x,s.y);if(!c)return null;const hp=Math.max(20,s.max*1.5),p={t:'thrall',x:c[0],y:c[1],tx:c[0],ty:c[1],hp,max:hp,fx:{},src:null,pv:[c[0],c[1]],ths:s,tht:T,thby:by};
+ S.enemies.push(p);s.charm={e:p};s.en=null;s.fight=false;s.en2=null;S.fx.push({x:s.x,y:s.y,t:.6,m:.6,r:.6*K,col:'#ff7ac8'});return p;}
 function charmTick(e,dt,SL){e.chc=(e.chc===undefined?3:e.chc)-dt;if(e.chc>0)return;let b=null,bd=CHARMR;for(const s of SL){if(s.H||s.charm||s.pig||s.mech||s.beast)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}
- if(!b){e.chc=.5;return;}e.chc=CHARMCD;b.charm={t:CHARMT,e,cd:1};b.en=null;b.fight=false;b.en2=null;S.fx.push({x:b.x,y:b.y,t:.6,m:.6,r:.6*K,col:'#ff7ac8'});}
-function charmedTick(dt){const Ls=liveUnits();for(const s of Ls){const c=s.charm;if(!c)continue;c.t-=dt;
-  if(c.t<=0||!(c.e.hp>0)||!S.enemies.includes(c.e)){s.charm=null;s.lock=true;s.en=null;continue;}
-  // camina con la Súcubo, un poco por detrás
-  const dx=c.e.x-s.x,dy=c.e.y-s.y,dd=Math.hypot(dx,dy),U=unitOf(s.tw);if(dd>.9){const st=Math.min(dd-.9,U.spd*dt*1.2);s.x+=dx/dd*st;s.y+=dy/dd*st;}
-  // y ataca a tus otros soldados que tenga al lado
-  c.cd-=dt;if(c.cd<=0){let o=null,od=SCONTACT*1.3;for(const q of Ls){if(q===s||q.charm||q.H)continue;const d=Math.hypot(q.x-s.x,q.y-s.y);if(d<=od){od=d;o=q;}}
-   if(o){c.cd=1;hitUnit(o,stats(s.tw).dmg*.6,null);S.fx.push({x:o.x,y:o.y,t:.2,m:.2,r:.3*K,col:'#ff7ac8'});}else c.cd=.3;}}}
+ if(!b||!turnCoat(b,e,CHARMT)){e.chc=.5;return;}e.chc=CHARMCD;}
+function charmedTick(dt){for(const t of unitTowers())for(const s of t.sd){const c=s.charm;if(!c)continue;const p=c.e;
+  if(!S.enemies.includes(p)){s.charm=null;if(p.leak||p.hp>0){/* llegó al núcleo (o desapareció): vuelve a su torre */s.x=t.x;s.y=t.y;s.lock=true;s.en=null;}else{/* lo mataste: cae y reaparece como siempre */s.hp=0;s.rt=unitOf(t).rez;s.en=null;s.fight=false;}continue;}
+  if(p.hp<=0)continue;p.tht-=dt;
+  if(p.tht<=0||!(p.thby&&p.thby.hp>0)){S.enemies.splice(S.enemies.indexOf(p),1);s.charm=null;s.x=p.x;s.y=p.y;s.lock=true;s.en=null;S.fx.push({x:p.x,y:p.y,t:.4,m:.4,r:.5*K,col:'#ffd0ea'});}}}
+{const _a=achDeath;achDeath=function(e){if(e&&e.t==='thrall')return;return _a.apply(this,arguments);};}
 // los soldados embelesados no los ven ni tus unidades ni los enemigos: se sacan un momento de su torre mientras se calculan el paso y el combate
 function withoutCharmed(fn){const saved=[];for(const t of unitTowers())if(t.sd&&t.sd.some(s=>s.charm)){saved.push([t,t.sd]);t.sd=t.sd.filter(s=>!s.charm);}try{return fn();}finally{for(const[t,sd]of saved)t.sd=sd;}}
 {const _w=unitWalk;unitWalk=function(dt){return withoutCharmed(()=>_w(dt));};}
@@ -62,13 +67,13 @@ function eSkillsTick(dt){const SL=liveUnits().filter(s=>!s.charm);
   if(E.sk)skTick(e,E,dt,SL);if(E.charm)charmTick(e,dt,SL);if(E.jam)jamTick(e,dt);}
  charmedTick(dt);
  if(S.efx)S.efx=S.efx.filter(q=>(q.t-=dt)>0);}
-{const _u=update;update=function(dt){_u(dt);if(!S)return;if(S.phase==='wave')eSkillsTick(dt);else if(S.list)for(const t of unitTowers())for(const s of t.sd||[])if(s.charm){s.charm=null;s.lock=true;s.en=null;}};}
+{const _u=update;update=function(dt){_u(dt);if(!S)return;if(S.phase==='wave')eSkillsTick(dt);else if(S.list)for(const t of unitTowers())for(const s of t.sd||[])if(s.charm){s.charm=null;s.x=t.x;s.y=t.y;s.lock=true;s.en=null;}};}
 {const _s=startWave;startWave=function(){const r=_s.apply(this,arguments);if(S){S.efx=[];for(const t of S.list)t.jam=0;}return r;};}
 // ---- salpicadura de los disparos en arco ----
 function splashUnits(tg,d,e){for(const t of unitTowers())for(const s of t.sd){if(s===tg||s.hp<=0||s.charm)continue;if(Math.hypot(s.x-tg.x,s.y-tg.y)<=.9*K)hitUnit(s,d,e);}S.fx.push({x:tg.x,y:tg.y,t:.35,m:.35,r:.9*K,col:'#ff9a3c'});}
 // ---- dibujo ----
 // corro de los demonios: los que siguen a su guía giran despacio a su alrededor
-function eWob(e){if(!e.sqid||e.sqlead||e.loose||!e.fsp||ET[e.t].fac!=='d')return null;const h=(e.sqid.length*7+(e.wseed||(e.wseed=Math.random()*6.28)));const a=performance.now()/1100+h;return [Math.cos(a)*.35,Math.sin(a)*.35];}
+function eWob(e){return null;}
 function eSkillsDraw(g,lw){if(!S)return;
  for(const e of S.enemies)if(e.chan>0&&e.hp>0){const px=e.x*CS+CS/2,py=e.y*CS+CS/2,R=JAMR*CS;g.save();g.beginPath();g.arc(px,py,R,0,7);g.clip();g.fillStyle='rgba(63,232,255,.08)';g.fillRect(px-R,py-R,R*2,R*2);
   g.strokeStyle='rgba(63,232,255,.35)';g.lineWidth=lw(1);const st=CS*.6,o=(performance.now()/60)%st;for(let x=px-R-st+o;x<px+R;x+=st){g.beginPath();g.moveTo(x,py-R);g.lineTo(x,py+R);g.stroke();}for(let y=py-R;y<py+R;y+=st){g.beginPath();g.moveTo(px-R,y);g.lineTo(px+R,y);g.stroke();}g.restore();
@@ -78,7 +83,7 @@ function eSkillsDraw(g,lw){if(!S)return;
  for(const q of S.efx||[]){const px=q.x*CS+CS/2,py=q.y*CS+CS/2,al=Math.max(0,q.t/q.m);g.globalAlpha=al*.55;g.fillStyle=q.col;g.beginPath();if(q.arc){g.moveTo(px,py);g.arc(px,py,q.r*CS,q.a-q.arc,q.a+q.arc);g.closePath();}else g.arc(px,py,q.r*CS*(1.1-al*.3),0,7);g.fill();g.globalAlpha=al;g.strokeStyle=q.col;g.lineWidth=lw(2.5);g.stroke();g.globalAlpha=1;}}
 // palabras clave nuevas
 {const _k=kwHtml0;kwHtml0=function(id,src){
- if(id==='charm')return '<b>Embeleso</b><small>Cada '+CHARMCD+' s elige a uno de tus soldados cercanos (3 casillas), que lleva un aro rosa y lucha para el enemigo durante '+CHARMT+' s: deja de bloquear, camina con la Súcubo y ataca a tus otros soldados. Si la Súcubo muere, el efecto acaba. El héroe es inmune.</small>';
+ if(id==='charm')return '<b>Embeleso</b><small>Cada '+CHARMCD+' s elige a uno de tus soldados cercanos (3 casillas), que pasa a ser un enemigo rosa durante '+CHARMT+' s: camina por el camino con el grupo y pelea contra tus unidades. Si llega al núcleo quita 1 de vida y el soldado vuelve a su torre. Si lo matas, el soldado cae y reaparece como siempre. Si la Súcubo muere o se acaba el tiempo, vuelve a ser tuyo. El héroe es inmune.</small>';
  if(id==='jam')return '<b>Interferencia</b><small>Se para '+JAMT+' s y despliega un campo holográfico de '+f(JAMR/K)+' casillas: las torres dentro se apagan y no disparan. Luego descansa '+JAMREST+' s. Las torres de unidades siguen luchando.</small>';
  if(id==='arcsh')return '<b>Disparo en arco</b><small>Su ataque cae en arco y salpica: las unidades a menos de 0,9 casillas del objetivo reciben la mitad del daño.</small>';
  if(id==='airatk')return '<b>Ataque aéreo</b><small>Vuela, pero se para en el aire para atacar a tus unidades y a tu héroe desde lejos. Solo las unidades a distancia y las torres que alcancen el aire pueden darle.</small>';

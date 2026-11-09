@@ -9,12 +9,13 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
   RL.open=false;S.phase='build';S.gold=99999;S.deck=['arrow','bastion'];
   sol=[];for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===1&&!S.occ[x+','+y]){const q=sqOf(x,y);if(q.x===x&&q.y===y)sol.push([x,y]);}}
  S.tsel='bastion';build(sol[0][0],sol[0][1]);const bt=S.list[S.list.length-1];S.tsel='arrow';build(sol[1][0],sol[1][1]);const ar=S.list[S.list.length-1];
- S.phase='wave';S.enemies=[];const mk=(t,x,y)=>{const e={t,x,y,tx:Math.round(x),ty:Math.round(y),hp:500,max:500,fx:{}};S.enemies.push(e);return e;};
+ for(const p of S.portals){p.sq=[];p.sqm=[];p.plan={norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}startWave();S.enemies=[];const mk=(t,x,y)=>{const e={t,x,y,tx:Math.round(x),ty:Math.round(y),hp:500,max:500,fx:{}};S.enemies.push(e);return e;};
  const sd=bt.sd;for(const s of sd){s.x=bt.x;s.y=bt.y;s.hp=s.max;}
  // Súcubo
  const su=mk('warlock',bt.x+1,bt.y);for(let i=0;i<70;i++)eSkillsTick(.05);out.charm=sd.some(s=>s.charm);
  const c=sd.find(s=>s.charm);out.free=!!c;let seen=false;withoutCharmed(()=>{seen=bt.sd.includes(c);});out.hidden=!seen;
- for(let i=0;i<230;i++)eSkillsTick(.05);out.release=c&&!c.charm;S.enemies=[];
+ out.thrall=S.enemies.some(e=>e.t==='thrall'&&e.ths===c);for(let i=0;i<230;i++)eSkillsTick(.05);out.release=c&&!c.charm&&!S.enemies.some(e=>e.t==='thrall'&&e.ths===c);
+ for(const s of sd){s.hp=s.max;s.charm=null;s.x=bt.x;s.y=bt.y;}su.chc=0;eSkillsTick(.05);const c2=sd.find(s=>s.charm);if(c2){const pr=c2.charm.e;pr.hp=0;S.enemies=S.enemies.filter(e=>e!==pr);eSkillsTick(.05);out.thKill=c2.hp<=0&&!c2.charm;c2.hp=c2.max;c2.rt=0;}else out.thKill=false;S.enemies=[];
  // Pirata
  const hk=mk('hack',ar.x+1,ar.y);for(let i=0;i<60;i++)eSkillsTick(.05);out.jam=ar.jam>0&&hk.chan>0;out.jamRate=stats(ar).rate<.01;S.enemies=[];for(let i=0;i<10;i++)eSkillsTick(.05);out.unjam=!(ar.jam>0);
  // golpe de campeón
@@ -25,6 +26,6 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
  out.kw=['charm','jam','arcsh','airatk','whirl','jet','quake','claw'].every(k=>kwHtml0(k,'').includes('<b>'));
  return out;});
 const f=[];const ck=(c,m)=>{if(!c)f.push(m);};
-ck(r.charm,'la Súcubo no embelesa');ck(r.hidden,'el embelesado sigue contando como soldado');ck(r.release,'el embeleso no acaba');ck(r.jam,'el Pirata no interfiere');ck(r.jamRate,'la torre interferida sigue disparando');ck(r.unjam,'la interferencia no se va');
+ck(r.charm,'la Súcubo no embelesa');ck(r.hidden,'el embelesado sigue contando como soldado');ck(r.release,'el embeleso no acaba');ck(r.thrall,'el embelesado no pasa a ser enemigo');ck(r.thKill,'matar al embelesado no tumba al soldado');ck(r.jam,'el Pirata no interfiere');ck(r.jamRate,'la torre interferida sigue disparando');ck(r.unjam,'la interferencia no se va');
 ck(r.whirl,'el Caudillo no usa el Hachazo');ck(r.splash,'el disparo en arco no salpica');ck(r.gyro&&r.gundr,'voladores con ataque mal');ck(r.sk,'habilidades de campeón sin asignar');ck(r.kw,'faltan palabras clave');
 console.log(f.length?'FALLOS '+JSON.stringify(f)+' '+JSON.stringify(r):'habilidades_enemigos ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

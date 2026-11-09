@@ -1328,7 +1328,7 @@ body.mfs .tk{width:26px;height:38px}body.mfs .tk .tki{font-size:12px;top:3px}bod
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v293</div>
+<div id="ver">Towerize v294</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3104,9 +3104,9 @@ function drawUnits(c,s,cs,ox,oy,lw){
      if(im.complete&&im.naturalWidth){c.beginPath();c.arc(px,py,r,0,7);c.clip();try{c.filter='grayscale(1) brightness(.75)';}catch(e){}c.drawImage(im,px-r,py-r,r*2,r*2);try{c.filter='none';}catch(e){}}c.restore();
      c.strokeStyle='#8a8f9c';c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();
      const n=Math.ceil(q.H.s.rt||q.rt||0);if(n>0){c.font='800 '+Math.round(r*1.1)+'px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.lineWidth=lw(3);c.strokeStyle='rgba(0,0,0,.8)';c.strokeText(n,px,py+1);c.fillStyle='#fff';c.fillText(n,px,py+1);}}
-    continue;}const wb=q.drunk>0?Math.sin(performance.now()/110+q.i)*cs*.18:0,px=ox+q.x*cs+cs/2+wb,py=oy+q.y*cs+cs/2,r=(q.H?cs*1.05:q.mech?cs*1.5:q.pig?cs*1.0:q.beast?cs*(q.beast==='bear'?.95:.75):cs*.5)*(typeof UVS!=='undefined'&&!S.pvE?UVS:1);
+    continue;}if(q.charm)continue;const wb=q.drunk>0?Math.sin(performance.now()/110+q.i)*cs*.18:0,px=ox+q.x*cs+cs/2+wb,py=oy+q.y*cs+cs/2,r=(q.H?cs*1.05:q.mech?cs*1.5:q.pig?cs*1.0:q.beast?cs*(q.beast==='bear'?.95:.75):cs*.5)*(typeof UVS!=='undefined'&&!S.pvE?UVS:1);
    if(MK){c.fillStyle=tinfo(t).col;for(const sd of[-1,1]){c.beginPath();c.moveTo(px+sd*r*.55,py-r*.45);c.lineTo(px+sd*r*1.45,py-r*.95);c.lineTo(px+sd*r*.85,py-r*.05);c.closePath();c.fill();}}
-   c.fillStyle=q.H?q.H.def.col:tinfo(t).col;c.beginPath();c.arc(px,py,r,0,7);c.fill();if(q.charm){c.strokeStyle='#ff7ac8';c.lineWidth=lw(3);c.beginPath();c.arc(px,py,r*1.4,0,7);c.stroke();}
+   c.fillStyle=q.H?q.H.def.col:tinfo(t).col;c.beginPath();c.arc(px,py,r,0,7);c.fill();
    if(q.H){const im=heroImg(q.H.id);if(im.complete&&im.naturalWidth){c.save();c.beginPath();c.arc(px,py,r,0,7);c.clip();c.drawImage(im,px-r,py-r,r*2,r*2);c.restore();}else{c.font=Math.round(r*1.5)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#14161c';c.fillText(q.H.def.ic,px,py+1);}
     c.strokeStyle=q.H.def.col;c.lineWidth=lw(3);c.beginPath();c.arc(px,py,r,0,7);c.stroke();c.strokeStyle='rgba(0,0,0,.55)';c.lineWidth=lw(1);c.beginPath();c.arc(px,py,r+lw(2),0,7);c.stroke();}
    else{c.strokeStyle='#cfe0ff';c.lineWidth=lw(1.5);c.stroke();if(!q.mech&&!q.pig&&!q.beast){const ui=unitIc(t);if(ui){c.fillStyle='#14161c';icDraw(c,ui,px,py+1,r*1.45);}}}
@@ -3323,7 +3323,18 @@ function sqCmd(dt){const L0=S.sqL;if(!L0)return;
   const fac=ET[e.t].fac;if(fac==='m')continue;const lost=L.hp<=0||L.leak,far=!lost&&(fac==='g'||fac==='a')&&Math.hypot(L.x-e.x,L.y-e.y)>SQFAR;
   if(!lost&&!far)continue;e.loose=1;e.fsp=0;
   if(fac==='g'||fac==='a')e.scat=1;else if(fac==='d'&&lost&&!e.fx.haste)e.fx.haste={m:1.3,t:2};}}
-{const _u=update;update=function(dt){_u(dt);if(S&&S.phase==='wave')sqCmd(dt);};}
+// ---- carriles: cualquier enemigo puede cambiar de carril (-1 izquierda, 0 centro, 1 derecha respecto a su marcha) ----
+function setLane(e,l){e.fln=Math.max(-1,Math.min(1,Math.round(l)));}
+const eProg=e=>{const f=S.field[e.ty]&&S.field[e.ty][e.tx];return (f==null||!isFinite(f)?1e9:f)+Math.hypot(e.tx-e.x,e.ty-e.y);};
+// ---- corro de los demonios: giran de verdad alrededor de su guía (cambian de carril y aprietan o aflojan el paso para rodearlo) ----
+const RINGLEAD={seal:1,acolyte:1,warlock:1},RINGR=1.25,RINGW=.55;
+function ringTick(dt){const L0=S.sqL;if(!L0)return;const cnt={};
+ for(const e of S.enemies){if(!e.sqid||e.loose||e.sqlead||e.hp<=0||ET[e.t].fac!=='d'||isFly(e))continue;const L=L0[e.sqid];if(!L||L.hp<=0||!RINGLEAD[L.t])continue;
+  if(e.fx.slow||e.fx.stun||e.fx.freeze||e.fx.root||e.stopped||e.ct>0)continue;
+  if(e.ra===undefined){const i=cnt[e.sqid]=(cnt[e.sqid]||0)+1;e.ra=i*1.047;}else cnt[e.sqid]=(cnt[e.sqid]||0)+1;
+  e.ra+=RINGW*dt;const want=eProg(L)-Math.cos(e.ra)*RINGR,err=eProg(e)-want,ls=(L.fsp||ET[L.t].sp)*(L.fx.slow?L.fx.slow.m:1);
+  setLane(e,Math.sin(e.ra)*1.3);e.fsp=Math.max(.2,ls*Math.max(.45,Math.min(1.7,1+err*.7)));}}
+{const _u=update;update=function(dt){_u(dt);if(S&&S.phase==='wave'){sqCmd(dt);ringTick(dt);}};}
 {const _s=startWave;startWave=function(){if(S&&S.phase==='build')S.sqL={};return _s.apply(this,arguments);};}
 // desperdigados: de vez en cuando cambian de carril
 {const _l=laneStep;laneStep=function(e,F){if(e.scat&&Math.random()<.3)e.fln=Math.floor(Math.random()*3)-1;return _l(e,F);};}
@@ -3435,15 +3446,20 @@ function skTick(e,E,dt,SL){e.skc=(e.skc===undefined?8:e.skc)-dt;if(e.skc>0)retur
   hitUnit(s,dmg,e);if(K0.st&&s.hp>0)s.cd=Math.max(s.cd||0,K0.st);}
  (S.efx=S.efx||[]).push({k:E.sk,x:e.x,y:e.y,a:ang,r:R,arc:K0.a||0,col:K0.col,t:.6,m:.6});S.msg=E.n+': '+K0.n+'.';}
 // ---- Súcubo: embeleso ----
+// El soldado embelesado se convierte un rato en un enemigo de verdad («Soldado embelesado»): camina por el camino con el grupo, pelea contra tus unidades
+// y, si llega al núcleo, quita 1 de vida. Mientras tanto el soldado original queda fuera de juego. Al acabar el efecto vuelve a ser tuyo donde esté;
+// si matas al embelesado, el soldado cae y reaparece en su torre como siempre. Sirve de base para futuras mecánicas de «cambiar de bando».
+ET.thrall={n:'Soldado embelesado',gold:0,hp:1,hf:30,sp:ET.minion.sp,r:ET.minion.r,col:'#ff7ac8',dmg:1,ap:0,am:0,ud:6,ac:1,need:1,rg:'melee',xp:0,gen:1,fac:'d',thrall:1};EIC.thrall='💂';
+function pathCellNear(x,y){if(!S.field||!S.cells)return null;let b=null,bd=1e9;const cx=Math.round(x),cy=Math.round(y);for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){const px=cx+dx,py=cy+dy;if(!inb(px,py)||S.cells[py][px]!==2)continue;const f=S.field[py]&&S.field[py][px];if(f==null||!isFinite(f)||f<0)continue;const d=Math.hypot(px-x,py-y);if(d<bd){bd=d;b=[px,py];}}return b;}
+function turnCoat(s,by,T){const c=pathCellNear(s.x,s.y);if(!c)return null;const hp=Math.max(20,s.max*1.5),p={t:'thrall',x:c[0],y:c[1],tx:c[0],ty:c[1],hp,max:hp,fx:{},src:null,pv:[c[0],c[1]],ths:s,tht:T,thby:by};
+ S.enemies.push(p);s.charm={e:p};s.en=null;s.fight=false;s.en2=null;S.fx.push({x:s.x,y:s.y,t:.6,m:.6,r:.6*K,col:'#ff7ac8'});return p;}
 function charmTick(e,dt,SL){e.chc=(e.chc===undefined?3:e.chc)-dt;if(e.chc>0)return;let b=null,bd=CHARMR;for(const s of SL){if(s.H||s.charm||s.pig||s.mech||s.beast)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}
- if(!b){e.chc=.5;return;}e.chc=CHARMCD;b.charm={t:CHARMT,e,cd:1};b.en=null;b.fight=false;b.en2=null;S.fx.push({x:b.x,y:b.y,t:.6,m:.6,r:.6*K,col:'#ff7ac8'});}
-function charmedTick(dt){const Ls=liveUnits();for(const s of Ls){const c=s.charm;if(!c)continue;c.t-=dt;
-  if(c.t<=0||!(c.e.hp>0)||!S.enemies.includes(c.e)){s.charm=null;s.lock=true;s.en=null;continue;}
-  // camina con la Súcubo, un poco por detrás
-  const dx=c.e.x-s.x,dy=c.e.y-s.y,dd=Math.hypot(dx,dy),U=unitOf(s.tw);if(dd>.9){const st=Math.min(dd-.9,U.spd*dt*1.2);s.x+=dx/dd*st;s.y+=dy/dd*st;}
-  // y ataca a tus otros soldados que tenga al lado
-  c.cd-=dt;if(c.cd<=0){let o=null,od=SCONTACT*1.3;for(const q of Ls){if(q===s||q.charm||q.H)continue;const d=Math.hypot(q.x-s.x,q.y-s.y);if(d<=od){od=d;o=q;}}
-   if(o){c.cd=1;hitUnit(o,stats(s.tw).dmg*.6,null);S.fx.push({x:o.x,y:o.y,t:.2,m:.2,r:.3*K,col:'#ff7ac8'});}else c.cd=.3;}}}
+ if(!b||!turnCoat(b,e,CHARMT)){e.chc=.5;return;}e.chc=CHARMCD;}
+function charmedTick(dt){for(const t of unitTowers())for(const s of t.sd){const c=s.charm;if(!c)continue;const p=c.e;
+  if(!S.enemies.includes(p)){s.charm=null;if(p.leak||p.hp>0){/* llegó al núcleo (o desapareció): vuelve a su torre */s.x=t.x;s.y=t.y;s.lock=true;s.en=null;}else{/* lo mataste: cae y reaparece como siempre */s.hp=0;s.rt=unitOf(t).rez;s.en=null;s.fight=false;}continue;}
+  if(p.hp<=0)continue;p.tht-=dt;
+  if(p.tht<=0||!(p.thby&&p.thby.hp>0)){S.enemies.splice(S.enemies.indexOf(p),1);s.charm=null;s.x=p.x;s.y=p.y;s.lock=true;s.en=null;S.fx.push({x:p.x,y:p.y,t:.4,m:.4,r:.5*K,col:'#ffd0ea'});}}}
+{const _a=achDeath;achDeath=function(e){if(e&&e.t==='thrall')return;return _a.apply(this,arguments);};}
 // los soldados embelesados no los ven ni tus unidades ni los enemigos: se sacan un momento de su torre mientras se calculan el paso y el combate
 function withoutCharmed(fn){const saved=[];for(const t of unitTowers())if(t.sd&&t.sd.some(s=>s.charm)){saved.push([t,t.sd]);t.sd=t.sd.filter(s=>!s.charm);}try{return fn();}finally{for(const[t,sd]of saved)t.sd=sd;}}
 {const _w=unitWalk;unitWalk=function(dt){return withoutCharmed(()=>_w(dt));};}
@@ -3462,13 +3478,13 @@ function eSkillsTick(dt){const SL=liveUnits().filter(s=>!s.charm);
   if(E.sk)skTick(e,E,dt,SL);if(E.charm)charmTick(e,dt,SL);if(E.jam)jamTick(e,dt);}
  charmedTick(dt);
  if(S.efx)S.efx=S.efx.filter(q=>(q.t-=dt)>0);}
-{const _u=update;update=function(dt){_u(dt);if(!S)return;if(S.phase==='wave')eSkillsTick(dt);else if(S.list)for(const t of unitTowers())for(const s of t.sd||[])if(s.charm){s.charm=null;s.lock=true;s.en=null;}};}
+{const _u=update;update=function(dt){_u(dt);if(!S)return;if(S.phase==='wave')eSkillsTick(dt);else if(S.list)for(const t of unitTowers())for(const s of t.sd||[])if(s.charm){s.charm=null;s.x=t.x;s.y=t.y;s.lock=true;s.en=null;}};}
 {const _s=startWave;startWave=function(){const r=_s.apply(this,arguments);if(S){S.efx=[];for(const t of S.list)t.jam=0;}return r;};}
 // ---- salpicadura de los disparos en arco ----
 function splashUnits(tg,d,e){for(const t of unitTowers())for(const s of t.sd){if(s===tg||s.hp<=0||s.charm)continue;if(Math.hypot(s.x-tg.x,s.y-tg.y)<=.9*K)hitUnit(s,d,e);}S.fx.push({x:tg.x,y:tg.y,t:.35,m:.35,r:.9*K,col:'#ff9a3c'});}
 // ---- dibujo ----
 // corro de los demonios: los que siguen a su guía giran despacio a su alrededor
-function eWob(e){if(!e.sqid||e.sqlead||e.loose||!e.fsp||ET[e.t].fac!=='d')return null;const h=(e.sqid.length*7+(e.wseed||(e.wseed=Math.random()*6.28)));const a=performance.now()/1100+h;return [Math.cos(a)*.35,Math.sin(a)*.35];}
+function eWob(e){return null;}
 function eSkillsDraw(g,lw){if(!S)return;
  for(const e of S.enemies)if(e.chan>0&&e.hp>0){const px=e.x*CS+CS/2,py=e.y*CS+CS/2,R=JAMR*CS;g.save();g.beginPath();g.arc(px,py,R,0,7);g.clip();g.fillStyle='rgba(63,232,255,.08)';g.fillRect(px-R,py-R,R*2,R*2);
   g.strokeStyle='rgba(63,232,255,.35)';g.lineWidth=lw(1);const st=CS*.6,o=(performance.now()/60)%st;for(let x=px-R-st+o;x<px+R;x+=st){g.beginPath();g.moveTo(x,py-R);g.lineTo(x,py+R);g.stroke();}for(let y=py-R;y<py+R;y+=st){g.beginPath();g.moveTo(px-R,y);g.lineTo(px+R,y);g.stroke();}g.restore();
@@ -3478,7 +3494,7 @@ function eSkillsDraw(g,lw){if(!S)return;
  for(const q of S.efx||[]){const px=q.x*CS+CS/2,py=q.y*CS+CS/2,al=Math.max(0,q.t/q.m);g.globalAlpha=al*.55;g.fillStyle=q.col;g.beginPath();if(q.arc){g.moveTo(px,py);g.arc(px,py,q.r*CS,q.a-q.arc,q.a+q.arc);g.closePath();}else g.arc(px,py,q.r*CS*(1.1-al*.3),0,7);g.fill();g.globalAlpha=al;g.strokeStyle=q.col;g.lineWidth=lw(2.5);g.stroke();g.globalAlpha=1;}}
 // palabras clave nuevas
 {const _k=kwHtml0;kwHtml0=function(id,src){
- if(id==='charm')return '<b>Embeleso</b><small>Cada '+CHARMCD+' s elige a uno de tus soldados cercanos (3 casillas), que lleva un aro rosa y lucha para el enemigo durante '+CHARMT+' s: deja de bloquear, camina con la Súcubo y ataca a tus otros soldados. Si la Súcubo muere, el efecto acaba. El héroe es inmune.</small>';
+ if(id==='charm')return '<b>Embeleso</b><small>Cada '+CHARMCD+' s elige a uno de tus soldados cercanos (3 casillas), que pasa a ser un enemigo rosa durante '+CHARMT+' s: camina por el camino con el grupo y pelea contra tus unidades. Si llega al núcleo quita 1 de vida y el soldado vuelve a su torre. Si lo matas, el soldado cae y reaparece como siempre. Si la Súcubo muere o se acaba el tiempo, vuelve a ser tuyo. El héroe es inmune.</small>';
  if(id==='jam')return '<b>Interferencia</b><small>Se para '+JAMT+' s y despliega un campo holográfico de '+f(JAMR/K)+' casillas: las torres dentro se apagan y no disparan. Luego descansa '+JAMREST+' s. Las torres de unidades siguen luchando.</small>';
  if(id==='arcsh')return '<b>Disparo en arco</b><small>Su ataque cae en arco y salpica: las unidades a menos de 0,9 casillas del objetivo reciben la mitad del daño.</small>';
  if(id==='airatk')return '<b>Ataque aéreo</b><small>Vuela, pero se para en el aire para atacar a tus unidades y a tu héroe desde lejos. Solo las unidades a distancia y las torres que alcancen el aire pueden darle.</small>';
@@ -7801,12 +7817,13 @@ const ESVG3={"troll": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6
 {const D={troll:['mini','Troll','#3e6a5a','g',1,{regen:1}],hknight:['mini','Caballero infernal','#5a0f18','d',1,{shield:6}],warlord:['elite','Señor de la guerra orco','#3e6a28','g',1,{banner:1}],wander:['elite','Demonio errante','#3a1a4a','d',1,{tele:1}],
  infil:['mini','Infiltrador óptico','#22303e','m',2,{camo:1}],mutant:['mini','Mutante adaptativo','#3a2e4a','a',2,{adapt:1}],brood:['elite','Matriarca incubadora','#1e4a46','a',2,{burst:8}],carrier:['elite','Nodriza','#3e4654','m',2,{launch:2}]};
  for(const k in D){const[b,n,col,fac,era,x]=D[k],B=ET[b],E=Object.assign({},B,{n,col,fac,gen:0},x);if(era===2){E.era=2;E.hf=Math.round(B.hf*1.15);E.hp=B.hp*1.15;}ET[k]=E;EIC[k]={esvg:ESVG3[k]};}
- ET.mini.gen=1;ET.elite.gen=1;}
+ ET.mini.gen=1;ET.elite.gen=1;
+ ET.banner={n:'Estandarte orco',gold:0,hp:3,hf:140,sp:0,r:ET.norm.r,col:'#c0392b',dmg:0,ap:0,am:0,ud:0,ac:9,need:1,rg:'melee',xp:0,gen:1,fac:'g',flag:1};EIC.banner='🚩';}
 const ELV={1:{mini:['troll','hknight'],elite:['warlord','wander']},2:{mini:['infil','mutant'],elite:['brood','carrier']}};
 {const _s=spawnEnemy;spawnEnemy=function(t,p,fo){if((t==='mini'||t==='elite')&&!S.tut){const L=ELV[S.era===2?2:1][t];t=L[Math.floor(Math.random()*L.length)];}return _s.call(this,t,p,fo);};}
 {const i=EFAM.findIndex(x=>x[0]==='Élites');if(i>=0)EFAM.splice(i,1,['Mini-élites',['troll','hknight']],['Élites',['warlord','wander']],['Mini-élites · Distópica',['infil','mutant']],['Élites · Distópica',['brood','carrier']]);}
 for(const k of['troll','hknight','warlord','wander','infil','mutant','brood','carrier'])DNIMP.add(k);
-const BANCD=12,BANT=15,BANR=1.5*K,TELECD=10,TELEW=1,TELED=3*K,CAMOR=1.5*K,CAMOREV=3,ADMAX=.3,LAUNCHCD=6;
+const BANCD=12,BANT=12,BANR=1.5*K,TELECD=10,TELEW=1,TELED=3*K,CAMOR=1.5*K,CAMOREV=3,ADMAX=.3,LAUNCHCD=6;
 // ---- aparición de enemigos desde otro (crías de la Matriarca, drones de la Nodriza) ----
 function spawnAt(t,src,n){const hp=ehpOf(t,S.round);for(let i=0;i<n;i++){const a=Math.random()*6.28,j=.4;(S.espw=S.espw||[]).push({t,x:src.x+Math.cos(a)*j,y:src.y+Math.sin(a)*j,tx:src.tx,ty:src.ty,hp,max:hp,fx:{},src:null,pv:[src.x,src.y],fln:src.fln,fd:src.fd});}}
 // ---- daño: escudo, adaptación y revelado del camuflaje ----
@@ -7816,36 +7833,38 @@ function eHurtMod(e,a,src,ty){const E=ET[e.t];if(!E)return a;
  if(E.adapt){const r=e.res||(e.res={phys:0,magic:0,elem:0});a*=1-(r[ty]||0);(e.adT=e.adT||{phys:0,magic:0,elem:0})[ty]=(e.adT[ty]||0)+a;}
  return a;}
 // ---- camuflaje: las torres solo le apuntan de cerca o si está revelado ----
-const camoHid=(e,t)=>{const E=ET[e.t];if(!E||!E.camo||e.rev>0||e.ct>0)return false;return !t||Math.hypot(e.x-t.x,e.y-t.y)>CAMOR;};
-// los tics de las torres de la era 2 y desbloqueables no miran torre a torre: no ven a los camuflados que no estén a 1,5 casillas de alguna torre
+const camoHid=e=>{const E=ET[e.t];return !!(E&&E.camo&&!(e.rev>0)&&!(e.ct>0));};
+// regla única para todas las torres: el camuflado se revela (para todas) mientras pase a 1,5 casillas de alguna torre, al recibir daño o al chocar con tus unidades
 {const _t=e2TowersTick;e2TowersTick=function(dt){if(!S||!S.enemies.some(e=>ET[e.t]&&ET[e.t].camo))return _t.apply(this,arguments);
- const all=S.enemies,vis=all.filter(e=>!camoHid(e)||S.list.some(t=>Math.hypot(e.x-t.x,e.y-t.y)<=CAMOR));S.enemies=vis;try{return _t.apply(this,arguments);}finally{const add=S.enemies.filter(e=>!all.includes(e));S.enemies=all.concat(add);}};}
+ const all=S.enemies,vis=all.filter(e=>!camoHid(e));S.enemies=vis;try{return _t.apply(this,arguments);}finally{const add=S.enemies.filter(e=>!all.includes(e));S.enemies=all.concat(add);}};}
 // ---- tic ----
 function eliteTick(dt){
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];
-  if(E.camo&&e.rev>0)e.rev-=dt;
+  if(E.camo){if(e.rev>0)e.rev-=dt;if(S.list.some(t=>Math.hypot(e.x-t.x,e.y-t.y)<=CAMOR))e.rev=Math.max(e.rev||0,.3);}
   if(E.regen){e.rgT=(e.rgT||0)+dt;if(e.rgT>=1){e.rgT-=1;const blk=e.bn>=.5||(e.ps&&e.ps.length)||(e.bl&&e.bl.length);e.rgOff=!!blk;if(!blk&&e.hp<e.max){e.hp=Math.min(e.max,e.hp+e.max*.03);S.fx.push({x:e.x,y:e.y,t:.3,m:.3,r:.3*K,col:'#6fe07a'});}}}
   if(E.adapt){e.adC=(e.adC||0)+dt;if(e.adC>=1){e.adC-=1;const T=e.adT||{},top=['phys','magic','elem'].reduce((b,k)=>(T[k]||0)>(T[b]||0)?k:b,'phys'),r=e.res||(e.res={phys:0,magic:0,elem:0});if((T[top]||0)>0){for(const k in r)r[k]=k===top?Math.min(ADMAX,r[k]+.03):Math.max(0,r[k]-.01);e.adTop=top;}e.adT={phys:0,magic:0,elem:0};}}
   if(E.tele&&e.tw>0&&(e.fx.stun||e.fx.freeze||e.fx.fear||e.kbN)){e.tw=0;e.tlc=TELECD;S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:.6*K,col:'#c070ff'});}
   if(e.fx.stun||e.fx.freeze||e.fx.poly)continue;
-  if(E.banner){e.bnc=(e.bnc===undefined?4:e.bnc)-dt;if(e.bnc<=0){e.bnc=BANCD;(S.banners=S.banners||[]).push({x:e.x,y:e.y,t:BANT});S.msg=E.n+' planta un estandarte.';}}
+  if(E.banner){e.bnc=(e.bnc===undefined?4:e.bnc)-dt;if(e.bnc<=0){e.bnc=BANCD;{const hp=ehpOf('banner',S.round);(S.espw=S.espw||[]).push({t:'banner',x:e.x,y:e.y,tx:e.tx,ty:e.ty,hp,max:hp,fx:{},src:null,pv:[e.x,e.y],life:BANT});}S.msg=E.n+' planta un estandarte.';}}
   if(E.tele){if(e.tw>0){if(e.fx.stun||e.fx.freeze||e.fx.fear||e.kbN){e.tw=0;e.tlc=TELECD;S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:.6*K,col:'#c070ff'});}else{e.tw-=dt;if(e.tw<=0){teleFwd(e);e.tlc=TELECD;}}}
    else{e.tlc=(e.tlc===undefined?6:e.tlc)-dt;const fv=S.field[e.ty]&&S.field[e.ty][e.tx];if(e.tlc<=0&&fv!=null&&fv>TELED*1.6){e.tw=TELEW;e.kbN=0;}else if(e.tlc<=0)e.tlc=1;}}
   if(E.launch){e.lnc=(e.lnc===undefined?3:e.lnc)-dt;if(e.lnc<=0){e.lnc=LAUNCHCD;spawnAt('swarm',e,E.launch);}}}
- // estandartes: aceleran a los enemigos que pasan cerca
- if(S.banners){S.banners=S.banners.filter(b=>(b.t-=dt)>0);for(const b of S.banners)for(const e of S.enemies)if(e.hp>0&&!isFly(e)&&Math.hypot(e.x-b.x,e.y-b.y)<=BANR&&!(e.fx.haste&&e.fx.haste.m>1.25))e.fx.haste={m:1.25,t:.4};}
- if(S.espw&&S.espw.length){for(const n of S.espw){S.enemies.push(n);see('en',n.t);}S.espw=[];}}
+ // estandartes: son enemigos quietos que se pueden destruir; aceleran a los que pasan cerca y se caen solos al acabar su tiempo (o si ya no queda nadie más)
+ {const bs=S.enemies.filter(b=>b.t==='banner'&&b.hp>0);if(bs.length){const others=S.enemies.some(e=>e.t!=='banner'&&e.hp>0)||S.portals.some(p=>p.q&&p.q.length);
+  for(const b of bs){b.life-=dt;if(b.life<=0||!others){S.enemies.splice(S.enemies.indexOf(b),1);continue;}for(const e of S.enemies)if(e.hp>0&&e!==b&&e.t!=='banner'&&!isFly(e)&&Math.hypot(e.x-b.x,e.y-b.y)<=BANR&&!(e.fx.haste&&e.fx.haste.m>1.25))e.fx.haste={m:1.25,t:.4};}}}
+ if(S.espw&&S.espw.length){for(const n of S.espw){S.enemies.push(n);if(!ET[n.t].gen)see('en',n.t);}S.espw=[];}}
 function teleFwd(e){const x0=e.x,y0=e.y;e.fsp=0;let d=0;for(let i=0;i<300&&d<TELED;i++){const px=e.x,py=e.y;if(move(e,.05)){e.leak=true;break;}d+=Math.hypot(e.x-px,e.y-py);}
  S.fx.push({x:x0,y:y0,t:.5,m:.5,r:.7*K,col:'#c070ff'});S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:.7*K,col:'#c070ff'});}
 // el empuje cancela el teletransporte: se marca al empujar
 {const _k=knock;knock=function(e,d){if(e)e.kbN=1;return _k.apply(this,arguments);};}
 {const _a=achDeath;achDeath=function(e){if(e&&!e.leak&&ET[e.t]&&ET[e.t].burst&&!e.burstD){e.burstD=1;spawnAt('stalk',e,ET[e.t].burst);}return _a.apply(this,arguments);};}
-{const _u=update;update=function(dt){_u(dt);if(S&&S.phase==='wave')eliteTick(dt);else if(S&&S.banners)S.banners=[];};}
+{const _u=update;update=function(dt){_u(dt);if(S&&S.phase==='wave')eliteTick(dt);};}
+{const _m=move;move=function(e,dt){if(ET[e.t]&&ET[e.t].flag)return false;return _m(e,dt);};}
+{const _a=achDeath;achDeath=function(e){if(e&&e.t==='banner')return;return _a.apply(this,arguments);};}
 // ---- dibujo ----
 const eAlpha=e=>camoHid(e)?.32:1;
 function eEliteDraw(g,lw){if(!S)return;
- for(const b of S.banners||[]){const x=b.x*CS+CS/2,y=b.y*CS+CS/2,h=CS*1.4;g.fillStyle='rgba(192,57,43,.12)';g.strokeStyle='rgba(192,57,43,.45)';g.lineWidth=lw(1);g.beginPath();g.arc(x,y,BANR*CS,0,7);g.fill();g.stroke();
-  g.strokeStyle='#6a4a2a';g.lineWidth=lw(3);g.beginPath();g.moveTo(x,y+h*.3);g.lineTo(x,y-h);g.stroke();g.fillStyle='#c0392b';g.beginPath();g.moveTo(x,y-h);g.lineTo(x+h*.7,y-h*.85);g.lineTo(x+h*.55,y-h*.6);g.lineTo(x+h*.7,y-h*.35);g.lineTo(x,y-h*.35);g.closePath();g.fill();}
+ for(const b of S.enemies)if(b.t==='banner'&&b.hp>0){const x=b.x*CS+CS/2,y=b.y*CS+CS/2;g.fillStyle='rgba(192,57,43,.10)';g.strokeStyle='rgba(192,57,43,.5)';g.lineWidth=lw(1.2);g.beginPath();g.arc(x,y,BANR*CS,0,7);g.fill();g.stroke();}
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t],px=e.x*CS+CS/2,py=e.y*CS+CS/2,r=E.r*CS*EVS;
   if(e.tw>0){const p=.5+.5*Math.sin(performance.now()/60);g.strokeStyle='rgba(192,112,255,'+(.5+.5*p)+')';g.lineWidth=lw(3);g.beginPath();g.arc(px,py,r*(1.4+.4*p),0,7);g.stroke();}
   if(E.shield&&(e.shq===undefined||e.shq>0)){const n=e.shq===undefined?E.shield:e.shq;g.strokeStyle='#c9d4e0';g.lineWidth=lw(3);g.beginPath();g.arc(px,py,r+lw(5),-Math.PI/2-n*.25,-Math.PI/2+n*.25);g.stroke();}
@@ -7855,9 +7874,9 @@ function eEliteDraw(g,lw){if(!S)return;
 {const _k=kwHtml0;kwHtml0=function(id,src){
  if(id==='regen')return '<b>Regeneración</b><small>Recupera un 3 % de su vida máxima cada segundo, salvo mientras sufra quemadura, veneno o sangrado.</small>';
  if(id==='shield')return '<b>Escudo frontal</b><small>Su escudo para por completo los primeros golpes que recibe (6). Los estados (quemadura, veneno…) no lo gastan y le hacen daño igual.</small>';
- if(id==='banner')return '<b>Estandarte</b><small>Cada '+BANCD+' s planta un estandarte que dura '+BANT+' s: los enemigos de tierra que pasen a '+f(BANR/K)+' casillas o menos van un 25 % más rápido.</small>';
+ if(id==='banner')return '<b>Estandarte</b><small>Cada '+BANCD+' s planta un estandarte: los enemigos de tierra que pasen a '+f(BANR/K)+' casillas o menos van un 25 % más rápido. El estandarte se puede destruir como un enemigo más (no se mueve ni ataca) y se cae solo a los '+BANT+' s.</small>';
  if(id==='tele')return '<b>Teletransporte</b><small>Cada '+TELECD+' s brilla en violeta durante '+TELEW+' s y salta '+f(TELED/K)+' casillas hacia delante por el camino. Si lo aturdes, congelas, aterras o empujas mientras brilla, el salto se cancela.</small>';
- if(id==='camo')return '<b>Camuflaje</b><small>Casi invisible: tus torres solo pueden apuntarle si pasa a '+f(CAMOR/K)+' casillas o menos. Se revela '+CAMOREV+' s al recibir cualquier daño (de área, de estados…) o al chocar con tus unidades o tu héroe, que sí lo bloquean.</small>';
+ if(id==='camo')return '<b>Camuflaje</b><small>Casi invisible: tus torres no pueden apuntarle. Se revela para todas mientras pase a '+f(CAMOR/K)+' casillas o menos de alguna torre, durante '+CAMOREV+' s al recibir cualquier daño (de área, de estados…) y al chocar con tus unidades o tu héroe, que sí lo bloquean.</small>';
  if(id==='adapt')return '<b>Adaptación</b><small>Gana poco a poco resistencia al tipo de daño que más recibe (hasta un 30 %) y la pierde en los demás. El anillo de color muestra a qué se está adaptando: mezcla tipos de daño.</small>';
  if(id==='burst')return '<b>Puesta</b><small>Al morir suelta '+ET.brood.burst+' Acechadores.</small>';
  if(id==='launch')return '<b>Hangar</b><small>Cada '+LAUNCHCD+' s lanza '+ET.carrier.launch+' Drones enjambre.</small>';
@@ -7865,7 +7884,7 @@ function eEliteDraw(g,lw){if(!S)return;
 {const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(['regen','Regeneración','💚'],['shield','Escudo frontal','🛡️'],['banner','Estandarte','🚩'],['tele','Teletransporte','🌀'],['camo','Camuflaje','👻'],['adapt','Adaptación','🧬'],['burst','Puesta','🥚'],['launch','Hangar','🛸']);}
 Object.assign(MECUSE,{regen:['en:troll'],shield:['en:hknight'],banner:['en:warlord'],tele:['en:wander'],camo:['en:infil'],adapt:['en:mutant'],burst:['en:brood'],launch:['en:carrier']});
 Object.assign(ETIP,{troll:'Se regenera sin parar: quémalo, envenénalo o hazle sangrar para cortarlo.',hknight:'Su escudo para los primeros golpes: gástalo con torres rápidas o usa estados.',
- warlord:'Sus estandartes aceleran a los que pasan: mátalo pronto o frena a los acelerados.',wander:'Salta hacia delante cada 10 s: aturdirlo, congelarlo o empujarlo mientras brilla cancela el salto.',
+ warlord:'Sus estandartes aceleran a los que pasan: destrúyelos y mátalo pronto.',wander:'Salta hacia delante cada 10 s: aturdirlo, congelarlo o empujarlo mientras brilla cancela el salto.',
  infil:'Camuflado: revélalo con daño en área o estados, o bloquéalo con tus unidades.',mutant:'Se adapta al daño que más recibe: mezcla tipos de daño.',
  brood:'Al morir suelta Acechadores: ten daño en área cerca de donde vaya a caer.',carrier:'Lanza drones sin parar: mátala pronto y ten torres que den al aire.'});
 // ---- v293 · Primeros jefes de historia: Rey Goblin (Fantástica) y ARGOS (Distópica) ----

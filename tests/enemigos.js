@@ -23,6 +23,12 @@ const r=await p.evaluate(async()=>{const out={};INTRO.on=false;STO.intro=1;OPT.h
  const mates=L?S.enemies.filter(e=>e.sqid===L.sqid&&e!==L):[];out.mates=mates.length;
  if(L){L.hp=0;for(let i=0;i<4;i++)update(.05);}
  out.loose=mates.length>0&&mates.every(e=>e.loose&&e.fsp===0&&e.scat);
+ // corro de los demonios: los que rodean a su guía cambian de carril de verdad y no se alejan de él
+ S.enemies=[];for(const p of S.portals){p.q=[];p.qf=[];p.sq=['circulo'];p.sqm=[{seal:1,acolyte:3,minion:3}];p.plan={seal:1,acolyte:3,minion:3,norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}
+ S.phase='build';startWave();for(const p of S.portals.slice(1)){p.q=[];p.qf=[];}
+ for(let i=0;i<500&&S.enemies.length<7;i++)update(.05);const Lr=S.enemies.find(e=>e.sqlead&&e.t==='seal');const lanes={};let far=0;
+ if(Lr){for(let i=0;i<260;i++){update(.05);for(const e of S.enemies)if(e.sqid===Lr.sqid&&e!==Lr&&e.hp>0){(lanes[S.enemies.indexOf(e)]=lanes[S.enemies.indexOf(e)]||new Set()).add(e.fln);far=Math.max(far,Math.hypot(e.x-Lr.x,e.y-Lr.y));}}}
+ out.ring=!!Lr&&Object.values(lanes).some(s=>s.size>=2);out.ringNear=far>0&&far<3*K;out.ringFar=far;
  // auras: el Tamborilero da armadura y el Portador resistencia mágica
  const e1={t:'norm',x:5,y:5,hp:10,max:10,fx:{}},c1={t:'seal',x:5,y:5.5,hp:10,max:10,fx:{}};
  out.auraM=ET.seal.aura.m===1&&!ET.custodian.aura.m;
@@ -39,5 +45,5 @@ const r=await p.evaluate(async()=>{const out={};INTRO.on=false;STO.intro=1;OPT.h
  return out;});
 const f=[];const ck=(c,m)=>{if(!c)f.push(m);};
 ck(r.types,'faltan tipos nuevos o sus datos');ck(r.names,'nombres nuevos no aplicados');ck(r.svg,'iconos SVG no registrados');ck(r.promo,'evoluciones mal');ck(r.squads,'escuadra con tipo inexistente');
-ck(r.lead,'escuadra sin un único líder');ck(r.leadSeal,'el Círculo no lo guía el Portador');ck(r.leader,'el líder del Muro no es el Tamborilero');ck(r.mates>0,'no salió la escuadra');ck(r.loose,'al caer el líder no se desperdigan');ck(r.auraM,'auras mal');ck(r.svgLoad,'el SVG no carga como imagen');ck(r.e2types,'faltan enemigos de la era 2');ck(r.hide&&r.show,'el compendio enseña la era 2 antes de tiempo');ck(r.era===2&&r.e2sq,'en la era 2 salen escuadras de otra era');ck(r.e1sq,'en la Fantástica salen escuadras de la era 2');ck(r.mHold,'las máquinas rompen filas');ck(r.aLoose,'los alienígenas no se desperdigan');
+ck(r.lead,'escuadra sin un único líder');ck(r.leadSeal,'el Círculo no lo guía el Portador');ck(r.leader,'el líder del Muro no es el Tamborilero');ck(r.mates>0,'no salió la escuadra');ck(r.loose,'al caer el líder no se desperdigan');ck(r.auraM,'auras mal');ck(r.ring,'el corro de demonios no cambia de carril');ck(r.ringNear,'el corro se deshace');ck(r.svgLoad,'el SVG no carga como imagen');ck(r.e2types,'faltan enemigos de la era 2');ck(r.hide&&r.show,'el compendio enseña la era 2 antes de tiempo');ck(r.era===2&&r.e2sq,'en la era 2 salen escuadras de otra era');ck(r.e1sq,'en la Fantástica salen escuadras de la era 2');ck(r.mHold,'las máquinas rompen filas');ck(r.aLoose,'los alienígenas no se desperdigan');
 console.log(f.length?'FALLOS '+JSON.stringify(f)+' '+JSON.stringify(r):'enemigos ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();
