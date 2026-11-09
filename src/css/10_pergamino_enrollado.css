@@ -12,8 +12,8 @@
  border-top:3px solid var(--lea);border-bottom:3px solid var(--lea);color:var(--ink)}
 /* ---- elegir torre ---- */
 #relic .pscr{position:relative;margin:0 auto;max-width:900px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.55))}
-#relic .ppap{margin:0 22px;padding:18px 36px 14px;text-align:center;animation:punroll .5s cubic-bezier(.3,.7,.3,1) both}
-#relic .pscr .prod.l{animation:prodl .5s cubic-bezier(.3,.7,.3,1) both}#relic .pscr .prod.r{animation:prodr .5s cubic-bezier(.3,.7,.3,1) both}
+#relic .ppap{margin:0 22px;padding:18px 36px 14px;text-align:center;animation:punroll .65s cubic-bezier(.3,.7,.3,1) both}
+#relic .pscr .prod.l{animation:prodl .65s cubic-bezier(.3,.7,.3,1) both}#relic .pscr .prod.r{animation:prodr .65s cubic-bezier(.3,.7,.3,1) both}
 @keyframes punroll{from{clip-path:inset(0 50%)}to{clip-path:inset(0 0)}}
 @keyframes prodl{from{left:calc(50% - 30px)}to{left:0}}@keyframes prodr{from{right:calc(50% - 30px)}to{right:0}}
 #relic .ppap .ptt{display:block;font:700 20px Georgia,"Times New Roman",serif!important;color:var(--inkh)!important;text-shadow:none!important}
@@ -154,3 +154,4 @@ body:has(#dlg.on) #panel:has(.prow){visibility:hidden}
 button.drr{display:inline-block;margin:6px auto;padding:6px 14px;border-radius:9px;font-weight:700;border:1.5px solid #8a6ac0;background:#efe4ff;color:#3a2a5a;cursor:pointer}button.drr:hover{background:#e2d2ff}
 #panel .pctt~button.drr{position:absolute;top:10px;left:12px;margin:0}
 #relic>button.drr{display:block}
+body.revl #panel{visibility:hidden}

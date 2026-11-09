@@ -47,7 +47,7 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .hst{margin-top:4px;border-top:1px solid var(--line);padding-top:4px}.hst .ttl{display:none}
 .hst{display:grid;grid-template-columns:1fr 1fr;column-gap:14px}.hst .row{margin:calc(2px*var(--hs)) 0;font-size:calc(12px*var(--hs))}.hst small{font-size:calc(11px*var(--hs))}.hst small{grid-column:1/-1}
 .hlock .hport{filter:brightness(0) opacity(.55)}
-.slr{animation:hslr .28s ease-out}.sll{animation:hsll .28s ease-out}
+.slr{animation:hslr .35s ease-out}.sll{animation:hsll .35s ease-out}
 @keyframes hslr{from{transform:translateX(40px);opacity:.2}to{transform:none;opacity:1}}@keyframes hsll{from{transform:translateX(-40px);opacity:.2}to{transform:none;opacity:1}}
 .hdots{display:flex;justify-content:center;gap:6px;margin:4px 0}.hpabs{display:flex;flex-direction:column;gap:calc(4px*var(--hs));margin:calc(6px*var(--hs)) 0}.hpab{display:flex;align-items:center;gap:6px;font-size:calc(12px*var(--hs));background:var(--panel);border-radius:7px;padding:calc(3px*var(--hs)) 6px;cursor:help}.hpab .habi{width:calc(24px*var(--hs));height:calc(24px*var(--hs));flex:0 0 auto;font-size:calc(14px*var(--hs))}.hpn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hpl{color:var(--hl);font-weight:700;font-size:calc(11px*var(--hs))}
 .hdots .hdot{width:10px;height:10px;min-width:0;padding:0;margin:0;border-radius:50%;background:var(--line2);border:0}.hdots .hdot.on{background:var(--hl)}
@@ -62,7 +62,7 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .hmsg{position:absolute;box-sizing:border-box;font-size:14px;line-height:1.45;pointer-events:auto;opacity:0;transition:opacity .35s}#hint.dim .hmsg{opacity:1}
 .hban{background:rgba(255,215,90,.1);border:1px solid rgba(255,215,90,.4);border-radius:8px;padding:6px 10px;margin:6px 0;font-size:13px}
 #toast{position:fixed;top:62px;left:50%;transform:translateX(-50%);z-index:99;display:flex;flex-direction:column;gap:6px;pointer-events:none}
-.tst{background:color-mix(in srgb,var(--panel2) 96%,transparent);color:var(--fg);border:1px solid var(--hl);border-radius:10px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:tstin .3s ease-out;transition:opacity .5s,transform .5s;max-width:80vw}
+.tst{background:color-mix(in srgb,var(--panel2) 96%,transparent);color:var(--fg);border:1px solid var(--hl);border-radius:10px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:tstin .38s ease-out;transition:opacity .5s,transform .5s;max-width:80vw}
 .tst.out{opacity:0;transform:translateY(-10px)}@keyframes tstin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}#comp.open,#opts.open,#relic.open{display:block}#errb{position:fixed;z-index:99;max-width:min(320px,calc(100vw - 20px));padding:8px 13px;border-radius:12px;background:#b8323f;color:#fff;font-size:13.5px;font-weight:600;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.45);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .18s,transform .18s}#errb.on{opacity:1;transform:none}
 .fbar{row-gap:6px}.fbar button{margin-bottom:6px!important}#relic .evopts button,#relic .pbot button{margin-bottom:6px}
 .kcap.bkq{position:static;transform:none;align-self:flex-end;margin:0 4px 22px;height:20px;line-height:17px;font-size:12px;min-width:22px}
@@ -79,7 +79,7 @@ body.dsk #comp.bkm,body.mfs #comp.bkm,body.inmenu #comp.bkm{position:fixed!impor
 .bkp.l{border-radius:14px 0 0 14px;box-shadow:inset -18px 0 24px -14px var(--gut,rgba(90,60,20,.45))}
 .bkp.r{border-radius:0 14px 14px 0;background:linear-gradient(270deg,color-mix(in srgb,var(--paper) 90%,var(--pedge,var(--trim))),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--pedge,var(--trim))));box-shadow:inset 18px 0 24px -14px var(--gut,rgba(90,60,20,.45));padding-right:54px}
 #comp.narrow .bkp.l,#comp.narrow .bkp.r{border-radius:14px}
-.bkp.flip{animation:bkflip .32s ease-out}
+.bkp.flip{animation:bkflip .4s ease-out}
 @keyframes bkflip{0%{transform:perspective(1400px) rotateY(-14deg);transform-origin:left center;opacity:.25}100%{transform:none;opacity:1}}
 .bkmarks{position:absolute;top:-46px;left:34px;display:flex;gap:6px;z-index:0}
 .bkmk{width:48px;height:46px;margin:0!important;padding:0!important;border:0!important;border-radius:9px 9px 0 0!important;display:grid;place-items:center;font-size:20px;background:var(--lea)!important;box-shadow:inset 0 -8px 10px rgba(0,0,0,.25)!important;cursor:pointer;transition:transform .15s}

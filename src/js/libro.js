@@ -34,8 +34,8 @@ function lbClose(resume,now){
  LB.open=false;LB.cover=false;CP.open=false;OP.open=false;CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;
  const el=$('comp');
  if(!now&&S&&S.core&&!document.body.classList.contains('inmenu')&&el.firstElementChild){// el libro se encoge y se mete en el núcleo
-  lbSetOrigin();const w=el.firstElementChild;el.classList.add('lbout');w.classList.add('lbshrink');const tok=LB.ctok=(LB.ctok||0)+1;
-  setTimeout(()=>{if(LB.ctok!==tok||LB.open)return;el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');coreFlash();},420);}
+  lbSetOrigin();const w=el.firstElementChild,slow=!!LB.slowOut;el.classList.add('lbout');w.classList.add('lbshrink');if(slow)w.classList.add('lbslow');const tok=LB.ctok=(LB.ctok||0)+1;
+  setTimeout(()=>{if(LB.ctok!==tok||LB.open)return;el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');coreFlash();},slow?1150:520);}
  else{el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');}
  if(PMU.open){PMU.open=false;if(resume!==false&&S)S.speed=PMU.spd||1;}
  if(typeof ui==='function'&&S)ui();
@@ -118,9 +118,11 @@ function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
   footL:toMenu,footR:`<button class="lbbk" data-a="tutskip">⏭ Saltar tutorial</button>`};
  if(st==='skip')return {marks:null,key:'skip',left:`<h3>Tutorial saltado</h3><div class="bksub">Las pistas están desactivadas</div><p>Si quieres aprender el juego, puedes ver cualquiera de los dos tutoriales o activar las pistas cuando quieras desde <b>Ayuda</b>.</p>`,
   right:`<div class="lbdet"><span class="lbdic">⏭</span><h4>Listo</h4><p>Vamos a preparar tu primera partida.</p></div>`,footL:toMenu,footR:`<button class="gbtn" data-a="skipok">Continuar ›</button>`};
- if(st==='era'){const [ln]=ERALINE(),done=STO.p>=3;
-  return {marksHTML:`<div class="bkmarks"><button class="bkmk on" title="Era Fantástica">🐉</button></div>`,key:'era',
-   left:`<h3>Era Fantástica</h3><div class="bksub">Nueva partida · 1 de 3</div><div class="era lbera"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small><p style="margin-top:16px">Cada era trae sus propios héroes, torres, enemigos, reliquias y eventos. Gana partidas para reparar el núcleo y abrir el camino a la siguiente.</p>${done?'<div class="eline"><span class="on">Fantástica</span><span title="Próximamente">???</span></div>':''}</div>`,
+ if(st==='era'){const [ln]=ERALINE(),done=STO.p>=3,eras=eraList();if(!eras.includes(ERA))ERA=1;
+  const marks=`<div class="bkmarks">${kcOn()&&eras.length>1?'<span class="kcap bkq">Q</span>':''}${eras.map(v=>`<button class="bkmk${v===ERA?' on':''}${v===2&&era2HintOn()?' glow':''}" data-a="erasel" data-v="${v}" title="Era ${ERADEF[v].n}">${ERADEF[v].ic}</button>`).join('')}${kcOn()&&eras.length>1?'<span class="kcap bkq">E</span>':''}</div>`;
+  if(ERA===2){const pg=era2Page();return {marksHTML:marks,key:'era2',left:pg.left,right:pg.right,footL:toMenu,footR:`<button class="gbtn" data-a="erago">Continuar ›</button>`};}
+  return {marksHTML:marks,key:'era',after:()=>era2Hint(),
+   left:era2HintHTML()+`<h3>Era Fantástica</h3><div class="bksub">Nueva partida · 1 de 3</div><div class="era lbera"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small><p style="margin-top:16px">Cada era trae sus propios héroes, torres, enemigos, reliquias y eventos. Gana partidas para reparar el núcleo y abrir el camino a la siguiente.</p>${done?'<div class="eline"><span class="on">Fantástica</span><span>Ruinas de Neón</span></div>':''}</div>`,
    right:`<div class="lbeter"><div class="lbeh"><span class="lbei">💠</span><b>ÉTER</b></div><p>${escH(ln.replace(/\{N\}/g,nm))}</p></div><div class="lbsys"><b>SISTEMA</b> · Integridad del núcleo: ${[9,38,71,100][Math.min(3,STO.p)]} %${STO.p>=3?' · Navegación parcial operativa':' · Fragmentos integrados: '+Math.min(3,STO.p)+' de 3'}</div>`,
    footL:toMenu,footR:`<button class="gbtn" data-a="erago">Continuar ›</button>`};}
  if(st==='rounds'){const mx=rMax();

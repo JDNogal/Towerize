@@ -1,6 +1,6 @@
 // ---- ofertas de torres: cada 2 rondas eliges 1 de 3 hasta tener 7 en el mazo ----
 const DECKMAX=7,SKIPG=[50,30,10];
-const eraOk=k=>!TW[k].era||TW[k].era===1;
+const eraOk=k=>!TW[k].era||TW[k].era===1||(TW[k].era===2&&eraHas2());
 const tPool=()=>Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k)&&tunl(k)&&!S.deck.includes(k));
 function tryTowerOffer(){if(S&&S.tut){const o=S.tut.off;if(o&&!RL.open&&!S.aim&&S.phase==='build'&&!HQ.cur){S.tut.off=null;RL.towP=o.present?1:0;RL.towo=o.present?o.list.slice():o.list.filter(k=>!S.deck.includes(k));RL.towT=o.title;RL.towD=o.txt;RL.towNS=1;if(RL.towo.length)renderTowerOffer();}return;}if(!S||!S.towOff||RL.open||S.aim||!S.deck||!(S.phase==='place'||S.phase==='build'))return;S.towOff=0;
  const p=tPool();if(S.deck.length>=DECKMAX||!p.length)return;RL.towo=shuf(p).slice(0,3);(S.drr=S.drr||{}).tw=0;renderTowerOffer();}

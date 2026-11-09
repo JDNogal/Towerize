@@ -40,6 +40,7 @@ const T=[
  ['guardar_ventanas_tutorial.js','Guardar con cofre, evento u oferta abiertos; fin de ronda; tutorial'],
  ['radagast_primera.js','Radagast se desbloquea al ganar la primera partida (aunque se salte el tutorial)'],
  ['registro_partidas.js','Registro de partidas: se apunta al empezar, se cierra al acabar y se ve en el libro'],
+ ['era2.js','Era 2 (Ruinas de Neón): se abre con 3 victorias, se elige en el libro y dibuja su mapa'],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);

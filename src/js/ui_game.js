@@ -230,7 +230,7 @@ function exitGame(){LB.exit=0;try{saveRun&&svLive()&&saveRun('exit');}catch(e){}
 function togglePtips(){const on=!(OPT.ptip||OPT.ptipw);OPT.ptip=OPT.ptipw=on;saveOpt();const b=$('ptb');if(b)b.classList.toggle('on',on);try{sfx('ui');}catch(e){}toast(on?'💀 Bocadillos de los portales: siempre visibles':'💀 Bocadillos de los portales: solo al pasar el ratón');}
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
- if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
+ if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','erasel','era2hok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim)||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -357,6 +357,8 @@ function act(e){
  else if(a==='pexit'){if(!LB.exit){LB.exit=1;lbRender();return;}exitGame();}
  else if(a==='newgame'){if(SAV.meta&&!LB.ask){LB.ask=1;lbRender();return;}LB.ask=0;const go=()=>{if(!tutChosen())renderTutPick();else renderEra();};if(!STO.intro){STO.intro=1;saveSto();playDialog(STORY.intro,go);}else go();}
  else if(a==='erago')renderSetup();
+ else if(a==='erasel')eraPick(b.dataset.v);
+ else if(a==='era2hok'){hintSeen('era2mk');lbRender();}
  else if(a==='lbprep'){LB.step=b.dataset.v;lbRender();}
  else if(a==='lbcover'){closeQuick();lbOpen(null,true);}
  else if(a==='help')renderHelp();

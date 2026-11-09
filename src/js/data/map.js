@@ -13,7 +13,7 @@ const PIECES=[
 const OBS={'#':'Hierba',T:'Árbol',R:'Roca',H:'Casa',W:'Pozo',F:'Trigo',M:'Molino',A:'Estanque',G:'Huerto',n:'Pino nevado',j:'Helechos',k:'Espantapájaros',l:'Farol',g:'Chatarra',e:'Tienda',f:'Hoguera',u:'Ruinas',z:'Gemas',b:'Barriles'},cellOf=ch=>ch==='S'?1:OBS[ch]?3:2;
 // Decoración de la Era Fantástica: pequeñas estampas con sentido (bosques, granjas con molino, aldeas con pozo, canteras, estanques) sobre la hierba libre
 const STAMPS=[{w:4,f:'forest'},{w:2,f:'farm'},{w:2,f:'village'},{w:1,f:'quarry'},{w:1,f:'pond'}];
-function decorate(o){const g=o.p.map(r=>[...r]),free=(x,y)=>x>=0&&y>=0&&x<P&&y<P&&g[y][x]==='#',nb=(x,y)=>D.map(([a,b])=>[x+a,y+b]).filter(([a,b])=>free(a,b));
+function decorate(o){if(typeof S!=='undefined'&&S&&S.era===2)return decorateE2(o);const g=o.p.map(r=>[...r]),free=(x,y)=>x>=0&&y>=0&&x<P&&y<P&&g[y][x]==='#',nb=(x,y)=>D.map(([a,b])=>[x+a,y+b]).filter(([a,b])=>free(a,b));
  const cells=[];g.forEach((r,y)=>r.forEach((ch,x)=>{if(ch==='#')cells.push([x,y]);}));const goal=Math.round(cells.length*DECF);let n=0,tries=0;
  const grow=(s,k,ch)=>{const q=[s],got=[];while(q.length&&got.length<k){const[x,y]=q.splice(Math.floor(Math.random()*q.length),1)[0];if(!free(x,y))continue;g[y][x]=ch;got.push([x,y]);q.push(...nb(x,y));}return got;};
  while(n<goal&&tries++<40){const s=cells[Math.floor(Math.random()*cells.length)];if(!free(s[0],s[1]))continue;const SL=STAMPS.concat(DSTAMPS.filter(t=>decOn(t.lot)).map(t=>({w:t.w,f:'d:'+t.lot,t})));let W=0;for(const t of SL)W+=t.w;let r=Math.random()*W,f='forest',dt=null;for(const t of SL){r-=t.w;if(r<=0){f=t.f;dt=t.t;break;}}
@@ -25,12 +25,12 @@ function decorate(o){const g=o.p.map(r=>[...r]),free=(x,y)=>x>=0&&y>=0&&x<P&&y<P
   else n+=grow(s,1+Math.floor(Math.random()*2),'A').length;}
  o.p=g.map(r=>r.join(''));}
 function drawRim(g,k){const BCS=K*CS,x0=Math.floor(CAM.x/BCS)-1,y0=Math.floor(CAM.y/BCS)-1,x1=Math.ceil((CAM.x+VIEW/k)/BCS)+1,y1=Math.ceil((CAM.y+VH/k)/BCS)+1;
- const ext=COSM.dec.filter(d=>decOn(d.id)).map(d=>d.ch),pool=['T','T','T','R','T','R'].concat(ext);
+ const e2=S&&S.era===2,ext=e2?[]:COSM.dec.filter(d=>decOn(d.id)).map(d=>d.ch),pool=(e2?['Q','c','Y','Y','V','X','c','N']:['T','T','T','R','T','R']).concat(ext);
  for(let gy=Math.max(y0,-P);gy<Math.min(y1,NC+P);gy++)for(let gx=Math.max(x0,-P);gx<Math.min(x1,NC+P);gx++){if(gx>=0&&gy>=0&&gx<NC&&gy<NC)continue;
-  const X=gx*BCS,Y=gy*BCS,h=((gx*374761393+gy*668265263)^(gx*gy*2246822519))>>>0;g.fillStyle='#2c3a2f';g.fillRect(X,Y,BCS,BCS);
-  if(h%100<38)drawObs(g,pool[(h>>>8)%pool.length],X,Y,BCS);else drawObs(g,'#',X,Y,BCS);
+  const X=gx*BCS,Y=gy*BCS,h=((gx*374761393+gy*668265263)^(gx*gy*2246822519))>>>0;if(e2)e2Ground(g,X,Y,gx,gy,BCS);else{g.fillStyle='#2c3a2f';g.fillRect(X,Y,BCS,BCS);}
+  if(h%100<(e2?30:38))drawObs(g,pool[(h>>>8)%pool.length],X,Y,BCS);else if(!e2)drawObs(g,'#',X,Y,BCS);
   const d=Math.max(gx<0?-gx:gx>=NC?gx-NC+1:0,gy<0?-gy:gy>=NC?gy-NC+1:0)/P;g.fillStyle=`rgba(8,10,14,${(.35+.5*d).toFixed(2)})`;g.fillRect(X,Y,BCS,BCS);}}
-function drawObs(c,ch,x,y,s){if('njklgefuzb'.includes(ch))return drawDeco2(c,ch,x,y,s);
+function drawObs(c,ch,x,y,s){if('QNXVcYE'.includes(ch))return e2Obs(c,ch,x,y,s);if('njklgefuzb'.includes(ch))return drawDeco2(c,ch,x,y,s);
  if(ch==='#'){const h=((x*73+y*151)|0)%7;if(h===0){c.fillStyle='#d9c26a';c.beginPath();c.arc(x+s*.3,y+s*.35,s*.05,0,7);c.fill();}else if(h===3){c.fillStyle='#c98ac9';c.beginPath();c.arc(x+s*.68,y+s*.62,s*.05,0,7);c.fill();}else if(h===5){c.strokeStyle='#3e5a3a';c.lineWidth=Math.max(1,s*.04);c.beginPath();c.moveTo(x+s*.45,y+s*.7);c.lineTo(x+s*.42,y+s*.55);c.moveTo(x+s*.5,y+s*.7);c.lineTo(x+s*.55,y+s*.56);c.stroke();}return;}
  if(ch==='T'){c.fillStyle='#5a3c22';c.fillRect(x+s*.44,y+s*.55,s*.12,s*.3);c.fillStyle='#2f6b3a';c.beginPath();c.arc(x+s*.5,y+s*.42,s*.3,0,7);c.fill();c.fillStyle='#3e8a4a';c.beginPath();c.arc(x+s*.42,y+s*.36,s*.15,0,7);c.fill();}
  else if(ch==='R'){c.fillStyle='#6d6f78';c.beginPath();c.ellipse(x+s*.5,y+s*.58,s*.32,s*.22,0,0,7);c.fill();c.fillStyle='#8a8d97';c.beginPath();c.ellipse(x+s*.44,y+s*.52,s*.14,s*.09,0,0,7);c.fill();}

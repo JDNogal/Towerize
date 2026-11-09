@@ -47,7 +47,7 @@ const STORY={
   {sp:'ÉTER',g:0,t:'{N}… Sí. Ahora lo recuerdo.'},
   {sp:'ÉTER',g:0,t:'Gracias por no rendirte, {N}. Navegación parcial operativa: solo conservo unas coordenadas. Las de casa.'},
   {sp:'ÉTER',g:0,t:'Volvamos a nuestro tiempo. No sé qué nos espera allí… pero esta vez no estás solo.'},
-  {t:'Próxima era: tu tiempo · Próximamente'}]};
+  {sys:1,t:'Coordenadas fijadas. Destino: Ruinas de Neón. Nueva era disponible al empezar partida.'}]};
 const ERALINE=()=>STO.p>=3?['¿Listos para el salto, {N}? La Era Fantástica ya no tiene más que darnos… por ahora. Sigo calibrando las coordenadas.',0]:
  [['Núcleo dañado. Necesito los fragmentos que dejan los jefes de esta era para repararme. Gane, Piloto.',3],['Una pieza integrada. Siga así, Piloto.',2],['Solo falta una pieza. Puedo sentirlo.',1]][STO.p];
 function renderEra(){LB.step='era';lbOpen('prep');}
@@ -55,6 +55,6 @@ function renderEraOld(){const [ln]=ERALINE(),nm=STO.name||'Piloto',done=STO.p>=3
  $('msetup').innerHTML=`<div class="era"><h3>Era Fantástica</h3><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small>`+
   `<div class="eter"><b>ÉTER</b>${escH(ln.replace(/\{N\}/g,nm))}</div>${done?'<div class="eline"><span class="on">Fantástica</span><span title="Próximamente">???</span></div>':''}`+
   `<div style="display:flex;gap:10px;justify-content:center"><button class="go" data-a="erago">Continuar</button><button data-a="mback">Volver</button></div></div>`;$('menu').classList.add('setup');}
-function storyWin(){if(S.tut||STO.p>=3)return;STO.p++;saveSto();const k='p'+STO.p;setTimeout(()=>playDialog(STORY[k]),400);}
+function storyWin(){if(S.tut||STO.p>=3)return;STO.p++;saveSto();const k='p'+STO.p;setTimeout(()=>playDialog(STORY[k],STO.p>=3?()=>{try{era2Announce();}catch(e){}}:null),400);}
 closePrim();init();showMenu();fsMark();requestAnimationFrame(loop);
 

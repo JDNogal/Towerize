@@ -53,7 +53,7 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .hst{margin-top:4px;border-top:1px solid var(--line);padding-top:4px}.hst .ttl{display:none}
 .hst{display:grid;grid-template-columns:1fr 1fr;column-gap:14px}.hst .row{margin:calc(2px*var(--hs)) 0;font-size:calc(12px*var(--hs))}.hst small{font-size:calc(11px*var(--hs))}.hst small{grid-column:1/-1}
 .hlock .hport{filter:brightness(0) opacity(.55)}
-.slr{animation:hslr .28s ease-out}.sll{animation:hsll .28s ease-out}
+.slr{animation:hslr .35s ease-out}.sll{animation:hsll .35s ease-out}
 @keyframes hslr{from{transform:translateX(40px);opacity:.2}to{transform:none;opacity:1}}@keyframes hsll{from{transform:translateX(-40px);opacity:.2}to{transform:none;opacity:1}}
 .hdots{display:flex;justify-content:center;gap:6px;margin:4px 0}.hpabs{display:flex;flex-direction:column;gap:calc(4px*var(--hs));margin:calc(6px*var(--hs)) 0}.hpab{display:flex;align-items:center;gap:6px;font-size:calc(12px*var(--hs));background:var(--panel);border-radius:7px;padding:calc(3px*var(--hs)) 6px;cursor:help}.hpab .habi{width:calc(24px*var(--hs));height:calc(24px*var(--hs));flex:0 0 auto;font-size:calc(14px*var(--hs))}.hpn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hpl{color:var(--hl);font-weight:700;font-size:calc(11px*var(--hs))}
 .hdots .hdot{width:10px;height:10px;min-width:0;padding:0;margin:0;border-radius:50%;background:var(--line2);border:0}.hdots .hdot.on{background:var(--hl)}
@@ -68,7 +68,7 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .hmsg{position:absolute;box-sizing:border-box;font-size:14px;line-height:1.45;pointer-events:auto;opacity:0;transition:opacity .35s}#hint.dim .hmsg{opacity:1}
 .hban{background:rgba(255,215,90,.1);border:1px solid rgba(255,215,90,.4);border-radius:8px;padding:6px 10px;margin:6px 0;font-size:13px}
 #toast{position:fixed;top:62px;left:50%;transform:translateX(-50%);z-index:99;display:flex;flex-direction:column;gap:6px;pointer-events:none}
-.tst{background:color-mix(in srgb,var(--panel2) 96%,transparent);color:var(--fg);border:1px solid var(--hl);border-radius:10px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:tstin .3s ease-out;transition:opacity .5s,transform .5s;max-width:80vw}
+.tst{background:color-mix(in srgb,var(--panel2) 96%,transparent);color:var(--fg);border:1px solid var(--hl);border-radius:10px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:tstin .38s ease-out;transition:opacity .5s,transform .5s;max-width:80vw}
 .tst.out{opacity:0;transform:translateY(-10px)}@keyframes tstin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}#comp.open,#opts.open,#relic.open{display:block}#errb{position:fixed;z-index:99;max-width:min(320px,calc(100vw - 20px));padding:8px 13px;border-radius:12px;background:#b8323f;color:#fff;font-size:13.5px;font-weight:600;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.45);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .18s,transform .18s}#errb.on{opacity:1;transform:none}
 .fbar{row-gap:6px}.fbar button{margin-bottom:6px!important}#relic .evopts button,#relic .pbot button{margin-bottom:6px}
 .kcap.bkq{position:static;transform:none;align-self:flex-end;margin:0 4px 22px;height:20px;line-height:17px;font-size:12px;min-width:22px}
@@ -85,7 +85,7 @@ body.dsk #comp.bkm,body.mfs #comp.bkm,body.inmenu #comp.bkm{position:fixed!impor
 .bkp.l{border-radius:14px 0 0 14px;box-shadow:inset -18px 0 24px -14px var(--gut,rgba(90,60,20,.45))}
 .bkp.r{border-radius:0 14px 14px 0;background:linear-gradient(270deg,color-mix(in srgb,var(--paper) 90%,var(--pedge,var(--trim))),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--pedge,var(--trim))));box-shadow:inset 18px 0 24px -14px var(--gut,rgba(90,60,20,.45));padding-right:54px}
 #comp.narrow .bkp.l,#comp.narrow .bkp.r{border-radius:14px}
-.bkp.flip{animation:bkflip .32s ease-out}
+.bkp.flip{animation:bkflip .4s ease-out}
 @keyframes bkflip{0%{transform:perspective(1400px) rotateY(-14deg);transform-origin:left center;opacity:.25}100%{transform:none;opacity:1}}
 .bkmarks{position:absolute;top:-46px;left:34px;display:flex;gap:6px;z-index:0}
 .bkmk{width:48px;height:46px;margin:0!important;padding:0!important;border:0!important;border-radius:9px 9px 0 0!important;display:grid;place-items:center;font-size:20px;background:var(--lea)!important;box-shadow:inset 0 -8px 10px rgba(0,0,0,.25)!important;cursor:pointer;transition:transform .15s}
@@ -428,7 +428,7 @@ body.dsk #fps{position:fixed;top:44px;right:8px}body.inmenu #fps{display:none!im
 button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-height:22px;opacity:.55}button.pinb.on{opacity:1;border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 [data-a="comp"].lk{opacity:.55;position:relative}[data-a="comp"].lk::after{content:'🔒';position:absolute;right:-4px;bottom:-4px;font-size:11px}
 /* ventanas de partida sobre el mapa desenfocado */
-#relic.open.blur{background:rgba(13,14,18,.5);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:flex;flex-direction:column;align-items:center;justify-content:safe center;animation:blin .25s ease-out}
+#relic.open.blur{background:rgba(13,14,18,.5);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:flex;flex-direction:column;align-items:center;justify-content:safe center;animation:blin .32s ease-out}
 @keyframes blin{from{opacity:0}to{opacity:1}}
 #relic.blur>*{max-width:min(1100px,100%)}
 .toff{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:12px 0}
@@ -470,7 +470,7 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 
 /* ---- diálogos de la historia ---- */
 #dlg{position:fixed;inset:0;z-index:98;display:none;background:rgba(8,9,13,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);cursor:pointer;user-select:none;-webkit-user-select:none}
-#dlg.on{display:block;animation:blin .3s ease-out}
+#dlg.on{display:block;animation:blin .38s ease-out}
 #dlg .dbx{position:absolute;left:50%;bottom:7vh;transform:translateX(-50%);width:min(760px,92vw);box-sizing:border-box;background:rgba(14,18,26,.95);border:1px solid #3fa7c9;border-radius:14px;padding:16px 20px 22px;box-shadow:0 0 0 1px rgba(63,167,201,.15),0 10px 40px rgba(0,0,0,.5);color:#dfeef5}
 #dlg .dsp{font:700 13px/1 system-ui,sans-serif;letter-spacing:.14em;color:#6fd3f0;margin-bottom:8px}
 #dlg .dtx{font-size:17px;line-height:1.55;min-height:3.1em;white-space:pre-wrap}
@@ -663,7 +663,7 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 /* ---- portada ---- */
 .lbcv{position:relative;display:flex;align-items:center;justify-content:center;font-family:Georgia,"Times New Roman",serif;color:var(--leatxt)}
 .lbcv.a{width:min(520px,calc(100vw - 180px));height:min(600px,calc(100vh - 70px));margin-right:70px}
-.lbcvin{position:relative;width:100%;height:100%;border-radius:14px 22px 22px 14px;background:linear-gradient(135deg,color-mix(in srgb,var(--lea) 85%,#fff),var(--lea2));box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--trim) 55%,var(--lea)),inset 0 0 0 10px var(--lea2),inset 0 0 0 11px var(--trim),0 30px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;padding:34px 44px 26px 58px;box-sizing:border-box;animation:lbcv .3s ease-out}
+.lbcvin{position:relative;width:100%;height:100%;border-radius:14px 22px 22px 14px;background:linear-gradient(135deg,color-mix(in srgb,var(--lea) 85%,#fff),var(--lea2));box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--trim) 55%,var(--lea)),inset 0 0 0 10px var(--lea2),inset 0 0 0 11px var(--trim),0 30px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;padding:34px 44px 26px 58px;box-sizing:border-box;animation:lbcv .38s ease-out}
 @keyframes lbcv{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
 .lbcvin::before{content:"";position:absolute;left:0;top:0;bottom:0;width:26px;background:linear-gradient(90deg,var(--lea2),var(--inkh) 60%,var(--lea2));border-radius:14px 0 0 14px;box-shadow:inset -2px 0 3px rgba(0,0,0,.4)}
 /* canto de las hojas: fino, tostado y pegado a la tapa; las cintas pasan por encima */
@@ -689,7 +689,7 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 .bkrib:hover{transform:translateX(4px)}.bkrib.on{background:var(--acc2)!important;width:72px}
 .bkrib.lk{opacity:.55}.bkrib.lk::after{content:"🔒";position:absolute;font-size:11px;top:4px;right:6px}
 .bkribs .bkrib{box-shadow:inset 8px 0 10px rgba(0,0,0,.25)}
-.bkw.lbanim{animation:lbopen .36s ease-out}@keyframes lbopen{from{transform:perspective(1200px) rotateY(-14deg) scale(.96);opacity:.4}to{transform:none;opacity:1}}
+.bkw.lbanim{animation:lbopen .46s ease-out}@keyframes lbopen{from{transform:perspective(1200px) rotateY(-14deg) scale(.96);opacity:.4}to{transform:none;opacity:1}}
 /* portada B (móvil): botones en la tapa */
 .lbcv.b{width:min(560px,calc(100vw - 20px));height:auto;max-height:calc(100vh - 14px);max-height:calc(100dvh - 14px)}
 .lbcv.b .lbcvin{height:auto;max-height:calc(100vh - 14px);max-height:calc(100dvh - 14px);overflow:auto;padding:16px 22px 14px 34px;border-radius:14px 18px 18px 14px}
@@ -809,10 +809,10 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 .lbhpc .hbar .bt{flex:1;height:7px;background:var(--paper3);border-radius:4px;overflow:hidden}.lbhpc .bf{display:block;height:100%;border-radius:4px}
 /* ---- el libro sale del núcleo y vuelve a él ---- */
 #comp.bkm{--ox:50vw;--oy:50vh}
-.lbgrow{animation:lbgrow .4s cubic-bezier(.2,.8,.3,1.1)}
+.lbgrow{animation:lbgrow .52s cubic-bezier(.2,.8,.3,1.1)}
 @keyframes lbgrow{from{transform:translate(calc(var(--ox) - 50vw),calc(var(--oy) - 50vh)) scale(.06);opacity:.2}to{transform:none;opacity:1}}
 #comp.lbout{pointer-events:none}
-.lbshrink{animation:lbshrink .42s cubic-bezier(.6,0,.9,.4) forwards!important}
+.lbshrink{animation:lbshrink .52s cubic-bezier(.6,0,.9,.4) forwards!important}.lbshrink.lbslow{animation-duration:1.15s!important;animation-timing-function:cubic-bezier(.45,0,.75,.35)!important}
 @keyframes lbshrink{from{transform:none;opacity:1}to{transform:translate(calc(var(--ox) - 50vw),calc(var(--oy) - 50vh)) scale(.04);opacity:.1}}
 .lbcv.a.lbgrow,.lbcv.a.lbshrink{margin-right:70px}
 .coreflash{position:fixed;z-index:59;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,#fff 0,var(--gbtn) 30%,color-mix(in srgb,var(--gbtn) 40%,transparent) 60%,transparent 72%);animation:coreflash .85s ease-out forwards;mix-blend-mode:screen}
@@ -923,6 +923,10 @@ body.inmenu.lbsetup canvas#c{filter:none}
 .tutl{margin:4px 0 0;padding-left:18px;font-size:13.5px}.tutl li{margin:5px 0}
 #comp .bkp .bkg>.row.rw{grid-column:1/-1}
 #comp.narrow .tutem{font-size:34px}#comp.narrow .tutbig h3{font-size:20px}#comp.narrow .tutst{margin:6px 0 2px}
+/* aviso de era nueva: banda en la página que señala el marcapáginas de arriba, y el marcapáginas brilla */
+.bkmk.glow{box-shadow:0 0 0 2px #3fe8ff,0 0 14px #3fe8ff!important;animation:bkglow 1.2s ease-in-out infinite alternate}@keyframes bkglow{from{box-shadow:0 0 0 2px #3fe8ff,0 0 6px #3fe8ff}to{box-shadow:0 0 0 3px #8ff4ff,0 0 18px #3fe8ff}}
+.bkhint{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:9px 12px;border:1.5px solid #3fa8c0;border-radius:10px;background:rgba(63,232,255,.12);font-size:13px;line-height:1.4}.bkhint .bkht{display:block;font-weight:700;margin-bottom:2px;color:var(--inkh)}.bkhint .bkharr{font-size:22px;flex:0 0 auto}.bkhint .gbtn.sm{flex:0 0 auto;padding:5px 12px;font-size:12.5px;margin:0}
+#comp.narrow .bkhint{font-size:12px;padding:7px 10px;margin-bottom:8px}
 /* ---- bocadillo de pergamino (sustituye a la etiqueta del navegador) ---- */
 #ttb{position:fixed;left:0;top:0;z-index:200;pointer-events:none;max-width:260px;padding:5px 11px;border-radius:9px;background:var(--paper);border:1.5px solid var(--trim);color:var(--ink);font:600 12.5px/1.35 Inter,system-ui,sans-serif;box-shadow:0 6px 16px rgba(30,15,5,.4);opacity:0;transform:translateY(3px);transition:opacity .1s,transform .1s;white-space:normal;text-align:center}
 #ttb.on{opacity:1;transform:none}
@@ -1094,8 +1098,8 @@ body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.k
  border-top:3px solid var(--lea);border-bottom:3px solid var(--lea);color:var(--ink)}
 /* ---- elegir torre ---- */
 #relic .pscr{position:relative;margin:0 auto;max-width:900px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.55))}
-#relic .ppap{margin:0 22px;padding:18px 36px 14px;text-align:center;animation:punroll .5s cubic-bezier(.3,.7,.3,1) both}
-#relic .pscr .prod.l{animation:prodl .5s cubic-bezier(.3,.7,.3,1) both}#relic .pscr .prod.r{animation:prodr .5s cubic-bezier(.3,.7,.3,1) both}
+#relic .ppap{margin:0 22px;padding:18px 36px 14px;text-align:center;animation:punroll .65s cubic-bezier(.3,.7,.3,1) both}
+#relic .pscr .prod.l{animation:prodl .65s cubic-bezier(.3,.7,.3,1) both}#relic .pscr .prod.r{animation:prodr .65s cubic-bezier(.3,.7,.3,1) both}
 @keyframes punroll{from{clip-path:inset(0 50%)}to{clip-path:inset(0 0)}}
 @keyframes prodl{from{left:calc(50% - 30px)}to{left:0}}@keyframes prodr{from{right:calc(50% - 30px)}to{right:0}}
 #relic .ppap .ptt{display:block;font:700 20px Georgia,"Times New Roman",serif!important;color:var(--inkh)!important;text-shadow:none!important}
@@ -1236,6 +1240,7 @@ body:has(#dlg.on) #panel:has(.prow){visibility:hidden}
 button.drr{display:inline-block;margin:6px auto;padding:6px 14px;border-radius:9px;font-weight:700;border:1.5px solid #8a6ac0;background:#efe4ff;color:#3a2a5a;cursor:pointer}button.drr:hover{background:#e2d2ff}
 #panel .pctt~button.drr{position:absolute;top:10px;left:12px;margin:0}
 #relic>button.drr{display:block}
+body.revl #panel{visibility:hidden}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -1250,12 +1255,13 @@ button.drr{display:inline-block;margin:6px auto;padding:6px 14px;border-radius:9
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v282</div>
+<div id="ver">Towerize v283</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
 let VIEW=1000,VH=1000,PXR=1;
 const DECF=.5,P=7,K=3,CS=20,ENR=.6,POISD=3,GOLDR=.05,PTICK=1,FRZT=3,FRZCD=6,FRZR=3.5*K,MINP=10,BUFFS_FROM=2,SLOWT=1.5,SPLASH=.6,LINGER=.5,HP0=18,HPG=1.25,D=[[1,0],[-1,0],[0,1],[0,-1]];
+let ERA=1; // era elegida para la próxima partida (1 Fantástica, 2 Ruinas de Neón); ver era2.js
 // Partida: rondas elegidas (15-30), tamaño del mapa en piezas y cofres
 let BN=5,NC=P*BN,N=NC*K,ROUNDS=15,CHESTS=3;
 const chestsFor=n=>3+(n>=19)+(n>=24)+(n>=29),mapFor=n=>n<=20?5:7,bossRound=r=>r===ROUNDS||(r===15&&ROUNDS>15);
@@ -1374,7 +1380,7 @@ const PIECES=[
 const OBS={'#':'Hierba',T:'Árbol',R:'Roca',H:'Casa',W:'Pozo',F:'Trigo',M:'Molino',A:'Estanque',G:'Huerto',n:'Pino nevado',j:'Helechos',k:'Espantapájaros',l:'Farol',g:'Chatarra',e:'Tienda',f:'Hoguera',u:'Ruinas',z:'Gemas',b:'Barriles'},cellOf=ch=>ch==='S'?1:OBS[ch]?3:2;
 // Decoración de la Era Fantástica: pequeñas estampas con sentido (bosques, granjas con molino, aldeas con pozo, canteras, estanques) sobre la hierba libre
 const STAMPS=[{w:4,f:'forest'},{w:2,f:'farm'},{w:2,f:'village'},{w:1,f:'quarry'},{w:1,f:'pond'}];
-function decorate(o){const g=o.p.map(r=>[...r]),free=(x,y)=>x>=0&&y>=0&&x<P&&y<P&&g[y][x]==='#',nb=(x,y)=>D.map(([a,b])=>[x+a,y+b]).filter(([a,b])=>free(a,b));
+function decorate(o){if(typeof S!=='undefined'&&S&&S.era===2)return decorateE2(o);const g=o.p.map(r=>[...r]),free=(x,y)=>x>=0&&y>=0&&x<P&&y<P&&g[y][x]==='#',nb=(x,y)=>D.map(([a,b])=>[x+a,y+b]).filter(([a,b])=>free(a,b));
  const cells=[];g.forEach((r,y)=>r.forEach((ch,x)=>{if(ch==='#')cells.push([x,y]);}));const goal=Math.round(cells.length*DECF);let n=0,tries=0;
  const grow=(s,k,ch)=>{const q=[s],got=[];while(q.length&&got.length<k){const[x,y]=q.splice(Math.floor(Math.random()*q.length),1)[0];if(!free(x,y))continue;g[y][x]=ch;got.push([x,y]);q.push(...nb(x,y));}return got;};
  while(n<goal&&tries++<40){const s=cells[Math.floor(Math.random()*cells.length)];if(!free(s[0],s[1]))continue;const SL=STAMPS.concat(DSTAMPS.filter(t=>decOn(t.lot)).map(t=>({w:t.w,f:'d:'+t.lot,t})));let W=0;for(const t of SL)W+=t.w;let r=Math.random()*W,f='forest',dt=null;for(const t of SL){r-=t.w;if(r<=0){f=t.f;dt=t.t;break;}}
@@ -1386,12 +1392,12 @@ function decorate(o){const g=o.p.map(r=>[...r]),free=(x,y)=>x>=0&&y>=0&&x<P&&y<P
   else n+=grow(s,1+Math.floor(Math.random()*2),'A').length;}
  o.p=g.map(r=>r.join(''));}
 function drawRim(g,k){const BCS=K*CS,x0=Math.floor(CAM.x/BCS)-1,y0=Math.floor(CAM.y/BCS)-1,x1=Math.ceil((CAM.x+VIEW/k)/BCS)+1,y1=Math.ceil((CAM.y+VH/k)/BCS)+1;
- const ext=COSM.dec.filter(d=>decOn(d.id)).map(d=>d.ch),pool=['T','T','T','R','T','R'].concat(ext);
+ const e2=S&&S.era===2,ext=e2?[]:COSM.dec.filter(d=>decOn(d.id)).map(d=>d.ch),pool=(e2?['Q','c','Y','Y','V','X','c','N']:['T','T','T','R','T','R']).concat(ext);
  for(let gy=Math.max(y0,-P);gy<Math.min(y1,NC+P);gy++)for(let gx=Math.max(x0,-P);gx<Math.min(x1,NC+P);gx++){if(gx>=0&&gy>=0&&gx<NC&&gy<NC)continue;
-  const X=gx*BCS,Y=gy*BCS,h=((gx*374761393+gy*668265263)^(gx*gy*2246822519))>>>0;g.fillStyle='#2c3a2f';g.fillRect(X,Y,BCS,BCS);
-  if(h%100<38)drawObs(g,pool[(h>>>8)%pool.length],X,Y,BCS);else drawObs(g,'#',X,Y,BCS);
+  const X=gx*BCS,Y=gy*BCS,h=((gx*374761393+gy*668265263)^(gx*gy*2246822519))>>>0;if(e2)e2Ground(g,X,Y,gx,gy,BCS);else{g.fillStyle='#2c3a2f';g.fillRect(X,Y,BCS,BCS);}
+  if(h%100<(e2?30:38))drawObs(g,pool[(h>>>8)%pool.length],X,Y,BCS);else if(!e2)drawObs(g,'#',X,Y,BCS);
   const d=Math.max(gx<0?-gx:gx>=NC?gx-NC+1:0,gy<0?-gy:gy>=NC?gy-NC+1:0)/P;g.fillStyle=`rgba(8,10,14,${(.35+.5*d).toFixed(2)})`;g.fillRect(X,Y,BCS,BCS);}}
-function drawObs(c,ch,x,y,s){if('njklgefuzb'.includes(ch))return drawDeco2(c,ch,x,y,s);
+function drawObs(c,ch,x,y,s){if('QNXVcYE'.includes(ch))return e2Obs(c,ch,x,y,s);if('njklgefuzb'.includes(ch))return drawDeco2(c,ch,x,y,s);
  if(ch==='#'){const h=((x*73+y*151)|0)%7;if(h===0){c.fillStyle='#d9c26a';c.beginPath();c.arc(x+s*.3,y+s*.35,s*.05,0,7);c.fill();}else if(h===3){c.fillStyle='#c98ac9';c.beginPath();c.arc(x+s*.68,y+s*.62,s*.05,0,7);c.fill();}else if(h===5){c.strokeStyle='#3e5a3a';c.lineWidth=Math.max(1,s*.04);c.beginPath();c.moveTo(x+s*.45,y+s*.7);c.lineTo(x+s*.42,y+s*.55);c.moveTo(x+s*.5,y+s*.7);c.lineTo(x+s*.55,y+s*.56);c.stroke();}return;}
  if(ch==='T'){c.fillStyle='#5a3c22';c.fillRect(x+s*.44,y+s*.55,s*.12,s*.3);c.fillStyle='#2f6b3a';c.beginPath();c.arc(x+s*.5,y+s*.42,s*.3,0,7);c.fill();c.fillStyle='#3e8a4a';c.beginPath();c.arc(x+s*.42,y+s*.36,s*.15,0,7);c.fill();}
  else if(ch==='R'){c.fillStyle='#6d6f78';c.beginPath();c.ellipse(x+s*.5,y+s*.58,s*.32,s*.22,0,0,7);c.fill();c.fillStyle='#8a8d97';c.beginPath();c.ellipse(x+s*.44,y+s*.52,s*.14,s*.09,0,0,7);c.fill();}
@@ -1444,7 +1450,7 @@ brick:{n:'Casa de ladrillo',ic:'🧱',dt:'phys',cost:0,range:3,dmg:0,rate:1/12,c
 glut:{n:'Mímico glotón',ic:'🧰',dt:'phys',cost:0,range:1.6,dmg:16,rate:.9,col:'#8a5626',l:'X',fx:'Ninguno',uniq:1,glut:1,ev:'chest'},
 bastion:{n:'Baluarte',ic:'🛡️',dt:'phys',cost:80,range:2.5,dmg:4,rate:1,unit:{n:3,hp:40,ap:10,rez:8,spd:2},col:'#5b8def',l:'B',fx:'Ninguno'},
 monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:3.5,rate:1,unit:{n:2,hp:34,ap:0,rez:8,spd:2},col:'#d9a24e',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
-tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:2,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
+tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:3,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
  augur:{n:'Augur Voltaico',ic:'👁️',icb:'⚡',dt:'elem',augur:1,cost:100,range:2.6,dmg:22,rate:.8,splash:.9,shape:'Rayo del cielo',areaTxt:'El rayo cae sobre el objetivo y alcanza a los enemigos de alrededor.',col:'#8fd0ff',l:'U',fx:'Ninguno'},
 flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:1.8,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
  sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.2,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
@@ -1818,14 +1824,14 @@ const YLOCK='Gana una partida con al menos una Salamandra y un Cryomago construi
 // torres que necesitan logro para poder salir en las ofertas de la partida (null = logro aún por definir)
 const TLOCK={frost:'chest',poison:'event',sala:'pyro'};
 const BASET=()=>[...new Set(['cata'].concat(Object.values(HEROES).filter(h=>!h.late).flatMap(h=>h.deck||[])))];
-const tunl=k=>BASET().includes(k)||(typeof OPT!=='undefined'&&(OPT.u_tw||OPT.u_hr&&Object.values(HEROES).some(h=>(h.deck||[]).includes(k))))||(TLOCK[k]?!!ACHS[TLOCK[k]]:false);
+const tunl=k=>BASET().includes(k)||/* las torres de la era 2 están disponibles desde el principio cuando juegas en esa era */(TW[k]&&TW[k].era===2&&typeof eraHas2==='function'&&eraHas2())||(typeof OPT!=='undefined'&&(OPT.u_tw||OPT.u_hr&&Object.values(HEROES).some(h=>(h.deck||[]).includes(k))))||(TLOCK[k]?!!ACHS[TLOCK[k]]:false);
 function achieve(id){if(!ACH[id]||ACHS[id])return;ACHS[id]=Date.now();if(PINS.includes(id)){PINS=PINS.filter(x=>x!==id);savePins();}try{localStorage.setItem('rt-ach',JSON.stringify(ACHS));}catch(e){}
  if(id==='elem'&&HEROES.yrsa)delete HEROES.yrsa.lockTxt;const A=ACH[id],T=A.tw&&TW[A.tw],Rl=A.rl&&RELIC[A.rl],Hr=A.hr&&HEROES[A.hr];toast(`🏆 <b>Logro: ${A.n}</b>${T?`<br><small>Desbloqueas ${T.ic} ${T.n}: ya puede salirte en las ofertas de torres.</small>`:''}${Rl?`<br><small>Desbloqueas la reliquia ${Rl.ic} ${Rl.n}: ya puede salirte en los cofres.</small>`:''}${Hr?`<br><small>Desbloqueas a ${Hr.ic} ${Hr.n}: ya puedes elegirla al empezar una partida.</small>`:''}${A.ux?`<br><small>Desbloqueas ${A.ux}.</small>`:''}${cosOf(id).map(([k,c])=>`<br><small>Desbloqueas ${CSKIND[k][1].toLowerCase()}: ${c.n}.</small>`).join('')}`);
  if(T)newU('tw',T.ic,T.n,'Logro: '+A.n,A.tw);if(Rl)newU('rl',Rl.ic,Rl.n,'Logro: '+A.n,A.rl);if(Hr)newU('hr',Hr.ic,Hr.n,'Logro: '+A.n,A.hr);if(A.ux)newU('ux','📖',A.ux.replace(/^el /,'').replace(/^./,m=>m.toUpperCase()));for(const[k,c]of cosOf(id))newU(k,CSKIND[k][0],c.n,'Logro: '+A.n);}
 function toast(h){let el=$('toast');if(!el){el=document.createElement('div');el.id='toast';document.body.appendChild(el);}const d=document.createElement('div');d.className='tst';d.innerHTML=h;el.appendChild(d);setTimeout(()=>d.classList.add('out'),3800);setTimeout(()=>d.remove(),4400);}
 // ---- ofertas de torres: cada 2 rondas eliges 1 de 3 hasta tener 7 en el mazo ----
 const DECKMAX=7,SKIPG=[50,30,10];
-const eraOk=k=>!TW[k].era||TW[k].era===1;
+const eraOk=k=>!TW[k].era||TW[k].era===1||(TW[k].era===2&&eraHas2());
 const tPool=()=>Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k)&&tunl(k)&&!S.deck.includes(k));
 function tryTowerOffer(){if(S&&S.tut){const o=S.tut.off;if(o&&!RL.open&&!S.aim&&S.phase==='build'&&!HQ.cur){S.tut.off=null;RL.towP=o.present?1:0;RL.towo=o.present?o.list.slice():o.list.filter(k=>!S.deck.includes(k));RL.towT=o.title;RL.towD=o.txt;RL.towNS=1;if(RL.towo.length)renderTowerOffer();}return;}if(!S||!S.towOff||RL.open||S.aim||!S.deck||!(S.phase==='place'||S.phase==='build'))return;S.towOff=0;
  const p=tPool();if(S.deck.length>=DECKMAX||!p.length)return;RL.towo=shuf(p).slice(0,3);(S.drr=S.drr||{}).tw=0;renderTowerOffer();}
@@ -1987,6 +1993,7 @@ const OPTS=[
  {tab:'kb',type:'keys'},
  {tab:'jg',type:'reset',label:'Borrar progreso',desc:'Borra todo lo que has conseguido y descubierto: compendio, logros, récords y victorias de héroe, rondas, tutoriales, historia y tu nombre para ÉTER, los desbloqueos y la personalización (paletas, núcleos y decoraciones). Se mantienen el sonido, los atajos y tus preferencias de interfaz. No se puede deshacer.'},
  {tab:'un',type:'toggle',key:'u_rl',def:false,label:'Desbloquear todas las reliquias',desc:'Las reliquias que dependen de un logro también pueden salir en los cofres.'},
+ {tab:'un',type:'toggle',key:'u_era',def:false,label:'Desbloquear todas las eras',desc:'La era Ruinas de Neón disponible sin haber reparado a ÉTER.'},
  {tab:'un',type:'toggle',key:'u_cs',def:false,label:'Desbloquear toda la personalización',desc:'Encuadernaciones, núcleos y decoraciones disponibles sin conseguir sus logros.'},
  {tab:'ps',type:'cosm'},
  {tab:'un',type:'toggle',key:'u_rd',def:false,label:'Desbloquear todas las duraciones de partida',desc:'Puedes elegir partidas de 15 a 30 rondas desde el principio.'},
@@ -2038,13 +2045,13 @@ const saveNewu=()=>{try{localStorage.setItem('rt-newu',JSON.stringify(NEWU));}ca
 function newU(kind,ic,n,extra,id){NEWU.push({k:kind,ic,n,x:extra||'',id:id||null});saveNewu();}
 function heroWinCount(){if(!S||S.tut||!S.hero||S.pvE)return;const id=S.hero.id,t0=hTier(id);HWIN[id]=(HWIN[id]||0)+1;try{localStorage.setItem('rt-hwin',JSON.stringify(HWIN));}catch(e){}
  const t1=hTier(id);if(t1>t0){const H=HEROES[id];newU('frame','🖼️','Marco de '+hTierN(t1)+' · '+H.n,(HWIN[id])+' victorias');toast(`🖼️ <b>Marco de ${hTierN(t1)} para ${H.n}</b><br><small>${HWIN[id]} victoria${HWIN[id]===1?'':'s'} con este héroe.</small>`);}}
-const NUKL={tw:'Torres',hr:'Héroes',rl:'Reliquias',ux:'Funciones',pal:'Encuadernaciones',core:'Núcleos',dec:'Decoración del mapa',frame:'Marcos de héroe'};
+const NUKL={era:'Eras',tw:'Torres',hr:'Héroes',rl:'Reliquias',ux:'Funciones',pal:'Encuadernaciones',core:'Núcleos',dec:'Decoración del mapa',frame:'Marcos de héroe'};
 // ficha de un desbloqueo (página derecha)
 function nuDetail(u){if(!u)return '';
  if(u.k==='tw'&&u.id&&TW[u.id]){const T=TW[u.id];return bkSheet(`<span class="bkbic" style="background:${T.col}">${T.ic}</span>`,(T.uniq?uniqGlance(u.id,1):shopInfo(u.id,1)).replace(/<b>[^<]*? /,'<b>'))+'<p class="bknote">A partir de ahora puede salirte en las ofertas de torres de cada partida.</p>';}
  if(u.k==='rl'&&u.id&&RELIC[u.id]){const r=RELIC[u.id];return bkSheet(`<span class="bkbic" style="background:${r.col}">${r.ic}</span>`,relicInfo(u.id,1))+'<p class="bknote">A partir de ahora puede salirte en los cofres.</p>';}
  if(u.k==='hr'&&u.id&&HEROES[u.id]){const D=HEROES[u.id];return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(u.id)}</span>`,heroInfo(u.id,1).replace(/<b>[^<]*? /,'<b>'))+'<p class="bknote">Ya puedes elegirlo al empezar una partida.</p>';}
- const why={ux:'Ya está disponible en el menú.',pal:'Se elige en Opciones › Personalización.',core:'Se elige en Opciones › Personalización.',dec:'Se activa o desactiva en Opciones › Personalización.',frame:'Se pone solo en el retrato del héroe.'}[u.k]||'';
+ const why={era:'Se elige al empezar una partida, en el paso «Era».',ux:'Ya está disponible en el menú.',pal:'Se elige en Opciones › Personalización.',core:'Se elige en Opciones › Personalización.',dec:'Se activa o desactiva en Opciones › Personalización.',frame:'Se pone solo en el retrato del héroe.'}[u.k]||'';
  return `<div class="bksh"><span class="bkbic">${u.ic}</span><div class="ttl bksht"><b>${u.n}</b>${u.x?`<br><small>${u.x}</small>`:''}</div></div><p class="bknote">${why}</p>`;}
 function renderUnlocks(){if(!NEWU.length)return;const list=NEWU.slice();NEWU=[];saveNewu();
  const g={};list.forEach((u,i)=>{u.i=i;(g[u.k]=g[u.k]||[]).push(u);});
@@ -2125,7 +2132,7 @@ function coreCrystal0(c,x,y,b,t,K0){const u=b*.95,rep=K0.crack?.4:K0.cr?1:Math.m
  if(K0.arch){c.fillStyle='#8a8478';c.strokeStyle='#3a362f';c.lineWidth=Math.max(.8,u*.015);for(const sd of[-1,1]){c.fillRect(x+sd*u*.3-u*.06,y-u*.42,u*.12,u*.66);c.strokeRect(x+sd*u*.3-u*.06,y-u*.42,u*.12,u*.66);}c.beginPath();c.arc(x,y-u*.42,u*.36,Math.PI,0);c.lineWidth=u*.08;c.strokeStyle='#8a8478';c.stroke();c.lineWidth=Math.max(.8,u*.015);c.strokeStyle='#3a362f';c.beginPath();c.arc(x,y-u*.42,u*.4,Math.PI,0);c.stroke();c.beginPath();c.arc(x,y-u*.42,u*.32,Math.PI,0);c.stroke();}
  if(K0.wring||K0.wsq){if(K0.wring)wring(1);else wsq(1);if(hit>0){c.fillStyle=`rgba(200,190,170,${.7*hit})`;for(let i=0;i<8;i++){c.beginPath();c.arc(x-u*.3+i*u*.085,y+u*.4+(1-hit)*u*.08+Math.sin(i*1.7)*u*.03,u*.012,0,7);c.fill();}}}
  if(K0.walls){wall(1);if(hit>0){c.fillStyle=`rgba(200,190,170,${.7*hit})`;for(let i=0;i<8;i++){c.beginPath();c.arc(x-u*.3+i*u*.085,y+u*.38+(1-hit)*u*.08+Math.sin(i*1.7)*u*.03,u*.012,0,7);c.fill();}}}}
-function drawCore(g,cx,cy,b,skin){skin=skin||OPT.core||'base';const c=COSM.core.find(x=>x.id===skin);if(!c||!cosOwn(c))skin='base';const t=(typeof performance!=='undefined'?performance.now():0)/1000;
+function drawCore(g,cx,cy,b,skin){if(!skin&&S&&S.era===2){e2Core(g,cx,cy,b);return;}skin=skin||OPT.core||'base';const c=COSM.core.find(x=>x.id===skin);if(!c||!cosOwn(c))skin='base';const t=(typeof performance!=='undefined'?performance.now():0)/1000;
  coreCrystal(g,cx,cy,b,t,skin);}
 // decoración nueva
 const DSTAMPS=[{lot:'snow',w:1.5,ch:'n',a:2,b:4},{lot:'jung',w:1.5,ch:'j',a:2,b:4},{lot:'farm',w:1.2,ch:'F',a:2,b:3,x:'k'},{lot:'lamp',w:1,ch:'l',a:1,b:2},{lot:'scrap',w:1,ch:'g',a:1,b:2},{lot:'camp',w:1,ch:'e',a:1,b:1,x:'f'},{lot:'ruin',w:1.2,ch:'u',a:1,b:3},{lot:'gem',w:1,ch:'z',a:1,b:2},{lot:'tav',w:1,ch:'b',a:1,b:2}];
@@ -3665,6 +3672,8 @@ function init(){GT.r=0;GT.c=0;
  closePrim();if(typeof FO!=='undefined')closeFocus();S={cc:Array.from({length:NC},()=>Array(NC).fill(0)),cells:Array.from({length:N},()=>Array(N).fill(0)),buff:Array.from({length:N},()=>Array(N).fill(null)),
  blocks:{},rain:[],mines:[],barr:[],dbl:[],list:[],occ:{},tid:0,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[],round:0,hp:20,gold:150,phase:'place',
  offers:[],sup:SUP0,pi:0,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},evts:{},uq:[],vch:{},hpEn:0,pend:[],sched:[],half:0,dneed:0,dsel:[],chest4:0,forgeR:-1,noChest:0,bless:{},sharp:0,idolN:0,merc:null,fz:[],mimFor:null,tsel:null,dn:[],rc:3,tut:TUTON?{}:null,snap:null,selT:null,hover:null,core:null,speed:1,field:null,msg:'',st:{dmg:0,gKill:0,gTile:0,gRound:0,gRel:0,gEv:0,gSell:0,spent:0,kills:0,time:0,all:[],rl:{}}};
+ S.revAt=-1;/* cofres y eventos ocultos hasta empezar la partida (se revelan uno a uno al elegir héroe) */
+ S.era=S.tut?1:(typeof ERA!=='undefined'?ERA:1);
  let b=BASE;for(let i=Math.floor(Math.random()*4);i>0;i--)b=rot(b);
  const c=BN>>1;stamp(c,c,b,[]);
  // Cofres: recorrido de bloques contiguos que empieza en el hueco de salida de la base (donde va la pieza de la ronda 1).
@@ -4610,19 +4619,20 @@ function draw(){
   for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){if(S.blocks[bx+','+by])continue;
    if(sl.has(bx+','+by))g.strokeRect(bx*P*BCS+lw(2),by*P*BCS+lw(2),P*BCS-lw(4),P*BCS-lw(4));}
   g.setLineDash([]);}
- const cob=pathSkin()==='cob';
+ const e2=S.era===2,cob=!e2&&pathSkin()==='cob';if(e2)e2Tick();
  for(const key in S.blocks){const[bx,by]=key.split(',').map(Number);
   for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;
-   const cv0=S.cc[gy][gx];g.fillStyle=cv0===2?'#a8854a':'#2c3a2f';g.fillRect(gx*BCS,gy*BCS,BCS,BCS);if(cv0===2&&cob)drawCob(g,gx,gy,BCS);if(cv0===3&&S.obs)drawObs(g,S.obs[gx+','+gy]||'#',gx*BCS,gy*BCS,BCS);else if(cv0===1)drawSolar(g,gx*BCS,gy*BCS,BCS);
+   const cv0=S.cc[gy][gx];if(e2){e2Cell(g,gx,gy,cv0,BCS);}else{g.fillStyle=cv0===2?'#a8854a':'#2c3a2f';g.fillRect(gx*BCS,gy*BCS,BCS,BCS);if(cv0===2&&cob)drawCob(g,gx,gy,BCS);if(cv0===3&&S.obs)drawObs(g,S.obs[gx+','+gy]||'#',gx*BCS,gy*BCS,BCS);else if(cv0===1)drawSolar(g,gx*BCS,gy*BCS,BCS);}
    const bk=S.buff[gy*K][gx*K];if(bk)mark(g,bk,gx*BCS,gy*BCS,BCS);}}
- for(const key in S.evts||{}){if(S.blocks[key])continue;const[bx,by]=key.split(',').map(Number),cx=(bx*P+P/2)*BCS,cy=(by*P+P/2)*BCS;
+ const RVO=revOrder();
+ for(const key in S.evts||{}){if(S.blocks[key])continue;const rf=revF(RVO,key);if(rf<=0)continue;const[bx,by]=key.split(',').map(Number),cx=(bx*P+P/2)*BCS,cy=(by*P+P/2)*BCS;g.save();g.translate(cx,cy);g.scale(rf,rf);g.translate(-cx,-cy);g.globalAlpha=Math.min(1,rf);
   g.fillStyle='rgba(160,120,255,.14)';g.beginPath();g.arc(cx,cy,BCS*2.2,0,7);g.fill();g.fillStyle='#5a3f9e';g.strokeStyle='#c9b8ff';g.lineWidth=lw(2.5);g.beginPath();g.arc(cx,cy,BCS*1.05,0,7);g.fill();g.stroke();
-  g.fillStyle='#fff';g.font='bold '+Math.round(BCS*1.4)+'px Georgia,serif';g.textAlign='center';g.textBaseline='middle';g.fillText('?',cx,cy+BCS*.06);}
- for(const key in S.chests){if(S.blocks[key])continue;const[bx,by]=key.split(',').map(Number),cx=(bx*P+P/2)*BCS,cy=(by*P+P/2)*BCS,w=BCS*2.4,hh=BCS*1.7,y0=cy-hh/2;
+  g.fillStyle='#fff';g.font='bold '+Math.round(BCS*1.4)+'px Georgia,serif';g.textAlign='center';g.textBaseline='middle';g.fillText('?',cx,cy+BCS*.06);g.restore();}
+ for(const key in S.chests){if(S.blocks[key])continue;const rf=revF(RVO,key);if(rf<=0)continue;const[bx,by]=key.split(',').map(Number),cx=(bx*P+P/2)*BCS,cy=(by*P+P/2)*BCS,w=BCS*2.4,hh=BCS*1.7,y0=cy-hh/2;g.save();g.translate(cx,cy);g.scale(rf,rf);g.translate(-cx,-cy);g.globalAlpha=Math.min(1,rf);
   g.fillStyle='rgba(240,180,41,.12)';g.beginPath();g.arc(cx,cy,BCS*2.2,0,7);g.fill();
   g.fillStyle='#7a4b22';g.fillRect(cx-w/2,y0+hh*.35,w,hh*.65);g.fillStyle='#9a6330';g.fillRect(cx-w/2,y0,w,hh*.4);
   g.fillStyle='#f0b429';g.fillRect(cx-w/2,y0+hh*.34,w,hh*.1);g.fillRect(cx-BCS*.22,y0+hh*.15,BCS*.44,hh*.55);
-  g.fillStyle='#14161c';g.fillRect(cx-BCS*.08,y0+hh*.42,BCS*.16,BCS*.3);}
+  g.fillStyle='#14161c';g.fillRect(cx-BCS*.08,y0+hh*.42,BCS*.16,BCS*.3);g.restore();}
  const h=S.hover,ht=h&&!MFSQ()&&S.occ[h.x+','+h.y];
  for(const t of new Set([S.selT,ht]))if(t)rangeCircle(t.x,t.y,stats(t).range);
  if(BM.s&&(BM.arm||BM.hov)&&TW[BM.arm||BM.hov]){const q=BM.s,b=BF[S.buff[q.y][q.x]];rangeCircle(q.x,q.y,TW[BM.arm||BM.hov].range*(b&&b.rg||1));}
@@ -4667,7 +4677,7 @@ function draw(){
  for(const p of S.pools){g.fillStyle=(p.el==='bleed'?'rgba(224,72,90,':p.el==='fire'?'rgba(255,120,40,':'rgba(123,211,74,')+Math.min(.55,p.t/2)+')';g.beginPath();g.arc(p.x*CS+CS/2,p.y*CS+CS/2,p.r*CS,0,7);g.fill();}
  g.strokeStyle='rgba(192,57,74,.55)';g.lineWidth=lw(2);
  for(const e of S.ends){g.beginPath();g.arc(e.x*CS+CS/2,e.y*CS+CS/2,CS*.9,0,7);g.stroke();}
- drawShip(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
+ if(e2)e2Cars(g,BCS);else drawShip(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
  drawMimic(g,CS,lw);
  drawCore(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
  for(const t of S.list)if(t.fl&&S.phase==='wave')drawFlame(g,t,x=>x*CS+CS/2,y=>y*CS+CS/2,CS);
@@ -5134,12 +5144,12 @@ function ui(){
  $('mbr').innerHTML=xPanel()+heroPanel()+(S.phase==='build'?`<button class="go${WARM?' arm':''}" data-a="wave" style="position:relative">${WARM?'✓ Pulsa otra vez':'Empezar oleada'}${kcap(kbN('wave'))}</button>`:'');
  if(S.phase==='place'&&(MF||!TOUCH)&&S.pi!=null&&!S.pexp&&S.offers[S.pi]){const o=S.offers[S.pi];h=`<div class="pstrip"><b>${o.n}</b>${payOn()&&pcost(o)?`<span class="gd">${pcost(o)} 🪙</span>`:''}<button data-a="prot" data-i="${S.pi}">⟳ Girar</button><button data-a="pick" data-i="${S.pi}">✕ Cancelar</button><button data-a="pexp" title="Ver las piezas">▲</button></div>`;}
  else if(S.phase==='place'){
-  h=(S.pi==null&&!S.tut?'<div class="pctt">Elige una pieza</div><button class="pcpeek" data-a="ppeek" title="Ver el mapa">👁</button>'+diceRr('pc'):'')+'<small style="display:block;margin-bottom:12px">'+(S.pi==null?(S.tut?'Elige una pieza. Puedes girarla antes de colocarla.':'Puedes girarla antes de colocarla. Después podrás cancelar y volver aquí.'):(BARX.pc=1,'Pulsa un hueco marcado que conecte con el camino.'+(HSEEN.barpc?'':' Vuelve a pulsar la pieza para dejar de elegirla.')))+'</small><div class="prow">'+
+  h=(S.pi==null?'<div class="pctt">Elige una pieza</div><button class="pcpeek" data-a="ppeek" title="Ver el mapa">👁</button>'+diceRr('pc'):'')+'<small style="display:block;margin-bottom:12px">'+(S.pi==null?(S.tut?'Puedes girarla antes de colocarla.':'Puedes girarla antes de colocarla. Después podrás cancelar y volver aquí.'):(BARX.pc=1,'Pulsa un hueco marcado que conecte con el camino.'+(HSEEN.barpc?'':' Vuelve a pulsar la pieza para dejar de elegirla.')))+'</small><div class="prow">'+
   S.offers.map((o,i)=>`<div class="cardw"><button class="card ${i===S.pi?'on':''}" data-a="pick" data-i="${i}" data-tip="piece:${i}"><canvas width="98" height="98" data-i="${i}"></canvas>${o.n}${!payOn()?'':pcost(o)?`<span class="pcst gd">${pcost(o)} 🪙</span>`:'<span class="pcst pfree">Gratis</span>'}</button><button class="rbtn${TOUCH?'':' wide'}" data-a="prot" data-i="${i}" title="Girar la pieza${TOUCH?'':' ('+kbN('rot')+')'}"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13.2 8.4A5.2 5.2 0 1 1 11.6 4.3"/><path d="M12.6 1.8v3.4H9.2"/></svg>${TOUCH?'':'R'}</button></div>`).join('')+'</div>';}
  else if(S.phase==='build'||S.phase==='wave'){h='';}
  else h=(S.phase==='lost'&&S.snap&&S.rc>0?`<button class="go" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="go" data-a="results">Ver resultados</button><button data-a="reset">Jugar de nuevo</button><button data-a="menu">Menú principal</button>';
  $('ui').innerHTML=h;$('panel').classList.toggle('pempty',!h&&!S.msg);
- {/* elegir pieza: ventana centrada y grande, sin poder hacer nada más; 👁 para mirar el mapa */const pk=S.phase==='place'&&S.pi==null&&!S.tut&&!document.body.classList.contains('inmenu')&&!(typeof DLG!=='undefined'&&DLG.on);if(!pk)S.ppk=0;document.body.classList.toggle('pcpick',pk&&!S.ppk);document.body.classList.toggle('pcpeek',pk&&!!S.ppk);
+ {/* elegir pieza: ventana centrada y grande, sin poder hacer nada más; 👁 para mirar el mapa */document.body.classList.toggle('revl',S.revAt>0&&S.phase==='place');const pk=S.phase==='place'&&S.pi==null&&!(S.revAt>0)&&!(S.tut&&HQ.cur&&HQ.cur.id==='tut_welcome'&&!HQ.cur.si)&&!(typeof LB!=='undefined'&&LB.open)&&!document.body.classList.contains('inmenu')&&!(typeof DLG!=='undefined'&&DLG.on);if(!pk)S.ppk=0;document.body.classList.toggle('pcpick',pk&&!S.ppk);document.body.classList.toggle('pcpeek',pk&&!!S.ppk);
   let pb=$('pcback');if(pk&&S.ppk&&!pb){pb=document.createElement('button');pb.id='pcback';pb.innerHTML='🧩 Volver a las piezas';document.body.appendChild(pb);pb.addEventListener('click',e=>{e.stopPropagation();S.ppk=0;ui();});}if(pb&&!(pk&&S.ppk))pb.remove();}
  {let ch=0;if(BARX.pc&&S.pi==null){BARX.pc=0;if(!HSEEN.barpc){HSEEN.barpc=1;ch=1;}}if(BARX.tw&&!S.tsel){BARX.tw=0;if(!HSEEN.bartw){HSEEN.bartw=1;ch=1;}}if(ch)try{localStorage.setItem('rt-hints',JSON.stringify(HSEEN));}catch(e){}}
  $('ui').querySelectorAll('canvas[data-i]').forEach(cn=>drawPat(cn.getContext('2d'),S.offers[+cn.dataset.i],14,0,0,1));
@@ -5558,7 +5568,7 @@ function exitGame(){LB.exit=0;try{saveRun&&svLive()&&saveRun('exit');}catch(e){}
 function togglePtips(){const on=!(OPT.ptip||OPT.ptipw);OPT.ptip=OPT.ptipw=on;saveOpt();const b=$('ptb');if(b)b.classList.toggle('on',on);try{sfx('ui');}catch(e){}toast(on?'💀 Bocadillos de los portales: siempre visibles':'💀 Bocadillos de los portales: solo al pasar el ratón');}
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
- if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
+ if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','erasel','era2hok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim)||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -5685,6 +5695,8 @@ function act(e){
  else if(a==='pexit'){if(!LB.exit){LB.exit=1;lbRender();return;}exitGame();}
  else if(a==='newgame'){if(SAV.meta&&!LB.ask){LB.ask=1;lbRender();return;}LB.ask=0;const go=()=>{if(!tutChosen())renderTutPick();else renderEra();};if(!STO.intro){STO.intro=1;saveSto();playDialog(STORY.intro,go);}else go();}
  else if(a==='erago')renderSetup();
+ else if(a==='erasel')eraPick(b.dataset.v);
+ else if(a==='era2hok'){hintSeen('era2mk');lbRender();}
  else if(a==='lbprep'){LB.step=b.dataset.v;lbRender();}
  else if(a==='lbcover'){closeQuick();lbOpen(null,true);}
  else if(a==='help')renderHelp();
@@ -5751,8 +5763,8 @@ function lbClose(resume,now){
  LB.open=false;LB.cover=false;CP.open=false;OP.open=false;CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;
  const el=$('comp');
  if(!now&&S&&S.core&&!document.body.classList.contains('inmenu')&&el.firstElementChild){// el libro se encoge y se mete en el núcleo
-  lbSetOrigin();const w=el.firstElementChild;el.classList.add('lbout');w.classList.add('lbshrink');const tok=LB.ctok=(LB.ctok||0)+1;
-  setTimeout(()=>{if(LB.ctok!==tok||LB.open)return;el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');coreFlash();},420);}
+  lbSetOrigin();const w=el.firstElementChild,slow=!!LB.slowOut;el.classList.add('lbout');w.classList.add('lbshrink');if(slow)w.classList.add('lbslow');const tok=LB.ctok=(LB.ctok||0)+1;
+  setTimeout(()=>{if(LB.ctok!==tok||LB.open)return;el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');coreFlash();},slow?1150:520);}
  else{el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');}
  if(PMU.open){PMU.open=false;if(resume!==false&&S)S.speed=PMU.spd||1;}
  if(typeof ui==='function'&&S)ui();
@@ -5835,9 +5847,11 @@ function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
   footL:toMenu,footR:`<button class="lbbk" data-a="tutskip">⏭ Saltar tutorial</button>`};
  if(st==='skip')return {marks:null,key:'skip',left:`<h3>Tutorial saltado</h3><div class="bksub">Las pistas están desactivadas</div><p>Si quieres aprender el juego, puedes ver cualquiera de los dos tutoriales o activar las pistas cuando quieras desde <b>Ayuda</b>.</p>`,
   right:`<div class="lbdet"><span class="lbdic">⏭</span><h4>Listo</h4><p>Vamos a preparar tu primera partida.</p></div>`,footL:toMenu,footR:`<button class="gbtn" data-a="skipok">Continuar ›</button>`};
- if(st==='era'){const [ln]=ERALINE(),done=STO.p>=3;
-  return {marksHTML:`<div class="bkmarks"><button class="bkmk on" title="Era Fantástica">🐉</button></div>`,key:'era',
-   left:`<h3>Era Fantástica</h3><div class="bksub">Nueva partida · 1 de 3</div><div class="era lbera"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small><p style="margin-top:16px">Cada era trae sus propios héroes, torres, enemigos, reliquias y eventos. Gana partidas para reparar el núcleo y abrir el camino a la siguiente.</p>${done?'<div class="eline"><span class="on">Fantástica</span><span title="Próximamente">???</span></div>':''}</div>`,
+ if(st==='era'){const [ln]=ERALINE(),done=STO.p>=3,eras=eraList();if(!eras.includes(ERA))ERA=1;
+  const marks=`<div class="bkmarks">${kcOn()&&eras.length>1?'<span class="kcap bkq">Q</span>':''}${eras.map(v=>`<button class="bkmk${v===ERA?' on':''}${v===2&&era2HintOn()?' glow':''}" data-a="erasel" data-v="${v}" title="Era ${ERADEF[v].n}">${ERADEF[v].ic}</button>`).join('')}${kcOn()&&eras.length>1?'<span class="kcap bkq">E</span>':''}</div>`;
+  if(ERA===2){const pg=era2Page();return {marksHTML:marks,key:'era2',left:pg.left,right:pg.right,footL:toMenu,footR:`<button class="gbtn" data-a="erago">Continuar ›</button>`};}
+  return {marksHTML:marks,key:'era',after:()=>era2Hint(),
+   left:era2HintHTML()+`<h3>Era Fantástica</h3><div class="bksub">Nueva partida · 1 de 3</div><div class="era lbera"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small><p style="margin-top:16px">Cada era trae sus propios héroes, torres, enemigos, reliquias y eventos. Gana partidas para reparar el núcleo y abrir el camino a la siguiente.</p>${done?'<div class="eline"><span class="on">Fantástica</span><span>Ruinas de Neón</span></div>':''}</div>`,
    right:`<div class="lbeter"><div class="lbeh"><span class="lbei">💠</span><b>ÉTER</b></div><p>${escH(ln.replace(/\{N\}/g,nm))}</p></div><div class="lbsys"><b>SISTEMA</b> · Integridad del núcleo: ${[9,38,71,100][Math.min(3,STO.p)]} %${STO.p>=3?' · Navegación parcial operativa':' · Fragmentos integrados: '+Math.min(3,STO.p)+' de 3'}</div>`,
    footL:toMenu,footR:`<button class="gbtn" data-a="erago">Continuar ›</button>`};}
  if(st==='rounds'){const mx=rMax();
@@ -6020,8 +6034,8 @@ const tgCell=(x,y,rc)=>()=>{const r=cv.getBoundingClientRect(),k=sc()/VIEW*r.wid
 const tgCard=sel=>()=>{const e=document.querySelector(sel);return e?tgEl(e.closest('button')||e)():null;};
 const tgEnemy=e=>()=>e.hp>0?tgCell(e.x,e.y,1.3)():null;
 const tgEl=sel=>()=>{const el=typeof sel==='string'?document.querySelector(sel):sel;if(!el||!el.offsetParent)return null;const b=el.getBoundingClientRect();return{x:b.left+b.width/2,y:b.top+b.height/2,r:Math.max(26,Math.max(b.width,b.height)/2+10)};};
-function hintShow(h){HQ.cur=h;try{if(PR.open)closePrim();}catch(e){}/* que la ficha de un portal no tape lo que señala la pista */let el=$('hint');if(!el){el=document.createElement('div');el.id='hint';document.body.appendChild(el);el.addEventListener('click',e=>{if(e.target.closest('[data-a="hintok"]')){const c=HQ.cur;if(c&&c.steps&&c.si<c.steps.length-1){c.si++;c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}else hintClose();}});}
- const ns=h.steps&&h.si<h.steps.length-1;const wt=h.steps&&h.steps[h.si][2];el.innerHTML=`<div class="hring"></div><div class="hmsg tipc"><b>${h.title}</b>${h.steps?`<small class="hstep">${h.si+1}/${h.steps.length}</small>`:''}<div style="margin:4px 0 ${wt?2:8}px">${h.txt}</div>${wt?'':`<button class="go" data-a="hintok">${ns?'Siguiente ›':'Entendido'}</button>`}</div>`;el.className='open'+(S.phase==='wave'?' slow':'')+(wt?'':' block');
+function hintShow(h){HQ.cur=h;if(S&&S.tut&&S.phase==='place')setTimeout(()=>{try{ui();}catch(e){}},0);try{if(PR.open)closePrim();}catch(e){}/* que la ficha de un portal no tape lo que señala la pista */let el=$('hint');if(!el){el=document.createElement('div');el.id='hint';document.body.appendChild(el);el.addEventListener('click',e=>{if(e.target.closest('[data-a="hintok"]')){const c=HQ.cur;if(c&&c.steps&&c.si<c.steps.length-1){c.si++;c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}else hintClose();}});}
+ const ns=h.steps&&h.si<h.steps.length-1;const wt=h.steps&&h.steps[h.si][2];el.innerHTML=`<div class="hring"></div><div class="hmsg tipc"><b>${h.title}</b>${h.steps?`<small class="hstep">${h.si+1}/${h.steps.length}</small>`:''}<div style="margin:4px 0 ${wt?2:8}px">${h.txt}</div>${wt?'':`<button class="go" data-a="hintok">${ns?'Siguiente ›':'Entendido'}</button>`}</div>`;el.className='open'+(S&&S.phase==='wave'?' slow':'')+(wt?'':' block')+(h.menu?' dim':'');
  if(h.cam){if(h.cam.fit){const zf=VH/(BS*1.6*P*K*CS),zw=VIEW/(BS*1.6*P*K*CS);CAM.z=Math.max(ZMIN,Math.min(CAM.z,zf,zw));}camCenter(h.cam.x,h.cam.y);}}
 // ¿la pista abierta bloquea el resto del juego? Sí, salvo las que piden hacer algo para continuar («Pulsa este botón…»)
 function hintBlocks(){const c=HQ.cur;if(!c)return false;if(c.steps&&c.steps[c.si]&&c.steps[c.si][2])return false;const el=$('hint');return !!(el&&el.classList.contains('open')&&!el.classList.contains('hid'));}
@@ -6039,8 +6053,9 @@ function hintPace(){const k=S.phase+S.round;if(HQ.pk!==k){if(HQ.pph==='wave')HQ.
 function portAuto(){if(!S||S.phase!=='build'||S.round>2||S.portAuto===S.round||PR.open||RL.open||HQ.cur||HQ.q.length||FO.open||LB.open||!realG())return;const pt=S.portals&&S.portals[0];if(!pt)return;S.portAuto=S.round;
  const tg={key:'pt:'+pt.x+','+pt.y+'a',html:()=>portalInfo(pt),rect:cellRect(pt.x-1,pt.y-1,3)};if(MFSQ()){LUPA.tg=tg;LUPA.sticky=true;placeLupa(tg.rect);}else{openPrim(tg);PR.pinned=true;PR.auto=1;}}
 function hintTick(rdt){
+ if(HQ.cur&&HQ.cur.menu){const el=$('hint');if(el){el.classList.remove('hid');el.classList.add('block','dim');}hintPos();return;}
  portAuto();
- const busy=RL.open||LB.open||FO.open||!realG();
+ const busy=RL.open||LB.open||FO.open||!realG()||(S&&S.revAt>0)||(($('comp')||{}).classList||{contains:()=>0}).contains('lbout');
  if(!HQ.cur&&!busy&&HQ.q.length&&hintPace())hintShow(HQ.q.shift());
  if(HQ.cur&&!realG())hintClose();
  const el=$('hint');if(el&&HQ.cur){el.classList.toggle('hid',busy);el.classList.toggle('block',hintBlocks());el.classList.toggle('dim',HQ.f<.35||S.phase!=='wave');}
@@ -6179,7 +6194,7 @@ const STORY={
   {sp:'ÉTER',g:0,t:'{N}… Sí. Ahora lo recuerdo.'},
   {sp:'ÉTER',g:0,t:'Gracias por no rendirte, {N}. Navegación parcial operativa: solo conservo unas coordenadas. Las de casa.'},
   {sp:'ÉTER',g:0,t:'Volvamos a nuestro tiempo. No sé qué nos espera allí… pero esta vez no estás solo.'},
-  {t:'Próxima era: tu tiempo · Próximamente'}]};
+  {sys:1,t:'Coordenadas fijadas. Destino: Ruinas de Neón. Nueva era disponible al empezar partida.'}]};
 const ERALINE=()=>STO.p>=3?['¿Listos para el salto, {N}? La Era Fantástica ya no tiene más que darnos… por ahora. Sigo calibrando las coordenadas.',0]:
  [['Núcleo dañado. Necesito los fragmentos que dejan los jefes de esta era para repararme. Gane, Piloto.',3],['Una pieza integrada. Siga así, Piloto.',2],['Solo falta una pieza. Puedo sentirlo.',1]][STO.p];
 function renderEra(){LB.step='era';lbOpen('prep');}
@@ -6187,7 +6202,7 @@ function renderEraOld(){const [ln]=ERALINE(),nm=STO.name||'Piloto',done=STO.p>=3
  $('msetup').innerHTML=`<div class="era"><h3>Era Fantástica</h3><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small>`+
   `<div class="eter"><b>ÉTER</b>${escH(ln.replace(/\{N\}/g,nm))}</div>${done?'<div class="eline"><span class="on">Fantástica</span><span title="Próximamente">???</span></div>':''}`+
   `<div style="display:flex;gap:10px;justify-content:center"><button class="go" data-a="erago">Continuar</button><button data-a="mback">Volver</button></div></div>`;$('menu').classList.add('setup');}
-function storyWin(){if(S.tut||STO.p>=3)return;STO.p++;saveSto();const k='p'+STO.p;setTimeout(()=>playDialog(STORY[k]),400);}
+function storyWin(){if(S.tut||STO.p>=3)return;STO.p++;saveSto();const k='p'+STO.p;setTimeout(()=>playDialog(STORY[k],STO.p>=3?()=>{try{era2Announce();}catch(e){}}:null),400);}
 closePrim();init();showMenu();fsMark();requestAnimationFrame(loop);
 
 // ---- pantallas de entrada: Claude → GigaDrill Studios → título (con el menú desenfocado detrás) ----
@@ -6488,6 +6503,113 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
  else if(a==='hsbigx'){const el=$('hsbig');if(el)el.classList.remove('on');}
  else return;e.stopPropagation();},true);
 addEventListener('keydown',e=>{const el=$('hsbig');if(e.key==='Escape'&&el&&el.classList.contains('on')){el.classList.remove('on');e.stopImmediatePropagation();e.preventDefault();}},true);
+// ==================== ERAS · la segunda era: Ruinas de Neón ====================
+// ERA = era elegida para la próxima partida; S.era = era de la partida en curso. La era 2 se abre al reparar a ÉTER (3 victorias).
+const ERADEF={1:{n:'Fantástica',ic:'🐉',col:'#4a8a4a'},2:{n:'Ruinas de Neón',ic:'🌆',col:'#3fe8ff'}};
+
+const era2Ok=()=>UNLOCK_ALL||(typeof OPT!=='undefined'&&OPT.u_era)||(typeof STO!=='undefined'&&STO.p>=3);
+const inMenu=()=>document.body.classList.contains('inmenu');
+// ¿se juega (o se consulta) con el contenido de la era 2? En el menú, si está desbloqueada; en partida, si la partida es de la era 2
+function eraHas2(){return inMenu()?era2Ok():!!(typeof S!=='undefined'&&S&&S.era===2);}
+const eraList=()=>era2Ok()?[1,2]:[1];
+function eraPick(v){v=+v;if(v===2&&!era2Ok())return;ERA=v;try{localStorage.setItem('rt-era',String(v));}catch(e){}if(typeof lbRender==='function')lbRender();}
+try{const v=+localStorage.getItem('rt-era');if(v===2)ERA=2;}catch(e){}
+// página de la era 2 en «Elegir era»
+function era2Page(){const nm=(typeof STO!=='undefined'&&STO.name)||'Piloto',bb=(typeof STO!=='undefined'&&STO.bb)||0;
+ return{left:`<h3>Ruinas de Neón</h3><div class="bksub">Nueva partida · 1 de 3</div><div class="era lbera e2"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<bb?' got':''}">${i<bb?'📼':''}</div>`).join('')}</div><small>Registros recuperados ${Math.min(3,bb)} / 3 · cada partida ganada recupera la caja negra de un jefe</small><p style="margin-top:16px">Un futuro lejano: caminos holográficos entre torres caídas y neones que aún parpadean. Las máquinas que quedaron atrás no han dejado de funcionar. Esta era es algo más dura que la Fantástica.</p></div>`,
+  right:`<div class="lbeter"><div class="lbeh"><span class="lbei">💠</span><b>ÉTER</b></div><p>${escH(('Las coordenadas de casa nos han traído aquí, {N}. Esto fue una ciudad. Nuestra ciudad, creo. Los registros de esas máquinas pueden contarnos qué pasó.').replace(/\{N\}/g,nm))}</p></div><div class="lbsys"><b>SISTEMA</b> · Carga de salto: ${[0,33,66,100][Math.min(3,bb)]} % · Firmas temporales: ${Math.min(3,bb)} de 3</div>`};}
+// ---- diálogos de la era 2 (provisionales, pendientes de aprobar) ----
+const STORY2={
+ arrive:[{sys:1,t:'Salto completado. Coordenadas: coinciden con el registro «Hogar». Fecha: desconocida.'},
+  {sp:'ÉTER',g:0,t:'Esto… esto es nuestra ciudad, {N}. O lo fue. Las torres siguen en pie, pero no hay nadie. Solo máquinas.'},
+  {sp:'ÉTER',g:0,t:'Detecto actividad: robots de mantenimiento, drones de vigilancia… y algo grande. Siguen cumpliendo órdenes de alguien que ya no está.'},
+  {sp:'ÉTER',g:0,t:'Nos han visto. Defienda la nave como en la otra era, {N}. Yo intentaré leer sus registros.'}]};
+// ---- aviso de era nueva: al llegar a 3 piezas (en la historia) o, si ya las tenía, al abrir el menú ----
+function era2Announce(){if(typeof STO==='undefined'||!era2Ok()||STO.e2n)return;STO.e2n=1;saveSto();newU('era',ERADEF[2].ic,'Era: '+ERADEF[2].n,'ÉTER reparado · 3 victorias');}
+// ================= MAPA DE LA ERA 2 =================
+// suelo: losas de hormigón oscuro con grietas y brotes · camino: holograma cian con bordes de luz y flechas; con enemigos en el mapa se tiñe de rojo y lo recorren ondas
+// solares: plataformas hexagonales con marco magenta · núcleo: la nave entre escombros
+const E2={alert:0,t0:0,cf:null,cfk:-1};
+const e2Hash=(x,y)=>((x*73+y*151)|0)%11;
+function e2Ground(g,X,Y,gx,gy,B){g.fillStyle=(gx+gy)%2?'#1c1f2a':'#1a1c26';g.fillRect(X,Y,B,B);g.strokeStyle='rgba(0,0,0,.35)';g.lineWidth=Math.max(.6,B*.025);g.strokeRect(X+.5,Y+.5,B-1,B-1);
+ const h=e2Hash(gx,gy);if(h===0||h===7){g.strokeStyle='rgba(0,0,0,.55)';g.lineWidth=Math.max(.8,B*.03);g.beginPath();g.moveTo(X+B*.15,Y+B*.2);g.lineTo(X+B*.45,Y+B*.55);g.lineTo(X+B*.35,Y+B*.85);g.stroke();}
+ if(h===3){g.fillStyle='#24342a';g.beginPath();g.ellipse(X+B*.72,Y+B*.78,B*.14,B*.08,0,0,7);g.fill();g.strokeStyle='#4f8a4a';g.lineWidth=Math.max(.8,B*.04);g.beginPath();g.moveTo(X+B*.72,Y+B*.78);g.lineTo(X+B*.82,Y+B*.56);g.moveTo(X+B*.72,Y+B*.78);g.lineTo(X+B*.6,Y+B*.58);g.stroke();}}
+function e2CF(){const k=Object.keys(S.blocks).length;if(E2.cfk!==k||!E2.cf){E2.cf=cfield();E2.cfk=k;}return E2.cf;}
+function e2Path(g,X,Y,gx,gy,B,a){const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2,cf=e2CF(),t=performance.now()/1000;
+ // holograma: cian → rojo según la alerta
+ const r=Math.round(63+(255-63)*a),gg=Math.round(232-(232-70)*a),b=Math.round(255-(255-90)*a),col=(al)=>`rgba(${r},${gg},${b},${al})`;
+ g.fillStyle=col(.16);g.fillRect(X,Y,B,B);g.fillStyle=col(.07);for(let i=0;i<B;i+=B/9)g.fillRect(X,Y+i,B,B/18);
+ // ondas que recorren el camino (de los portales al núcleo) cuando hay alerta
+ if(a>0&&cf&&cf[gy]&&cf[gy][gx]<1e9){const w=.5+.5*Math.sin(cf[gy][gx]*.9-t*5);g.fillStyle=`rgba(255,60,80,${.26*a*w})`;g.fillRect(X,Y,B,B);}
+ // bordes de luz donde toca suelo (línea ancha tenue + línea fina viva, sin sombras: es barato)
+ const L=Math.max(1,B*.05);g.lineWidth=L*2.6;g.strokeStyle=col(.22);const edge=(x1,y1,x2,y2)=>{g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();};
+ const es=[];if(!isP(gx,gy-1))es.push([X,Y+L,X+B,Y+L]);if(!isP(gx,gy+1))es.push([X,Y+B-L,X+B,Y+B-L]);if(!isP(gx-1,gy))es.push([X+L,Y,X+L,Y+B]);if(!isP(gx+1,gy))es.push([X+B-L,Y,X+B-L,Y+B]);
+ for(const e of es)edge(...e);g.lineWidth=L;g.strokeStyle=col(.95);for(const e of es)edge(...e);
+ // flecha hacia el núcleo
+ if(cf&&cf[gy]&&cf[gy][gx]<1e9){let d=null,v=cf[gy][gx];for(const[dx,dy]of D){const nx=gx+dx,ny=gy+dy;if(isP(nx,ny)&&cf[ny][nx]<v){v=cf[ny][nx];d=[dx,dy];}}
+  if(d){const cx=X+B/2,cy=Y+B/2,s=B*.16;g.strokeStyle=`rgba(${Math.round(180+(255-180)*a)},${Math.round(250-(250-150)*a)},255,.55)`;g.lineWidth=L;g.beginPath();g.moveTo(cx-d[0]*s-d[1]*s*.8,cy-d[1]*s-d[0]*s*.8);g.lineTo(cx,cy);g.lineTo(cx-d[0]*s+d[1]*s*.8,cy-d[1]*s+d[0]*s*.8);g.stroke();}}}
+function e2Solar(g,X,Y,B){const cx=X+B/2,cy=Y+B/2;g.fillStyle='#2e3340';g.beginPath();for(let k=0;k<6;k++){const a=k/6*Math.PI*2+Math.PI/6;g.lineTo(cx+Math.cos(a)*B*.42,cy+Math.sin(a)*B*.42);}g.closePath();g.fill();
+ g.strokeStyle='rgba(255,79,216,.35)';g.lineWidth=Math.max(1,B*.1);g.beginPath();for(let k=0;k<6;k++){const a=k/6*Math.PI*2+Math.PI/6;g.lineTo(cx+Math.cos(a)*B*.34,cy+Math.sin(a)*B*.34);}g.closePath();g.stroke();g.strokeStyle='#ff4fd8';g.lineWidth=Math.max(1,B*.045);g.stroke();
+ g.fillStyle='#ff4fd8';g.fillRect(cx-B*.05,cy-B*.05,B*.1,B*.1);}
+// celda completa (suelo + lo que lleve encima)
+function e2Cell(g,gx,gy,cv0,B){const X=gx*B,Y=gy*B;e2Ground(g,X,Y,gx,gy,B);
+ if(cv0===2)e2Path(g,X,Y,gx,gy,B,E2.alert);else if(cv0===1)e2Solar(g,X,Y,B);else if(cv0===3&&S.obs){const ch=S.obs[gx+','+gy]||'#';if(ch!=='#')drawObs(g,ch,X,Y,B);}}
+// alerta del camino: sube cuando hay enemigos en el mapa, baja al acabar la oleada
+function e2Tick(){const now=performance.now(),dt=Math.min(.1,(now-(E2.t0||now))/1000);E2.t0=now;const want=S&&S.phase==='wave'&&S.enemies.length?1:0;E2.alert+=(want-E2.alert)*Math.min(1,dt*2.5);if(Math.abs(E2.alert-want)<.01)E2.alert=want;}
+// ---- decoración de la era 2 (letras libres en OBS): Q pilar oxidado · N letrero de neón · X panel holográfico · V dron caído · c chatarra · Y brotes · E máquina expendedora ----
+Object.assign(OBS,{Q:'Pilar oxidado',N:'Letrero de neón',X:'Panel holográfico',V:'Dron caído',c:'Chatarra',Y:'Brotes',E:'Máquina expendedora'});
+function e2Obs(c,ch,x,y,s){const X=f=>x+s*f,Y=f=>y+s*f,L=Math.max(1,s*.04),t=performance.now()/1000,h=e2Hash(Math.round(x/s),Math.round(y/s));
+ if(ch==='Q'){c.fillStyle='#4a3a2e';c.fillRect(X(.34),Y(.1),s*.32,s*.82);c.fillStyle='#6a4a30';c.fillRect(X(.34),Y(.1),s*.1,s*.82);c.fillStyle='#8a5a2a';c.fillRect(X(.4),Y(.26),s*.2,s*.08);c.fillRect(X(.4),Y(.6),s*.2,s*.08);c.fillStyle='#2a2028';c.fillRect(X(.3),Y(.86),s*.4,s*.08);}
+ else if(ch==='N'){c.fillStyle='#262a36';c.fillRect(X(.08),Y(.3),s*.84,s*.4);c.strokeStyle='#1a1d26';c.lineWidth=L;c.strokeRect(X(.08),Y(.3),s*.84,s*.4);const on=Math.sin(t*7+h)>-.6;c.strokeStyle=on?'#ff4fd8':'rgba(255,79,216,.25)';c.lineWidth=L*1.5;c.beginPath();c.moveTo(X(.2),Y(.62));c.lineTo(X(.2),Y(.38));c.lineTo(X(.38),Y(.62));c.lineTo(X(.38),Y(.38));c.stroke();c.strokeStyle='#3fe8ff';c.beginPath();c.moveTo(X(.52),Y(.38));c.lineTo(X(.52),Y(.62));c.lineTo(X(.66),Y(.62));c.stroke();c.strokeStyle='rgba(255,79,216,.25)';c.beginPath();c.moveTo(X(.74),Y(.38));c.lineTo(X(.86),Y(.62));c.moveTo(X(.86),Y(.38));c.lineTo(X(.74),Y(.62));c.stroke();}
+ else if(ch==='X'){const col=['#ff4fd8','#3fe8ff','#ffb347'][h%3],on=Math.sin(t*3+h*2)>-.85;c.fillStyle='#3a3f4a';c.fillRect(X(.45),Y(.5),s*.1,s*.42);c.fillStyle=on?col+'44':'#22262e';c.fillRect(X(.12),Y(.1),s*.76,s*.42);c.strokeStyle=on?col:'#3a3f4a';c.lineWidth=L;c.strokeRect(X(.12),Y(.1),s*.76,s*.42);if(on){c.fillStyle=col;for(let i=0;i<3;i++)c.fillRect(X(.2),Y(.18+i*.1),s*(i%2?.28:.44),s*.05);}}
+ else if(ch==='V'){c.fillStyle='#55606e';c.beginPath();c.ellipse(X(.5),Y(.62),s*.34,s*.17,-.3,0,7);c.fill();c.fillStyle='#3a4250';c.fillRect(X(.1),Y(.3),s*.22,s*.1);c.fillRect(X(.66),Y(.24),s*.22,s*.1);c.fillStyle='#ff6a3a';c.beginPath();c.arc(X(.56),Y(.58),s*.05,0,7);c.fill();for(let i=0;i<3;i++){const k=(t*.5+i/3+h*.1)%1;c.fillStyle=`rgba(120,120,130,${.45*(1-k)})`;c.beginPath();c.arc(X(.6)+k*s*.1,Y(.35)-k*s*.5,s*(.06+k*.12),0,7);c.fill();}}
+ else if(ch==='c'){c.fillStyle='#4a5566';c.fillRect(X(.15),Y(.5),s*.3,s*.3);c.fillStyle='#55606e';c.beginPath();c.arc(X(.65),Y(.6),s*.16,0,7);c.fill();c.fillStyle='#2a3038';c.beginPath();c.arc(X(.65),Y(.6),s*.06,0,7);c.fill();c.fillStyle='#6a4a30';c.fillRect(X(.4),Y(.3),s*.3,s*.1);c.fillStyle='#ff4fd8';c.fillRect(X(.22),Y(.58),s*.08,s*.05);}
+ else if(ch==='Y'){c.fillStyle='#24342a';c.beginPath();c.ellipse(X(.5),Y(.78),s*.3,s*.12,0,0,7);c.fill();c.strokeStyle='#4f8a4a';c.lineWidth=L*1.3;for(let k=-1;k<=1;k++){c.beginPath();c.moveTo(X(.5),Y(.78));c.quadraticCurveTo(X(.5+k*.2),Y(.5),X(.5+k*.3),Y(.3));c.stroke();}c.fillStyle='#6fb05a';for(let k=-1;k<=1;k++){c.beginPath();c.ellipse(X(.5+k*.3),Y(.3),s*.07,s*.04,k*.6,0,7);c.fill();}}
+ else if(ch==='E'){c.fillStyle='#4a5566';c.fillRect(X(.22),Y(.1),s*.56,s*.82);c.fillStyle='#2a3038';c.fillRect(X(.22),Y(.84),s*.56,s*.08);const on=Math.sin(t*2+h)>-.3;c.fillStyle=on?'rgba(63,232,255,.4)':'#1c2230';c.fillRect(X(.3),Y(.2),s*.4,s*.32);c.fillStyle='#ff4fd8';c.fillRect(X(.3),Y(.62),s*.14,s*.08);c.fillStyle='#2a3038';c.fillRect(X(.5),Y(.62),s*.2,s*.08);}}
+// estampas de decoración de la era 2 (sustituyen a bosques, granjas y aldeas)
+const E2STAMPS=[{w:3,f:'ruins'},{w:2,f:'neon'},{w:2,f:'scrap'},{w:2,f:'green'},{w:1,f:'shop'}];
+function decorateE2(o){const g=o.p.map(r=>[...r]),free=(x,y)=>x>=0&&y>=0&&x<P&&y<P&&g[y][x]==='#',nb=(x,y)=>D.map(([a,b])=>[x+a,y+b]).filter(([a,b])=>free(a,b));
+ const cells=[];g.forEach((r,y)=>r.forEach((ch,x)=>{if(ch==='#')cells.push([x,y]);}));const goal=Math.round(cells.length*DECF*.8);let n=0,tries=0;
+ const grow=(s,k,ch)=>{const q=[s],got=[];while(q.length&&got.length<k){const[x,y]=q.splice(Math.floor(Math.random()*q.length),1)[0];if(!free(x,y))continue;g[y][x]=ch;got.push([x,y]);q.push(...nb(x,y));}return got;};
+ while(n<goal&&tries++<40){const s=cells[Math.floor(Math.random()*cells.length)];if(!free(s[0],s[1]))continue;let W=0;for(const t of E2STAMPS)W+=t.w;let r=Math.random()*W,f='ruins';for(const t of E2STAMPS){r-=t.w;if(r<=0){f=t.f;break;}}
+  if(f==='ruins'){const c=grow(s,1+Math.floor(Math.random()*2),'Q');n+=c.length;const m=c.flatMap(([x,y])=>nb(x,y))[0];if(m){g[m[1]][m[0]]='c';n++;}}
+  else if(f==='neon'){g[s[1]][s[0]]=Math.random()<.5?'N':'X';n++;}
+  else if(f==='scrap'){const c=grow(s,1+Math.floor(Math.random()*2),'c');n+=c.length;const m=c.flatMap(([x,y])=>nb(x,y))[0];if(m){g[m[1]][m[0]]='V';n++;}}
+  else if(f==='green')n+=grow(s,2+Math.floor(Math.random()*3),'Y').length;
+  else{g[s[1]][s[0]]='E';n++;}}
+ o.p=g.map(r=>r.join(''));}
+// ---- coches voladores al fondo: cruzan la zona construida con una estela ----
+const E2CARS=[{y:.18,sp:.055,col:'#ff9a3a',off:0},{y:.52,sp:-.04,col:'#3fe8ff',off:.4},{y:.86,sp:.047,col:'#ff4fd8',off:.75}];
+function e2Cars(g,B){const ks=Object.keys(S.blocks);if(!ks.length)return;let x0=1e9,y0=1e9,x1=-1,y1=-1;for(const k of ks){const[bx,by]=k.split(',').map(Number);x0=Math.min(x0,bx);y0=Math.min(y0,by);x1=Math.max(x1,bx);y1=Math.max(y1,by);}
+ const L=(x1-x0+1)*P*B,T=(y1-y0+1)*P*B,ox=x0*P*B,oy=y0*P*B,t=performance.now()/1000;
+ for(const c of E2CARS){let k=((t*c.sp+c.off)%1+1)%1;const x=ox+k*L,y=oy+c.y*T,dir=Math.sign(c.sp),w=B*1.3;const gr=g.createLinearGradient(x-dir*w,0,x,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,c.col);g.strokeStyle=gr;g.lineWidth=Math.max(1,B*.05);g.beginPath();g.moveTo(x-dir*w,y);g.lineTo(x,y);g.stroke();
+  g.fillStyle='rgba(42,46,58,.9)';g.beginPath();g.ellipse(x+dir*B*.15,y,B*.24,B*.09,0,0,7);g.fill();g.fillStyle=c.col;g.fillRect(x+dir*B*.3-B*.03,y-B*.03,B*.07,B*.06);}}
+// ---- núcleo de la era 2: la nave en pie entre escombros, con destello rojo al recibir daño ----
+function e2Core(g,cx,cy,B){const t=performance.now()/1000,hit=S&&S.chit?Math.max(0,1-(performance.now()-S.chit)/500):0;
+ g.fillStyle='#3a3f4a';for(const[a,b,r]of[[-.65,-.5,.18],[.7,-.45,.15],[-.75,.38,.13],[.6,.52,.2],[0,-.8,.12],[-.3,.62,.1]]){g.beginPath();g.ellipse(cx+a*B,cy+b*B,r*B,r*B*.7,0,0,7);g.fill();}
+ g.fillStyle='#55606e';for(const[a,b]of[[-.45,-.7],[.5,-.75],[.8,.15],[-.82,-.05]])g.fillRect(cx+a*B,cy+b*B,B*.16,B*.26);
+ const gl=g.createRadialGradient(cx,cy,2,cx,cy,B*1.3);gl.addColorStop(0,`rgba(${hit?255:63},${hit?80:232},${hit?90:255},${.3+.2*Math.sin(t*2)})`);gl.addColorStop(1,'rgba(63,232,255,0)');g.fillStyle=gl;g.fillRect(cx-B*1.4,cy-B*1.4,B*2.8,B*2.8);
+ g.save();g.translate(cx,cy-B*.1+Math.sin(t*1.4)*B*.03);const s=B/52;g.scale(s,s);g.fillStyle=hit?'#c9a4ae':'#9aa4ae';g.strokeStyle='#2a3038';g.lineWidth=2.5;g.beginPath();g.moveTo(-34,6);g.quadraticCurveTo(0,-18,34,6);g.lineTo(20,13);g.lineTo(-20,13);g.closePath();g.fill();g.stroke();
+ g.fillStyle=hit?'#ff6a7a':'#3fe8ff';g.beginPath();g.ellipse(0,-1,9,5.5,0,0,7);g.fill();g.stroke();g.fillStyle='#7a848e';g.beginPath();g.moveTo(-34,6);g.lineTo(-43,15);g.lineTo(-22,13);g.closePath();g.fill();g.stroke();g.beginPath();g.moveTo(34,6);g.lineTo(43,15);g.lineTo(22,13);g.closePath();g.fill();g.stroke();
+ g.fillStyle=`rgba(63,232,255,${.6+.3*Math.sin(t*6)})`;g.beginPath();g.ellipse(-14,15,4,2,0,0,7);g.ellipse(14,15,4,2,0,0,7);g.fill();g.restore();}
+// ---- enganches: al abrir el menú, aviso de era nueva; al empezar partida, diálogo de llegada ----
+{const _sm=showMenu;showMenu=function(){const r=_sm.apply(this,arguments);try{era2Announce();}catch(e){}return r;};}
+function era2Arrive(){if(!S||S.era!==2||S.tut||STO.e2a)return;STO.e2a=1;saveSto();setTimeout(()=>{if(S&&S.era===2&&!DLG.on)playDialog(STORY2.arrive);},700);}
+{const _ch=chooseHero;chooseHero=function(){const r=_ch.apply(this,arguments);try{era2Arrive();}catch(e){}return r;};}
+// ---- la primera vez que aparece el marcapáginas de la era 2: pista con foco como las demás (bloquea hasta pulsar Entendido) ----
+const era2HintOn=()=>era2Ok()&&!HSEEN.era2mk&&ERA!==2;
+function era2HintHTML(){return '';}
+function era2Hint(){if(!era2HintOn()||HQ.cur)return;setTimeout(()=>{if(!era2HintOn()||HQ.cur||!LB.open||LB.step!=='era')return;const tg=tgEl('.bkmarks .bkmk[data-v="2"]');if(!tg())return;
+ hintShow({id:'era2mk',menu:1,title:'¡Nueva era desbloqueada!',txt:'Has reparado a ÉTER: ahora puedes viajar a las <b>Ruinas de Neón</b>. Elige la era en estos marcapáginas'+(kcOn()?' (o con <b>Q</b> y <b>E</b>)':'')+': 🐉 Fantástica, 🌆 Ruinas de Neón.',tg});},650);}
+{const _ep=eraPick;eraPick=function(v){const r=_ep.apply(this,arguments);try{if(+v===2&&!HSEEN.era2mk)hintSeen('era2mk');}catch(e){}return r;};}
+// ---- al empezar la partida, los cofres y eventos aparecen uno a uno (del más cercano al núcleo al más lejano) mientras el libro entra en el núcleo ----
+const REV0=380,REVG=200,REVD=260;
+function revOrder(){const c=S.core||{x:0,y:0},ks=Object.keys(S.chests||{}).concat(Object.keys(S.evts||{})).filter(k=>!S.blocks[k]),B=P*K,d=k=>{const[bx,by]=k.split(',').map(Number);return Math.hypot((bx+.5)*B-c.x,(by+.5)*B-c.y);};return ks.sort((a,b)=>d(a)-d(b));}
+function revF(ord,key){if(S.revAt===undefined||S.revAt===0)return 1;if(S.revAt<0)return 0;const i=ord.indexOf(key),t=performance.now()-S.revAt-REV0-Math.max(0,i)*REVG;if(t<=0)return 0;const k=Math.min(1,t/REVD);return k<1?k*(1+.35*Math.sin(k*Math.PI)):1;}
+function revStart(){if(!S||S.revAt!==-1)return;S.revAt=performance.now();const n=revOrder().length,tok=S.revAt;
+ for(let i=0;i<n;i++)setTimeout(()=>{if(S&&S.revAt===tok)try{sfx('ui');}catch(e){}},REV0+i*REVG);
+ setTimeout(()=>{if(S&&S.revAt===tok){S.revAt=0;try{ui();}catch(e){}}},REV0+n*REVG+REVD+250);}
+{const _c2=chooseHero;chooseHero=function(){LB.slowOut=1;try{revStart();}catch(e){}const r=_c2.apply(this,arguments);LB.slowOut=0;try{ui();}catch(e){}return r;};}
 // ---- música de fondo ----
 // La canción se inyecta solo en las versiones de prueba (build.js --out, si existe musica/tema.mp3, que no va al repositorio).
 // Suena en bucle desde el primer clic o tecla (el navegador no deja sonar antes). Volumen = general × música.

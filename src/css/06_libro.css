@@ -6,7 +6,7 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 /* ---- portada ---- */
 .lbcv{position:relative;display:flex;align-items:center;justify-content:center;font-family:Georgia,"Times New Roman",serif;color:var(--leatxt)}
 .lbcv.a{width:min(520px,calc(100vw - 180px));height:min(600px,calc(100vh - 70px));margin-right:70px}
-.lbcvin{position:relative;width:100%;height:100%;border-radius:14px 22px 22px 14px;background:linear-gradient(135deg,color-mix(in srgb,var(--lea) 85%,#fff),var(--lea2));box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--trim) 55%,var(--lea)),inset 0 0 0 10px var(--lea2),inset 0 0 0 11px var(--trim),0 30px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;padding:34px 44px 26px 58px;box-sizing:border-box;animation:lbcv .3s ease-out}
+.lbcvin{position:relative;width:100%;height:100%;border-radius:14px 22px 22px 14px;background:linear-gradient(135deg,color-mix(in srgb,var(--lea) 85%,#fff),var(--lea2));box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--trim) 55%,var(--lea)),inset 0 0 0 10px var(--lea2),inset 0 0 0 11px var(--trim),0 30px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;padding:34px 44px 26px 58px;box-sizing:border-box;animation:lbcv .38s ease-out}
 @keyframes lbcv{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
 .lbcvin::before{content:"";position:absolute;left:0;top:0;bottom:0;width:26px;background:linear-gradient(90deg,var(--lea2),var(--inkh) 60%,var(--lea2));border-radius:14px 0 0 14px;box-shadow:inset -2px 0 3px rgba(0,0,0,.4)}
 /* canto de las hojas: fino, tostado y pegado a la tapa; las cintas pasan por encima */
@@ -32,7 +32,7 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 .bkrib:hover{transform:translateX(4px)}.bkrib.on{background:var(--acc2)!important;width:72px}
 .bkrib.lk{opacity:.55}.bkrib.lk::after{content:"🔒";position:absolute;font-size:11px;top:4px;right:6px}
 .bkribs .bkrib{box-shadow:inset 8px 0 10px rgba(0,0,0,.25)}
-.bkw.lbanim{animation:lbopen .36s ease-out}@keyframes lbopen{from{transform:perspective(1200px) rotateY(-14deg) scale(.96);opacity:.4}to{transform:none;opacity:1}}
+.bkw.lbanim{animation:lbopen .46s ease-out}@keyframes lbopen{from{transform:perspective(1200px) rotateY(-14deg) scale(.96);opacity:.4}to{transform:none;opacity:1}}
 /* portada B (móvil): botones en la tapa */
 .lbcv.b{width:min(560px,calc(100vw - 20px));height:auto;max-height:calc(100vh - 14px);max-height:calc(100dvh - 14px)}
 .lbcv.b .lbcvin{height:auto;max-height:calc(100vh - 14px);max-height:calc(100dvh - 14px);overflow:auto;padding:16px 22px 14px 34px;border-radius:14px 18px 18px 14px}
@@ -152,10 +152,10 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 .lbhpc .hbar .bt{flex:1;height:7px;background:var(--paper3);border-radius:4px;overflow:hidden}.lbhpc .bf{display:block;height:100%;border-radius:4px}
 /* ---- el libro sale del núcleo y vuelve a él ---- */
 #comp.bkm{--ox:50vw;--oy:50vh}
-.lbgrow{animation:lbgrow .4s cubic-bezier(.2,.8,.3,1.1)}
+.lbgrow{animation:lbgrow .52s cubic-bezier(.2,.8,.3,1.1)}
 @keyframes lbgrow{from{transform:translate(calc(var(--ox) - 50vw),calc(var(--oy) - 50vh)) scale(.06);opacity:.2}to{transform:none;opacity:1}}
 #comp.lbout{pointer-events:none}
-.lbshrink{animation:lbshrink .42s cubic-bezier(.6,0,.9,.4) forwards!important}
+.lbshrink{animation:lbshrink .52s cubic-bezier(.6,0,.9,.4) forwards!important}.lbshrink.lbslow{animation-duration:1.15s!important;animation-timing-function:cubic-bezier(.45,0,.75,.35)!important}
 @keyframes lbshrink{from{transform:none;opacity:1}to{transform:translate(calc(var(--ox) - 50vw),calc(var(--oy) - 50vh)) scale(.04);opacity:.1}}
 .lbcv.a.lbgrow,.lbcv.a.lbshrink{margin-right:70px}
 .coreflash{position:fixed;z-index:59;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,#fff 0,var(--gbtn) 30%,color-mix(in srgb,var(--gbtn) 40%,transparent) 60%,transparent 72%);animation:coreflash .85s ease-out forwards;mix-blend-mode:screen}
@@ -266,3 +266,7 @@ body.inmenu.lbsetup canvas#c{filter:none}
 .tutl{margin:4px 0 0;padding-left:18px;font-size:13.5px}.tutl li{margin:5px 0}
 #comp .bkp .bkg>.row.rw{grid-column:1/-1}
 #comp.narrow .tutem{font-size:34px}#comp.narrow .tutbig h3{font-size:20px}#comp.narrow .tutst{margin:6px 0 2px}
+/* aviso de era nueva: banda en la página que señala el marcapáginas de arriba, y el marcapáginas brilla */
+.bkmk.glow{box-shadow:0 0 0 2px #3fe8ff,0 0 14px #3fe8ff!important;animation:bkglow 1.2s ease-in-out infinite alternate}@keyframes bkglow{from{box-shadow:0 0 0 2px #3fe8ff,0 0 6px #3fe8ff}to{box-shadow:0 0 0 3px #8ff4ff,0 0 18px #3fe8ff}}
+.bkhint{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:9px 12px;border:1.5px solid #3fa8c0;border-radius:10px;background:rgba(63,232,255,.12);font-size:13px;line-height:1.4}.bkhint .bkht{display:block;font-weight:700;margin-bottom:2px;color:var(--inkh)}.bkhint .bkharr{font-size:22px;flex:0 0 auto}.bkhint .gbtn.sm{flex:0 0 auto;padding:5px 12px;font-size:12.5px;margin:0}
+#comp.narrow .bkhint{font-size:12px;padding:7px 10px;margin-bottom:8px}

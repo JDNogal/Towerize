@@ -5,6 +5,8 @@ function init(){GT.r=0;GT.c=0;
  closePrim();if(typeof FO!=='undefined')closeFocus();S={cc:Array.from({length:NC},()=>Array(NC).fill(0)),cells:Array.from({length:N},()=>Array(N).fill(0)),buff:Array.from({length:N},()=>Array(N).fill(null)),
  blocks:{},rain:[],mines:[],barr:[],dbl:[],list:[],occ:{},tid:0,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[],round:0,hp:20,gold:150,phase:'place',
  offers:[],sup:SUP0,pi:0,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},evts:{},uq:[],vch:{},hpEn:0,pend:[],sched:[],half:0,dneed:0,dsel:[],chest4:0,forgeR:-1,noChest:0,bless:{},sharp:0,idolN:0,merc:null,fz:[],mimFor:null,tsel:null,dn:[],rc:3,tut:TUTON?{}:null,snap:null,selT:null,hover:null,core:null,speed:1,field:null,msg:'',st:{dmg:0,gKill:0,gTile:0,gRound:0,gRel:0,gEv:0,gSell:0,spent:0,kills:0,time:0,all:[],rl:{}}};
+ S.revAt=-1;/* cofres y eventos ocultos hasta empezar la partida (se revelan uno a uno al elegir héroe) */
+ S.era=S.tut?1:(typeof ERA!=='undefined'?ERA:1);
  let b=BASE;for(let i=Math.floor(Math.random()*4);i>0;i--)b=rot(b);
  const c=BN>>1;stamp(c,c,b,[]);
  // Cofres: recorrido de bloques contiguos que empieza en el hueco de salida de la base (donde va la pieza de la ronda 1).

@@ -17,8 +17,8 @@ const tgCell=(x,y,rc)=>()=>{const r=cv.getBoundingClientRect(),k=sc()/VIEW*r.wid
 const tgCard=sel=>()=>{const e=document.querySelector(sel);return e?tgEl(e.closest('button')||e)():null;};
 const tgEnemy=e=>()=>e.hp>0?tgCell(e.x,e.y,1.3)():null;
 const tgEl=sel=>()=>{const el=typeof sel==='string'?document.querySelector(sel):sel;if(!el||!el.offsetParent)return null;const b=el.getBoundingClientRect();return{x:b.left+b.width/2,y:b.top+b.height/2,r:Math.max(26,Math.max(b.width,b.height)/2+10)};};
-function hintShow(h){HQ.cur=h;try{if(PR.open)closePrim();}catch(e){}/* que la ficha de un portal no tape lo que señala la pista */let el=$('hint');if(!el){el=document.createElement('div');el.id='hint';document.body.appendChild(el);el.addEventListener('click',e=>{if(e.target.closest('[data-a="hintok"]')){const c=HQ.cur;if(c&&c.steps&&c.si<c.steps.length-1){c.si++;c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}else hintClose();}});}
- const ns=h.steps&&h.si<h.steps.length-1;const wt=h.steps&&h.steps[h.si][2];el.innerHTML=`<div class="hring"></div><div class="hmsg tipc"><b>${h.title}</b>${h.steps?`<small class="hstep">${h.si+1}/${h.steps.length}</small>`:''}<div style="margin:4px 0 ${wt?2:8}px">${h.txt}</div>${wt?'':`<button class="go" data-a="hintok">${ns?'Siguiente ›':'Entendido'}</button>`}</div>`;el.className='open'+(S.phase==='wave'?' slow':'')+(wt?'':' block');
+function hintShow(h){HQ.cur=h;if(S&&S.tut&&S.phase==='place')setTimeout(()=>{try{ui();}catch(e){}},0);try{if(PR.open)closePrim();}catch(e){}/* que la ficha de un portal no tape lo que señala la pista */let el=$('hint');if(!el){el=document.createElement('div');el.id='hint';document.body.appendChild(el);el.addEventListener('click',e=>{if(e.target.closest('[data-a="hintok"]')){const c=HQ.cur;if(c&&c.steps&&c.si<c.steps.length-1){c.si++;c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}else hintClose();}});}
+ const ns=h.steps&&h.si<h.steps.length-1;const wt=h.steps&&h.steps[h.si][2];el.innerHTML=`<div class="hring"></div><div class="hmsg tipc"><b>${h.title}</b>${h.steps?`<small class="hstep">${h.si+1}/${h.steps.length}</small>`:''}<div style="margin:4px 0 ${wt?2:8}px">${h.txt}</div>${wt?'':`<button class="go" data-a="hintok">${ns?'Siguiente ›':'Entendido'}</button>`}</div>`;el.className='open'+(S&&S.phase==='wave'?' slow':'')+(wt?'':' block')+(h.menu?' dim':'');
  if(h.cam){if(h.cam.fit){const zf=VH/(BS*1.6*P*K*CS),zw=VIEW/(BS*1.6*P*K*CS);CAM.z=Math.max(ZMIN,Math.min(CAM.z,zf,zw));}camCenter(h.cam.x,h.cam.y);}}
 // ¿la pista abierta bloquea el resto del juego? Sí, salvo las que piden hacer algo para continuar («Pulsa este botón…»)
 function hintBlocks(){const c=HQ.cur;if(!c)return false;if(c.steps&&c.steps[c.si]&&c.steps[c.si][2])return false;const el=$('hint');return !!(el&&el.classList.contains('open')&&!el.classList.contains('hid'));}
@@ -36,8 +36,9 @@ function hintPace(){const k=S.phase+S.round;if(HQ.pk!==k){if(HQ.pph==='wave')HQ.
 function portAuto(){if(!S||S.phase!=='build'||S.round>2||S.portAuto===S.round||PR.open||RL.open||HQ.cur||HQ.q.length||FO.open||LB.open||!realG())return;const pt=S.portals&&S.portals[0];if(!pt)return;S.portAuto=S.round;
  const tg={key:'pt:'+pt.x+','+pt.y+'a',html:()=>portalInfo(pt),rect:cellRect(pt.x-1,pt.y-1,3)};if(MFSQ()){LUPA.tg=tg;LUPA.sticky=true;placeLupa(tg.rect);}else{openPrim(tg);PR.pinned=true;PR.auto=1;}}
 function hintTick(rdt){
+ if(HQ.cur&&HQ.cur.menu){const el=$('hint');if(el){el.classList.remove('hid');el.classList.add('block','dim');}hintPos();return;}
  portAuto();
- const busy=RL.open||LB.open||FO.open||!realG();
+ const busy=RL.open||LB.open||FO.open||!realG()||(S&&S.revAt>0)||(($('comp')||{}).classList||{contains:()=>0}).contains('lbout');
  if(!HQ.cur&&!busy&&HQ.q.length&&hintPace())hintShow(HQ.q.shift());
  if(HQ.cur&&!realG())hintClose();
  const el=$('hint');if(el&&HQ.cur){el.classList.toggle('hid',busy);el.classList.toggle('block',hintBlocks());el.classList.toggle('dim',HQ.f<.35||S.phase!=='wave');}

@@ -51,7 +51,7 @@ body.dsk #fps{position:fixed;top:44px;right:8px}body.inmenu #fps{display:none!im
 button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-height:22px;opacity:.55}button.pinb.on{opacity:1;border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 [data-a="comp"].lk{opacity:.55;position:relative}[data-a="comp"].lk::after{content:'🔒';position:absolute;right:-4px;bottom:-4px;font-size:11px}
 /* ventanas de partida sobre el mapa desenfocado */
-#relic.open.blur{background:rgba(13,14,18,.5);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:flex;flex-direction:column;align-items:center;justify-content:safe center;animation:blin .25s ease-out}
+#relic.open.blur{background:rgba(13,14,18,.5);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:flex;flex-direction:column;align-items:center;justify-content:safe center;animation:blin .32s ease-out}
 @keyframes blin{from{opacity:0}to{opacity:1}}
 #relic.blur>*{max-width:min(1100px,100%)}
 .toff{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:12px 0}
@@ -93,7 +93,7 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 
 /* ---- diálogos de la historia ---- */
 #dlg{position:fixed;inset:0;z-index:98;display:none;background:rgba(8,9,13,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);cursor:pointer;user-select:none;-webkit-user-select:none}
-#dlg.on{display:block;animation:blin .3s ease-out}
+#dlg.on{display:block;animation:blin .38s ease-out}
 #dlg .dbx{position:absolute;left:50%;bottom:7vh;transform:translateX(-50%);width:min(760px,92vw);box-sizing:border-box;background:rgba(14,18,26,.95);border:1px solid #3fa7c9;border-radius:14px;padding:16px 20px 22px;box-shadow:0 0 0 1px rgba(63,167,201,.15),0 10px 40px rgba(0,0,0,.5);color:#dfeef5}
 #dlg .dsp{font:700 13px/1 system-ui,sans-serif;letter-spacing:.14em;color:#6fd3f0;margin-bottom:8px}
 #dlg .dtx{font-size:17px;line-height:1.55;min-height:3.1em;white-space:pre-wrap}
