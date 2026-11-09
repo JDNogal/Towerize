@@ -1,4 +1,4 @@
-// Enemigos por facciones (v289): tipos nuevos, iconos SVG, escuadras con líder y cadena de mando, auras de armadura y de resistencia mágica
+// Enemigos por facciones (v289-v290): tipos nuevos, iconos SVG, escuadras con líder y cadena de mando, auras de armadura y de resistencia mágica
 const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const errs=[];
 const p=await b.newPage({viewport:{width:1280,height:720}});p.on('pageerror',e=>errs.push(e.message));
 await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');}catch(e){}});
@@ -27,8 +27,17 @@ const r=await p.evaluate(async()=>{const out={};INTRO.on=false;STO.intro=1;OPT.h
  const e1={t:'norm',x:5,y:5,hp:10,max:10,fx:{}},c1={t:'seal',x:5,y:5.5,hp:10,max:10,fx:{}};
  out.auraM=ET.seal.aura.m===1&&!ET.custodian.aura.m;
  const svgOk=await new Promise(res=>{const im=svgIm(ESVG.norm);if(im.complete&&im.naturalWidth)return res(true);im.onload=()=>res(true);im.onerror=()=>res(false);setTimeout(()=>res(im.naturalWidth>0),1500);});out.svgLoad=svgOk;
+ // era 2: tipos y escuadras propias; el compendio no los enseña antes de llegar
+ out.e2types=['auto','drone','titan','swarm','rocket','techm','weaver'].every(k=>ET[k]&&ET[k].era===2&&ET[k].fac&&EIC[k]&&EIC[k].esvg);
+ OPT.u_era=0;STO.p=0;out.hide=!enEraOk('auto')&&enEraOk('norm');OPT.u_era=1;out.show=enEraOk('auto');
+ ERA=2;startGame(15);chooseHero('vega');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
+ out.era=S.era;S.round=8;const th=[];for(let i=0;i<12;i++)th.push(...waveSquads(8));out.e2sq=th.length>0&&th.every(k=>SQUADS[k].era===2);
+ S.era=1;const th1=[];for(let i=0;i<12;i++)th1.push(...waveSquads(8));out.e1sq=th1.every(k=>SQUADS[k].era===1);S.era=2;
+ // las máquinas no rompen filas al perder al líder
+ const m={t:'auto',x:0,y:0,hp:10,max:10,fx:{},sqid:'z',fsp:1},Lz={t:'techm',x:0,y:0,hp:0,max:10,fx:{},sqid:'z',sqlead:1};S.enemies=[m,Lz];S.sqL={z:Lz};S.phase='wave';sqCmd(.05);out.mHold=!m.loose&&m.fsp===1;
+ const a2={t:'drone',x:0,y:0,hp:10,max:10,fx:{},sqid:'z',fsp:1};S.enemies=[a2,Lz];sqCmd(.05);out.aLoose=a2.loose&&a2.scat;S.enemies=[];
  return out;});
 const f=[];const ck=(c,m)=>{if(!c)f.push(m);};
 ck(r.types,'faltan tipos nuevos o sus datos');ck(r.names,'nombres nuevos no aplicados');ck(r.svg,'iconos SVG no registrados');ck(r.promo,'evoluciones mal');ck(r.squads,'escuadra con tipo inexistente');
-ck(r.lead,'escuadra sin un único líder');ck(r.leadSeal,'el Círculo no lo guía el Portador');ck(r.leader,'el líder del Muro no es el Tamborilero');ck(r.mates>0,'no salió la escuadra');ck(r.loose,'al caer el líder no se desperdigan');ck(r.auraM,'auras mal');ck(r.svgLoad,'el SVG no carga como imagen');
+ck(r.lead,'escuadra sin un único líder');ck(r.leadSeal,'el Círculo no lo guía el Portador');ck(r.leader,'el líder del Muro no es el Tamborilero');ck(r.mates>0,'no salió la escuadra');ck(r.loose,'al caer el líder no se desperdigan');ck(r.auraM,'auras mal');ck(r.svgLoad,'el SVG no carga como imagen');ck(r.e2types,'faltan enemigos de la era 2');ck(r.hide&&r.show,'el compendio enseña la era 2 antes de tiempo');ck(r.era===2&&r.e2sq,'en la era 2 salen escuadras de otra era');ck(r.e1sq,'en la Fantástica salen escuadras de la era 2');ck(r.mHold,'las máquinas rompen filas');ck(r.aLoose,'los alienígenas no se desperdigan');
 console.log(f.length?'FALLOS '+JSON.stringify(f)+' '+JSON.stringify(r):'enemigos ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

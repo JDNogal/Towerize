@@ -11,8 +11,8 @@ function gainRelic(id){S.relics.push(id);S.rs[id]={cd:0,t:0};if(id==='mimic')set
 function goldEv(v){S.gold+=v;if(S.st&&v>0)S.st.gEv+=v;}
 function addNow(k,v){const p=S.portals[0];if(p)p.plan[k]=(p.plan[k]||0)+v;}
 function blockBuffs(bk){if(!bk)return false;const[bx,by]=bk.split(',').map(Number),NB=N/BN;for(let y=by*NB;y<(by+1)*NB;y++)for(let x=bx*NB;x<(bx+1)*NB;x++)if(S.buff[y]&&BF[S.buff[y][x]])return true;return false;}
-function lessEnemies(f){for(const p of S.portals)for(const k of['norm','fast','tank','custodian','sling','javelin','raider','acolyte','warlock','shaman'])if(p.plan[k])p.plan[k]=Math.max(1,Math.round(p.plan[k]*(1-f)));}
-function moreEnemies(f){for(const p of S.portals)for(const k of['norm','fast','tank'])if(p.plan[k])p.plan[k]=Math.ceil(p.plan[k]*(1+f));}
+function lessEnemies(f){for(const p of S.portals)for(const k of REGT)if(p.plan[k])p.plan[k]=Math.max(1,Math.round(p.plan[k]*(1-f)));}
+function moreEnemies(f){for(const p of S.portals)for(const k of['norm','fast','tank','minion','auto','drone','stalk','brutep'])if(p.plan[k])p.plan[k]=Math.ceil(p.plan[k]*(1+f));}
 function heroUp(){const H=S.hero;if(!H||H.lvl>=HLMAX)return false;giveXp(H,xpNeed(H.lvl+1)-H.xp+.01);return true;}
 function lvUp(t){t.lvl++;if(t.lvl===3&&!TW[t.type].uniq)hint('spec','Nv 4','En <b>Nv 4</b> eliges una de dos especializaciones para tu torre, cada una con sus propias habilidades especiales.',tgCell(t.x,t.y,1.4));if(t.sd&&!TW[t.type].guild){const m=sdHp(t);for(const q of t.sd){const dd=m-q.max;q.max=m;if(q.hp>0)q.hp+=dd;}}}
 const pigDone=()=>['brick','wood','straw'].every(k=>MEM.pigs[k]);

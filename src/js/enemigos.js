@@ -90,13 +90,14 @@ Object.assign(SQF,{
  let best=-1,bi=0;out.forEach((o,i)=>{const v=(L&&(o.t===L||SQFAM[o.t]===L)?1e9:0)+hv(o.t)-o.r*.01;if(v>best){best=v;bi=i;}});out[bi].lead=1;return out;};}
 // ---- cadena de mando ----
 // Cada escuadra sigue a su líder. Si el líder cae (o, en los pieles verdes, si se alejan demasiado de él), los demás pierden la formación:
-// · pieles verdes: cada uno a su paso y cambiando de carril (se desperdigan);  · demonios: el corro se rompe y echan a correr 2 s.
+// · pieles verdes y alienígenas: cada uno a su paso y cambiando de carril (se desperdigan);  · demonios: el corro se rompe y echan a correr 2 s;
+// · máquinas: nunca rompen filas por perder al líder.
 const SQFAR=3*K;
 function sqCmd(dt){const L0=S.sqL;if(!L0)return;
  for(const e of S.enemies){if(!e.sqid||e.loose||e.sqlead||e.hp<=0)continue;const L=L0[e.sqid];if(!L)continue;
-  const lost=L.hp<=0||L.leak,fac=ET[e.t].fac,far=!lost&&fac==='g'&&Math.hypot(L.x-e.x,L.y-e.y)>SQFAR;
+  const fac=ET[e.t].fac;if(fac==='m')continue;const lost=L.hp<=0||L.leak,far=!lost&&(fac==='g'||fac==='a')&&Math.hypot(L.x-e.x,L.y-e.y)>SQFAR;
   if(!lost&&!far)continue;e.loose=1;e.fsp=0;
-  if(fac==='g')e.scat=1;else if(fac==='d'&&lost&&!e.fx.haste)e.fx.haste={m:1.3,t:2};}}
+  if(fac==='g'||fac==='a')e.scat=1;else if(fac==='d'&&lost&&!e.fx.haste)e.fx.haste={m:1.3,t:2};}}
 {const _u=update;update=function(dt){_u(dt);if(S&&S.phase==='wave')sqCmd(dt);};}
 {const _s=startWave;startWave=function(){if(S&&S.phase==='build')S.sqL={};return _s.apply(this,arguments);};}
 // desperdigados: de vez en cuando cambian de carril

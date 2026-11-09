@@ -34,6 +34,7 @@
   "hero.js",
   "squads.js",
   "enemigos.js",
+  "enemigos_e2.js",
   "stats.js",
   "fullscreen.js",
   "tutorial.js",

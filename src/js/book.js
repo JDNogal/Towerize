@@ -18,7 +18,7 @@ function bkItems(t){const L=[];
  else if(t==='rl'){L.push({sec:'Reliquias normales'});for(const r of RELICS.filter(r=>!r.evr))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});
   L.push({sec:'Reliquias de evento'});for(const r of RELICS.filter(r=>r.evr))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});}
  else if(t==='en'){const fl=CFILTERS.en,act=fl.filter(f=>CP.flt[f.key]),ok=k=>act.every(f=>seen('en',k)&&f.test(k,CP.flt[f.key]));
-  const nm=Object.keys(ET).filter(k=>!ET[k].evn&&ok(k)),ev=Object.keys(ET).filter(k=>ET[k].evn&&ok(k));
+  const nm=Object.keys(ET).filter(k=>!ET[k].evn&&ok(k)&&(typeof enEraOk!=='function'||enEraOk(k))),ev=Object.keys(ET).filter(k=>ET[k].evn&&ok(k));
   const fams=ks=>{const out=EFAM.map(([n,l])=>[n,l.filter(k=>ks.includes(k))]).filter(x=>x[1].length),used=new Set(EFAM.flatMap(x=>x[1])),rest=ks.filter(k=>!used.has(k));if(rest.length)out.push(['Otros',rest]);return out;};
   for(const [n,l] of fams(nm)){L.push({sec:n});for(const k of l)L.push({id:k,dot:ET[k].col,n:ET[k].n,ok:seen('en',k)});}
   if(ev.length){L.push({sec:'De evento'});for(const k of ev)L.push({id:k,dot:ET[k].col,n:ET[k].n,ok:seen('en',k)});}}

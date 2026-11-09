@@ -225,7 +225,7 @@ function pieceInfo(o){
 }
 function portalInfo(p){
  if(!p)return '<b>Extremo inactivo</b><small>Esta ronda no saldrán enemigos por aquí. Se usan primero los extremos de la pieza nueva y luego los más lejanos a la base.</small>';
- return '<b>Portal enemigo</b>'+['norm','fast','tank','custodian','sling','javelin','raider','acolyte','warlock','shaman','mini','elite','boss','colossus','cub','greyw','bigw','wanted','momdrg'].filter(t=>p.plan[t]).map(t=>R('',t==='wanted'?'Élite (encargo)':ET[t].n,p.plan[t])).join('')+'<small>Enemigos que saldrán por este portal en la oleada.</small>';
+ return '<b>Portal enemigo</b>'+Object.keys(p.plan).filter(t=>p.plan[t]&&(ET[t]||t==='wanted')).map(t=>R('',t==='wanted'?'Élite (encargo)':ET[t].n,p.plan[t])).join('')+'<small>Enemigos que saldrán por este portal en la oleada.</small>';
 }
 const PH='<small style="margin:0">Pasa el ratón por un elemento del juego para ver su información.</small>';
 // ---- hover: rueda de carga, ralentización y panel de información ----
