@@ -1,4 +1,4 @@
-// Jefes de historia (v293): Rey Goblin con su trono y ARGOS con sus generadores de escudo
+// Jefes de historia (v293-v295): Rey Goblin, ARGOS, Troll del Abismo y la Forja, y su orden según la historia
 const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const errs=[];
 const p=await b.newPage({viewport:{width:1280,height:720}});p.on('pageerror',e=>errs.push(e.message));
 await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');}catch(e){}});
@@ -21,9 +21,18 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
  for(let i=0;i<400&&!gs.every(g=>g.anch);i++)update(.05);out.anch=gs.some(g=>g.anch);
  for(const g of gs)g.hp=0;bossTick(.05);out.down=A.sh===0;hurt(A,500,null,'phys');out.hurt=A.hp<h0;
  A.shT=59.99;bossTick(.05);out.call=S.enemies.filter(e=>e.t==='gen'&&e.hp>0).length>=1;
- out.kw=['throne','riches','scepter','gens','anchor'].every(k=>kwHtml0(k,'').includes('<b>'));
+ // orden según la historia
+ S.era=1;S.round=ROUNDS;STO.p=0;const o1=storyBoss();STO.p=1;const o2=storyBoss();S.round=ROUNDS-1;const o2m=storyBoss();S.round=ROUNDS;S.era=2;STO.bb=0;const o3=storyBoss();STO.bb=1;const o4=storyBoss();
+ out.order=o1==='kgob'&&o2==='atroll'&&o2m==='kgob'&&o3==='argos'&&o4==='forge';STO.p=3;S.era=1;S.sbP=null;out.rand=SBOSS[1].includes(storyBoss());STO.p=0;STO.bb=0;
+ // Troll del Abismo y la Forja
+ setup(1,'reinhart');const sl2=[];for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===1&&!S.occ[x+','+y]){const q=sqOf(x,y);if(q.x===x&&q.y===y)sl2.push([x,y]);}
+ S.phase='build';S.tsel='bastion';build(sl2[0][0],sl2[0][1]);const b2=S.list[S.list.length-1];S.phase='wave';
+ const P0=S.portals[0];const T={t:'atroll',x:P0.x,y:P0.y,tx:P0.x,ty:P0.y,hp:400,max:1000,fx:{}};S.enemies=[T];for(let i=0;i<21;i++)boss2Tick(.05);const g1=T.hp-400;out.abreg=g1>0;T.hp=400;T.bn=3;for(let i=0;i<21;i++)boss2Tick(.05);const g2=T.hp-400;T.hp=400;T.bn=0;T.ct=1;T.rgT=0;for(let i=0;i<21;i++)boss2Tick(.05);const g3=T.hp-400;T.ct=0;out.abcut=g2>0&&g2<g1*.5&&g3<g1&&g3>g2;
+ for(const s of b2.sd){s.x=T.x+.5;s.y=T.y;s.hp=s.max;s.cd=0;}T.stc=0;boss2Tick(.05);out.stomp=b2.sd.some(s=>s.cd>=1&&s.hp<s.max);
+ const Fg={t:'forge',x:P0.x,y:P0.y,tx:P0.x,ty:P0.y,hp:1000,max:1000,fx:{},lnc:0,lbc:0};S.enemies=[Fg];boss2Tick(.05);eliteTick(.05);out.line=S.enemies.filter(e=>e.t==='auto').length===2&&S.enemies.some(e=>e.t==='carrier');S.enemies=[];
+ out.kw=['throne','riches','scepter','gens','anchor','abregen','stomp','line'].every(k=>kwHtml0(k,'').includes('<b>'));
  return out;});
 const f=[];const ck=(c,m)=>{if(!c)f.push(m);};
 ck(r.kgob&&r.porters,'el Rey Goblin no sale con sus porteadores');ck(r.isBoss,'el Rey Goblin no cuenta como jefe');ck(r.stuck,'los porteadores no van pegados al trono');ck(r.treas,'no lanza Lluvia de riquezas');ck(r.fell,'no se cae al morir los porteadores');ck(r.gold,'no da el oro de los tesoros');
-ck(r.argos&&r.gens,'ARGOS no sale con sus generadores');ck(r.inv,'ARGOS no es invulnerable con escudo');ck(r.anch,'los generadores no se anclan');ck(r.down&&r.hurt,'el escudo no cae');ck(r.call,'ARGOS no llama a otro generador');ck(r.kw,'faltan palabras clave');
+ck(r.argos&&r.gens,'ARGOS no sale con sus generadores');ck(r.inv,'ARGOS no es invulnerable con escudo');ck(r.anch,'los generadores no se anclan');ck(r.down&&r.hurt,'el escudo no cae');ck(r.call,'ARGOS no llama a otro generador');ck(r.order,'el orden de los jefes según la historia está mal');ck(r.rand,'con la historia completa no sale un jefe válido');ck(r.abreg&&r.abcut,'regeneración del Troll del Abismo mal');ck(r.stomp,'el Troll del Abismo no pisotea');ck(r.line,'la Forja no fabrica');ck(r.kw,'faltan palabras clave');
 console.log(f.length?'FALLOS '+JSON.stringify(f)+' '+JSON.stringify(r):'jefes ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();
