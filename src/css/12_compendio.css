@@ -39,3 +39,5 @@
 .necbt .go{margin:0!important}
 @media (max-width:760px),(max-height:430px){#nenot{bottom:8px}.nentx small{max-width:190px}}
 .bktiles+.bktiles{margin-top:8px}
+/* v289: iconos SVG de enemigos dentro de su círculo */
+.icesvg{display:inline-flex;width:1.2em;height:1.2em;vertical-align:middle;line-height:0}.icesvg svg{width:100%;height:100%}

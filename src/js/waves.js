@@ -7,7 +7,7 @@ function retryWave(){if(!S.snap||!(S.rc>0)||(S.phase!=='wave'&&S.phase!=='lost')
 // cola de un portal. Con qf (array), rellena en paralelo la formación de cada entrada ({r, l, sp, sid} o null)
 function baseQueue(p,qf){const q=[],f=[],cnt={};
  (p.sq||[]).forEach((k,j)=>{if(j){q.push('|');f.push(null);}const m=(p.sqm&&p.sqm[j])||SQUADS[k].m,fo=sqForm(k,m);
-  if(fo){const sp=Math.min(...fo.map(o=>ET[o.t].sp));for(const o of fo){q.push(o.t);f.push({r:o.r,l:o.l,sp,sid:j});cnt[o.t]=(cnt[o.t]||0)+1;}}
+  if(fo){const sp=Math.min(...fo.map(o=>ET[o.t].sp));for(const o of fo){q.push(o.t);f.push({r:o.r,l:o.l,sp,sid:j,lead:o.lead||0});cnt[o.t]=(cnt[o.t]||0)+1;}}
   else{const g=[];for(const t in m)for(let i=0;i<m[t];i++)g.push(t);g.sort((a,b)=>FORM[a]-FORM[b]);for(const t of g){q.push(t);f.push(null);cnt[t]=(cnt[t]||0)+1;}}});
  const ec={};for(const t of p.esc||[])ec[t]=(ec[t]||0)+1;const extra=[];for(const t of REGT.concat(['cub'])){const d=(p.plan[t]||0)-(ec[t]||0)-(cnt[t]||0);if(d>0)for(let i=0;i<d;i++)extra.push(t);else if(d<0){let n=-d;for(let i=q.length-1;i>=0&&n>0;i--)if(q[i]===t){q.splice(i,1);f.splice(i,1);n--;}}}
  if(extra.length){if(q.length){q.push('|');f.push(null);}for(const t of extra){q.push(t);f.push(null);}}
@@ -79,6 +79,7 @@ function spawnEnemy(t,p,fo){
  const dest=p.split?p.split[(p.si=(p.si||0)+1)%p.split.length]:null;
  // pv: «venía de fuera del portal», para que el primer paso siga recto hacia dentro y conserve su carril
  S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest,fsp:fo?fo.sp:0,sqid:fo?(p.sqn=(p.sqn||0),p.x+'.'+p.y+'.'+S.round+'.'+fo.sid):null,pv:[x+da,y+db]});
+ if(fo&&fo.lead){const e=S.enemies[S.enemies.length-1];e.sqlead=1;(S.sqL=S.sqL||{})[e.sqid]=e;}
 }
 function compassStep(e){
  // Brújula (pasivo), a nivel de pieza: al entrar en una casilla de pieza nueva puede desviarse por una rama que se aleja del núcleo y seguirla mientras la distancia siga creciendo

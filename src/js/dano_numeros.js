@@ -4,7 +4,7 @@
 //  · al costado: el contador sigue al enemigo por fuera del camino
 //  · encima: como antes, sobre el enemigo
 // Filtros: qué enemigos (todos / importantes / solo jefes), qué golpes (todos / críticos y grandes), opacidad y tamaño.
-const DNIMP=new Set(['mini','elite','greyw','bigw','wanted','momdrg','boss','colossus','bob','tank','armored','custodian','shaman','warlock','griffin','champ']);
+const DNIMP=new Set(['mini','elite','greyw','bigw','wanted','momdrg','boss','colossus','bob','tank','armored','custodian','shaman','warlock','griffin','champ','dchamp','seal']);
 const DNBOSS=new Set(['boss','colossus','bob','momdrg']);
 const dnStyle=()=>OPT.dnst||'jump',dnSz=()=>({s:.8,n:1,l:1.25}[OPT.dnsz||'n']||1),dnOp=()=>+(OPT.dnop||1);
 function dnShowE(e){const w=OPT.dnwho||'all';if(!e.t)return w==='all';if(w==='all')return true;if(w==='boss')return DNBOSS.has(e.t);return DNIMP.has(e.t)||!!e.wanted;}

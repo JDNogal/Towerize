@@ -1,7 +1,7 @@
 // ==================== COMPENDIO ENLAZADO CON LA PARTIDA ====================
 // · Botón 📖 en la ficha lateral (torre, enemigo, héroe, reliquia) y en los bocadillos de palabras clave: abre el libro en esa página.
 // · Pestaña «Mecánicas»: todas las palabras clave agrupadas, generadas con los mismos textos de los bocadillos. Sin spoilers.
-// · Flechas de evolución entre los enemigos de una misma línea (Guerrero → Veterano → Campeón…).
+// · Flechas de evolución entre los enemigos de una misma línea (Orco → Orco veterano → Caudillo orco…).
 // · Aviso de «¡Nuevo enemigo!» la primera vez que aparece cada tipo, con su «Cómo enfrentarlo».
 
 // ---- palabras clave por grupos: [id, nombre, icono] ----
@@ -27,10 +27,10 @@ const mecOk=id=>{const u=MECUSE[id];return !u||u.some(mecRefOk);};
 const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barren en grupo.',vet:'Más vida y algo de armadura: el daño mágico o elemental rinde más.',champ:'Mucha armadura: usa daño mágico, elemental o penetración.',
  fast:'Corre mucho y aguanta poco: daño en área o ralentizarlo.',runner:'Muy rápido: ralentízalo o bloquéalo con tus unidades.',raider:'Esquiva a tus soldados y te roba oro si llega: mátalo con torres.',
  tank:'Lento y con mucha vida: concentra en él el daño fuerte.',armored:'Muy blindado: daño mágico, elemental o penetración. La armadura rota ayuda.',
- bat:'Voladores débiles en grupo: torres de área que alcancen el aire.',harpy:'Vuela: tus soldados no lo paran. Usa torres que den al aire.',griffin:'Volador resistente: necesitas mucho daño contra el aire.',
- sling:'Se para a disparar a tus unidades desde lejos: quítalo pronto con torres.',javelin:'Sus jabalinas atraviesan media armadura de tus unidades.',
+ bat:'Voladores débiles en grupo: torres de área que alcancen el aire.',raptor:'El Diablillo ya crecido: vuela y aguanta más. Usa torres que den al aire.',hound:'Muy rápido y resiste algo la magia: ralentízalo o usa daño físico.',minion:'Resiste un poco la magia: el daño físico rinde más.',demon:'Más vida y resistencia mágica: usa daño físico o elemental.',dchamp:'Mucha resistencia mágica: usa daño físico, elemental o penetración.',seal:'Su aura da resistencia mágica a los de alrededor: mátalo primero o usa daño físico.',harpy:'Vuela rápido y aguanta poco: tus soldados no la paran. Usa torres rápidas que den al aire.',griffin:'Volador resistente: necesitas mucho daño contra el aire.',
+ sling:'Se para a disparar a tus unidades desde lejos: quítalo pronto con torres.',javelin:'Sus bombas atraviesan media armadura de tus unidades.',
  acolyte:'Resiste la magia y daña a tus unidades con ella: usa daño físico.',warlock:'Maldice a tus torres cercanas, que disparan más lento: mátalo primero.',
- shaman:'Cura a los enemigos de alrededor: elimínalo antes que al resto.',custodian:'Su aura protege a los de alrededor: mátalo primero.',
+ shaman:'Cura a los enemigos de alrededor: elimínalo antes que al resto.',custodian:'Su tambor da armadura a los de alrededor: mátalo primero o usa daño mágico.',
  mini:'Mucha vida y daño: concentra el fuego y frénalo.',elite:'Muy resistente y peligroso: prepara daño fuerte y control.',
  boss:'Si llega al núcleo, pierdes. Resiste el control: necesitas mucho daño.',colossus:'Al perder vida suelta mini-élites: guarda daño para ellas.',bob:'Usa tu reliquia cuando esté en tu zona de fuego.',
  cub:'Cachorros rápidos en manada: daño en área.',greyw:'Al bajar de la mitad aúlla y acelera a los lobatos.',bigw:'Derriba barricadas y muros y aparta a tus soldados.',momdrg:'Escupe fuego a tus unidades: mantenlas lejos o usa torres.'};

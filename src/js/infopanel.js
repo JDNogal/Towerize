@@ -32,7 +32,7 @@ function kwHtml0(id,src){
  const c=kctx(src);
  if(c&&c.E){const E=c.E;
   if(id==='ehp')return '<b>Vida</b><small>Daño que aguanta el enemigo antes de morir. Es siempre la misma: los enemigos no se hacen más fuertes con las rondas, pero aparecen versiones más duras de cada familia (solo en partidas de más de 15 rondas crece un poco a partir de la ronda 16). El daño que recibe se reduce antes por su armadura o su resistencia mágica, según el tipo de daño; el elemental no lo reduce nada.</small>';
-  if(id==='espd')return `<b>Velocidad</b><small>Casillas que avanza por segundo por el camino. Como referencia, un Guerrero avanza 1. Las ralentizaciones la reducen mientras duran.</small>`;
+  if(id==='espd')return `<b>Velocidad</b><small>Casillas que avanza por segundo por el camino. Como referencia, un Orco avanza 1. Las ralentizaciones la reducen mientras duran.</small>`;
   if(id==='edmg')return `<b>Daño al núcleo</b><small>Vida que pierdes cada vez que uno de estos enemigos llega al núcleo. Los jefes te quitan toda la vida: si un jefe llega al núcleo, pierdes la expedición.</small>`;
   if(id==='egold')return `<b>Oro por baja</b><small>Oro que ganas al derrotarlo en las primeras rondas. Como las oleadas traen cada vez más enemigos, en rondas altas cada baja da algo menos, para que el oro de cada ronda no se dispare. Las casillas de Codicia y algunas reliquias suman un porcentaje de este oro.</small>`;
  }
@@ -95,7 +95,7 @@ function kwHtml0(id,src){
   if(id==='telem')return `<b class="cel">Daño elemental</b>`+R('','Lo reduce','Nada')+'<small>Ignora por completo la armadura y la mágica.</small>';
   if(id==='aphys')return `<b class="cph">Armadura</b>`+tbl+'<small>Reduce el daño físico recibido: armadura ÷ (armadura + '+ARM_K+'). Los bonus de armadura son planos y suman antes de aplicar la fórmula, por eso nunca llegan a anular el daño.</small>';
   if(id==='amagic')return `<b class="cmg">Resistencia mágica</b>`+tbl+'<small>Reduce el daño mágico recibido: armadura ÷ (armadura + '+ARM_K+'). Funciona igual que la armadura.</small>';
-  if(id==='aura')return `<b>Aura</b>`+'<small>Los enemigos dentro del radio, incluido el que la emite, reciben su bufo mientras sigan dentro y se dibujan con un contorno gris. Si varias auras dan el mismo bufo, no se suman: vale el mayor. Haz clic en un enemigo con aura para ver su radio.</small>';}
+  if(id==='aura')return `<b>Aura</b>`+'<small>Los enemigos dentro del radio, incluido el que la emite, reciben su bufo mientras sigan dentro y se dibujan con un contorno del color del aura: acero si da armadura, violeta si da resistencia mágica. El área del aura se ve siempre alrededor de quien la da. Si varias auras dan el mismo bufo, no se suman: vale el mayor. Haz clic en un enemigo con aura para ver su radio.</small>';}
  if(c&&c.T){const T=c.T,s=c.s;
   if(id==='dmg')return `<b>Daño</b>`+`<small>${T.dot?'Esta torre no hace daño directo: lanza charcos que aplican stacks de veneno. Su daño por segundo estimado se muestra en DPS.':T.unit?'Lo que hace cada golpe de un soldado. Un crítico lo multiplica y las casillas especiales de la torre lo modifican.':'Lo que hace cada disparo al impactar. Un crítico lo multiplica y las casillas especiales de la torre lo modifican.'}</small>`;
   if(id==='pstk')return '<b>Acumulación</b><small>Cada cuánto tiempo el charco añade un stack de veneno a todos los enemigos que están dentro.</small>';
@@ -285,8 +285,8 @@ const PR={open:false,pinned:false,key:null,html:null,rect:null,dom:0,cell:null,d
 const KS=[],KD={el:null,t:0},GRACE=.3;
 function closeKS(from){from=from||0;while(KS.length>from){const k=KS.pop();if(k.el.parentNode)k.el.parentNode.removeChild(k.el);}KD.el=null;KD.t=0;}
 let EID=0;
-function enemyInst(e){const E=ET[e.t],ap=(E.ap||0)+(e.cb||0),am=(E.am||0)+(e.cb||0);
- return enemyInfo(e.t)+'<small style="margin-top:8px">Este enemigo ahora:</small>'+R('chp','Vida',Math.round(e.hp)+' / '+Math.round(e.max))+R('cph','Armadura',armTxt(ap)+(e.cb>0?' (+'+e.cb+')':''))+R('cmg','Resistencia mágica',armTxt(am)+(e.cb>0?' (+'+e.cb+')':''));}
+function enemyInst(e){const E=ET[e.t],ap=(E.ap||0)+(e.cb||0),am=(E.am||0)+(e.cbm||0);
+ return enemyInfo(e.t)+'<small style="margin-top:8px">Este enemigo ahora:</small>'+R('chp','Vida',Math.round(e.hp)+' / '+Math.round(e.max))+R('cph','Armadura',armTxt(ap)+(e.cb>0?' (+'+e.cb+')':''))+R('cmg','Resistencia mágica',armTxt(am)+(e.cbm>0?' (+'+e.cbm+')':''));}
 function closePrim(){if(typeof S!=='undefined'&&S)S.selE=null;PR.auto=0;PR.open=false;PR.pinned=false;PR.key=null;PR.cell=null;PR.dead=0;closeKS();$('tip').style.display='none';$('side').innerHTML=PH;}
 function openPrim(tg){
  {const k=String(tg.key||'');if(k.startsWith('shop:'))curSeen(k.slice(5));else if(k.startsWith('tw:')){const t=S&&S.list&&S.list.find(o=>'tw:'+o.id===k);if(t)curSeen(t.type);}}

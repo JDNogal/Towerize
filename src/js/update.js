@@ -17,9 +17,9 @@ function update(dt){
    if(q.burn)for(const o of hit)if(o.hp>0)addBurn(o,q.src,q.burn);
    S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:Math.max(q.ar||0,.35*K),col:q.col||'#f0c46a'});}}}
  S.rain=S.rain.filter(q=>q.left>0);
- for(const e of S.enemies){e.cb=0;e.cor=0;if(e.ps&&e.ps.length){e.crT=(e.crT||0)+dt;if(e.crT>=1){e.crT-=1;const by=new Map();for(const q of e.ps){const cr=q.src&&q.src.ab&&abRank(q.src,'corr');if(cr)by.set(q.src,(by.get(q.src)||0)+1);}
+ for(const e of S.enemies){e.cb=0;e.cbm=0;e.cor=0;if(e.ps&&e.ps.length){e.crT=(e.crT||0)+dt;if(e.crT>=1){e.crT-=1;const by=new Map();for(const q of e.ps){const cr=q.src&&q.src.ab&&abRank(q.src,'corr');if(cr)by.set(q.src,(by.get(q.src)||0)+1);}
   for(const[src,n]of by){const cr=abRank(src,'corr');for(let i=Math.floor(n/5);i>0;i--)brkAdd(e,cr.a,cr.max);}}}}
- for(const c of S.enemies){const A=ET[c.t].aura;if(!A)continue;for(const e of S.enemies)if(Math.hypot(e.x-c.x,e.y-c.y)<=A.r)e.cb=Math.max(e.cb,A.v);}
+ for(const c of S.enemies){const A=ET[c.t].aura;if(!A)continue;for(const e of S.enemies)if(Math.hypot(e.x-c.x,e.y-c.y)<=A.r){if(A.m)e.cbm=Math.max(e.cbm,A.v);else e.cb=Math.max(e.cb,A.v);}}
  S.barr=S.barr.filter(b=>(b.t-=dt)>0);S.dbl=S.dbl.filter(b=>(b.t-=dt)>0);S.tz=(S.tz||[]).filter(z=>(z.t-=dt)>0);S.bz=(S.bz||[]).filter(z=>{const ins=S.enemies.filter(e=>e.hp>0&&Math.hypot(e.x-z.x,e.y-z.y)<=z.r);for(const e of ins)slowE(e,.7,.25);z.tk-=dt;if(z.tk<=0){z.tk+=1;for(const e of ins){addBurn(e,null,3);addChill(e,null,1);}}return(z.t-=dt)>0;});S.fz=(S.fz||[]).filter(z=>{z.tk-=dt;if(z.tk<=0){z.tk+=1;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-z.x,e.y-z.y)<=z.r)emberBurn(e,null,z.n);}return(z.t-=dt)>0;});
  unitCombat(dt);
  for(const t of S.list){if(!t.sd)continue;for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);
@@ -38,7 +38,7 @@ function update(dt){
   if(!S.tut&&!S.pvE&&(e.bn>0||e.ps&&e.ps.length||e.bl&&e.bl.length||e.cs&&e.cs.length||e.ez)){const n=BL(e);recBest('bar',n);if(n>=5)achieve('bar');}
   if(e.mk){e.mk.t-=dt;if(e.mk.t<=0)e.mk=null;}
   const ox=e.x,oy=e.y;
-  if(move(e,dt)){e.leak=true;if(e.hx>0){orbAdd(e.x,e.y,e.hx);e.hx=0;}if(rp('crystal')&&!isBoss(e)&&S.cryR!==S.round){S.cryR=S.round;RS('crystal').n++;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:1.2*K,col:'#8fe3ff'});S.msg='💎 El Corazón de cristal ha absorbido un golpe.';}else{EKS(e.t).l++;histLeak(e.t,isBoss(e)?Math.max(S.hp,ET[e.t].dmg):ET[e.t].dmg);hpLoss(isBoss(e)?Math.max(S.hp,ET[e.t].dmg):ET[e.t].dmg,1);}if(ET[e.t].steal){const v=Math.min(S.gold,ET[e.t].steal);S.gold-=v;if(v)S.msg='Un Saqueador te ha robado '+v+' de oro.';}}
+  if(move(e,dt)){e.leak=true;if(e.hx>0){orbAdd(e.x,e.y,e.hx);e.hx=0;}if(rp('crystal')&&!isBoss(e)&&S.cryR!==S.round){S.cryR=S.round;RS('crystal').n++;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:1.2*K,col:'#8fe3ff'});S.msg='💎 El Corazón de cristal ha absorbido un golpe.';}else{EKS(e.t).l++;histLeak(e.t,isBoss(e)?Math.max(S.hp,ET[e.t].dmg):ET[e.t].dmg);hpLoss(isBoss(e)?Math.max(S.hp,ET[e.t].dmg):ET[e.t].dmg,1);}if(ET[e.t].steal){const v=Math.min(S.gold,ET[e.t].steal);S.gold-=v;if(v)S.msg='Un '+ET[e.t].n+' te ha robado '+v+' de oro.';}}
   else if(e.bl&&e.bl.length){const d=Math.hypot(e.x-ox,e.y-oy);if(d>0){DNK='bleed';hurt(e,e.bl.length*BLEEDD/K*d,e.bl[e.bl.length-1].src,'elem');DNK=null;}}}
  S.enemies=S.enemies.filter(e=>!e.leak);
  const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y);
