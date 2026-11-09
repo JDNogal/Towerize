@@ -4,14 +4,23 @@ rng:{n:'Alcance',l:'A',col:'#4cc9a0',rg:1.35,t:'<span class="cg">+35% rango</spa
 pow:{n:'Potencia',l:'P',col:'#e0605a',d:1.5,r:1/1.5,t:'<span class="cd">+50% daño</span>, <span class="cr">+50% enfriamiento</span>'},
 spd:{n:'Frenesí',l:'R',col:'#a15cff',d:.75,r:1/.75,t:'<span class="cr">−25% enfriamiento</span>, <span class="cd">−25% daño</span>'},
 gold:{n:'Codicia',l:'$',col:'#f0b429',gold:.5,t:'<span class="gd">+50% de oro</span> por baja'},
-aoe:{n:'Expansión',l:'E',col:'#ff9a3c',ar:1.4,t:'<span class="ca">+40% área de efecto</span>',note:'Solo tiene efecto en torres que hacen daño en área.'}};
+aoe:{n:'Expansión',l:'E',col:'#ff9a3c',ar:1.4,t:'<span class="ca">+40% área de efecto</span>',note:'Solo tiene efecto en torres que hacen daño en área.'},
+crt:{n:'Precisión',l:'C',col:'#ff5c8a',cr:.15,t:'<span class="cc">+15% de probabilidad de crítico</span>'},
+prf:{n:'Perforación',l:'X',col:'#9aa4b4',pen:10,t:'<span class="cph">+10 de penetración</span> (física o mágica, según la torre)',note:'No afecta al daño elemental, que ya ignora la armadura.'},
+eco:{n:'Eco',l:'O',col:'#4fd6e0',eco:5,t:'Uno de cada <b>5</b> disparos se repite al instante',note:'Solo en torres que disparan (no en las de unidades ni de apoyo).'},
+per:{n:'Persistencia',l:'T',col:'#6aa0ff',per:1.5,t:'Lo que deja la torre dura un <span class="cr">50%</span> más',note:'Charcos, zonas, franjas de fuego, bidones y ralentizaciones de sus disparos.'},
+tal:{n:'Taller',l:'M',col:'#b8865a',tal:.8,t:'Mejorar la torre cuesta un <span class="gd">20%</span> menos',note:'Mejoras de nivel, especialización y habilidades.'},
+cua:{n:'Cuartel',l:'U',col:'#7a8cff',uhp:1.3,t:'<span class="chp">+30% de vida</span> de sus soldados',note:'Solo tiene efecto en torres de unidades.'}};
 const BK=Object.keys(BF);
 // Super casillas: mismas casillas con los bonus x2 (clave = base+'+'). Probabilidad base 20%, +SUPUP cada vez que sale una normal, se reinicia al salir una super.
 const SUP0=.2,SUPUP=.05;
 const BFSUP={rng:{rg:1.7,t:'<span class="cg">+70% rango</span>'},
  pow:{d:2,r:1/2,t:'<span class="cd">+100% daño</span>, <span class="cr">+100% enfriamiento</span>'},
  spd:{d:.5,r:2,t:'<span class="cr">−50% enfriamiento</span>, <span class="cd">−50% daño</span>'},
- gold:{gold:1,t:'<span class="gd">+100% de oro</span> por baja'},aoe:{ar:1.8,t:'<span class="ca">+80% área de efecto</span>'}};
+ gold:{gold:1,t:'<span class="gd">+100% de oro</span> por baja'},aoe:{ar:1.8,t:'<span class="ca">+80% área de efecto</span>'},
+ crt:{cr:.3,t:'<span class="cc">+30% de probabilidad de crítico</span>'},prf:{pen:20,t:'<span class="cph">+20 de penetración</span> (física o mágica, según la torre)'},
+ eco:{eco:3,t:'Uno de cada <b>3</b> disparos se repite al instante'},per:{per:2,t:'Lo que deja la torre dura el <span class="cr">doble</span>'},
+ tal:{tal:.6,t:'Mejorar la torre cuesta un <span class="gd">40%</span> menos'},cua:{uhp:1.6,t:'<span class="chp">+60% de vida</span> de sus soldados'}};
 for(const k of BK)BF[k+'+']={...BF[k],...BFSUP[k],sup:1,base:k};
 const bkey=k=>BF[k].base||k,bname=k=>BF[k].n+(BF[k].sup?' <span class="stg">★</span>':'');
 function rollBuff(){const k=BK[Math.floor(Math.random()*BK.length)];
@@ -40,10 +49,10 @@ bastion:{n:'Baluarte',ic:'🛡️',dt:'phys',cost:80,range:2.5,dmg:4,rate:1,unit
 monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:3.5,rate:1,unit:{n:2,hp:34,ap:0,rez:8,spd:2},col:'#d9a24e',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
 tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:3,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
  augur:{n:'Augur Voltaico',ic:'👁️',icb:'⚡',dt:'elem',augur:1,cost:100,range:2.6,dmg:22,rate:.8,splash:.9,shape:'Rayo del cielo',areaTxt:'El rayo cae sobre el objetivo y alcanza a los enemigos de alrededor.',col:'#8fd0ff',l:'U',fx:'Ninguno'},
-flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:1.8,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
+flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:2.2,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
 acid:{n:'Chorro de ácido',ic:'☣️',dt:'elem',era:2,cost:105,range:2.4,dmg:2,rate:2,dot:1,acidj:1,custom:1,col:'#9be15d',l:'Q',fx:'Veneno y armadura rota'},
-sonic:{n:'Torre sónica',ic:'🔊',dt:'magic',era:2,cost:115,range:2.2,dmg:14,rate:.5,sonic:1,custom:1,shape:'Onda circular',areaTxt:'La onda se expande desde la torre hasta su alcance y golpea una vez a cada enemigo que atraviesa.',col:'#ff8ad8',l:'W',fx:'Onda que empuja'},
- sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.2,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
+sonic:{n:'Torre sónica',ic:'🔊',dt:'magic',era:2,cost:115,range:2.2,dmg:10,rate:.5,sonic:1,custom:1,shape:'Onda circular',areaTxt:'La onda se expande desde la torre hasta su alcance y golpea una vez a cada enemigo que atraviesa.',col:'#ff8ad8',l:'W',fx:'Onda que empuja'},
+ sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.5,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
 const ET={vet:{n:'Veterano',gold:6,hp:4.4,hf:80,sp:1,r:.27,col:'#b8443f',dmg:1,ap:15,am:0},champ:{n:'Campeón',gold:14,hp:12,hf:220,sp:.9,r:.31,col:'#8e2a36',dmg:2,ap:30,am:10},runner:{n:'Corredor',gold:6,hp:2.5,hf:45,sp:1.9,r:.22,col:'#e3a33e',dmg:1,ap:0,am:0},armored:{n:'Acorazado',gold:18,hp:15,hf:280,sp:.55,r:.35,col:'#6c7484',dmg:3,ap:40,am:0},bat:{n:'Murciélago',gold:2,hp:.8,hf:14,sp:1.8,r:.18,col:'#6a5480',dmg:1,ap:0,am:0,fly:1},harpy:{n:'Arpía',gold:6,hp:3.3,hf:60,sp:1.2,r:.25,col:'#b07cc0',dmg:1,ap:0,am:10,fly:1},griffin:{n:'Grifo',gold:16,hp:12,hf:220,sp:1,r:.33,col:'#c9a052',dmg:2,ap:20,am:0,fly:1,el:1},norm:{n:'Guerrero',gold:3,hp:1,sp:1,r:.26,col:'#e05a5a',dmg:1,ap:0,am:0},fast:{n:'Asalto',gold:4,hp:.55,sp:1.7,r:.2,col:'#f08fb0',dmg:1,ap:0,am:0},
 tank:{n:'Tanque',gold:10,hp:2.6,sp:.65,r:.34,col:'#a04a7a',dmg:2,ap:10,am:0},
 custodian:{n:'Custodio',gold:5,hp:1.4,sp:.65,r:.3,col:'#4f9fb5',dmg:1,ap:0,am:10,aura:{r:2.5,v:10}},
@@ -103,8 +112,8 @@ const AB={
  shrap:{n:'Metralla',ranks:[{c:30,p:.2},{c:35,p:.3},{c:40,p:.4}],txt:r=>`Cada impacto tiene un <span class="cc">${Math.round(r.p*100)}%</span> de aplicar 1 stack de ${kw('bleed','sangrado','')}.`},
  frzh:{n:'Congelación',ranks:[{c:40,p:.1},{c:45,p:.15},{c:50,p:.2}],txt:r=>`Cada golpe tiene un <span class="cc">${Math.round(r.p*100)}%</span> de ${kw('freeze','congelar','')} al enemigo <span class="cr">1 s</span>.`},
  icicle:{n:'Témpanos',ranks:[{c:40,cd:25,r:1.5,a:.5,n:4},{c:45,cd:25,r:1.5,a:.5,n:6},{c:50,cd:25,r:1.5,a:.5,n:8}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, si hay un objetivo, caen ${r.n} témpanos en un radio de <span class="ca">${f(r.r)} casillas</span> centrado en él. Cada uno hace el ${ICEM*100}% del daño del golpe (mágico) en un área de <span class="ca">${f(r.a)} casillas</span> y ${kw('slow','ralentiza','')} a los alcanzados.`},
- deep:{n:'Escarcha profunda',ranks:[{c:40,s:.7},{c:45,s:.8},{c:50,s:.9}],txt:r=>`La ${kw('slow','ralentización','')} del aura crece cuanto más tiempo lleva el enemigo dentro: del 50% al entrar hasta el <span class="cvl">${Math.round(r.s*100)}%</span> tras ${DEEPT} s.`},
- blizz:{n:'Ventisca',ranks:[{c:55,cd:25,d:5},{c:60,cd:20,d:6}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, si hay enemigos en el aura, los ${kw('freeze','congela','')} a todos durante <span class="cr">${r.d} s</span>. Los jefes, la mitad.`},
+ deep:{n:'Escarcha profunda',ranks:[{c:40,s:.6},{c:45,s:.65},{c:50,s:.7}],txt:r=>`La ${kw('slow','ralentización','')} del aura crece cuanto más tiempo lleva el enemigo dentro: del 50% al entrar hasta el <span class="cvl">${Math.round(r.s*100)}%</span> tras ${DEEPT} s.`},
+ blizz:{n:'Ventisca',ranks:[{c:55,cd:25,d:3},{c:60,cd:20,d:4}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, si hay enemigos en el aura, los ${kw('freeze','congela','')} a todos durante <span class="cr">${r.d} s</span>. Los jefes, la mitad.`},
  overl:{n:'Sobrecarga',ranks:[{c:50,g:.1,max:1},{c:55,g:.15,max:1}],txt:r=>`Mientras el rayo siga sobre el mismo enemigo, su daño sube un <span class="cd">${Math.round(r.g*100)}%</span> por segundo, hasta un máximo de +${Math.round(r.max*100)}%. Se reinicia al cambiar de objetivo.`},
  arcpen:{n:'Penetración arcana',ranks:[{c:35,pen:15},{c:40,pen:20},{c:45,pen:25}],txt:r=>`El rayo gana <span class="cmg">${r.pen}</span> de ${kw('penp','penetración mágica','')}.`},
  split:{n:'Divisor',ranks:[{c:45,n:2},{c:50,n:3},{c:55,n:4}],txt:r=>`El rayo se divide en <b>${r.n}</b> rayos, cada uno sobre un enemigo distinto. Los rayos reparten los elementos en orden (${ELEMS.map(e=>`<span style="color:${tcol(e.col)}">${e.n}</span>`).join(', ')}) y cada rayo aplica 1 stack de su elemento cada 1,5 s.`},
@@ -142,7 +151,7 @@ const AB={
  fork:{n:'Rayo bifurcado',ranks:[{c:45,n:2},{c:55,n:3}],txt:r=>`El rayo del juicio se divide y cae también sobre los <b>${r.n}</b> enemigos más cercanos a su objetivo (2,5 casillas), con la mitad de daño.`},
  fulg:{n:'Fulgurita',ranks:[{c:40,t:4},{c:50,t:6}],txt:r=>`Donde cae el rayo del juicio, el suelo se vuelve cristal durante <span class="cr">${r.t} s</span>: cada segundo, los enemigos que lo pisan reciben daño eléctrico y 1 stack de ${kw('ez','electrizado','')}.`},
  hex:{n:'Maleficio',ranks:[{c:45,m:.15},{c:55,m:.25}],txt:r=>`Cada orbe deja ${kw('cursed','maldito','')} a su objetivo durante ${HEXT} s: recibe un <span class="cmg">+${Math.round(r.m*100)}%</span> de daño mágico de todas las fuentes.`},
- nova:{n:'Nova Arcana',ranks:[{c:45,ch:5,m:3,r:1.5},{c:55,ch:4,m:4,r:2}],txt:r=>`Cada <b>${r.ch}</b> orbes que impactan, el siguiente estalla en una nova: <span class="cmg">${r.m}×</span> el daño del orbe como daño mágico a todos en <span class="ca">${f(r.r)} casillas</span>.`},
+ nova:{n:'Nova Arcana',ranks:[{c:45,ch:6,m:2,r:1.2},{c:55,ch:5,m:2.5,r:1.5}],txt:r=>`Cada <b>${r.ch}</b> orbes que impactan, el siguiente estalla en una nova: <span class="cmg">${r.m}×</span> el daño del orbe como daño mágico a todos en <span class="ca">${f(r.r)} casillas</span>.`},
  poly:{n:'Polimorfia',ranks:[{c:50,p:.1,d:3},{c:60,p:.15,d:4}],txt:r=>`Cada orbe tiene un <span class="cc">${Math.round(r.p*100)}%</span> de dejar ${kw('poly','transformado','')} (en rana) a su objetivo durante <span class="cr">${r.d} s</span>. Las élites, la mitad; los jefes son inmunes.`},
  raise:{n:'Alzar a los caídos',ranks:[{c:45,d:5,n:3},{c:55,d:7,n:5}],txt:r=>`Los enemigos que mata el orbe (salvo jefes) se alzan como ${kw('spect','espectros','')} durante <span class="cr">${r.d} s</span>, hasta <b>${r.n}</b> a la vez. Caminan hacia los portales y bloquean y golpean a los enemigos que encuentran.`},
  knight:{n:'Caballero Espectral',req:'raise',ranks:[{c:150,n:10,d:12}],txt:r=>`Cada <b>${r.n}</b> espectros alzados aparece un <b>Caballero Espectral</b> durante <span class="cr">${r.d} s</span>: mucho más resistente, bloquea por completo a todo lo que no sea jefe (a los jefes, en parte) y golpea en área. Al desvanecerse lanza un grito de ultratumba: los enemigos a 2 casillas quedan ${kw('fear','aterrados','')} ${f(FEART)} s.`},
@@ -167,7 +176,7 @@ const AB={
  lmark:{n:'Marcador láser',ranks:[{c:40,m:.15},{c:50,m:.25}],txt:r=>`La torre apunta con un láser visible: su objetivo queda ${kw('lmk','marcado con láser','')} y recibe un <span class="cd">+${Math.round(r.m*100)}%</span> de daño de todas tus torres y unidades.`},
  blink:{n:'Sin pestañear',ranks:[{c:45,p:1}],txt:r=>`Si un disparo mata a su objetivo, el siguiente disparo sale <b>al instante</b>.`},
  // ---- era 2 · Robots ----
- drill:{n:'¡Giga Taladro!',ranks:[{c:45,cd:20,d:4,m:3},{c:55,cd:15,d:6,m:4}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, si hay enemigos, el mecha carga desde su bandera <span class="ca">${r.d} casillas</span> hacia los portales con un taladro que ocupa todo el carril: <span class="cd">${r.m}×</span> su daño a todo lo que atraviesa y los ${kw('push','empuja','')} media casilla.`},
+ drill:{n:'¡Giga Taladro!',ranks:[{c:45,cd:20,d:4,m:2},{c:55,cd:15,d:6,m:2.5}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, si hay enemigos, el mecha carga desde su bandera <span class="ca">${r.d} casillas</span> hacia los portales con un taladro que ocupa todo el carril: <span class="cd">${r.m}×</span> su daño a todo lo que atraviesa y los ${kw('push','empuja','')} media casilla.`},
  react:{n:'Blindaje reactivo',ranks:[{c:35,p:.25},{c:40,p:.4},{c:45,p:.55}],txt:r=>`Cada golpe que recibe un robot tiene un <span class="cc">${Math.round(r.p*100)}%</span> de rebotar: el robot recibe la mitad de daño y devuelve al atacante el <span class="cd">100%</span> de su propio daño.`},
  shoulder:{n:'Cañón de hombro',ranks:[{c:40,cd:6,m:2,r:.8},{c:50,cd:4,m:2.5,r:1}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, el mecha dispara un misil al enemigo más fuerte a 3 casillas de su bandera: <span class="cd">${f(r.m)}×</span> su daño en un área de <span class="ca">${f(r.r)} casillas</span>.`},
  reens:{n:'Reensamblaje rápido',ranks:[{c:30,t:5},{c:35,t:3},{c:40,t:1.5}],txt:r=>`Los androides caídos se reensamblan en <span class="cr">${f(r.t)} s</span>.`},
@@ -183,10 +192,10 @@ const AB={
  // ---- era 2 · Láser de arco ----
  fence:{n:'Valla eléctrica',ranks:[{c:35,m:3,s:.5},{c:40,m:5,s:.75}],txt:r=>`Los enemigos que cruzan un arco de la red reciben <span class="cd">${r.m}×</span> el daño de un tick y quedan ${kw('stun','aturdidos','')} <span class="cr">${f(r.s)} s</span>. Como mucho una vez cada 3 s por enemigo.`},
  shortc:{n:'Cortocircuito',ranks:[{c:40,p:.25},{c:50,p:.4}],txt:r=>`Cada golpe tiene un <span class="cc">${Math.round(r.p*100)}%</span> de saltar a otro enemigo que esté a 1,5 casillas de cualquier otra torre de la red, con el <span class="cd">60%</span> del daño.`},
- overload:{n:'Sobrecarga',ranks:[{c:45,cd:12,m:5},{c:55,cd:8,m:6}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, toda la red descarga a la vez: <span class="cd">${r.m}×</span> el daño de un tick a todos los enemigos dentro del rango de cualquiera de sus torres.`},
- hv:{n:'Alto voltaje',ranks:[{c:35,n:1},{c:40,n:2},{c:45,n:3}],txt:r=>`Cada tick del arco añade <b>${1+r.n}</b> de ${kw('vc','carga','')} en vez de 1.`},
- ground:{n:'Toma de tierra',ranks:[{c:40,r:1,p:.5},{c:50,r:1.5,p:.75}],txt:r=>`La descarga hace también el <span class="cd">${Math.round(r.p*100)}%</span> de su daño a los enemigos a <span class="ca">${f(r.r)} casillas</span> del objetivo.`},
- jump:{n:'Arco saltarín',ranks:[{c:45,k:.5}],txt:r=>`Tras descargar, el arco salta solo al siguiente enemigo, que empieza con <span class="cd">la mitad</span> de la ${kw('vc','carga','')}.`},
+ overload:{n:'Sobrecarga',ranks:[{c:45,cd:15,m:3},{c:55,cd:12,m:4}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, toda la red descarga a la vez: <span class="cd">${r.m}×</span> el daño de un tick a todos los enemigos dentro del rango de cualquiera de sus torres.`},
+ hv:{n:'Alto voltaje',ranks:[{c:35,n:.5},{c:40,n:1},{c:45,n:1.5}],txt:r=>`Cada tick del arco añade <b>${f(1+r.n)}</b> de ${kw('vc','carga','')} en vez de 1.`},
+ ground:{n:'Toma de tierra',ranks:[{c:40,r:1,p:.35},{c:50,r:1.3,p:.5}],txt:r=>`La descarga hace también el <span class="cd">${Math.round(r.p*100)}%</span> de su daño a los enemigos a <span class="ca">${f(r.r)} casillas</span> del objetivo.`},
+ jump:{n:'Arco saltarín',ranks:[{c:45,k:.35}],txt:r=>`Tras descargar, el arco salta solo al siguiente enemigo, que empieza con el <span class="cd">${Math.round(r.k*100)}%</span> de la ${kw('vc','carga','')}.`},
  // ---- Lanzallamas · Detonador ----
  overp:{n:'Sobrepresión',ranks:[{c:40,r:.3,m:.3},{c:50,r:.6,m:.6}],txt:r=>`La explosión es un <span class="ca">${Math.round(r.r*100)}%</span> más grande y hace un <span class="cd">+${Math.round(r.m*100)}%</span> de daño.`},
  chainr:{n:'Reacción en cadena',ranks:[{c:40,b:6},{c:50,b:10}],txt:r=>`La explosión deja <span class="cbu">${r.b} stacks</span> de ${kw('burn','quemadura','')} a los enemigos que alcanza. Además, un enemigo ${kw('poison','envenenado','')} explota al momento, sin esperar a los 30 stacks.`},
@@ -197,7 +206,7 @@ const AB={
  ash:{n:'Humo y ceniza',ranks:[{c:35,s:.75,w:.25},{c:45,s:.6,w:.5}],txt:r=>`Dentro de una franja, los enemigos van un <span class="cvl">${Math.round((1-r.s)*100)}%</span> más lentos y atacan a tus unidades un <span class="cph">${Math.round(r.w*100)}%</span> más despacio.`},
  // ---- Chorro de ácido · Corrosión ----
  conc:{n:'Ácido concentrado',ranks:[{c:35,a:2,max:10},{c:40,a:3,max:15},{c:45,a:4,max:20}],txt:r=>`Cada golpe rompe <span class="cph">−${r.a}</span> de armadura (${kw('brk','armadura rota','')}), acumulable hasta <span class="cph">−${r.max}</span>, en vez de −1 hasta −5.`},
- pudd:{n:'Charcos',ranks:[{c:40,t:3},{c:50,t:5}],txt:r=>`Los enemigos que mata el veneno de esta torre se deshacen en un charco de ${kw('poison','veneno','')} que dura <span class="cr">${r.t} s</span>.`},
+ pudd:{n:'Charcos',ranks:[{c:40,t:2},{c:50,t:3}],txt:r=>`Los enemigos que mata el veneno de esta torre se deshacen en un charco de ${kw('poison','veneno','')} que dura <span class="cr">${r.t} s</span>.`},
  sores:{n:'Llagas',ranks:[{c:40,p:.5},{c:50,p:1}],txt:r=>`Cuando un enemigo se queda sin armadura, cada golpe del chorro tiene un <span class="cc">${Math.round(r.p*100)}%</span> de aplicarle 1 stack de ${kw('bleed','sangrado','')}.`},
  // ---- Chorro de ácido · Nube viajera ----
  dfront:{n:'Doble frente',ranks:[{c:50,n:1}],txt:r=>`Suelta <b>2 nubes</b> a la vez. En los cruces, cada una se va por una rama distinta.`},
@@ -231,7 +240,7 @@ frost:{
  hel:{n:'Hechicero Helado',ic:'🔮',col:'#8fb0ff',lv:{dmg:L4D*1.3,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['frzh','icicle','shatter'],d:'Proyectiles de hielo que pueden congelar, y témpanos que caen del cielo.'},
  vent:{n:'Guardián de la Ventisca',ic:'🌨️',col:'#9fe0ff',lv:{dmg:L4D*.5,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},aura:true,ab:['deep','blizz','bite'],d:'No dispara: emite un aura que ralentiza y daña poco a todos los enemigos dentro.'}},
 augur:{
- lord:{n:'Señor de la Tormenta',ic:'☁️',col:'#9fc4e8',lv:{dmg:L4D*.9,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},ab:['drench','cumulo','hail'],d:'Invoca una nube sobre su bandera (puedes moverla). Sus rayos caen al azar sobre los enemigos que pasan debajo.'},
+ lord:{n:'Señor de la Tormenta',ic:'☁️',col:'#9fc4e8',lv:{dmg:L4D*1.3,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},ab:['drench','cumulo','hail'],d:'Invoca una nube sobre su bandera (puedes moverla). Sus rayos caen al azar sobre los enemigos que pasan debajo.'},
  herald:{n:'Heraldo del Juicio',ic:'🌟',col:'#ffe58a',lv:{dmg:L4D*1.5,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},ab:['wrath','fork','fulg'],d:'No dispara: se carga con el tiempo y con cada muerte cercana. Lleno (8), lanza un rayo al enemigo con más vida: 6× su daño.'}},
 orb:{
  foco:{n:'Foco Arcano',ic:'🌑',col:'#9d86ff',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['hex','nova','poly'],d:'Orbes que maldicen: debilitan frente a la magia, cargan novas y pueden convertir a los enemigos en ranas.'},
@@ -275,7 +284,7 @@ acid:{
  cloud:{n:'Nube viajera',ic:'🌫️',col:'#b8e07a',lv:{dmg:L4D*.9,cd:.7,range:1.2*1.1,area:1.3,hp:L4H,pen:0},o:{tcloud:1,shape:'Nube',areaTxt:'Envenena a todos los enemigos que atraviesa, también a los voladores.'},ab:['dfront','slowadv','trailx'],d:'Ya no dispara: cada 6 s suelta una nube tóxica en el camino que avanza contra corriente hacia los portales (6 casillas) envenenando a todo lo que atraviesa.'}},
 sonic:{
  spk:{n:'Altavoces de la Resistencia',ic:'📢',col:'#ff9ae0',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{spk:1},ab:['bass','seren','feedb'],d:'Sus ondas ralentizan un 30% (2 s) a los enemigos y animan a tus unidades y a tu héroe dentro de su alcance: +20% de daño.'},
- giant:{n:'Torre sónica gigante',ic:'📣',col:'#ff6ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2*1.15,area:1.3,hp:L4H,pen:0},o:{giant:1},ab:['daze','echo','swall'],d:'Ondas más potentes que empujan más lejos (0,6 casillas). Pueden desorientar, repetirse como un eco y formar un muro de sonido.'}}};
+ giant:{n:'Torre sónica gigante',ic:'📣',col:'#ff6ad0',lv:{dmg:L4D*1.1,cd:.7,range:1.2*1.15,area:1.3,hp:L4H,pen:0},o:{giant:1},ab:['daze','echo','swall'],d:'Ondas más potentes que empujan más lejos (casi media casilla). Pueden desorientar, repetirse como un eco y formar un muro de sonido.'}}};
 // Precios de habilidades de Nv 4: el primer rango (desbloquear) es el caro; las de un solo rango, más caras aún
 {const r5=v=>Math.round(v/5)*5;for(const k in SPECS){const b=TW[k]&&TW[k].cost;if(!b)continue;for(const sp of Object.values(SPECS[k]))for(const a of sp.ab){const R=AB[a]&&AB[a].ranks;if(!R)continue;R.forEach((r,i)=>{r.c=R.length===1?r5(b*4.2):i===0?r5(b*2.8):r5(b*1.9);});}}}
 const GLV=[['1','Nv 1'],['2','Nv 2'],['3','Nv 3'],['4a','Nv 4 · A'],['4b','Nv 4 · B']];

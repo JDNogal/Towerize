@@ -24,7 +24,7 @@ function e2DmgM(e,src,ty){let m=1;if(e.inf&&e.inf.t>0)m*=1+e.inf.m;if(e.lmk&&e.l
  if(TT.grow)s.dmg*=t.g||1;
  {const w=abRank(t,'weak');if(w)s.critm+=w.m;}
  if(t.rb&&t.rb.t>0){if(t.rb.k==='d')s.dmg*=1+t.rb.m;else if(t.rb.k==='r')s.rate*=1+t.rb.m;else s.range*=1+t.rb.m;}
- if(t.drc>0)s.crit=Math.min(1,s.crit+.05*t.drc);
+ if(t.drc>0)s.crit=Math.min(1,s.crit+(t.drp||.05)*t.drc);
  if(t.oc>0)s.rate*=t.ocm||2;
  return s;};}
 const magMax=t=>{const TT=twm(t.type,t.spec),mz=abRank(t,'magz');return (TT.mag||0)+(mz?mz.n:0);};

@@ -21,6 +21,8 @@ function stats(t){
  const tx=abRank(t,'toxin'),pa=abRank(t,'arcpen'),crit=Math.min(1,CRIT+(tx?tx.cr:0)+(rp('lens')?.1:0)+(ra('lens')?.2:0)),critm=2+(ra('lens')?1:0);
  return{ldur:T.log?logDur(t.lvl):0,dmg:T.dmg*d,rate:T.rate*r,range:T.range*rg,crit,critm,area:(T.splash||T.pr||0)*ar,gold,pen:(L.pen||0)+(pa?pa.pen:0)+(rp('tome')&&twm(t.type,t.spec).dt==='magic'?10:0)};
 }
+// cadencia de la torre respecto a la de su nivel sin bonus: los charcos (cuyo número no depende de disparar más) la usan para que Potencia y Frenesí sigan siendo un intercambio justo
+const rateF=(t,s)=>{try{const T=TW[t.type],L=lvMods(t.type,t.lvl,t.spec);return Math.max(.25,s.rate/(T.rate/(L.cd||1)));}catch(e){return 1;}};
 const sqOf=(x,y)=>{const kx=Math.floor(x/K),ky=Math.floor(y/K);return{kx,ky,x:kx*K+1,y:ky*K+1};};
 const sqCells=q=>{const a=[];for(let j=0;j<K;j++)for(let i=0;i<K;i++)a.push([q.kx*K+i,q.ky*K+j]);return a;};
 // quita la torre elegida en el menú de construcción
@@ -43,7 +45,7 @@ const upLbl=c=>c?`<span class="gd">−${c} 🪙</span>`:'<span class="gd">gratis
 function upgrade(t){if(placeLock()){plMsg();return;}
  if(t&&TW[t.type].uniq&&!TW[t.type].upc)return;
  if(!t||!S.list.includes(t)||t.lvl>=(TW[t.type].pig?4:3)||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
- const T=TW[t.type],c=upCost(T,t.lvl+1);
+ const T=TW[t.type],c=tCost(t,upCost(T,t.lvl+1));
  if(S.gold<c){S.msg='Oro insuficiente para mejorar.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.lvl++;t.inv=(t.inv||T.cost)+c;if(undoOk(t))t.undo+=c;if(S.tut&&S.tut.freeUp)S.tut.freeUp=0;
  if(t.sd){const m=sdHp(t);for(const q of t.sd){const dd=m-q.max;q.max=m;if(q.hp>0)q.hp+=dd;}}
@@ -86,7 +88,7 @@ function upRow(t,pinned){
 }
 function chooseSpec(t,sp){if(placeLock()){plMsg();return;}
  if(!t||!S.list.includes(t)||t.lvl!==3||!SPECS[t.type]||!SPECS[t.type][sp]||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
- const T=TW[t.type],c=upCost(T,4);
+ const T=TW[t.type],c=tCost(t,upCost(T,4));
  if(S.gold<c){S.msg='Oro insuficiente para mejorar.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.lvl=4;t.spec=sp;t.inv=(t.inv||T.cost)+c;if(undoOk(t))t.undo+=c;t.ab={};t.acd={};if(t.type==='augur'&&sp==='lord'&&!t.flag)autoFlag(t);
  if(t.sd){const m=sdHp(t);for(const q of t.sd){const dd=m-q.max;q.max=m;if(q.hp>0)q.hp=Math.min(m,Math.max(1,q.hp+dd));}}S.msg='';refreshPrim();ui();
@@ -95,7 +97,7 @@ function chooseSpec(t,sp){if(placeLock()){plMsg();return;}
 const abReq=(t,id)=>{const r=AB[id]&&AB[id].req;return r&&!(t&&t.ab&&t.ab[r])?'Primero compra «'+AB[r].n+'».':'';};
 function buyAb(t,id){if(placeLock()){plMsg();return;}{const w=abReq(t,id);if(w){S.msg=w;try{errBubble(w);}catch(e){}ui();return;}}
  if(!t||!S.list.includes(t)||t.lvl!==4||!SPECS[t.type][t.spec].ab.includes(id)||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
- const D=AB[id],rk=t.ab[id]||0;if(rk>=D.ranks.length)return;const c=D.ranks[rk].c;
+ const D=AB[id],rk=t.ab[id]||0;if(rk>=D.ranks.length)return;const c=tCost(t,D.ranks[rk].c);
  if(S.gold<c){S.msg='Oro insuficiente para la habilidad.'+WISHTXT();ui();return;}
  S.gold-=c;S.st.spent+=c;t.ab[id]=rk+1;t.inv=(t.inv||TW[t.type].cost)+c;if(undoOk(t))t.undo+=c;if(rk===0)t.acd[id]=0;S.msg='';refreshPrim();ui();
 }
@@ -111,7 +113,7 @@ const SOFF=[0,1,2].map(i=>{const a=-Math.PI/2+i*2*Math.PI/3;return[Math.cos(a)*T
 const SOFF4=[[-TRI*.75,-TRI*.75],[TRI*.75,-TRI*.75],[TRI*.75,TRI*.75],[-TRI*.75,TRI*.75]];
 const PIGOFF={brick:[0,-.9],wood:[.9,.6],straw:[-.9,.6]};
 const slotOf=(t,i)=>{const b=t.flag||{x:t.x,y:t.y};if(t.pigU&&PIGOFF[t.pigU]){const o=PIGOFF[t.pigU];return{x:b.x+o[0],y:b.y+o[1]};}if(t.hero||(t.sd&&t.sd.length===1))return{x:b.x,y:b.y};const o=t.sd&&t.sd.length===4?SOFF4[i]:SOFF[i];return{x:b.x+o[0],y:b.y+o[1]};};
-const sdHp=t=>TW[t.type].unit.hp*lvMods(t.type,t.lvl,t.spec).hp,uapOf=t=>(t.uov?t.uov.ap:t.hero?hsAt(t.hero.id,t.hero.lvl).ap:TW[t.type].unit.ap+(tinfo(t).uap||0)+(t.xap||0))+RELARM();
+const sdHp=t=>TW[t.type].unit.hp*lvMods(t.type,t.lvl,t.spec).hp*(typeof tileV==='function'?tileV(t,'uhp',1):1),uapOf=t=>(t.uov?t.uov.ap:t.hero?hsAt(t.hero.id,t.hero.lvl).ap:TW[t.type].unit.ap+(tinfo(t).uap||0)+(t.xap||0))+RELARM();
 function mkSoldiers(t){const U=TW[t.type].unit;t.sd=[];for(let i=0;i<U.n;i++)t.sd.push({i,x:t.x,y:t.y,hp:sdHp(t),max:sdHp(t),en:null,cd:0,rt:0,tw:t,lock:true,fight:false});}
 function autoFlag(t){const R2=stats(t).range,r=Math.ceil(R2);let b=null,bd=1e9;
  for(let y=Math.max(0,t.y-r);y<=Math.min(N-1,t.y+r);y++)for(let x=Math.max(0,t.x-r);x<=Math.min(N-1,t.x+r);x++){if(S.cells[y][x]!==2)continue;const d=Math.hypot(x-t.x,y-t.y);if(d<=R2&&d<bd){bd=d;b={x,y};}}

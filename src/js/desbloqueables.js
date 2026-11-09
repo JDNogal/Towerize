@@ -16,14 +16,14 @@ E2SVG.acid='<svg viewBox="0 0 64 64"><path d="M22 10 h20 v8 h-4 v10 l12 22 a4 4 
 E2SVG.sonic='<svg viewBox="0 0 64 64"><rect x="18" y="14" width="20" height="36" rx="4" fill="#3a2a40" stroke="#ff8ad8" stroke-width="2.5"/><circle cx="28" cy="38" r="7" fill="#1a1020" stroke="#ff8ad8" stroke-width="2"/><circle cx="28" cy="38" r="2.5" fill="#ffb0e8"/><circle cx="28" cy="22" r="4" fill="#1a1020" stroke="#ff8ad8" stroke-width="1.5"/><path d="M44 26 a10 10 0 0 1 0 12 M50 20 a18 18 0 0 1 0 24" fill="none" stroke="#ff8ad8" stroke-width="2.5" stroke-linecap="round"/></svg>';
 TW.acid.icsvg=E2SVG.acid;TW.sonic.icsvg=E2SVG.sonic;
 // ---- constantes ----
-const DETTH=30,DETR=1,FWT=4,FWR=1.7,CLOUDCD=6,CLOUDSP=1.2*K,CLOUDR=.75*K,CLOUDD=6,SONSP=5*K,SONK=.4,SONKG=.6,GUITRZ=10;
+const DETTH=30,DETR=1,FWT=4,FWR=1.7,CLOUDCD=4,CLOUDSP=1.2*K,CLOUDR=.75*K,CLOUDD=6,SONSP=5*K,SONK=.2,SONKG=.45,GUITRZ=10;
 const unlTarget=(t,s,fly)=>{const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y),md=TGT[t.mode]||TGT.core;let tg=null,bs=0;
  for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-t.x,e.y-t.y)>s.range||(!fly&&isFly(e)))continue;const sc=md.score(e,prog);if(!tg||sc>bs||(sc===bs&&prog(e)<prog(tg))){tg=e;bs=sc;}}return tg;};
 // casilla de camino más cercana a la torre dentro de su alcance
 function nearPathT(t,R){let b=null,bd=1e9;const r=Math.ceil(R);for(let y=Math.max(0,t.y-r);y<=Math.min(N-1,t.y+r);y++)for(let x=Math.max(0,t.x-r);x<=Math.min(N-1,t.x+r);x++){if(S.cells[y][x]!==2)continue;const d=Math.hypot(x-t.x,y-t.y);if(d<=R&&d<bd){bd=d;b={x,y};}}return b;}
 // ---- estadísticas: el alcance de la Torre sónica crece más con los niveles; los Altavoces animan a las unidades y al héroe cercanos ----
 {const _st=stats;stats=function(t){const s=_st.apply(this,arguments);if(!t)return s;
- if(!t.hero&&TW[t.type]&&TW[t.type].sonic)s.range*=1+.12*((t.lvl||1)-1);
+ if(!t.hero&&TW[t.type]&&TW[t.type].sonic)s.range*=1+.07*((t.lvl||1)-1);
  if(S&&S.phase==='wave'&&(t.sd||t.hero)){const sp=S.list.filter(o=>o.type==='sonic'&&o.spec==='spk');if(sp.length){const us=t.hero?[t.hero.s]:t.sd;if(us&&us.some(u=>u&&u.hp>0&&sp.some(o=>Math.hypot(u.x-o.x,u.y-o.y)<=(o.rgC||_st(o).range*1.36))))s.dmg*=1.2;}}
  return s;};}
 // ---- multiplicador de daño: desorientación (siguiente golpe directo +50%) y Acople (ralentizados cerca de unos Altavoces) ----
@@ -63,7 +63,7 @@ function acidShot(t,tg,s,dm){const cc=abRank(t,'conc'),so=abRank(t,'sores');addP
  S.fx.push({line:[t.x,t.y,tg.x,tg.y],t:.16,m:.16,col:'rgba(155,225,93,.9)'});try{sfx('beam',{r:1.5});}catch(e){}}
 // Nube viajera: nace en el camino junto a la torre y va contra corriente hacia los portales
 function cloudLaunch(t,s){const c=nearPathT(t,s.range);if(!c)return;const df=abRank(t,'dfront'),sa=abRank(t,'slowadv'),tr=abRank(t,'trailx'),n=df?2:1;S.tcl=S.tcl||[];
- for(let i=0;i<n;i++)S.tcl.push({x:c.x,y:c.y,cx:c.x,cy:c.y,left:CLOUDD*K,sp:CLOUDSP*(sa?sa.sp:1),n:s.dmg*(1+(sa?sa.m:0)),src:t,tk:0,br:i,lt:Math.floor(c.x/K)+','+Math.floor(c.y/K),tr:tr?tr.t:0,pen:s.pen});
+ for(let i=0;i<n;i++)S.tcl.push({x:c.x,y:c.y,cx:c.x,cy:c.y,left:CLOUDD*K,sp:CLOUDSP*(sa?sa.sp:1),n:s.dmg*1.5*(1+(sa?sa.m:0)),src:t,tk:0,br:i,lt:Math.floor(c.x/K)+','+Math.floor(c.y/K),tr:tr?tr.t:0,pen:s.pen});
  S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:CLOUDR,col:'#b8e07a'});}
 function cloudAll(dt){if(!S.tcl||!S.tcl.length)return;S.tcl=S.tcl.filter(c=>{if(!S.list.includes(c.src))return false;let mv=c.sp*dt;
  while(mv>1e-6&&c.left>0){const dx=c.cx-c.x,dy=c.cy-c.y,dd=Math.hypot(dx,dy);
@@ -77,9 +77,9 @@ function cloudAll(dt){if(!S.tcl||!S.tcl.length)return;S.tcl=S.tcl.filter(c=>{if(
 function acidTick(t,s,dt){t.cd=Math.max(-.1,t.cd-dt);const TT=twm(t.type,t.spec);
  if(TT.tcloud){if(t.cd<=0){const has=S.enemies.some(e=>e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range*1.5);if(has){t.cd=CLOUDCD/(s.rate/TW.acid.rate);cloudLaunch(t,s);}}return;}
  const tg=unlTarget(t,s,true);if(!tg){t.cd=Math.max(t.cd,0);return;}let n=0;
- while(t.cd<=0&&n++<6){t.cd+=1/s.rate;const crit=Math.random()<s.crit+mkB(tg),dm=s.dmg*(crit?s.critm:1);acidShot(t,tg,s,dm);if(crit)critMark(tg);onHit(tg,t);}}
+ while(t.cd<=0&&n++<6){t.cd+=1/s.rate;if(ecoShot(t))t.cd-=1/s.rate;const crit=Math.random()<s.crit+mkB(tg),dm=s.dmg*(crit?s.critm:1);acidShot(t,tg,s,dm);if(crit)critMark(tg);onHit(tg,t);}}
 // Charcos: los enemigos que mata el veneno de una Corrosión se deshacen en un charco
-{const _ad=achDeath;achDeath=function(e){try{const k=e.src;if(k&&k.type==='acid'&&k.spec==='corr'&&S.list.includes(k)&&e.kdn==='poison'){const pd=abRank(k,'pudd');if(pd){const st=stats(k);S.pools.push({x:e.x,y:e.y,t:pd.t,n:st.dmg,tk:0,src:k,r:.6*K});}}}catch(x){}return _ad.apply(this,arguments);};}
+{const _ad=achDeath;achDeath=function(e){try{const k=e.src;if(k&&k.type==='acid'&&k.spec==='corr'&&S.list.includes(k)&&e.kdn==='poison'){const pd=abRank(k,'pudd');if(pd){const st=stats(k);S.pools.push({x:e.x,y:e.y,t:pd.t,n:st.dmg*rateF(k,st),tk:0,src:k,r:.6*K});}}}catch(x){}return _ad.apply(this,arguments);};}
 // ==================== TORRE SÓNICA ====================
 SPECT.guit={n:'Guitarrista rebelde',ic:'🎸',col:'#ff8ad8',w:1,d:1,sp:1};
 function sonicWave(t,s,o){S.sonw=S.sonw||[];const TT=twm(t.type,t.spec),gi=!!TT.giant,sw=abRank(t,'swall'),dz=abRank(t,'daze');
@@ -102,7 +102,7 @@ function sonicTick(t,s,dt){t.cd=Math.max(-.1,t.cd-dt);for(const k in t.acd)t.acd
  guitTick(t,s,dt);
  const has=S.enemies.some(e=>e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range);if(!has){t.cd=Math.max(t.cd,0);return;}
  const bs=abRank(t,'bass');if(bs&&!(t.acd.bass>0)){t.acd.bass=bs.cd;sonicWave(t,s,{m:bs.m,stun:bs.s,echo:0});try{sfx('boom');}catch(e){}}
- let n=0;while(t.cd<=0&&n++<4){t.cd+=1/s.rate;sonicWave(t,s);try{sfx('beam',{r:.6});}catch(e){}}}
+ let n=0;while(t.cd<=0&&n++<4){t.cd+=1/s.rate;if(ecoShot(t))t.cd-=1/s.rate;sonicWave(t,s);try{sfx('beam',{r:.6});}catch(e){}}}
 // ---- tick común ----
 function unlTick(dt){for(const e of S.enemies)e.acop=0;
  for(const t of S.list){const T=TW[t.type];if(!T)continue;

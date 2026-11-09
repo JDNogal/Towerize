@@ -1,5 +1,5 @@
 // ===== Augur Voltaico (Era Fantástica): rayos que caen del cielo, nubes de tormenta y juicios =====
-const WETT=3,WETF=1.5,CLR=1.2,HCH=8,HJM=6,FULGD=.25;
+const WETT=3,WETF=1.5,CLR=2.1,HCH=8,HJM=6,FULGD=.25;
 const ezM=e=>1+EZAMP*(e.ez?e.ez.n:0);
 const cloudR=t=>{const cu=abRank(t,'cumulo');return CLR*K*(1+(cu?cu.r:0)+(t.cg||0));};
 function augurShot(t,tg,s,dm,crit,nq){if(t.spec==='herald')return;

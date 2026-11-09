@@ -3,9 +3,9 @@ const TM={t:null,arm:null,hov:null,sig:''};
 function tmHas(t,a){const pp=PR.pinned,pk=PR.key;PR.pinned=true;PR.key='tw:'+t.id;let h='';try{h=towerInfo(t)||'';}catch(e){}finally{PR.pinned=pp;PR.key=pk;}return h.includes('data-a="'+a+'"');}
 function tmOpts(t){const T=TW[t.type],top=[],bot=[];let side=null;
  if(T.guild&&tmHas(t,'gup'))top.push({k:'gup',ic:'⬆',c:T.upc[t.lvl+1]});
- else if(t.lvl===3&&SPECS[t.type]&&!T.uniq)for(const sp in SPECS[t.type])top.push({k:'spec',v:sp,ic:SPECS[t.type][sp].ic,c:upCost(T,4)});
- else if(t.lvl===4&&t.spec&&SPECS[t.type])for(const id of SPECS[t.type][t.spec].ab){const D=AB[id],rk=t.ab&&t.ab[id]||0,n=D.ranks.length;top.push({k:'abuy',v:id,ab:1,rk,n,c:rk<n?D.ranks[rk].c:null,lk:!!abReq(t,id)});}
- else if(tmHas(t,'up'))top.push({k:'up',ic:'⬆',c:upCost(T,t.lvl+1)});
+ else if(t.lvl===3&&SPECS[t.type]&&!T.uniq)for(const sp in SPECS[t.type])top.push({k:'spec',v:sp,ic:SPECS[t.type][sp].ic,c:tCost(t,upCost(T,4))});
+ else if(t.lvl===4&&t.spec&&SPECS[t.type])for(const id of SPECS[t.type][t.spec].ab){const D=AB[id],rk=t.ab&&t.ab[id]||0,n=D.ranks.length;top.push({k:'abuy',v:id,ab:1,rk,n,c:rk<n?tCost(t,D.ranks[rk].c):null,lk:!!abReq(t,id)});}
+ else if(tmHas(t,'up'))top.push({k:'up',ic:'⬆',c:tCost(t,upCost(T,t.lvl+1))});
  bot.push({k:'lupa',ic:'🔍'});if(!T.uniq)bot.push({k:'sell',ic:'$',sv:sellVal(t)});
  if(T.faro){bot.push({k:'flz',v:'0',ic:'🔦'});if((t.lvl||1)>=4)bot.push({k:'flz',v:'1',ic:'🔦'});}
  if(tmHas(t,'flag'))side={k:'flag',ic:'🚩'};
@@ -40,10 +40,10 @@ function upCmp(t){const T=TW[t.type];if(T.uniq||t.lvl>=3)return'';let a,b;try{a=
  const TT=twm(t.type,t.spec),R=(l,c,x,y)=>x===y?'':`<div class="tmc"><span>${l}</span><b>${x} → <span class="${c}">${y}</span></b></div>`,dt=T.dot||T.burn;
  return '<div class="tmcmp">'+R(T.unit?'Daño del soldado':dt?'Stacks':'Daño','cd',f(a.dmg),f(b.dmg))+(T.unit?'':R(dt?'DPS':'Daño por segundo','cd',f(dpsOf(a,TT)),f(dpsOf(b,TT))))+R('Enfriamiento','ccl',f(1/a.rate)+' s',f(1/b.rate)+' s')+R('Rango','cg',f(a.range/K)+' cas.',f(b.range/K)+' cas.')+'</div>';}
 function tmInfo(k,t){const T=TW[t.type],[a,v]=k.split(':');
- if(a==='up'){const n=t.lvl+1;return{h:`<b>⬆ Mejorar a Nv ${n}</b>`+(!T.uniq&&n<=3?(upCmp(t)||`<small>${upText(t)}.</small>`):''),c:upCost(T,n),buy:1,w:1};}
+ if(a==='up'){const n=t.lvl+1;return{h:`<b>⬆ Mejorar a Nv ${n}</b>`+(!T.uniq&&n<=3?(upCmp(t)||`<small>${upText(t)}.</small>`):''),c:tCost(t,upCost(T,n)),buy:1,w:1};}
  if(a==='gup')return{h:`<b>⬆ Subir a rango ${RANKS[t.lvl]}</b>`,c:T.upc[t.lvl+1],buy:1};
- if(a==='spec'){const x=SPECS[t.type][v];return{h:`<b>${x.ic} ${x.n}</b><small>${x.d}</small><small>${specCh(t,v)}</small>`,c:upCost(T,4),buy:1,w:1};}
- if(a==='abuy'){const D=AB[v],rk=t.ab&&t.ab[v]||0,n=D.ranks.length,rq=abReq(t,v);return{h:`<b>${D.n}</b> · Rango ${rk}/${n}<small>${rk>=n?D.txt(D.ranks[n-1]):(rk?'Siguiente: ':'')+D.txt(D.ranks[Math.min(rk,n-1)])}</small>`+(rq?`<small class="cd">🔒 ${rq}</small>`:''),c:rk<n?D.ranks[rk].c:null,buy:rk<n,w:rk<n};}
+ if(a==='spec'){const x=SPECS[t.type][v];return{h:`<b>${x.ic} ${x.n}</b><small>${x.d}</small><small>${specCh(t,v)}</small>`,c:tCost(t,upCost(T,4)),buy:1,w:1};}
+ if(a==='abuy'){const D=AB[v],rk=t.ab&&t.ab[v]||0,n=D.ranks.length,rq=abReq(t,v);return{h:`<b>${D.n}</b> · Rango ${rk}/${n}<small>${rk>=n?D.txt(D.ranks[n-1]):(rk?'Siguiente: ':'')+D.txt(D.ranks[Math.min(rk,n-1)])}</small>`+(rq?`<small class="cd">🔒 ${rq}</small>`:''),c:rk<n?tCost(t,D.ranks[rk].c):null,buy:rk<n,w:rk<n};}
  if(a==='sell')return{h:undoOk(t)?`<b>Deshacer construcción</b><small>La has puesto en esta fase: recuperas <b>todo</b> lo que pagaste, <span class="gd">+${sellVal(t)} 🪙</span>.</small>`:`<b>Vender torre</b><small>Recuperas <span class="gd">+${sellVal(t)} 🪙</span> (la mitad de lo invertido).</small>`,sell:1};
  if(a==='flag')return{h:`<b>🚩 ${t.type==='augur'?'Mover la nube':'Mover bandera'}</b><small>Elige una casilla del camino dentro de su rango.</small>`};
  if(a==='lupa')return{h:'<b>🔍 Ficha completa</b><small>Estadísticas, objetivo y todos los detalles de la torre.</small>'};

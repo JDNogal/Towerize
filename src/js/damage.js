@@ -134,7 +134,7 @@ function abilities(t,tg,s){
   if(be){t.acd.storm=r7.cd;zap(t,be,s,s.dmg*r7.m,twm(t.type,t.spec),1);}}
  const r8=abRank(t,'flask');
  if(r8&&rdy('flask')){let be=null,bn=0;for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-t.x,e.y-t.y)>s.range)continue;let n=0;for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=s.area)n++;if(n>bn){bn=n;be=e;}}
-  if(be){t.acd.flask=r8.cd;const pz=abRank(t,'ponz');S.pools.push({x:be.tx,y:be.ty,t:4,n:s.dmg*(pz?pz.m:1),tk:0,src:t,r:s.area});S.fx.push({x:be.x,y:be.y,t:.5,m:.5,r:s.area,col:'#7bd34a'});}}
+  if(be){t.acd.flask=r8.cd;const pz=abRank(t,'ponz');S.pools.push({x:be.tx,y:be.ty,t:4,n:s.dmg*(pz?pz.m:1)*rateF(t,s),tk:0,src:t,r:s.area});S.fx.push({x:be.x,y:be.y,t:.5,m:.5,r:s.area,col:'#7bd34a'});}}
  const r6=abRank(t,'blizz');
  if(r6&&rdy('blizz')){t.acd.blizz=r6.cd;let n=0;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range&&freezeE(e,r6.d))n++;S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:s.range,col:'#cdf2ff'});}
 }

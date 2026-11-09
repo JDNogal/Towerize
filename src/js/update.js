@@ -57,7 +57,7 @@ function update(dt){
   if(abRank(t,'overl')){if(t.ovE!==tg){const cv=abRank(t,'conv');t.ovT=cv&&t.ovE&&t.ovE.hp<=0?t.ovT*cv.p:0;t.ovE=tg;}else t.ovT+=dt;}
   let n=0;
   while(t.cd<=0&&n++<6){
-   t.cd+=1/s.rate;
+   t.cd+=1/s.rate;if(typeof ecoShot==='function'&&ecoShot(t))t.cd-=1/s.rate;
    const crit=Math.random()<s.crit+mkB(tg),dm=s.dmg*(crit?s.critm:1),pzr=abRank(t,'poison'),pz=!!(pzr&&Math.random()<pzr.p),col=pz?'#7bd34a':T.col;
    if(X.aura){const dp=abRank(t,'deep'),bi=abRank(t,'bite');
     for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-t.x,e.y-t.y)>s.range)continue;
@@ -84,7 +84,7 @@ function update(dt){
    if(T.zap){zap(t,tg,s,dm*(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1),TT);if(crit)critMark(tg);continue;}
    if(T.burn){flameTick(t,tg,s,(crit?s.critm:1)*(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1),TT);if(crit)critMark(tg);continue;}
    if(T.puddle){const px=tg.tx,py=tg.ty,pz=abRank(t,'ponz');
-    if(!S.pools.some(p=>p.src===t&&Math.hypot(p.x-px,p.y-py)<.8*K))S.pools.push({x:px,y:py,t:T.dur,n:dm*(pz?pz.m:1),tk:0,src:t,r:s.area});
+    if(!S.pools.some(p=>p.src===t&&Math.hypot(p.x-px,p.y-py)<.8*K))S.pools.push({x:px,y:py,t:T.dur,n:dm*(pz?pz.m:1)*rateF(t,s),tk:0,src:t,r:s.area});
     break;}
    if(T.beam){sfx('beam',{r:T.orb?1:1.3});const ov=abRank(t,'overl'),mm=ov?1+Math.min(ov.max,ov.g*t.ovT):1;hurt(tg,dm*mm*(1+(T.orb?soulB(t):0))*(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1),t,T.dt,s.pen);onHit(tg,t);if(T.orb&&tg.hp>0)orbHit(t,tg,s,dm);if(crit)critMark(tg);if(tg.hp<=0)break;continue;}
    if(T.mag!=null){bunkerFire(t,tg,s,dm,crit);if(tg.hp<=0)break;continue;}
