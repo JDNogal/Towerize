@@ -151,7 +151,7 @@ function achTick(dt){if(S.pvE||!S.list)return;
   if(c1||c2||c3){const id=S.chestRel[0],R=RELIC[id];hint('tut_relic','¡Usa tu reliquia!',`Bob está en plena zona de fuego: es el momento perfecto para activar ${R.ic} <b>${R.n}</b>. Pulsa su botón en la barra de reliquias y verás la diferencia.`,tgEl('#relics [data-a="ract"][data-id="'+id+'"]'));}}}
 const YLOCK='Gana una partida con al menos una Salamandra y un Cryomago construidos al final.';if(!ACHS.elem)HEROES.yrsa.lockTxt=YLOCK;
 // torres que necesitan logro para poder salir en las ofertas de la partida (null = logro aún por definir)
-const TLOCK={frost:'chest',poison:'event',sala:'pyro',altar:'armonia',dron:'chapa',cannon:null,flame:null};
+const TLOCK={frost:'chest',poison:'event',sala:'pyro',altar:'armonia',dron:'chapa',cannon:'bombard',flame:'herencia',acid:'oxido',sonic:'marcha'};
 const BASET=()=>[...new Set(['cata'].concat(Object.values(HEROES).filter(h=>!h.late).flatMap(h=>h.deck||[])))];
 const tunl=k=>BASET().includes(k)||/* las torres de la era 2 están disponibles desde el principio cuando juegas en esa era */(TW[k]&&TW[k].era===2&&TW[k].e2b&&typeof eraHas2==='function'&&eraHas2())||(typeof OPT!=='undefined'&&(OPT.u_tw||OPT.u_hr&&Object.values(HEROES).some(h=>(h.deck||[]).includes(k))))||(TLOCK[k]?!!ACHS[TLOCK[k]]:false);
 function achieve(id){if(!ACH[id]||ACHS[id])return;ACHS[id]=Date.now();if(PINS.includes(id)){PINS=PINS.filter(x=>x!==id);savePins();}try{localStorage.setItem('rt-ach',JSON.stringify(ACHS));}catch(e){}

@@ -17,14 +17,14 @@ const flareM=e=>{let m=1;for(const z of S.flares||[])if(Math.hypot(e.x-z.x,e.y-z
   const routes=[];const grow=(x,y,path,left)=>{const nx=awayNext(x,y);if(!nx.length||path.length>60){routes.push(path);return;}if(nx.length===1||left<=1){const q=nx[Math.floor(Math.random()*nx.length)];grow(q.x,q.y,path.concat([q]),left);return;}
    const per=Math.max(1,Math.floor(left/nx.length));let rem=left;nx.forEach((q,i)=>{const n=i===nx.length-1?rem:per;rem-=n;if(n>0)grow(q.x,q.y,path.concat([q]),n);});};
   grow(p.x,p.y,[p],3);while(routes.length<3)routes.push(routes[routes.length-1]||[p]);
-  S.planes=S.planes||[];routes.slice(0,3).forEach((r,i)=>S.planes.push({r,i:0,k:-i*.6,dm,hit:new Set(),src:H.pt}));
+  S.planes=S.planes||[];const sid={k:0};routes.slice(0,3).forEach((r,i)=>S.planes.push({r,i:0,k:-i*.6,dm,hit:new Set(),src:H.pt,sid}));
   H.ucd=HUCD;if(S.st)S.st.habU=(S.st.habU||0)+1;try{sfx('ui');}catch(e){}}
  S.aim=null;S.msg='';ui();renderRelics();};}
 {const _ht=heroAbTick;heroAbTick=function(dt){const r=_ht.apply(this,arguments);try{vegaTick(dt);}catch(e){}return r;};}
 function vegaTick(dt){const H=S.hero;
  for(const z of S.flares||[])z.t-=dt;S.flares=(S.flares||[]).filter(z=>z.t>0);
  for(const pl of S.planes||[]){pl.k+=dt*7;if(pl.k<0)continue;while(pl.k>=1&&pl.i<pl.r.length-1){pl.k-=1;pl.i++;}const a=pl.r[pl.i],b=pl.r[Math.min(pl.r.length-1,pl.i+1)],f=Math.min(1,Math.max(0,pl.k)),x=a.x+(b.x-a.x)*f,y=a.y+(b.y-a.y)*f;pl.x=x;pl.y=y;
-  for(const e of S.enemies){if(e.hp<=0||pl.hit.has(e)||Math.hypot(e.x-x,e.y-y)>1.1*K)continue;pl.hit.add(e);hurt(e,pl.dm,pl.src,'phys');S.fx.push({x:e.x,y:e.y,t:.25,m:.25,r:.5*K,col:'#ffb07a'});}
+  for(const e of S.enemies){if(e.hp<=0||pl.hit.has(e)||Math.hypot(e.x-x,e.y-y)>1.1*K)continue;pl.hit.add(e);hurt(e,pl.dm,pl.src,'phys');if(e.hp<=0&&pl.sid&&!S.tut&&!S.pvE){pl.sid.k++;recBest('bombard',pl.sid.k);if(pl.sid.k>=8)achieve('bombard');}S.fx.push({x:e.x,y:e.y,t:.25,m:.25,r:.5*K,col:'#ffb07a'});}
   if(pl.i>=pl.r.length-1&&pl.k>=1)pl.done=1;}
  S.planes=(S.planes||[]).filter(p=>!p.done);
  // Machete: golpes cuerpo a cuerpo a daño completo con sangrado (la mitad del daño la añade aquí, al detectar el golpe)

@@ -1285,7 +1285,7 @@ body.mfs .tk{width:26px;height:38px}body.mfs .tk .tki{font-size:12px;top:3px}bod
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v285</div>
+<div id="ver">Towerize v286</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -1490,6 +1490,8 @@ monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:3.5,rate:1,unit:{
 tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:3,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
  augur:{n:'Augur Voltaico',ic:'👁️',icb:'⚡',dt:'elem',augur:1,cost:100,range:2.6,dmg:22,rate:.8,splash:.9,shape:'Rayo del cielo',areaTxt:'El rayo cae sobre el objetivo y alcanza a los enemigos de alrededor.',col:'#8fd0ff',l:'U',fx:'Ninguno'},
 flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:1.8,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
+acid:{n:'Chorro de ácido',ic:'☣️',dt:'elem',era:2,cost:105,range:2.4,dmg:2,rate:2,dot:1,acidj:1,custom:1,col:'#9be15d',l:'Q',fx:'Veneno y armadura rota'},
+sonic:{n:'Torre sónica',ic:'🔊',dt:'magic',era:2,cost:115,range:2.2,dmg:14,rate:.5,sonic:1,custom:1,shape:'Onda circular',areaTxt:'La onda se expande desde la torre hasta su alcance y golpea una vez a cada enemigo que atraviesa.',col:'#ff8ad8',l:'W',fx:'Onda que empuja'},
  sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.2,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
 const ET={vet:{n:'Veterano',gold:6,hp:4.4,hf:80,sp:1,r:.27,col:'#b8443f',dmg:1,ap:15,am:0},champ:{n:'Campeón',gold:14,hp:12,hf:220,sp:.9,r:.31,col:'#8e2a36',dmg:2,ap:30,am:10},runner:{n:'Corredor',gold:6,hp:2.5,hf:45,sp:1.9,r:.22,col:'#e3a33e',dmg:1,ap:0,am:0},armored:{n:'Acorazado',gold:18,hp:15,hf:280,sp:.55,r:.35,col:'#6c7484',dmg:3,ap:40,am:0},bat:{n:'Murciélago',gold:2,hp:.8,hf:14,sp:1.8,r:.18,col:'#6a5480',dmg:1,ap:0,am:0,fly:1},harpy:{n:'Arpía',gold:6,hp:3.3,hf:60,sp:1.2,r:.25,col:'#b07cc0',dmg:1,ap:0,am:10,fly:1},griffin:{n:'Grifo',gold:16,hp:12,hf:220,sp:1,r:.33,col:'#c9a052',dmg:2,ap:20,am:0,fly:1,el:1},norm:{n:'Guerrero',gold:3,hp:1,sp:1,r:.26,col:'#e05a5a',dmg:1,ap:0,am:0},fast:{n:'Asalto',gold:4,hp:.55,sp:1.7,r:.2,col:'#f08fb0',dmg:1,ap:0,am:0},
 tank:{n:'Tanque',gold:10,hp:2.6,sp:.65,r:.34,col:'#a04a7a',dmg:2,ap:10,am:0},
@@ -1634,6 +1636,30 @@ const AB={
  hv:{n:'Alto voltaje',ranks:[{c:35,n:1},{c:40,n:2},{c:45,n:3}],txt:r=>`Cada tick del arco añade <b>${1+r.n}</b> de ${kw('vc','carga','')} en vez de 1.`},
  ground:{n:'Toma de tierra',ranks:[{c:40,r:1,p:.5},{c:50,r:1.5,p:.75}],txt:r=>`La descarga hace también el <span class="cd">${Math.round(r.p*100)}%</span> de su daño a los enemigos a <span class="ca">${f(r.r)} casillas</span> del objetivo.`},
  jump:{n:'Arco saltarín',ranks:[{c:45,k:.5}],txt:r=>`Tras descargar, el arco salta solo al siguiente enemigo, que empieza con <span class="cd">la mitad</span> de la ${kw('vc','carga','')}.`},
+ // ---- Lanzallamas · Detonador ----
+ overp:{n:'Sobrepresión',ranks:[{c:40,r:.3,m:.3},{c:50,r:.6,m:.6}],txt:r=>`La explosión es un <span class="ca">${Math.round(r.r*100)}%</span> más grande y hace un <span class="cd">+${Math.round(r.m*100)}%</span> de daño.`},
+ chainr:{n:'Reacción en cadena',ranks:[{c:40,b:6},{c:50,b:10}],txt:r=>`La explosión deja <span class="cbu">${r.b} stacks</span> de ${kw('burn','quemadura','')} a los enemigos que alcanza. Además, un enemigo ${kw('poison','envenenado','')} explota al momento, sin esperar a los 30 stacks.`},
+ tarb:{n:'Bidones de brea',ranks:[{c:45,cd:12,n:1},{c:55,cd:8,n:2}],txt:r=>`Cada <span class="cr">${r.cd} s</span> deja un bidón de brea en el camino, dentro de su alcance (hasta <b>${r.n}</b> a la vez). Al tocarlo un enemigo ardiendo, o el fuego, explota: <span class="cd">15×</span> el daño de un tick a 1 casilla y deja brea ardiendo.`},
+ // ---- Lanzallamas · Muro de fuego ----
+ morew:{n:'Más muros',ranks:[{c:40,n:1},{c:50,n:2}],txt:r=>`Mantiene <b>${1+r.n} franjas</b> de fuego a la vez, en puntos distintos del camino.`},
+ densef:{n:'Combustible denso',ranks:[{c:35,t:2,m:.25},{c:45,t:4,m:.5}],txt:r=>`Las franjas duran <span class="cr">${r.t} s</span> más y meten un <span class="cbu">+${Math.round(r.m*100)}%</span> de stacks de ${kw('burn','quemadura','')}.`},
+ ash:{n:'Humo y ceniza',ranks:[{c:35,s:.75,w:.25},{c:45,s:.6,w:.5}],txt:r=>`Dentro de una franja, los enemigos van un <span class="cvl">${Math.round((1-r.s)*100)}%</span> más lentos y atacan a tus unidades un <span class="cph">${Math.round(r.w*100)}%</span> más despacio.`},
+ // ---- Chorro de ácido · Corrosión ----
+ conc:{n:'Ácido concentrado',ranks:[{c:35,a:2,max:10},{c:40,a:3,max:15},{c:45,a:4,max:20}],txt:r=>`Cada golpe rompe <span class="cph">−${r.a}</span> de armadura (${kw('brk','armadura rota','')}), acumulable hasta <span class="cph">−${r.max}</span>, en vez de −1 hasta −5.`},
+ pudd:{n:'Charcos',ranks:[{c:40,t:3},{c:50,t:5}],txt:r=>`Los enemigos que mata el veneno de esta torre se deshacen en un charco de ${kw('poison','veneno','')} que dura <span class="cr">${r.t} s</span>.`},
+ sores:{n:'Llagas',ranks:[{c:40,p:.5},{c:50,p:1}],txt:r=>`Cuando un enemigo se queda sin armadura, cada golpe del chorro tiene un <span class="cc">${Math.round(r.p*100)}%</span> de aplicarle 1 stack de ${kw('bleed','sangrado','')}.`},
+ // ---- Chorro de ácido · Nube viajera ----
+ dfront:{n:'Doble frente',ranks:[{c:50,n:1}],txt:r=>`Suelta <b>2 nubes</b> a la vez. En los cruces, cada una se va por una rama distinta.`},
+ slowadv:{n:'Avance lento',ranks:[{c:35,sp:.7,m:.5},{c:45,sp:.5,m:1}],txt:r=>`La nube avanza un <span class="cvl">${Math.round((1-r.sp)*100)}%</span> más despacio y mete un <span class="cpo">+${Math.round(r.m*100)}%</span> de stacks de ${kw('poison','veneno','')}.`},
+ trailx:{n:'Estela tóxica',ranks:[{c:40,t:3},{c:50,t:5}],txt:r=>`La nube deja tras de sí un rastro de ${kw('poison','veneno','')} que dura <span class="cr">${r.t} s</span>. Además, si alcanza a un enemigo ${kw('burn','ardiendo','')}, estalla: daño de veneno igual a <span class="cd">10×</span> sus stacks a todos a 1 casilla.`},
+ // ---- Torre sónica · Altavoces ----
+ bass:{n:'Bajo profundo',ranks:[{c:45,cd:8,s:.6,m:2},{c:55,cd:6,s:.8,m:3}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, si hay enemigos, lanza una onda grave: <span class="cd">${r.m}×</span> el daño y ${kw('stun','aturde','')} <span class="cr">${f(r.s)} s</span> a los que alcanza.`},
+ seren:{n:'Serenata bélica',ranks:[{c:50,h:.05,r:1},{c:60,h:.1,r:1.5}],txt:r=>`Invoca a un <b>guitarrista rebelde</b> junto a la torre: sus acordes golpean en área (<span class="ca">${f(r.r)} casillas</span>, 50% del daño) y cada 2 s curan un <span class="chp">${Math.round(r.h*100)}%</span> a las unidades a 2 casillas. Si cae, vuelve a los 10 s.`},
+ feedb:{n:'Acople',ranks:[{c:40,m:.15},{c:50,m:.25}],txt:r=>`Los enemigos ${kw('slow','ralentizados','')} dentro de su alcance reciben un <span class="cd">+${Math.round(r.m*100)}%</span> de daño de tus torres.`},
+ // ---- Torre sónica · Gigante ----
+ daze:{n:'Desorientación',ranks:[{c:45,t:.4,m:.5}],txt:r=>`Los enemigos empujados quedan ${kw('daze','desorientados','')}: se paran <span class="cr">${f(r.t)} s</span> y el siguiente golpe que reciben hace un <span class="cd">+${Math.round(r.m*100)}%</span>.`},
+ echo:{n:'Eco',ranks:[{c:40,p:.75,p2:0},{c:50,p:.75,p2:.4}],txt:r=>`Al apagarse una onda, hay un <span class="cc">75%</span> de que suene una réplica con el <span class="cd">60%</span> del daño${r.p2?`, y esta a su vez un <span class="cc">40%</span> de que suene una tercera`:''}.`},
+ swall:{n:'Muro de sonido',ranks:[{c:45,b:1.5}],txt:r=>`Las ondas ${kw('push','empujan','')} también a los voladores, y las élites y los jefes resisten menos el empuje (<span class="cg">×${f(r.b)}</span> antes de su resistencia).`},
  // ---- torres de bufo ----
  twin:{n:'Runas gemelas',ranks:[{c:40,n:1},{c:50,n:2}],txt:r=>`El altar lanza <b>${1+r.n} runas</b> a la vez.`},
  major:{n:'Runa mayor',ranks:[{c:40,m:.5,t:2},{c:50,m:1,t:4}],txt:r=>`Los bufos de las runas son un <span class="cd">${Math.round(r.m*100)}%</span> más fuertes y duran <span class="cr">${r.t} s</span> más.`},
@@ -1691,8 +1717,14 @@ sala:{
  volc:{n:'Corazón Volcánico',ic:'❤️‍🔥',col:'#ff6a2e',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['erupt','flare','embr'],d:'Acumula Calor mientras dispara (lleno en 8 s): el cono se abre hasta 110° y aplica hasta un 50% más de stacks. Sin objetivo, se enfría.'},
  forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*.9,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo. Para élites, jefes y enemigos con armadura.'}},
 flame:{
- pyro:{n:'Pirómano',ic:'🌋',col:'#ff8a3c',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{cone:90},ab:['napalm','embers','fuel'],d:'Cono más ancho (90°) que quema a muchos enemigos a la vez. Pensada para área.'},
- torch:{n:'Soplete',ic:'🔦',col:'#ff5f3a',lv:{dmg:L4D*1.3,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['focus','deton','intens'],d:'Llama estrecha que golpea a un solo enemigo con muchos más stacks por tick. Se juega como el Láser.'}}};
+ detn:{n:'Detonador',ic:'🎆',col:'#ff8a3c',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['overp','chainr','tarb'],d:'Cuando un enemigo acumula 30 stacks de quemadura de esta torre, explota: pierde la mitad de sus stacks y hace daño en área (1 casilla).'},
+ muro:{n:'Muro de fuego',ic:'🌋',col:'#ff5f3a',lv:{dmg:L4D*.9,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},o:{cone:0,fwall:1,shape:'Franja',areaTxt:'La franja ocupa toda la anchura del camino.'},ab:['morew','densef','ash'],d:'Ya no lanza llamas: enciende una franja de fuego en el camino, delante de su objetivo, que quema durante 4 s a todo el que la cruza.'}},
+acid:{
+ corr:{n:'Corrosión',ic:'🧫',col:'#7fd34a',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['conc','pudd','sores'],d:'Chorro más concentrado: más veneno y más armadura rota por golpe. Lo que mata se deshace en charcos.'},
+ cloud:{n:'Nube viajera',ic:'🌫️',col:'#b8e07a',lv:{dmg:L4D*.9,cd:.7,range:1.2*1.1,area:1.3,hp:L4H,pen:0},o:{tcloud:1,shape:'Nube',areaTxt:'Envenena a todos los enemigos que atraviesa, también a los voladores.'},ab:['dfront','slowadv','trailx'],d:'Ya no dispara: cada 6 s suelta una nube tóxica en el camino que avanza contra corriente hacia los portales (6 casillas) envenenando a todo lo que atraviesa.'}},
+sonic:{
+ spk:{n:'Altavoces de la Resistencia',ic:'📢',col:'#ff9ae0',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{spk:1},ab:['bass','seren','feedb'],d:'Sus ondas ralentizan un 30% (2 s) a los enemigos y animan a tus unidades y a tu héroe dentro de su alcance: +20% de daño.'},
+ giant:{n:'Torre sónica gigante',ic:'📣',col:'#ff6ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2*1.15,area:1.3,hp:L4H,pen:0},o:{giant:1},ab:['daze','echo','swall'],d:'Ondas más potentes que empujan más lejos (0,6 casillas). Pueden desorientar, repetirse como un eco y formar un muro de sonido.'}}};
 // Precios de habilidades de Nv 4: el primer rango (desbloquear) es el caro; las de un solo rango, más caras aún
 {const r5=v=>Math.round(v/5)*5;for(const k in SPECS){const b=TW[k]&&TW[k].cost;if(!b)continue;for(const sp of Object.values(SPECS[k]))for(const a of sp.ab){const R=AB[a]&&AB[a].ranks;if(!R)continue;R.forEach((r,i)=>{r.c=R.length===1?r5(b*4.2):i===0?r5(b*2.8):r5(b*1.9);});}}}
 const GLV=[['1','Nv 1'],['2','Nv 2'],['3','Nv 3'],['4a','Nv 4 · A'],['4b','Nv 4 · B']];
@@ -1907,7 +1939,7 @@ function achTick(dt){if(S.pvE||!S.list)return;
   if(c1||c2||c3){const id=S.chestRel[0],R=RELIC[id];hint('tut_relic','¡Usa tu reliquia!',`Bob está en plena zona de fuego: es el momento perfecto para activar ${R.ic} <b>${R.n}</b>. Pulsa su botón en la barra de reliquias y verás la diferencia.`,tgEl('#relics [data-a="ract"][data-id="'+id+'"]'));}}}
 const YLOCK='Gana una partida con al menos una Salamandra y un Cryomago construidos al final.';if(!ACHS.elem)HEROES.yrsa.lockTxt=YLOCK;
 // torres que necesitan logro para poder salir en las ofertas de la partida (null = logro aún por definir)
-const TLOCK={frost:'chest',poison:'event',sala:'pyro',altar:'armonia',dron:'chapa',cannon:null,flame:null};
+const TLOCK={frost:'chest',poison:'event',sala:'pyro',altar:'armonia',dron:'chapa',cannon:'bombard',flame:'herencia',acid:'oxido',sonic:'marcha'};
 const BASET=()=>[...new Set(['cata'].concat(Object.values(HEROES).filter(h=>!h.late).flatMap(h=>h.deck||[])))];
 const tunl=k=>BASET().includes(k)||/* las torres de la era 2 están disponibles desde el principio cuando juegas en esa era */(TW[k]&&TW[k].era===2&&TW[k].e2b&&typeof eraHas2==='function'&&eraHas2())||(typeof OPT!=='undefined'&&(OPT.u_tw||OPT.u_hr&&Object.values(HEROES).some(h=>(h.deck||[]).includes(k))))||(TLOCK[k]?!!ACHS[TLOCK[k]]:false);
 function achieve(id){if(!ACH[id]||ACHS[id])return;ACHS[id]=Date.now();if(PINS.includes(id)){PINS=PINS.filter(x=>x!==id);savePins();}try{localStorage.setItem('rt-ach',JSON.stringify(ACHS));}catch(e){}
@@ -4679,7 +4711,7 @@ function update(dt){
  S.enemies=S.enemies.filter(e=>!e.leak);
  const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y);
  for(const t of S.list){
-  const T=TW[t.type],s=stats(t);if(T.unit||T.support||T.swarm)continue;t.cd=Math.max(-.1,t.cd-dt);if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);if(t.flash&&(t.flash.t-=dt)<=0)t.flash=null;if(t.fl&&(t.fl.ttl-=dt)<=0)t.fl=null;
+  const T=TW[t.type],s=stats(t);if(T.unit||T.support||T.swarm||T.custom)continue;t.cd=Math.max(-.1,t.cd-dt);if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);if(t.flash&&(t.flash.t-=dt)<=0)t.flash=null;if(t.fl&&(t.fl.ttl-=dt)<=0)t.fl=null;
   let tg=alive(t.tgt||{})&&Math.hypot(t.tgt.x-t.x,t.tgt.y-t.y)<=s.range?t.tgt:null;
   if(!tg){const md=TGT[t.mode]||TGT.core;let bs=0;
    for(const e of S.enemies){if(Math.hypot(e.x-t.x,e.y-t.y)>s.range||(T.ground&&isFly(e)))continue;const sc=md.score(e,prog);
@@ -7105,14 +7137,14 @@ const flareM=e=>{let m=1;for(const z of S.flares||[])if(Math.hypot(e.x-z.x,e.y-z
   const routes=[];const grow=(x,y,path,left)=>{const nx=awayNext(x,y);if(!nx.length||path.length>60){routes.push(path);return;}if(nx.length===1||left<=1){const q=nx[Math.floor(Math.random()*nx.length)];grow(q.x,q.y,path.concat([q]),left);return;}
    const per=Math.max(1,Math.floor(left/nx.length));let rem=left;nx.forEach((q,i)=>{const n=i===nx.length-1?rem:per;rem-=n;if(n>0)grow(q.x,q.y,path.concat([q]),n);});};
   grow(p.x,p.y,[p],3);while(routes.length<3)routes.push(routes[routes.length-1]||[p]);
-  S.planes=S.planes||[];routes.slice(0,3).forEach((r,i)=>S.planes.push({r,i:0,k:-i*.6,dm,hit:new Set(),src:H.pt}));
+  S.planes=S.planes||[];const sid={k:0};routes.slice(0,3).forEach((r,i)=>S.planes.push({r,i:0,k:-i*.6,dm,hit:new Set(),src:H.pt,sid}));
   H.ucd=HUCD;if(S.st)S.st.habU=(S.st.habU||0)+1;try{sfx('ui');}catch(e){}}
  S.aim=null;S.msg='';ui();renderRelics();};}
 {const _ht=heroAbTick;heroAbTick=function(dt){const r=_ht.apply(this,arguments);try{vegaTick(dt);}catch(e){}return r;};}
 function vegaTick(dt){const H=S.hero;
  for(const z of S.flares||[])z.t-=dt;S.flares=(S.flares||[]).filter(z=>z.t>0);
  for(const pl of S.planes||[]){pl.k+=dt*7;if(pl.k<0)continue;while(pl.k>=1&&pl.i<pl.r.length-1){pl.k-=1;pl.i++;}const a=pl.r[pl.i],b=pl.r[Math.min(pl.r.length-1,pl.i+1)],f=Math.min(1,Math.max(0,pl.k)),x=a.x+(b.x-a.x)*f,y=a.y+(b.y-a.y)*f;pl.x=x;pl.y=y;
-  for(const e of S.enemies){if(e.hp<=0||pl.hit.has(e)||Math.hypot(e.x-x,e.y-y)>1.1*K)continue;pl.hit.add(e);hurt(e,pl.dm,pl.src,'phys');S.fx.push({x:e.x,y:e.y,t:.25,m:.25,r:.5*K,col:'#ffb07a'});}
+  for(const e of S.enemies){if(e.hp<=0||pl.hit.has(e)||Math.hypot(e.x-x,e.y-y)>1.1*K)continue;pl.hit.add(e);hurt(e,pl.dm,pl.src,'phys');if(e.hp<=0&&pl.sid&&!S.tut&&!S.pvE){pl.sid.k++;recBest('bombard',pl.sid.k);if(pl.sid.k>=8)achieve('bombard');}S.fx.push({x:e.x,y:e.y,t:.25,m:.25,r:.5*K,col:'#ffb07a'});}
   if(pl.i>=pl.r.length-1&&pl.k>=1)pl.done=1;}
  S.planes=(S.planes||[]).filter(p=>!p.done);
  // Machete: golpes cuerpo a cuerpo a daño completo con sangrado (la mitad del daño la añade aquí, al detectar el golpe)
@@ -7163,6 +7195,135 @@ STORY2.vega=[{sys:1,t:'Señal entrante en una frecuencia de la Resistencia. Orig
  {sp:'ÉTER',g:0,t:'Una nave que no debería estar aquí, con un piloto que tampoco. Pero defendemos este núcleo, y parece que ahora también esta ciudad.'},
  {sp:'VEGA',g:0,t:'Entonces os vendrá bien alguien que conozca el terreno. Tengo un rifle, un dron y una radio que todavía responde. Decidme dónde me queréis.'}];
 {const _oh=openHero;openHero=function(){if(S&&S.era===2&&!S.tut&&!PREVIEWING&&!S.pvE&&!S.pvH&&typeof STO!=='undefined'&&STO.intro&&!STO.e2v){const lines=(!STO.e2a?STORY2.arrive:[]).concat(STORY2.vega);STO.e2v=1;STO.e2a=1;saveSto();const a=arguments,self=this;setTimeout(()=>dlgQueue(lines,()=>_oh.apply(self,a)),400);return;}return _oh.apply(this,arguments);};}
+// ==================== Torres desbloqueables de la Era Distópica: Lanzallamas (Detonador / Muro de fuego), Chorro de ácido (Corrosión / Nube viajera), Torre sónica (Altavoces / Gigante) y sus logros ====================
+// ---- logros que las desbloquean ----
+ACH.herencia={c:'jg',n:'Herencia de fuego',d:'Gana una partida en la Era Distópica con una Salamandra a Nv 4 al final.',tw:'flame'};
+ACH.oxido={c:'jg',n:'Óxido',d:'Deja a 0 la armadura de un jefe rompiéndosela (armadura rota).',tw:'acid'};
+ACH.marcha={c:'jg',n:'Marcha atrás',d:'Haz retroceder a un mismo enemigo 10 casillas en total en una sola oleada (empujones).',tw:'sonic'};
+ACH.bombard={c:'jg',n:'Bombardeo',d:'Mata a 8 enemigos con un solo Ataque aéreo de Vega.',tw:'cannon'};
+APM.marcha={max:10,best:1};APM.bombard={max:8,best:1};
+if(typeof ACHVIS!=='undefined'){ACHVIS.herencia=()=>typeof era2Ok==='function'&&era2Ok();ACHVIS.bombard=()=>typeof era2Ok==='function'&&era2Ok();}
+{const _aw=achWin;achWin=function(){const r=_aw.apply(this,arguments);try{if(!S.tut&&S.era===2&&S.list.some(t=>t.type==='sala'&&t.lvl>=4))achieve('herencia');}catch(e){}return r;};}
+// Óxido: al romper armadura, si un jefe se queda a 0 o menos
+{const _bk=brkAdd;brkAdd=function(e,a,mx){const r=_bk.apply(this,arguments);try{if(e&&isBoss(e)&&!S.tut&&!S.pvE&&armorOf(e,'phys')<=0)achieve('oxido');}catch(x){}return r;};}
+// Marcha atrás: suma lo que retrocede cada enemigo en la oleada (los caminos van por ejes, así que la distancia recorrida es |dx|+|dy|)
+{const _kn=knock;knock=function(e,d){const x0=e.x,y0=e.y;const r=_kn.apply(this,arguments);try{if(!S.tut&&!S.pvE){e.kbT=(e.kbT||0)+(Math.abs(e.x-x0)+Math.abs(e.y-y0))/K;recBest('marcha',Math.floor(e.kbT));if(e.kbT>=10)achieve('marcha');}}catch(x){}return r;};}
+// ---- iconos vectoriales ----
+E2SVG.acid='<svg viewBox="0 0 64 64"><path d="M22 10 h20 v8 h-4 v10 l12 22 a4 4 0 0 1 -3 6 h-30 a4 4 0 0 1 -3 -6 l12 -22 v-10 h-4z" fill="#2a3a1a" stroke="#9be15d" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 44 l6 -10 h12 l6 10z" fill="#9be15d"/><circle cx="26" cy="48" r="2.5" fill="#d8ff9a"/><circle cx="36" cy="50" r="2" fill="#d8ff9a"/><path d="M46 20 L56 14 M48 28 L58 26" stroke="#9be15d" stroke-width="2.5" stroke-linecap="round"/></svg>';
+E2SVG.sonic='<svg viewBox="0 0 64 64"><rect x="18" y="14" width="20" height="36" rx="4" fill="#3a2a40" stroke="#ff8ad8" stroke-width="2.5"/><circle cx="28" cy="38" r="7" fill="#1a1020" stroke="#ff8ad8" stroke-width="2"/><circle cx="28" cy="38" r="2.5" fill="#ffb0e8"/><circle cx="28" cy="22" r="4" fill="#1a1020" stroke="#ff8ad8" stroke-width="1.5"/><path d="M44 26 a10 10 0 0 1 0 12 M50 20 a18 18 0 0 1 0 24" fill="none" stroke="#ff8ad8" stroke-width="2.5" stroke-linecap="round"/></svg>';
+TW.acid.icsvg=E2SVG.acid;TW.sonic.icsvg=E2SVG.sonic;
+// ---- constantes ----
+const DETTH=30,DETR=1,FWT=4,FWR=1.7,CLOUDCD=6,CLOUDSP=1.2*K,CLOUDR=.75*K,CLOUDD=6,SONSP=5*K,SONK=.4,SONKG=.6,GUITRZ=10;
+const unlTarget=(t,s,fly)=>{const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y),md=TGT[t.mode]||TGT.core;let tg=null,bs=0;
+ for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-t.x,e.y-t.y)>s.range||(!fly&&isFly(e)))continue;const sc=md.score(e,prog);if(!tg||sc>bs||(sc===bs&&prog(e)<prog(tg))){tg=e;bs=sc;}}return tg;};
+// casilla de camino más cercana a la torre dentro de su alcance
+function nearPathT(t,R){let b=null,bd=1e9;const r=Math.ceil(R);for(let y=Math.max(0,t.y-r);y<=Math.min(N-1,t.y+r);y++)for(let x=Math.max(0,t.x-r);x<=Math.min(N-1,t.x+r);x++){if(S.cells[y][x]!==2)continue;const d=Math.hypot(x-t.x,y-t.y);if(d<=R&&d<bd){bd=d;b={x,y};}}return b;}
+// ---- estadísticas: el alcance de la Torre sónica crece más con los niveles; los Altavoces animan a las unidades y al héroe cercanos ----
+{const _st=stats;stats=function(t){const s=_st.apply(this,arguments);if(!t)return s;
+ if(!t.hero&&TW[t.type]&&TW[t.type].sonic)s.range*=1+.12*((t.lvl||1)-1);
+ if(S&&S.phase==='wave'&&(t.sd||t.hero)){const sp=S.list.filter(o=>o.type==='sonic'&&o.spec==='spk');if(sp.length){const us=t.hero?[t.hero.s]:t.sd;if(us&&us.some(u=>u&&u.hp>0&&sp.some(o=>Math.hypot(u.x-o.x,u.y-o.y)<=(o.rgC||_st(o).range*1.36))))s.dmg*=1.2;}}
+ return s;};}
+// ---- multiplicador de daño: desorientación (siguiente golpe directo +50%) y Acople (ralentizados cerca de unos Altavoces) ----
+{const _m=e2DmgM;e2DmgM=function(e,src,ty){let m=_m(e,src,ty);if(e.dz>0&&!DNK&&src){m*=1+e.dz;e.dz=0;}if(e.acop>0&&e.fx&&e.fx.slow&&src&&!src.hero&&!src.summ)m*=1+e.acop;return m;};}
+// ==================== LANZALLAMAS ====================
+// Detonador: con 30 stacks de quemadura de esta torre el enemigo explota (los envenenados, al momento con Reacción en cadena)
+function detonate(t,e){const ov=abRank(t,'overp'),ch=abRank(t,'chainr'),r=DETR*K*(1+(ov?ov.r:0)),dmg=e.bn*BURND*.5*(1+(ov?ov.m:0));
+ for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=r){DNK='fire';hurt(o,dmg,t,'elem');DNK=null;if(ch&&o!==e&&o.hp>0)addBurn(o,t,ch.b);}
+ e.bn*=.5;e.detc=.8;S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r,col:'#ff8a3c'});try{sfx('boom');}catch(x){}}
+function detonTick(t){if(t.spec!=='detn')return;const ch=abRank(t,'chainr');
+ for(const e of S.enemies){if(e.hp<=0||e.bsrc!==t||!(e.bn>0)||e.detc>0)continue;if(e.bn>=DETTH||(ch&&e.ps&&e.ps.length&&e.bn>=5))detonate(t,e);}}
+// bidones de brea: en una casilla de camino dentro del alcance, la más cercana a los portales; explotan con fuego
+function tarbTick(t,s,dt){const tb=abRank(t,'tarb');if(!tb)return;S.tarb=S.tarb||[];const mine=S.tarb.filter(b=>b.src===t);
+ if(!(t.acd.tarb>0)&&mine.length<tb.n){t.acd.tarb=tb.cd;let b=null,bf=-1;const r=Math.ceil(s.range);
+  for(let y=Math.max(0,t.y-r);y<=Math.min(N-1,t.y+r);y++)for(let x=Math.max(0,t.x-r);x<=Math.min(N-1,t.x+r);x++){if(S.cells[y][x]!==2||Math.hypot(x-t.x,y-t.y)>s.range)continue;const fv=S.field[y]&&S.field[y][x];if(fv==null||!isFinite(fv)||fv<0)continue;if(S.tarb.some(q=>Math.hypot(q.x-x,q.y-y)<1.5*K))continue;if(fv>bf){bf=fv;b={x,y};}}
+  if(b)S.tarb.push({x:b.x,y:b.y,t:40,src:t,dm:s.dmg*15,pen:s.pen});}}
+function tarbAll(dt){if(!S.tarb||!S.tarb.length)return;S.tarb=S.tarb.filter(b=>{if(!S.list.includes(b.src))return false;b.t-=dt;if(b.t<=0)return false;
+ const lit=S.enemies.some(e=>e.hp>0&&!isFly(e)&&e.bn>0&&Math.hypot(e.x-b.x,e.y-b.y)<=.7*K)||S.pools.some(p=>p.el==='fire'&&Math.hypot(p.x-b.x,p.y-b.y)<=p.r+.5*K);
+ if(!lit)return true;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-b.x,e.y-b.y)<=K){DNK='fire';hurt(e,b.dm,b.src,'elem');DNK=null;}
+ S.pools.push({x:b.x,y:b.y,t:TARF,n:TARB,tk:0,src:b.src,r:.8*K,el:'fire',tar:1});S.fx.push({x:b.x,y:b.y,t:.5,m:.5,r:K,col:'#ff7a2e'});try{sfx('boom');}catch(x){}return false;});}
+// Muro de fuego: franjas que ocupan la casilla de camino delante del objetivo
+function fwallShot(t,tg,s){S.fwall=S.fwall||[];const mw=abRank(t,'morew'),df=abRank(t,'densef'),as=abRank(t,'ash'),max=1+(mw?mw.n:0),q=sqOf(tg.x,tg.y),dur=FWT+(df?df.t:0),n=s.dmg*s.rate*.6*(1+(df?df.m:0));
+ const mine=S.fwall.filter(w=>w.src===t);let w=mine.find(w=>w.x===q.x&&w.y===q.y);
+ if(w){w.t=dur;w.n=n;w.ash=as;return;}
+ if(mine.length>=max){mine.sort((a,b)=>a.t-b.t);w=mine[0];Object.assign(w,{x:q.x,y:q.y,t:dur,n,ash:as,tk:0});}else S.fwall.push({x:q.x,y:q.y,t:dur,n,ash:as,tk:0,src:t});
+ S.fx.push({x:q.x,y:q.y,t:.35,m:.35,r:FWR,col:'#ff6a2e'});}
+function fwallAll(dt){if(!S.fwall||!S.fwall.length)return;for(const w of S.fwall){w.t-=dt;if(!S.list.includes(w.src)){w.t=0;continue;}
+ const ins=S.enemies.filter(e=>e.hp>0&&!isFly(e)&&Math.hypot(e.x-w.x,e.y-w.y)<=FWR);
+ w.tk-=dt;if(w.tk<=0){w.tk+=PTICK;for(const e of ins)addBurn(e,w.src,w.n);}
+ if(w.ash)for(const e of ins){slowE(e,w.ash.s,.3);e.ashW=w.ash.w;e.ashT=.3;}}
+ S.fwall=S.fwall.filter(w=>w.t>0);
+ for(const e of S.enemies)if(e.ashT>0){e.ashT-=dt;if(e.acd!=null)e.acd+=dt*e.ashW;}}
+{const _ft=flameTick;flameTick=function(t,tg,s,cm,TT){if(t.spec==='muro'){fwallShot(t,tg,s);return;}const r=_ft.apply(this,arguments);try{detonTick(t);}catch(e){}return r;};}
+// ==================== CHORRO DE ÁCIDO ====================
+function acidShot(t,tg,s,dm){const cc=abRank(t,'conc'),so=abRank(t,'sores');addPois(tg,dm,t);brkAdd(tg,cc?cc.a:1,cc?cc.max:5);
+ if(so&&armorOf(tg,'phys')<=0&&Math.random()<so.p)addBleed(tg,t,1);
+ S.fx.push({line:[t.x,t.y,tg.x,tg.y],t:.16,m:.16,col:'rgba(155,225,93,.9)'});try{sfx('beam',{r:1.5});}catch(e){}}
+// Nube viajera: nace en el camino junto a la torre y va contra corriente hacia los portales
+function cloudLaunch(t,s){const c=nearPathT(t,s.range);if(!c)return;const df=abRank(t,'dfront'),sa=abRank(t,'slowadv'),tr=abRank(t,'trailx'),n=df?2:1;S.tcl=S.tcl||[];
+ for(let i=0;i<n;i++)S.tcl.push({x:c.x,y:c.y,cx:c.x,cy:c.y,left:CLOUDD*K,sp:CLOUDSP*(sa?sa.sp:1),n:s.dmg*(1+(sa?sa.m:0)),src:t,tk:0,br:i,lt:Math.floor(c.x/K)+','+Math.floor(c.y/K),tr:tr?tr.t:0,pen:s.pen});
+ S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:CLOUDR,col:'#b8e07a'});}
+function cloudAll(dt){if(!S.tcl||!S.tcl.length)return;S.tcl=S.tcl.filter(c=>{if(!S.list.includes(c.src))return false;let mv=c.sp*dt;
+ while(mv>1e-6&&c.left>0){const dx=c.cx-c.x,dy=c.cy-c.y,dd=Math.hypot(dx,dy);
+  if(dd<1e-6){const nx=awayNext(c.cx,c.cy);if(!nx.length){c.left=0;break;}nx.sort((a,b)=>a.x-b.x||a.y-b.y);const q=nx[c.br%nx.length];
+   {const tk=Math.floor(c.cx/K)+','+Math.floor(c.cy/K);if(c.tr&&c.lt!==tk){const q0=sqOf(c.cx,c.cy);S.pools.push({x:q0.x,y:q0.y,t:c.tr,n:c.n*.5,tk:0,src:c.src,r:.6*K});c.lt=tk;}}
+   c.cx=q.x;c.cy=q.y;continue;}
+  const st=Math.min(mv,dd,c.left);c.x+=dx/dd*st;c.y+=dy/dd*st;mv-=st;c.left-=st;}
+ c.tk-=dt;if(c.tk<=0){c.tk+=PTICK*.5;for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-c.x,e.y-c.y)>CLOUDR)continue;addPois(e,c.n*.5,c.src);
+   if(c.tr&&e.bn>0){const tot=(e.ps||[]).reduce((a,q)=>a+q.w,0)*10;DNK='poison';for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=K)hurt(o,tot,c.src,'elem');DNK=null;S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:K,col:'#9be15d'});c.left=0;break;}}}
+ return c.left>0;});}
+function acidTick(t,s,dt){t.cd=Math.max(-.1,t.cd-dt);const TT=twm(t.type,t.spec);
+ if(TT.tcloud){if(t.cd<=0){const has=S.enemies.some(e=>e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range*1.5);if(has){t.cd=CLOUDCD/(s.rate/TW.acid.rate);cloudLaunch(t,s);}}return;}
+ const tg=unlTarget(t,s,true);if(!tg){t.cd=Math.max(t.cd,0);return;}let n=0;
+ while(t.cd<=0&&n++<6){t.cd+=1/s.rate;const crit=Math.random()<s.crit+mkB(tg),dm=s.dmg*(crit?s.critm:1);acidShot(t,tg,s,dm);if(crit)critMark(tg);onHit(tg,t);}}
+// Charcos: los enemigos que mata el veneno de una Corrosión se deshacen en un charco
+{const _ad=achDeath;achDeath=function(e){try{const k=e.src;if(k&&k.type==='acid'&&k.spec==='corr'&&S.list.includes(k)&&e.kdn==='poison'){const pd=abRank(k,'pudd');if(pd){const st=stats(k);S.pools.push({x:e.x,y:e.y,t:pd.t,n:st.dmg,tk:0,src:k,r:.6*K});}}}catch(x){}return _ad.apply(this,arguments);};}
+// ==================== TORRE SÓNICA ====================
+SPECT.guit={n:'Guitarrista rebelde',ic:'🎸',col:'#ff8ad8',w:1,d:1,sp:1};
+function sonicWave(t,s,o){S.sonw=S.sonw||[];const TT=twm(t.type,t.spec),gi=!!TT.giant,sw=abRank(t,'swall'),dz=abRank(t,'daze');
+ S.sonw.push({x:t.x,y:t.y,r:0,R:s.range,sp:SONSP,dm:s.dmg*(o&&o.m||1),pen:s.pen,src:t,hit:new Set(),kb:(gi?SONKG:SONK)*K,fly:!!sw,bres:sw?sw.b:1,slow:TT.spk?.7:0,stun:o&&o.stun||0,dz:dz?dz:null,echo:o&&o.echo!=null?o.echo:1,big:!!(o&&o.stun)});}
+function sonwAll(dt){if(!S.sonw||!S.sonw.length)return;S.sonw=S.sonw.filter(w=>{const t=w.src;if(!S.list.includes(t))return false;const r0=w.r;w.r=Math.min(w.R,w.r+w.sp*dt);
+ for(const e of S.enemies){if(e.hp<=0||w.hit.has(e))continue;const d=Math.hypot(e.x-w.x,e.y-w.y);if(d>w.r||d<r0-.5)continue;w.hit.add(e);
+  const crit=Math.random()<stats(t).crit+mkB(e),dm=w.dm*(crit?stats(t).critm:1);hurt(e,dm,t,'magic',w.pen);if(crit)critMark(e);onHit(e,t);if(e.hp<=0)continue;
+  if(!isFly(e)||w.fly){knock(e,w.kb*((ET[e.t].el||isBoss(e))?w.bres:1));if(w.dz){stunE(e,w.dz.t);e.dz=w.dz.m;}}
+  if(w.slow)slowE(e,w.slow,2);if(w.stun)stunE(e,w.stun);}
+ if(w.r>=w.R){const ec=abRank(t,'echo');if(ec&&w.echo>0){const p=w.echo===1?ec.p:ec.p2;if(p&&Math.random()<p){const s=stats(t);sonicWave(t,s,{m:.6*(w.dm/s.dmg),echo:w.echo===1?2:0,stun:w.stun});}}return false;}return true;});}
+// guitarrista rebelde: unidad invocada junto a la torre; sus acordes golpean en área y curan
+function guitSpawn(t,s){const c=nearPathT(t,s.range);if(!c)return;const B=SPECT.guit,hp=TW.bastion.unit.hp*LV[3].hp*2.2*hpR(S.round),u={type:'bastion',lvl:3,summ:1,beast:'guit',gOwner:t,ttl:9999,x:c.x,y:c.y,cells:[],flag:{x:c.x,y:c.y},ab:{},acd:{},sd:[],xap:10,alert:1.5*K,uspdx:B.sp,ovr:{dmg:s.dmg*.6,rate:1,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
+ u.sd=[{i:0,x:c.x,y:c.y,hp,max:hp,en:null,cd:0,rt:0,tw:u,lock:false,fight:false,wt:B.w,beast:'guit'}];(S.summ=S.summ||[]).push(u);t.guit=u;S.fx.push({x:c.x,y:c.y,t:.6,m:.6,r:1.2*K,col:'#ff8ad8'});}
+function guitTick(t,s,dt){const sr=abRank(t,'seren');if(!sr)return;const u=t.guit,al=u&&(S.summ||[]).includes(u)&&u.sd[0].hp>0;
+ if(!al){t.gT=(t.gT==null?0:t.gT)-dt;if(t.gT<=0){guitSpawn(t,s);t.gT=GUITRZ;}return;}
+ u.ovr.dmg=s.dmg*.6;u.gh=(u.gh||0)+dt;if(u.gh>=2){u.gh=0;const q=u.sd[0];let n=0;for(const o of unitTowers())for(const x of o.sd)if(x!==q&&x.hp>0&&x.hp<x.max&&Math.hypot(x.x-q.x,x.y-q.y)<=2*K){x.hp=Math.min(x.max,x.hp+x.max*sr.h);n++;}if(n)S.fx.push({x:q.x,y:q.y,t:.5,m:.5,r:2*K,col:'#ffb0e8'});}}
+{const _oh=onHit;onHit=function(e,t){const r=_oh.apply(this,arguments);try{if(t&&t.beast==='guit'&&t.gOwner&&S.list.includes(t.gOwner)){const sr=abRank(t.gOwner,'seren');if(sr){const q=t.sd[0],dm=t.ovr.dmg*.5;for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-q.x,o.y-q.y)<=sr.r*K)hurt(o,dm,t.gOwner,'magic',0);S.fx.push({x:q.x,y:q.y,t:.25,m:.25,r:sr.r*K,col:'#ff8ad8'});}}}catch(x){}return r;};}
+function sonicTick(t,s,dt){t.cd=Math.max(-.1,t.cd-dt);for(const k in t.acd)t.acd[k]=Math.max(0,(t.acd[k]||0)-dt);t.rgC=s.range;
+ const fb=abRank(t,'feedb');if(fb)for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range)e.acop=Math.max(e.acop||0,fb.m);
+ guitTick(t,s,dt);
+ const has=S.enemies.some(e=>e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range);if(!has){t.cd=Math.max(t.cd,0);return;}
+ const bs=abRank(t,'bass');if(bs&&!(t.acd.bass>0)){t.acd.bass=bs.cd;sonicWave(t,s,{m:bs.m,stun:bs.s,echo:0});try{sfx('boom');}catch(e){}}
+ let n=0;while(t.cd<=0&&n++<4){t.cd+=1/s.rate;sonicWave(t,s);try{sfx('beam',{r:.6});}catch(e){}}}
+// ---- tick común ----
+function unlTick(dt){for(const e of S.enemies)e.acop=0;
+ for(const t of S.list){const T=TW[t.type];if(!T)continue;
+  if(t.type==='flame'){if(!t.acd)t.acd={};tarbTick(t,stats(t),dt);for(const e of S.enemies)if(e.detc>0)e.detc-=dt;}
+  if(t.type==='acid')acidTick(t,stats(t),dt);
+  if(t.type==='sonic')sonicTick(t,stats(t),dt);}
+ tarbAll(dt);fwallAll(dt);cloudAll(dt);sonwAll(dt);}
+{const _t=e2TowersTick;e2TowersTick=function(dt){const r=_t.apply(this,arguments);try{unlTick(dt);}catch(e){}return r;};}
+{const _nr=nextRound;nextRound=function(){try{S.tarb=[];S.fwall=[];S.tcl=[];S.sonw=[];for(const t of S.list){t.guit=null;t.gT=0;}}catch(e){}return _nr.apply(this,arguments);};}
+// ---- dibujo ----
+function unlDraw(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000;
+ for(const w of S.fwall||[]){const a=Math.min(.6,w.t/1.5),f=.85+.15*Math.sin(now*14+w.x);g.fillStyle='rgba(255,110,40,'+a*.55+')';g.beginPath();g.arc(X(w.x),X(w.y),FWR*CS*f,0,7);g.fill();g.strokeStyle='rgba(255,200,90,'+a+')';g.lineWidth=lw(2);g.beginPath();for(let i=0;i<7;i++){const px=X(w.x)-FWR*CS+i*FWR*CS/3,h=(.5+.5*Math.abs(Math.sin(now*9+i*1.7+w.y)))*CS*1.2;g.moveTo(px,X(w.y)+CS*.6);g.lineTo(px+CS*.2,X(w.y)+CS*.6-h);}g.stroke();}
+ for(const b of S.tarb||[]){g.fillStyle='#3a2f28';g.strokeStyle='#8a6a4a';g.lineWidth=lw(1.5);g.beginPath();g.rect(X(b.x)-CS*.45,X(b.y)-CS*.6,CS*.9,CS*1.2);g.fill();g.stroke();g.strokeStyle='#c9a24a';g.beginPath();g.moveTo(X(b.x)-CS*.45,X(b.y)-CS*.2);g.lineTo(X(b.x)+CS*.45,X(b.y)-CS*.2);g.moveTo(X(b.x)-CS*.45,X(b.y)+CS*.2);g.lineTo(X(b.x)+CS*.45,X(b.y)+CS*.2);g.stroke();}
+ for(const c of S.tcl||[]){g.fillStyle='rgba(155,225,93,.14)';for(let i=0;i<5;i++){const a=now*1.5+i*1.26,r=CLOUDR*CS*.55;g.beginPath();g.arc(X(c.x)+Math.cos(a)*r*.6,X(c.y)+Math.sin(a*1.3)*r*.5,r,0,7);g.fill();}g.strokeStyle='rgba(184,224,122,.6)';g.lineWidth=lw(1);g.setLineDash([lw(3),lw(3)]);g.beginPath();g.arc(X(c.x),X(c.y),CLOUDR*CS,0,7);g.stroke();g.setLineDash([]);}
+ for(const w of S.sonw||[]){const k=w.r/w.R,a=(1-k*.7)*(w.big?1:.8);g.strokeStyle='rgba(255,138,216,'+a+')';g.lineWidth=lw(w.big?5:2.5);g.beginPath();g.arc(X(w.x),X(w.y),w.r*CS,0,7);g.stroke();g.strokeStyle='rgba(255,220,245,'+a*.5+')';g.lineWidth=lw(1);g.beginPath();g.arc(X(w.x),X(w.y),Math.max(0,w.r*CS-lw(4)),0,7);g.stroke();}
+ for(const e of S.enemies)if(e.dz>0){g.font=Math.round(CS*.9)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('💫',X(e.x),X(e.y)-ET[e.t].r*CS*EVS-lw(6));}}
+{const _d=e2DrawWorld;e2DrawWorld=function(lw){const r=_d.apply(this,arguments);try{unlDraw(lw);}catch(e){}return r;};}
+// ---- fichas: efectos base y palabras clave ----
+{const _ef=effHtml;effHtml=function(T,src){if(T.acidj)return kw('poison','Veneno',src)+' + '+kw('brk','Armadura rota',src);if(T.sonic)return kw('push','Empuje',src)+' '+(T.giant?f(SONKG):f(SONK))+' casillas'+(T.spk?' + '+kw('slow','Ralentización',src)+' 30%':'');return _ef.apply(this,arguments);};}
+const UNLTXT={acid:T=>T.tcloud?'':'Cada chorro aplica stacks de veneno (su «daño») y rompe −1 de armadura, hasta −5. Alcanza también a los voladores.',
+ sonic:T=>'Cada onda sale de la torre y se expande hasta su alcance: golpea una vez a cada enemigo que atraviesa y lo empuja hacia atrás por el camino'+(T.giant?' (los voladores no, salvo con Muro de sonido)':' (los voladores no)')+'. Su alcance crece más que el de otras torres al subir de nivel.'};
+{const _ti=towerInfo;towerInfo=function(t){let h=_ti.apply(this,arguments);try{if(t&&UNLTXT[t.type]){const tx=UNLTXT[t.type](twm(t.type,t.spec));if(tx){const i=h.indexOf('<div class="row');h=i>=0?h.slice(0,i)+`<small>${tx}</small>`+h.slice(i):h+`<small>${tx}</small>`;}}}catch(e){}return h;};}
+{const _si=shopInfo;shopInfo=function(k,quiet){let h=_si.apply(this,arguments);try{if(UNLTXT[k]){const st=quiet?cpState(k):{lv:1,spec:null},tx=UNLTXT[k](twm(k,st.spec));if(tx){const i=h.indexOf('<div class="row');h=i>=0?h.slice(0,i)+`<small>${tx}</small>`+h.slice(i):h+`<small>${tx}</small>`;}}}catch(e){}return h;};}
+E2KW.daze=()=>'<b>Desorientado</b>'+R('','Duración','0,4 s')+'<small>La onda de la Torre sónica gigante lo ha dejado aturdido un instante, y el siguiente golpe directo que reciba hará un 50% más de daño.</small>';
 // ---- música de fondo ----
 // La canción se inyecta solo en las versiones de prueba (build.js --out, si existe musica/tema.mp3, que no va al repositorio).
 // Suena en bucle desde el primer clic o tecla (el navegador no deja sonar antes). Volumen = general × música.
