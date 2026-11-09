@@ -1271,6 +1271,47 @@ body.mfs .tk{width:26px;height:38px}body.mfs .tk .tki{font-size:12px;top:3px}bod
 .icimg img{width:1.25em;height:1.25em;vertical-align:-.25em;object-fit:contain}
 /* siluetas de las torres con icono dibujado: sin el disco de fondo, para que la sombra tenga la forma del icono */
 .bti.un .icsvg svg,.sil .icsvg svg,.lsh .icsvg svg{background:none!important}
+/* ===== Compendio enlazado: botón 📖, flechas de evolución, Mecánicas y aviso de enemigo nuevo ===== */
+.hascp{position:relative}
+.hascp>.ttl,.kpanel.hascp>b:first-child{padding-right:30px}
+.cpgo{position:absolute;top:6px;right:6px;z-index:2;margin:0!important;width:26px;height:26px;padding:0!important;border-radius:7px!important;display:grid;place-items:center;font-size:15px;line-height:1;background:var(--paper2,#f3e6c8)!important;border:1px solid var(--pline2,#b88a5a)!important;cursor:pointer;filter:saturate(.9)}
+.cpgo:hover{filter:none;transform:translateY(-1px)}
+#tip.hascp .cpgo{top:6px;right:8px}
+/* flechas de evolución entre fichas del compendio de enemigos */
+.bktiles:has(.bkevo){column-gap:24px}
+.bkevo{position:absolute;left:-25px;top:50%;transform:translateY(-62%);width:26px;height:16px;color:var(--ink2,#7a4a28);opacity:.85;pointer-events:auto;font-style:normal}
+.bkevo svg{display:block}
+/* Mecánicas */
+.mecbic{font-size:26px;display:grid!important;place-items:center;background:var(--paper2,#ecdcbb)}
+.mecg{display:block;margin:-2px 0 6px!important;font-style:italic;opacity:.75}
+.mecuses{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.mecuse{display:inline-flex!important;align-items:center;gap:6px;margin:0!important;padding:3px 9px 3px 4px!important;border-radius:9px!important;font-size:13px;background:var(--paper2)!important;border:1px solid var(--pline2)!important;color:var(--ink)!important;cursor:pointer}
+.mecuse i{width:22px;height:22px;border-radius:50%;display:inline-grid;place-items:center;font-style:normal;font-size:13px;overflow:hidden}
+.mecuse i .icst,.mecuse i svg,.mecuse i img{width:20px;height:20px}
+/* aviso de enemigo nuevo: abajo en el centro */
+#nenot{position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);z-index:60;transition:transform .35s cubic-bezier(.2,1.3,.4,1),opacity .3s;opacity:0;pointer-events:none}
+#nenot.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.nenot{display:flex!important;align-items:center;gap:10px;margin:0!important;padding:8px 14px 8px 8px!important;border-radius:12px!important;background:#f5e9cf!important;color:#4a2e1c!important;border:none!important;box-shadow:0 0 0 3px #c0622e,0 10px 26px rgba(0,0,0,.6);cursor:pointer;text-align:left;animation:nenp 1.6s ease-in-out infinite}
+@keyframes nenp{50%{box-shadow:0 0 0 3px #c0622e,0 0 20px 4px rgba(192,98,46,.75),0 10px 26px rgba(0,0,0,.6)}}
+.necic{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:26px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25),0 0 0 2px #c0622e;flex:0 0 auto;overflow:hidden}
+.necic .icst,.necic svg,.necic img{width:40px;height:40px}
+.nentx b{display:block;font:700 11px system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#c0622e}
+.nentx span{display:block;font:700 16px Georgia,serif}
+.nentx small{display:block;font-size:12.5px;color:#7a5a40;max-width:260px}
+/* ficha corta al pulsar el aviso (pausa) */
+#necard{position:fixed;inset:0;z-index:70;display:none;place-items:center;background:rgba(8,10,14,.55)}
+#necard.on{display:grid}
+.necpap{position:relative;width:min(440px,92vw);background:#f5e9cf;color:#4a2e1c;border-radius:12px;padding:16px 18px 14px;box-shadow:0 0 0 3px #6b3f22,0 16px 40px rgba(0,0,0,.6)}
+.necpap .cpgo{top:10px;right:10px}
+.nechd{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.nechd b{display:block;font:700 22px Georgia,serif}
+.nechd small{font-size:12.5px;color:#7a5a40}
+.necpap .esec{color:#a0532a}
+.necpap p{margin:4px 0 12px;font-size:15px;line-height:1.5}
+.necbt{display:flex;justify-content:flex-end}
+.necbt .go{margin:0!important}
+@media (max-width:760px),(max-height:430px){#nenot{bottom:8px}.nentx small{max-width:190px}}
+.bktiles+.bktiles{margin-top:8px}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -1285,7 +1326,7 @@ body.mfs .tk{width:26px;height:38px}body.mfs .tk .tki{font-size:12px;top:3px}bod
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v286</div>
+<div id="ver">Towerize v287</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -5103,7 +5144,7 @@ function kwHtml0(id,src){
  if(id==='brk')return `<b>Armadura rota</b>`+R('cr','Duración de cada golpe',BRKT+' s')+'<small>Reduce la armadura física del enemigo. Cada golpe suma su reducción y caduca por separado, hasta un máximo. Beneficia a todo el daño físico, venga de la torre que venga.</small>';
  if(id==='flam')return `<b>Inflamable</b>`+R('cd','Al arder',TARB+' stacks de quemadura por segundo')+R('cr','Duración del fuego',TARF+' s')+'<small>Si le llega fuego (un enemigo con quemadura o un charco de fuego), arde y se convierte en un charco de fuego que quema a quien esté dentro. Cualquier fuego prende cualquier sustancia inflamable, sea de la torre que sea.</small>';
  if(id==='stun')return `<b>Aturdir</b>`+R('cr','Duración',f(STUNT)+' s')+'<small>Un enemigo aturdido no se mueve. No se puede aturdir a un enemigo congelado. Los jefes sufren la mitad (resistencia de jefe).</small>';
- if(id==='burn')return `<b>Quemadura</b> · daño elemental`+R('cd','Daño de cada stack',BURND+' por segundo')+R('cr','Pérdida de stacks',Math.round(BURNK*100)+'% por segundo')+'<small>Los stacks no caducan por tiempo: cada segundo el enemigo pierde una parte de ellos. Mientras tanto, cada stack hace daño elemental (ignora la armadura) por segundo. Si lo golpeas sin parar, los stacks se acumulan hasta un equilibrio; si dejas de golpearlo, el fuego se apaga solo.</small>';
+ if(id==='burn')return `<b>Quemadura</b> · daño elemental`+R('cd','Daño de cada stack',BURND+' por segundo')+R('cr','Reducción','−'+Math.round(BURNK*100)+'% de stacks por segundo')+'<small>Los stacks no caducan por tiempo: cada segundo el enemigo pierde una parte de ellos. Mientras tanto, cada stack hace daño elemental (ignora la armadura) por segundo. Si lo golpeas sin parar, los stacks se acumulan hasta un equilibrio; si dejas de golpearlo, el fuego se apaga solo.</small>';
  if(id==='beam'){const ok=c&&c.T.beam,T=ok?c.T:TW.laser,s=ok?c.s:{dmg:T.dmg,rate:T.rate};
   return `<b>Rayo continuo</b>`+'<small>Se mantiene sobre un objetivo y le hace daño constante, en vez de disparos sueltos. Cambia de objetivo cuando muere o sale del rango.</small>';}
  return '';
@@ -5125,13 +5166,15 @@ function durOf(T,s){if(T.log)return f(s.ldur||logDur(1))+' s (rodando)';if(T.wal
 const USPN={pal:'Paladín',ass:'Asesino',fist:'Monje de batalla',drunk:'Maestro ebrio'};
 function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith('shop:'))k=src.slice(5);else if(src.startsWith('tw:')&&S&&S.list){const t=S.list.find(o=>'tw:'+o.id===src);if(t){k=t.type;sp=t.spec;}}
  const ic=(sp&&UIC[sp])||(k&&UIC[k]);if(!ic)return '';const T=TW[k]||{};return `<span class="tuic uhic" style="background:${T.col||'#5b8def'}" title="">${icHtml(ic)}</span>`;}
+// fuera del compendio, el tipo de daño ya lo dice el icono junto a «Daño»: no hace falta su fila
+const dtRowOn=src=>!!(CP&&CP.open);
 function rows(s,T,src,extra){
  const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*SPLASH)+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
-  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
+  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
    (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+cr+(ef?R('cf',kst('eff','Efectos',src),ef):'')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`+'</div>'+extra.tail;}
- return dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+(T.puddle?R('ccl',kst('cool','Enfriamiento',src)+' ('+kst('pstk','Acumulación',src)+')',f(1/s.rate)+' s ('+f(PTICK)+' s)'):R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s'))+(du?R('cr',kst('dur','Duración',src),du):'')+R('cg',kst('rng','Rango',src),cas(s.range/K))+objRow(!!T.ground,src)+
+ return dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+(T.puddle?R('ccl',kst('cool','Enfriamiento',src)+' ('+kst('pstk','Acumulación',src)+')',f(1/s.rate)+' s ('+f(PTICK)+' s)'):R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s'))+(du?R('cr',kst('dur','Duración',src),du):'')+R('cg',kst('rng','Rango',src),cas(s.range/K))+objRow(!!T.ground,src)+
   (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(T.burn&&T.cone?R('ca',kst('area','Área',src),'Cono de '+T.cone+'°'):'')+
   (s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+(s.dmg>0||T.dot||T.burn?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'')+
   (T.log?R('',kst('push','Empuje',src),'0,5 casillas'):'')+(extra||'')+(ef?R('cf',kst('eff','Efectos',src),ef):'');
@@ -5148,12 +5191,16 @@ function tgtRow0(t,src,pinned){
 function unitRows(T,src,t,pinned,hpm,uap){const U=T.unit,ap=U.ap+(uap||0),mr=t&&abRank(t,'sacred')?abRank(t,'sacred').a:0;
  return {u:1,n:R('',kst('usol','Nº de unidades',src),U.n),life:R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+(mr?R('cmg',kst('umr','Resistencia mágica',src),armTxt(mr)):'')+R('cr',kst('urez','Reaparición',src),U.rez+' s'),rng:U.range?R('cg',kst('rng','Rango',src),cas(U.range)):'',obj:objRow(!U.range,src),tail:
   (t?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`:'<small>Haz clic en la torre para mover su bandera.</small>'):'')};}
+// ficha de una torre construida: solo información. Mejorar, especializar, comprar habilidades y vender se hacen en el menú de botones de la torre.
+// En Nv 4 se listan sus habilidades con el rango que tiene (el detalle, en el bocadillo de cada una).
+function abRows(t){if(t.lvl!==4||!t.spec||!SPECS[t.type])return '';const src='tw:'+t.id;
+ return '<div class="esec" style="margin-top:8px">Habilidades</div>'+SPECS[t.type][t.spec].ab.map(id=>{const D=AB[id],rk=t.ab[id]||0,n=D.ranks.length;return R(rk?'':'cno',kst('ab_'+id,D.n,src),rk?(rk>=n?'Máx.':'Rango '+rk+'/'+n):'—');}).join('');}
 function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
  const X=tinfo(t);
  return `<div class="ttl ttlg"><b>${X.ic} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap):tgtRow(t,src,PR.pinned&&PR.key===src))+
-  (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+upRow(t,PR.pinned&&PR.key===src)+(PR.pinned&&PR.key===src?`<div class="tgt"><button data-a="sell">Vender torre (<span class="gd">+${sellVal(t)} 🪙</span>)</button></div>`:'')+(T.unit?'':dpsRow(s,T,src));
+  (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
 function lvTabs(id,sn){let h='';for(let n=1;n<=nStates(id);n++){const ok=tlvOk(id,n);if(!ok)continue;/* sin spoilers: solo los niveles alcanzados */const X=n>=4?SPECS[id][Object.keys(SPECS[id])[n-4]]:null;
@@ -6322,7 +6369,7 @@ function loop(t){
  const gon=S&&(S.hero||S.tut)&&S.round>=1&&S.phase!=='won'&&S.phase!=='lost'&&!document.body.classList.contains('inmenu');if(gon)GT.r+=Math.min(raw,3600);try{heroCard();}catch(e){}try{emapTick(raw);}catch(e){}if(gon){/* héroe caído con una acción suya activa (moverlo, habilidad): se cancela para no bloquear el resto */const H=S.hero;if(H&&H.s&&H.s.hp<=0&&(S.aim==='hero'||S.aim==='habb'||S.aim==='habu')){S.aim=null;S.aimT=null;S.msg='';renderRelics();ui();}
  /* un enemigo junto al núcleo con el juego a más de ×1: se baja a ×1 para dar tiempo a reaccionar (una vez por enemigo) */
  if(S.phase==='wave'&&S.speed>1&&S.core&&!PREVIEWING){for(const e of S.enemies){if(e.hp>0&&!e.leak&&!e.nearC&&Math.hypot(e.x-S.core.x,e.y-S.core.y)<=1.6*K){e.nearC=1;S.lspd=1;S.speed=1;ui();toast('🐢 Velocidad ×1: un enemigo está a punto de llegar al núcleo.');break;}}}}hoverTick(rdt);layoutSide();posFocus();ptipTick();$('relic').classList.toggle('blur',!!(RL.open&&!RL.hpick&&(RL.towo||RL.ev||(RL.choices&&RL.choices.length))));{const lk=!compOk();for(const b of document.querySelectorAll('[data-a="comp"]'))b.classList.toggle('lk',lk);}if(APAN.open)apanTick();document.body.classList.toggle('ovl',!!(LB.open||RL.open||PMU.open||FO.open||$('endscr').classList.contains('open')));tryTowerOffer();hintTick(rdt);hpanTick();dnTick(rdt);
- const sp=S.speed,held=LB.open||RL.open||FO.open,forced=held||S.phase!=='wave',slw=(OPT.slow&&S.phase==='wave')?(HV.sl||0):0;
+ const sp=S.speed,held=LB.open||RL.open||FO.open||(typeof NEC!=='undefined'&&NEC.open),forced=held||S.phase!=='wave',slw=(OPT.slow&&S.phase==='wave')?(HV.sl||0):0;
  // avance rápido: nadie en rango de torres ni del héroe → ×3 (se calcula cada cuarto de segundo)
  if(S.phase==='wave'&&OPT.ffwd!==false&&sp>0&&sp<3&&!held&&!PREVIEWING){FF.t-=raw;if(FF.t<=0){FF.t=.25;FF.on=ffIdle();}}else FF.on=false;
  const sp2=FF.on&&!slw?3:sp;
@@ -7324,6 +7371,121 @@ const UNLTXT={acid:T=>T.tcloud?'':'Cada chorro aplica stacks de veneno (su «da�
 {const _ti=towerInfo;towerInfo=function(t){let h=_ti.apply(this,arguments);try{if(t&&UNLTXT[t.type]){const tx=UNLTXT[t.type](twm(t.type,t.spec));if(tx){const i=h.indexOf('<div class="row');h=i>=0?h.slice(0,i)+`<small>${tx}</small>`+h.slice(i):h+`<small>${tx}</small>`;}}}catch(e){}return h;};}
 {const _si=shopInfo;shopInfo=function(k,quiet){let h=_si.apply(this,arguments);try{if(UNLTXT[k]){const st=quiet?cpState(k):{lv:1,spec:null},tx=UNLTXT[k](twm(k,st.spec));if(tx){const i=h.indexOf('<div class="row');h=i>=0?h.slice(0,i)+`<small>${tx}</small>`+h.slice(i):h+`<small>${tx}</small>`;}}}catch(e){}return h;};}
 E2KW.daze=()=>'<b>Desorientado</b>'+R('','Duración','0,4 s')+'<small>La onda de la Torre sónica gigante lo ha dejado aturdido un instante, y el siguiente golpe directo que reciba hará un 50% más de daño.</small>';
+// ==================== COMPENDIO ENLAZADO CON LA PARTIDA ====================
+// · Botón 📖 en la ficha lateral (torre, enemigo, héroe, reliquia) y en los bocadillos de palabras clave: abre el libro en esa página.
+// · Pestaña «Mecánicas»: todas las palabras clave agrupadas, generadas con los mismos textos de los bocadillos. Sin spoilers.
+// · Flechas de evolución entre los enemigos de una misma línea (Guerrero → Veterano → Campeón…).
+// · Aviso de «¡Nuevo enemigo!» la primera vez que aparece cada tipo, con su «Cómo enfrentarlo».
+
+// ---- palabras clave por grupos: [id, nombre, icono] ----
+const MECG=[
+ ['Estados',[['burn','Quemadura','🔥'],['poison','Veneno','☠️'],['bleed','Sangrado','🩸'],['chill','Hipotermia','🥶'],['ez','Electrizado','⚡'],['brk','Armadura rota','🔨'],['slow','Ralentización','🐌'],['freeze','Congelar','🧊'],['stun','Aturdir','💫'],['daze','Desorientado','🌀'],['root','Enredo','🌿'],['sticky','Pegajoso','🍯'],['flam','Inflamable','🛢️'],['wet','Mojado','💧'],['cursed','Maldito','🌑'],['poly','Transformado','🐸'],['fear','Aterrado','😱'],['mark','Marcado','🎯'],['prey','Presa','🦅'],['inf','Infectado','🦠'],['lmk','Marcado con láser','🔴'],['vc','Carga','🔋'],['stk','Acumulable','➕']]],
+ ['Tipos de daño',[['tphys','Daño físico','⚔️'],['tmagic','Daño mágico','✨'],['telem','Daño elemental','🌈'],['crit','Crítico','❗'],['penp','Penetración','🗡️'],['aoedmg','Daño en área','💥'],['area','Área','⭕'],['chain','Rebote','🔗'],['beam','Rayo continuo','📏'],['push','Empuje','👋']]],
+ ['Estadísticas de torres',[['dmg','Daño','🎯'],['cool','Enfriamiento','⏱️'],['rng','Rango','📡'],['dps','DPS','📈'],['dur','Duración','⌛'],['tgt','Objetivo','🧭'],['tgts','Objetivos','🥾'],['eff','Efectos','🧪'],['mag','Cargador','🔫'],['lvl','Nivel','⭐'],['cost','Coste','🪙'],['upc','Mejora','⬆️']]],
+ ['Unidades y enemigos',[['ehp','Vida','❤️'],['espd','Velocidad','👟'],['edmg','Daño al núcleo','💔'],['egold','Oro por baja','💰'],['eud','Daño a unidades','🗡️'],['eac','Enfriamiento enemigo','⏱️'],['erg','Rango enemigo','🏹'],['eblk','Corpulencia','🧱'],['aphys','Armadura','🛡️'],['amagic','Resistencia mágica','🔮'],['umr','Resistencia mágica de unidades','🔮'],['bres','Resistencia a control','👑'],['fly','Volador','🪽'],['aura','Aura','🌟'],['dodge','Escurridizo','💨'],['steal','Saqueo','💸'],['pierce','Perforante','📌'],['curse','Maldición','🕯️'],['eheal','Curación tribal','🌿'],['usol','Soldados','💂'],['uhp','Vida del soldado','❤️'],['urez','Reaparición','🔄']]],
+ ['Héroes',[['hlv','Nivel de héroe','⭐'],['hxp','Experiencia','✨'],['hrez','Reaparición del héroe','🔄'],['hrel','Reliquia inicial','💎'],['hmel','Daño en melee','✊'],['g_hab','Habilidad del héroe','🌀']]],
+ ['Partida',[['g_core','Núcleo','💠'],['g_piece','Pieza','🧩'],['g_portal','Portal','🌀'],['g_solar','Solar','⬜'],['g_tile','Casilla especial','✨'],['vch','Vale de mejora','🎟️'],['rcd','Recarga de reliquia','⏳']]]];
+const MECI={};for(const[g,l]of MECG)for(const[id,n,ic]of l)MECI[id]={id,n,ic,g};
+// contexto para las palabras que dependen de una torre o un enemigo concretos
+const MECCTX={ehp:'en:norm',espd:'en:norm',edmg:'en:norm',egold:'en:norm',dmg:'shop:arrow',cool:'shop:arrow',rng:'shop:arrow',dps:'shop:arrow',eff:'shop:arrow',tgt:'shop:arrow',lvl:'shop:arrow',cost:'shop:arrow',upc:'shop:arrow'};
+// quién usa cada mecánica (torres, enemigos y héroes); también decide si ya la has descubierto
+const MECUSE={burn:['tw:sala','tw:flame','tw:monk','hr:yrsa'],poison:['tw:poison','tw:acid','tw:arrow'],bleed:['tw:cannon','tw:bastion','tw:bunker','hr:vega'],chill:['hr:yrsa'],ez:['tw:tesla'],
+ brk:['tw:cata','tw:poison','tw:acid','tw:nano','tw:sala'],slow:['tw:frost','tw:sonic','tw:straw'],freeze:['tw:frost'],stun:['tw:tesla','tw:cata','tw:laser','tw:sonic'],daze:['tw:sonic'],root:['hr:sylvana'],
+ sticky:['tw:cata'],flam:['tw:cata'],wet:['tw:augur'],cursed:['tw:orb'],poly:['tw:orb'],fear:['tw:orb'],mark:['tw:arrow'],prey:['hr:sylvana'],inf:['tw:nano'],lmk:['tw:bunker'],vc:['tw:laser'],
+ chain:['tw:tesla'],beam:['tw:orb','tw:laser'],push:['tw:sonic','tw:cannon','tw:wood'],mag:['tw:bunker'],
+ dodge:['en:raider'],steal:['en:raider'],pierce:['en:javelin'],curse:['en:warlock'],eheal:['en:shaman'],aura:['en:custodian'],fly:['en:bat','en:harpy','en:griffin'],bres:['en:boss','en:colossus']};
+const mecRefOk=r=>{const[t,k]=r.split(':');return t==='hr'?(HEROES[k]&&(seen('hr',k)||!HEROES[k].lockTxt)):seen(t,k);};
+const mecOk=id=>{const u=MECUSE[id];return !u||u.some(mecRefOk);};
+// «Cómo enfrentarlo»: una o dos frases por enemigo
+const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barren en grupo.',vet:'Más vida y algo de armadura: el daño mágico o elemental rinde más.',champ:'Mucha armadura: usa daño mágico, elemental o penetración.',
+ fast:'Corre mucho y aguanta poco: daño en área o ralentizarlo.',runner:'Muy rápido: ralentízalo o bloquéalo con tus unidades.',raider:'Esquiva a tus soldados y te roba oro si llega: mátalo con torres.',
+ tank:'Lento y con mucha vida: concentra en él el daño fuerte.',armored:'Muy blindado: daño mágico, elemental o penetración. La armadura rota ayuda.',
+ bat:'Voladores débiles en grupo: torres de área que alcancen el aire.',harpy:'Vuela: tus soldados no lo paran. Usa torres que den al aire.',griffin:'Volador resistente: necesitas mucho daño contra el aire.',
+ sling:'Se para a disparar a tus unidades desde lejos: quítalo pronto con torres.',javelin:'Sus jabalinas atraviesan media armadura de tus unidades.',
+ acolyte:'Resiste la magia y daña a tus unidades con ella: usa daño físico.',warlock:'Maldice a tus torres cercanas, que disparan más lento: mátalo primero.',
+ shaman:'Cura a los enemigos de alrededor: elimínalo antes que al resto.',custodian:'Su aura protege a los de alrededor: mátalo primero.',
+ mini:'Mucha vida y daño: concentra el fuego y frénalo.',elite:'Muy resistente y peligroso: prepara daño fuerte y control.',
+ boss:'Si llega al núcleo, pierdes. Resiste el control: necesitas mucho daño.',colossus:'Al perder vida suelta mini-élites: guarda daño para ellas.',bob:'Usa tu reliquia cuando esté en tu zona de fuego.',
+ cub:'Cachorros rápidos en manada: daño en área.',greyw:'Al bajar de la mitad aúlla y acelera a los lobatos.',bigw:'Derriba barricadas y muros y aparta a tus soldados.',momdrg:'Escupe fuego a tus unidades: mantenlas lejos o usa torres.'};
+const efamOf=k=>{const f=EFAM.find(([n,l])=>l.includes(k));return f?f[0]:'';};
+
+// ---- pestaña nueva ----
+CTABS.splice(CTABS.findIndex(x=>x[0]==='lg'),0,['mc','Mecánicas']);CTICO.mc='⚙️';BKSUB.mc='Cómo funciona todo';
+{const _bi=bkItems;bkItems=function(t){
+ if(t==='mc'){const L=[];for(const[g,l]of MECG){L.push({sec:g});for(const[id,n,ic]of l)L.push({id,ic,n,ok:mecOk(id)});}return L;}
+ const L=_bi.apply(this,arguments);
+ if(t==='en'){const ids=L.filter(x=>x.id!=null).map(x=>x.id);for(const it of L)if(it.id&&EVO[it.id]&&ids.includes(EVO[it.id].from))it.evo=EVO[it.id];
+  // dentro de una sección con una línea de evolución, lo que no pertenece a esa línea va en otra fila
+  const inChain=k=>!!(EVO[k]&&ids.includes(EVO[k].from))||Object.values(EVO).some(v=>v.from===k&&ids.includes(Object.keys(EVO).find(u=>EVO[u]===v)));
+  const out=[];let sec=[];const flush=()=>{if(sec.some(x=>inChain(x.id))){const a=sec.filter(x=>inChain(x.id)),b2=sec.filter(x=>!inChain(x.id));out.push(...a);if(b2.length){out.push({sec:'\u200b'});out.push(...b2);}}else out.push(...sec);sec=[];};
+  for(const it of L){if(it.sec){flush();out.push(it);}else sec.push(it);}flush();return out;}
+ return L;};}
+// líneas de evolución, sacadas de los ascensos de las escuadras (PROMO): base → primer ascenso → siguiente
+const EVO={};for(const b in PROMO){let prev=b;const seenU=[];for(const[r,u]of PROMO[b]){if(seenU.includes(u))continue;seenU.push(u);EVO[u]={from:prev,r};prev=u;}}
+const EVOSVG='<svg viewBox="0 0 26 16" width="26" height="16"><path d="M2 10.5 Q10 5.5 18.5 8" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M15.2 3.6 L22.6 8.6 L15.6 13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+{const _bt=bkTile;bkTile=function(it,t){let h=_bt.apply(this,arguments);
+ if(it.evo){const okA=seen('en',it.evo.from),okB=it.ok;const tip=okA&&okB?`Evoluciona del ${ET[it.evo.from].n} desde la ronda ${it.evo.r}`:'Evolución';h=h.replace(/<\/button>$/,`<i class="bkevo" title="${tip}">${EVOSVG}</i></button>`);}
+ return h;};}
+{const _bd=bkDetail;bkDetail=function(t,id){
+ if(t==='mc')return mecDetail(id);
+ let h=_bd.apply(this,arguments);
+ if(t==='en'&&ET[id]&&seen('en',id)&&ETIP[id])h+=`<div class="esec" style="margin-top:12px">Cómo enfrentarlo</div><div class="ddesc">${ETIP[id]}</div>`;
+ return h;};}
+function mecDetail(id){const M=MECI[id];if(!M)return'';
+ if(!mecOk(id))return `<div class="bkun"><span class="sil bkbig">${M.ic}</span><h4>???</h4><p>Aún no descubierta. Aparecerá al encontrar algo que la use.</p></div>`;
+ let h='';try{h=kwHtml(id,MECCTX[id]||'')||'';}catch(e){h='';}
+ h=h.replace(/^\s*<b[^>]*>[\s\S]*?<\/b>/,'').replace(/<div class="row[^"]*"><span>Cálculo<\/span>[\s\S]*?<\/div>/,'');
+ let sub=M.g;{const m=h.match(/^\s*·\s*([^<]+)/);if(m){const x=m[1].trim();sub+=' · '+x.charAt(0).toUpperCase()+x.slice(1);h=h.slice(m[0].length);}}
+ const uses=(MECUSE[id]||[]).filter(mecRefOk).map(r=>{const[t,k]=r.split(':');const n=t==='tw'?TW[k].n:t==='en'?ET[k].n:HEROES[k].n,ic=t==='tw'?`<i style="background:${TW[k].col}">${twIc(k)}</i>`:t==='en'?`<i style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</i>`:`<i style="background:${HEROES[k].col}">${HEROES[k].ic||'🦸'}</i>`;
+  return `<button class="mecuse" data-a="cpgo" data-t="${t}" data-v="${k}">${ic}${n}</button>`;}).join('');
+ return bkSheet(`<span class="bkbic mecbic">${M.ic}</span>`,`<div class="ttl"><b>${M.n}</b></div><small class="mecg">${sub}</small>`+h)+(uses?`<div class="esec" style="margin-top:12px">Lo usan</div><div class="mecuses">${uses}</div>`:'');}
+// subtítulo: «descubiertas» y flechas que empiezan fila (al hacer salto de línea) se ocultan
+{const _cp=compParts;compParts=function(){const P=_cp.apply(this,arguments);
+ if(CP.tab==='mc')P.left=P.left.replace(' descubiertos</div>',' descubiertas</div>');P.left=P.left.split('<div class="bksec">\u200b</div>').join('');
+ const a0=P.after;P.after=el=>{a0&&a0(el);try{el.querySelectorAll('.bkevo').forEach(i=>{const b=i.closest('.bti'),p=b&&b.previousElementSibling;i.style.display=p&&p.classList.contains('bti')&&p.offsetTop===b.offsetTop?'':'none';});}catch(e){}};
+ return P;};}
+
+// ---- botón 📖 en fichas y bocadillos ----
+const cpBtn=(t,v)=>`<button class="cpgo" data-a="cpgo" data-t="${t}" data-v="${v}" title="Abrir en el compendio">📖</button>`;
+{const _ei=enemyInfo;enemyInfo=function(k){return _ei.apply(this,arguments)+`<i class="cpref" data-t="en" data-v="${k}" hidden></i>`;};}
+function cpTarget(key,box){key=String(key||'');
+ if(key.startsWith('tw:')){const t=S&&S.list&&S.list.find(o=>'tw:'+o.id===key);return t&&!t.hero&&TW[t.type]?['tw',t.type]:null;}
+ if(key.startsWith('shop:'))return['tw',key.slice(5)];
+ if(key.startsWith('relic:'))return['rl',key.slice(6)];
+ if(key.startsWith('emap:'))return seen('en',key.slice(5).replace('?',''))?['en',key.slice(5)]:null;
+ if(key==='hero'&&S&&S.hero)return['hr',S.hero.id];
+ const m=box&&box.querySelector('.cpref');if(m)return[m.dataset.t,m.dataset.v];
+ return null;}
+function cpDecorate(box,tg){if(!box||!tg||!compOk())return;box.querySelectorAll(':scope>.cpgo').forEach(b=>b.remove());if((tg[0]==='tw'||tg[0]==='en'||tg[0]==='rl')&&!seen(tg[0],tg[1]))return;
+ box.insertAdjacentHTML('afterbegin',cpBtn(tg[0],tg[1]));box.classList.add('hascp');}
+function cpPrimDecor(){try{const box=PMN()?$('tip'):$('side');box.classList.remove('hascp');if(!PR.open)return;cpDecorate(box,cpTarget(PR.key,box));}catch(e){}}
+{const _o=openPrim;openPrim=function(){const r=_o.apply(this,arguments);cpPrimDecor();return r;};}
+{const _r=refreshPrim;refreshPrim=function(){const r=_r.apply(this,arguments);cpPrimDecor();return r;};}
+{const _k=openKw;openKw=function(a,pl){const r=_k.apply(this,arguments);try{const d=KS[KS.length-1]&&KS[KS.length-1].el,id=a.dataset.kw||'';
+  const tg=MECI[id]&&mecOk(id)?['mc',id]:id.startsWith('tw_')?['tw',id.slice(3)]:id.startsWith('en_')?['en',id.slice(3)]:id.startsWith('hr_')?['hr',id.slice(3)]:id.startsWith('rl_')?['rl',id.slice(3)]:null;
+  if(d&&tg)cpDecorate(d,tg);}catch(e){}return r;};}
+function cpGo(t,v){if(!compOk())return;if(NEC.open)necClose();try{closeKS();}catch(e){}
+ CP.tab=t;CP.sel[t]=v;CP.flt={};CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=true;CP.hl=v;
+ if(LB.open&&!LB.cover&&(LB.area==='cp'))renderComp();else lbOpen('cp');}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.cpgo,.mecuse');if(!b)return;e.stopPropagation();e.preventDefault();cpGo(b.dataset.t,b.dataset.v);},true);
+
+// ---- aviso de «¡Nuevo enemigo!» ----
+const NEC={q:[],cur:null,open:false,tm:0};
+{const _s=see;see=function(t,k){try{if(t==='en'&&SEEOK&&!SEEN.en[k]&&typeof S!=='undefined'&&S&&!S.tut&&!S.pvE&&!(typeof PREVIEWING!=='undefined'&&PREVIEWING)&&S.phase==='wave'&&ET[k]&&!NEC.q.includes(k)&&NEC.cur!==k)NEC.q.push(k);}catch(e){}return _s.apply(this,arguments);};}
+const necIc=k=>`<span class="necic" style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</span>`;
+const necShort=k=>{const s=ETIP[k]||'';const i=s.indexOf(':');return i>0&&i<60?s.slice(0,i)+'.':s.split('. ')[0].replace(/\.?$/,'.');};
+function necShow(k){let el=$('nenot');if(!el){el=document.createElement('div');el.id='nenot';document.body.appendChild(el);}NEC.cur=k;
+ el.innerHTML=`<button class="nenot" data-k="${k}">${necIc(k)}<span class="nentx"><b>¡Nuevo enemigo!</b><span>${ET[k].n}</span><small>${necShort(k)}</small></span></button>`;el.classList.add('on');try{sfx('page');}catch(e){}
+ clearTimeout(NEC.tm);NEC.tm=setTimeout(()=>{if(NEC.cur===k&&!NEC.open)necHide();},8000);}
+function necHide(){const el=$('nenot');if(el)el.classList.remove('on');NEC.cur=null;}
+function necOpen(k){necHide();NEC.open=true;NEC.k=k;let el=$('necard');if(!el){el=document.createElement('div');el.id='necard';document.body.appendChild(el);}
+ el.innerHTML=`<div class="necpap">${compOk()?cpBtn('en',k):''}<div class="nechd">${necIc(k)}<div><b>${ET[k].n}</b><small>${efamOf(k)}</small></div></div><div class="esec">Cómo enfrentarlo</div><p>${ETIP[k]||'Obsérvalo bien: es nuevo.'}</p><div class="necbt"><button class="go" data-necok="1">Seguir ›</button></div></div>`;el.classList.add('on');}
+function necClose(){NEC.open=false;const el=$('necard');if(el)el.classList.remove('on');}
+document.addEventListener('click',e=>{const n=e.target.closest&&e.target.closest('.nenot');if(n){e.stopPropagation();necOpen(n.dataset.k);return;}
+ if(e.target.closest&&e.target.closest('[data-necok]')){e.stopPropagation();necClose();return;}
+ if(NEC.open&&e.target.id==='necard'){e.stopPropagation();necClose();}},true);
+addEventListener('keydown',e=>{if(!NEC.open)return;if(e.key==='Escape'||e.key==='Enter'||e.key===' '){e.preventDefault();e.stopImmediatePropagation();necClose();}},true);
+setInterval(()=>{try{if(!S||S.phase!=='wave'||S.tut){if(NEC.cur&&(!S||S.phase!=='wave'))necHide();if(!S||S.phase!=='wave')NEC.q=[];return;}if(!NEC.cur&&!NEC.open&&!LB.open&&NEC.q.length)necShow(NEC.q.shift());}catch(e){}},250);
 // ---- música de fondo ----
 // La canción se inyecta solo en las versiones de prueba (build.js --out, si existe musica/tema.mp3, que no va al repositorio).
 // Suena en bucle desde el primer clic o tecla (el navegador no deja sonar antes). Volumen = general × música.

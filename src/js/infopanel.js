@@ -141,7 +141,7 @@ function kwHtml0(id,src){
  if(id==='brk')return `<b>Armadura rota</b>`+R('cr','Duración de cada golpe',BRKT+' s')+'<small>Reduce la armadura física del enemigo. Cada golpe suma su reducción y caduca por separado, hasta un máximo. Beneficia a todo el daño físico, venga de la torre que venga.</small>';
  if(id==='flam')return `<b>Inflamable</b>`+R('cd','Al arder',TARB+' stacks de quemadura por segundo')+R('cr','Duración del fuego',TARF+' s')+'<small>Si le llega fuego (un enemigo con quemadura o un charco de fuego), arde y se convierte en un charco de fuego que quema a quien esté dentro. Cualquier fuego prende cualquier sustancia inflamable, sea de la torre que sea.</small>';
  if(id==='stun')return `<b>Aturdir</b>`+R('cr','Duración',f(STUNT)+' s')+'<small>Un enemigo aturdido no se mueve. No se puede aturdir a un enemigo congelado. Los jefes sufren la mitad (resistencia de jefe).</small>';
- if(id==='burn')return `<b>Quemadura</b> · daño elemental`+R('cd','Daño de cada stack',BURND+' por segundo')+R('cr','Pérdida de stacks',Math.round(BURNK*100)+'% por segundo')+'<small>Los stacks no caducan por tiempo: cada segundo el enemigo pierde una parte de ellos. Mientras tanto, cada stack hace daño elemental (ignora la armadura) por segundo. Si lo golpeas sin parar, los stacks se acumulan hasta un equilibrio; si dejas de golpearlo, el fuego se apaga solo.</small>';
+ if(id==='burn')return `<b>Quemadura</b> · daño elemental`+R('cd','Daño de cada stack',BURND+' por segundo')+R('cr','Reducción','−'+Math.round(BURNK*100)+'% de stacks por segundo')+'<small>Los stacks no caducan por tiempo: cada segundo el enemigo pierde una parte de ellos. Mientras tanto, cada stack hace daño elemental (ignora la armadura) por segundo. Si lo golpeas sin parar, los stacks se acumulan hasta un equilibrio; si dejas de golpearlo, el fuego se apaga solo.</small>';
  if(id==='beam'){const ok=c&&c.T.beam,T=ok?c.T:TW.laser,s=ok?c.s:{dmg:T.dmg,rate:T.rate};
   return `<b>Rayo continuo</b>`+'<small>Se mantiene sobre un objetivo y le hace daño constante, en vez de disparos sueltos. Cambia de objetivo cuando muere o sale del rango.</small>';}
  return '';
@@ -163,13 +163,15 @@ function durOf(T,s){if(T.log)return f(s.ldur||logDur(1))+' s (rodando)';if(T.wal
 const USPN={pal:'Paladín',ass:'Asesino',fist:'Monje de batalla',drunk:'Maestro ebrio'};
 function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith('shop:'))k=src.slice(5);else if(src.startsWith('tw:')&&S&&S.list){const t=S.list.find(o=>'tw:'+o.id===src);if(t){k=t.type;sp=t.spec;}}
  const ic=(sp&&UIC[sp])||(k&&UIC[k]);if(!ic)return '';const T=TW[k]||{};return `<span class="tuic uhic" style="background:${T.col||'#5b8def'}" title="">${icHtml(ic)}</span>`;}
+// fuera del compendio, el tipo de daño ya lo dice el icono junto a «Daño»: no hace falta su fila
+const dtRowOn=src=>!!(CP&&CP.open);
 function rows(s,T,src,extra){
  const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*SPLASH)+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
-  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
+  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
    (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+cr+(ef?R('cf',kst('eff','Efectos',src),ef):'')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`+'</div>'+extra.tail;}
- return dm+R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st'))+(T.puddle?R('ccl',kst('cool','Enfriamiento',src)+' ('+kst('pstk','Acumulación',src)+')',f(1/s.rate)+' s ('+f(PTICK)+' s)'):R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s'))+(du?R('cr',kst('dur','Duración',src),du):'')+R('cg',kst('rng','Rango',src),cas(s.range/K))+objRow(!!T.ground,src)+
+ return dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+(T.puddle?R('ccl',kst('cool','Enfriamiento',src)+' ('+kst('pstk','Acumulación',src)+')',f(1/s.rate)+' s ('+f(PTICK)+' s)'):R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s'))+(du?R('cr',kst('dur','Duración',src),du):'')+R('cg',kst('rng','Rango',src),cas(s.range/K))+objRow(!!T.ground,src)+
   (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(T.burn&&T.cone?R('ca',kst('area','Área',src),'Cono de '+T.cone+'°'):'')+
   (s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+(s.dmg>0||T.dot||T.burn?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'')+
   (T.log?R('',kst('push','Empuje',src),'0,5 casillas'):'')+(extra||'')+(ef?R('cf',kst('eff','Efectos',src),ef):'');
@@ -186,12 +188,16 @@ function tgtRow0(t,src,pinned){
 function unitRows(T,src,t,pinned,hpm,uap){const U=T.unit,ap=U.ap+(uap||0),mr=t&&abRank(t,'sacred')?abRank(t,'sacred').a:0;
  return {u:1,n:R('',kst('usol','Nº de unidades',src),U.n),life:R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+(mr?R('cmg',kst('umr','Resistencia mágica',src),armTxt(mr)):'')+R('cr',kst('urez','Reaparición',src),U.rez+' s'),rng:U.range?R('cg',kst('rng','Rango',src),cas(U.range)):'',obj:objRow(!U.range,src),tail:
   (t?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`:'<small>Haz clic en la torre para mover su bandera.</small>'):'')};}
+// ficha de una torre construida: solo información. Mejorar, especializar, comprar habilidades y vender se hacen en el menú de botones de la torre.
+// En Nv 4 se listan sus habilidades con el rango que tiene (el detalle, en el bocadillo de cada una).
+function abRows(t){if(t.lvl!==4||!t.spec||!SPECS[t.type])return '';const src='tw:'+t.id;
+ return '<div class="esec" style="margin-top:8px">Habilidades</div>'+SPECS[t.type][t.spec].ab.map(id=>{const D=AB[id],rk=t.ab[id]||0,n=D.ranks.length;return R(rk?'':'cno',kst('ab_'+id,D.n,src),rk?(rk>=n?'Máx.':'Rango '+rk+'/'+n):'—');}).join('');}
 function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
  const X=tinfo(t);
  return `<div class="ttl ttlg"><b>${X.ic} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap):tgtRow(t,src,PR.pinned&&PR.key===src))+
-  (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+upRow(t,PR.pinned&&PR.key===src)+(PR.pinned&&PR.key===src?`<div class="tgt"><button data-a="sell">Vender torre (<span class="gd">+${sellVal(t)} 🪙</span>)</button></div>`:'')+(T.unit?'':dpsRow(s,T,src));
+  (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
 function lvTabs(id,sn){let h='';for(let n=1;n<=nStates(id);n++){const ok=tlvOk(id,n);if(!ok)continue;/* sin spoilers: solo los niveles alcanzados */const X=n>=4?SPECS[id][Object.keys(SPECS[id])[n-4]]:null;

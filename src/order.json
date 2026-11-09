@@ -10,7 +10,8 @@
   "08_cuero.css",
   "09_pergamino.css",
   "10_pergamino_enrollado.css",
-  "11_era2.css"
+  "11_era2.css",
+  "12_compendio.css"
  ],
  "js": [
   "00_config.js",
@@ -70,6 +71,7 @@
   "bufo.js",
   "vega.js",
   "desbloqueables.js",
+  "compendio_enlace.js",
   "musica.js"
  ]
 }

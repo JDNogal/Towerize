@@ -44,6 +44,7 @@ const T=[
  ['era2.js','Era 2 (Distópica · Ruinas de Neón): se abre con 3 victorias, se elige en el libro y dibuja su mapa'],
  ['era2_torres.js','Torres de serie de la era 2, torres de bufo, Vega y la Radio de la Resistencia'],
  ['desbloqueables.js','Lanzallamas, Chorro de ácido y Torre sónica con sus especializaciones, habilidades y logros'],
+ ['compendio_enlace.js','Compendio enlazado: botón 📖, pestaña Mecánicas, flechas de evolución y aviso de enemigo nuevo'],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);

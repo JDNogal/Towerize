@@ -1,0 +1,41 @@
+/* ===== Compendio enlazado: botón 📖, flechas de evolución, Mecánicas y aviso de enemigo nuevo ===== */
+.hascp{position:relative}
+.hascp>.ttl,.kpanel.hascp>b:first-child{padding-right:30px}
+.cpgo{position:absolute;top:6px;right:6px;z-index:2;margin:0!important;width:26px;height:26px;padding:0!important;border-radius:7px!important;display:grid;place-items:center;font-size:15px;line-height:1;background:var(--paper2,#f3e6c8)!important;border:1px solid var(--pline2,#b88a5a)!important;cursor:pointer;filter:saturate(.9)}
+.cpgo:hover{filter:none;transform:translateY(-1px)}
+#tip.hascp .cpgo{top:6px;right:8px}
+/* flechas de evolución entre fichas del compendio de enemigos */
+.bktiles:has(.bkevo){column-gap:24px}
+.bkevo{position:absolute;left:-25px;top:50%;transform:translateY(-62%);width:26px;height:16px;color:var(--ink2,#7a4a28);opacity:.85;pointer-events:auto;font-style:normal}
+.bkevo svg{display:block}
+/* Mecánicas */
+.mecbic{font-size:26px;display:grid!important;place-items:center;background:var(--paper2,#ecdcbb)}
+.mecg{display:block;margin:-2px 0 6px!important;font-style:italic;opacity:.75}
+.mecuses{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.mecuse{display:inline-flex!important;align-items:center;gap:6px;margin:0!important;padding:3px 9px 3px 4px!important;border-radius:9px!important;font-size:13px;background:var(--paper2)!important;border:1px solid var(--pline2)!important;color:var(--ink)!important;cursor:pointer}
+.mecuse i{width:22px;height:22px;border-radius:50%;display:inline-grid;place-items:center;font-style:normal;font-size:13px;overflow:hidden}
+.mecuse i .icst,.mecuse i svg,.mecuse i img{width:20px;height:20px}
+/* aviso de enemigo nuevo: abajo en el centro */
+#nenot{position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);z-index:60;transition:transform .35s cubic-bezier(.2,1.3,.4,1),opacity .3s;opacity:0;pointer-events:none}
+#nenot.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.nenot{display:flex!important;align-items:center;gap:10px;margin:0!important;padding:8px 14px 8px 8px!important;border-radius:12px!important;background:#f5e9cf!important;color:#4a2e1c!important;border:none!important;box-shadow:0 0 0 3px #c0622e,0 10px 26px rgba(0,0,0,.6);cursor:pointer;text-align:left;animation:nenp 1.6s ease-in-out infinite}
+@keyframes nenp{50%{box-shadow:0 0 0 3px #c0622e,0 0 20px 4px rgba(192,98,46,.75),0 10px 26px rgba(0,0,0,.6)}}
+.necic{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:26px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25),0 0 0 2px #c0622e;flex:0 0 auto;overflow:hidden}
+.necic .icst,.necic svg,.necic img{width:40px;height:40px}
+.nentx b{display:block;font:700 11px system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#c0622e}
+.nentx span{display:block;font:700 16px Georgia,serif}
+.nentx small{display:block;font-size:12.5px;color:#7a5a40;max-width:260px}
+/* ficha corta al pulsar el aviso (pausa) */
+#necard{position:fixed;inset:0;z-index:70;display:none;place-items:center;background:rgba(8,10,14,.55)}
+#necard.on{display:grid}
+.necpap{position:relative;width:min(440px,92vw);background:#f5e9cf;color:#4a2e1c;border-radius:12px;padding:16px 18px 14px;box-shadow:0 0 0 3px #6b3f22,0 16px 40px rgba(0,0,0,.6)}
+.necpap .cpgo{top:10px;right:10px}
+.nechd{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.nechd b{display:block;font:700 22px Georgia,serif}
+.nechd small{font-size:12.5px;color:#7a5a40}
+.necpap .esec{color:#a0532a}
+.necpap p{margin:4px 0 12px;font-size:15px;line-height:1.5}
+.necbt{display:flex;justify-content:flex-end}
+.necbt .go{margin:0!important}
+@media (max-width:760px),(max-height:430px){#nenot{bottom:8px}.nentx small{max-width:190px}}
+.bktiles+.bktiles{margin-top:8px}
