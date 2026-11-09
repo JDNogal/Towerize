@@ -35,6 +35,7 @@
   "squads.js",
   "enemigos.js",
   "enemigos_e2.js",
+  "habilidades_enemigos.js",
   "stats.js",
   "fullscreen.js",
   "tutorial.js",

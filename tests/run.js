@@ -47,6 +47,7 @@ const T=[
  ['compendio_enlace.js','Compendio enlazado: botón 📖, pestaña Mecánicas, flechas de evolución y aviso de enemigo nuevo'],
  ['casillas_nuevas.js','Casillas especiales nuevas: Precisión, Perforación, Eco, Persistencia, Taller y Cuartel'],
  ['enemigos.js','Enemigos por facciones: tipos nuevos, iconos, escuadras con líder y cadena de mando'],
+ ['habilidades_enemigos.js','Habilidades de los enemigos: embeleso, interferencia, golpes de campeón, disparos en arco y voladores que atacan'],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);

@@ -24,17 +24,17 @@ const MECUSE={burn:['tw:sala','tw:flame','tw:monk','hr:yrsa'],poison:['tw:poison
 const mecRefOk=r=>{const[t,k]=r.split(':');return t==='hr'?(HEROES[k]&&(seen('hr',k)||!HEROES[k].lockTxt)):seen(t,k);};
 const mecOk=id=>{const u=MECUSE[id];return !u||u.some(mecRefOk);};
 // «Cómo enfrentarlo»: una o dos frases por enemigo
-const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barren en grupo.',vet:'Más vida y algo de armadura: el daño mágico o elemental rinde más.',champ:'Mucha armadura: usa daño mágico, elemental o penetración.',
+const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barren en grupo.',vet:'Más vida y algo de armadura: el daño mágico o elemental rinde más.',champ:'Mucha armadura y cada 25 s un hachazo giratorio: no amontones tus unidades a su alrededor.',
  fast:'Corre mucho y aguanta poco: daño en área o ralentizarlo.',runner:'Muy rápido: ralentízalo o bloquéalo con tus unidades.',raider:'Esquiva a tus soldados y te roba oro si llega: mátalo con torres.',
  tank:'Lento y con mucha vida: concentra en él el daño fuerte.',armored:'Muy blindado: daño mágico, elemental o penetración. La armadura rota ayuda.',
- bat:'Voladores débiles en grupo: torres de área que alcancen el aire.',raptor:'El Diablillo ya crecido: vuela y aguanta más. Usa torres que den al aire.',hound:'Muy rápido y resiste algo la magia: ralentízalo o usa daño físico.',minion:'Resiste un poco la magia: el daño físico rinde más.',demon:'Más vida y resistencia mágica: usa daño físico o elemental.',dchamp:'Mucha resistencia mágica: usa daño físico, elemental o penetración.',seal:'Su aura da resistencia mágica a los de alrededor: mátalo primero o usa daño físico.',harpy:'Vuela rápido y aguanta poco: tus soldados no la paran. Usa torres rápidas que den al aire.',griffin:'Volador resistente: necesitas mucho daño contra el aire.',
- sling:'Se para a disparar a tus unidades desde lejos: quítalo pronto con torres.',javelin:'Sus bombas atraviesan media armadura de tus unidades.',
- acolyte:'Resiste la magia y daña a tus unidades con ella: usa daño físico.',warlock:'Maldice a tus torres cercanas, que disparan más lento: mátalo primero.',
+ bat:'Voladores débiles en grupo: torres de área que alcancen el aire.',raptor:'El Diablillo ya crecido: vuela y aguanta más. Usa torres que den al aire.',hound:'Muy rápido y resiste algo la magia: ralentízalo o usa daño físico.',minion:'Resiste un poco la magia: el daño físico rinde más.',demon:'Más vida y resistencia mágica: usa daño físico o elemental.',dchamp:'Mucha resistencia mágica y cada 25 s un chorro de fuego hacia delante: usa daño físico.',seal:'Su aura da resistencia mágica a los de alrededor: mátalo primero o usa daño físico.',harpy:'Vuela rápido y aguanta poco: tus soldados no la paran. Usa torres rápidas que den al aire.',griffin:'Volador resistente: necesitas mucho daño contra el aire.',
+ sling:'Se para a disparar a tus unidades desde lejos: quítalo pronto con torres.',javelin:'Sus bombas caen en arco, atraviesan media armadura y salpican a las unidades de alrededor.',gyro:'Se para en el aire a bombardear a tus unidades: usa torres que den al aire.',
+ acolyte:'Resiste la magia y daña a tus unidades con ella: usa daño físico.',warlock:'Embelesa a tus soldados para que luchen contra ti: mátala pronto con torres. El héroe es inmune.',
  shaman:'Cura a los enemigos de alrededor: elimínalo antes que al resto.',custodian:'Su tambor da armadura a los de alrededor: mátalo primero o usa daño mágico.',
  mini:'Mucha vida y daño: concentra el fuego y frénalo.',elite:'Muy resistente y peligroso: prepara daño fuerte y control.',
  boss:'Si llega al núcleo, pierdes. Resiste el control: necesitas mucho daño.',colossus:'Al perder vida suelta mini-élites: guarda daño para ellas.',bob:'Usa tu reliquia cuando esté en tu zona de fuego.',
  cub:'Cachorros rápidos en manada: daño en área.',greyw:'Al bajar de la mitad aúlla y acelera a los lobatos.',bigw:'Derriba barricadas y muros y aparta a tus soldados.',momdrg:'Escupe fuego a tus unidades: mantenlas lejos o usa torres.'};
-if(typeof ETIP2!=='undefined')Object.assign(ETIP,ETIP2);
+if(typeof ETIP2!=='undefined')Object.assign(ETIP,ETIP2);if(typeof MECG2!=='undefined'){const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(...MECG2);}if(typeof MECUSE2!=='undefined')Object.assign(MECUSE,MECUSE2);
 const efamOf=k=>{const f=EFAM.find(([n,l])=>l.includes(k));return f?f[0]:'';};
 
 // ---- pestaña nueva ----

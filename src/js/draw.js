@@ -102,7 +102,8 @@ function draw(){
  drawDragons();
  for(const q of S.fx)if(q.frag){const k=1-q.t/q.m,px=(q.x0+(q.x-q.x0)*k)*CS+CS/2,py=(q.y0+(q.y-q.y0)*k)*CS+CS/2-Math.sin(k*Math.PI)*CS*2.2,r=CS*(.9-.3*k);g.save();g.translate(px,py);g.rotate(k*6+q.sd*6);g.fillStyle=q.col;g.strokeStyle='#e8a0a8';g.lineWidth=lw(1.5);g.beginPath();g.moveTo(-r,-r*.6);g.lineTo(r*.8,-r);g.lineTo(r,r*.5);g.lineTo(-r*.4,r);g.closePath();g.fill();g.stroke();g.restore();}
  if(OPT.fx)for(const q of S.fx){if(q.mk||q.bolt||q.frag||q.line)continue;g.globalAlpha=Math.max(0,q.t/q.m)*.7;g.fillStyle=q.col;g.beginPath();g.arc(q.x*CS+CS/2,q.y*CS+CS/2,q.r*CS,0,7);g.fill();g.globalAlpha=1;}
- for(const e of S.enemies){const E=ET[e.t],px=e.x*CS+CS/2,py=e.y*CS+CS/2,r=E.r*CS*EVS;
+ if(typeof eSkillsDraw==='function')eSkillsDraw(g,lw);
+ for(const e of S.enemies){const E=ET[e.t],wb=typeof eWob==='function'?eWob(e):null,px=(e.x+(wb?wb[0]:0))*CS+CS/2,py=(e.y+(wb?wb[1]:0))*CS+CS/2,r=E.r*CS*EVS;
   if(E.aura&&e.hp>0){const ac=E.aura.m?'176,106,255':'143,176,208';g.fillStyle='rgba('+ac+',.07)';g.strokeStyle='rgba('+ac+',.5)';g.lineWidth=lw(1.5);g.setLineDash&&g.setLineDash([lw(5),lw(4)]);g.beginPath();g.arc(px,py,E.aura.r*CS,0,7);g.fill();g.stroke();g.setLineDash&&g.setLineDash([]);}
   if(E.fly){g.fillStyle='rgba(0,0,0,.28)';g.beginPath();g.ellipse(px,py+r*1.1,r*.9,r*.35,0,0,7);g.fill();if(!(enIc(e.t)&&enIc(e.t).esvg)){const wf=Math.sin(performance.now()/90+e.x)*.35;g.fillStyle=E.col;g.beginPath();g.moveTo(px,py);g.lineTo(px-r*2,py-r*(1.1+wf));g.lineTo(px-r*.6,py+r*.3);g.closePath();g.moveTo(px,py);g.lineTo(px+r*2,py-r*(1.1+wf));g.lineTo(px+r*.6,py+r*.3);g.closePath();g.fill();}}
   const sk=e.ps&&e.ps.length,bl=e.bl&&e.bl.length;g.fillStyle=e.fx.freeze?'#cdf2ff':e.fx.stun?'#fff2a0':sk?'#8fc24a':e.bn>=.5?'#ff9a4a':bl?'#d0506a':e.fx.slow?'#7fb4d9':E.col;g.beginPath();g.arc(px,py,r,0,7);g.fill();
