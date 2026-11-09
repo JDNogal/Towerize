@@ -30,9 +30,20 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
  const P0=S.portals[0];const T={t:'atroll',x:P0.x,y:P0.y,tx:P0.x,ty:P0.y,hp:400,max:1000,fx:{}};S.enemies=[T];for(let i=0;i<21;i++)boss2Tick(.05);const g1=T.hp-400;out.abreg=g1>0;T.hp=400;T.bn=3;for(let i=0;i<21;i++)boss2Tick(.05);const g2=T.hp-400;T.hp=400;T.bn=0;T.ct=1;T.rgT=0;for(let i=0;i<21;i++)boss2Tick(.05);const g3=T.hp-400;T.ct=0;out.abcut=g2>0&&g2<g1*.5&&g3<g1&&g3>g2;
  for(const s of b2.sd){s.x=T.x+.5;s.y=T.y;s.hp=s.max;s.cd=0;}T.stc=0;boss2Tick(.05);out.stomp=b2.sd.some(s=>s.cd>=1&&s.hp<s.max);
  const Fg={t:'forge',x:P0.x,y:P0.y,tx:P0.x,ty:P0.y,hp:1000,max:1000,fx:{},lnc:0,lbc:0};S.enemies=[Fg];boss2Tick(.05);eliteTick(.05);out.line=S.enemies.filter(e=>e.t==='auto').length===2&&S.enemies.some(e=>e.t==='carrier');S.enemies=[];
- out.kw=['throne','riches','scepter','gens','anchor','abregen','stomp','line'].every(k=>kwHtml0(k,'').includes('<b>'));
+ // Señor del Abismo y el Simbionte
+ S.era=1;S.round=ROUNDS;STO.p=2;const o5=storyBoss();S.era=2;STO.bb=2;const o6=storyBoss();out.order3=o5==='alord'&&o6==='symb';STO.p=0;STO.bb=0;S.era=1;
+ S.wt=S.wt||10;const tw={x:P0.x+1,y:P0.y,type:'arrow',jam:0};const L1=S.list;S.list=[tw];
+ const AL={t:'alord',x:P0.x,y:P0.y,tx:P0.x,ty:P0.y,hp:1000,max:1000,fx:{},rfc:0,pc:0};S.enemies=[AL];boss3Tick(.05);eliteTick(.05);out.rift=S.enemies.filter(e=>ET[e.t].fac==='d'&&e!==AL).length===3;
+ out.pwarn=AL.pw>0&&!(tw.jam>0);for(let i=0;i<32;i++)boss3Tick(.05);out.penta=AL.pa>0&&tw.jam>0;
+ out.gnd=!isFly(AL);AL.hp=200;boss3Tick(.05);out.wings=isFly(AL)&&AL.spx>1;S.wt+=20;boss3Tick(.05);out.land=!isFly(AL)&&AL.spx===1;
+ tw.jam=0;const SY={t:'symb',x:P0.x,y:P0.y,tx:P0.x,ty:P0.y,hp:1000,max:1000,fx:{},plc:0};S.enemies=[SY];boss3Tick(.05);out.shell=armorOf(SY,'phys')>=80&&armorOf(SY,'magic')<=10;out.pulseW=SY.pv2>0&&!(tw.jam>0);
+ for(let i=0;i<32;i++)boss3Tick(.05);out.pulse=tw.jam>1;
+ SY.hp=480;boss3Tick(.05);out.core=SY.ph2===1&&armorOf(SY,'magic')>=70&&armorOf(SY,'phys')<=10&&SY.spx>1;
+ const food={t:'drone',x:P0.x+.5,y:P0.y,tx:P0.x,ty:P0.y,hp:50,max:50,fx:{}};S.enemies.push(food);SY.etc=0;const hh=SY.hp;boss3Tick(.05);out.eat=!S.enemies.includes(food)&&SY.hp>hh;
+ SY.hp=200;boss3Tick(.05);out.fury=SY.fury===1&&SY.spx===2;S.enemies=[];S.list=L1;
+ out.kw=['throne','riches','scepter','gens','anchor','abregen','stomp','line','rift','penta','wings','shell','pulse','core2'].every(k=>kwHtml0(k,'').includes('<b>'));
  return out;});
 const f=[];const ck=(c,m)=>{if(!c)f.push(m);};
 ck(r.kgob&&r.porters,'el Rey Goblin no sale con sus porteadores');ck(r.isBoss,'el Rey Goblin no cuenta como jefe');ck(r.stuck,'los porteadores no van pegados al trono');ck(r.treas,'no lanza Lluvia de riquezas');ck(r.fell,'no se cae al morir los porteadores');ck(r.gold,'no da el oro de los tesoros');
-ck(r.argos&&r.gens,'ARGOS no sale con sus generadores');ck(r.inv,'ARGOS no es invulnerable con escudo');ck(r.anch,'los generadores no se anclan');ck(r.down&&r.hurt,'el escudo no cae');ck(r.call,'ARGOS no llama a otro generador');ck(r.order,'el orden de los jefes según la historia está mal');ck(r.rand,'con la historia completa no sale un jefe válido');ck(r.abreg&&r.abcut,'regeneración del Troll del Abismo mal');ck(r.stomp,'el Troll del Abismo no pisotea');ck(r.line,'la Forja no fabrica');ck(r.kw,'faltan palabras clave');
+ck(r.argos&&r.gens,'ARGOS no sale con sus generadores');ck(r.inv,'ARGOS no es invulnerable con escudo');ck(r.anch,'los generadores no se anclan');ck(r.down&&r.hurt,'el escudo no cae');ck(r.call,'ARGOS no llama a otro generador');ck(r.order,'el orden de los jefes según la historia está mal');ck(r.rand,'con la historia completa no sale un jefe válido');ck(r.abreg&&r.abcut,'regeneración del Troll del Abismo mal');ck(r.stomp,'el Troll del Abismo no pisotea');ck(r.line,'la Forja no fabrica');ck(r.order3,'el tercer jefe no sale en la tercera partida');ck(r.rift,'el Señor del Abismo no abre portales');ck(r.pwarn&&r.penta,'pentagrama mal');ck(r.gnd&&r.wings&&r.land,'alas mal');ck(r.shell&&r.core,'fases del Simbionte mal');ck(r.pulseW&&r.pulse,'pulso mal');ck(r.eat,'el Simbionte no devora');ck(r.fury,'furia mal');ck(r.kw,'faltan palabras clave');
 console.log(f.length?'FALLOS '+JSON.stringify(f)+' '+JSON.stringify(r):'jefes ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

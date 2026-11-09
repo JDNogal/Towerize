@@ -15,7 +15,7 @@ function plague(e){if(!e.ps||!e.ps.length)return;const by=new Map();
   const near=S.enemies.filter(o=>o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=2*K).sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y)).slice(0,2);
   if(!near.length)continue;
   for(let i=0;i<n;i++){const o=near[i%near.length];(o.ps=o.ps||[]).push({w:arr[i].w,t:arr[i].t,src});}}}
-const armorOf=(e,ty)=>e.fx&&e.fx.poly?0:ty==='phys'?Math.max(-MAXPEN,(ET[e.t].ap||0)+(e.cb||0)-(e.cor||0)-brkOf(e)):ty==='magic'?Math.max(-MAXPEN,(ET[e.t].am||0)+(e.cbm||0)-(e.cor||0)):0;
+const armorOf=(e,ty)=>e.fx&&e.fx.poly?0:ty==='phys'?Math.max(-MAXPEN,(e.apx!=null?e.apx:(ET[e.t].ap||0))+(e.cb||0)-(e.cor||0)-brkOf(e)):ty==='magic'?Math.max(-MAXPEN,(e.amx!=null?e.amx:(ET[e.t].am||0))+(e.cbm||0)-(e.cor||0)):0;
 // Penetración plana: resta armadura (puede quedar negativa, mínimo -MAXPEN => máximo x2 de daño). El daño elemental ignora armadura y penetración.
 let TZX=0;const TZR=4*K;
 // ---- números de daño: se suman por enemigo y tipo mientras sigan llegando golpes ----

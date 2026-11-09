@@ -93,5 +93,5 @@ function czTick(dt){for(const e of S.enemies)e.stkIn=0;
   if(add.length)S.cz.push(...add);}
  for(const e of S.enemies){if(e.stkIn>0){e.stk=1;e.stkM=e.stkIn;}else if(e.stk>0)e.stk=Math.max(0,e.stk-dt/STKT);if(e.stk>0)slowE(e,1-e.stkM*e.stk,.15);
   if(e.brk&&e.brk.length){for(const q of e.brk)q.t-=dt;e.brk=e.brk.filter(q=>q.t>0);}}}
-const isFly=e=>!!ET[e.t].fly&&!(e.gnd>S.wt);
+const isFly=e=>(!!ET[e.t].fly||e.flyx>S.wt)&&!(e.gnd>S.wt);
 const alive=e=>e.hp>0&&S.enemies.includes(e),mkB=e=>e&&e.mk&&e.mk.t>0?e.mk.cr:0;

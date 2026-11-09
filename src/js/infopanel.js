@@ -285,7 +285,7 @@ const PR={open:false,pinned:false,key:null,html:null,rect:null,dom:0,cell:null,d
 const KS=[],KD={el:null,t:0},GRACE=.3;
 function closeKS(from){from=from||0;while(KS.length>from){const k=KS.pop();if(k.el.parentNode)k.el.parentNode.removeChild(k.el);}KD.el=null;KD.t=0;}
 let EID=0;
-function enemyInst(e){const E=ET[e.t],ap=(E.ap||0)+(e.cb||0),am=(E.am||0)+(e.cbm||0);
+function enemyInst(e){const E=ET[e.t],ap=(e.apx!=null?e.apx:(E.ap||0))+(e.cb||0),am=(e.amx!=null?e.amx:(E.am||0))+(e.cbm||0);
  return enemyInfo(e.t)+'<small style="margin-top:8px">Este enemigo ahora:</small>'+R('chp','Vida',Math.round(e.hp)+' / '+Math.round(e.max))+R('cph','Armadura',armTxt(ap)+(e.cb>0?' (+'+e.cb+')':''))+R('cmg','Resistencia mágica',armTxt(am)+(e.cbm>0?' (+'+e.cbm+')':''));}
 function closePrim(){if(typeof S!=='undefined'&&S)S.selE=null;PR.auto=0;PR.open=false;PR.pinned=false;PR.key=null;PR.cell=null;PR.dead=0;closeKS();$('tip').style.display='none';$('side').innerHTML=PH;}
 function openPrim(tg){
