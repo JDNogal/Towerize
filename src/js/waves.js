@@ -96,7 +96,7 @@ function forkRoutes(cx,cy){const key=cx+','+cy;S.forks=S.forks||{};if(S.forks[ke
 function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!S.cc[cy]||!S.cf||ra("compass"))return;
  const rs=forkRoutes(cx,cy).filter(r=>!(prev&&r.n[0]===prev[0]&&r.n[1]===prev[1]));if(rs.length<2)return;
  const best=Math.min(...rs.map(r=>r.len)),ok=rs.filter(r=>r.len<=best+FORKTOL);if(ok.length<2)return;
- const key=cx+','+cy;S.fbag=S.fbag||{};let bag=S.fbag[key];if(!bag||!bag.length)bag=S.fbag[key]=shuf(ok.map((r,i)=>i));const r=ok[bag.pop()];
+ const key=cx+','+cy+':'+ok.length;S.fbag=S.fbag||{};let bag=S.fbag[key];if(!bag||!bag.length)bag=S.fbag[key]=shuf(ok.map((r,i)=>i));const r=ok[bag.pop()];if(!r)return;
  if(r.len===best&&S.cf[r.n[1]][r.n[0]]<S.cf[cy][cx])return;/* la más corta: la sigue el camino normal */
  e.wps=r.path.slice();}
 function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}

@@ -1,6 +1,6 @@
 let VIEW=1000,VH=1000,PXR=1;
 const DECF=.5,P=7,K=3,CS=20,ENR=.6,POISD=3,GOLDR=.05,PTICK=1,FRZT=3,FRZCD=6,FRZR=3.5*K,MINP=10,BUFFS_FROM=2,SLOWT=1.5,SPLASH=.6,LINGER=.5,HP0=18,HPG=1.25,D=[[1,0],[-1,0],[0,1],[0,-1]];
-let ERA=1; // era elegida para la próxima partida (1 Fantástica, 2 Ruinas de Neón); ver era2.js
+let ERA=1; // era elegida para la próxima partida (1 Fantástica, 2 Distópica · Ruinas de Neón); ver era2.js
 // Partida: rondas elegidas (15-30), tamaño del mapa en piezas y cofres
 let BN=5,NC=P*BN,N=NC*K,ROUNDS=15,CHESTS=3;
 const chestsFor=n=>3+(n>=19)+(n>=24)+(n>=29),mapFor=n=>n<=20?5:7,bossRound=r=>r===ROUNDS||(r===15&&ROUNDS>15);

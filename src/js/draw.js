@@ -79,7 +79,7 @@ function draw(){
  for(const p of S.pools){g.fillStyle=(p.el==='bleed'?'rgba(224,72,90,':p.el==='fire'?'rgba(255,120,40,':'rgba(123,211,74,')+Math.min(.55,p.t/2)+')';g.beginPath();g.arc(p.x*CS+CS/2,p.y*CS+CS/2,p.r*CS,0,7);g.fill();}
  g.strokeStyle='rgba(192,57,74,.55)';g.lineWidth=lw(2);
  for(const e of S.ends){g.beginPath();g.arc(e.x*CS+CS/2,e.y*CS+CS/2,CS*.9,0,7);g.stroke();}
- if(e2)e2Cars(g,BCS);else drawShip(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
+ if(e2)e2Cars(g,BCS);if(e2)drawShipE2(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);else drawShip(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
  drawMimic(g,CS,lw);
  drawCore(g,S.core.x*CS+CS/2,S.core.y*CS+CS/2,BCS);
  for(const t of S.list)if(t.fl&&S.phase==='wave')drawFlame(g,t,x=>x*CS+CS/2,y=>y*CS+CS/2,CS);
@@ -160,6 +160,7 @@ function draw(){
    drawPat(g,o,BCS,bx*P*BCS,by*P*BCS,.85);
    g.fillStyle=ok?'rgba(80,220,120,.22)':'rgba(230,70,70,.4)';g.fillRect(bx*P*BCS,by*P*BCS,P*BCS,P*BCS);
    g.strokeStyle=ok?'#50dc78':'#e64646';g.lineWidth=lw(2);g.strokeRect(bx*P*BCS+lw(1),by*P*BCS+lw(1),P*BCS-lw(2),P*BCS-lw(2));}}
+ try{if(typeof e2DrawWorld==='function')e2DrawWorld(lw);if(typeof bufoDraw==='function')bufoDraw(lw);if(typeof vegaDraw==='function')vegaDraw(lw);}catch(e){}
  g.setTransform(1,0,0,1,0,0);
  $('sr').textContent='⏳ Ronda '+Math.min(S.round,ROUNDS)+'/'+ROUNDS+((S.phase==='build'||S.phase==='wave')&&S.portals&&S.portals.length?'  ·  ⭕ '+S.portals.length:'')+(S.fury?'  ·  💢 Furia ×'+String(furyM()).replace('.',','):'');$('sr').title=S.fury?'Furia: todos ganan daño mientras dure la oleada':'⭕ Portales activos esta ronda';{const a=$('stR'),b=$('stC');a.style.display=OPT.treal?'':'none';b.style.display=OPT.tcomb?'':'none';if(OPT.treal)a.textContent='🕒 '+fClk(GT.r);if(OPT.tcomb)b.textContent='⚔️ '+fClk(GT.c);}$('sh').textContent=(S.hp<=10?'💔':'❤️')+' Vida '+S.hp;{const iv=S.relics&&S.relics.includes('scale')?interest():0,h='🪙 Oro '+Math.floor(S.gold)+(iv>0?' <span class="sgint">+'+iv+'</span>':'');if($('sg')._h!==h){$('sg').innerHTML=h;$('sg')._h=h;}}
 }

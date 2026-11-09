@@ -21,7 +21,12 @@ arrow:{n:'Arqueros',ic:'🏹',dt:'phys',cost:75,range:2.8,dmg:6.5,rate:2.5,ps:12
 cannon:{n:'Cañoneros',ic:'💣',dt:'phys',era:2,cost:90,range:2.6,dmg:30,rate:.7,ps:6,splash:1.1,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#e07a3d',l:'N',fx:'Ninguno'},
  cata:{n:'Catapulta',ic:'🪨',dt:'phys',cata:1,ground:1,cost:90,range:2.8,dmg:38,rate:.55,ps:5,splash:1.15,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#a8977c',l:'C',fx:'Ninguno'},
 frost:{n:'Cryomago',ic:'🧊',dt:'elem',cost:70,range:2.4,dmg:3,rate:1.5,ps:9,slow:.5,col:'#6cc5ff',l:'H',fx:'Ralentiza 50% (1,5 s)'},
-laser:{n:'Láser',ic:'⚡',dt:'magic',era:2,cost:110,range:2.8,dmg:3,rate:8,beam:1,col:'#d66bff',l:'L',fx:'Rayo continuo'},
+laser:{n:'Láser de arco',ic:'⚡',dt:'elem',era:2,e2b:1,cost:110,range:2.8,dmg:2.6,rate:8,beam:1,arc:1,col:'#ffe24a',l:'L',fx:'Arco eléctrico continuo'},
+bunker:{n:'Búnker',ic:'🏚️',dt:'phys',era:2,e2b:1,cost:85,range:2.6,dmg:2.8,rate:5,ps:40,mag:30,reload:1.8,ramp:.6,col:'#9aa07a',l:'K',fx:'Cargador: la cadencia sube mientras dispara'},
+robots:{n:'Robots',ic:'🤖',dt:'phys',era:2,e2b:1,cost:90,range:2.5,dmg:5,rate:1,unit:{n:3,hp:50,ap:15,rez:9,spd:2},col:'#8aa0b8',l:'R',fx:'Ninguno'},
+nano:{n:'Enjambre de nanitos',ic:'🫧',dt:'magic',era:2,e2b:1,cost:105,range:2.6,dmg:3.6,rate:4,swarm:1,col:'#8fb4ff',l:'E',fx:'Enjambre que persigue a los enemigos'},
+altar:{n:'Altar de runas',ic:'🪬',dt:'magic',cost:90,range:2.6,dmg:0,rate:0,support:1,bufo:1,col:'#c89aff',l:'A',fx:'Bufos temporales a las torres cercanas'},
+dron:{n:'Dron de mantenimiento',ic:'🛸',dt:'phys',era:2,cost:95,range:3,dmg:0,rate:0,support:1,bufo:1,col:'#e8b04a',l:'D',fx:'Afina la puntería de las torres cercanas'},
  orb:{n:'Orbe arcano',ic:'🧿',dt:'magic',cost:110,range:2.8,dmg:22,rate:.85,ps:4.5,orb:1,col:'#8a7dff',l:'I',fx:'Orbe mágico'},
 poison:{n:'Envenenadora',ground:1,ic:'🧪',dt:'elem',cost:100,range:3,dmg:3,rate:.5,puddle:1,dot:1,dur:4,pr:1,shape:'Charco',areaTxt:'Todos los enemigos dentro del círculo reciben el efecto.',col:'#7bd34a',l:'V',fx:'Veneno acumulable'},
 faro:{n:'Faro arcano',ic:'🗼',dt:'magic',cost:0,range:3,dmg:0,rate:0,col:'#ffe27a',l:'F',fx:'Ninguno',uniq:1,support:1,faro:1,ev:'lighthouse'},
@@ -151,7 +156,42 @@ const AB={
  fuel:{n:'Combustible',ranks:[{c:35,d:.3},{c:40,d:.25},{c:45,d:.2}],txt:r=>`Los stacks de ${kw('burn','quemadura','')} de esta torre se reducen un <b>${Math.round(r.d*100)}%</b> por segundo en vez de un ${Math.round(BURNK*100)}%.`},
  focus:{n:'Foco',ranks:[{c:45,g:.05,max:.25},{c:50,g:.1,max:.35},{c:55,g:.15,max:.5}],txt:r=>`Mientras la llama siga sobre el mismo enemigo, sus stacks de ${kw('burn','quemadura','')} por tick suben un <span class="cbu">${Math.round(r.g*100)}%</span> por segundo, hasta un máximo de +${Math.round(r.max*100)}%. Se reinicia al cambiar de objetivo.`},
  deton:{n:'Detonación',ranks:[{c:45,th:50,r:1},{c:50,th:40,r:1.2},{c:55,th:30,r:1.5}],txt:r=>`Cuando un enemigo supera <b>${r.th}</b> stacks de ${kw('burn','quemadura','')}, explota: hace a todos en <span class="ca">${f(r.r)} casillas</span> la mitad del daño de 1 segundo de sus stacks (<span class="cd">${BURND}</span> por stack) y pierde la mitad de ellos.`},
- intens:{n:'Intensidad',ranks:[{c:35,p:.1},{c:40,p:.15},{c:45,p:.2}],txt:r=>`+<span class="cbu">${Math.round(r.p*100)}%</span> de stacks de ${kw('burn','quemadura','')} por tick.`}};
+ intens:{n:'Intensidad',ranks:[{c:35,p:.1},{c:40,p:.15},{c:45,p:.2}],txt:r=>`+<span class="cbu">${Math.round(r.p*100)}%</span> de stacks de ${kw('burn','quemadura','')} por tick.`},
+ // ---- era 2 · Búnker ----
+ trigger:{n:'Gatillo fácil',ranks:[{c:30,r:.5},{c:35,r:1},{c:40,r:1.5}],txt:r=>`La cadencia sube aún más mientras dispara: hasta <span class="cr">+${Math.round(r.r*100)}%</span> extra con el ${kw('mag','cargador','')} a punto de vaciarse.`},
+ magz:{n:'Cargador ampliado',ranks:[{c:30,n:15},{c:35,n:30},{c:40,n:50}],txt:r=>`El ${kw('mag','cargador','')} tiene <b>+${r.n} balas</b>.`},
+ expan:{n:'Balas expansivas',ranks:[{c:30,p:.1},{c:35,p:.15},{c:40,p:.2}],txt:r=>`Cada bala tiene un <span class="cc">${Math.round(r.p*100)}%</span> de aplicar 1 stack de ${kw('bleed','sangrado','')}.`},
+ weak:{n:'Punto débil',ranks:[{c:35,m:.5},{c:40,m:1},{c:45,m:1.5}],txt:r=>`Los ${kw('crit','críticos','')} hacen <span class="cc">×${f(2+r.m)}</span> en vez de ×2.`},
+ lmark:{n:'Marcador láser',ranks:[{c:40,m:.15},{c:50,m:.25}],txt:r=>`La torre apunta con un láser visible: su objetivo queda ${kw('lmk','marcado con láser','')} y recibe un <span class="cd">+${Math.round(r.m*100)}%</span> de daño de todas tus torres y unidades.`},
+ blink:{n:'Sin pestañear',ranks:[{c:45,p:1}],txt:r=>`Si un disparo mata a su objetivo, el siguiente disparo sale <b>al instante</b>.`},
+ // ---- era 2 · Robots ----
+ drill:{n:'¡Giga Taladro!',ranks:[{c:45,cd:20,d:4,m:3},{c:55,cd:15,d:6,m:4}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, si hay enemigos, el mecha carga desde su bandera <span class="ca">${r.d} casillas</span> hacia los portales con un taladro que ocupa todo el carril: <span class="cd">${r.m}×</span> su daño a todo lo que atraviesa y los ${kw('push','empuja','')} media casilla.`},
+ react:{n:'Blindaje reactivo',ranks:[{c:35,p:.25},{c:40,p:.4},{c:45,p:.55}],txt:r=>`Cada golpe que recibe un robot tiene un <span class="cc">${Math.round(r.p*100)}%</span> de rebotar: el robot recibe la mitad de daño y devuelve al atacante el <span class="cd">100%</span> de su propio daño.`},
+ shoulder:{n:'Cañón de hombro',ranks:[{c:40,cd:6,m:2,r:.8},{c:50,cd:4,m:2.5,r:1}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, el mecha dispara un misil al enemigo más fuerte a 3 casillas de su bandera: <span class="cd">${f(r.m)}×</span> su daño en un área de <span class="ca">${f(r.r)} casillas</span>.`},
+ reens:{n:'Reensamblaje rápido',ranks:[{c:30,t:5},{c:35,t:3},{c:40,t:1.5}],txt:r=>`Los androides caídos se reensamblan en <span class="cr">${f(r.t)} s</span>.`},
+ decoy:{n:'Señuelo',ranks:[{c:45,cd:15,r:2},{c:55,cd:10,r:2.5}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, un androide pita 1,5 s: los enemigos a <span class="ca">${f(r.r)} casillas</span> se amontonan a su alrededor, y entonces explota con <span class="cd">doble</span> de daño.`},
+ scrap:{n:'Chatarra volátil',ranks:[{c:35,n:3,m:.6},{c:45,n:4,m:.8}],txt:r=>`Al explotar, cada androide suelta <b>${r.n} piezas</b> que caen cerca y explotan un segundo después con el <span class="cd">${Math.round(r.m*100)}%</span> de su daño.`},
+ // ---- era 2 · Nanitos ----
+ infect:{n:'Infección',ranks:[{c:35,m:.15},{c:40,m:.2},{c:45,m:.25,sw:1}],txt:r=>`Los enemigos que toca el enjambre quedan ${kw('inf','infectados','')} 4 s: reciben un <span class="cd">+${Math.round(r.m*100)}%</span> de daño de todas las fuentes.${r.sw?' Además, el enjambre se divide en una <b>tercera nube</b>.':''}`},
+ virus:{n:'Virus',req:'infect',ranks:[{c:40,r:1.5},{c:50,r:2.5}],txt:r=>`Cuando muere un enemigo ${kw('inf','infectado','')}, la infección salta a los enemigos a <span class="ca">${f(r.r)} casillas</span> o menos.`},
+ reprog:{n:'Reprogramar',req:'infect',ranks:[{c:45,p:.3},{c:55,p:.5}],txt:r=>`Cada segundo, un enemigo ${kw('inf','infectado','')} tiene un <span class="cc">${Math.round(r.p*100)}%</span> de atacar al enemigo más cercano con el daño del enjambre. Si mata o muere, la infección pasa a otro enemigo cercano.`},
+ hunger:{n:'Hambre voraz',ranks:[{c:35,g:.12,max:2.4},{c:40,g:.16,max:3},{c:45,g:.2,max:3.5}],txt:r=>`El enjambre crece un <span class="cd">${Math.round(r.g*100)}%</span> por enemigo devorado, hasta <span class="cd">×${f(r.max)}</span>.`},
+ acid:{n:'Ácido nanométrico',ranks:[{c:35,a:2,max:10},{c:40,a:3,max:15},{c:45,a:4,max:20}],txt:r=>`Cada segundo, los enemigos dentro del enjambre sufren ${kw('brk','armadura rota','')}: <span class="cph">−${r.a}</span> de armadura y de resistencia mágica, acumulable hasta <span class="cph">−${r.max}</span>.`},
+ bottom:{n:'Sin fondo',ranks:[{c:40,k:.5},{c:50,k:.75}],txt:r=>`Al empezar la oleada, el enjambre conserva el <span class="cd">${Math.round(r.k*100)}%</span> del crecimiento de la anterior.`},
+ // ---- era 2 · Láser de arco ----
+ fence:{n:'Valla eléctrica',ranks:[{c:35,m:3,s:.5},{c:40,m:5,s:.75}],txt:r=>`Los enemigos que cruzan un arco de la red reciben <span class="cd">${r.m}×</span> el daño de un tick y quedan ${kw('stun','aturdidos','')} <span class="cr">${f(r.s)} s</span>. Como mucho una vez cada 3 s por enemigo.`},
+ shortc:{n:'Cortocircuito',ranks:[{c:40,p:.25},{c:50,p:.4}],txt:r=>`Cada golpe tiene un <span class="cc">${Math.round(r.p*100)}%</span> de saltar a otro enemigo que esté a 1,5 casillas de cualquier otra torre de la red, con el <span class="cd">60%</span> del daño.`},
+ overload:{n:'Sobrecarga',ranks:[{c:45,cd:12,m:5},{c:55,cd:8,m:6}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, toda la red descarga a la vez: <span class="cd">${r.m}×</span> el daño de un tick a todos los enemigos dentro del rango de cualquiera de sus torres.`},
+ hv:{n:'Alto voltaje',ranks:[{c:35,n:1},{c:40,n:2},{c:45,n:3}],txt:r=>`Cada tick del arco añade <b>${1+r.n}</b> de ${kw('vc','carga','')} en vez de 1.`},
+ ground:{n:'Toma de tierra',ranks:[{c:40,r:1,p:.5},{c:50,r:1.5,p:.75}],txt:r=>`La descarga hace también el <span class="cd">${Math.round(r.p*100)}%</span> de su daño a los enemigos a <span class="ca">${f(r.r)} casillas</span> del objetivo.`},
+ jump:{n:'Arco saltarín',ranks:[{c:45,k:.5}],txt:r=>`Tras descargar, el arco salta solo al siguiente enemigo, que empieza con <span class="cd">la mitad</span> de la ${kw('vc','carga','')}.`},
+ // ---- torres de bufo ----
+ twin:{n:'Runas gemelas',ranks:[{c:40,n:1},{c:50,n:2}],txt:r=>`El altar lanza <b>${1+r.n} runas</b> a la vez.`},
+ major:{n:'Runa mayor',ranks:[{c:40,m:.5,t:2},{c:50,m:1,t:4}],txt:r=>`Los bufos de las runas son un <span class="cd">${Math.round(r.m*100)}%</span> más fuertes y duran <span class="cr">${r.t} s</span> más.`},
+ affin:{n:'Afinidad',ranks:[{c:35,p:.5}],txt:r=>`Puedes marcar una torre favorita (botón de bandera): recibe la <span class="cd">mitad</span> de todas las runas.`},
+ fleet:{n:'Flota',ranks:[{c:40,n:1},{c:50,n:2}],txt:r=>`<b>${1+r.n} drones</b> en vez de 1.`},
+ overclock:{n:'Overclock',ranks:[{c:45,t:3,m:2},{c:55,t:4,m:2.5}],txt:r=>`La torre que visita un dron dispara <span class="cr">×${f(r.m)}</span> más rápido durante <span class="cr">${r.t} s</span>.`},
+ weld:{n:'Soldadura',ranks:[{c:35,h:.05,sh:.1},{c:45,h:.1,sh:.2}],txt:r=>`Mientras vuela, el dron cura cada segundo un <span class="chp">${Math.round(r.h*100)}%</span> a las unidades a 1,5 casillas y les da un escudo del <span class="chp">${Math.round(r.sh*100)}%</span> de su vida.`}};
 const SPECS={arrow:{
  rapid:{n:'Arqueros Raudos',ic:'🪶',col:'#f0c46a',lv:{dmg:L4D*.85,cd:.7*.65,range:1.2,area:1.3,hp:L4H,pen:0},ab:['rain','poison','burst'],d:'Disparan mucho más rápido, a costa de algo de daño.'},
  xbow:{n:'Ballesteros',ic:'🎯',col:'#c9783a',lv:{dmg:L4D*2.5,cd:.7*1.4,range:1.2,area:1.3,hp:L4H,pen:15},ab:['charged','pierce','mark'],d:'Disparan más lento, pero con mucho más daño y penetración de armadura.'}},
@@ -171,8 +211,21 @@ orb:{
  foco:{n:'Foco Arcano',ic:'🌑',col:'#9d86ff',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['hex','nova','poly'],d:'Orbes que maldicen: debilitan frente a la magia, cargan novas y pueden convertir a los enemigos en ranas.'},
  reap:{n:'Segador de Almas',ic:'🪦',col:'#9fb4d8',lv:{dmg:L4D*.85,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['raise','knight','harvest'],d:'Orbes más débiles: los enemigos que matan se alzan como espectros aliados.'}},
 laser:{
- conc:{n:'Rayo Concentrado',ic:'🔆',col:'#e07bff',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['overl','arcpen','conv'],d:'Un solo rayo cuyo daño crece cuanto más tiempo sigue al mismo enemigo.'},
- prism:{n:'Prisma',ic:'🌈',col:'#ff7ad9',dt:'elem',lv:{dmg:L4D*.5,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},prism:true,ab:['split','trail','refr'],d:'El rayo se divide en rayos elementales de poco daño que aplican stacks (sangrado, veneno).'}},
+ red:{n:'Red eléctrica',ic:'🔗',col:'#9fe8ff',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{net:1},ab:['fence','shortc','overload'],d:'Se une con un arco a las demás Redes eléctricas a 3 casillas o menos: cada torre conectada da +15% de daño a todas. Los enemigos que cruzan un arco sufren.'},
+ volt:{n:'Arco voltaico',ic:'⚡',col:'#fff08a',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{volt:1},ab:['hv','ground','jump'],d:'El arco carga de electricidad a su objetivo; con la carga llena, descarga: un golpe de 15× y lo aturde.'}},
+bunker:{
+ sup:{n:'Supresión',ic:'🔩',col:'#c9b06a',lv:{dmg:L4D*.9,cd:.7*.8,range:1.2,area:1.3,hp:L4H,pen:0},o:{mag:45,ramp:1.2},ab:['trigger','magz','expan'],d:'Cargadores de 45 balas y la cadencia sube mucho más mientras dispara. Pensada para hordas.'},
+ nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*7,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['weak','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración. Para élites y jefes.'}},
+robots:{
+ mecha:{n:'Mechas',ic:'🦾',col:'#e0884a',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.5,pen:0},o:{mecha:1},ab:['drill','react','shoulder'],d:'Uno de los robots se transforma en un mecha élite: mucha más vida, corpulencia 2 y golpes en área. Los otros dos le apoyan.'},
+ kami:{n:'Androides kamikaze',ic:'💥',col:'#ff6a5a',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H*.5,pen:0},o:{kami:1},uspd:1.6,ab:['reens','decoy','scrap'],d:'4 androides rápidos y frágiles. Al caer explotan (3× su daño en 1 casilla) y la torre los reensambla enseguida.'}},
+nano:{
+ hack:{n:'Hackeo',ic:'🧬',col:'#9fe0ff',lv:{dmg:L4D*.75,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{nsw:2},ab:['infect','virus','reprog'],d:'El enjambre se divide en 2 nubes que van a enemigos distintos. Infecta a los enemigos para que reciban más daño.'},
+ devour:{n:'Enjambre devorador',ic:'🕳️',col:'#b0b8ff',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{nsw:1,grow:1},ab:['hunger','acid','bottom'],d:'Una sola nube que crece con cada enemigo que devora durante la oleada: más daño y más grande. Al acabar la oleada vuelve a su tamaño.'}},
+altar:{
+ altar:{n:'Altar mayor',ic:'🪬',col:'#c89aff',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},ab:['twin','major','affin'],d:'Más alcance. Sus runas llegan más lejos y se pueden mejorar.'}},
+dron:{
+ dron:{n:'Helipuerto',ic:'🛸',col:'#e8b04a',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},ab:['fleet','overclock','weld'],d:'Más alcance. Los drones se pueden mejorar.'}},
 poison:{
  alch:{n:'Alquimista',ic:'⚗️',col:'#58c9a0',lv:{dmg:L4D*1.6,cd:.7,range:1.2,area:1.3*1.3,hp:L4H,pen:0},ab:['plague','corr','flask'],d:'Charcos más grandes y más stacks. El veneno se contagia y corroe la armadura.'},
  pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*.7,cd:.7,range:1.2,area:1.3*.75,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},

@@ -91,6 +91,6 @@ function castFreeze(c){
 const diceRr=k=>S&&S.relics&&rp('dice')&&!(S.drr||{})[k]?`<button class="drr" data-a="dreroll" data-k="${k}">🎲 Volver a tirar</button>`:'';
 function diceReroll(k){if(!rp('dice')||(S.drr||{})[k])return;
  if(k==='pc'){if(S.phase!=='place')return;S.pi=null;deal();(S.drr=S.drr||{}).pc=1;}
- else if(k==='tw'){if(!RL.towo)return;const p=tPool();if(!p.length)return;RL.towo=shuf(p).slice(0,3);(S.drr=S.drr||{}).tw=1;renderTowerOffer();}
+ else if(k==='tw'){if(!RL.towo)return;const p=tPool();if(!p.length)return;RL.towo=towPick3(p);(S.drr=S.drr||{}).tw=1;renderTowerOffer();}
  else if(k==='rl'){if(!RL.choices)return;openRelic();(S.drr=S.drr||{}).rl=1;renderRelicPick();}
  try{sfx('ui');}catch(e){}ui();}

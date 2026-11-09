@@ -141,3 +141,8 @@ button.pinb{float:right;margin:-2px 0 0 6px;padding:0 6px;font-size:13px;line-he
 @media (prefers-reduced-motion:reduce){#intro .ist.on .igdb,#intro .ist.on .igdi{animation:none}}
 #intro .igdt{text-align:left;line-height:1}#intro .igdw{font:900 clamp(38px,8vw,72px)/1 system-ui,sans-serif;letter-spacing:.02em;color:#e8f2f6}
 #intro .igdt{display:inline-flex;flex-direction:column}#intro .igds{font:700 clamp(14px,2.6vw,24px)/1 system-ui,sans-serif;color:#3fe8ff;margin-top:8px;display:flex;justify-content:space-between;padding:0 .1em}
+/* diálogos con retrato: ÉTER con su núcleo (color del núcleo), personajes con su retrato y su color */
+#dlg .dbx.who{display:flex;gap:16px;align-items:flex-start;border-color:color-mix(in srgb,var(--dc) 70%,#3fa7c9);box-shadow:0 0 0 1px color-mix(in srgb,var(--dc) 20%,transparent),0 10px 40px rgba(0,0,0,.5)}
+#dlg .dbx.who .dsp{color:var(--dc)}#dlg .dcol{flex:1;min-width:0}
+#dlg .dpp{flex:0 0 72px;width:72px;height:72px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 2px var(--dc),0 0 14px color-mix(in srgb,var(--dc) 45%,transparent)}#dlg .dpp img,#dlg .dpp svg,#dlg .dpp .dpb{display:block;width:100%;height:100%}
+body.mfs #dlg .dpp{flex-basis:52px;width:52px;height:52px}

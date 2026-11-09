@@ -41,7 +41,7 @@ function update(dt){
  S.enemies=S.enemies.filter(e=>!e.leak);
  const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y);
  for(const t of S.list){
-  const T=TW[t.type],s=stats(t);if(T.unit||T.support)continue;t.cd=Math.max(-.1,t.cd-dt);if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);if(t.flash&&(t.flash.t-=dt)<=0)t.flash=null;if(t.fl&&(t.fl.ttl-=dt)<=0)t.fl=null;
+  const T=TW[t.type],s=stats(t);if(T.unit||T.support||T.swarm)continue;t.cd=Math.max(-.1,t.cd-dt);if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);if(t.flash&&(t.flash.t-=dt)<=0)t.flash=null;if(t.fl&&(t.fl.ttl-=dt)<=0)t.fl=null;
   let tg=alive(t.tgt||{})&&Math.hypot(t.tgt.x-t.x,t.tgt.y-t.y)<=s.range?t.tgt:null;
   if(!tg){const md=TGT[t.mode]||TGT.core;let bs=0;
    for(const e of S.enemies){if(Math.hypot(e.x-t.x,e.y-t.y)>s.range||(T.ground&&isFly(e)))continue;const sc=md.score(e,prog);
@@ -85,6 +85,7 @@ function update(dt){
     if(!S.pools.some(p=>p.src===t&&Math.hypot(p.x-px,p.y-py)<.8*K))S.pools.push({x:px,y:py,t:T.dur,n:dm*(pz?pz.m:1),tk:0,src:t,r:s.area});
     break;}
    if(T.beam){sfx('beam',{r:T.orb?1:1.3});const ov=abRank(t,'overl'),mm=ov?1+Math.min(ov.max,ov.g*t.ovT):1;hurt(tg,dm*mm*(1+(T.orb?soulB(t):0))*(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1),t,T.dt,s.pen);onHit(tg,t);if(T.orb&&tg.hp>0)orbHit(t,tg,s,dm);if(crit)critMark(tg);if(tg.hp<=0)break;continue;}
+   if(T.mag!=null){bunkerFire(t,tg,s,dm,crit);if(tg.hp<=0)break;continue;}
    if(T.augur){augurShot(t,tg,s,dm,crit,S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1);continue;}
    if(T.cata){cataShot(t,tg,s,dm,crit,S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1);continue;}
    // el daño, el crítico y el área se fijan al disparar; los efectos se aplican al impactar
@@ -111,7 +112,7 @@ function update(dt){
    for(let i=0;i<2;i++){const pt=tr.length>i+1?tr[tr.length-1-i]:[e.tx,e.ty],m={t:'mini',x:pt[0],y:pt[1],tx:pt[0],ty:pt[1],trail:tr.slice(0,Math.max(0,tr.length-1-i)),hp:mh,max:mh,fx:{},src:null};
     S.enemies.push(m);S.fx.push({frag:1,x0:e.x,y0:e.y,x:pt[0],y:pt[1],t:.45,m:.45,col:ET.colossus.col,sd:Math.random()});}
    S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:1.2*K,col:'#c0304a'});}}
- wolfTick(dt);dragonAdults(dt);guildHeal(dt);furyTick();orbTick(dt);heroAbTick(dt);mechaTick(dt);achTick(dt);logTick(dt);
+ wolfTick(dt);dragonAdults(dt);guildHeal(dt);furyTick();orbTick(dt);heroAbTick(dt);mechaTick(dt);achTick(dt);logTick(dt);if(typeof e2TowersTick==='function')e2TowersTick(dt);if(typeof bufoTick==='function')bufoTick(dt);
  let bossDead=false;
  S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(!e.leak)S.wk=(S.wk||0)+1;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=100)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
   {const gb=killGoldF(e.t),g1=rndG(gb*(e.src&&e.src.type&&TW[e.src.type]&&TW[e.src.type].guild?1.25:1)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=rp('coin')?rndG(gb*.5):0;S.gold+=g1+g2+g3;mimFeed(e);if(e.src&&TW[e.src.type]&&TW[e.src.type].glut)glutEat(e.src);if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;{const q=EKS(e.t);q.k++;q.g+=g1+g2+g3;}if(e.src)e.src.kills=(e.src.kills||0)+1;}}

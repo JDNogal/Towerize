@@ -172,6 +172,7 @@ cv.addEventListener('click',e=>{
  if(S.aim==='dism'){dismAt(c);return;}
  if(S.aim==='sharp'){if(aimConfirm(c))return;sharpAt(c);S.acf=null;return;}
  if(S.aim==='vch'){if(aimConfirm(c))return;vchAt(c);S.acf=null;return;}
+ if(S.aim==='fav'){favAt(c);return;}
  if(S.aim==='mecha'){if(mechaOk()){S.aim=null;ui();return;}castMecha(c);return;}
  if(S.aim==='habb'||S.aim==='habu'){if(habOk(S.aim.slice(3))){S.aim=null;ui();return;}castHab(c,S.aim.slice(3));return;}
  if(S.aim==='ember'){if(inb(c.x,c.y))castEmber(c);return;}
@@ -355,7 +356,7 @@ function act(e){
  else if(a==='evok')closeEvent();
  else if(a==='gup')guildUp(S.list.find(o=>o.id===+b.dataset.id));
  else if(a==='pexit'){if(!LB.exit){LB.exit=1;lbRender();return;}exitGame();}
- else if(a==='newgame'){if(SAV.meta&&!LB.ask){LB.ask=1;lbRender();return;}LB.ask=0;const go=()=>{if(!tutChosen())renderTutPick();else renderEra();};if(!STO.intro){STO.intro=1;saveSto();playDialog(STORY.intro,go);}else go();}
+ else if(a==='newgame'){if(SAV.meta&&!LB.ask){LB.ask=1;lbRender();return;}LB.ask=0;const go=()=>{if(!tutChosen())renderTutPick();else renderEra();};go();}
  else if(a==='erago')renderSetup();
  else if(a==='erasel')eraPick(b.dataset.v);
  else if(a==='era2hok'){hintSeen('era2mk');lbRender();}

@@ -68,9 +68,9 @@ function startGame(n){SEEOK=true;saveClear();
  document.body.classList.remove('inmenu');$('endscr').classList.remove('open');init();
 }
 // primera partida normal ganada: si aún no tenía a Radagast (se saltó el tutorial), lo desbloquea
-function winRad(){let had=true;try{had=radOk();localStorage.setItem('rt-win1','1');}catch(e){}if(!had&&!OPT.u_hr){delete HEROES.radagast.lockTxt;newU('hr',HEROES.radagast.ic,HEROES.radagast.n,'Primera partida ganada','radagast');}}
+function winRad(h0){let had=true;try{had=h0!==undefined?h0:radOk();localStorage.setItem('rt-win1','1');}catch(e){}if(!had&&!OPT.u_hr){STO.qrad=1;saveSto();delete HEROES.radagast.lockTxt;newU('hr',HEROES.radagast.ic,HEROES.radagast.n,'Primera partida ganada','radagast');}}
 function endGame(){
- const st=S.st,won=S.phase==='won',H=S.hero,earned=st.gKill+st.gTile+st.gRound+st.gRel+(st.gEv||0);if(won){pigWin();if(!S.tut){achWin();storyWin();winRad();}}if(won&&!S.tut&&S.list.some(t=>t.type==='sala')&&S.list.some(t=>t.type==='frost'))achieve('elem');
+ const st=S.st,won=S.phase==='won',H=S.hero,earned=st.gKill+st.gTile+st.gRound+st.gRel+(st.gEv||0);if(won){pigWin();if(!S.tut){/* antes de achWin: la victoria cuenta en HWIN y haría creer que Radagast ya estaba desbloqueado */const rh=radOk();achWin();storyWin();winRad(rh);}}if(won&&!S.tut&&S.list.some(t=>t.type==='sala')&&S.list.some(t=>t.type==='frost'))achieve('elem');
  const g=n=>`<span class="gd">${fi(n)} 🪙</span>`,d=n=>`<span class="cd">${fi(n)}</span>`;
  const all=st.all.slice().sort((a,b)=>(b.dmgT||0)-(a.dmgT||0));
  const hd=H?(H.pt.dmgT||0):0,tdm=all.reduce((s,t)=>s+(t.dmgT||0),0),other=Math.max(0,st.dmg-tdm-hd);

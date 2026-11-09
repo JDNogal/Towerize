@@ -7,8 +7,10 @@ const bkNarrow=()=>innerWidth<760||innerHeight<430;
 CP.sel=CP.sel||{};
 function bkItems(t){const L=[];
  if(t==='tw'){const fl=CFILTERS.tw,act=fl.filter(f=>CP.flt[f.key]);
-  const ids=Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k)&&act.every(f=>seen('tw',k)&&f.test(k,CP.flt[f.key])));
-  L.push({sec:'Torres normales'});for(const k of ids)L.push({id:k,ic:twIc(k),col:TW[k].col,n:TW[k].n,ok:seen('tw',k),lk:!tunl(k)&&!seen('tw',k)});
+  const ids=Object.keys(TW).filter(k=>!TW[k].uniq&&eraShow(k)&&act.every(f=>seen('tw',k)&&f.test(k,CP.flt[f.key]))),e2=ids.filter(k=>TW[k].era===2),e1=ids.filter(k=>TW[k].era!==2);
+  const row=k=>L.push({id:k,ic:twIc(k),col:TW[k].col,n:TW[k].n,ok:seen('tw',k),lk:!tunl(k)&&!seen('tw',k)});
+  L.push({sec:e2.length?'Torres de la Era Fantástica':'Torres normales'});for(const k of e1)row(k);
+  if(e2.length){L.push({sec:'Torres de la Era Distópica'});for(const k of e2)row(k);}
   L.push({sec:'Torres de evento'});for(const k of Object.keys(TW).filter(k=>TW[k].uniq))L.push({id:k,ic:twIc(k),col:TW[k].col,n:TW[k].n,ok:seen('tw',k)});}
  else if(t==='hr'){for(const id of Object.keys(HEROES).filter(h=>UNLOCK_ALL||heroVis(h)))L.push({id,por:1,col:HEROES[id].col,n:HEROES[id].n,ok:UNLOCK_ALL||!HEROES[id].lockTxt,lk:!UNLOCK_ALL&&!!HEROES[id].lockTxt});}
  else if(t==='pc'){PIECES.forEach((o,i)=>L.push({id:String(i),pc:i,n:o.n,ok:seen('pc',o.n)}));}

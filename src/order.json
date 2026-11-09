@@ -9,7 +9,8 @@
   "07_bocadillo.css",
   "08_cuero.css",
   "09_pergamino.css",
-  "10_pergamino_enrollado.css"
+  "10_pergamino_enrollado.css",
+  "11_era2.css"
  ],
  "js": [
   "00_config.js",
@@ -61,6 +62,11 @@
   "eter.js",
   "historial.js",
   "era2.js",
+  "historia.js",
+  "era2_torres.js",
+  "data/iconos_img.js",
+  "bufo.js",
+  "vega.js",
   "musica.js"
  ]
 }

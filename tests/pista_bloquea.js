@@ -2,7 +2,7 @@
 const OUT=require('path').join(__dirname,'out');require('fs').mkdirSync(OUT,{recursive:true});
 const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:720}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
-await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;startTut();chooseHero('sylvana');});
+await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;startTut();chooseHero('sylvana');S.revAt=0;});
 await p.waitForTimeout(500);const fails=[];const ck=(c,m)=>{if(!c)fails.push(m);};
 // tutorial: colocar la primera pieza para pasar a construcción
 await p.evaluate(()=>{for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}});
@@ -25,6 +25,6 @@ ck(await p.evaluate(()=>S.phase==='build'),'empezó la oleada con una torre por 
 await p.evaluate(()=>{S.tut.off=null;RL.open=false;HQ.q=[];if(HQ.cur)hintClose();startWave();});await p.waitForTimeout(200);
 ck(await p.evaluate(()=>S.phase==='wave'),'no empieza la oleada cuando todo está bien');
 // una pista nueva cierra la ficha del portal abierta (no debe tapar lo que señala)
-await p.evaluate(()=>{const pt=S.portals[0];openPrim({key:'pt:x',html:()=>portalInfo(pt),rect:cellRect(pt.x-1,pt.y-1,3)});PR.pinned=true;hint('tut_tstportal','Prueba','Texto.',null);});await p.waitForTimeout(600);
+await p.evaluate(()=>{const pt=S.portals[0];openPrim({key:'pt:x',html:()=>portalInfo(pt),rect:cellRect(pt.x-1,pt.y-1,3)});PR.pinned=true;if(HQ.cur)hintClose();hintShow({id:'tut_tstportal',title:'Prueba',txt:'Texto.',tg:null});});await p.waitForTimeout(400);
 ck(await p.evaluate(()=>HQ.cur&&HQ.cur.id==='tut_tstportal'&&!PR.open),'la ficha del portal sigue abierta con la pista');
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'pista ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

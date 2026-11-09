@@ -75,7 +75,7 @@ body.mfs #relic .ppap .tof .chips{min-height:38px}
 #relic .tgl .tun{justify-content:center;margin:0 0 8px}
 .ttl.ttlg{display:flex;align-items:center;gap:6px}.ttl.ttlg>b{flex:1;min-width:0}.ttl.ttlg .gal{margin:0;flex:none}
 .lvt{display:inline-flex!important;align-items:center;justify-content:center;gap:2px;min-width:0!important;width:auto!important;padding:2px 7px!important;margin:0 3px 4px 0!important;height:auto!important;vertical-align:middle}
-.lvt.on{background:#f7d98a!important;border-color:#b5622a!important;box-shadow:inset 0 0 0 1px #b5622a}.lvt.off{opacity:.35;filter:grayscale(1)}.lvt .lvx{font-size:12px}
+.lvt.on{background:#f7d98a!important;border-color:#b5622a!important;box-shadow:inset 0 0 0 1px #b5622a}.lvt.off{opacity:.35;filter:grayscale(1)}.lvt .lvx{font-size:17px;line-height:1;margin-left:2px}
 .lvtabs{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 6px;width:100%}.lvtabs .lvt{float:none!important;margin:0!important;min-height:30px;padding:2px 8px!important;border-radius:8px!important;background:#fbf2dd;border:1.5px solid #c9a87a!important}
 .lvtabs .lvt.on{background:#f7d98a!important;border-color:#b5622a!important}
 .bksht .lvtabs{display:inline-flex;width:auto;margin:6px 0 0 8px;vertical-align:middle}.bksht .lvtabs .lvt{margin:0!important}

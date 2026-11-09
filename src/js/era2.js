@@ -1,8 +1,12 @@
-// ==================== ERAS · la segunda era: Ruinas de Neón ====================
+// ==================== ERAS · la segunda era: Distópica (escenario: Ruinas de Neón) ====================
 // ERA = era elegida para la próxima partida; S.era = era de la partida en curso. La era 2 se abre al reparar a ÉTER (3 victorias).
-const ERADEF={1:{n:'Fantástica',ic:'🐉',col:'#4a8a4a'},2:{n:'Ruinas de Neón',ic:'🌆',col:'#3fe8ff'}};
+const ERADEF={1:{n:'Fantástica',ic:'🐉',col:'#4a8a4a'},2:{n:'Distópica',ic:'🌆',col:'#3fe8ff',esc:'Ruinas de Neón'}};
+// nombre de la era con su escenario: «Era Distópica · Ruinas de Neón»
+const eraName=(e,full)=>{const D=ERADEF[e]||ERADEF[1];return 'Era '+D.n+(full&&D.esc?' · '+D.esc:'');};
 
 const era2Ok=()=>UNLOCK_ALL||(typeof OPT!=='undefined'&&OPT.u_era)||(typeof STO!=='undefined'&&STO.p>=3);
+// qué torres se muestran en el compendio: las de una era ya alcanzada salen siempre (en sombra si no se han visto)
+const eraShow=k=>!TW[k].era||TW[k].era===1||(TW[k].era===2&&era2Ok());
 const inMenu=()=>document.body.classList.contains('inmenu');
 // ¿se juega (o se consulta) con el contenido de la era 2? En el menú, si está desbloqueada; en partida, si la partida es de la era 2
 function eraHas2(){return inMenu()?era2Ok():!!(typeof S!=='undefined'&&S&&S.era===2);}
@@ -11,7 +15,7 @@ function eraPick(v){v=+v;if(v===2&&!era2Ok())return;ERA=v;try{localStorage.setIt
 try{const v=+localStorage.getItem('rt-era');if(v===2)ERA=2;}catch(e){}
 // página de la era 2 en «Elegir era»
 function era2Page(){const nm=(typeof STO!=='undefined'&&STO.name)||'Piloto',bb=(typeof STO!=='undefined'&&STO.bb)||0;
- return{left:`<h3>Ruinas de Neón</h3><div class="bksub">Nueva partida · 1 de 3</div><div class="era lbera e2"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<bb?' got':''}">${i<bb?'📼':''}</div>`).join('')}</div><small>Registros recuperados ${Math.min(3,bb)} / 3 · cada partida ganada recupera la caja negra de un jefe</small><p style="margin-top:16px">Un futuro lejano: caminos holográficos entre torres caídas y neones que aún parpadean. Las máquinas que quedaron atrás no han dejado de funcionar. Esta era es algo más dura que la Fantástica.</p></div>`,
+ return{left:`<h3>Era Distópica</h3><div class="bksub">Ruinas de Neón · Nueva partida · 1 de 3</div><div class="era lbera e2"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<bb?' got':''}">${i<bb?'📼':''}</div>`).join('')}</div><small>Registros recuperados ${Math.min(3,bb)} / 3 · cada partida ganada recupera la caja negra de un jefe</small><p style="margin-top:16px">Un futuro lejano: caminos holográficos entre torres caídas y neones que aún parpadean. Las máquinas que quedaron atrás no han dejado de funcionar. Esta era es algo más dura que la Fantástica.</p></div>`,
   right:`<div class="lbeter"><div class="lbeh"><span class="lbei">💠</span><b>ÉTER</b></div><p>${escH(('Las coordenadas de casa nos han traído aquí, {N}. Esto fue una ciudad. Nuestra ciudad, creo. Los registros de esas máquinas pueden contarnos qué pasó.').replace(/\{N\}/g,nm))}</p></div><div class="lbsys"><b>SISTEMA</b> · Carga de salto: ${[0,33,66,100][Math.min(3,bb)]} % · Firmas temporales: ${Math.min(3,bb)} de 3</div>`};}
 // ---- diálogos de la era 2 (provisionales, pendientes de aprobar) ----
 const STORY2={
@@ -95,7 +99,7 @@ function era2Arrive(){if(!S||S.era!==2||S.tut||STO.e2a)return;STO.e2a=1;saveSto(
 const era2HintOn=()=>era2Ok()&&!HSEEN.era2mk&&ERA!==2;
 function era2HintHTML(){return '';}
 function era2Hint(){if(!era2HintOn()||HQ.cur)return;setTimeout(()=>{if(!era2HintOn()||HQ.cur||!LB.open||LB.step!=='era')return;const tg=tgEl('.bkmarks .bkmk[data-v="2"]');if(!tg())return;
- hintShow({id:'era2mk',menu:1,title:'¡Nueva era desbloqueada!',txt:'Has reparado a ÉTER: ahora puedes viajar a las <b>Ruinas de Neón</b>. Elige la era en estos marcapáginas'+(kcOn()?' (o con <b>Q</b> y <b>E</b>)':'')+': 🐉 Fantástica, 🌆 Ruinas de Neón.',tg});},650);}
+ hintShow({id:'era2mk',menu:1,title:'¡Nueva era desbloqueada!',txt:'Has reparado a ÉTER: ahora puedes viajar a la <b>Era Distópica</b>, las Ruinas de Neón. Elige la era en estos marcapáginas'+(kcOn()?' (o con <b>Q</b> y <b>E</b>)':'')+': 🐉 Fantástica, 🌆 Ruinas de Neón.',tg});},650);}
 {const _ep=eraPick;eraPick=function(v){const r=_ep.apply(this,arguments);try{if(+v===2&&!HSEEN.era2mk)hintSeen('era2mk');}catch(e){}return r;};}
 // ---- al empezar la partida, los cofres y eventos aparecen uno a uno (del más cercano al núcleo al más lejano) mientras el libro entra en el núcleo ----
 const REV0=380,REVG=200,REVD=260;

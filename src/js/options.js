@@ -29,7 +29,7 @@ const OPTS=[
  {tab:'kb',type:'keys'},
  {tab:'jg',type:'reset',label:'Borrar progreso',desc:'Borra todo lo que has conseguido y descubierto: compendio, logros, récords y victorias de héroe, rondas, tutoriales, historia y tu nombre para ÉTER, los desbloqueos y la personalización (paletas, núcleos y decoraciones). Se mantienen el sonido, los atajos y tus preferencias de interfaz. No se puede deshacer.'},
  {tab:'un',type:'toggle',key:'u_rl',def:false,label:'Desbloquear todas las reliquias',desc:'Las reliquias que dependen de un logro también pueden salir en los cofres.'},
- {tab:'un',type:'toggle',key:'u_era',def:false,label:'Desbloquear todas las eras',desc:'La era Ruinas de Neón disponible sin haber reparado a ÉTER.'},
+ {tab:'un',type:'toggle',key:'u_era',def:false,label:'Desbloquear todas las eras',desc:'La Era Distópica (Ruinas de Neón) disponible sin haber reparado a ÉTER.'},
  {tab:'un',type:'toggle',key:'u_cs',def:false,label:'Desbloquear toda la personalización',desc:'Encuadernaciones, núcleos y decoraciones disponibles sin conseguir sus logros.'},
  {tab:'ps',type:'cosm'},
  {tab:'un',type:'toggle',key:'u_rd',def:false,label:'Desbloquear todas las duraciones de partida',desc:'Puedes elegir partidas de 15 a 30 rondas desde el principio.'},
@@ -168,7 +168,7 @@ function coreCrystal0(c,x,y,b,t,K0){const u=b*.95,rep=K0.crack?.4:K0.cr?1:Math.m
  if(K0.arch){c.fillStyle='#8a8478';c.strokeStyle='#3a362f';c.lineWidth=Math.max(.8,u*.015);for(const sd of[-1,1]){c.fillRect(x+sd*u*.3-u*.06,y-u*.42,u*.12,u*.66);c.strokeRect(x+sd*u*.3-u*.06,y-u*.42,u*.12,u*.66);}c.beginPath();c.arc(x,y-u*.42,u*.36,Math.PI,0);c.lineWidth=u*.08;c.strokeStyle='#8a8478';c.stroke();c.lineWidth=Math.max(.8,u*.015);c.strokeStyle='#3a362f';c.beginPath();c.arc(x,y-u*.42,u*.4,Math.PI,0);c.stroke();c.beginPath();c.arc(x,y-u*.42,u*.32,Math.PI,0);c.stroke();}
  if(K0.wring||K0.wsq){if(K0.wring)wring(1);else wsq(1);if(hit>0){c.fillStyle=`rgba(200,190,170,${.7*hit})`;for(let i=0;i<8;i++){c.beginPath();c.arc(x-u*.3+i*u*.085,y+u*.4+(1-hit)*u*.08+Math.sin(i*1.7)*u*.03,u*.012,0,7);c.fill();}}}
  if(K0.walls){wall(1);if(hit>0){c.fillStyle=`rgba(200,190,170,${.7*hit})`;for(let i=0;i<8;i++){c.beginPath();c.arc(x-u*.3+i*u*.085,y+u*.38+(1-hit)*u*.08+Math.sin(i*1.7)*u*.03,u*.012,0,7);c.fill();}}}}
-function drawCore(g,cx,cy,b,skin){if(!skin&&S&&S.era===2){e2Core(g,cx,cy,b);return;}skin=skin||OPT.core||'base';const c=COSM.core.find(x=>x.id===skin);if(!c||!cosOwn(c))skin='base';const t=(typeof performance!=='undefined'?performance.now():0)/1000;
+function drawCore(g,cx,cy,b,skin){skin=skin||OPT.core||'base';const c=COSM.core.find(x=>x.id===skin);if(!c||!cosOwn(c))skin='base';const t=(typeof performance!=='undefined'?performance.now():0)/1000;
  coreCrystal(g,cx,cy,b,t,skin);}
 // decoración nueva
 const DSTAMPS=[{lot:'snow',w:1.5,ch:'n',a:2,b:4},{lot:'jung',w:1.5,ch:'j',a:2,b:4},{lot:'farm',w:1.2,ch:'F',a:2,b:3,x:'k'},{lot:'lamp',w:1,ch:'l',a:1,b:2},{lot:'scrap',w:1,ch:'g',a:1,b:2},{lot:'camp',w:1,ch:'e',a:1,b:1,x:'f'},{lot:'ruin',w:1.2,ch:'u',a:1,b:3},{lot:'gem',w:1,ch:'z',a:1,b:2},{lot:'tav',w:1,ch:'b',a:1,b:2}];

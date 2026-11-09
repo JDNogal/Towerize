@@ -40,7 +40,9 @@ const T=[
  ['guardar_ventanas_tutorial.js','Guardar con cofre, evento u oferta abiertos; fin de ronda; tutorial'],
  ['radagast_primera.js','Radagast se desbloquea al ganar la primera partida (aunque se salte el tutorial)'],
  ['registro_partidas.js','Registro de partidas: se apunta al empezar, se cierra al acabar y se ve en el libro'],
- ['era2.js','Era 2 (Ruinas de Neón): se abre con 3 victorias, se elige en el libro y dibuja su mapa'],
+ ['primera_partida.js','Primera partida: directa a 15 rondas, intro con Reinhart y Sylvana y luego elegir héroe; Radagast se presenta al ganar'],
+ ['era2.js','Era 2 (Distópica · Ruinas de Neón): se abre con 3 victorias, se elige en el libro y dibuja su mapa'],
+ ['era2_torres.js','Torres de serie de la era 2, torres de bufo, Vega y la Radio de la Resistencia'],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);
@@ -53,7 +55,7 @@ for(const [f,desc,vars,tries] of T){
   for(let i=0;i<(tries||1)&&!ok;i++){
    res=spawnSync(process.execPath,[path.join(__dirname,f),FILE,...(v==='m'?['m']:[])],{encoding:'utf8',timeout:180000});
    const out=((res.stdout||'')+(res.stderr||'')).split('\n').filter(l=>l.trim()&&!/agent-proxy|fonts\.g|Allowed|details/.test(l));
-   last=(out[out.length-1]||'').trim();ok=res.status===0&&okLast(last)&&!/Error|Uncaught/.test(res.stderr||'');
+   last=(out[out.length-1]||'').trim();ok=res.status===0&&okLast(last)&&!out.some(l=>/^FALLOS\b/.test(l.trim()))&&!/Error|Uncaught/.test(res.stderr||'');
    if(!ok&&i+1<(tries||1))continue;
    if(!ok){console.log('✗ '+f+(vars?' ('+v+')':'')+' — '+desc);console.log(out.slice(-12).map(l=>'    '+l).join('\n'));}
   }

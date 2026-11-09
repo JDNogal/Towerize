@@ -48,10 +48,31 @@ function shipSaucer(c,lights){c.fillStyle='#9aa4ae';c.strokeStyle='#2a3038';c.li
 // lado del núcleo sin camino (prefiere arriba): así la nave no tapa el camino por el que llegan los enemigos
 function shipSide(){const c=S&&S.core;if(!c||!S.cc)return[0,-1];const gx=Math.floor(c.x/K),gy=Math.floor(c.y/K),pa=(x,y)=>S.cc[y]&&S.cc[y][x]===2;
  for(const d of[[0,-1],[-1,0],[1,0],[0,1]])if(!pa(gx+d[0],gy+d[1])&&!pa(gx+d[0]*2,gy+d[1]*2))return d;return[0,-1];}
+// ---- nave de la era 2: ya reparada, mejora con las cajas negras (STO.bb 0-3) ----
+// 1: patas y antena parabólica emitiendo · 2: alas con luces y anillo de salto del suelo encendido por delante · 3: cohetes y anillo completo (despega un poco)
+function drawShipE2(g,cx,cy,B){const bb=Math.min(3,(typeof STO!=='undefined'&&STO.bb)||0),s=B/52,t=performance.now()/1000,sd=shipSide(),x=sd[0]*84,y=sd[1]===1?96:sd[1]*80-(sd[0]?14:0),gy=y+34;
+ g.save();g.translate(cx,cy);g.scale(s,s);
+ // anillo de salto en el suelo (dos anillos concéntricos)
+ const R=[[74,17],[88,21]];for(const[rx,ry]of R){g.strokeStyle='rgba(63,232,255,.16)';g.lineWidth=5;g.beginPath();g.ellipse(x,gy,rx,ry,0,0,7);g.stroke();}
+ if(bb>=2){const full=bb>=3,pul=.75+.25*Math.sin(t*3);g.strokeStyle=`rgba(63,232,255,${pul})`;g.lineWidth=4;for(const[rx,ry]of R){g.beginPath();g.ellipse(x,gy,rx,ry,0,0,full?7:Math.PI);g.stroke();}
+  g.strokeStyle=`rgba(63,232,255,${.25*pul})`;g.lineWidth=10;for(const[rx,ry]of R){g.beginPath();g.ellipse(x,gy,rx,ry,0,0,full?7:Math.PI);g.stroke();}
+  // chispa que recorre el anillo
+  const a=(t*1.2)%(full?Math.PI*2:Math.PI);g.fillStyle='#e8ffff';g.beginPath();g.arc(x+Math.cos(a)*88,gy+Math.sin(a)*21,3,0,7);g.fill();}
+ // plataforma
+ g.fillStyle='rgba(0,0,0,.35)';g.beginPath();g.ellipse(x,gy,58,12,0,0,7);g.fill();g.strokeStyle='rgba(63,232,255,.5)';g.lineWidth=2;g.beginPath();g.ellipse(x,gy,50,9,0,0,7);g.stroke();
+ const fl=bb>=3?-8+Math.sin(t*1.6)*2:0;g.save();g.translate(x,y+fl);
+ if(bb>=2){g.fillStyle='#6a7480';g.strokeStyle='#2a3038';g.lineWidth=2.5;for(const sg of[-1,1]){g.beginPath();g.moveTo(sg*44,4);g.lineTo(sg*78,-4);g.lineTo(sg*80,6);g.lineTo(sg*44,14);g.closePath();g.fill();g.stroke();g.fillStyle=Math.sin(t*4+sg)>0?'#ff4fd8':'#7a2a6a';g.fillRect(sg*76-2,-2,4,4);g.fillStyle='#6a7480';}}
+ shipSaucer(g,true);
+ if(bb===1||bb===2){g.strokeStyle='#4a5260';g.lineWidth=3;for(const sg of[-1,1]){g.beginPath();g.moveTo(sg*26,18);g.lineTo(sg*36,34);g.stroke();g.fillStyle='#4a5260';g.fillRect(sg*36-6,33,12,3);}}
+ if(bb>=3){for(const sg of[-1,1]){g.fillStyle='#5a6470';g.fillRect(sg*38-7,10,14,10);const f=14+Math.sin(t*20+sg)*3;g.fillStyle='rgba(255,140,60,.9)';g.beginPath();g.moveTo(sg*38-6,20);g.lineTo(sg*38,20+f);g.lineTo(sg*38+6,20);g.closePath();g.fill();g.fillStyle='rgba(255,230,150,.9)';g.beginPath();g.moveTo(sg*38-3,20);g.lineTo(sg*38,20+f*.55);g.lineTo(sg*38+3,20);g.closePath();g.fill();}}
+ if(bb>=1){g.strokeStyle='#2a3038';g.lineWidth=2;g.beginPath();g.moveTo(-20,-6);g.lineTo(-24,-13);g.stroke();g.fillStyle='#b8c0ca';g.beginPath();g.ellipse(-24,-15,9,5,-.5,0,7);g.fill();g.stroke();g.fillStyle='#ff4fd8';g.beginPath();g.arc(-27,-19,2,0,7);g.fill();
+  for(let i=0;i<3;i++){const k=(t*.9+i/3)%1;g.strokeStyle=`rgba(255,79,216,${.8*(1-k)})`;g.lineWidth=1.6;g.beginPath();g.arc(-27,-19,4+k*16,-2.6,-1.2);g.stroke();}}
+ g.restore();g.restore();}
 function drawShip(g,cx,cy,B,st){if(st==null)st=(STO.p||0)>=3?2:(STO.p||0)>=1?1:0;const s=B/52,t=performance.now()/1000,sd=shipSide(),x=sd[0]*84,y=sd[1]===1?96:sd[1]*80-(sd[0]?14:0);
  g.save();g.translate(cx,cy);g.scale(s,s);
  // cráter (más pequeño cuanto más reparada)
- const w=st===2?40:62;g.fillStyle='#1f2e1a';g.beginPath();g.ellipse(x,y+32,w,w*.3,0,0,7);g.fill();g.fillStyle='#3a2a1a';g.beginPath();g.ellipse(x,y+32,w*.82,w*.22,0,0,7);g.fill();
+ if(S&&S.era===2){/* era 2: la nave ya está reparada, posada sobre una plataforma (sin cráter) */g.fillStyle='rgba(0,0,0,.35)';g.beginPath();g.ellipse(x,y+32,46,10,0,0,7);g.fill();g.strokeStyle='rgba(63,232,255,.5)';g.lineWidth=2;g.beginPath();g.ellipse(x,y+32,40,8,0,0,7);g.stroke();}
+ else{const w=st===2?40:62;g.fillStyle='#1f2e1a';g.beginPath();g.ellipse(x,y+32,w,w*.3,0,0,7);g.fill();g.fillStyle='#3a2a1a';g.beginPath();g.ellipse(x,y+32,w*.82,w*.22,0,0,7);g.fill();}
  const ang=[1.45,.75,0][st],dep=[30,14,0][st],fl=st===2?Math.sin(t*1.6)*3-6:0;
  g.save();if(st<2){g.beginPath();g.rect(-200,-400,400,400+y+34);g.clip();}g.translate(x,y+dep+fl);g.rotate(-ang);shipSaucer(g,st===2);g.restore();
  if(st===0){for(let i=0;i<4;i++){const k=(t*.4+i/4)%1;g.fillStyle=`rgba(90,90,90,${.5*(1-k)})`;g.beginPath();g.arc(x-10+k*24,y-30-k*60,7+k*14,0,7);g.fill();}
