@@ -188,7 +188,7 @@ function makePortals(boss){
  if(S.tut&&S.round===10)ps[0].plan.bob=1;
  if(!boss&&!S.tut&&ELITES[S.round])for(const t in ELITES[S.round])ps[0].plan[t]+=ELITES[S.round][t];
  for(const sc of S.sched||[])if(sc.r===S.round)for(const k in sc.add)ps[0].plan[k]=(ps[0].plan[k]||0)+sc.add[k];
- if(boss){let q=ps.find(q=>q.x===boss.x&&q.y===boss.y);if(!q){q=mk(boss);ps.push(q);}q.plan[ROUNDS===30&&S.round===30?'colossus':'boss']=1;
+ if(boss){let q=ps.find(q=>q.x===boss.x&&q.y===boss.y);if(!q){q=mk(boss);ps.push(q);}q.plan[ROUNDS===30&&S.round===30?'colossus':(typeof storyBoss==='function'&&!S.tut?storyBoss():'boss')]=1;
   /* jefe final: sale con su escolta (una escuadra grande pegada a él) */if(S.round===ROUNDS&&!S.tut){const E=q.esc=[];const B=(S.era===2?['brutep','techm','auto','brutep','drone','weaver','auto','drone','brutep','auto']:['tank','custodian','norm','tank','norm','custodian','norm','norm','tank','norm']),n=Math.min(B.length,6+Math.floor(ROUNDS/5));for(let i=0;i<n;i++){const u=promote(B[i],S.round);E.push(u);q.plan[u]=(q.plan[u]||0)+1;}}}
  {const cap=S.round<14?1:S.round<=15?2:2+Math.floor((S.round-15)/5);let n=0;for(const q of ps)for(const m of (q.sqm||[])){const g=m.griffin||0;if(!g)continue;const ok=Math.min(g,cap-n),ex=g-ok;n+=ok;m.griffin=ok;if(ex){m.harpy=(m.harpy||0)+ex;q.plan.griffin-=ex;q.plan.harpy=(q.plan.harpy||0)+ex;}}}
  S.portals=ps;

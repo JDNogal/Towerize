@@ -63,7 +63,7 @@ function startWave(){
   for(const t of['mini','elite','greyw','bigw','wanted','momdrg'])for(let i=0;i<(p.plan[t]||0);i++){const cut=[];for(let j=0;j<=p.q.length;j++)if(j===p.q.length||p.q[j]==='|'||!p.qf[j]||(j>0&&p.qf[j-1]&&p.qf[j-1].sid!==p.qf[j].sid))cut.push(j);
    const lo=cut.filter(j=>j>=p.q.length*.5),at=lo.length?lo[Math.floor(Math.random()*lo.length)]:p.q.length;p.q.splice(at,0,t);p.qf.splice(at,0,null);}
   const add=t=>{p.q.push(t);p.qf.push(null);};
-  if(p.plan.boss)add('boss');if(p.plan.colossus)add('colossus');if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');if(p.plan.bob)add('bob');p.t=0;}
+  if(p.plan.boss)add('boss');for(const bk of['kgob','argos'])if(p.plan[bk])add(bk);if(p.plan.colossus)add('colossus');if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');if(p.plan.bob)add('bob');p.t=0;}
  if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.forks={};S.fbag={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
  // duración prevista: lo que tarda en salir toda la cola + lo que tarda el enemigo más lento en recorrer el camino más largo
  {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:(t==='boss'||t==='colossus')?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
@@ -75,7 +75,7 @@ const oldHP=t=>S.tut||ET[t].evn||!ET[t].hf,ehpOf=(t,r)=>oldHP(t)?HP0*HPOLD(r)*ET
 function spawnEnemy(t,p,fo){
  let wanted=0;if(t==='wanted'){t='elite';wanted=1;}
  see('en',t);if(ET[t].fly&&!S.tut)hint('fly','Enemigos voladores','Los enemigos <b>voladores</b> no se pueden bloquear y no les afecta nada que golpee el suelo. El resto de tus ataques sí les dan.');
- const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus')&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%3)-1;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
+ const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus'||(ET[t]&&ET[t].story))&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%3)-1;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
  const dest=p.split?p.split[(p.si=(p.si||0)+1)%p.split.length]:null;
  // pv: «venía de fuera del portal», para que el primer paso siga recto hacia dentro y conserve su carril
  S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest,fsp:fo?fo.sp:0,sqid:fo?(p.sqn=(p.sqn||0),p.x+'.'+p.y+'.'+S.round+'.'+fo.sid):null,pv:[x+da,y+db]});

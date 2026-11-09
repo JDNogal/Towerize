@@ -1,5 +1,5 @@
 // Efectos de control: los jefes reducen un 50% su fuerza (ralentización), duración (congelación) o distancia (empuje).
-const isBoss=e=>e.t==='boss'||e.t==='colossus'||e.t==='bob',udM=e=>isBoss(e)&&ROUNDS>=26?1+.1*S.round:1;
+const isBoss=e=>e.t==='boss'||e.t==='colossus'||e.t==='bob'||!!(ET[e.t]&&ET[e.t].story),udM=e=>isBoss(e)&&ROUNDS>=26?1+.1*S.round:1;
 function slowE(e,m,t){if(e.fx.freeze)return;if(isBoss(e))m=1-(1-m)*BOSSRES;const q=e.fx.slow;e.fx.slow={m:q&&q.t>0?Math.min(q.m,m):m,t};}
 function freezeE(e,t){if(e.fx.freeze||e.fx.fimm)return false;e.fx.freeze={t:(isBoss(e)?t*BOSSRES:t)*(e.fx.wet?WETF:1)};delete e.fx.slow;return true;}
 function addBleed(e,src,n){e.bl=e.bl||[];const c=stkN(e,n||1);for(let i=0;i<c;i++)e.bl.push({t:BLEEDT,src});}
