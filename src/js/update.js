@@ -7,7 +7,9 @@ function update(dt){
  if(S.st){S.st.time+=dt;for(const t of S.list)t.act=(t.act||0)+dt;if(S.hero)S.hero.pt.act=(S.hero.pt.act||0)+dt;}
  S.wt+=dt;for(const id of S.relics){const st=S.rs[id];if(st.t>0)st.t=Math.max(0,st.t-dt);if(st.cd>0&&S.phase==='wave')st.cd=Math.max(0,st.cd-dt);}
  const iv=Math.max(.3,.7-S.round*.03);
- for(const p of S.portals){p.t-=dt;if(p.q.length&&p.t<=0){let t=p.q.shift();if(t==='|'){p.t=SQGAP;continue;}const esc=t.endsWith('#');if(esc)t=t.slice(0,-1);spawnEnemy(t,p);p.t=(t==='boss'||t==='colossus')?.25:esc?.22:iv;}}
+ for(const p of S.portals){p.t-=dt;let gd=0;while(p.q.length&&p.t<=0&&gd++<12){let t=p.q.shift();const fo=p.qf?p.qf.shift():null;if(t==='|'){p.t=SQGAP*Math.max(1,1/(p.lsp||1));continue;}const esc=t.endsWith('#');if(esc)t=t.slice(0,-1);spawnEnemy(t,p,fo);
+  // dentro de una formación, la siguiente fila sale cuando esta ha avanzado su distancia (a la velocidad común); las de la misma fila, a la vez
+  const nf=p.qf&&p.qf[0];if(fo){p.lsp=fo.sp;p.t+=nf&&nf.sid===fo.sid?(nf.r-fo.r)*SQROW/fo.sp:iv;}else{p.lsp=0;p.t=(t==='boss'||t==='colossus')?.25:esc?.22:iv;}if(p.t>0)break;}}
  S.pools=S.pools.filter(p=>(p.t-=dt)>0);
  for(const q of S.rain){if(!S.list.includes(q.src)){q.left=0;continue;}q.tk-=dt;while(q.tk<=0&&q.left>0){q.tk+=.12;q.left--;const c=S.enemies.filter(e=>e.hp>0&&Math.hypot(e.x-q.x,e.y-q.y)<=q.r);if(c.length){const e=c[Math.floor(Math.random()*c.length)],ty=q.ty||'phys',hit=[e];strike(e,q.dm,q.src,ty,q.pen);
    if(q.ar)for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=q.ar){hurt(o,q.dm*(q.af||1),q.src,ty,q.pen);hit.push(o);}

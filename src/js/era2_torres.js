@@ -151,11 +151,11 @@ function e2DrawWorld(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000;
   if(t.type==='robots'&&t.sd)for(const s of t.sd){if(s.hp<=0)continue;if(s.mech){g.fillStyle='#14161c';g.font=Math.round(CS*1.6)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🦾',X(s.x),X(s.y)+1);}
    if(s.beep>0){const k=1-s.beep/1.5;g.strokeStyle='rgba(255,90,90,'+(.4+.6*Math.abs(Math.sin(now*12)))+')';g.lineWidth=lw(2);g.beginPath();g.arc(X(s.x),X(s.y),s.beepR*CS*(1-k*.6),0,7);g.stroke();}}
   // carga voltaica del objetivo
-  if(t.type==='laser'&&t.spec==='volt'&&t.tgt&&t.tgt.hp>0&&t.tgt.vc&&t.tgt.vc[t.id]>0){const e=t.tgt,k=Math.min(1,e.vc[t.id]/VMAX),r=ET[e.t].r*CS+lw(5);g.strokeStyle='rgba(255,240,138,.9)';g.lineWidth=lw(2.5);g.beginPath();g.arc(X(e.x),X(e.y),r,-Math.PI/2,-Math.PI/2+k*6.283);g.stroke();}}
+  if(t.type==='laser'&&t.spec==='volt'&&t.tgt&&t.tgt.hp>0&&t.tgt.vc&&t.tgt.vc[t.id]>0){const e=t.tgt,k=Math.min(1,e.vc[t.id]/VMAX),r=ET[e.t].r*CS*EVS+lw(5);g.strokeStyle='rgba(255,240,138,.9)';g.lineWidth=lw(2.5);g.beginPath();g.arc(X(e.x),X(e.y),r,-Math.PI/2,-Math.PI/2+k*6.283);g.stroke();}}
  // piezas de chatarra
  for(const q of S.scrap||[]){const k=1-q.t/q.m,x=q.x0+(q.x-q.x0)*Math.min(1,k*2),y=q.y0+(q.y-q.y0)*Math.min(1,k*2)-Math.sin(Math.min(1,k*2)*Math.PI)*K*.6;g.fillStyle='#ffb07a';g.beginPath();g.arc(X(x),X(y),lw(3),0,7);g.fill();}
  // infectados: aro cian; marcados con láser: punto rojo
- for(const e of S.enemies){if(e.inf&&e.inf.t>0){g.strokeStyle='rgba(159,224,255,.9)';g.lineWidth=lw(1.5);g.setLineDash([lw(2),lw(2)]);g.beginPath();g.arc(X(e.x),X(e.y),ET[e.t].r*CS+lw(3),0,7);g.stroke();g.setLineDash([]);}}}
+ for(const e of S.enemies){if(e.inf&&e.inf.t>0){g.strokeStyle='rgba(159,224,255,.9)';g.lineWidth=lw(1.5);g.setLineDash([lw(2),lw(2)]);g.beginPath();g.arc(X(e.x),X(e.y),ET[e.t].r*CS*EVS+lw(3),0,7);g.stroke();g.setLineDash([]);}}}
 // ---- palabras clave nuevas ----
 const E2KW={mag:()=>'<b>Cargador</b><small>El Búnker dispara ráfagas con un cargador: cuanto más vacío está, más rápido dispara. Al vaciarse, recarga durante un momento (barra naranja bajo la torre) y vuelve a empezar.</small>',
  lmk:()=>'<b>Marcado con láser</b><small>El Nido de francotirador apunta a su objetivo con un láser rojo visible. Mientras dura, el enemigo recibe más daño de todas tus torres y unidades.</small>',

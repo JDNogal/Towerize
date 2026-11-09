@@ -40,7 +40,7 @@ function loop(t){
  {let fe=document.getElementById('ffwd');if(FF.on&&!fe){fe=document.createElement('div');fe.id='ffwd';fe.textContent='⏩ ×3 · ningún enemigo a tiro';document.body.appendChild(fe);}if(fe)fe.classList.toggle('on',FF.on);}
  const eff=((sp===0||held)?0:sp2+(Math.min(sp2,.25)-sp2)*slw)*HQ.f;
  const st=forced?'F':(OPT.slow&&sp>.25&&slw>=.95?'S':'N');if(st!==SPA){SPA=st;markSpeed();}
- if(gon)GT.c+=rdt*eff;update(rdt*eff);prevStep(rdt);hpkPrevStep(rdt);relicTick();draw();try{tmTick();}catch(e){}try{bmTick();}catch(e){}requestAnimationFrame(loop);
+ if(gon)GT.c+=rdt*eff;update(rdt*eff);try{camTick(rdt);camAuto();}catch(e){}prevStep(rdt);hpkPrevStep(rdt);relicTick();draw();try{tmTick();}catch(e){}try{bmTick();}catch(e){}requestAnimationFrame(loop);
 }
 $('game').className='pm-'+PM;
 setDsk();addEventListener('resize',setDsk);

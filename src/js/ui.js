@@ -38,13 +38,13 @@ cv.addEventListener('wheel',e=>{e.preventDefault();const r=cv.getBoundingClientR
  if(e.ctrlKey){zoomAt(Math.exp(-e.deltaY*.01),px,py);return;}
  const pad=e.deltaMode===0&&(e.deltaX!==0||!Number.isInteger(e.deltaY)||Math.abs(e.deltaY)<50);
  if(pad){const k=sc();CAM.x+=e.deltaX/r.width*VIEW/k;CAM.y+=e.deltaY/r.height*VH/k;clampCam();return;}
- zoomAt(e.deltaY<0?1.2:1/1.2,px,py);},{passive:false});
-cv.addEventListener('mousedown',e=>{if(e.button>2)return;DR={x:e.clientX,y:e.clientY,cx:CAM.x,cy:CAM.y,m:false,b:e.button};if(e.button)e.preventDefault();});
+ zoomSmooth(e.deltaY<0?1.25:1/1.25,px,py);},{passive:false});
+cv.addEventListener('mousedown',e=>{if(e.button>2)return;camStop();DR={x:e.clientX,y:e.clientY,cx:CAM.x,cy:CAM.y,m:false,b:e.button};if(e.button)e.preventDefault();});
 addEventListener('mousemove',e=>{if(!DR)return;const dx=e.clientX-DR.x,dy=e.clientY-DR.y;if(!DR.m&&Math.hypot(dx,dy)<6)return;DR.m=true;const r=cv.getBoundingClientRect(),k=sc();CAM.x=DR.cx-dx/r.width*VIEW/k;CAM.y=DR.cy-dy/r.height*VH/k;clampCam();});
 addEventListener('mouseup',()=>{if(DR&&DR.m){DRAGGED=true;setTimeout(()=>{DRAGGED=false;},60);}DR=null;});
 {let T0=null;const px=t=>{const r=cv.getBoundingClientRect();return[(t.clientX-r.left)/r.width*VIEW,(t.clientY-r.top)/r.height*VH];};
  const dist=ts=>Math.hypot(ts[0].clientX-ts[1].clientX,ts[0].clientY-ts[1].clientY),mid=ts=>px({clientX:(ts[0].clientX+ts[1].clientX)/2,clientY:(ts[0].clientY+ts[1].clientY)/2});
- cv.addEventListener('touchstart',e=>{const ts=e.touches;if(ts.length===2){T0={pinch:1,d:dist(ts),m:mid(ts),moved:true};}else if(ts.length===1){T0={pinch:0,x:ts[0].clientX,y:ts[0].clientY,cx:CAM.x,cy:CAM.y,moved:false};}},{passive:true});
+ cv.addEventListener('touchstart',e=>{const ts=e.touches;camStop();if(ts.length===2){T0={pinch:1,d:dist(ts),m:mid(ts),moved:true};}else if(ts.length===1){T0={pinch:0,x:ts[0].clientX,y:ts[0].clientY,cx:CAM.x,cy:CAM.y,moved:false};}},{passive:true});
  cv.addEventListener('touchmove',e=>{if(!T0)return;const ts=e.touches,r=cv.getBoundingClientRect();
   if(ts.length===2&&T0.pinch){e.preventDefault();const d=dist(ts),m=mid(ts);zoomAt(d/T0.d,m[0],m[1]);const k=sc();CAM.x-=(m[0]-T0.m[0])/k;CAM.y-=(m[1]-T0.m[1])/k;clampCam();T0.d=d;T0.m=m;DRAGGED=true;}
   else if(ts.length===1&&!T0.pinch){const dx=ts[0].clientX-T0.x,dy=ts[0].clientY-T0.y;if(!T0.moved&&Math.hypot(dx,dy)<8)return;T0.moved=true;e.preventDefault();const k=sc();CAM.x=T0.cx-dx/r.width*VIEW/k;CAM.y=T0.cy-dy/r.height*VH/k;clampCam();DRAGGED=true;}},{passive:false});

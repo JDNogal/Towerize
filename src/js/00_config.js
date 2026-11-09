@@ -8,6 +8,8 @@ const chestsFor=n=>3+(n>=19)+(n>=24)+(n>=29),mapFor=n=>n<=20?5:7,bossRound=r=>r=
 const hpR=r=>r<=15?1:1+.12*(r-15),bossB=()=>ROUNDS<=15?1:ROUNDS<=20?1.35:ROUNDS<=25?1.45:1.5;
 const cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=cv.height=VIEW;
 // Cámara: z=1 muestra todo el mapa; CAM.x/y = esquina superior izquierda en píxeles de mundo
+// tamaño de dibujo de enemigos y unidades respecto a su tamaño real en el juego (solo visual)
+const EVS=1.4,UVS=1.15;
 let ZINI=1.5,ZMAX=4,BS=Math.min(VIEW,VH)/(N*CS);const CAM={z:ZINI,x:0,y:0},ZMIN=1;
 function setSize(bn){BN=bn;NC=P*BN;N=NC*K;BS=Math.min(VIEW,VH)/(N*CS);ZINI=1.5*BN/5;ZMAX=4*BN/5;}
 const sc=()=>BS*CAM.z;
@@ -64,7 +66,7 @@ addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.r
  else if(kbIs('upg',k)){if(e.shiftKey){const b=document.querySelector('#tmenu.on [data-tm="up"],#side [data-a="up"],#tip [data-a="up"]');if(b){wishToggle(b);e.preventDefault();}}else{const b=document.querySelector('#tmenu.on [data-tm="up"],#tmenu.on [data-tm="gup"]');if(b){tmDo(b);e.preventDefault();}else if(clickA('[data-a="up"]'))e.preventDefault();}}});
 const keyOK=e=>!(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))&&typeof S!=='undefined'&&S&&!document.body.classList.contains('inmenu')&&!LB.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof INTRO!=='undefined'&&INTRO.on);
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey)return;const mv=['up','left','down','right'].find(a=>kbIs(a,k));if(mv){KEYS.add(mv);e.preventDefault();}
- else if(kbIs('zin',k)||k==='+'||k==='='){zoomAt(1.2,VIEW/2,VH/2);e.preventDefault();}else if(kbIs('zout',k)||k==='-'){zoomAt(1/1.2,VIEW/2,VH/2);e.preventDefault();}});
+ else if(kbIs('zin',k)||k==='+'||k==='='){zoomSmooth(1.25,VIEW/2,VH/2);e.preventDefault();}else if(kbIs('zout',k)||k==='-'){zoomSmooth(1/1.25,VIEW/2,VH/2);e.preventDefault();}});
 addEventListener('keyup',e=>{const k=e.key.toLowerCase();for(const a of ['up','left','down','right'])if(kbIs(a,k))KEYS.delete(a);});addEventListener('blur',()=>KEYS.clear());
 {let last=0;const tick=t=>{const dt=Math.min(.05,(t-(last||t))/1000);last=t;if(KEYS.size&&typeof S!=='undefined'&&S){const sp=VIEW*.9*dt/sc();if(KEYS.has('left'))CAM.x-=sp;if(KEYS.has('right'))CAM.x+=sp;if(KEYS.has('up'))CAM.y-=sp;if(KEYS.has('down'))CAM.y+=sp;clampCam();}requestAnimationFrame(tick);};requestAnimationFrame(tick);}
 document.addEventListener('mouseover',e=>{if(TOUCH||!S||S.phase!=='place'||S.pi==null||S.pexp)return;if(e.target.closest&&e.target.closest('.pstrip')&&!e.target.closest('button')){S.pexp=true;ui();}});

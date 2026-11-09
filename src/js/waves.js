@@ -4,11 +4,16 @@ function retryWave(){if(!S.snap||!(S.rc>0)||(S.phase!=='wave'&&S.phase!=='lost')
  if(S.tut)TUTR++;const snap=S.snap,rc=S.tut?99:S.rc-1,used=((S.st&&S.st.retries)||0)+1;closePrim();closeFocus();RL.open=false;$('relic').classList.remove('open');$('endscr').classList.remove('open');
  S=structuredClone(snap);S.snap=snap;S.rc=rc;S.st.retries=used;S.phase='build';S.selT=null;S.aim=null;S.rask=0;S.mask=0;S.dn=[];
  S.msg=S.tut?'Oleada reiniciada.':'Oleada reiniciada. Te quedan '+rc+' carga'+(rc===1?'':'s')+' de Reintentar.';renderRelics();ui();}
-function baseQueue(p){const q=[],cnt={};
- (p.sq||[]).forEach((k,j)=>{if(j)q.push('|');const m=(p.sqm&&p.sqm[j])||SQUADS[k].m,g=[];for(const t in m)for(let i=0;i<m[t];i++)g.push(t);g.sort((a,b)=>FORM[a]-FORM[b]);for(const t of g){q.push(t);cnt[t]=(cnt[t]||0)+1;}});
- const ec={};for(const t of p.esc||[])ec[t]=(ec[t]||0)+1;const extra=[];for(const t of REGT.concat(['cub'])){const d=(p.plan[t]||0)-(ec[t]||0)-(cnt[t]||0);if(d>0)for(let i=0;i<d;i++)extra.push(t);else if(d<0){let n=-d;for(let i=q.length-1;i>=0&&n>0;i--)if(q[i]===t){q.splice(i,1);n--;}}}
- if(extra.length){if(q.length)q.push('|');q.push(...extra);}
- return q.filter((t,i,a)=>t!=='|'||(i>0&&i<a.length-1&&a[i-1]!=='|'));}
+// cola de un portal. Con qf (array), rellena en paralelo la formación de cada entrada ({r, l, sp, sid} o null)
+function baseQueue(p,qf){const q=[],f=[],cnt={};
+ (p.sq||[]).forEach((k,j)=>{if(j){q.push('|');f.push(null);}const m=(p.sqm&&p.sqm[j])||SQUADS[k].m,fo=sqForm(k,m);
+  if(fo){const sp=Math.min(...fo.map(o=>ET[o.t].sp));for(const o of fo){q.push(o.t);f.push({r:o.r,l:o.l,sp,sid:j});cnt[o.t]=(cnt[o.t]||0)+1;}}
+  else{const g=[];for(const t in m)for(let i=0;i<m[t];i++)g.push(t);g.sort((a,b)=>FORM[a]-FORM[b]);for(const t of g){q.push(t);f.push(null);cnt[t]=(cnt[t]||0)+1;}}});
+ const ec={};for(const t of p.esc||[])ec[t]=(ec[t]||0)+1;const extra=[];for(const t of REGT.concat(['cub'])){const d=(p.plan[t]||0)-(ec[t]||0)-(cnt[t]||0);if(d>0)for(let i=0;i<d;i++)extra.push(t);else if(d<0){let n=-d;for(let i=q.length-1;i>=0&&n>0;i--)if(q[i]===t){q.splice(i,1);f.splice(i,1);n--;}}}
+ if(extra.length){if(q.length){q.push('|');f.push(null);}for(const t of extra){q.push(t);f.push(null);}}
+ const keep=q.map((t,i,a)=>t!=='|'||(i>0&&i<a.length-1&&a[i-1]!=='|'));
+ if(qf){qf.length=0;f.forEach((x,i)=>{if(keep[i])qf.push(x);});}
+ return q.filter((t,i)=>keep[i]);}
 // ---- bocadillos de los portales: una fila por escuadra (las iguales seguidas se agrupan con ×N) ----
 const PSPEC=['mini','elite','wanted','greyw','bigw','momdrg','boss','colossus','bob'];let PTAP=null,PTSIG='';
 const portalAt=c=>S.portals.find(p=>Math.abs(c.x-p.x)<=1&&Math.abs(c.y-p.y)<=1)||null;
@@ -53,9 +58,12 @@ function startWave(){
  S.wk=0;
  if(!S.tut)romaChk();
  {const keep=S.snap;S.snap=null;const dn=S.dn;S.dn=[];try{S.snap=structuredClone(S);}catch(err){S.snap=null;console.warn(err);}S.dn=dn;}
- for(const p of S.portals){p.q=baseQueue(p);
-  for(const t of['mini','elite','greyw','bigw','wanted','momdrg'])for(let i=0;i<(p.plan[t]||0);i++)p.q.splice(Math.floor(p.q.length*(.5+Math.random()*.4)),0,t);
-  if(p.plan.boss)p.q.push('boss');if(p.plan.colossus)p.q.push('colossus');if(p.esc&&p.esc.length)p.q.push(...p.esc.map(t=>t+'#'));if(p.plan.bob)p.q.push('bob');p.t=0;}
+ for(const p of S.portals){p.qf=[];p.q=baseQueue(p,p.qf);
+  // los especiales (élites, lobos…) salen entre escuadras, nunca en mitad de una formación
+  for(const t of['mini','elite','greyw','bigw','wanted','momdrg'])for(let i=0;i<(p.plan[t]||0);i++){const cut=[];for(let j=0;j<=p.q.length;j++)if(j===p.q.length||p.q[j]==='|'||!p.qf[j]||(j>0&&p.qf[j-1]&&p.qf[j-1].sid!==p.qf[j].sid))cut.push(j);
+   const lo=cut.filter(j=>j>=p.q.length*.5),at=lo.length?lo[Math.floor(Math.random()*lo.length)]:p.q.length;p.q.splice(at,0,t);p.qf.splice(at,0,null);}
+  const add=t=>{p.q.push(t);p.qf.push(null);};
+  if(p.plan.boss)add('boss');if(p.plan.colossus)add('colossus');if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');if(p.plan.bob)add('bob');p.t=0;}
  if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.forks={};S.fbag={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
  // duración prevista: lo que tarda en salir toda la cola + lo que tarda el enemigo más lento en recorrer el camino más largo
  {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:(t==='boss'||t==='colossus')?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
@@ -64,12 +72,13 @@ function startWave(){
  ui();tutPhase('wave');
 }
 const oldHP=t=>S.tut||ET[t].evn||!ET[t].hf,ehpOf=(t,r)=>oldHP(t)?HP0*HPOLD(r)*ET[t].hp:ET[t].hf*hpR(r);
-function spawnEnemy(t,p){
+function spawnEnemy(t,p,fo){
  let wanted=0;if(t==='wanted'){t='elite';wanted=1;}
  see('en',t);if(ET[t].fly&&!S.tut)hint('fly','Enemigos voladores','Los enemigos <b>voladores</b> no se pueden bloquear y no les afecta nada que golpee el suelo. El resto de tus ataques sí les dan.');
- const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus')&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=(p.ln=((p.ln||0)+1)%3)-1;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
+ const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus')&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%3)-1;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
  const dest=p.split?p.split[(p.si=(p.si||0)+1)%p.split.length]:null;
- S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest});
+ // pv: «venía de fuera del portal», para que el primer paso siga recto hacia dentro y conserve su carril
+ S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest,fsp:fo?fo.sp:0,sqid:fo?(p.sqn=(p.sqn||0),p.x+'.'+p.y+'.'+S.round+'.'+fo.sid):null,pv:[x+da,y+db]});
 }
 function compassStep(e){
  // Brújula (pasivo), a nivel de pieza: al entrar en una casilla de pieza nueva puede desviarse por una rama que se aleja del núcleo y seguirla mientras la distancia siga creciendo
@@ -99,8 +108,22 @@ function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!
  const key=cx+','+cy+':'+ok.length;S.fbag=S.fbag||{};let bag=S.fbag[key];if(!bag||!bag.length)bag=S.fbag[key]=shuf(ok.map((r,i)=>i));const r=ok[bag.pop()];if(!r)return;
  if(r.len===best&&S.cf[r.n[1]][r.n[0]]<S.cf[cy][cx])return;/* la más corta: la sigue el camino normal */
  e.wps=r.path.slice();}
+// ---- carriles: cada enemigo conserva su carril (izquierda, centro o derecha respecto a su marcha) también en las curvas,
+// para que las formaciones no se deshagan en fila de a uno. La dirección de marcha es la de la casilla de pieza vecina más cercana al destino.
+// una escuadra en formación no atraviesa a la escuadra que va delante: si la alcanza, marcha a su paso
+function sqFollow(e){const F=S.field,f0=F[e.ty]&&F[e.ty][e.tx];let sp=99;if(f0==null)return sp;for(const o of S.enemies){if(o===e||o.hp<=0||o.sqid===e.sqid||isFly(o)!==isFly(e))continue;const d=Math.hypot(o.x-e.x,o.y-e.y);if(d>1.4)continue;const f1=F[o.ty]&&F[o.ty][o.tx];if(f1==null||f1>=f0)continue;
+  const os=o.fx.stun||o.fx.freeze||o.fx.root||o.stopped?0:(o.fsp||ET[o.t].sp)*(o.fx.slow?o.fx.slow.m:1);sp=Math.min(sp,Math.max(.15,os));}return sp;}
+function laneDir(e,F){const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K);let best=null,bv=Infinity;
+ for(const[a,b]of D){const mx=(cx+a)*K+1,my=(cy+b)*K+1;if(!inb(mx,my))continue;const v=F[my][mx];if(v==null||v<0||!isFinite(v))continue;if(S.cells[my][mx]!==2)continue;if(v<bv||(v===bv&&e.fd&&e.fd[0]===a&&e.fd[1]===b)){bv=v;best=[a,b];}}
+ const v0=F[cy*K+1]&&F[cy*K+1][cx*K+1];if(best&&v0!=null&&bv>=v0)return null;return best;}
+const laneOf=(x,y,fd)=>{const ox=x-Math.floor(x/K)*K-1,oy=y-Math.floor(y/K)*K-1;return ox*fd[1]-oy*fd[0];};
+function laneStep(e,F){if(e.nolane)return null;const fd=laneDir(e,F);if(!fd)return null;e.fd=fd;if(e.fln==null)e.fln=laneOf(e.tx,e.ty,fd);
+ const cur=laneOf(e.tx,e.ty,fd),ok=(x,y)=>inb(x,y)&&S.cells[y][x]===2&&F[y][x]!=null&&isFinite(F[y][x])&&F[y][x]>=0;
+ if(cur!==e.fln){const dir=e.fln>cur?1:-1,lx=fd[1]*dir,ly=-fd[0]*dir,nx=e.tx+lx,ny=e.ty+ly;if(ok(nx,ny)&&Math.floor(nx/K)===Math.floor(e.tx/K)&&Math.floor(ny/K)===Math.floor(e.ty/K))return[nx,ny];}
+ const nx=e.tx+fd[0],ny=e.ty+fd[1];if(ok(nx,ny)&&F[ny][nx]<F[e.ty][e.tx]+K)return[nx,ny];return null;}
 function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
- const PBK=.25;let mv=ET[e.t].sp*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
+ if(e.fsp&&(e.fx.slow||e.fx.stun||e.fx.freeze||e.fx.root||e.fx.poly||e.fx.haste||e.stopped))e.fsp=0;
+ const PBK=.25;let mv=(e.fsp?Math.min(e.fsp,sqFollow(e)):ET[e.t].sp)*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
  const go=c=>{(e.trail=e.trail||[]).push([e.tx,e.ty]);if(e.trail.length>3000)e.trail.shift();e.pv=[e.tx,e.ty];e.tx=c[0];e.ty=c[1];};
  while(mv>0){
   const dx=e.tx-e.x,dy=e.ty-e.y,dd=Math.hypot(dx,dy);
@@ -114,6 +137,7 @@ function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.
    const F=e.dest?afield([Math.floor(e.dest[0]/K),Math.floor(e.dest[1]/K)]):e.wps?afield(e.wps[0]):(e.away&&e.aw)?afield(e.aw):S.field;
    // solo se consideran vecinos que acercan al objetivo; entre varios igual de buenos se prefiere seguir recto (mantiene el carril) y, si no, se reparte con una bolsa barajada por casilla
    let bd=F[e.ty][e.tx],cs=[];
+   {const ln=laneStep(e,F);if(ln){go(ln);continue;}}
    for(const[a,b]of D){const nx=e.tx+a,ny=e.ty+b;if(!inb(nx,ny))continue;const v=F[ny][nx];
     if(v>=bd)continue;if(cs.length&&v<F[cs[0][1]][cs[0][0]])cs=[];
     if(!cs.length||v===F[cs[0][1]][cs[0][0]])cs.push([nx,ny]);}

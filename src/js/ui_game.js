@@ -150,7 +150,7 @@ $('rotx').addEventListener('click',()=>{document.body.classList.add('vert');setT
 $('rotfs').addEventListener('click',()=>{enterFS();});if(!FSOK)$('rotfs').style.display='none';
 $('rot').classList.add('on');try{if(sessionStorage.getItem('rt-rot'))document.body.classList.add('vert');}catch(e){}
 $('zm').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const z=b.dataset.z;
- if(z==='pt'){togglePtips();return;}if(z==='+')zoomAt(1.4,VIEW/2,VH/2);else if(z==='-')zoomAt(1/1.4,VIEW/2,VH/2);else if(z==='0'){CAM.z=ZMIN;clampCam();}else if(z==='c'){CAM.z=ZINI;camCenter(S.core.x,S.core.y);}else if(z==='f')toggleFS();});
+ if(z==='pt'){togglePtips();return;}if(z==='+')zoomSmooth(1.4,VIEW/2,VH/2);else if(z==='-')zoomSmooth(1/1.4,VIEW/2,VH/2);else if(z==='0'){camGo(ZMIN,N/2-.5,N/2-.5);}else if(z==='c'){camFit();}else if(z==='f')toggleFS();});
 cv.addEventListener('contextmenu',e=>{e.preventDefault();if(!S||!S.list)return;if(S.aim&&S.aim!=='flag')return;const c=cell(e),t=S.occ[c.x+','+c.y];if(t)quickFlag(t);else if(S.aim==='flag'){S.aim=null;S.aimT=null;S.msg='';renderRelics();ui();}});
 // móvil: mantener pulsada una torre ~0,5 s = mover su bandera
 {let lp=null;cv.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||!S||!S.list||S.aim)return;const c=cell(e),t=S.occ[c.x+','+c.y];if(!t)return;const x=e.clientX,y=e.clientY;lp={x,y,tm:setTimeout(()=>{if(lp&&quickFlag(t)){LPF=performance.now();try{navigator.vibrate&&navigator.vibrate(25);}catch(er){}}lp=null;},500)};});

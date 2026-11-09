@@ -102,7 +102,7 @@ function draw(){
  drawDragons();
  for(const q of S.fx)if(q.frag){const k=1-q.t/q.m,px=(q.x0+(q.x-q.x0)*k)*CS+CS/2,py=(q.y0+(q.y-q.y0)*k)*CS+CS/2-Math.sin(k*Math.PI)*CS*2.2,r=CS*(.9-.3*k);g.save();g.translate(px,py);g.rotate(k*6+q.sd*6);g.fillStyle=q.col;g.strokeStyle='#e8a0a8';g.lineWidth=lw(1.5);g.beginPath();g.moveTo(-r,-r*.6);g.lineTo(r*.8,-r);g.lineTo(r,r*.5);g.lineTo(-r*.4,r);g.closePath();g.fill();g.stroke();g.restore();}
  if(OPT.fx)for(const q of S.fx){if(q.mk||q.bolt||q.frag||q.line)continue;g.globalAlpha=Math.max(0,q.t/q.m)*.7;g.fillStyle=q.col;g.beginPath();g.arc(q.x*CS+CS/2,q.y*CS+CS/2,q.r*CS,0,7);g.fill();g.globalAlpha=1;}
- for(const e of S.enemies){const E=ET[e.t],px=e.x*CS+CS/2,py=e.y*CS+CS/2,r=E.r*CS;
+ for(const e of S.enemies){const E=ET[e.t],px=e.x*CS+CS/2,py=e.y*CS+CS/2,r=E.r*CS*EVS;
   if(E.fly){g.fillStyle='rgba(0,0,0,.28)';g.beginPath();g.ellipse(px,py+r*1.1,r*.9,r*.35,0,0,7);g.fill();const wf=Math.sin(performance.now()/90+e.x)*.35;g.fillStyle=E.col;g.beginPath();g.moveTo(px,py);g.lineTo(px-r*2,py-r*(1.1+wf));g.lineTo(px-r*.6,py+r*.3);g.closePath();g.moveTo(px,py);g.lineTo(px+r*2,py-r*(1.1+wf));g.lineTo(px+r*.6,py+r*.3);g.closePath();g.fill();}
   const sk=e.ps&&e.ps.length,bl=e.bl&&e.bl.length;g.fillStyle=e.fx.freeze?'#cdf2ff':e.fx.stun?'#fff2a0':sk?'#8fc24a':e.bn>=.5?'#ff9a4a':bl?'#d0506a':e.fx.slow?'#7fb4d9':E.col;g.beginPath();g.arc(px,py,r,0,7);g.fill();
   if(enIc(e.t)){g.strokeStyle='#1a1008';g.lineWidth=Math.max(lw(1.2),r*.12);g.stroke();enIcDraw(g,e.t,px,py+r*.04,r*.72);}
@@ -115,18 +115,14 @@ function draw(){
   if(S.fury){const pu=.45+.35*Math.sin(performance.now()/160+e.x);g.strokeStyle='rgba(255,60,40,'+pu+')';g.lineWidth=lw(2.5);g.beginPath();g.arc(px,py,r+lw(5),0,7);g.stroke();}
   {const mk=emarks(e);if(mk){g.fillStyle='#e8f2c8';g.font='bold '+Math.round(lw(10))+'px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';g.textAlign='center';g.textBaseline='bottom';g.fillText(mk,px,py-r-lw(5));}}
   const bw=Math.max(r*2.2,lw(8)),bh=lw(2.5);g.fillStyle='#000';g.fillRect(px-bw/2,py-r-lw(4),bw,bh);g.fillStyle='#6fe07a';g.fillRect(px-bw/2,py-r-lw(4),bw*Math.max(0,e.hp/e.max),bh);}
- if(OPT.dnum&&S.dn&&S.dn.length){g.textAlign='center';g.textBaseline='bottom';g.lineJoin='round';
-  for(const d of S.dn){if(d.sh<.5)continue;const a=d.idle<.6?1:Math.max(0,1-(d.idle-.6)/.5),cr=d.crit>0,sz=lw(cr?19:14),rise=lw(Math.min(14,d.age*10));
-   const px=d.x*CS+CS/2,py=d.y*CS+CS/2-d.r*CS-lw(18)-d.i*lw(15)-rise,txt=fmtD(d.sh)+(cr?'!':'');
-   g.globalAlpha=a;g.font='bold '+sz+'px "Trebuchet MS",sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';g.lineWidth=lw(3);g.strokeStyle='rgba(10,12,16,.9)';g.strokeText(txt,px,py);g.fillStyle=DNC[d.key]||'#fff';g.fillText(txt,px,py);}
-  g.globalAlpha=1;}
+ try{dnDraw(lw);}catch(e){}
  // portales encima de los enemigos: salen «de debajo» y el portal siempre se ve y se puede pulsar
  for(const p of S.portals){const px=p.x*CS+CS/2,py=p.y*CS+CS/2,R=CS*1.35;g.fillStyle='#c8303f';g.beginPath();g.arc(px,py,R,0,7);g.fill();g.strokeStyle='#ffb0b8';g.lineWidth=lw(2.5);g.stroke();
   if(SKULL.complete&&SKULL.naturalWidth){const z=R*1.35;g.drawImage(SKULL,px-z/2,py-z/2,z,z);}}
  if(S.aim==='flag'&&S.aimT&&S.list.includes(S.aimT)){const t=S.aimT,R2=stats(t).range;g.fillStyle='rgba(90,180,255,.12)';g.strokeStyle='rgba(110,190,255,.9)';g.lineWidth=lw(1.5);g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,R2*CS,0,7);g.fill();g.stroke();
   const r=Math.ceil(R2);for(let y=Math.max(0,t.y-r);y<=Math.min(N-1,t.y+r);y++)for(let x=Math.max(0,t.x-r);x<=Math.min(N-1,t.x+r);x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=R2){g.fillStyle='rgba(91,141,239,.45)';g.fillRect(x*CS,y*CS,CS,CS);if(h&&h.x===x&&h.y===y){g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.arc(x*CS+CS/2,y*CS+CS/2,CS*.48,0,7);g.fill();}}}
  if(S.selE&&PR.pinned&&PR.key&&PR.key.startsWith('ei:')&&S.enemies.includes(S.selE)){const q=S.selE,A=ET[q.t].aura,px=q.x*CS+CS/2,py=q.y*CS+CS/2;
-  g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.beginPath();g.arc(px,py,ET[q.t].r*CS+lw(5),0,7);g.stroke();
+  g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.beginPath();g.arc(px,py,ET[q.t].r*CS*EVS+lw(5),0,7);g.stroke();
   if(A){g.fillStyle='rgba(170,176,189,.18)';g.strokeStyle='rgba(200,205,215,.9)';g.beginPath();g.arc(px,py,A.r*CS,0,7);g.fill();g.stroke();}}
  drawUnits(g,S,CS,0,0,lw);
  try{drawHeroSay(g,lw);}catch(e){}
