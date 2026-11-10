@@ -125,3 +125,5 @@ body.pcpick #rtl,body.lbopen #rtl,body:has(#relic.open) #rtl{display:none!import
 .bkpvr .bkpven{display:flex;flex-wrap:wrap;gap:5px;align-content:flex-start;max-height:132px;overflow-y:auto;padding:6px;border:1px solid var(--pline2);border-radius:8px;background:color-mix(in srgb,var(--paper) 70%,transparent);scrollbar-width:thin}
 /* v305: piezas del compendio: era del decorado y otro decorado */
 .pcbar{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:8px 0 0}
+/* v305: en el compendio, los nombres de las habilidades se ven como palabra clave (pasa el ratón para leer qué hacen) */
+#comp .kw.st[data-kw^="ab_"]{text-decoration:underline dotted 1.5px;text-underline-offset:3px;cursor:help;color:var(--acc)}

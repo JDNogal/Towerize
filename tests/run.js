@@ -71,6 +71,7 @@ const T=[
  ['red_electrica.js','Red eléctrica: se conecta con las torres dentro de su alcance'],
  ['vista_enemigos.js','Vistas previas: enemigos en tarjeta con scroll y filtros; el núcleo no cae'],
  ['piezas_compendio.js','Compendio de piezas: variantes vistas y decorado de cada era'],
+ ['habilidades_compendio.js','Compendio: el bocadillo de las habilidades de Nv 4'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];
