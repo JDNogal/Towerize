@@ -1377,6 +1377,7 @@ body.mfs .rlbar .rlg{grid-column:1;grid-row:1}body.mfs .rlbar [data-a="peek"]{gr
 body.mfs .rlbar [data-mz="deck"]{grid-column:2;grid-row:2}body.mfs .rlbar [data-mz="rel"]{grid-column:2;grid-row:3}
 #hpop{z-index:130!important}
 #hpop small.cc{display:none}
+#mzside [data-cpt]{cursor:pointer}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -5238,12 +5239,14 @@ function drawPat(c,o,cs,ox,oy,a){
  c.globalAlpha=a;for(const b of o.b)mark(c,b.k,ox+b.x*cs,oy+b.y*cs,cs);c.globalAlpha=1;
 }
 // pieza dibujada con el aspecto de la era 2 (ofertas y vista previa al colocarla)
-function drawPatE2(c,o,cs,ox,oy,a){const isP=(x,y)=>x>=0&&y>=0&&x<P&&y<P&&cellOf(o.p[y][x])===2;
- for(let y=0;y<P;y++)for(let x=0;x<P;x++){const ch=o.p[y][x],cv0=cellOf(ch),X=ox+x*cs,Y=oy+y*cs;c.globalAlpha=a;e2Ground(c,X,Y,x,y,cs);
-  if(cv0===2){c.fillStyle='rgba(63,232,255,.16)';c.fillRect(X,Y,cs,cs);c.fillStyle='rgba(63,232,255,.07)';for(let i=0;i<cs;i+=cs/9)c.fillRect(X,Y+i,cs,cs/18);
+function drawPatE2(c,o,cs,ox,oy,a){const isP=(x,y)=>x>=0&&y>=0&&x<P&&y<P&&cellOf(o.p[y][x])===2,card=!!(c.canvas&&c.canvas.closest&&c.canvas.closest('.card'));
+ for(let y=0;y<P;y++)for(let x=0;x<P;x++){const ch=o.p[y][x],cv0=cellOf(ch),X=ox+x*cs,Y=oy+y*cs;c.globalAlpha=a;if(card){c.fillStyle='#14161e';c.fillRect(X,Y,cs,cs);}else e2Ground(c,X,Y,x,y,cs);
+  /* en las cartas del libro (tinta sobre pergamino) el camino va más marcado para que se distinga */if(cv0===2&&card){c.fillStyle='rgba(150,240,255,.62)';c.fillRect(X,Y,cs,cs);const L=Math.max(1.2,cs*.12);c.fillStyle='#e8fbff';if(!isP(x,y-1))c.fillRect(X,Y,cs,L);if(!isP(x,y+1))c.fillRect(X,Y+cs-L,cs,L);if(!isP(x-1,y))c.fillRect(X,Y,L,cs);if(!isP(x+1,y))c.fillRect(X+cs-L,Y,L,cs);}
+  else if(cv0===2){c.fillStyle='rgba(63,232,255,.16)';c.fillRect(X,Y,cs,cs);c.fillStyle='rgba(63,232,255,.07)';for(let i=0;i<cs;i+=cs/9)c.fillRect(X,Y+i,cs,cs/18);
    const L=Math.max(1,cs*.05),es=[];if(!isP(x,y-1))es.push([X,Y+L,X+cs,Y+L]);if(!isP(x,y+1))es.push([X,Y+cs-L,X+cs,Y+cs-L]);if(!isP(x-1,y))es.push([X+L,Y,X+L,Y+cs]);if(!isP(x+1,y))es.push([X+cs-L,Y,X+cs-L,Y+cs]);
    const ed=e=>{c.beginPath();c.moveTo(e[0],e[1]);c.lineTo(e[2],e[3]);c.stroke();};c.lineWidth=L*2.6;c.strokeStyle='rgba(63,232,255,.22)';es.forEach(ed);c.lineWidth=L;c.strokeStyle='rgba(63,232,255,.95)';es.forEach(ed);}
-  else if(cv0===1)e2Solar(c,X,Y,cs);else if(ch!=='#')drawObs(c,ch,X,Y,cs);}
+  else if(cv0===1){if(card){const cx=X+cs/2,cy=Y+cs/2,h=r=>{c.beginPath();for(let k=0;k<6;k++){const q=k/6*Math.PI*2+Math.PI/6;c.lineTo(cx+Math.cos(q)*cs*r,cy+Math.sin(q)*cs*r);}c.closePath();};h(.44);c.fillStyle='#f4fbff';c.fill();h(.3);c.fillStyle='#5a6274';c.fill();}else e2Solar(c,X,Y,cs);}
+  else if(ch!=='#'){if(card){c.save();c.globalAlpha=a*.2;c.fillStyle='#ffffff';c.fillRect(X+cs*.1,Y+cs*.1,cs*.8,cs*.8);c.restore();}drawObs(c,ch,X,Y,cs);}}
  c.globalAlpha=a;for(const b of o.b)mark(c,b.k,ox+b.x*cs,oy+b.y*cs,cs);c.globalAlpha=1;}
 function rangeCircle(x,y,r){g.fillStyle='rgba(90,180,255,.17)';g.strokeStyle='rgba(110,190,255,.95)';g.lineWidth=1.5/sc();
  g.beginPath();g.arc(x*CS+CS/2,y*CS+CS/2,r*CS,0,7);g.fill();g.stroke();}
@@ -8890,10 +8893,10 @@ if(typeof window!=='undefined'){
 // PC: dos paneles a los lados de la ventana (la hoja del mazo y el cofre de reliquias). Si no caben, o en móvil:
 // dos botones redondos junto al ojo (baraja y cofre) que abren la lista. Todo es de consulta: bocadillo al pasar o mantener.
 const MZ={pop:null};
-const mzOn=()=>{if(typeof S==='undefined'||!S||!S.deck)return false;if(document.body.classList.contains('pcpick'))return !document.body.classList.contains('pcpeek');
+const mzOn=()=>{if(typeof S==='undefined'||!S||!S.deck||(typeof LB!=='undefined'&&LB.open))return false;if(document.body.classList.contains('pcpick'))return !document.body.classList.contains('pcpeek');
  return !!(RL.open&&!RL.hpick&&!RL.peek&&$('relic').querySelector('.rlbar'));};
-const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}"><i style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
-const mzRel=()=>S.relics.length?`<div class="mzgrid">${S.relics.map(id=>`<i data-tip="relic:${id}">${icHtml(RELIC[id].ic)}</i>`).join('')}</div>`:'<div class="mzvac">Aún no tienes reliquias.</div>';
+const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}" data-cpt="tw" data-cpv="${k}"><i style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
+const mzRel=()=>S.relics.length?`<div class="mzgrid">${S.relics.map(id=>`<i data-tip="relic:${id}" data-cpt="rl" data-cpv="${id}">${icHtml(RELIC[id].ic)}</i>`).join('')}</div>`:'<div class="mzvac">Aún no tienes reliquias.</div>';
 function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el.id='mzside';el.innerHTML='<div class="mzd"></div><div class="mzr"></div>';document.body.appendChild(el);}
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
  // ¿caben a los lados de la ventana? (si no, botones)
@@ -8909,9 +8912,22 @@ function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el
   const mk=(k,ic,t)=>{const b=document.createElement('button');b.dataset.mz=k;b.className='mzb';b.title=t;b.innerHTML=ic;b.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();mzOpen(k);});return b;};
   const d=mk('deck','🃏','Ver tu mazo'),rl=mk('rel','🧰','Ver tus reliquias');if(eye){host.insertBefore(d,eye);host.insertBefore(rl,eye);}else{host.appendChild(d);host.appendChild(rl);}};
  add(bar);if(pk&&document.body.classList.contains('pcpick')){let w=$('mzpk');if(!w){w=document.createElement('div');w.id='mzpk';pk.parentNode.insertBefore(w,pk);}add(w);}}
-function mzOpen(k){mzClose();const p=document.createElement('div');p.id='mzpop';p.innerHTML=`<div class="mzbox ${k==='deck'?'mzd':'mzr'}"><button class="mzx" aria-label="Cerrar">✕</button>${k==='deck'?`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres · toca una para ver su ficha</small></h4><div class="mzcols">${mzDeck()}</div>`:`<h4>Cofre de reliquias<small>Toca una para ver qué hace</small></h4>${mzRel()}`}</div>`;
+function mzOpen(k){mzClose();const p=document.createElement('div');p.id='mzpop';p.innerHTML=`<div class="mzbox ${k==='deck'?'mzd':'mzr'}"><button class="mzx" aria-label="Cerrar">✕</button>${k==='deck'?`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres · toca para ver su ficha; otra vez, para abrirla en el compendio</small></h4><div class="mzcols">${mzDeck()}</div>`:`<h4>Cofre de reliquias<small>Toca para ver qué hace; otra vez, para abrirla en el compendio</small></h4>${mzRel()}`}</div>`;
  p.addEventListener('click',e=>{if(e.target===p||e.target.closest('.mzx')){e.stopPropagation();mzClose();}});document.body.appendChild(p);MZ.pop=k;try{sfx('page');}catch(e){}}
 function mzClose(){const p=$('mzpop');if(p)p.remove();MZ.pop=null;}
 addEventListener('keydown',e=>{if(MZ.pop&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();mzClose();}},true);
 setInterval(()=>{try{mzSide();}catch(e){}},200);
+// clic (o segundo toque en móvil): abre esa ficha en el compendio
+{let last=null;document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('#mzside [data-cpt],#mzpop [data-cpt]');if(!a){last=null;return;}
+ if(TOUCH&&last!==a){last=a;return;}last=null;e.stopPropagation();e.preventDefault();const hp=$('hpop');if(hp)hp.style.display='none';mzClose();try{cpGo(a.dataset.cpt,a.dataset.cpv);if(LB.open)LB.fromWin=1;}catch(x){}},true);}
+// ==================== v304 · Alcance de las torres a distancia ====================
+// Los solares los pone el juego: con poco alcance una torre a distancia apenas llega a la pieza de al lado
+// (medido en mapas reales: con 2,2 casillas solo el 11 % de los solares alcanza otra pieza; con 3, el 35 %; con 3,4, el 70 %).
+// Todas suben a un mínimo de 3 casillas en Nv 1, pero se respeta el orden: las de más alcance siguen teniendo más
+// (nuevo = 3 + (antes − 2,2) / 2: Lanzallamas 2,2 → 3 · Arqueros 2,8 → 3,3 · Envenenadora 3 → 3,4). Sus niveles y especializaciones
+// suben en proporción y pierden algo de daño a cambio (÷ √ de lo que crece el alcance). Las unidades y las de apoyo no cambian.
+const RANGE_OLD={};
+for(const k in TW){const T=TW[k];if(!T||T.unit||T.support||T.uniq||T.guild||T.ev||!(T.range>0))continue;
+ /* TW.range ya está en subcasillas (casillas × K) */const old=T.range/K,nw=Math.max(old,3+(old-2.2)/2);if(nw<=old+1e-6)continue;
+ const f=nw/old;RANGE_OLD[k]=+old.toFixed(2);T.range=nw*K;if(T.dmg>0)T.dmg=+(T.dmg/Math.sqrt(f)).toFixed(2);}
 </script></body></html>

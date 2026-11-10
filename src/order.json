@@ -90,6 +90,7 @@
   "reliquias_e2b.js",
   "sonidos_e2.js",
   "musica.js",
-  "mazo_vista.js"
+  "mazo_vista.js",
+  "alcance_minimo.js"
  ]
 }

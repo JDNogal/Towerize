@@ -10,12 +10,14 @@ function drawPat(c,o,cs,ox,oy,a){
  c.globalAlpha=a;for(const b of o.b)mark(c,b.k,ox+b.x*cs,oy+b.y*cs,cs);c.globalAlpha=1;
 }
 // pieza dibujada con el aspecto de la era 2 (ofertas y vista previa al colocarla)
-function drawPatE2(c,o,cs,ox,oy,a){const isP=(x,y)=>x>=0&&y>=0&&x<P&&y<P&&cellOf(o.p[y][x])===2;
- for(let y=0;y<P;y++)for(let x=0;x<P;x++){const ch=o.p[y][x],cv0=cellOf(ch),X=ox+x*cs,Y=oy+y*cs;c.globalAlpha=a;e2Ground(c,X,Y,x,y,cs);
-  if(cv0===2){c.fillStyle='rgba(63,232,255,.16)';c.fillRect(X,Y,cs,cs);c.fillStyle='rgba(63,232,255,.07)';for(let i=0;i<cs;i+=cs/9)c.fillRect(X,Y+i,cs,cs/18);
+function drawPatE2(c,o,cs,ox,oy,a){const isP=(x,y)=>x>=0&&y>=0&&x<P&&y<P&&cellOf(o.p[y][x])===2,card=!!(c.canvas&&c.canvas.closest&&c.canvas.closest('.card'));
+ for(let y=0;y<P;y++)for(let x=0;x<P;x++){const ch=o.p[y][x],cv0=cellOf(ch),X=ox+x*cs,Y=oy+y*cs;c.globalAlpha=a;if(card){c.fillStyle='#14161e';c.fillRect(X,Y,cs,cs);}else e2Ground(c,X,Y,x,y,cs);
+  /* en las cartas del libro (tinta sobre pergamino) el camino va más marcado para que se distinga */if(cv0===2&&card){c.fillStyle='rgba(150,240,255,.62)';c.fillRect(X,Y,cs,cs);const L=Math.max(1.2,cs*.12);c.fillStyle='#e8fbff';if(!isP(x,y-1))c.fillRect(X,Y,cs,L);if(!isP(x,y+1))c.fillRect(X,Y+cs-L,cs,L);if(!isP(x-1,y))c.fillRect(X,Y,L,cs);if(!isP(x+1,y))c.fillRect(X+cs-L,Y,L,cs);}
+  else if(cv0===2){c.fillStyle='rgba(63,232,255,.16)';c.fillRect(X,Y,cs,cs);c.fillStyle='rgba(63,232,255,.07)';for(let i=0;i<cs;i+=cs/9)c.fillRect(X,Y+i,cs,cs/18);
    const L=Math.max(1,cs*.05),es=[];if(!isP(x,y-1))es.push([X,Y+L,X+cs,Y+L]);if(!isP(x,y+1))es.push([X,Y+cs-L,X+cs,Y+cs-L]);if(!isP(x-1,y))es.push([X+L,Y,X+L,Y+cs]);if(!isP(x+1,y))es.push([X+cs-L,Y,X+cs-L,Y+cs]);
    const ed=e=>{c.beginPath();c.moveTo(e[0],e[1]);c.lineTo(e[2],e[3]);c.stroke();};c.lineWidth=L*2.6;c.strokeStyle='rgba(63,232,255,.22)';es.forEach(ed);c.lineWidth=L;c.strokeStyle='rgba(63,232,255,.95)';es.forEach(ed);}
-  else if(cv0===1)e2Solar(c,X,Y,cs);else if(ch!=='#')drawObs(c,ch,X,Y,cs);}
+  else if(cv0===1){if(card){const cx=X+cs/2,cy=Y+cs/2,h=r=>{c.beginPath();for(let k=0;k<6;k++){const q=k/6*Math.PI*2+Math.PI/6;c.lineTo(cx+Math.cos(q)*cs*r,cy+Math.sin(q)*cs*r);}c.closePath();};h(.44);c.fillStyle='#f4fbff';c.fill();h(.3);c.fillStyle='#5a6274';c.fill();}else e2Solar(c,X,Y,cs);}
+  else if(ch!=='#'){if(card){c.save();c.globalAlpha=a*.2;c.fillStyle='#ffffff';c.fillRect(X+cs*.1,Y+cs*.1,cs*.8,cs*.8);c.restore();}drawObs(c,ch,X,Y,cs);}}
  c.globalAlpha=a;for(const b of o.b)mark(c,b.k,ox+b.x*cs,oy+b.y*cs,cs);c.globalAlpha=1;}
 function rangeCircle(x,y,r){g.fillStyle='rgba(90,180,255,.17)';g.strokeStyle='rgba(110,190,255,.95)';g.lineWidth=1.5/sc();
  g.beginPath();g.arc(x*CS+CS/2,y*CS+CS/2,r*CS,0,7);g.fill();g.stroke();}

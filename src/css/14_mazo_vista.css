@@ -32,3 +32,4 @@ body.mfs .rlbar .rlg{grid-column:1;grid-row:1}body.mfs .rlbar [data-a="peek"]{gr
 body.mfs .rlbar [data-mz="deck"]{grid-column:2;grid-row:2}body.mfs .rlbar [data-mz="rel"]{grid-column:2;grid-row:3}
 #hpop{z-index:130!important}
 #hpop small.cc{display:none}
+#mzside [data-cpt]{cursor:pointer}

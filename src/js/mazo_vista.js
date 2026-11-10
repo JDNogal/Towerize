@@ -2,10 +2,10 @@
 // PC: dos paneles a los lados de la ventana (la hoja del mazo y el cofre de reliquias). Si no caben, o en móvil:
 // dos botones redondos junto al ojo (baraja y cofre) que abren la lista. Todo es de consulta: bocadillo al pasar o mantener.
 const MZ={pop:null};
-const mzOn=()=>{if(typeof S==='undefined'||!S||!S.deck)return false;if(document.body.classList.contains('pcpick'))return !document.body.classList.contains('pcpeek');
+const mzOn=()=>{if(typeof S==='undefined'||!S||!S.deck||(typeof LB!=='undefined'&&LB.open))return false;if(document.body.classList.contains('pcpick'))return !document.body.classList.contains('pcpeek');
  return !!(RL.open&&!RL.hpick&&!RL.peek&&$('relic').querySelector('.rlbar'));};
-const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}"><i style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
-const mzRel=()=>S.relics.length?`<div class="mzgrid">${S.relics.map(id=>`<i data-tip="relic:${id}">${icHtml(RELIC[id].ic)}</i>`).join('')}</div>`:'<div class="mzvac">Aún no tienes reliquias.</div>';
+const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}" data-cpt="tw" data-cpv="${k}"><i style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
+const mzRel=()=>S.relics.length?`<div class="mzgrid">${S.relics.map(id=>`<i data-tip="relic:${id}" data-cpt="rl" data-cpv="${id}">${icHtml(RELIC[id].ic)}</i>`).join('')}</div>`:'<div class="mzvac">Aún no tienes reliquias.</div>';
 function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el.id='mzside';el.innerHTML='<div class="mzd"></div><div class="mzr"></div>';document.body.appendChild(el);}
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
  // ¿caben a los lados de la ventana? (si no, botones)
@@ -21,8 +21,11 @@ function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el
   const mk=(k,ic,t)=>{const b=document.createElement('button');b.dataset.mz=k;b.className='mzb';b.title=t;b.innerHTML=ic;b.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();mzOpen(k);});return b;};
   const d=mk('deck','🃏','Ver tu mazo'),rl=mk('rel','🧰','Ver tus reliquias');if(eye){host.insertBefore(d,eye);host.insertBefore(rl,eye);}else{host.appendChild(d);host.appendChild(rl);}};
  add(bar);if(pk&&document.body.classList.contains('pcpick')){let w=$('mzpk');if(!w){w=document.createElement('div');w.id='mzpk';pk.parentNode.insertBefore(w,pk);}add(w);}}
-function mzOpen(k){mzClose();const p=document.createElement('div');p.id='mzpop';p.innerHTML=`<div class="mzbox ${k==='deck'?'mzd':'mzr'}"><button class="mzx" aria-label="Cerrar">✕</button>${k==='deck'?`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres · toca una para ver su ficha</small></h4><div class="mzcols">${mzDeck()}</div>`:`<h4>Cofre de reliquias<small>Toca una para ver qué hace</small></h4>${mzRel()}`}</div>`;
+function mzOpen(k){mzClose();const p=document.createElement('div');p.id='mzpop';p.innerHTML=`<div class="mzbox ${k==='deck'?'mzd':'mzr'}"><button class="mzx" aria-label="Cerrar">✕</button>${k==='deck'?`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres · toca para ver su ficha; otra vez, para abrirla en el compendio</small></h4><div class="mzcols">${mzDeck()}</div>`:`<h4>Cofre de reliquias<small>Toca para ver qué hace; otra vez, para abrirla en el compendio</small></h4>${mzRel()}`}</div>`;
  p.addEventListener('click',e=>{if(e.target===p||e.target.closest('.mzx')){e.stopPropagation();mzClose();}});document.body.appendChild(p);MZ.pop=k;try{sfx('page');}catch(e){}}
 function mzClose(){const p=$('mzpop');if(p)p.remove();MZ.pop=null;}
 addEventListener('keydown',e=>{if(MZ.pop&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();mzClose();}},true);
 setInterval(()=>{try{mzSide();}catch(e){}},200);
+// clic (o segundo toque en móvil): abre esa ficha en el compendio
+{let last=null;document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('#mzside [data-cpt],#mzpop [data-cpt]');if(!a){last=null;return;}
+ if(TOUCH&&last!==a){last=a;return;}last=null;e.stopPropagation();e.preventDefault();const hp=$('hpop');if(hp)hp.style.display='none';mzClose();try{cpGo(a.dataset.cpt,a.dataset.cpv);if(LB.open)LB.fromWin=1;}catch(x){}},true);}
