@@ -1,0 +1,8 @@
+/* v298 · vales y tickets en el botón de mejorar */
+#tmenu .tmb .tvch{position:absolute;top:-8px;left:-8px;min-width:17px;height:17px;border-radius:9px;background:#2a2014;border:1.5px solid #ffd75a;color:#ffd75a;font:800 11px system-ui,sans-serif;display:grid;place-items:center;pointer-events:none;line-height:1}
+#tmenu .tmb.vch{border-color:#ffd75a;box-shadow:0 0 0 2px rgba(255,215,90,.35)}
+#tmenu .tmb.vch .p{color:#ffd75a}
+#tmenu .tmb.vch .ic{opacity:1;filter:none}
+#tmcard .cf.vch{color:#7a4a00;font-weight:800}
+#tmvch{position:absolute;transform:translateX(-50%);white-space:nowrap;z-index:40;pointer-events:none;opacity:0;transition:opacity .35s;font:700 12px Georgia,serif;color:#3a2414;background:#f1e3bd;border:2px solid #7a5a2a;border-radius:8px;padding:3px 9px;box-shadow:0 3px 10px rgba(0,0,0,.45)}
+#tmvch.on{opacity:1}

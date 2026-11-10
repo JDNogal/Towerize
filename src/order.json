@@ -11,7 +11,8 @@
   "09_pergamino.css",
   "10_pergamino_enrollado.css",
   "11_era2.css",
-  "12_compendio.css"
+  "12_compendio.css",
+  "13_novedades.css"
  ],
  "js": [
   "00_config.js",
@@ -79,6 +80,7 @@
   "elites.js",
   "jefes.js",
   "estados_unidades.js",
+  "vales_boton.js",
   "musica.js"
  ]
 }
