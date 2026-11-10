@@ -1448,6 +1448,40 @@ button.card{position:relative}button.card canvas.pctl{position:absolute;pointer-
 /* v305 · paneles de mazo y reliquias: se estrechan para caber al lado de la ventana (antes, con «Ver detalles» en pantallas de 1536 px pasaban a botones) */
 #mzside>div{width:var(--mzw,168px)}#mzside .mzd{left:10px}#mzside .mzr{right:10px}
 #relic .rlbar .wcomp.wcd{position:static;width:34px;height:34px;font-size:16px!important;border-radius:50%!important;padding:0!important}
+/* v305 · aviso y ficha de enemigo nuevo con los colores de la paleta elegida (antes, siempre pergamino) */
+.nenot{background:var(--paper)!important;color:var(--ink)!important;box-shadow:0 0 0 3px var(--acc),0 10px 26px rgba(0,0,0,.6)}
+.necic{box-shadow:inset 0 0 0 2px rgba(0,0,0,.25),0 0 0 2px var(--acc)}
+.nentx b{color:var(--acc)}.nentx small,.nechd small{color:color-mix(in srgb,var(--ink) 65%,transparent)}
+.necpap{background:linear-gradient(180deg,var(--paper),color-mix(in srgb,var(--paper) 90%,var(--trim)));color:var(--ink);box-shadow:0 0 0 3px var(--lea),inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 75%,transparent),0 16px 40px rgba(0,0,0,.6)}
+.necpap .esec{color:var(--acc)}
+@keyframes nenp{50%{box-shadow:0 0 0 3px var(--acc),0 0 20px 4px color-mix(in srgb,var(--acc) 75%,transparent),0 10px 26px rgba(0,0,0,.6)}}
+/* v305 · la palabra clave que se está explicando: mismo color, sin subrayado y sin abrir nada */
+.kw.kwself{cursor:inherit!important;text-decoration:none!important;border-bottom:0!important}
+/* v305 · logros fijados en partida */
+#pinbar{display:none;position:fixed;z-index:13;font:12px system-ui,sans-serif;pointer-events:auto}
+#pinbar.on{display:block}
+#pinbar .pbt{display:none}
+#pinbar .pnl{display:flex;flex-direction:column;gap:5px;width:210px}
+#pinbar .pnr{display:block;width:100%;text-align:left;padding:6px 9px;border-radius:9px;cursor:pointer;background:color-mix(in srgb,var(--paper) 94%,transparent);color:var(--ink);border:2px solid var(--lea);box-shadow:0 3px 10px rgba(0,0,0,.4)}
+#pinbar .pnr:hover{border-color:var(--trim)}
+#pinbar .pnr b{display:block;font-size:12px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pinbar .pnb{display:inline-block;vertical-align:middle;width:120px;height:5px;border-radius:3px;background:color-mix(in srgb,var(--ink) 18%,transparent);margin:4px 6px 0 0;overflow:hidden}
+#pinbar .pnb i{display:block;height:100%;background:var(--acc)}
+#pinbar .pnr small{font-size:11px;opacity:.8}
+/* móvil: un botón 📌 que despliega la lista */
+body.mfs #pinbar .pbt{display:inline-flex;align-items:center;gap:3px;width:auto;height:34px;padding:0 9px;border-radius:17px}
+body.mfs #pinbar .pnl{display:none;margin-top:6px}body.mfs #pinbar.open .pnl{display:flex}
+/* barras de scroll con el estilo del juego */
+#relic,#comp *,#mzside>div,#pinbar{scrollbar-width:thin;scrollbar-color:var(--trim) transparent}
+#relic::-webkit-scrollbar,#comp *::-webkit-scrollbar,#mzside>div::-webkit-scrollbar{width:8px;height:8px}
+#relic::-webkit-scrollbar-thumb,#comp *::-webkit-scrollbar-thumb,#mzside>div::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--trim) 80%,transparent);border-radius:4px}
+#relic::-webkit-scrollbar-track,#comp *::-webkit-scrollbar-track,#mzside>div::-webkit-scrollbar-track{background:transparent}
+/* v305 · novedades del compendio por ficha */
+.bti.nov{position:relative}.bti.nov::after{content:"";position:absolute;top:3px;right:3px;width:9px;height:9px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2),0 0 6px var(--gbtn);pointer-events:none}
+.bkmk.new{position:relative}.bkmk.new::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2);pointer-events:none}
+.bknovall{display:inline-block;margin:6px 0 2px;padding:3px 10px;font-size:12px;border-radius:12px}
+/* v305 · comparación de mejora con los colores de cada estadística */
+.tmcmp .tmold{opacity:.7;font-weight:500}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -4749,7 +4783,8 @@ function unitCombat(dt){
   if(e.hp<=0||e.fx.freeze||e.fx.poly||e.fx.fear){e.acd=E.ac;continue;}
   if(E.rg==='ranged'){if(e.rw>0)e.rw-=dt;else{let bd=RANGED_R;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;tg=s;}}
    if(tg){if(e.rsH===undefined||e.hp<e.rsH-.01){e.rsH=e.hp;e.rsT=0;}else e.rsT=(e.rsT||0)+dt;if(e.rsT>20){e.rsT=0;e.rw=3;tg=null;}else{e.stopped=true;if(!tg.en&&!tg.lock&&!(tg.H&&tg.H.def.ranged)&&!tg.rng&&!isFly(e)){tg.en=e;tg.enR=e;e.nb=(e.nb||0)+tg.w;}}}else e.rsT=0;}}
-  else if(e.ct>0){/* cuerpo a cuerpo: a cada unidad solo le pega el enemigo con el que está peleando (los que retiene de más esperan) */tg=SL.find(s=>s.fight&&s.en===e)||null;if(tg&&Math.hypot(tg.x-e.x,tg.y-e.y)>MELR)tg=null;e.stopped=e.ct>=(E.need||1);}
+  else if(e.ct>0){/* cuerpo a cuerpo: le pega a la unidad que lo retiene (también los que retiene de más) */tg=SL.find(s=>s.fight&&s.en===e)||SL.find(s=>s.en2===e&&s.hp>0)||null;if(tg&&Math.hypot(tg.x-e.x,tg.y-e.y)>MELR)tg=null;e.stopped=e.ct>=(E.need||1);}
+  else if(e.sqid&&!e.loose&&!isFly(e)&&(E.ud||0)>0){/* v305 · escuadra frenada: si una unidad tuya pelea con alguien de su escuadra, los de al lado se paran y le pegan también (no se quedan mirando) */const m=SL.find(s=>s.hp>0&&s.en&&s.en.sqid===e.sqid&&s.en.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<=MELR*1.5);if(m){tg=m;e.stopped=true;}}
   if(tg){const U=unitOf(tg.tw);e.acd=(e.acd===undefined?E.ac:e.acd)-dt;
    while(e.acd<=0&&tg.hp>0){e.acd+=E.ac;if(E.rg==='ranged')S.fx.push({x:tg.x,y:tg.y,t:.25,m:.25,r:.35*K,col:E.dt==='magic'?'#a58bff':'#d9c08a'});const sg=tg.drunk>0&&abRank(tg.tw,'stagger');if(sg&&Math.random()<sg.p){if(S.pvE&&S.dn)dnAdd(tg,0,'taken');continue;}
     {const co=abRank(tg.tw,'counter');if(co&&Math.random()<co.p){const cs=stats(tg.tw),cd=cs.dmg;hurt(e,cd,tg.tw,'phys');const MT=TW[tg.tw.type],ch=abRank(tg.tw,'chi');if(MT&&MT.monk){DNK='magic';hurt(e,cd*(ch?ch.m:MT.mhit),tg.tw,'magic');DNK=null;}S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.4*K,col:'#ffd27a'});}}
@@ -5799,7 +5834,7 @@ function openPrim(tg){
 function refreshPrim(){if(!PR.open)return;closeKS();const h=PR.html();if(PMN())$('tip').innerHTML=h;else $('side').innerHTML=h;}
 function openKw(a,pl){
  closeKS(pl);
- const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.style.setProperty('--kc',getComputedStyle(a).color);
+ const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.dataset.kself=a.dataset.kw||'';d.style.setProperty('--kc',getComputedStyle(a).color);
  document.body.appendChild(d);
  const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth,ht=d.offsetHeight;
  // la caja sale junto a la palabra (debajo; si no cabe, encima), aunque tape parte del panel del que sale: así no se va lejos de donde miras
@@ -5832,7 +5867,7 @@ function hideLupa(){LUPA.tg=null;LUPA.sticky=false;const b=$('lupa');if(b)b.styl
 function hoverTick(rdt){
  S.hover=null;
  const el=M.has?document.elementFromPoint(M.x,M.y):null;
- const kpEl=el&&el.closest('.kpanel'),kwEl=el&&el.closest('.kw');
+ const kpEl=el&&el.closest('.kpanel'),kwEl0=el&&el.closest('.kw'),kwEl=kwEl0&&!kwSelf(kwEl0)?kwEl0:null;
  const inPrim=!!(el&&(el.closest('#tip')||el.closest('#side'))),inComp=!!(el&&(el.closest('#comp')||el.closest('#opts')||el.closest('#relic')||el.closest('#hint')||el.closest('#hpop')||el.closest('#focus')||el.closest('#tmcard')||el.closest('#bmcard')||el.closest('#mzside')||el.closest('#mzpop')));
  const lvl=kpEl?+kpEl.dataset.level:(inPrim||inComp?0:-1);
  const tg=(!inPrim&&!kpEl&&!inComp)?resolve(el):null;
@@ -5876,6 +5911,12 @@ function hoverTick(rdt){
  if(!S.hover&&PR.open&&PR.cell)S.hover=PR.cell;
  HV.sl=PR.pinned?(onPin?1:0):(PR.open?1:HV.t);
 }
+
+// v305 · dentro de la explicación de una palabra clave (su bocadillo o su página de mecánica en el compendio), la misma palabra
+// conserva el color pero no abre otro bocadillo de sí misma
+function kwSelf(k){try{const id=k.dataset.kw;if(!id)return false;const kp=k.closest('.kpanel');if(kp&&kp.dataset.kself===id)return true;
+ if(k.closest('#comp')&&typeof CP!=='undefined'&&CP.open&&CP.tab==='mc'&&CP.sel&&CP.sel.mc===id)return true;}catch(e){}return false;}
+setInterval(()=>{try{document.querySelectorAll('.kpanel .kw:not(.kwself),#comp .kw:not(.kwself)').forEach(k=>{if(kwSelf(k))k.classList.add('kwself');});document.querySelectorAll('.kwself').forEach(k=>{if(!kwSelf(k))k.classList.remove('kwself');});}catch(e){}},200);
 // ---- interfaz ----
 function ui(){
  try{if(S.msg){const t=String(S.msg).replace(/<[^>]+>/g,'');if(ERRRX.test(t)&&!/^(Elige|Pulsa)/.test(t)){S.msg='';LMSG='';errBubble(t);}}}catch(e){}
@@ -6046,8 +6087,8 @@ function tmPos(force){const m=$('tmenu'),t=TM.t;if(!m||!t||!m._o)return;const r=
  m._p={px,py,R,ty,by,W:c.width,H:c.height};if(force||TM.hov||TM.arm)tmCardPos();}
 // antes → después al mejorar un nivel
 function upCmp(t){const T=TW[t.type];if(T.uniq||t.lvl>=3)return'';let a,b;try{a=stats(t);b=stats(Object.assign({},t,{lvl:t.lvl+1}));}catch(e){return'';}
- const TT=twm(t.type,t.spec),R=(l,c,x,y)=>x===y?'':`<div class="tmc"><span>${l}</span><b>${x} → <span class="${c}">${y}</span></b></div>`,dt=T.dot||T.burn;
- return '<div class="tmcmp">'+R(T.unit?'Daño del soldado':dt?'Stacks':'Daño','cd',f(a.dmg),f(b.dmg))+(T.unit?'':R(dt?'DPS':'Daño por segundo','cd',f(dpsOf(a,TT)),f(dpsOf(b,TT))))+R('Enfriamiento','ccl',f(1/a.rate)+' s',f(1/b.rate)+' s')+R('Rango','cg',f(a.range/K)+' cas.',f(b.range/K)+' cas.')+'</div>';}
+ const TT=twm(t.type,t.spec),R=(l,c,x,y)=>x===y?'':`<div class="tmc"><span class="${c}">${l}</span><b><span class="${c} tmold">${x}</span> → <span class="${c}">${y}</span></b></div>`,dt=T.dot||T.burn,dc=(()=>{try{return dtCls(dtOf(T))||'cd';}catch(e){return 'cd';}})();
+ return '<div class="tmcmp">'+R(T.unit?'Daño del soldado':dt?'Stacks':'Daño',dc,f(a.dmg),f(b.dmg))+(T.unit?'':R(dt?'DPS':'Daño por segundo','cd',f(dpsOf(a,TT)),f(dpsOf(b,TT))))+R('Enfriamiento','ccl',f(1/a.rate)+' s',f(1/b.rate)+' s')+R('Rango','cg',f(a.range/K)+' cas.',f(b.range/K)+' cas.')+'</div>';}
 function tmInfo(k,t){const T=TW[t.type],[a,v]=k.split(':');
  if(a==='up'){const n=t.lvl+1;return{h:`<b>⬆ Mejorar a Nv ${n}</b>`+(!T.uniq&&n<=3?(upCmp(t)||`<small>${upText(t)}.</small>`):''),c:tCost(t,upCost(T,n)),buy:1,w:1};}
  if(a==='gup')return{h:`<b>⬆ Subir a rango ${RANKS[t.lvl]}</b>`,c:T.upc[t.lvl+1],buy:1};
@@ -6317,7 +6358,8 @@ function exitGame(){LB.exit=0;try{saveRun&&svLive()&&saveRun('exit');}catch(e){}
 function togglePtips(){const on=!(OPT.ptip||OPT.ptipw);OPT.ptip=OPT.ptipw=on;saveOpt();const b=$('ptb');if(b)b.classList.toggle('on',on);try{sfx('ui');}catch(e){}toast(on?'💀 Bocadillos de los portales: siempre visibles':'💀 Bocadillos de los portales: solo al pasar el ratón');}
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
- if(RL.open&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','erasel','era2hok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
+ /* con una ventana (oferta, cofre, evento) abierta solo valen sus botones… salvo dentro del libro abierto encima (compendio desde el mazo, las reliquias o el 📖) */
+ if(RL.open&&!(LB.open&&b.closest&&b.closest('#comp'))&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','erasel','era2hok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim)||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -6485,7 +6527,7 @@ try{LB.news=JSON.parse(localStorage.getItem('rt-lbnew'))||{};}catch(e){}
 // puntito de novedad en las cintas: algo nuevo que ver en esa área (logro conseguido, descubrimiento, desbloqueo)
 function lbNew(area){if(LB.open&&!LB.cover&&LB.area===area)return;LB.news[area]=1;try{localStorage.setItem('rt-lbnew',JSON.stringify(LB.news));}catch(e){}if(LB.open)lbRender();}
 function lbSeenArea(area){if(!LB.news[area])return;delete LB.news[area];try{localStorage.setItem('rt-lbnew',JSON.stringify(LB.news));}catch(e){}}
-const lbHasNew=k=>!!LB.news[k]||(k==='op'&&typeof NEWU!=='undefined'&&NEWU.length>0);
+const lbHasNew=k=>(k==='cp'||k==='lg')&&typeof novArea==='function'?novArea(k):!!LB.news[k]||(k==='op'&&typeof NEWU!=='undefined'&&NEWU.length>0);
 const LBAREAS=[['cp','Compendio','📖'],['lg','Logros','🏆'],['st','Estadísticas','📊'],['pt','Partidas','📚'],['op','Opciones','⚙️'],['hp','Ayuda','❓'],['cr','Créditos','📜']];
 const lbInGame=()=>!document.body.classList.contains('inmenu')&&!!(S&&S.list);
 const lbAreas=()=>LBAREAS.filter(([k])=>k!=='st'||lbInGame());
@@ -6520,7 +6562,7 @@ function lbClose(resume,now){
 }
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal. En la preparación de partida no se sale así
 function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.area==='msg'){const f=LB.msg&&LB.msg.onBack;LB.msg=null;if(f)f();else lbClose(true);return;}if(LB.fromWin){LB.fromWin=0;lbClose(true);return;}if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
-const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
+const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}${typeof novMark==='function'&&novMark(act,v)?' new':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
 const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
 // flechas de pasar página: al anterior / siguiente de la sección en la que estás (sin fondo, solo trazo)
 const lbArrows=()=>lbStepList()?`<button class="bkarr l" data-a="lbprev" title="Anterior">‹</button><button class="bkarr r" data-a="lbnext" title="Siguiente">›</button>`:'';
@@ -6648,7 +6690,7 @@ function lbRender(){
  else if(nar){const showR=CP.pageR||P.pvm;pages=showR?`<div class="bkp r${P.flip?' flip':''}">${P.pvm?'':'<button class="bkback" data-a="cbkl">‹ Volver</button>'}${P.right}</div>`:`<div class="bkp l">${P.left}</div>`;}
  else pages=`<div class="bkp l">${P.left}</div><div class="bkp r${P.flip?' flip':''}">${P.right}</div>`;
  const hasft=!!(P.footL||P.footR),feet=hasft?`<div class="lbft l">${P.footL||''}</div><div class="lbft r">${P.footR||''}</div>`:'';
- el.innerHTML=`<div class="bkw${LB.anim?' lbanim':''}">${marks}<div class="bk${hasft?' hasft':''}"><div class="bkcover"></div>${pages}${feet}${lbArrows()}${nar||LB.area==='prep'?'':(P.ribs||lbRibs())}${LB.area==='prep'?'':`<button class="bkx" data-a="lbx" title="${LB.area==='end'?'Ver el mapa':lbInGame()?'Volver a la pausa':'Volver al menú'}">✕</button>`}</div></div>`;
+ el.innerHTML=`<div class="bkw${LB.anim?' lbanim':''}">${marks}<div class="bk${hasft?' hasft':''}"><div class="bkcover"></div>${pages}${feet}${lbArrows()}${nar||LB.area==='prep'?'':(P.ribs||lbRibs())}${LB.area==='prep'?'':`<button class="bkx" data-a="lbx" title="${LB.area==='end'?'Ver el mapa':LB.ret?'Volver':LB.fromWin||LB.orig==='game'?'Volver a la partida':lbInGame()?'Volver a la pausa':'Volver al menú'}">✕</button>`}</div></div>`;
  if((LB.anim||(!same&&LB.lastK0)||(same&&P.flip))&&!LB.quiet){try{sfx(LB.anim?'bkopen':'page');}catch(e){}}LB.lastK0=LB.lastK;LB.quiet=false;LB.anim=false;
  const nl=el.querySelector('.bkp.l,.bkp.spread');if(nl&&same)nl.scrollTop=st;
  if(P.after)P.after(el);
@@ -7904,7 +7946,7 @@ const MECUSE={burn:['tw:sala','tw:flame','tw:monk','hr:yrsa'],poison:['tw:poison
  sticky:['tw:cata'],flam:['tw:cata'],wet:['tw:augur'],cursed:['tw:orb'],poly:['tw:orb'],fear:['tw:orb'],mark:['tw:arrow'],prey:['hr:sylvana'],inf:['tw:nano'],lmk:['tw:bunker'],vc:['tw:laser'],
  chain:['tw:tesla'],beam:['tw:orb','tw:laser'],push:['tw:sonic','tw:cannon','tw:wood'],mag:['tw:bunker'],
  dodge:['en:raider'],steal:['en:raider'],pierce:['en:javelin'],curse:['en:warlock'],eheal:['en:shaman'],aura:['en:custodian'],fly:['en:bat','en:harpy','en:griffin'],bres:['en:boss','en:colossus']};
-const mecRefOk=r=>{const[t,k]=r.split(':');return t==='hr'?(HEROES[k]&&(seen('hr',k)||!HEROES[k].lockTxt)):seen(t,k);};
+const mecRefOk=r=>{const[t,k,sp]=r.split(':');if(t==='tw'&&sp){const i=Object.keys(SPECS[k]||{}).indexOf(sp);return seen('tw',k)&&i>=0&&tlvOk(k,4+i);}return t==='hr'?(HEROES[k]&&(seen('hr',k)||!HEROES[k].lockTxt)):seen(t,k);};
 const mecOk=id=>{const u=MECUSE[id];return !u||u.some(mecRefOk);};
 // «Cómo enfrentarlo»: una o dos frases por enemigo
 const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barren en grupo.',vet:'Más vida y algo de armadura: el daño mágico o elemental rinde más.',champ:'Mucha armadura y cada 25 s un hachazo giratorio: no amontones tus unidades a su alrededor.',
@@ -9101,6 +9143,47 @@ function achLink(id,fallback){const A=ACH[id];if(!A)return fallback||'';const f=
 // volver a donde estabas (p. ej. la elección de héroe) al salir de Logros con «atrás»
 {const _g=cpGo;cpGo=function(t,v){const from=LB.open&&!LB.cover?LB.area:null,tab=CP.tab,win=RL.open&&RL.hpick;const r=_g.apply(this,arguments);try{if(from==='prep'||from==='op'||(from==='cp'&&t==='lg')){LB.ret=from;LB.retTab=tab;}else if(win&&LB.open)LB.fromWin=1;}catch(e){}return r;};}
 {const _b=lbBack;lbBack=function(){if(LB.ret&&LB.open&&(LB.area==='lg'||LB.area==='cp')){const r=LB.ret;LB.ret=0;if(r==='cp'&&LB.retTab){CP.tab=LB.retTab;CP.pageR=true;}lbOpen(r);return;}LB.ret=0;return _b.apply(this,arguments);};}
+// ---- el libro vuelve a donde estabas: si lo abriste jugando (desde una pista, una ficha, el 📖…), al cerrarlo vuelves a la partida, no a la pausa ----
+{const _o=lbOpen;lbOpen=function(area,cover){try{if(!LB.open)LB.orig=cover?'pause':(lbInGame()?'game':'menu');else if(cover)LB.orig='pause';}catch(e){}return _o.apply(this,arguments);};}
+{const _b=lbBack;lbBack=function(){try{if(LB.open&&!LB.cover&&!LB.ret&&!LB.fromWin&&LB.orig==='game'&&!['prep','msg','end'].includes(LB.area)&&!(LB.end&&S&&(S.phase==='won'||S.phase==='lost'))){LB.orig=0;lbClose(true);return;}}catch(e){}return _b.apply(this,arguments);};}
+// ---- mecánicas sin spoilers: las que solo trae una especialización no se descubren por ver la torre, sino al alcanzar esa especialización ----
+{const BASE={burn:['sala','flame'],poison:['poison','acid'],brk:['acid'],slow:['frost','straw'],push:['sonic','wood'],chain:['tesla'],beam:['orb','laser'],vc:['laser'],mag:['bunker']};
+ const SPM={burn:{monk:['drunk']},poison:{arrow:['rapid']},bleed:{cannon:['mnr'],bastion:['ass'],bunker:['sup']},ez:{tesla:['ele']},brk:{cata:['treb'],poison:['alch'],nano:['devour'],sala:['forge']},
+  slow:{sonic:['spk']},freeze:{frost:['hel','vent']},stun:{tesla:['cad'],cata:['treb','ogre'],laser:['red','volt'],sonic:['spk']},daze:{sonic:['giant']},sticky:{cata:['treb']},flam:{cata:['treb']},
+  wet:{augur:['lord']},cursed:{orb:['foco']},poly:{orb:['foco']},fear:{orb:['reap']},mark:{arrow:['xbow']},inf:{nano:['hack']},lmk:{bunker:['nido']},push:{cannon:['art']}};
+ for(const id in MECUSE){MECUSE[id]=MECUSE[id].flatMap(r=>{const[t,k]=r.split(':');if(t!=='tw'||(BASE[id]||[]).includes(k))return[r];const sp=SPM[id]&&SPM[id][k];return sp&&sp.length?sp.filter(x=>SPECS[k]&&SPECS[k][x]).map(x=>'tw:'+k+':'+x):[r];});}}
+// ---- logros fijados a la vista en partida: arriba a la izquierda, junto al menú y «Reintentar» (antes solo se veían en el compendio) ----
+function pinbarTick(){let el=$('pinbar');if(!el){el=document.createElement('div');el.id='pinbar';document.body.appendChild(el);
+  el.addEventListener('click',e=>{const r=e.target.closest('[data-pin]');if(r){e.stopPropagation();if(MFSQ()&&!el.classList.contains('open')){el.classList.add('open');return;}cpGo('lg',r.dataset.pin);el.classList.remove('open');return;}if(e.target.closest('.pbt')){e.stopPropagation();el.classList.toggle('open');}});}
+ const ids=PINS.filter(id=>ACH[id]&&!ACHS[id]),on=ids.length>0&&inRun()&&!PREVIEWING;el.classList.toggle('on',on);if(!on){el.dataset.sg='';return;}
+ const m=$('mtl');if(m){const r=m.getBoundingClientRect();el.style.left=Math.round(r.right+8)+'px';el.style.top=Math.round(r.top)+'px';}
+ const row=id=>{const A=ACH[id],M=APM[id];let v=null,mx=null;try{if(M){mx=M.max;v=M.cur?M.cur():M.best?Math.max((S.gbest||{})[id]||0,0):null;}}catch(e){}
+  const sec=achSec(id);return `<button class="pnr" data-pin="${id}" title="Ver en Logros"><b>📌 ${sec?'???':A.n}</b>${v!=null&&mx?`<span class="pnb"><i style="width:${Math.min(100,v/mx*100)}%"></i></span><small>${Math.min(mx,v)}/${mx}</small>`:''}</button>`;};
+ const h=`<button class="pbt" title="Logros fijados">📌<small>${ids.length}</small></button><div class="pnl">${ids.map(row).join('')}</div>`;if(el.dataset.sg!==h){el.dataset.sg=h;el.innerHTML=h;}}
+setInterval(()=>{try{pinbarTick();}catch(e){}},400);
+// ==================== v305 · Novedades del compendio, ítem a ítem ====================
+// Cada cosa nueva (torre, enemigo, reliquia, mecánica, logro conseguido…) lleva su puntito hasta que abres su ficha.
+// La pestaña y la cinta del área solo se apagan cuando ya no queda ninguna por ver. «Marcar todos como vistos» limpia solo la pestaña en la que estás.
+var NOVO={};try{NOVO=JSON.parse(localStorage.getItem('rt-novo'))||{};}catch(e){}
+const novSave=()=>{try{localStorage.setItem('rt-novo',JSON.stringify(NOVO));}catch(e){}};
+function novAdd(t,k){if(t==null||k==null)return;(NOVO[t]=NOVO[t]||{})[k]=1;novSave();}
+function novSeen(t,k){if(NOVO[t]&&NOVO[t][k]){delete NOVO[t][k];if(!Object.keys(NOVO[t]).length)delete NOVO[t];novSave();return true;}return false;}
+function novHas(t){return !!(NOVO&&NOVO[t]&&Object.keys(NOVO[t]).length);}
+function novArea(a){return a==='lg'?novHas('lg'):['tw','hr','pc','bf','rl','en','ev','mc'].some(novHas);}
+function novMark(act,v){if(act==='ctab')return novHas(v);if(act==='achf')return !!(NOVO.lg&&Object.keys(NOVO.lg).some(id=>ACH[id]&&(v==='all'||(ACH[id].c||'cl')===v)));return false;}
+// mecánicas: se descubren solas al ver lo que las usa; se apuntan las que pasan a verse
+let MECK=null;try{MECK=JSON.parse(localStorage.getItem('rt-meck'));}catch(e){}
+function mecScan(mark){if(typeof MECI==='undefined'||typeof mecOk!=='function')return;const first=!MECK;MECK=MECK||{};let ch=false;
+ for(const id in MECI){if(!MECK[id]&&mecOk(id)){MECK[id]=1;ch=true;if(!first&&mark)novAdd('mc',id);}}if(ch){try{localStorage.setItem('rt-meck',JSON.stringify(MECK));}catch(e){}}}
+try{mecScan(false);}catch(e){}
+{const _s=see;see=function(t,k){const nw=typeof SEEOK!=='undefined'&&SEEOK&&SEEN[t]&&!SEEN[t][k];const r=_s.apply(this,arguments);try{if(nw&&SEEN[t][k]){novAdd(t,k);mecScan(true);}}catch(e){}return r;};}
+{const _a=achieve;achieve=function(id){const nw=ACH[id]&&!ACHS[id];const r=_a.apply(this,arguments);try{if(nw&&ACHS[id])novAdd('lg',id);}catch(e){}return r;};}
+// al abrir una ficha, deja de ser nueva; puntito en las fichas nuevas y botón para marcar toda la pestaña
+{const _c=compParts;compParts=function(){const P=_c.apply(this,arguments);try{const t=CP.tab,k=CP.sel[t];
+  if(k!=null&&!(CP.prev||CP.hprev||CP.eprev)&&(!bkNarrow()||CP.pageR))novSeen(t,k);
+  const N=NOVO[t]||{};P.left=P.left.replace(/<button class="bti([^"]*)" data-a="csel" data-v="([^"]*)"/g,(m,c,v)=>N[v]?`<button class="bti${c} nov" data-a="csel" data-v="${v}"`:m);
+  if(Object.keys(N).length)P.left=P.left.replace(/(<div class="bksub">[\s\S]*?<\/div>)/,`$1<button class="bknovall" data-a="novall">✓ Marcar todos como vistos <small>(${Object.keys(N).length})</small></button>`);}catch(e){}return P;};}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="novall"]');if(!b)return;e.stopPropagation();e.preventDefault();delete NOVO[CP.tab];novSave();try{sfx('ui');}catch(er){}lbRender();},true);
 // ==================== v302 · SONIDOS DE LO NUEVO (Era Distópica, héroes, reliquias y Prototipo Omega) ====================
 // Todos sintetizados (sin muestras). Se añaden a «Probar sonidos» en un grupo propio.
 const SY2={
@@ -9222,6 +9305,12 @@ setInterval(()=>{try{mzSide();}catch(e){}try{wcompDock();}catch(e){}},200);
 // clic (o segundo toque en móvil): abre esa ficha en el compendio
 {let last=null;document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('#mzside [data-cpt],#mzpop [data-cpt]');if(!a){last=null;return;}
  if(TOUCH&&last!==a){last=a;return;}last=null;e.stopPropagation();e.preventDefault();const hp=$('hpop');if(hp)hp.style.display='none';mzClose();try{cpGo(a.dataset.cpt,a.dataset.cpv);if(LB.open)LB.fromWin=1;}catch(x){}},true);}
+// v305 · las ventanas (oferta de torres, cofre, eventos) se encogen un poco si no caben a lo alto, para que no salga la barra de scroll del navegador
+function relFit(){const rl=$('relic');if(!rl||!rl.classList.contains('open'))return;if(!rl.firstElementChild)return;
+ const kids=[...rl.children].filter(k=>!k.classList.contains('rlbar'));if(!kids.length)return;let tot=0;for(const k of kids)k.style.zoom='';
+ const z=parseFloat(getComputedStyle(kids[0]).zoom)||1;const top=Math.min(...kids.map(k=>k.getBoundingClientRect().top)),bot=Math.max(...kids.map(k=>k.getBoundingClientRect().bottom));tot=bot-top;
+ const room=innerHeight-48;if(tot>room){const nz=Math.max(.8,z*room/tot);for(const k of kids)k.style.zoom=String(nz);}}
+setInterval(()=>{try{relFit();}catch(e){}},300);
 // ==================== v304 · Alcance de las torres a distancia ====================
 // Los solares los pone el juego: con poco alcance una torre a distancia apenas llega a la pieza de al lado
 // (medido en mapas reales: con 2,2 casillas solo el 11 % de los solares alcanza otra pieza; con 3, el 35 %; con 3,4, el 70 %).

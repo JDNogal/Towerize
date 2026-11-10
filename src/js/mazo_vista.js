@@ -34,3 +34,9 @@ setInterval(()=>{try{mzSide();}catch(e){}try{wcompDock();}catch(e){}},200);
 // clic (o segundo toque en móvil): abre esa ficha en el compendio
 {let last=null;document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('#mzside [data-cpt],#mzpop [data-cpt]');if(!a){last=null;return;}
  if(TOUCH&&last!==a){last=a;return;}last=null;e.stopPropagation();e.preventDefault();const hp=$('hpop');if(hp)hp.style.display='none';mzClose();try{cpGo(a.dataset.cpt,a.dataset.cpv);if(LB.open)LB.fromWin=1;}catch(x){}},true);}
+// v305 · las ventanas (oferta de torres, cofre, eventos) se encogen un poco si no caben a lo alto, para que no salga la barra de scroll del navegador
+function relFit(){const rl=$('relic');if(!rl||!rl.classList.contains('open'))return;if(!rl.firstElementChild)return;
+ const kids=[...rl.children].filter(k=>!k.classList.contains('rlbar'));if(!kids.length)return;let tot=0;for(const k of kids)k.style.zoom='';
+ const z=parseFloat(getComputedStyle(kids[0]).zoom)||1;const top=Math.min(...kids.map(k=>k.getBoundingClientRect().top)),bot=Math.max(...kids.map(k=>k.getBoundingClientRect().bottom));tot=bot-top;
+ const room=innerHeight-48;if(tot>room){const nz=Math.max(.8,z*room/tot);for(const k of kids)k.style.zoom=String(nz);}}
+setInterval(()=>{try{relFit();}catch(e){}},300);

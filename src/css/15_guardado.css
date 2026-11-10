@@ -20,3 +20,37 @@ button.card{position:relative}button.card canvas.pctl{position:absolute;pointer-
 /* v305 · paneles de mazo y reliquias: se estrechan para caber al lado de la ventana (antes, con «Ver detalles» en pantallas de 1536 px pasaban a botones) */
 #mzside>div{width:var(--mzw,168px)}#mzside .mzd{left:10px}#mzside .mzr{right:10px}
 #relic .rlbar .wcomp.wcd{position:static;width:34px;height:34px;font-size:16px!important;border-radius:50%!important;padding:0!important}
+/* v305 · aviso y ficha de enemigo nuevo con los colores de la paleta elegida (antes, siempre pergamino) */
+.nenot{background:var(--paper)!important;color:var(--ink)!important;box-shadow:0 0 0 3px var(--acc),0 10px 26px rgba(0,0,0,.6)}
+.necic{box-shadow:inset 0 0 0 2px rgba(0,0,0,.25),0 0 0 2px var(--acc)}
+.nentx b{color:var(--acc)}.nentx small,.nechd small{color:color-mix(in srgb,var(--ink) 65%,transparent)}
+.necpap{background:linear-gradient(180deg,var(--paper),color-mix(in srgb,var(--paper) 90%,var(--trim)));color:var(--ink);box-shadow:0 0 0 3px var(--lea),inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 75%,transparent),0 16px 40px rgba(0,0,0,.6)}
+.necpap .esec{color:var(--acc)}
+@keyframes nenp{50%{box-shadow:0 0 0 3px var(--acc),0 0 20px 4px color-mix(in srgb,var(--acc) 75%,transparent),0 10px 26px rgba(0,0,0,.6)}}
+/* v305 · la palabra clave que se está explicando: mismo color, sin subrayado y sin abrir nada */
+.kw.kwself{cursor:inherit!important;text-decoration:none!important;border-bottom:0!important}
+/* v305 · logros fijados en partida */
+#pinbar{display:none;position:fixed;z-index:13;font:12px system-ui,sans-serif;pointer-events:auto}
+#pinbar.on{display:block}
+#pinbar .pbt{display:none}
+#pinbar .pnl{display:flex;flex-direction:column;gap:5px;width:210px}
+#pinbar .pnr{display:block;width:100%;text-align:left;padding:6px 9px;border-radius:9px;cursor:pointer;background:color-mix(in srgb,var(--paper) 94%,transparent);color:var(--ink);border:2px solid var(--lea);box-shadow:0 3px 10px rgba(0,0,0,.4)}
+#pinbar .pnr:hover{border-color:var(--trim)}
+#pinbar .pnr b{display:block;font-size:12px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pinbar .pnb{display:inline-block;vertical-align:middle;width:120px;height:5px;border-radius:3px;background:color-mix(in srgb,var(--ink) 18%,transparent);margin:4px 6px 0 0;overflow:hidden}
+#pinbar .pnb i{display:block;height:100%;background:var(--acc)}
+#pinbar .pnr small{font-size:11px;opacity:.8}
+/* móvil: un botón 📌 que despliega la lista */
+body.mfs #pinbar .pbt{display:inline-flex;align-items:center;gap:3px;width:auto;height:34px;padding:0 9px;border-radius:17px}
+body.mfs #pinbar .pnl{display:none;margin-top:6px}body.mfs #pinbar.open .pnl{display:flex}
+/* barras de scroll con el estilo del juego */
+#relic,#comp *,#mzside>div,#pinbar{scrollbar-width:thin;scrollbar-color:var(--trim) transparent}
+#relic::-webkit-scrollbar,#comp *::-webkit-scrollbar,#mzside>div::-webkit-scrollbar{width:8px;height:8px}
+#relic::-webkit-scrollbar-thumb,#comp *::-webkit-scrollbar-thumb,#mzside>div::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--trim) 80%,transparent);border-radius:4px}
+#relic::-webkit-scrollbar-track,#comp *::-webkit-scrollbar-track,#mzside>div::-webkit-scrollbar-track{background:transparent}
+/* v305 · novedades del compendio por ficha */
+.bti.nov{position:relative}.bti.nov::after{content:"";position:absolute;top:3px;right:3px;width:9px;height:9px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2),0 0 6px var(--gbtn);pointer-events:none}
+.bkmk.new{position:relative}.bkmk.new::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2);pointer-events:none}
+.bknovall{display:inline-block;margin:6px 0 2px;padding:3px 10px;font-size:12px;border-radius:12px}
+/* v305 · comparación de mejora con los colores de cada estadística */
+.tmcmp .tmold{opacity:.7;font-weight:500}

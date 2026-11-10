@@ -61,6 +61,7 @@ const T=[
  ['teclas_bloqueo.js','Teclas rápidas bloqueadas cuando el ratón no puede pulsar el control'],
  ['codigo_guardado.js','Código de guardado: copiar progreso y partida a otro navegador'],
  ['logro_enlace.js','Logros pedidos: enlace a Logros desde torres y héroes bloqueados, fijar y volver'],
+ ['novedades.js','Novedades del compendio por ficha y marcar todos como vistos'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];

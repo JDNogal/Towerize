@@ -297,7 +297,7 @@ function openPrim(tg){
 function refreshPrim(){if(!PR.open)return;closeKS();const h=PR.html();if(PMN())$('tip').innerHTML=h;else $('side').innerHTML=h;}
 function openKw(a,pl){
  closeKS(pl);
- const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.style.setProperty('--kc',getComputedStyle(a).color);
+ const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.dataset.kself=a.dataset.kw||'';d.style.setProperty('--kc',getComputedStyle(a).color);
  document.body.appendChild(d);
  const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth,ht=d.offsetHeight;
  // la caja sale junto a la palabra (debajo; si no cabe, encima), aunque tape parte del panel del que sale: así no se va lejos de donde miras
@@ -330,7 +330,7 @@ function hideLupa(){LUPA.tg=null;LUPA.sticky=false;const b=$('lupa');if(b)b.styl
 function hoverTick(rdt){
  S.hover=null;
  const el=M.has?document.elementFromPoint(M.x,M.y):null;
- const kpEl=el&&el.closest('.kpanel'),kwEl=el&&el.closest('.kw');
+ const kpEl=el&&el.closest('.kpanel'),kwEl0=el&&el.closest('.kw'),kwEl=kwEl0&&!kwSelf(kwEl0)?kwEl0:null;
  const inPrim=!!(el&&(el.closest('#tip')||el.closest('#side'))),inComp=!!(el&&(el.closest('#comp')||el.closest('#opts')||el.closest('#relic')||el.closest('#hint')||el.closest('#hpop')||el.closest('#focus')||el.closest('#tmcard')||el.closest('#bmcard')||el.closest('#mzside')||el.closest('#mzpop')));
  const lvl=kpEl?+kpEl.dataset.level:(inPrim||inComp?0:-1);
  const tg=(!inPrim&&!kpEl&&!inComp)?resolve(el):null;
@@ -374,3 +374,9 @@ function hoverTick(rdt){
  if(!S.hover&&PR.open&&PR.cell)S.hover=PR.cell;
  HV.sl=PR.pinned?(onPin?1:0):(PR.open?1:HV.t);
 }
+
+// v305 · dentro de la explicación de una palabra clave (su bocadillo o su página de mecánica en el compendio), la misma palabra
+// conserva el color pero no abre otro bocadillo de sí misma
+function kwSelf(k){try{const id=k.dataset.kw;if(!id)return false;const kp=k.closest('.kpanel');if(kp&&kp.dataset.kself===id)return true;
+ if(k.closest('#comp')&&typeof CP!=='undefined'&&CP.open&&CP.tab==='mc'&&CP.sel&&CP.sel.mc===id)return true;}catch(e){}return false;}
+setInterval(()=>{try{document.querySelectorAll('.kpanel .kw:not(.kwself),#comp .kw:not(.kwself)').forEach(k=>{if(kwSelf(k))k.classList.add('kwself');});document.querySelectorAll('.kwself').forEach(k=>{if(!kwSelf(k))k.classList.remove('kwself');});}catch(e){}},200);

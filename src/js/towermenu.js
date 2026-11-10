@@ -37,8 +37,8 @@ function tmPos(force){const m=$('tmenu'),t=TM.t;if(!m||!t||!m._o)return;const r=
  m._p={px,py,R,ty,by,W:c.width,H:c.height};if(force||TM.hov||TM.arm)tmCardPos();}
 // antes → después al mejorar un nivel
 function upCmp(t){const T=TW[t.type];if(T.uniq||t.lvl>=3)return'';let a,b;try{a=stats(t);b=stats(Object.assign({},t,{lvl:t.lvl+1}));}catch(e){return'';}
- const TT=twm(t.type,t.spec),R=(l,c,x,y)=>x===y?'':`<div class="tmc"><span>${l}</span><b>${x} → <span class="${c}">${y}</span></b></div>`,dt=T.dot||T.burn;
- return '<div class="tmcmp">'+R(T.unit?'Daño del soldado':dt?'Stacks':'Daño','cd',f(a.dmg),f(b.dmg))+(T.unit?'':R(dt?'DPS':'Daño por segundo','cd',f(dpsOf(a,TT)),f(dpsOf(b,TT))))+R('Enfriamiento','ccl',f(1/a.rate)+' s',f(1/b.rate)+' s')+R('Rango','cg',f(a.range/K)+' cas.',f(b.range/K)+' cas.')+'</div>';}
+ const TT=twm(t.type,t.spec),R=(l,c,x,y)=>x===y?'':`<div class="tmc"><span class="${c}">${l}</span><b><span class="${c} tmold">${x}</span> → <span class="${c}">${y}</span></b></div>`,dt=T.dot||T.burn,dc=(()=>{try{return dtCls(dtOf(T))||'cd';}catch(e){return 'cd';}})();
+ return '<div class="tmcmp">'+R(T.unit?'Daño del soldado':dt?'Stacks':'Daño',dc,f(a.dmg),f(b.dmg))+(T.unit?'':R(dt?'DPS':'Daño por segundo','cd',f(dpsOf(a,TT)),f(dpsOf(b,TT))))+R('Enfriamiento','ccl',f(1/a.rate)+' s',f(1/b.rate)+' s')+R('Rango','cg',f(a.range/K)+' cas.',f(b.range/K)+' cas.')+'</div>';}
 function tmInfo(k,t){const T=TW[t.type],[a,v]=k.split(':');
  if(a==='up'){const n=t.lvl+1;return{h:`<b>⬆ Mejorar a Nv ${n}</b>`+(!T.uniq&&n<=3?(upCmp(t)||`<small>${upText(t)}.</small>`):''),c:tCost(t,upCost(T,n)),buy:1,w:1};}
  if(a==='gup')return{h:`<b>⬆ Subir a rango ${RANKS[t.lvl]}</b>`,c:T.upc[t.lvl+1],buy:1};
