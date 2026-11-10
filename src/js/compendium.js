@@ -5,7 +5,7 @@ const fbarHtml=fl=>fl.map(f=>`<div class="fbar">${kst(f.kw,f.label,'')}: <button
 const csec=(t,s)=>`<div class="esec" style="margin-top:14px">${t}</div><small>${s}</small>`;
 // ---- compendio: vistazo general con barras (lo demás, con números, en la vista de detalle) ----
 const GCOL={cd:'#ff6b5e',ccl:'#f3e7a1',cg:'#5ab4ff',chp:'#9be15d',cph:'#c9ced8',cmg:'#8f9bff',cvl:'#ffe14d',burn:'#ff9a4a',poison:'#5fdc7a'};
-const GICO={burn:'🔥',poison:'🧪',slow:'🐌',ez:'⚡',chain:'🔗',bwall:'🧱',logk:'🪵',mheal:'✚',drunk:'🍺',freeze:'🧊',chill:'❄️',bleed:'🩸',stun:'💫',wet:'💧',root:'🌿',sticky:'🫗'};
+const GICO={burn:'🔥',poison:'🧪',slow:'🐌',ez:'⚡',chain:'🔗',bwall:'🧱',logk:'🪵',mheal:'✚✚',drunk:'🍺',freeze:'🧊',chill:'❄️',bleed:'🩸',stun:'💫',wet:'💧',root:'🌿',sticky:'🫗'};
 // tipo de daño: color (los de cada tipo) e icono delante de «Daño». Físico 🗡️, mágico báculo azul, elemental llama, rayo, veneno y hielo en cuadro
 GCOL.cel='#4fd6b8';
 const DTSVG={magic:'<svg class="dti" viewBox="0 0 16 16" width="1.05em" height="1.05em" aria-hidden="true"><path d="M3 14.2L10.2 7" stroke="#2c3a8a" stroke-width="3" stroke-linecap="round"/><path d="M3 14.2L10.2 7" stroke="#6f84ff" stroke-width="1.6" stroke-linecap="round"/><path d="M9.2 5.2a3 3 0 1 0 4.4-1.6" fill="none" stroke="#2c3a8a" stroke-width="2.6" stroke-linecap="round"/><path d="M9.2 5.2a3 3 0 1 0 4.4-1.6" fill="none" stroke="#8f9bff" stroke-width="1.3" stroke-linecap="round"/><circle cx="11.6" cy="4.6" r="1.7" fill="#cfe0ff" stroke="#3a4cc0" stroke-width=".7"/></svg>',

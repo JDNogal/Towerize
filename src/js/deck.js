@@ -15,6 +15,8 @@ function tofGlance(k){const g=twGlance(k),i=g.indexOf('<div class="gbody">');con
  // torres de unidades: Daño y Enfriamiento primero, como en las demás (así las barras quedan a la misma altura); la vida de las unidades va después
  // y qué unidades son y cuántas, en una insignia sobre el icono de la torre (tofBadge)
  if(T.unit){const v=b.indexOf('Vida de unidades');if(v>0){const a=b.lastIndexOf('<div class="grow">',v),g=b.indexOf(' gv">',v),e=b.indexOf('</span></div>',g)+13;if(a>0&&g>0&&e>13){const row=b.slice(a,e);b=b.slice(0,a)+b.slice(e);const ef=b.indexOf('<div class="grow gt">');b=ef>0?b.slice(0,ef)+row+b.slice(ef):b.replace(/<\/div>$/,row+'</div>');}}}
+ // efectos: sin la palabra «Efectos», los iconos centrados bajo las barras (al tocarlos sale qué hacen)
+ b=b.replace(/<div class="grow gt"><span class="cf">[\s\S]*?<\/span><\/span><span class="gv2 gleft">([\s\S]*?)<\/span><\/div>/,'<div class="tofx">$1</div>');
  return b;}
 // a qué golpea (🥾 tierra · 🪽 aire), en la esquina de la carta; las torres de apoyo no atacan
 const tofTg=k=>{const T=TW[k];if(T.support||T.custom&&!T.dmg)return '';const g=T.unit?!T.unit.range:!!T.ground;return `<div class="toftg"><span class="kw st" data-kw="tgnd" data-src="shop:${k}">🥾</span><span class="kw st${g?' off':''}" data-kw="tair" data-src="shop:${k}">🪽</span></div>`;};
