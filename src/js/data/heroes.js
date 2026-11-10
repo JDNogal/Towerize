@@ -17,7 +17,7 @@ function xpTable(n){try{let cum=0;const c=[];for(let R=1;R<=n;R++){let x=0;for(c
  const T=[0,0];for(let l=2;l<=10;l++)T[l]=Math.max(T[l-1]||0,Math.round(C[l]-(C[l-1]||0)));return T;}catch(e){return XPDEF.slice();}}
 const xpNeed=l=>{const T=(typeof S!=='undefined'&&S&&S.xpT)||XPDEF;return T[Math.max(2,Math.min(10,l))]||XPDEF[l];};
 const RELARM=()=>S&&S.relics&&rp('barricade')?10:0;
-const unitTs=s=>s.list.filter(t=>t.sd).concat(s.list.filter(t=>t.pigT&&!t.pigT.off).map(t=>t.pigT)).concat(s.mecha&&s.mecha.on?[s.mecha.on]:[]).concat(s.hero?[s.hero.pt]:[]).concat(s.merc?[s.merc]:[]).concat(s.summ||[]),unitTowers=()=>unitTs(S);
+const unitTs=s=>s.list.filter(t=>t.sd).concat(s.list.filter(t=>t.pigT&&!t.pigT.off).map(t=>t.pigT)).concat(s.mecha&&s.mecha.on?[s.mecha.on]:[]).concat(s.hero?[s.hero.pt]:[]).concat(s.merc?[s.merc]:[]).concat(s.ally?[s.ally]:[]).concat(s.summ||[]),unitTowers=()=>unitTs(S);
 const unitOf=t=>{if(t.uov)return t.uov;if(!t.hero)return TW[t.type].unit;const x=hsAt(t.hero.id,t.hero.lvl);return{n:1,hp:x.hp,ap:x.ap,rez:x.rez,spd:t.hero.def.spd};};
 let HLV={};try{HLV=JSON.parse(localStorage.getItem('rt-hlv'))||{};}catch(e){}
 const hlvOk=(id,l)=>UNLOCK_ALL||l<=1||(HLV[id]||1)>=l;

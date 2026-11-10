@@ -272,6 +272,7 @@ function resolve(el){
  if(kind==='xab')return{key:'xab:'+id,html:mechaInfo,rect:rr(r),dom:1};
  if(kind==='hab')return S.hero?{key:'hab:'+id,html:()=>habInfo(id),rect:rr(r),dom:1}:null;
  if(kind==='vch')return{key:'vch:'+id,html:()=>vchInfo(id),rect:rr(r),dom:1};
+ if(kind==='ally')return{key:'ally',html:()=>'<div class="ttl"><b>👽 Criatura alienígena</b></div><small style="margin:0">Salió de la cápsula caída y pelea de tu lado toda la partida: bloquea a 2 enemigos y, si cae, reaparece a los 12 s. Pulsa su retrato y elige una casilla del camino para moverla.</small>',rect:rr(r),dom:1};
  if(kind==='pigs')return{key:'pigs',html:()=>'<div class="ttl"><b>🐷 Los tres cerditos</b></div><small style="margin:0">Pulsa y elige una casilla del camino: los cerditos van juntos, como un héroe más de la partida.</small>',rect:rr(r),dom:1};
  if(kind==='hero')return S.hero?{key:'hero',html:()=>heroInfo(S.hero.id),rect:rr(r),dom:1}:null;
  if(kind==='piece'){const o=S.offers[+id];if(!o)return null;

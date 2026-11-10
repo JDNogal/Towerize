@@ -91,7 +91,7 @@ function draw(){
   if(t.flash){g.strokeStyle='#fff';g.lineWidth=lw(3);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.flash.x*CS+CS/2,t.flash.y*CS+CS/2);g.stroke();}
   /* galones de nivel en la esquina superior derecha: uno por nivel (Nv 1-3); Nv 4, tres dorados y estrella; con todo al máximo, estrella dorada */
   if(mt)drawCrown(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);
-  if(!T.uniq||T.glut)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
+  if(!T.uniq||T.glut||T.omega)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
   if(S.wish&&S.wish.some(w=>w.id===t.id)){g.font=Math.round(BCS*.34)+'px sans-serif';g.fillText('🔖',t.x*CS+CS/2-BCS*.36,t.y*CS+CS/2-BCS*.34);}
   if(t===S.selT){g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.strokeRect((t.x-1)*CS+lw(1),(t.y-1)*CS+lw(1),BCS-lw(2),BCS-lw(2));}
   if(t.rays&&S.phase==='wave'){g.lineWidth=lw(2);for(const r of t.rays)if(r.e.hp>0){g.strokeStyle=r.el.col;g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(r.e.x*CS+CS/2,r.e.y*CS+CS/2);g.stroke();}}

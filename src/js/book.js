@@ -22,7 +22,7 @@ function bkItems(t){const L=[];
   const fams=ks=>{const out=EFAM.map(([n,l])=>[n,l.filter(k=>ks.includes(k))]).filter(x=>x[1].length),used=new Set(EFAM.flatMap(x=>x[1])),rest=ks.filter(k=>!used.has(k));if(rest.length)out.push(['Otros',rest]);return out;};
   for(const [n,l] of fams(nm)){L.push({sec:n});for(const k of l)L.push({id:k,dot:ET[k].col,n:ET[k].n,ok:seen('en',k)});}
   if(ev.length){L.push({sec:'De evento'});for(const k of ev)L.push({id:k,dot:ET[k].col,n:ET[k].n,ok:seen('en',k)});}}
- else if(t==='ev'){for(const id of Object.keys(EVENTS))L.push({id,ic:EVENTS[id].ic||'❔',n:EVENTS[id].n,ok:seen('ev',id)});}
+ else if(t==='ev'){for(const id of Object.keys(EVENTS).filter(evSeeEra))L.push({id,ic:EVENTS[id].ic||'❔',n:EVENTS[id].n,ok:seen('ev',id)});}
  else if(t==='lg'){CP.af=CP.af||'all';CP.as=CP.as||'all';
   // orden: fijados → en progreso (más avanzados primero) → resto → conseguidos (más recientes primero)
   const run=inRun(),frac=id=>{const M=APM[id];if(!M)return 0;const v=M.best&&!M.cur?(ACHBEST[id]||0):M.cur&&(run||id==='curious')?M.cur():0;return Math.min(1,v/M.max);},rk=id=>ACHS[id]?3:PINS.includes(id)?0:!achFound(id)?2.5:frac(id)>0?1:2,ord=(a,b)=>rk(a)-rk(b)||(rk(a)===1?frac(b)-frac(a):0)||(rk(a)===3?ACHS[b]-ACHS[a]:0);

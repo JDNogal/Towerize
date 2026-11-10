@@ -300,4 +300,4 @@ const PIGU={brick:{n:'Cerdito albañil',ic:'🐖',col:'#c0563a',hp:290,ap:40,dmg
  wood:{n:'Cerdito leñador',ic:'🐗',col:'#a8743a',hp:200,ap:20,dmg:14,rate:.9,push:.6,d:'Cuerpo a cuerpo con hacha: más daño que el albañil, y cada 3 golpes empuja al enemigo.'},
  straw:{n:'Cerdito espantapájaros',ic:'🐽',col:'#e8cf6a',hp:120,ap:0,dmg:10,rate:1,rng:1,range:3,slow:.3,slowt:2,d:'Lanza paja desde lejos: daña en un área pequeña y ralentiza un 30%. Si le alcanzan, bloquea y pega a mitad de daño.'},
  mech:{n:'Mecha Cerdito',ic:'🤖',col:'#d08a5a',hp:700,ap:50,dmg:20,rate:.8,st:30}};
-const tinfo=t=>t.pigU?{...TW.bastion,...PIGU[t.pigU]}:t.beast?{...TW.bastion,...(BEASTS[t.beast]||SPECT[t.beast])}:t.hero?t.hero.def:TW[t.type]&&TW[t.type].dragon?{...TW[t.type],...DRAG[t.stage||0]}:t.spec?SPECS[t.type][t.spec]:TW[t.type];
+const tinfo=t=>t.tinf?t.tinf:t.type==='omega'&&typeof omegaT==='function'?omegaT(t):t.pigU?{...TW.bastion,...PIGU[t.pigU]}:t.beast?{...TW.bastion,...(BEASTS[t.beast]||SPECT[t.beast])}:t.hero?t.hero.def:TW[t.type]&&TW[t.type].dragon?{...TW[t.type],...DRAG[t.stage||0]}:t.spec?SPECS[t.type][t.spec]:TW[t.type];
