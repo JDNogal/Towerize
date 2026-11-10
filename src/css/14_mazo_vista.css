@@ -67,9 +67,8 @@ body.mfs #relic .pskip small{font-size:10px!important;max-width:46%;text-align:l
 #relic.smore::after,#relic .smore::after{text-align:right;padding-right:16px;box-sizing:border-box;align-self:stretch;width:100%}
 /* las mayúsculas de «ACTIVO» se veían más altas que la etiqueta: se bajan un poco y la etiqueta y la recarga se quedan donde estaban */
 .rbtt{position:relative;top:2.6px}
-/* oferta de torres: insignia de unidades sobre el icono (Monje ×2), desplazada a la derecha para que el icono se vea */
+/* oferta de torres: insignia de unidades (Monje ×2) a la derecha del icono; en móvil, debajo del icono (al lado va el nombre) */
 #relic .tof .tic{position:relative;overflow:visible!important}
-.tubdg{position:absolute;right:-40px;bottom:-6px;display:flex;align-items:center;gap:2px;background:#f4e6c4;border:1.5px solid #6a4428;border-radius:14px;padding:1px 7px 1px 2px;font:700 12px system-ui,sans-serif;color:#8a3a1a;box-shadow:0 2px 4px rgba(0,0,0,.3);white-space:nowrap;line-height:1}
-.tubdg .tuic{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;flex:none}
-body.mfs #relic .tof .tubdg{right:-26px;bottom:-5px;font-size:10px;padding:0 5px 0 1px}body.mfs #relic .tof .tubdg .tuic{width:15px;height:15px;font-size:9px}
-body.mfs #relic .tof .tubdg{right:auto;left:50%;transform:translateX(-50%);bottom:-9px}
+.tubdg{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:2px;background:#f4e6c4;border:1.5px solid #6a4428;border-radius:14px;padding:2px 9px 2px 3px;font:700 14px system-ui,sans-serif;color:#8a3a1a;box-shadow:0 2px 4px rgba(0,0,0,.3);white-space:nowrap;line-height:1}
+.tubdg .tuic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:15px;flex:none}
+body.mfs #relic .tof .tubdg{right:auto;left:50%;top:auto;bottom:-9px;transform:translateX(-50%);font-size:10px;padding:0 5px 0 1px}body.mfs #relic .tof .tubdg .tuic{width:15px;height:15px;font-size:9px}

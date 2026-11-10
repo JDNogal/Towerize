@@ -7,4 +7,4 @@
 const RANGE_OLD={};
 for(const k in TW){const T=TW[k];if(!T||T.unit||T.support||T.uniq||T.guild||T.ev||!(T.range>0))continue;
  /* TW.range ya está en subcasillas (casillas × K) */const old=T.range/K,nw=Math.max(old,3+(old-2.2)/2);if(nw<=old+1e-6)continue;
- const f=nw/old;RANGE_OLD[k]=+old.toFixed(2);T.range=nw*K;if(T.dmg>0)T.dmg=+(T.dmg/Math.sqrt(f)).toFixed(2);}
+ const f=nw/old;RANGE_OLD[k]=+old.toFixed(2);T.range=nw*K;if(T.dmg>0){const d=T.dmg/Math.sqrt(f);T.dmg=d>=10?Math.round(d):d>=1?+d.toFixed(1):+d.toFixed(2);}}

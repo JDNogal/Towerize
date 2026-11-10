@@ -1412,12 +1412,11 @@ body.mfs #relic .pskip small{font-size:10px!important;max-width:46%;text-align:l
 #relic.smore::after,#relic .smore::after{text-align:right;padding-right:16px;box-sizing:border-box;align-self:stretch;width:100%}
 /* las mayúsculas de «ACTIVO» se veían más altas que la etiqueta: se bajan un poco y la etiqueta y la recarga se quedan donde estaban */
 .rbtt{position:relative;top:2.6px}
-/* oferta de torres: insignia de unidades sobre el icono (Monje ×2), desplazada a la derecha para que el icono se vea */
+/* oferta de torres: insignia de unidades (Monje ×2) a la derecha del icono; en móvil, debajo del icono (al lado va el nombre) */
 #relic .tof .tic{position:relative;overflow:visible!important}
-.tubdg{position:absolute;right:-40px;bottom:-6px;display:flex;align-items:center;gap:2px;background:#f4e6c4;border:1.5px solid #6a4428;border-radius:14px;padding:1px 7px 1px 2px;font:700 12px system-ui,sans-serif;color:#8a3a1a;box-shadow:0 2px 4px rgba(0,0,0,.3);white-space:nowrap;line-height:1}
-.tubdg .tuic{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;flex:none}
-body.mfs #relic .tof .tubdg{right:-26px;bottom:-5px;font-size:10px;padding:0 5px 0 1px}body.mfs #relic .tof .tubdg .tuic{width:15px;height:15px;font-size:9px}
-body.mfs #relic .tof .tubdg{right:auto;left:50%;transform:translateX(-50%);bottom:-9px}
+.tubdg{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:2px;background:#f4e6c4;border:1.5px solid #6a4428;border-radius:14px;padding:2px 9px 2px 3px;font:700 14px system-ui,sans-serif;color:#8a3a1a;box-shadow:0 2px 4px rgba(0,0,0,.3);white-space:nowrap;line-height:1}
+.tubdg .tuic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:15px;flex:none}
+body.mfs #relic .tof .tubdg{right:auto;left:50%;top:auto;bottom:-9px;transform:translateX(-50%);font-size:10px;padding:0 5px 0 1px}body.mfs #relic .tof .tubdg .tuic{width:15px;height:15px;font-size:9px}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -8983,5 +8982,5 @@ setInterval(()=>{try{mzSide();}catch(e){}},200);
 const RANGE_OLD={};
 for(const k in TW){const T=TW[k];if(!T||T.unit||T.support||T.uniq||T.guild||T.ev||!(T.range>0))continue;
  /* TW.range ya está en subcasillas (casillas × K) */const old=T.range/K,nw=Math.max(old,3+(old-2.2)/2);if(nw<=old+1e-6)continue;
- const f=nw/old;RANGE_OLD[k]=+old.toFixed(2);T.range=nw*K;if(T.dmg>0)T.dmg=+(T.dmg/Math.sqrt(f)).toFixed(2);}
+ const f=nw/old;RANGE_OLD[k]=+old.toFixed(2);T.range=nw*K;if(T.dmg>0){const d=T.dmg/Math.sqrt(f);T.dmg=d>=10?Math.round(d):d>=1?+d.toFixed(1):+d.toFixed(2);}}
 </script></body></html>
