@@ -1343,7 +1343,7 @@ body.mfs .tk{width:26px;height:38px}body.mfs .tk .tki{font-size:12px;top:3px}bod
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v302</div>
+<div id="ver">Towerize v303</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3119,13 +3119,14 @@ function drawUnits(c,s,cs,ox,oy,lw){
      if(im.complete&&im.naturalWidth){c.beginPath();c.arc(px,py,r,0,7);c.clip();try{c.filter='grayscale(1) brightness(.75)';}catch(e){}c.drawImage(im,px-r,py-r,r*2,r*2);try{c.filter='none';}catch(e){}}c.restore();
      c.strokeStyle='#8a8f9c';c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();
      const n=Math.ceil(q.H.s.rt||q.rt||0);if(n>0){c.font='800 '+Math.round(r*1.1)+'px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.lineWidth=lw(3);c.strokeStyle='rgba(0,0,0,.8)';c.strokeText(n,px,py+1);c.fillStyle='#fff';c.fillText(n,px,py+1);}}
-    continue;}if(q.charm)continue;const wb=q.drunk>0?Math.sin(performance.now()/110+q.i)*cs*.18:0,px=ox+q.x*cs+cs/2+wb,py=oy+q.y*cs+cs/2,r=(q.H?cs*1.05*(q.H.big?1.45:1):q.mech?cs*1.5:q.pig||q.ally?cs*1.0:q.beast?cs*(q.beast==='bear'?.95:.75):cs*.5)*(typeof UVS!=='undefined'&&!S.pvE?UVS:1);
+    continue;}if(q.charm)continue;const wb=q.drunk>0?Math.sin(performance.now()/110+q.i)*cs*.18:0,px=ox+q.x*cs+cs/2+wb,py=oy+q.y*cs+cs/2,r=(q.H?cs*1.05*(q.H.big?1.45:1):q.mech?cs*1.5:q.pig||q.ally||q.clone?cs*1.0:q.beast?cs*(q.beast==='bear'?.95:.75):cs*.5)*(typeof UVS!=='undefined'&&!S.pvE?UVS:1);
    if(MK){c.fillStyle=tinfo(t).col;for(const sd of[-1,1]){c.beginPath();c.moveTo(px+sd*r*.55,py-r*.45);c.lineTo(px+sd*r*1.45,py-r*.95);c.lineTo(px+sd*r*.85,py-r*.05);c.closePath();c.fill();}}
    if(q.H&&q.H.camo>0)c.globalAlpha=.35;c.fillStyle=q.H?q.H.def.col:tinfo(t).col;c.beginPath();c.arc(px,py,r,0,7);c.fill();if(q.ps&&q.ps.length){c.strokeStyle='#7bd34a';c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r*1.25,0,7);c.stroke();}
    if(q.H){const im=heroImg(q.H.id);if(im.complete&&im.naturalWidth){c.save();c.beginPath();c.arc(px,py,r,0,7);c.clip();c.drawImage(im,px-r,py-r,r*2,r*2);c.restore();}else{c.font=Math.round(r*1.5)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#14161c';c.fillText(q.H.def.ic,px,py+1);}
     c.strokeStyle=q.H.def.col;c.lineWidth=lw(3);c.beginPath();c.arc(px,py,r,0,7);c.stroke();c.strokeStyle='rgba(0,0,0,.55)';c.lineWidth=lw(1);c.beginPath();c.arc(px,py,r+lw(2),0,7);c.stroke();c.globalAlpha=1;}
-   else{c.strokeStyle='#cfe0ff';c.lineWidth=lw(1.5);c.stroke();if(!q.mech&&!q.pig&&!q.beast&&!q.ally){const ui=unitIc(t);if(ui){c.fillStyle='#14161c';icDraw(c,ui,px,py+1,r*1.45);}}}
+   else{c.strokeStyle='#cfe0ff';c.lineWidth=lw(1.5);c.stroke();if(!q.mech&&!q.pig&&!q.beast&&!q.ally&&!q.clone){const ui=unitIc(t);if(ui){c.fillStyle='#14161c';icDraw(c,ui,px,py+1,r*1.45);}}}
    if(q.mech){const cl=['#e8cf6a','#a8743a','#c0563a'];for(let i=0;i<3;i++){c.fillStyle=cl[i];c.beginPath();c.moveTo(px,py);c.arc(px,py,r,i*2.094-1.571,(i+1)*2.094-1.571);c.closePath();c.fill();}c.strokeStyle='#ffe0b0';c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();c.font=Math.round(r*1.2)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('🐷',px,py+1);}
+   if(q.clone){const im=heroImg(q.clone);c.save();c.globalAlpha=.55+.2*Math.sin(performance.now()/90);if(im.complete&&im.naturalWidth){c.beginPath();c.arc(px,py,r,0,7);c.clip();c.drawImage(im,px-r,py-r,r*2,r*2);}c.restore();c.strokeStyle='#3fe8ff';c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();}
    if(q.ally){const im=heroImg('ally');if(im.complete&&im.naturalWidth){c.save();c.beginPath();c.arc(px,py,r,0,7);c.clip();c.drawImage(im,px-r,py-r,r*2,r*2);c.restore();}c.strokeStyle='#ff4fd8';c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();}
    if(q.pig){const im=PORT['pig_'+q.pig]?heroImg('pig_'+q.pig):null;if(im&&im.complete&&im.naturalWidth){c.save();c.beginPath();c.arc(px,py,r,0,7);c.clip();c.drawImage(im,px-r,py-r,r*2,r*2);c.restore();c.strokeStyle=tinfo(t).col;c.lineWidth=lw(2.5);c.beginPath();c.arc(px,py,r,0,7);c.stroke();}else{c.font=Math.round(r*1.6)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(PIGU[q.pig].ic,px,py+1);}}
    if(q.beast){c.font=Math.round(r*1.9)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff';c.fillText((BEASTS[q.beast]||SPECT[q.beast]).ic,px,py+1);}
@@ -4018,7 +4019,7 @@ if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;
 function orbFlush(){if(S.orbs&&S.hero)for(const o of S.orbs)giveXp(S.hero,o.v);S.orbs=[];}
 function hpLoss(n,en){if(S)S.chit=performance.now();if(S.st)S.st.hpL=(S.st.hpL||0)+n;if(en)hint('retry','Reintentar',[['Un enemigo ha llegado al núcleo y has perdido <b>vida</b>.',tgEl('#sh')],['Si una oleada sale mal, puedes repetirla desde el principio con este botón. Tiene cargas limitadas.',tgEl('#mtl [data-a="retry"]')]]);S.hp-=n;S.idolN=(S.idolN||0)+n;if(en)S.hpEn=(S.hpEn||0)+n;}
 const INTMAX=100,interest=()=>Math.min(INTMAX,Math.floor(S.gold*.1/5)*5);
-const heroHpM=()=>rp('badge')?1.15:1;
+const heroHpM=()=>(rp('badge')?1.15:1)*(typeof r3On==='function'&&r3On('implant')?1.2:1);
 function heroSync(){const H=S.hero;if(!H)return;const q=H.s,m=hsAt(H.id,H.lvl).hp*heroHpM();if(Math.abs(q.max-m)>.01){const f=q.max>0?q.hp/q.max:1;q.max=m;if(q.hp>0)q.hp=m*f;}}
 const EMR=3*K;
 function castEmber(c){S.fz.push({x:c.x,y:c.y,r:EMR,t:8,tk:0,n:3*hpR(S.round)});S.rs.ember.t=8;setCD('ember');S.aim=null;S.msg='';S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:EMR,col:'#ff7a3c'});renderRelics();ui();}
@@ -4150,7 +4151,7 @@ function mkGuild(t){const U=TW[t.type].unit,base=U.hp*lvMods(t.type,t.lvl,null).
 function guildHeal(dt){for(const t of unitTowers()){if(!(TW[t.type]||{}).guild||!t.sd)continue;const pool=t.merc&&S.hero?t.sd.concat([S.hero.s]):t.sd;for(const s of t.sd){if(s.cls!=='heal'||s.hp<=0)continue;s.hc=(s.hc||4)-dt;if(s.hc>0)continue;s.hc=4;let lo=null;for(const q of pool)if(q.hp>0&&q.hp<q.max&&(!lo||q.hp/q.max<lo.hp/lo.max))lo=q;if(lo){lo.hp=Math.min(lo.max,lo.hp+lo.max*.15);S.fx.push({x:lo.x,y:lo.y,t:.5,m:.5,r:.8*K,col:'#8ff0a0'});}}}}
 // disparo de unidades a distancia (magos y sanadores del gremio, dragón bebé)
 function unitShoot(s,dt){const t=s.tw,st=stats(t),C=CLS[s.cls]||CLS0,drag=!!s.drag;s.cd-=dt;let tg=s.fight?s.en:null;const rg=drag?2.5*K:st.range;
- if(!tg){let bd=rg;for(const e of S.enemies)if(e.hp>0&&!ET[e.t].dodge){const d=Math.hypot(e.x-s.x,e.y-s.y);if(d<=bd){bd=d;tg=e;}}}
+ if(!tg){let bd=rg;for(const e of S.enemies)if(e.hp>0&&!(ET[e.t].dodge&&!(e.gpin>0))&&!(e.hk>0)){const d=Math.hypot(e.x-s.x,e.y-s.y);if(d<=bd){bd=d;tg=e;}}}
  if(!tg){s.cd=Math.max(s.cd,0);if(!s.en)uRegen(s,dt);return;}
  const rate=drag?1/1.2:st.rate*C.rt,base=drag?8:st.dmg*C.d,ty=drag?'elem':s.cls==='mage'?'magic':'phys';
  let n=0;while(s.cd<=0&&n++<4){s.cd+=1/rate;const crit=Math.random()<st.crit+mkB(tg),dm=base*(crit?st.critm:1)*(1+(s.ren||0));
@@ -4580,13 +4581,13 @@ function unitCombat(dt){
   if(s.lock||(s.en&&(!(s.en.hp>0)||!S.enemies.includes(s.en)||Math.hypot(fl(s).x-s.en.x,fl(s).y-s.en.y)>(s.tw.alert||ALERT)+SCONTACT*2+(s.enR===s.en?RANGED_R:0))))s.en=null;
   if(s.en)s.en.nb+=s.w;}
  for(const s of SL){if(s.en||s.lock)continue;let be=null,bd=1e9;const f0=fl(s);
-  for(const e of S.enemies){if(e.hp<=0||e.nb>=(ET[e.t].need||1)||ET[e.t].dodge||(isFly(e)&&!(s.H&&s.H.def.ranged)&&!s.rng))continue;if(Math.hypot(f0.x-e.x,f0.y-e.y)>(s.tw.alert||ALERT))continue;const E2=ET[e.t],d=Math.hypot(s.x-e.x,s.y-e.y)-(s.pref&&(E2.rg==='ranged'||E2.eheal||E2.curse||E2.aura)?100:0);if(d<bd){bd=d;be=e;}}
+  for(const e of S.enemies){if(e.hp<=0||e.nb>=(ET[e.t].need||1)||(ET[e.t].dodge&&!(e.gpin>0))||e.hk>0||(isFly(e)&&!(s.H&&s.H.def.ranged)&&!s.rng))continue;if(Math.hypot(f0.x-e.x,f0.y-e.y)>(s.tw.alert||ALERT))continue;const E2=ET[e.t],d=Math.hypot(s.x-e.x,s.y-e.y)-(s.pref&&(E2.rg==='ranged'||E2.eheal||E2.curse||E2.aura)?100:0);if(d<bd){bd=d;be=e;}}
   if(be){s.en=be;be.nb+=s.w;s.cd=0;}}
  for(const s of SL){s.fight=!!(s.en&&!s.lock&&Math.hypot(s.x-s.en.x,s.y-s.en.y)<=SCONTACT);if(s.fight)s.en.ct+=s.w;}
  // bloqueo múltiple: con capacidad sobrante (corpulencia − lo que necesita su enemigo), retiene además a otro enemigo cercano
  for(const s of SL){const rem=s.fight&&!(s.H&&s.H.def.ranged)&&!s.rng?s.w-(ET[s.en.t].need||1):0;
   if(s.en2&&(rem<1||!(s.en2.hp>0)||s.en2===s.en||!S.enemies.includes(s.en2)||(ET[s.en2.t].need||1)>rem||Math.hypot(s.x-s.en2.x,s.y-s.en2.y)>SCONTACT*1.25))s.en2=null;
-  if(!s.en2&&rem>=1){let be=null,bd=SCONTACT;for(const e of S.enemies){const E=ET[e.t];if(e.hp<=0||e===s.en||E.dodge||isFly(e)||E.rg==='ranged'||(E.need||1)>rem||e.ct>=(E.need||1))continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;be=e;}}s.en2=be;}
+  if(!s.en2&&rem>=1){let be=null,bd=SCONTACT;for(const e of S.enemies){const E=ET[e.t];if(e.hp<=0||e===s.en||(E.dodge&&!(e.gpin>0))||e.hk>0||isFly(e)||E.rg==='ranged'||(E.need||1)>rem||e.ct>=(E.need||1))continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;be=e;}}s.en2=be;}
   if(s.en2)s.en2.ct+=ET[s.en2.t].need||1;}
  for(const s of SL){
   if(s.H&&s.H.def.ranged){heroShoot(s,dt);continue;}
@@ -4611,7 +4612,7 @@ function unitCombat(dt){
 }
 // Sylvana: dispara desde su posición al enemigo más cercano dentro de su alcance; si uno la alcanza, lo bloquea y le pega cuerpo a cuerpo con la mitad de daño.
 function heroShoot(s,dt){const H=s.H,t=s.tw,st=stats(t);s.cd-=dt;let tg=s.fight?s.en:null;
- if(!tg){let bd=st.range;for(const e of S.enemies)if(e.hp>0&&!ET[e.t].dodge){const d=Math.hypot(e.x-s.x,e.y-s.y);if(d<=bd){bd=d;tg=e;}}}
+ if(!tg){let bd=st.range;for(const e of S.enemies)if(e.hp>0&&!(ET[e.t].dodge&&!(e.gpin>0))&&!(e.hk>0)){const d=Math.hypot(e.x-s.x,e.y-s.y);if(d<=bd){bd=d;tg=e;}}}
  if(!tg){s.cd=Math.max(s.cd,0);if(!s.en)uRegen(s,dt);return;}
  let n=0;while(s.cd<=0&&n++<4){s.cd+=1/st.rate;const crit=Math.random()<st.crit+mkB(tg),dm=st.dmg*(crit?st.critm:1);
   if(s.fight){hurt(tg,dm*HMELEE,t,H.def.dt||'phys',st.pen);if(crit)critMark(tg);onHit(tg,t);}
@@ -4814,7 +4815,7 @@ function dnTick(dt){if(!S.dn)return;for(const d of S.dn){d.age+=dt;d.idle+=dt;if
 const fmtD=n=>{n=Math.round(n);if(OPT.dsci&&n>=1e6){const s=n.toExponential(2).split('e+');return s[0].replace('.',',')+'e'+s[1];}
  if(OPT.dabbr&&n>=1000){const u=['K','M','B','T','Qa','Qi'];let i=-1,v=n;while(v>=1000&&i<u.length-1){v/=1000;i++;}return String(+v.toFixed(v<10?2:v<100?1:0)).replace('.',',')+u[i];}
  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');};
-const hurt=(e,a,src,ty,pen)=>{if(typeof eHurtMod==='function'){a=eHurtMod(e,a,src,ty);if(!(a>0))return 0;}if(e.fx&&e.fx.wet&&src&&(src.type==='augur'||src.type==='tesla'))a*=1+e.fx.wet.m;if(ty==='magic'&&e.fx&&e.fx.hex)a*=1+e.fx.hex.m;if(S.fury)a*=furyM();if(ET[e.t].fly&&rp('harpoon'))a*=1.25;if(e.prey>0)a*=1.15;if(typeof e2DmgM==='function')a*=e2DmgM(e,src,ty);if(src&&S.faros&&S.faros.length&&!src.hero)faroFeed(src,Math.min(Math.max(e.hp,0),a));if(ty==='phys'&&src&&src.ab&&src.ab.hollow)a*=1+abRank(src,'hollow').p*Math.max(0,armorOf(e,'phys'));const A=ty==='elem'?0:Math.max(-MAXPEN,armorOf(e,ty)-(pen||0)),m=1-A/(A+ARM_K);if(src&&src.hero&&src.hero.s&&S.phase==='wave')src.hero.s.la=S.wt;if(src&&src.hero&&e.hp>0)e.hx=(e.hx||0)+ET[e.t].xp*Math.min(e.hp,a*m)/e.max;if(src&&!src.hero){if(ty==='phys')e.ph=1;else if(ty==='magic')e.mh=1;}const dl=Math.min(Math.max(e.hp,0),a*m);e.hp-=a*m;if(src)e.src=src;e.kdn=DNK;if(S.tut&&src&&src.id)(e.hb=e.hb||{})[src.id]=S.wt;if(dl>0&&S.dn)dnAdd(e,dl,dnKey(src,ty));if(dl>0&&src&&typeof onDmg==='function')onDmg(e,dl,src,ty);if(S.st&&dl>0){S.st.dmg+=dl;if(src){src.dmgT=(src.dmgT||0)+dl;relDmg(src,dl);}}
+const hurt=(e,a,src,ty,pen)=>{if(e.hk>0&&!(typeof HKD!=='undefined'&&HKD))return 0;if(typeof eHurtMod==='function'){a=eHurtMod(e,a,src,ty);if(!(a>0))return 0;}if(e.fx&&e.fx.wet&&src&&(src.type==='augur'||src.type==='tesla'))a*=1+e.fx.wet.m;if(ty==='magic'&&e.fx&&e.fx.hex)a*=1+e.fx.hex.m;if(S.fury)a*=furyM();if(ET[e.t].fly&&rp('harpoon'))a*=1.25;if(e.prey>0)a*=1.15;if(typeof e2DmgM==='function')a*=e2DmgM(e,src,ty);if(src&&S.faros&&S.faros.length&&!src.hero)faroFeed(src,Math.min(Math.max(e.hp,0),a));if(ty==='phys'&&src&&src.ab&&src.ab.hollow)a*=1+abRank(src,'hollow').p*Math.max(0,armorOf(e,'phys'));const A=ty==='elem'?0:Math.max(-MAXPEN,armorOf(e,ty)-(pen||0)),m=1-A/(A+ARM_K);if(src&&src.hero&&src.hero.s&&S.phase==='wave')src.hero.s.la=S.wt;if(src&&src.hero&&e.hp>0)e.hx=(e.hx||0)+ET[e.t].xp*Math.min(e.hp,a*m)/e.max;if(src&&!src.hero){if(ty==='phys')e.ph=1;else if(ty==='magic')e.mh=1;}const dl=Math.min(Math.max(e.hp,0),a*m);e.hp-=a*m;if(src)e.src=src;e.kdn=DNK;if(S.tut&&src&&src.id)(e.hb=e.hb||{})[src.id]=S.wt;if(dl>0&&S.dn)dnAdd(e,dl,dnKey(src,ty));if(dl>0&&src&&typeof onDmg==='function')onDmg(e,dl,src,ty);if(S.st&&dl>0){S.st.dmg+=dl;if(src){src.dmgT=(src.dmgT||0)+dl;relDmg(src,dl);}}
  if(!TZX&&S.tz&&S.tz.length&&S.tz.some(z=>Math.hypot(e.x-z.x,e.y-z.y)<=z.r)){TZX=1;const d0=S.st?S.st.dmg:0;hurt(e,a*.25,src,'magic',0);if(S.st)RS('tome').dmg+=S.st.dmg-d0;TZX=0;}
  return m;};
 function pierceChain(e,raw,t,ty,pen,R){
@@ -5068,9 +5069,9 @@ function update(dt){
  const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y);
  for(const t of S.list){
   const T=TW[t.type],s=stats(t);if(T.unit||T.support||T.swarm||T.custom||t.jam>0)continue;t.cd=Math.max(-.1,t.cd-dt);if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);if(t.flash&&(t.flash.t-=dt)<=0)t.flash=null;if(t.fl&&(t.fl.ttl-=dt)<=0)t.fl=null;
-  let tg=alive(t.tgt||{})&&Math.hypot(t.tgt.x-t.x,t.tgt.y-t.y)<=s.range&&!(typeof camoHid==='function'&&camoHid(t.tgt,t))?t.tgt:null;
-  if(!tg){const md=TGT[t.mode]||TGT.core;let bs=0;
-   for(const e of S.enemies){if(Math.hypot(e.x-t.x,e.y-t.y)>s.range||(T.ground&&isFly(e))||(typeof camoHid==='function'&&camoHid(e,t)))continue;const sc=md.score(e,prog);
+  let tg=alive(t.tgt||{})&&!(t.tgt.hk>0)&&Math.hypot(t.tgt.x-t.x,t.tgt.y-t.y)<=s.range&&!(typeof camoHid==='function'&&camoHid(t.tgt,t))?t.tgt:null;
+  if(!tg){const md=(typeof tgtAI==='function'&&tgtAI(t,s))||TGT[t.mode]||TGT.core;let bs=0;
+   for(const e of S.enemies){if(e.hk>0||Math.hypot(e.x-t.x,e.y-t.y)>s.range||(T.ground&&isFly(e))||(typeof camoHid==='function'&&camoHid(e,t)))continue;const sc=md.score(e,prog);
     if(!tg||sc>bs||(sc===bs&&prog(e)<prog(tg))){tg=e;bs=sc;}}}
   t.tgt=T.beam?tg:null;
   volcHeat(t,!!tg,dt);
@@ -6223,8 +6224,8 @@ function act(e){
  else if(a==='tgt'||a==='tgtall'||a==='tgtdef'){
   const t=S.list.find(o=>o.id===+b.dataset.id);
   if(t){
-   if(a==='tgt'){t.mode=b.dataset.v;t.tgt=null;}
-   else if(a==='tgtall'){let n=0;for(const o of S.list)if(o.type===t.type){o.mode=t.mode;o.tgt=null;n++;}
+   if(a==='tgt'){t.mode=b.dataset.v;t.tgt=null;t.mman=1;}
+   else if(a==='tgtall'){let n=0;for(const o of S.list)if(o.type===t.type){o.mode=t.mode;o.tgt=null;o.mman=1;n++;}
     S.msg='Objetivo «'+TGT[t.mode].n+'» aplicado a '+n+(n===1?' torre':' torres')+' de '+TW[t.type].n+'.';ui();}
    else{S.dtg[t.type]=t.mode;S.msg='Las nuevas torres de '+TW[t.type].n+' empezarán con «'+TGT[t.mode].n+'».';ui();}
    refreshPrim();}}
@@ -8263,7 +8264,7 @@ if(typeof document!=='undefined'){const cw=document.getElementById('cw');if(cw)c
 // ---- Sello psiónico (Korr) ----
 nrAdd({id:'seal',n:'Sello psiónico',ic:'🧿',col:'#3a3a7a',ini:1,cd:2,
  pas:()=>'Los enemigos que golpean a tus unidades o a tu héroe reciben el <span class="cmg">10% del golpe</span> como <span class="cmg">daño mágico</span>.',
- act:()=>`<b>Tirón psíquico</b>: los enemigos de un área se juntan en el centro y quedan ${kw('slow','ralentizados','')} un 50% durante <b>4 s</b>.`},
+ act:()=>`Los enemigos de un área se juntan en el centro y quedan ${kw('slow','ralentizados','')} un 50% durante <b>4 s</b>.`},
  {aim:'Elige el centro del tirón psíquico.',r:2.5*K,col:'192,112,255',use:c=>{let n=0;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d>2.5*K)continue;n++;
    if(d>.5){const mv=Math.min(d,2.5*K*(isBoss(e)?.5:1)),q=pathNear(e.x+(c.x-e.x)/d*mv,e.y+(c.y-e.y)/d*mv);if(q){e.x=e.tx=q.x;e.y=e.ty=q.y;}}slowE(e,.5,4);}
   RS('seal').n+=n;S.fx.push({x:c.x,y:c.y,t:.6,m:.6,r:2.5*K,col:'#c070ff'});return true;}});
@@ -8273,14 +8274,14 @@ const h2States=e=>(e.bn>0?1:0)+(e.ps&&e.ps.length?1:0)+(e.bl&&e.bl.length?1:0)+(
 function h2Copy(a,b){if(a.bn>0){if(!(b.bn>0)){b.bn=0;b.bt=0;}b.bn=Math.max(b.bn,a.bn);b.bsrc=a.bsrc;}if(a.ps&&a.ps.length)b.ps=(b.ps||[]).concat(a.ps.map(q=>({...q})));if(a.bl&&a.bl.length)b.bl=(b.bl||[]).concat(a.bl.map(q=>({...q})));if(a.cs&&a.cs.length)b.cs=(b.cs||[]).concat(a.cs.map(q=>({...q})));if(a.ez&&a.ez.n>0)b.ez={n:Math.max(a.ez.n,b.ez?b.ez.n:0),t:4};if(a.brk&&a.brk.length)b.brk=(b.brk||[]).concat(a.brk.map(q=>({...q})));}
 nrAdd({id:'cell',n:'Célula de la Forja',ic:'🔋',col:'#2a5a4a',ini:1,cd:2,
  pas:()=>'Los enemigos con <b>2 o más estados</b> distintos reciben un <span class="cd">+10% de daño</span> de todo.',
- act:()=>'<b>Descarga en cadena</b>: un rayo salta entre <b>8</b> enemigos y les contagia los estados del primero (el que más estados tenga en el punto que elijas).'},
+ act:()=>'Un rayo salta entre <b>8</b> enemigos y les contagia los estados del primero (el que más estados tenga en el punto que elijas).'},
  {aim:'Elige el primer enemigo de la descarga.',r:1.5*K,col:'255,225,77',use:c=>{/* de los enemigos junto al punto elegido, empieza por el que más estados tiene */let f=null,bs=-1;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d>1.5*K)continue;const sc2=h2States(e)*100-d;if(sc2>bs){bs=sc2;f=e;}}if(!f){S.msg='Célula de la Forja: elige un punto con algún enemigo cerca.';return false;}
   const L=[f],pts=[[f.x,f.y-4*K],[f.x,f.y]];let cur=f;for(let i=0;i<7;i++){let nx=null,nd=3*K;for(const o of S.enemies){if(o.hp<=0||o.leak||L.includes(o))continue;const d=Math.hypot(o.x-cur.x,o.y-cur.y);if(d<=nd){nd=d;nx=o;}}if(!nx)break;L.push(nx);pts.push([nx.x,nx.y]);cur=nx;}
   const dm=12*hpR(S.round)*(1+S.round*.25);for(const o of L){if(o!==f)h2Copy(f,o);hurt(o,dm,S.hero?S.hero.pt:null,'elem');h2Ez(o,1);}RS('cell').n+=L.length;S.fx.push({bolt:pts,t:.3,m:.3,big:1});return true;}});
 // ---- Tablón de recompensas (Kai) ----
 nrAdd({id:'board',n:'Tablón de recompensas',ic:'📌',col:'#6a3a1a',ini:1,cd:2,
  pas:()=>'En cada oleada, un enemigo fuerte sale como <b>«Se busca»</b>: al matarlo cobras <span class="gd">oro extra</span>.',
- act:()=>`<b>Contrato</b>: el enemigo más fuerte del mapa queda ${kw('mark','marcado','')} <b>20 s</b>. Si muere en ese tiempo, da el <span class="gd">triple de oro</span>.`},
+ act:()=>`El enemigo más fuerte del mapa queda ${kw('mark','marcado','')} <b>20 s</b>. Si muere en ese tiempo, da el <span class="gd">triple de oro</span>.`},
  {use:()=>{let b=null;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;if(!b||e.max>b.max)b=e;}if(!b){S.msg='Tablón de recompensas: no hay enemigos en el mapa.';return false;}
   b.ctr=20;b.mk={t:20,cr:Math.max(.25,b.mk&&b.mk.t>0?b.mk.cr:0)};RS('board').n++;
   try{const el=document.querySelector('#relics [data-id="board"]'),r=cv.getBoundingClientRect(),q=el.getBoundingClientRect(),k=sc(),px=(q.left+q.width/2-r.left)/r.width*VIEW,py=(q.top+q.height/2-r.top)/r.height*VH;HX.beam={x:(px/k+CAM.x)/CS-.5,y:(py/k+CAM.y)/CS-.5,e:b,t:.7};}catch(x){HX.beam={x:b.x,y:b.y-6*K,e:b,t:.7};}
@@ -8314,13 +8315,13 @@ const R2={};
 // ---- Pulso electromagnético ----
 nrAdd({id:'emp',n:'Pulso electromagnético',ic:'🧲',col:'#3a4a8a',era:2,cd:3,
  pas:()=>`Cada impacto de torre: <span class="cf">10%</span> de dejar ${kw('ez','electrizado','')} al enemigo.`,
- act:()=>`<b>Descarga</b>: todos los enemigos ${kw('ez','electrizados','')} del mapa reciben un golpe eléctrico y quedan ${kw('stun','aturdidos','')} <b>2 s</b> (jefes, 1 s).`},
+ act:()=>`Todos los enemigos ${kw('ez','electrizados','')} del mapa reciben un golpe eléctrico y quedan ${kw('stun','aturdidos','')} <b>2 s</b> (jefes, 1 s).`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.ez&&e.ez.n>0);if(!L.length){S.msg='Pulso electromagnético: no hay enemigos electrizados.';return false;}const dm=20+S.round*8;
   for(const e of L){hurt(e,dm*(1+EZAMP*e.ez.n),null,'elem');stunE(e,2);S.fx.push({bolt:[[e.x+(Math.random()-.5),e.y-4*K],[e.x,e.y]],t:.2,m:.2});S.fx.push({x:e.x,y:e.y,t:.35,m:.35,r:.6*K,col:'#ffe14d'});}RS('emp').n+=L.length;return true;}});
 // ---- Generador de escudo ----
 nrAdd({id:'shgen',n:'Generador de escudo',ic:'💠',col:'#2a5a7a',era:2,cd:3,
  pas:()=>'Tus unidades y tu héroe empiezan cada oleada con un <span class="chp">escudo del 20%</span> de su vida.',
- act:()=>'<b>Cúpula</b>: durante <b>6 s</b>, tus unidades dentro del área no reciben daño.'},
+ act:()=>'Durante <b>6 s</b>, tus unidades dentro del área no reciben daño.'},
  {aim:'Elige dónde levantar la cúpula.',r:2*K,col:'90,200,255',dur:6,use:c=>{S.dome={x:c.x,y:c.y,r:2*K,t:6};S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:2*K,col:'#7ad8ff'});return true;}});
 UHM.unshift((s,d,e)=>{if(S.dome&&S.dome.t>0&&h2R(s,S.dome,S.dome.r)){RS('shgen').n++;return 0;}if(s.shd>0){const a=Math.min(s.shd,d);s.shd-=a;d-=a;RS('shgen').dmg+=a;}return d;});
 function r2Shields(){for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)s.shd=s.max*.2;}
@@ -8342,7 +8343,7 @@ function prCopy(src,cx,cy){const g0=S.gold,sp0=S.st?S.st.spent:0,ts=S.tsel,n0=S.
 function prRemove(t){t.sold=1;S.list=S.list.filter(o=>o!==t);for(const[a,b]of t.sq||[])if(S.occ[a+','+b]===t)delete S.occ[a+','+b];if(S.selT===t){S.selT=null;try{tmClose();}catch(e){}}try{if(PR.pinned&&PR.key==='tw:'+t.id)closePrim();}catch(e){}S.fx.push({x:t.x,y:t.y,t:.5,m:.5,r:1.2*K,col:'#3fe8ff'});}
 nrAdd({id:'printer',n:'Impresora 3D',ic:'🖨️',col:'#4a5a6a',era:2,cd:3,
  pas:()=>'Una vez por ronda, mejorar una torre de <b>Nv 1 a Nv 2</b> sale <span class="gd">gratis</span>.',
- act:()=>'<b>Imprimir</b>: copias una torre tuya, con su nivel y sus habilidades, en un solar vacío. Es un holograma: dura <b>40 s</b> si es de Nv 1, 35 s de Nv 2, 30 s de Nv 3 y 25 s de Nv 4.'},
+ act:()=>'Copias una torre tuya, con su nivel y sus habilidades, en un solar vacío. Es un holograma: dura <b>40 s</b> si es de Nv 1, 35 s de Nv 2, 30 s de Nv 3 y 25 s de Nv 4.'},
  {aim:'Elige la torre que quieres copiar.',start:()=>{S.prSrc=null;},use:c=>{const t=S.occ[c.x+','+c.y];
   if(!S.prSrc){if(!t||t.holo||TW[t.type].uniq||TW[t.type].guild){S.msg='Impresora 3D: elige una de tus torres (las únicas no se pueden copiar).';return false;}S.prSrc=t.id;S.msg='Ahora elige un solar vacío para la copia.';return false;}
   const src=S.list.find(o=>o.id===S.prSrc);if(!src){S.prSrc=null;S.msg='Elige la torre que quieres copiar.';return false;}
@@ -8352,19 +8353,19 @@ nrAdd({id:'printer',n:'Impresora 3D',ic:'🖨️',col:'#4a5a6a',era:2,cd:3,
 // ---- Adrenalina sintética ----
 nrAdd({id:'adren',n:'Adrenalina sintética',ic:'💉',col:'#7a2a3a',era:2,cd:3,
  pas:()=>'La primera vez en cada oleada que tu héroe baja del 30% de vida: <span class="cr">+30% de velocidad de ataque</span> durante <b>5 s</b>.',
- act:()=>'<b>Chute</b>: durante <b>8 s</b>, tu héroe y tus unidades atacan y se mueven un <span class="cr">50% más rápido</span>.'},
+ act:()=>'Durante <b>8 s</b>, tu héroe y tus unidades atacan y se mueven un <span class="cr">50% más rápido</span>.'},
  {dur:8,use:()=>{for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)S.fx.push({x:s.x,y:s.y,t:.4,m:.4,r:.6*K,col:'#ff6a7a'});return true;}});
 function uSpdM(t){return S.relics&&S.relics.includes('adren')&&ra('adren')?1.5:1;}
 // ---- Criocápsula ----
 nrAdd({id:'cryo',n:'Criocápsula',ic:'🧊',col:'#2a6a8a',era:2,evr:1,ev:'cryocam',cd:3,
  pas:()=>`Cada <b>5 impactos</b> que recibe un enemigo le dan 1 de ${kw('chill','hipotermia','')}. Los que mueren con hipotermia estallan en esquirlas que dan 1 de hipotermia alrededor.`,
- act:()=>`<b>Nitrógeno líquido</b>: ${kw('freeze','congela','')} <b>3 s</b> a todos los enemigos del mapa con ${kw('chill','hipotermia','')} (jefes, la mitad).`},
+ act:()=>`${kw('freeze','Congela','')} <b>3 s</b> a todos los enemigos del mapa con ${kw('chill','hipotermia','')} (jefes, la mitad).`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.cs&&e.cs.length);if(!L.length){S.msg='Criocápsula: no hay enemigos con hipotermia.';return false;}let n=0;for(const e of L){if(freezeE(e,3))n++;S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:.7*K,col:'#9fe4ff'});}RS('cryo').n2+=n;return true;}});
 H2K.push(e=>{if(S.relics.includes('cryo')&&rp('cryo')&&e.cs&&e.cs.length){for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=1.2*K)addChill(o,null,1);S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:1.2*K,col:'#bfeeff'});RS('cryo').n++;}});
 // ---- Inhibidor de señal ----
 nrAdd({id:'jammer',n:'Inhibidor de señal',ic:'📡',col:'#5a3a6a',era:2,evr:1,ev:'sos',cd:3,
  pas:()=>`Cuando muere el líder de una escuadra, los suyos quedan ${kw('fear','aterrados','')} <b>2 s</b>.`,
- act:()=>`<b>Interferencia</b>: todos los líderes del mapa quedan ${kw('stun','aturdidos','')} <b>4 s</b> y sus escuadras se desperdigan por los carriles.`},
+ act:()=>`Todos los líderes del mapa quedan ${kw('stun','aturdidos','')} <b>4 s</b> y sus escuadras se desperdigan por los carriles.`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.sqlead);if(!L.length){S.msg='Inhibidor de señal: no hay líderes de escuadra en el mapa.';return false;}
   for(const l of L){stunE(l,4);S.fx.push({x:l.x,y:l.y,t:.5,m:.5,r:K,col:'#c89aff'});for(const e of S.enemies)if(e!==l&&e.hp>0&&e.sqid===l.sqid&&!e.sqlead){e.loose=1;e.fsp=0;e.scat=1;try{setLane(e,Math.floor(Math.random()*3)-1);}catch(x){}}}RS('jammer').n+=L.length;return true;}});
 H2K.push(e=>{if(e.sqlead&&S.relics.includes('jammer')&&rp('jammer')){let n=0;for(const o of S.enemies)if(o!==e&&o.hp>0&&o.sqid===e.sqid){const d=isBoss(o)?1:2;o.fx.fear={t:Math.max(d,o.fx.fear?o.fx.fear.t:0)};n++;}RS('jammer').n2+=n;}});
@@ -8381,7 +8382,7 @@ nrAdd({id:'repro',n:'Rayo de reprogramación',ic:'🔫',col:'#3a6a6a',era:2,evr:
 // ---- Muestra viva ----
 nrAdd({id:'sample',n:'Muestra viva',ic:'🧫',col:'#5a2a6a',era:2,evr:1,ev:'capsule',cd:3,
  pas:()=>'Tus unidades y tu héroe <span class="chp">recuperan vida</span> poco a poco, también en combate.',
- act:()=>'<b>Mutación</b>: durante <b>10 s</b>, tus unidades y tu héroe hacen un <span class="cd">+30% de daño</span> y se curan un <span class="chp">20% del daño</span> que hacen.'},
+ act:()=>'Durante <b>10 s</b>, tus unidades y tu héroe hacen un <span class="cd">+30% de daño</span> y se curan un <span class="chp">20% del daño</span> que hacen.'},
  {dur:10,use:()=>{for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)S.fx.push({x:s.x,y:s.y,t:.4,m:.4,r:.6*K,col:'#c070ff'});return true;}});
 function onDmg(e,dl,src,ty){if(!S.relics||!S.relics.includes('sample')||!ra('sample'))return;let s=null;if(src.hero)s=src.hero.s;else if(src.sd){for(const q of src.sd)if(q.hp>0&&(!s||q.hp/q.max<s.hp/s.max))s=q;}if(s&&s.hp>0&&s.hp<s.max){const h=Math.min(s.max-s.hp,dl*.2);s.hp+=h;RS('sample').dmg+=h;}}
 // ---- Núcleo adaptativo ----
@@ -8392,7 +8393,7 @@ function r2Fx(t){const T=TW[t.type],o=[];if(T.burn)o.push('burn');if(T.dot)o.pus
 const R2FXN={burn:'quemadura',pois:'veneno',slow:'ralentización',ez:'electrizado',chill:'hipotermia',bleed:'sangrado'};
 nrAdd({id:'core2',n:'Núcleo adaptativo',ic:'⚛️',col:'#2a4a6a',era:2,evr:1,ev:'omega',cd:3,
  pas:()=>'Por cada <b>tipo distinto</b> de torre en el mapa: torres <span class="cd">+5% de daño</span> y <span class="cbu">+5% de stacks</span> en los estados (máx. +35%'+(typeof S!=='undefined'&&S&&S.list&&S.relics&&S.relics.includes('core2')?'; ahora: <span class="cd">+'+Math.round(coreP()*100)+'%</span>':'')+').',
- act:()=>'<b>Asimilación</b>: durante <b>15 s</b>, una torre que elijas aplica también los estados de las torres que tiene al lado (quemadura, veneno, ralentización, electrizado…).'},
+ act:()=>'Durante <b>15 s</b>, una torre que elijas aplica también los estados de las torres que tiene al lado (quemadura, veneno, ralentización, electrizado…).'},
  {aim:'Elige la torre que va a asimilar a sus vecinas.',use:c=>{const t=S.occ[c.x+','+c.y];if(!t||t.holo){S.msg='Núcleo adaptativo: elige una de tus torres.';return false;}const me=r2Fx(t),fx=new Set();
   for(const o of S.list)if(o!==t&&Math.hypot(o.x-t.x,o.y-t.y)<=1.6*K)for(const k of r2Fx(o))if(!me.includes(k))fx.add(k);
   if(!fx.size){S.msg='Núcleo adaptativo: esa torre no tiene al lado ninguna torre con estados que copiar.';return false;}t.asim={t:15,fx:[...fx]};S.msg=tinfo(t).n+' asimila: '+[...fx].map(k=>R2FXN[k]).join(', ')+'.';S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.6*K,col:'#7ad8ff'});return 'msg';}});
@@ -8585,6 +8586,137 @@ function omDrones(t,L,dt){let u=OMD.get(t);if(!u){/* tras cargar o reintentar: r
  const n=Math.min(3,L),k=(L>=4?2:1)*(1+.05*Math.max(0,S.round-1));u={type:'bastion',lvl:2,summ:1,odr:1,otid:t.id,olv:L,ttl:9999,x:t.x,y:t.y,cells:[],flag:{x:b.x,y:b.y},ab:{},acd:{},sd:[],xap:5,tinf:{n:'Dron de combate',ic:'🛸',col:'#9aa4b4',dt:'phys',range:2.5,dmg:6,rate:1.2,unit:{n:3,hp:45,ap:10,rez:9,spd:2.4}},ovr:{dmg:6*k,rate:1.2,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
  const hp=45*k;u.sd=Array.from({length:n},(_,i)=>({i,x:t.x,y:t.y,hp,max:hp,en:null,cd:0,rt:0,tw:u,lock:true,fight:false}));(S.summ=S.summ||[]).push(u);OMD.set(t,u);}
 H2T.push(dt=>omegaTick(dt));
+// ==================== v303 · RELIQUIAS DE LA ERA 2 · SEGUNDA TANDA (todas de cofre) ====================
+// Virus troyano, Dron de reconocimiento, Implante cibernético, Bidón radiactivo, Mapa estelar, Mochila cohete, Rastreador de combate,
+// Satélite láser, Generador de gravedad, Cápsula de clonación, Chip de IA táctica y Baliza de teletransporte.
+// Los activos no tienen nombre propio: se describen.
+const R3={};let HKD=0;
+const r3On=id=>!!(S&&S.relics&&S.relics.includes(id)&&rp(id)),r3Act=id=>!!(S&&S.relics&&S.relics.includes(id)&&ra(id));
+const r3Hp=()=>ehpOf('norm',Math.max(1,S.round));// vida de un enemigo normal en esta ronda: referencia de daño
+const r3Near=(c,R,f)=>{let b=null,bd=R;for(const e of S.enemies){if(e.hp<=0||e.leak||(f&&!f(e)))continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d<=bd){bd=d;b=e;}}return b;};
+const r3Path=c=>inb(c.x,c.y)&&S.cells[c.y][c.x]===2?c:pathNear(c.x,c.y);
+// ---- Virus troyano ----
+nrAdd({id:'trojan',n:'Virus troyano',ic:'🦠',col:'#2a5a2a',era:2,cd:3,
+ pas:()=>'Todas las habilidades de los enemigos tardan un <span class="cr">30% más</span> en recargarse.',
+ act:()=>'Un enemigo (no jefe) se pasa a tu bando <b>10 s</b>: camina hacia su portal y ataca a los enemigos que encuentra. Nadie le ataca mientras tanto.'},
+ {aim:'Elige el enemigo que vas a hackear.',r:1.2*K,col:'120,255,120',use:c=>{const e=r3Near(c,1.5*K,e=>!isBoss(e)&&!(e.hk>0));if(!e){S.msg='Virus troyano: elige un enemigo que no sea jefe.';return false;}
+  e.hk=10;e.hkc=0;e.fx.fear={t:10};e.tgt=null;for(const t of S.list)if(t.tgt===e)t.tgt=null;RS('trojan').n++;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:.9*K,col:'#7aff7a'});return true;}});
+{const T=.77,w=f=>function(){const a=[...arguments];if(r3On('trojan')){const i=a.findIndex(v=>typeof v==='number');if(i>=0)a[i]*=T;}return f.apply(this,a);};
+ skTick=w(skTick);charmTick=w(charmTick);jamTick=w(jamTick);eliteTick=w(eliteTick);bossTick=w(bossTick);boss2Tick=w(boss2Tick);boss3Tick=w(boss3Tick);}
+function hackTick(dt){for(const e of S.enemies){if(!(e.hk>0))continue;e.hk-=dt;if(e.hp<=0)continue;if(e.hk<=0){e.hk=0;delete e.fx.fear;continue;}e.fx.fear={t:Math.max(.3,e.hk)};
+ e.hkc-=dt;if(e.hkc<=0){e.hkc=1;const o=r3Near(e,1.3*K,o=>o!==e&&!(o.hk>0));if(o){HKD=1;try{hurt(o,Math.max(4,(ET[e.t].ud||5)*3*udM(e)),null,'phys');}finally{HKD=0;}S.fx.push({x:o.x,y:o.y,t:.25,m:.25,r:.45*K,col:'#7aff7a'});}}}}
+// ---- Dron de reconocimiento ----
+nrAdd({id:'drone',n:'Dron de reconocimiento',ic:'🛸',col:'#3a4a5a',era:2,cd:3,
+ pas:()=>`Un dron da vueltas al núcleo y dispara al enemigo más adelantado a su alcance. Descubre a los ${kw('camo','camuflados','')} que pisan la casilla del núcleo o las 8 de alrededor.`,
+ act:()=>`El dron suelta una bomba en un área: daño y ${kw('stun','aturde','')} <b>1 s</b>.`},
+ {aim:'Elige dónde soltar la bomba.',r:1.5*K,col:'255,180,90',use:c=>{let n=0;const dm=r3Hp()*.6;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-c.x,e.y-c.y)<=1.5*K){hurt(e,dm,null,'phys');stunE(e,1);n++;}
+  RS('drone').n2+=n;S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:1.5*K,col:'#ffb45a'});return true;}});
+const DRN={a:0,cd:0};
+function droneTick(dt){if(!r3On('drone')){DRN.p=null;return;}DRN.a+=dt*1.4;const c=S.core,p={x:c.x+Math.cos(DRN.a)*2.5*K,y:c.y+Math.sin(DRN.a)*2.5*K};DRN.p=p;
+ const kx=Math.floor(c.x/K),ky=Math.floor(c.y/K);for(const e of S.enemies)if(e.hp>0&&ET[e.t].camo&&Math.abs(Math.floor(e.x/K)-kx)<=1&&Math.abs(Math.floor(e.y/K)-ky)<=1)e.rev=Math.max(e.rev||0,.3);
+ if(S.phase!=='wave')return;DRN.cd-=dt;if(DRN.cd>0)return;let b=null,bp=1e9;for(const e of S.enemies){if(e.hp<=0||e.leak||e.hk>0||Math.hypot(e.x-p.x,e.y-p.y)>4*K)continue;if(typeof camoHid==='function'&&camoHid(e))continue;const pr=h2F(e.x,e.y);if(pr>=0&&pr<bp){bp=pr;b=e;}}
+ if(b){DRN.cd=.8;hurt(b,r3Hp()*.08,null,'phys');DRN.sh={x:b.x,y:b.y,t:.1};RS('drone').n++;}}
+// ---- Implante cibernético ----
+nrAdd({id:'implant',n:'Implante cibernético',ic:'🦾',col:'#4a3a5a',era:2,cd:3,
+ pas:()=>'Tu héroe: <span class="chp">+20% de vida</span> y <span class="cd">+10% de daño</span>.',
+ act:()=>'Durante <b>8 s</b>, las habilidades de tu héroe se recargan el <span class="cr">doble de rápido</span>.'},{dur:8,use:()=>{if(!S.hero){S.msg='Implante cibernético: no tienes héroe.';return false;}S.fx.push({x:S.hero.s.x,y:S.hero.s.y,t:.5,m:.5,r:K,col:'#c070ff'});return true;}});
+// ---- Bidón radiactivo ----
+nrAdd({id:'barrel',n:'Bidón radiactivo',ic:'☢️',col:'#5a5a1a',era:2,cd:3,
+ pas:()=>'Los enemigos que mueren dejan <b>3 s</b> una mancha radiactiva que hace un poco de daño y <b>corta toda curación</b> de los enemigos que la pisan.',
+ act:()=>'Una zona radiactiva grande durante <b>8 s</b>: daño constante y, dentro, ningún enemigo se cura ni se regenera.'},
+ {aim:'Elige dónde volcar el bidón.',r:2*K,col:'190,240,60',use:c=>{(S.rads=S.rads||[]).push({x:c.x,y:c.y,r:2*K,t:8,m:8,big:1,tk:0});return true;}});
+H2K.push(e=>{if(r3On('barrel')&&!e.hk)(S.rads=S.rads||[]).push({x:e.x,y:e.y,r:.8*K,t:3,m:3,tk:0});});
+function radTick(dt){for(const e of S.enemies){if(e.nh>0){if(e._nhp!=null&&e.hp>e._nhp&&e.hp>0){RS('barrel').gold+=e.hp-e._nhp;e.hp=e._nhp;}e.nh-=dt;}e._nhp=e.hp;}
+ if(!S.rads||!S.rads.length)return;for(const z of S.rads){z.t-=dt;z.tk-=dt;const tick=z.tk<=0;if(tick)z.tk+=.5;for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-z.x,e.y-z.y)>z.r)continue;e.nh=Math.max(e.nh||0,.6);if(tick&&S.phase==='wave'){hurt(e,r3Hp()*(z.big?.06:.025),null,'elem');RS('barrel').dmg+=1;}}}S.rads=S.rads.filter(z=>z.t>0);}
+// ---- Mapa estelar ----
+nrAdd({id:'starmap',n:'Mapa estelar',ic:'🌌',col:'#1a2a5a',era:2,cd:3,
+ pas:()=>'En los cofres eliges entre <b>4 reliquias</b> en vez de 3.',
+ act:()=>'Eliges un punto y, a los <b>3 s</b>, cae un meteorito: mucho daño en un área grande y deja '+kw('burn','quemadura','')+'.'},
+ {aim:'Elige dónde caerá el meteorito.',r:1.8*K,col:'255,140,60',use:c=>{(S.mets=S.mets||[]).push({x:c.x,y:c.y,t:3});return true;}});
+function metTick(dt){if(r3On('starmap'))S.chest4=1;if(!S.mets||!S.mets.length)return;for(const m of S.mets){m.t-=dt;if(m.t<=0){const dm=r3Hp()*2.2;let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-m.x,e.y-m.y)<=1.8*K){const d=Math.hypot(e.x-m.x,e.y-m.y);hurt(e,dm*(d<=.8*K?1:.55),null,'elem');addBurn(e,null,4);n++;}
+  RS('starmap').n+=n;S.fx.push({x:m.x,y:m.y,t:.8,m:.8,r:1.8*K,col:'#ff8a3c'});S.fx.push({x:m.x,y:m.y,t:.5,m:.5,r:.9*K,col:'#fff0b0'});try{sfx('boom',{force:1});}catch(x){}}}S.mets=S.mets.filter(m=>m.t>0);}
+// ---- Mochila cohete ----
+nrAdd({id:'jetpack',n:'Mochila cohete',ic:'🚀',col:'#6a3a2a',era:2,cd:3,
+ pas:()=>'Tu héroe reaparece un <span class="cr">30% antes</span> y se mueve un <span class="cr">30% más rápido</span>.',
+ act:()=>`Tu héroe vuela hasta el punto elegido del camino y cae haciendo daño en área y ${kw('stun','aturdiendo','')} <b>1 s</b>.`},
+ {aim:'Elige dónde aterriza tu héroe.',r:1.3*K,col:'255,150,80',use:c=>{const H=S.hero;if(!H||H.s.hp<=0){S.msg='Mochila cohete: tu héroe tiene que estar vivo.';return false;}const q=r3Path(c);if(!q){S.msg='Mochila cohete: elige un punto del camino.';return false;}
+  (S.kfx=S.kfx||[]).push({x0:H.s.x,y0:H.s.y,x1:q.x,y1:q.y,t:.35});H.s.x=q.x;H.s.y=q.y;H.pt.flag={x:q.x,y:q.y};H.s.lock=false;H.s.en=null;H.s.fight=false;
+  const dm=Math.max(hdm()*2.5,r3Hp()*.5);let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-q.x,e.y-q.y)<=1.3*K){hurt(e,dm,H.pt,'phys');stunE(e,1);n++;}RS('jetpack').n+=n;S.fx.push({x:q.x,y:q.y,t:.5,m:.5,r:1.3*K,col:'#ffa060'});return true;}});
+{const _u=uSpdM;uSpdM=function(t){return _u.apply(this,arguments)*(t&&t.hero&&r3On('jetpack')?1.3:1);};}
+// ---- Rastreador de combate ----
+nrAdd({id:'scouter',n:'Rastreador de combate',ic:'🥽',col:'#2a6a3a',era:2,cd:3,
+ pas:()=>'Tus torres, tus unidades y tu héroe hacen un <span class="cd">+20% de daño</span> a élites y jefes.',
+ act:()=>'Lees el poder de un enemigo: pierde el <b>10%</b> de su vida máxima (jefes, el 5%). Si tiene <b>más de 9000</b>, pierde el doble… y la reliquia tarda el doble en recargarse.'},
+ {aim:'Elige el enemigo que vas a leer.',r:1*K,col:'120,255,140',use:c=>{const e=r3Near(c,1.5*K);if(!e){S.msg='Rastreador de combate: elige un enemigo.';return false;}let d=e.max*(isBoss(e)?.05:.1);const big=e.max>9000;if(big)d*=2;
+  hurt(e,d,null,'elem');S.scX=big?1:0;RS('scouter').n++;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:.9*K,col:big?'#ff4f4f':'#7aff8a'});if(big){S.msg='¡Más de 9000! El rastreador ha reventado.';return 'msg';}return true;}});
+{const _s=setCD;setCD=function(id){const r=_s.apply(this,arguments);if(id==='scouter'&&S.scX){S.scX=0;S.rs.scouter.cd*=2;}return r;};}
+// ---- Satélite láser ----
+nrAdd({id:'satlaser',n:'Satélite láser',ic:'🛰️',col:'#3a2a5a',era:2,cd:3,
+ pas:()=>'Cada <b>20 s</b> de oleada, un impacto orbital cae sobre el enemigo con más vida: mucho daño en el centro y algo menos alrededor (2 casillas).',
+ act:()=>`El láser recorre <b>6 casillas</b> de camino desde el punto elegido hacia el portal, haciendo daño y dejando ${kw('burn','quemadura','')}.`},
+ {aim:'Elige dónde empieza el barrido.',r:.8*K,col:'255,80,220',use:c=>{const q=r3Path(c);if(!q){S.msg='Satélite láser: elige un punto del camino.';return false;}S.sweep={pts:h2Route(q.x,q.y,6*K),i:0,tk:0,hit:new Set()};return true;}});
+function satTick(dt){if(S.phase==='wave'&&r3On('satlaser')){S.satT=(S.satT||0)+dt;if(S.satT>=20&&!S.satX){let b=null;for(const e of S.enemies)if(e.hp>0&&!e.leak&&!(e.hk>0)&&(!b||e.hp>b.hp))b=e;if(b){S.satT=0;S.satX={e:b,t:1,x:b.x,y:b.y};}}}
+ if(S.satX){const X=S.satX;if(X.e.hp>0){X.x=X.e.x;X.y=X.e.y;}X.t-=dt;if(X.t<=0){const dm=r3Hp()*1.6;let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-X.x,e.y-X.y)<=2*K){const d=Math.hypot(e.x-X.x,e.y-X.y);hurt(e,d<=.7*K?dm:dm*.4,null,'elem');n++;}
+  RS('satlaser').n+=n;S.fx.push({x:X.x,y:X.y,t:.6,m:.6,r:2*K,col:'#ff4fd8'});S.fx.push({x:X.x,y:X.y,t:.4,m:.4,r:.7*K,col:'#ffffff'});S.satX=null;try{sfx('zap',{force:1});}catch(x){}}}
+ if(S.sweep){const W=S.sweep;W.tk-=dt;while(W.tk<=0&&W.i<W.pts.length){W.tk+=.06;const p=W.pts[W.i++];for(const e of S.enemies)if(e.hp>0&&!e.leak&&!W.hit.has(e)&&Math.hypot(e.x-p.x,e.y-p.y)<=.9*K){W.hit.add(e);hurt(e,r3Hp()*.7,null,'elem');addBurn(e,null,3);}}if(W.i>=W.pts.length)S.sweep=null;}}
+// ---- Generador de gravedad ----
+nrAdd({id:'gravity',n:'Generador de gravedad',ic:'🌀',col:'#2a2a4a',era:2,cd:3,
+ pas:()=>`Los enemigos ${kw('slow','ralentizados','')} reciben un <span class="cd">+15% de daño</span>.`,
+ act:()=>'Un campo de gravedad triple en un área durante <b>6 s</b>: los enemigos van un <b>60% más lentos</b>, no pueden teletransportarse ni esquivar a tus unidades (que ahora sí los bloquean). Los voladores siguen volando.'},
+ {aim:'Elige dónde activar el campo de gravedad.',r:2*K,col:'150,120,255',use:c=>{S.grav={x:c.x,y:c.y,r:2*K,t:6};return true;}});
+function gravTick(dt){for(const e of S.enemies)if(e.gpin>0)e.gpin-=dt;if(!S.grav)return;const G=S.grav;G.t-=dt;if(G.t<=0){S.grav=null;return;}
+ for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-G.x,e.y-G.y)>G.r)continue;e.gpin=.25;if(!isFly(e))slowE(e,.4,.3);e.fsp=0;}}
+{const _t=teleFwd;teleFwd=function(e){if(e&&e.gpin>0)return;return _t.apply(this,arguments);};}
+// ---- Cápsula de clonación ----
+nrAdd({id:'clone',n:'Cápsula de clonación',ic:'🧬',col:'#2a5a6a',era:2,cd:3,
+ pas:()=>'Cuando cae una de tus unidades o tu héroe, hay un <span class="cf">25%</span> de que reaparezca al instante.',
+ act:()=>'Durante <b>10 s</b>, un clon de tu héroe, con la mitad de vida y de daño, pelea a su lado.'},
+ {dur:10,use:()=>{const H=S.hero;if(!H||H.s.hp<=0){S.msg='Cápsula de clonación: tu héroe tiene que estar vivo.';return false;}const s=H.s,st=stats(H.pt),hp=s.max*.5;
+  const t={type:'bastion',lvl:2,summ:1,ttl:10,x:s.x,y:s.y,cells:[],flag:{x:Math.round(s.x),y:Math.round(s.y)},ab:{},acd:{},sd:[],tinf:{n:'Clon de '+H.def.n,ic:H.def.ic,col:'#3fe8ff',dt:H.def.dt||'phys',range:st.range/K,dmg:st.dmg*.5,rate:st.rate,unit:{n:1,hp,ap:5,rez:99,spd:2.2}},ovr:{dmg:st.dmg*.5,rate:st.rate,range:Math.max(2.5*K,st.range),crit:.05,critm:2,area:0,gold:0,pen:0}};
+  t.sd=[{i:0,x:s.x,y:s.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,clone:H.id,rng:H.def.ranged?1:0}];(S.summ=S.summ||[]).push(t);RS('clone').n2++;S.fx.push({x:s.x,y:s.y,t:.6,m:.6,r:K,col:'#3fe8ff'});return true;}});
+{const _u=unitDeath;unitDeath=function(t,s){const r=_u.apply(this,arguments);try{if(!t.summ&&!t.merc&&!S.pvE&&r3On('clone')&&Math.random()<.25){s.hp=s.max;s.rt=0;s.dd=0;s.en=null;s.fight=false;RS('clone').n++;S.fx.push({x:s.x,y:s.y,t:.5,m:.5,r:.8*K,col:'#3fe8ff'});}}catch(e){}return r;};}
+// ---- Chip de IA táctica ----
+nrAdd({id:'aichip',n:'Chip de IA táctica',ic:'💾',col:'#1a4a4a',era:2,cd:3,
+ pas:()=>'Tus torres eligen solas el mejor objetivo: las de área, el grupo más grande; las demás, el enemigo con más vida. Si cambias a mano el objetivo de una torre, se queda con tu elección.',
+ act:()=>'Durante <b>10 s</b>, cada torre que mata a un enemigo <span class="cr">vuelve a disparar al instante</span>.'},{dur:10,use:()=>true});
+const AIT={area:{n:'IA táctica',score:e=>e._dn||0},one:{n:'IA táctica',score:e=>e.hp}};
+function tgtAI(t,s){if(t.mman||!r3On('aichip'))return null;return (s&&s.area>0)?AIT.area:AIT.one;}
+function denseTick(){if(!r3On('aichip'))return;const L=S.enemies;for(const e of L){let n=0;for(const o of L)if(o.hp>0&&Math.abs(o.x-e.x)<=1.2*K&&Math.abs(o.y-e.y)<=1.2*K)n++;e._dn=n;}}
+{const _d=onDmg;onDmg=function(e,dl,src,ty){const r=_d.apply(this,arguments);try{if(e.hp<=0&&!e._rk&&src&&!src.hero&&!(src.sd&&src.sd.length)&&src.cd!=null&&r3Act('aichip')){e._rk=1;src.cd=0;RS('aichip').n++;}}catch(x){}return r;};}
+// ---- Baliza de teletransporte ----
+nrAdd({id:'beacon',n:'Baliza de teletransporte',ic:'📍',col:'#5a2a5a',era:2,cd:3,
+ pas:()=>'En cada oleada, el primer enemigo que iba a llegar al núcleo vuelve a su portal (jefes no).',
+ act:()=>'Mueves una torre que hayas construido tú a otro solar libre, con su nivel, especialización y habilidades. Al llegar, durante <b>8 s</b> dispara un <span class="cr">50% más rápido</span> y hace un <span class="cd">25% más de daño</span>.'},
+ {aim:'Elige la torre que quieres mover.',any:1,start:()=>{S.bcSrc=null;},use:c=>{const t=S.occ[c.x+','+c.y];
+  if(!S.bcSrc){if(!t||t.holo||TW[t.type].uniq||TW[t.type].guild||t.summ){S.msg='Baliza: elige una torre que hayas construido tú.';return false;}S.bcSrc=t.id;S.msg='Ahora elige un solar libre para llevarla.';return false;}
+  const src=S.list.find(o=>o.id===S.bcSrc);if(!src){S.bcSrc=null;S.msg='Elige la torre que quieres mover.';return false;}
+  const q=sqOf(c.x,c.y);if(t||!inbc(q.kx,q.ky)||S.cc[q.ky][q.kx]!==1){S.msg='Baliza: elige un solar libre.';return false;}
+  const nt=prCopy(src,c.x,c.y);if(!nt){S.msg='Baliza: ahí no se puede construir.';return false;}
+  nt.holo=0;nt.holoM=0;nt.bph=src.bph;nt.inv=src.inv;nt.mode=src.mode;nt.mman=src.mman;for(const k of['kills','dmgD','chapa','xd'])if(src[k]!=null)nt[k]=src[k];if((S.bcnt||{})[nt.type]!=null)S.bcnt[nt.type]++;
+  prRemove(src);nt.tpb=8;S.bcSrc=null;RS('beacon').n2++;S.fx.push({x:nt.x,y:nt.y,t:.6,m:.6,r:1.4*K,col:'#ff4fd8'});return true;}});
+{const _m=move;move=function(e,dt){const r=_m.apply(this,arguments);if(r&&!isBoss(e)&&!e.hk&&S.phase==='wave'&&r3On('beacon')&&S.bcR!==S.round){S.bcR=S.round;const o=e.org||S.portals.reduce((a,p)=>h2F(p.x,p.y)>h2F(a.x,a.y)?p:a,S.portals[0]);
+  S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:.9*K,col:'#ff4fd8'});e.x=e.tx=o.x;e.y=e.ty=o.y;e.fsp=0;S.fx.push({x:o.x,y:o.y,t:.5,m:.5,r:.9*K,col:'#ff4fd8'});RS('beacon').n++;S.msg='📍 La baliza ha devuelto a un enemigo a su portal.';return false;}return r;};}
+{const _sp=spawnEnemy;spawnEnemy=function(t,p){const n=S.enemies.length;const r=_sp.apply(this,arguments);try{const e=S.enemies[S.enemies.length-1];if(S.enemies.length>n&&e&&!e.org)e.org={x:e.x,y:e.y};}catch(x){}return r;};}
+// ---- daño, velocidad y tic ----
+{const _m=e2DmgM;e2DmgM=function(e,src,ty){let m=_m.apply(this,arguments);try{if(src&&r3On('scouter')&&(ET[e.t].el||isBoss(e)))m*=1.2;if(r3On('gravity')&&e.fx&&e.fx.slow&&e.fx.slow.t>0)m*=1.15;}catch(x){}return m;};}
+{const _s=stats;stats=function(t){const r=_s.apply(this,arguments);if(!t||typeof S==='undefined'||!S||!S.relics)return r;let d=1,rt=1;if(t.hero&&r3On('implant'))d*=1.1;if(t.tpb>0){rt*=1.5;d*=1.25;}return d!==1||rt!==1?Object.assign({},r,{dmg:r.dmg*d,rate:r.rate*rt}):r;};}
+H2T.push(dt=>{hackTick(dt);droneTick(dt);radTick(dt);metTick(dt);satTick(dt);gravTick(dt);denseTick();
+ for(const t of S.list)if(t.tpb>0)t.tpb-=dt;const H=S.hero;if(H){if(r3Act('implant')){H.bcd=Math.max(0,(H.bcd||0)-dt);H.ucd=Math.max(0,(H.ucd||0)-dt);}if(r3On('jetpack')&&H.s.hp<=0&&H.s.rt>0)H.s.rt-=dt*.43;}if(DRN.sh&&(DRN.sh.t-=dt)<=0)DRN.sh=null;});
+{const _nr=nextRound;nextRound=function(){try{S.rads=[];S.mets=[];S.satX=null;S.sweep=null;S.grav=null;S.satT=0;for(const e of S.enemies){e.hk=0;}}catch(e){}return _nr.apply(this,arguments);};}
+// ---- dibujo ----
+H2D.push((g,lw)=>{const X=v=>v*CS+CS/2,now=performance.now()/1000;
+ for(const z of S.rads||[]){const a=Math.min(1,z.t/1)*(z.big?.22:.16);g.fillStyle='rgba(190,240,60,'+a+')';g.strokeStyle='rgba(220,255,90,'+(a*2.5)+')';g.lineWidth=lw(1.5);g.beginPath();g.arc(X(z.x),X(z.y),z.r*CS,0,7);g.fill();g.stroke();
+  if(z.big){g.fillStyle='rgba(30,30,0,'+(a*2)+')';g.font='bold '+Math.round(lw(16))+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('☢',X(z.x),X(z.y));}}
+ if(S.grav){const G=S.grav;for(let i=0;i<3;i++){const k=((now*1.2+i/3)%1);g.strokeStyle='rgba(150,120,255,'+(.6*(1-k))+')';g.lineWidth=lw(2);g.beginPath();g.arc(X(G.x),X(G.y),G.r*CS*(1-k*.85),0,7);g.stroke();}g.fillStyle='rgba(80,60,160,.13)';g.beginPath();g.arc(X(G.x),X(G.y),G.r*CS,0,7);g.fill();}
+ for(const m of S.mets||[]){const k=1-m.t/3;g.strokeStyle='rgba(255,120,60,'+(.5+.4*Math.sin(now*12))+')';g.lineWidth=lw(2);g.setLineDash([lw(6),lw(4)]);g.beginPath();g.arc(X(m.x),X(m.y),1.8*K*CS,0,7);g.stroke();g.setLineDash([]);
+  const sx=X(m.x)+(1-k)*CS*14,sy=X(m.y)-(1-k)*CS*20;g.fillStyle='#ffb070';g.beginPath();g.arc(sx,sy,CS*(.5+k*.6),0,7);g.fill();g.strokeStyle='rgba(255,170,90,.6)';g.lineWidth=lw(5);g.beginPath();g.moveTo(sx,sy);g.lineTo(sx+CS*3,sy-CS*4.3);g.stroke();}
+ if(S.satX){const X0=S.satX,p=.5+.5*Math.sin(now*14);g.strokeStyle='rgba(255,79,216,'+(.6+.4*p)+')';g.lineWidth=lw(2.5);g.beginPath();g.arc(X(X0.x),X(X0.y),.7*K*CS,0,7);g.stroke();g.beginPath();g.moveTo(X(X0.x)-K*CS,X(X0.y));g.lineTo(X(X0.x)+K*CS,X(X0.y));g.moveTo(X(X0.x),X(X0.y)-K*CS);g.lineTo(X(X0.x),X(X0.y)+K*CS);g.stroke();}
+ if(S.sweep){const W=S.sweep,p=W.pts[Math.min(W.pts.length-1,W.i)];if(p){g.strokeStyle='rgba(255,79,216,.85)';g.lineWidth=lw(5);g.beginPath();g.moveTo(X(p.x),X(p.y)-CS*12);g.lineTo(X(p.x),X(p.y));g.stroke();g.fillStyle='rgba(255,220,250,.8)';g.beginPath();g.arc(X(p.x),X(p.y),CS*.9,0,7);g.fill();}}
+ for(const e of S.enemies)if(e.hk>0&&e.hp>0){const r=ET[e.t].r*CS;g.strokeStyle='rgba(120,255,120,.9)';g.lineWidth=lw(2);g.setLineDash([lw(3),lw(3)]);g.beginPath();g.arc(X(e.x),X(e.y),r*1.4,0,7);g.stroke();g.setLineDash([]);g.font=Math.round(Math.max(lw(10),r*.9))+'px sans-serif';g.textAlign='center';g.textBaseline='bottom';g.fillText('🦠',X(e.x),X(e.y)-r*1.3);}
+ for(const t of S.list)if(t.tpb>0){g.strokeStyle='rgba(255,79,216,'+(.5+.4*Math.sin(now*10))+')';g.lineWidth=lw(2.5);g.strokeRect((t.x-1)*CS+lw(1),(t.y-1)*CS+lw(1),K*CS-lw(2),K*CS-lw(2));}
+ if(DRN.p&&r3On('drone')){const p=DRN.p,px=X(p.x),py=X(p.y);if(DRN.sh){g.strokeStyle='rgba(255,230,150,.9)';g.lineWidth=lw(1.5);g.beginPath();g.moveTo(px,py);g.lineTo(X(DRN.sh.x),X(DRN.sh.y));g.stroke();}
+  g.fillStyle='#5a6474';g.strokeStyle='#14101e';g.lineWidth=lw(1.5);g.fillRect(px-CS*.45,py-CS*.3,CS*.9,CS*.6);g.strokeRect(px-CS*.45,py-CS*.3,CS*.9,CS*.6);g.fillStyle='#3fe8ff';g.beginPath();g.arc(px,py,CS*.15,0,7);g.fill();
+  g.strokeStyle='#9aa4b4';for(const sx of[-1,1]){const bx=px+sx*CS*.55,by=py-CS*.4;g.beginPath();g.moveTo(bx-CS*.25*Math.cos(now*30),by);g.lineTo(bx+CS*.25*Math.cos(now*30),by);g.stroke();}}});
 // ==================== v302 · SONIDOS DE LO NUEVO (Era Distópica, héroes, reliquias y Prototipo Omega) ====================
 // Todos sintetizados (sin muestras). Se añaden a «Probar sonidos» en un grupo propio.
 const SY2={
@@ -8642,7 +8774,7 @@ const sx=(k,o)=>{try{if(typeof PREVIEWING!=='undefined'&&PREVIEWING)return;sfx(k
 // habilidades de los héroes de siempre (y de Vega): un sonido al lanzarlas
 {const _c=castHab;castHab=function(c,k){const H=S.hero,b0=H?H.bcd||0:0,u0=H?H.ucd||0:0;const r=_c.apply(this,arguments);try{if(H&&!H2[H.id]&&((H.bcd||0)>b0||(H.ucd||0)>u0))sx(k==='u'?'h2_ult':'hab');}catch(e){}return r;};}
 // reliquias con sonido propio
-{const M={emp:'zap',cryo:'h_ice',printer:'holo',repro:'poly',shgen:'shield',jammer:'zap',cell:'zap',seal:'sonic',sample:'charm',adren:'hab',core2:'holo',board:'coin'};
+{const M={trojan:'charm',drone:'boom',implant:'hab',barrel:'h_acid',starmap:'boom',jetpack:'h2_ult',scouter:'zap',satlaser:'zap',gravity:'sonic',clone:'holo',aichip:'holo',beacon:'tele',emp:'zap',cryo:'h_ice',printer:'holo',repro:'poly',shgen:'shield',jammer:'zap',cell:'zap',seal:'sonic',sample:'charm',adren:'hab',core2:'holo',board:'coin'};
  for(const id in M){const Dn=NR[id];if(!Dn||!Dn.use)continue;const u=Dn.use;Dn.use=function(c){const r=u.apply(this,arguments);if(r!==false&&!(id==='printer'&&S.prSrc))sx(M[id]);return r;};}}
 // nanitos: zumbido mientras tienen a alguien a tiro
 if(typeof window!=='undefined')setInterval(()=>{try{if(typeof S==='undefined'||!S||S.phase!=='wave'||!S.list||(typeof PMU!=='undefined'&&PMU.open)||RL.open)return;

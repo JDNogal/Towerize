@@ -320,8 +320,8 @@ function act(e){
  else if(a==='tgt'||a==='tgtall'||a==='tgtdef'){
   const t=S.list.find(o=>o.id===+b.dataset.id);
   if(t){
-   if(a==='tgt'){t.mode=b.dataset.v;t.tgt=null;}
-   else if(a==='tgtall'){let n=0;for(const o of S.list)if(o.type===t.type){o.mode=t.mode;o.tgt=null;n++;}
+   if(a==='tgt'){t.mode=b.dataset.v;t.tgt=null;t.mman=1;}
+   else if(a==='tgtall'){let n=0;for(const o of S.list)if(o.type===t.type){o.mode=t.mode;o.tgt=null;o.mman=1;n++;}
     S.msg='Objetivo «'+TGT[t.mode].n+'» aplicado a '+n+(n===1?' torre':' torres')+' de '+TW[t.type].n+'.';ui();}
    else{S.dtg[t.type]=t.mode;S.msg='Las nuevas torres de '+TW[t.type].n+' empezarán con «'+TGT[t.mode].n+'».';ui();}
    refreshPrim();}}

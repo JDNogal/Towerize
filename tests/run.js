@@ -53,6 +53,7 @@ const T=[
  ['vales_boton.js','Vales y tickets: el botón de mejorar los ofrece cuando no llega el oro'],
  ['heroes_e2.js','Héroes de la era 2: Korr, Ferro y Kai con sus habilidades, reliquias y charcos en franja'],
  ['reliquias_e2.js','Reliquias de la era 2: cuatro de cofre y cinco de evento'],
+ ['reliquias_e2b.js','Reliquias de la era 2: segunda tanda de doce'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];

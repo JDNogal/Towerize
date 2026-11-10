@@ -5,13 +5,13 @@ const R2={};
 // ---- Pulso electromagnético ----
 nrAdd({id:'emp',n:'Pulso electromagnético',ic:'🧲',col:'#3a4a8a',era:2,cd:3,
  pas:()=>`Cada impacto de torre: <span class="cf">10%</span> de dejar ${kw('ez','electrizado','')} al enemigo.`,
- act:()=>`<b>Descarga</b>: todos los enemigos ${kw('ez','electrizados','')} del mapa reciben un golpe eléctrico y quedan ${kw('stun','aturdidos','')} <b>2 s</b> (jefes, 1 s).`},
+ act:()=>`Todos los enemigos ${kw('ez','electrizados','')} del mapa reciben un golpe eléctrico y quedan ${kw('stun','aturdidos','')} <b>2 s</b> (jefes, 1 s).`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.ez&&e.ez.n>0);if(!L.length){S.msg='Pulso electromagnético: no hay enemigos electrizados.';return false;}const dm=20+S.round*8;
   for(const e of L){hurt(e,dm*(1+EZAMP*e.ez.n),null,'elem');stunE(e,2);S.fx.push({bolt:[[e.x+(Math.random()-.5),e.y-4*K],[e.x,e.y]],t:.2,m:.2});S.fx.push({x:e.x,y:e.y,t:.35,m:.35,r:.6*K,col:'#ffe14d'});}RS('emp').n+=L.length;return true;}});
 // ---- Generador de escudo ----
 nrAdd({id:'shgen',n:'Generador de escudo',ic:'💠',col:'#2a5a7a',era:2,cd:3,
  pas:()=>'Tus unidades y tu héroe empiezan cada oleada con un <span class="chp">escudo del 20%</span> de su vida.',
- act:()=>'<b>Cúpula</b>: durante <b>6 s</b>, tus unidades dentro del área no reciben daño.'},
+ act:()=>'Durante <b>6 s</b>, tus unidades dentro del área no reciben daño.'},
  {aim:'Elige dónde levantar la cúpula.',r:2*K,col:'90,200,255',dur:6,use:c=>{S.dome={x:c.x,y:c.y,r:2*K,t:6};S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:2*K,col:'#7ad8ff'});return true;}});
 UHM.unshift((s,d,e)=>{if(S.dome&&S.dome.t>0&&h2R(s,S.dome,S.dome.r)){RS('shgen').n++;return 0;}if(s.shd>0){const a=Math.min(s.shd,d);s.shd-=a;d-=a;RS('shgen').dmg+=a;}return d;});
 function r2Shields(){for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)s.shd=s.max*.2;}
@@ -33,7 +33,7 @@ function prCopy(src,cx,cy){const g0=S.gold,sp0=S.st?S.st.spent:0,ts=S.tsel,n0=S.
 function prRemove(t){t.sold=1;S.list=S.list.filter(o=>o!==t);for(const[a,b]of t.sq||[])if(S.occ[a+','+b]===t)delete S.occ[a+','+b];if(S.selT===t){S.selT=null;try{tmClose();}catch(e){}}try{if(PR.pinned&&PR.key==='tw:'+t.id)closePrim();}catch(e){}S.fx.push({x:t.x,y:t.y,t:.5,m:.5,r:1.2*K,col:'#3fe8ff'});}
 nrAdd({id:'printer',n:'Impresora 3D',ic:'🖨️',col:'#4a5a6a',era:2,cd:3,
  pas:()=>'Una vez por ronda, mejorar una torre de <b>Nv 1 a Nv 2</b> sale <span class="gd">gratis</span>.',
- act:()=>'<b>Imprimir</b>: copias una torre tuya, con su nivel y sus habilidades, en un solar vacío. Es un holograma: dura <b>40 s</b> si es de Nv 1, 35 s de Nv 2, 30 s de Nv 3 y 25 s de Nv 4.'},
+ act:()=>'Copias una torre tuya, con su nivel y sus habilidades, en un solar vacío. Es un holograma: dura <b>40 s</b> si es de Nv 1, 35 s de Nv 2, 30 s de Nv 3 y 25 s de Nv 4.'},
  {aim:'Elige la torre que quieres copiar.',start:()=>{S.prSrc=null;},use:c=>{const t=S.occ[c.x+','+c.y];
   if(!S.prSrc){if(!t||t.holo||TW[t.type].uniq||TW[t.type].guild){S.msg='Impresora 3D: elige una de tus torres (las únicas no se pueden copiar).';return false;}S.prSrc=t.id;S.msg='Ahora elige un solar vacío para la copia.';return false;}
   const src=S.list.find(o=>o.id===S.prSrc);if(!src){S.prSrc=null;S.msg='Elige la torre que quieres copiar.';return false;}
@@ -43,19 +43,19 @@ nrAdd({id:'printer',n:'Impresora 3D',ic:'🖨️',col:'#4a5a6a',era:2,cd:3,
 // ---- Adrenalina sintética ----
 nrAdd({id:'adren',n:'Adrenalina sintética',ic:'💉',col:'#7a2a3a',era:2,cd:3,
  pas:()=>'La primera vez en cada oleada que tu héroe baja del 30% de vida: <span class="cr">+30% de velocidad de ataque</span> durante <b>5 s</b>.',
- act:()=>'<b>Chute</b>: durante <b>8 s</b>, tu héroe y tus unidades atacan y se mueven un <span class="cr">50% más rápido</span>.'},
+ act:()=>'Durante <b>8 s</b>, tu héroe y tus unidades atacan y se mueven un <span class="cr">50% más rápido</span>.'},
  {dur:8,use:()=>{for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)S.fx.push({x:s.x,y:s.y,t:.4,m:.4,r:.6*K,col:'#ff6a7a'});return true;}});
 function uSpdM(t){return S.relics&&S.relics.includes('adren')&&ra('adren')?1.5:1;}
 // ---- Criocápsula ----
 nrAdd({id:'cryo',n:'Criocápsula',ic:'🧊',col:'#2a6a8a',era:2,evr:1,ev:'cryocam',cd:3,
  pas:()=>`Cada <b>5 impactos</b> que recibe un enemigo le dan 1 de ${kw('chill','hipotermia','')}. Los que mueren con hipotermia estallan en esquirlas que dan 1 de hipotermia alrededor.`,
- act:()=>`<b>Nitrógeno líquido</b>: ${kw('freeze','congela','')} <b>3 s</b> a todos los enemigos del mapa con ${kw('chill','hipotermia','')} (jefes, la mitad).`},
+ act:()=>`${kw('freeze','Congela','')} <b>3 s</b> a todos los enemigos del mapa con ${kw('chill','hipotermia','')} (jefes, la mitad).`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.cs&&e.cs.length);if(!L.length){S.msg='Criocápsula: no hay enemigos con hipotermia.';return false;}let n=0;for(const e of L){if(freezeE(e,3))n++;S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:.7*K,col:'#9fe4ff'});}RS('cryo').n2+=n;return true;}});
 H2K.push(e=>{if(S.relics.includes('cryo')&&rp('cryo')&&e.cs&&e.cs.length){for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=1.2*K)addChill(o,null,1);S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:1.2*K,col:'#bfeeff'});RS('cryo').n++;}});
 // ---- Inhibidor de señal ----
 nrAdd({id:'jammer',n:'Inhibidor de señal',ic:'📡',col:'#5a3a6a',era:2,evr:1,ev:'sos',cd:3,
  pas:()=>`Cuando muere el líder de una escuadra, los suyos quedan ${kw('fear','aterrados','')} <b>2 s</b>.`,
- act:()=>`<b>Interferencia</b>: todos los líderes del mapa quedan ${kw('stun','aturdidos','')} <b>4 s</b> y sus escuadras se desperdigan por los carriles.`},
+ act:()=>`Todos los líderes del mapa quedan ${kw('stun','aturdidos','')} <b>4 s</b> y sus escuadras se desperdigan por los carriles.`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.sqlead);if(!L.length){S.msg='Inhibidor de señal: no hay líderes de escuadra en el mapa.';return false;}
   for(const l of L){stunE(l,4);S.fx.push({x:l.x,y:l.y,t:.5,m:.5,r:K,col:'#c89aff'});for(const e of S.enemies)if(e!==l&&e.hp>0&&e.sqid===l.sqid&&!e.sqlead){e.loose=1;e.fsp=0;e.scat=1;try{setLane(e,Math.floor(Math.random()*3)-1);}catch(x){}}}RS('jammer').n+=L.length;return true;}});
 H2K.push(e=>{if(e.sqlead&&S.relics.includes('jammer')&&rp('jammer')){let n=0;for(const o of S.enemies)if(o!==e&&o.hp>0&&o.sqid===e.sqid){const d=isBoss(o)?1:2;o.fx.fear={t:Math.max(d,o.fx.fear?o.fx.fear.t:0)};n++;}RS('jammer').n2+=n;}});
@@ -72,7 +72,7 @@ nrAdd({id:'repro',n:'Rayo de reprogramación',ic:'🔫',col:'#3a6a6a',era:2,evr:
 // ---- Muestra viva ----
 nrAdd({id:'sample',n:'Muestra viva',ic:'🧫',col:'#5a2a6a',era:2,evr:1,ev:'capsule',cd:3,
  pas:()=>'Tus unidades y tu héroe <span class="chp">recuperan vida</span> poco a poco, también en combate.',
- act:()=>'<b>Mutación</b>: durante <b>10 s</b>, tus unidades y tu héroe hacen un <span class="cd">+30% de daño</span> y se curan un <span class="chp">20% del daño</span> que hacen.'},
+ act:()=>'Durante <b>10 s</b>, tus unidades y tu héroe hacen un <span class="cd">+30% de daño</span> y se curan un <span class="chp">20% del daño</span> que hacen.'},
  {dur:10,use:()=>{for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)S.fx.push({x:s.x,y:s.y,t:.4,m:.4,r:.6*K,col:'#c070ff'});return true;}});
 function onDmg(e,dl,src,ty){if(!S.relics||!S.relics.includes('sample')||!ra('sample'))return;let s=null;if(src.hero)s=src.hero.s;else if(src.sd){for(const q of src.sd)if(q.hp>0&&(!s||q.hp/q.max<s.hp/s.max))s=q;}if(s&&s.hp>0&&s.hp<s.max){const h=Math.min(s.max-s.hp,dl*.2);s.hp+=h;RS('sample').dmg+=h;}}
 // ---- Núcleo adaptativo ----
@@ -83,7 +83,7 @@ function r2Fx(t){const T=TW[t.type],o=[];if(T.burn)o.push('burn');if(T.dot)o.pus
 const R2FXN={burn:'quemadura',pois:'veneno',slow:'ralentización',ez:'electrizado',chill:'hipotermia',bleed:'sangrado'};
 nrAdd({id:'core2',n:'Núcleo adaptativo',ic:'⚛️',col:'#2a4a6a',era:2,evr:1,ev:'omega',cd:3,
  pas:()=>'Por cada <b>tipo distinto</b> de torre en el mapa: torres <span class="cd">+5% de daño</span> y <span class="cbu">+5% de stacks</span> en los estados (máx. +35%'+(typeof S!=='undefined'&&S&&S.list&&S.relics&&S.relics.includes('core2')?'; ahora: <span class="cd">+'+Math.round(coreP()*100)+'%</span>':'')+').',
- act:()=>'<b>Asimilación</b>: durante <b>15 s</b>, una torre que elijas aplica también los estados de las torres que tiene al lado (quemadura, veneno, ralentización, electrizado…).'},
+ act:()=>'Durante <b>15 s</b>, una torre que elijas aplica también los estados de las torres que tiene al lado (quemadura, veneno, ralentización, electrizado…).'},
  {aim:'Elige la torre que va a asimilar a sus vecinas.',use:c=>{const t=S.occ[c.x+','+c.y];if(!t||t.holo){S.msg='Núcleo adaptativo: elige una de tus torres.';return false;}const me=r2Fx(t),fx=new Set();
   for(const o of S.list)if(o!==t&&Math.hypot(o.x-t.x,o.y-t.y)<=1.6*K)for(const k of r2Fx(o))if(!me.includes(k))fx.add(k);
   if(!fx.size){S.msg='Núcleo adaptativo: esa torre no tiene al lado ninguna torre con estados que copiar.';return false;}t.asim={t:15,fx:[...fx]};S.msg=tinfo(t).n+' asimila: '+[...fx].map(k=>R2FXN[k]).join(', ')+'.';S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.6*K,col:'#7ad8ff'});return 'msg';}});

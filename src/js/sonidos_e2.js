@@ -55,7 +55,7 @@ const sx=(k,o)=>{try{if(typeof PREVIEWING!=='undefined'&&PREVIEWING)return;sfx(k
 // habilidades de los héroes de siempre (y de Vega): un sonido al lanzarlas
 {const _c=castHab;castHab=function(c,k){const H=S.hero,b0=H?H.bcd||0:0,u0=H?H.ucd||0:0;const r=_c.apply(this,arguments);try{if(H&&!H2[H.id]&&((H.bcd||0)>b0||(H.ucd||0)>u0))sx(k==='u'?'h2_ult':'hab');}catch(e){}return r;};}
 // reliquias con sonido propio
-{const M={emp:'zap',cryo:'h_ice',printer:'holo',repro:'poly',shgen:'shield',jammer:'zap',cell:'zap',seal:'sonic',sample:'charm',adren:'hab',core2:'holo',board:'coin'};
+{const M={trojan:'charm',drone:'boom',implant:'hab',barrel:'h_acid',starmap:'boom',jetpack:'h2_ult',scouter:'zap',satlaser:'zap',gravity:'sonic',clone:'holo',aichip:'holo',beacon:'tele',emp:'zap',cryo:'h_ice',printer:'holo',repro:'poly',shgen:'shield',jammer:'zap',cell:'zap',seal:'sonic',sample:'charm',adren:'hab',core2:'holo',board:'coin'};
  for(const id in M){const Dn=NR[id];if(!Dn||!Dn.use)continue;const u=Dn.use;Dn.use=function(c){const r=u.apply(this,arguments);if(r!==false&&!(id==='printer'&&S.prSrc))sx(M[id]);return r;};}}
 // nanitos: zumbido mientras tienen a alguien a tiro
 if(typeof window!=='undefined')setInterval(()=>{try{if(typeof S==='undefined'||!S||S.phase!=='wave'||!S.list||(typeof PMU!=='undefined'&&PMU.open)||RL.open)return;

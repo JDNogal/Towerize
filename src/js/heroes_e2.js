@@ -153,7 +153,7 @@ if(typeof document!=='undefined'){const cw=document.getElementById('cw');if(cw)c
 // ---- Sello psiónico (Korr) ----
 nrAdd({id:'seal',n:'Sello psiónico',ic:'🧿',col:'#3a3a7a',ini:1,cd:2,
  pas:()=>'Los enemigos que golpean a tus unidades o a tu héroe reciben el <span class="cmg">10% del golpe</span> como <span class="cmg">daño mágico</span>.',
- act:()=>`<b>Tirón psíquico</b>: los enemigos de un área se juntan en el centro y quedan ${kw('slow','ralentizados','')} un 50% durante <b>4 s</b>.`},
+ act:()=>`Los enemigos de un área se juntan en el centro y quedan ${kw('slow','ralentizados','')} un 50% durante <b>4 s</b>.`},
  {aim:'Elige el centro del tirón psíquico.',r:2.5*K,col:'192,112,255',use:c=>{let n=0;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d>2.5*K)continue;n++;
    if(d>.5){const mv=Math.min(d,2.5*K*(isBoss(e)?.5:1)),q=pathNear(e.x+(c.x-e.x)/d*mv,e.y+(c.y-e.y)/d*mv);if(q){e.x=e.tx=q.x;e.y=e.ty=q.y;}}slowE(e,.5,4);}
   RS('seal').n+=n;S.fx.push({x:c.x,y:c.y,t:.6,m:.6,r:2.5*K,col:'#c070ff'});return true;}});
@@ -163,14 +163,14 @@ const h2States=e=>(e.bn>0?1:0)+(e.ps&&e.ps.length?1:0)+(e.bl&&e.bl.length?1:0)+(
 function h2Copy(a,b){if(a.bn>0){if(!(b.bn>0)){b.bn=0;b.bt=0;}b.bn=Math.max(b.bn,a.bn);b.bsrc=a.bsrc;}if(a.ps&&a.ps.length)b.ps=(b.ps||[]).concat(a.ps.map(q=>({...q})));if(a.bl&&a.bl.length)b.bl=(b.bl||[]).concat(a.bl.map(q=>({...q})));if(a.cs&&a.cs.length)b.cs=(b.cs||[]).concat(a.cs.map(q=>({...q})));if(a.ez&&a.ez.n>0)b.ez={n:Math.max(a.ez.n,b.ez?b.ez.n:0),t:4};if(a.brk&&a.brk.length)b.brk=(b.brk||[]).concat(a.brk.map(q=>({...q})));}
 nrAdd({id:'cell',n:'Célula de la Forja',ic:'🔋',col:'#2a5a4a',ini:1,cd:2,
  pas:()=>'Los enemigos con <b>2 o más estados</b> distintos reciben un <span class="cd">+10% de daño</span> de todo.',
- act:()=>'<b>Descarga en cadena</b>: un rayo salta entre <b>8</b> enemigos y les contagia los estados del primero (el que más estados tenga en el punto que elijas).'},
+ act:()=>'Un rayo salta entre <b>8</b> enemigos y les contagia los estados del primero (el que más estados tenga en el punto que elijas).'},
  {aim:'Elige el primer enemigo de la descarga.',r:1.5*K,col:'255,225,77',use:c=>{/* de los enemigos junto al punto elegido, empieza por el que más estados tiene */let f=null,bs=-1;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d>1.5*K)continue;const sc2=h2States(e)*100-d;if(sc2>bs){bs=sc2;f=e;}}if(!f){S.msg='Célula de la Forja: elige un punto con algún enemigo cerca.';return false;}
   const L=[f],pts=[[f.x,f.y-4*K],[f.x,f.y]];let cur=f;for(let i=0;i<7;i++){let nx=null,nd=3*K;for(const o of S.enemies){if(o.hp<=0||o.leak||L.includes(o))continue;const d=Math.hypot(o.x-cur.x,o.y-cur.y);if(d<=nd){nd=d;nx=o;}}if(!nx)break;L.push(nx);pts.push([nx.x,nx.y]);cur=nx;}
   const dm=12*hpR(S.round)*(1+S.round*.25);for(const o of L){if(o!==f)h2Copy(f,o);hurt(o,dm,S.hero?S.hero.pt:null,'elem');h2Ez(o,1);}RS('cell').n+=L.length;S.fx.push({bolt:pts,t:.3,m:.3,big:1});return true;}});
 // ---- Tablón de recompensas (Kai) ----
 nrAdd({id:'board',n:'Tablón de recompensas',ic:'📌',col:'#6a3a1a',ini:1,cd:2,
  pas:()=>'En cada oleada, un enemigo fuerte sale como <b>«Se busca»</b>: al matarlo cobras <span class="gd">oro extra</span>.',
- act:()=>`<b>Contrato</b>: el enemigo más fuerte del mapa queda ${kw('mark','marcado','')} <b>20 s</b>. Si muere en ese tiempo, da el <span class="gd">triple de oro</span>.`},
+ act:()=>`El enemigo más fuerte del mapa queda ${kw('mark','marcado','')} <b>20 s</b>. Si muere en ese tiempo, da el <span class="gd">triple de oro</span>.`},
  {use:()=>{let b=null;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;if(!b||e.max>b.max)b=e;}if(!b){S.msg='Tablón de recompensas: no hay enemigos en el mapa.';return false;}
   b.ctr=20;b.mk={t:20,cr:Math.max(.25,b.mk&&b.mk.t>0?b.mk.cr:0)};RS('board').n++;
   try{const el=document.querySelector('#relics [data-id="board"]'),r=cv.getBoundingClientRect(),q=el.getBoundingClientRect(),k=sc(),px=(q.left+q.width/2-r.left)/r.width*VIEW,py=(q.top+q.height/2-r.top)/r.height*VH;HX.beam={x:(px/k+CAM.x)/CS-.5,y:(py/k+CAM.y)/CS-.5,e:b,t:.7};}catch(x){HX.beam={x:b.x,y:b.y-6*K,e:b,t:.7};}

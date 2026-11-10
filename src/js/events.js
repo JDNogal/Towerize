@@ -139,7 +139,7 @@ if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;
 function orbFlush(){if(S.orbs&&S.hero)for(const o of S.orbs)giveXp(S.hero,o.v);S.orbs=[];}
 function hpLoss(n,en){if(S)S.chit=performance.now();if(S.st)S.st.hpL=(S.st.hpL||0)+n;if(en)hint('retry','Reintentar',[['Un enemigo ha llegado al núcleo y has perdido <b>vida</b>.',tgEl('#sh')],['Si una oleada sale mal, puedes repetirla desde el principio con este botón. Tiene cargas limitadas.',tgEl('#mtl [data-a="retry"]')]]);S.hp-=n;S.idolN=(S.idolN||0)+n;if(en)S.hpEn=(S.hpEn||0)+n;}
 const INTMAX=100,interest=()=>Math.min(INTMAX,Math.floor(S.gold*.1/5)*5);
-const heroHpM=()=>rp('badge')?1.15:1;
+const heroHpM=()=>(rp('badge')?1.15:1)*(typeof r3On==='function'&&r3On('implant')?1.2:1);
 function heroSync(){const H=S.hero;if(!H)return;const q=H.s,m=hsAt(H.id,H.lvl).hp*heroHpM();if(Math.abs(q.max-m)>.01){const f=q.max>0?q.hp/q.max:1;q.max=m;if(q.hp>0)q.hp=m*f;}}
 const EMR=3*K;
 function castEmber(c){S.fz.push({x:c.x,y:c.y,r:EMR,t:8,tk:0,n:3*hpR(S.round)});S.rs.ember.t=8;setCD('ember');S.aim=null;S.msg='';S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:EMR,col:'#ff7a3c'});renderRelics();ui();}
@@ -271,7 +271,7 @@ function mkGuild(t){const U=TW[t.type].unit,base=U.hp*lvMods(t.type,t.lvl,null).
 function guildHeal(dt){for(const t of unitTowers()){if(!(TW[t.type]||{}).guild||!t.sd)continue;const pool=t.merc&&S.hero?t.sd.concat([S.hero.s]):t.sd;for(const s of t.sd){if(s.cls!=='heal'||s.hp<=0)continue;s.hc=(s.hc||4)-dt;if(s.hc>0)continue;s.hc=4;let lo=null;for(const q of pool)if(q.hp>0&&q.hp<q.max&&(!lo||q.hp/q.max<lo.hp/lo.max))lo=q;if(lo){lo.hp=Math.min(lo.max,lo.hp+lo.max*.15);S.fx.push({x:lo.x,y:lo.y,t:.5,m:.5,r:.8*K,col:'#8ff0a0'});}}}}
 // disparo de unidades a distancia (magos y sanadores del gremio, dragón bebé)
 function unitShoot(s,dt){const t=s.tw,st=stats(t),C=CLS[s.cls]||CLS0,drag=!!s.drag;s.cd-=dt;let tg=s.fight?s.en:null;const rg=drag?2.5*K:st.range;
- if(!tg){let bd=rg;for(const e of S.enemies)if(e.hp>0&&!ET[e.t].dodge){const d=Math.hypot(e.x-s.x,e.y-s.y);if(d<=bd){bd=d;tg=e;}}}
+ if(!tg){let bd=rg;for(const e of S.enemies)if(e.hp>0&&!(ET[e.t].dodge&&!(e.gpin>0))&&!(e.hk>0)){const d=Math.hypot(e.x-s.x,e.y-s.y);if(d<=bd){bd=d;tg=e;}}}
  if(!tg){s.cd=Math.max(s.cd,0);if(!s.en)uRegen(s,dt);return;}
  const rate=drag?1/1.2:st.rate*C.rt,base=drag?8:st.dmg*C.d,ty=drag?'elem':s.cls==='mage'?'magic':'phys';
  let n=0;while(s.cd<=0&&n++<4){s.cd+=1/rate;const crit=Math.random()<st.crit+mkB(tg),dm=base*(crit?st.critm:1)*(1+(s.ren||0));
