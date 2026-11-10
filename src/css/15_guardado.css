@@ -75,3 +75,4 @@ body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border
 /* botones de Nv de la oferta, fuera de la caja que se desplaza; solo con «Ver detalles» */
 #relic .tof .lvout{display:none}
 #relic.tdeton .tof .lvout{display:inline-flex;vertical-align:middle;margin-left:10px}
+.kpanel.hascp,#tip.hascp{position:fixed!important}

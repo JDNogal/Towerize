@@ -33,3 +33,8 @@ setInterval(()=>{try{const c=$('comp');if(!LB.open&&document.body.classList.cont
 {const _p=placePiece;placePiece=function(bx,by){const ex=S.extraPc&&S.offers&&S.offers.length>1,i=S.pi;const r=_p.apply(this,arguments);
  try{if(ex){S.extraPc=0;S.offers=S.offers.filter((o,j)=>j!==i);const can=S.offers.some(o=>{for(let k=0;k<4;k++){for(let y=0;y<BN;y++)for(let x=0;x<BN;x++)if(check(x,y,o.p)===0)return true;rotO(o);}return false;});
   if(can){S.phase='place';S.pi=null;S.msg='📐 Escuadra del arquitecto: coloca la segunda pieza.';ui();}}}catch(e){}return r;};}
+// ---- «!» sobre un enemigo que lanza una habilidad (campeones): llama la atención sin llenar la pantalla de avisos ----
+H2D.push((g,lw)=>{const X=v=>v*CS+CS/2,dt=1/60;for(const e of S.enemies){if(!(e.exc>0)||e.hp<=0)continue;e.exc-=dt;const a=Math.min(1,e.exc/.3),y=X(e.y)-CS*1.15-Math.sin((1.2-e.exc)*9)*1.5;
+ g.save();g.globalAlpha=a;g.font='900 '+Math.round(CS*1.1)+'px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.lineWidth=lw(3);g.strokeStyle='#1b1712';g.strokeText('!',X(e.x),y);g.fillStyle='#ffd23a';g.fillText('!',X(e.x),y);g.restore();}});
+// ---- lo que tienes en la partida queda descubierto en el compendio al momento (reliquias de evento, torres del mazo, tu héroe…) ----
+setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.round||!SEEOK||PREVIEWING||S.pvE)return;for(const r of S.relics||[])if(RELIC[r])see('rl',r);for(const k of S.deck||[])if(TW[k])see('tw',k);for(const t of S.list||[])if(TW[t.type])see('tw',t.type);if(S.hero&&S.hero.id)see('hr',S.hero.id);}catch(e){}},1000);

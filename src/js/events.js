@@ -130,7 +130,7 @@ const furyM=()=>S&&S.fury?1+.25*S.fury:1;
 function furyTick(){if(S.phase!=='wave'||!S.furyAt)return;const F=S.wt>S.furyAt?Math.floor((S.wt-S.furyAt)/10)+1:0;if(F>(S.fury||0)){if(!S.fury){S.msg='¡Furia! Cada 10 s todos ganan +25% de daño.';hint('fury','Furia',[['Cuando una oleada se alarga demasiado, entra en juego la <b>Furia</b>, que hace que <b>todos</b> reciban un <span class="cd">+25% de daño</span> cada 10 s.',tgEl('#sr')],['Así ninguna oleada se atasca.',null]]);}S.fury=F;}}
 // la experiencia viaja en bolitas desde el enemigo (al morir o al escapar) hasta el héroe, y se suma al llegar
 function orbAdd(x,y,v){if(!(v>0)||!S.hero)return;(S.orbs=S.orbs||[]).push({x,y,v,t:0});}
-function orbGround(x,y,v){if(!(v>0)||!S.hero||S.pvH||S.pvE)return;(S.gorbs=S.gorbs||[]).push({x,y,v,t:0});}
+function orbGround(x,y,v){if(!(v>0)||!S.hero||S.pvH||S.pvE)return;S.gorbs=S.gorbs||[];/* las que caen juntas se suman en una sola bolita */const o=S.gorbs.find(q=>Math.hypot(q.x-x,q.y-y)<1.2);if(o){o.v+=v;return;}S.gorbs.push({x,y,v,t:0});}
 const ORBPICK=2*K;// distancia a la que el héroe recoge las bolas del suelo
 function orbTick(dt){if(S.gorbs&&S.gorbs.length&&S.hero&&S.hero.s.hp>0){const q=S.hero.s;S.gorbs=S.gorbs.filter(o=>{o.t+=dt;if(Math.hypot(q.x-o.x,q.y-o.y)<=ORBPICK){(S.orbs=S.orbs||[]).push({x:o.x,y:o.y,v:o.v,t:0});return false;}return true;});}
 if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;

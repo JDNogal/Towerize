@@ -25,7 +25,7 @@ function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getB
  const sp=K*CS*k,bz=Math.round(Math.max(48,Math.min(100,sp*.72)));m.style.setProperty('--bs',bz+'px');
  const gap=bz*1.22,R=Math.max(sp*.5+bz*.8,n>1?gap/(2*Math.sin(Math.min(Math.PI/n,Math.PI/2)/1)):0),T0=58;
  // el anillo empieza arriba y se va cerrando hacia abajo: con 2 torres, las dos arriba; con 3, una en medio y dos a los lados…
- const d=Math.min(2*Math.PI/n,gap/R);
+ const d=n>=5?2*Math.PI/n:Math.min(2*Math.PI/n,gap/R);/* v305: con 5 o más, polígono regular completo (pentágono, hexágono…) */
  // si se sale de la pantalla, se desplaza hacia dentro (sin dejar de rodear el solar)
  const pad=bz/2+6,cx=Math.max(R+pad,Math.min(c.width-R-pad,px)),cy=Math.max(T0+R+pad,Math.min(c.height-pad-bz*.35-(n*d>Math.PI?R:0),py));
  bs.forEach((b,i)=>{const a=-Math.PI/2+(i-(n-1)/2)*d;b.style.left=cx+Math.cos(a)*R+'px';b.style.top=cy+Math.sin(a)*R+'px';});

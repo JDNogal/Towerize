@@ -33,7 +33,7 @@ function skTick(e,E,dt,SL){e.skc=(e.skc===undefined?8:e.skc)-dt;if(e.skc>0)retur
  const ang=Math.atan2(tg.y-e.y,tg.x-e.x),dmg=E.ud*K0.m*(typeof udM==='function'?udM(e):1);
  for(const s of SL){const dx=s.x-e.x,dy=s.y-e.y,d=Math.hypot(dx,dy);if(d>R)continue;if(K0.a&&d>.3){let da=Math.abs(Math.atan2(dy,dx)-ang);if(da>Math.PI)da=2*Math.PI-da;if(da>K0.a)continue;}
   hitUnit(s,dmg,e);if(K0.st&&s.hp>0)s.cd=Math.max(s.cd||0,K0.st);}
- (S.efx=S.efx||[]).push({k:E.sk,x:e.x,y:e.y,a:ang,r:R,arc:K0.a||0,col:K0.col,t:.6,m:.6});S.msg=E.n+': '+K0.n+'.';}
+ (S.efx=S.efx||[]).push({k:E.sk,x:e.x,y:e.y,a:ang,r:R,arc:K0.a||0,col:K0.col,t:.6,m:.6});e.exc=1.2;/* v305: un «!» sobre el campeón en vez de un aviso de texto cada vez */}
 // ---- Súcubo: embeleso ----
 // El soldado embelesado se convierte un rato en un enemigo de verdad («Soldado embelesado»): camina por el camino con el grupo, pelea contra tus unidades
 // y, si llega al núcleo, quita 1 de vida. Mientras tanto el soldado original queda fuera de juego. Al acabar el efecto vuelve a ser tuyo donde esté;

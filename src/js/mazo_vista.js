@@ -10,9 +10,9 @@ function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
  // ¿caben a los lados de la ventana? (si no, botones)
  const win=document.body.classList.contains('pcpick')?$('panel'):($('relic').querySelector('.pscr,.evwin,.cgrid')||$('relic').firstElementChild);
- const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&(gap>=150||(!TOUCH&&innerWidth>=900));if(fit)el.style.setProperty('--mzw',Math.round(Math.max(132,Math.min(168,gap-20)))+'px');
+ const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&(gap>=150||(document.body.classList.contains('dsk')&&innerWidth>=900));if(fit)el.style.setProperty('--mzw',Math.round(Math.max(132,Math.min(168,gap-20)))+'px');
  /* ventanas que ocupan todo el ancho (cofre, eventos): en PC grande se estrechan para dejar sitio a los paneles */
- if(gap<150&&!TOUCH&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
+ if(gap<150&&document.body.classList.contains('dsk')&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
  document.body.classList.toggle('mzbtn',!fit);
  const sg=S.deck.join()+'|'+S.relics.join()+'|'+S.list.length;if(el.dataset.sg!==sg){el.dataset.sg=sg;
   el.querySelector('.mzd').innerHTML=`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres</small></h4>${mzDeck()}`;

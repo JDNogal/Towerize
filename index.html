@@ -1503,6 +1503,7 @@ body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border
 /* botones de Nv de la oferta, fuera de la caja que se desplaza; solo con «Ver detalles» */
 #relic .tof .lvout{display:none}
 #relic.tdeton .tof .lvout{display:inline-flex;vertical-align:middle;margin-left:10px}
+.kpanel.hascp,#tip.hascp{position:fixed!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -3645,7 +3646,7 @@ function skTick(e,E,dt,SL){e.skc=(e.skc===undefined?8:e.skc)-dt;if(e.skc>0)retur
  const ang=Math.atan2(tg.y-e.y,tg.x-e.x),dmg=E.ud*K0.m*(typeof udM==='function'?udM(e):1);
  for(const s of SL){const dx=s.x-e.x,dy=s.y-e.y,d=Math.hypot(dx,dy);if(d>R)continue;if(K0.a&&d>.3){let da=Math.abs(Math.atan2(dy,dx)-ang);if(da>Math.PI)da=2*Math.PI-da;if(da>K0.a)continue;}
   hitUnit(s,dmg,e);if(K0.st&&s.hp>0)s.cd=Math.max(s.cd||0,K0.st);}
- (S.efx=S.efx||[]).push({k:E.sk,x:e.x,y:e.y,a:ang,r:R,arc:K0.a||0,col:K0.col,t:.6,m:.6});S.msg=E.n+': '+K0.n+'.';}
+ (S.efx=S.efx||[]).push({k:E.sk,x:e.x,y:e.y,a:ang,r:R,arc:K0.a||0,col:K0.col,t:.6,m:.6});e.exc=1.2;/* v305: un «!» sobre el campeón en vez de un aviso de texto cada vez */}
 // ---- Súcubo: embeleso ----
 // El soldado embelesado se convierte un rato en un enemigo de verdad («Soldado embelesado»): camina por el camino con el grupo, pelea contra tus unidades
 // y, si llega al núcleo, quita 1 de vida. Mientras tanto el soldado original queda fuera de juego. Al acabar el efecto vuelve a ser tuyo donde esté;
@@ -4207,7 +4208,7 @@ const furyM=()=>S&&S.fury?1+.25*S.fury:1;
 function furyTick(){if(S.phase!=='wave'||!S.furyAt)return;const F=S.wt>S.furyAt?Math.floor((S.wt-S.furyAt)/10)+1:0;if(F>(S.fury||0)){if(!S.fury){S.msg='¡Furia! Cada 10 s todos ganan +25% de daño.';hint('fury','Furia',[['Cuando una oleada se alarga demasiado, entra en juego la <b>Furia</b>, que hace que <b>todos</b> reciban un <span class="cd">+25% de daño</span> cada 10 s.',tgEl('#sr')],['Así ninguna oleada se atasca.',null]]);}S.fury=F;}}
 // la experiencia viaja en bolitas desde el enemigo (al morir o al escapar) hasta el héroe, y se suma al llegar
 function orbAdd(x,y,v){if(!(v>0)||!S.hero)return;(S.orbs=S.orbs||[]).push({x,y,v,t:0});}
-function orbGround(x,y,v){if(!(v>0)||!S.hero||S.pvH||S.pvE)return;(S.gorbs=S.gorbs||[]).push({x,y,v,t:0});}
+function orbGround(x,y,v){if(!(v>0)||!S.hero||S.pvH||S.pvE)return;S.gorbs=S.gorbs||[];/* las que caen juntas se suman en una sola bolita */const o=S.gorbs.find(q=>Math.hypot(q.x-x,q.y-y)<1.2);if(o){o.v+=v;return;}S.gorbs.push({x,y,v,t:0});}
 const ORBPICK=2*K;// distancia a la que el héroe recoge las bolas del suelo
 function orbTick(dt){if(S.gorbs&&S.gorbs.length&&S.hero&&S.hero.s.hp>0){const q=S.hero.s;S.gorbs=S.gorbs.filter(o=>{o.t+=dt;if(Math.hypot(q.x-o.x,q.y-o.y)<=ORBPICK){(S.orbs=S.orbs||[]).push({x:o.x,y:o.y,v:o.v,t:0});return false;}return true;});}
 if(!S.orbs||!S.orbs.length||!S.hero)return;const H=S.hero,q=H.s;
@@ -5518,7 +5519,7 @@ function draw(){
  drawHammers();
  drawHeroAb(lw);drawMecha(lw);
  drawLogs(lw);
- for(const o of S.gorbs||[]){const pu=.75+.25*Math.sin(performance.now()/260+o.x),r=CS*(.3+Math.min(.3,o.v*.04))*pu,px=o.x*CS+CS/2,py=o.y*CS+CS/2;g.fillStyle='rgba(255,215,90,.25)';g.beginPath();g.arc(px,py,r*2,0,7);g.fill();g.fillStyle='#ffd84a';g.beginPath();g.arc(px,py,r,0,7);g.fill();}
+ for(const o of S.gorbs||[]){const pu=.75+.25*Math.sin(performance.now()/260+o.x),r=CS*(.1+Math.min(.08,o.v*.01))*pu,px=o.x*CS+CS/2,py=o.y*CS+CS/2;/* v305: experiencia discreta (antes tapaba a los enemigos) */g.fillStyle='rgba(255,215,90,.12)';g.beginPath();g.arc(px,py,r*1.8,0,7);g.fill();g.fillStyle='rgba(255,216,74,.65)';g.beginPath();g.arc(px,py,r,0,7);g.fill();}
  for(const o of S.orbs||[]){const r=CS*(.35+Math.min(.6,o.v*.05)),px=o.x*CS+CS/2,py=o.y*CS+CS/2;g.fillStyle='rgba(255,215,90,.35)';g.beginPath();g.arc(px,py,r*1.8,0,7);g.fill();g.fillStyle='#ffe27a';g.beginPath();g.arc(px,py,r,0,7);g.fill();}
  if(S.hero){const H=S.hero,q=H.s,sel=S.aim==='hero',now=performance.now(),ga=sel?1:Math.max(0,1-(now-(H.xpT||0))/1100),lf=Math.max(0,1-(now-(H.lvT||0))/700);
   const hov=!sel&&!S.aim&&S.hover&&heroAt(S.hover);/* al pasar el ratón por encima, también: su rango (a distancia) o la distancia a la que sale a pelear (cuerpo a cuerpo) */
@@ -6041,7 +6042,7 @@ function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getB
  const sp=K*CS*k,bz=Math.round(Math.max(48,Math.min(100,sp*.72)));m.style.setProperty('--bs',bz+'px');
  const gap=bz*1.22,R=Math.max(sp*.5+bz*.8,n>1?gap/(2*Math.sin(Math.min(Math.PI/n,Math.PI/2)/1)):0),T0=58;
  // el anillo empieza arriba y se va cerrando hacia abajo: con 2 torres, las dos arriba; con 3, una en medio y dos a los lados…
- const d=Math.min(2*Math.PI/n,gap/R);
+ const d=n>=5?2*Math.PI/n:Math.min(2*Math.PI/n,gap/R);/* v305: con 5 o más, polígono regular completo (pentágono, hexágono…) */
  // si se sale de la pantalla, se desplaza hacia dentro (sin dejar de rodear el solar)
  const pad=bz/2+6,cx=Math.max(R+pad,Math.min(c.width-R-pad,px)),cy=Math.max(T0+R+pad,Math.min(c.height-pad-bz*.35-(n*d>Math.PI?R:0),py));
  bs.forEach((b,i)=>{const a=-Math.PI/2+(i-(n-1)/2)*d;b.style.left=cx+Math.cos(a)*R+'px';b.style.top=cy+Math.sin(a)*R+'px';});
@@ -9192,6 +9193,11 @@ setInterval(()=>{try{const c=$('comp');if(!LB.open&&document.body.classList.cont
 {const _p=placePiece;placePiece=function(bx,by){const ex=S.extraPc&&S.offers&&S.offers.length>1,i=S.pi;const r=_p.apply(this,arguments);
  try{if(ex){S.extraPc=0;S.offers=S.offers.filter((o,j)=>j!==i);const can=S.offers.some(o=>{for(let k=0;k<4;k++){for(let y=0;y<BN;y++)for(let x=0;x<BN;x++)if(check(x,y,o.p)===0)return true;rotO(o);}return false;});
   if(can){S.phase='place';S.pi=null;S.msg='📐 Escuadra del arquitecto: coloca la segunda pieza.';ui();}}}catch(e){}return r;};}
+// ---- «!» sobre un enemigo que lanza una habilidad (campeones): llama la atención sin llenar la pantalla de avisos ----
+H2D.push((g,lw)=>{const X=v=>v*CS+CS/2,dt=1/60;for(const e of S.enemies){if(!(e.exc>0)||e.hp<=0)continue;e.exc-=dt;const a=Math.min(1,e.exc/.3),y=X(e.y)-CS*1.15-Math.sin((1.2-e.exc)*9)*1.5;
+ g.save();g.globalAlpha=a;g.font='900 '+Math.round(CS*1.1)+'px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.lineWidth=lw(3);g.strokeStyle='#1b1712';g.strokeText('!',X(e.x),y);g.fillStyle='#ffd23a';g.fillText('!',X(e.x),y);g.restore();}});
+// ---- lo que tienes en la partida queda descubierto en el compendio al momento (reliquias de evento, torres del mazo, tu héroe…) ----
+setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.round||!SEEOK||PREVIEWING||S.pvE)return;for(const r of S.relics||[])if(RELIC[r])see('rl',r);for(const k of S.deck||[])if(TW[k])see('tw',k);for(const t of S.list||[])if(TW[t.type])see('tw',t.type);if(S.hero&&S.hero.id)see('hr',S.hero.id);}catch(e){}},1000);
 // ==================== v305 · Novedades del compendio, ítem a ítem ====================
 // Cada cosa nueva (torre, enemigo, reliquia, mecánica, logro conseguido…) lleva su puntito hasta que abres su ficha.
 // La pestaña y la cinta del área solo se apagan cuando ya no queda ninguna por ver. «Marcar todos como vistos» limpia solo la pestaña en la que estás.
@@ -9312,9 +9318,9 @@ function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
  // ¿caben a los lados de la ventana? (si no, botones)
  const win=document.body.classList.contains('pcpick')?$('panel'):($('relic').querySelector('.pscr,.evwin,.cgrid')||$('relic').firstElementChild);
- const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&(gap>=150||(!TOUCH&&innerWidth>=900));if(fit)el.style.setProperty('--mzw',Math.round(Math.max(132,Math.min(168,gap-20)))+'px');
+ const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&(gap>=150||(document.body.classList.contains('dsk')&&innerWidth>=900));if(fit)el.style.setProperty('--mzw',Math.round(Math.max(132,Math.min(168,gap-20)))+'px');
  /* ventanas que ocupan todo el ancho (cofre, eventos): en PC grande se estrechan para dejar sitio a los paneles */
- if(gap<150&&!TOUCH&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
+ if(gap<150&&document.body.classList.contains('dsk')&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
  document.body.classList.toggle('mzbtn',!fit);
  const sg=S.deck.join()+'|'+S.relics.join()+'|'+S.list.length;if(el.dataset.sg!==sg){el.dataset.sg=sg;
   el.querySelector('.mzd').innerHTML=`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres</small></h4>${mzDeck()}`;

@@ -153,7 +153,7 @@ function draw(){
  drawHammers();
  drawHeroAb(lw);drawMecha(lw);
  drawLogs(lw);
- for(const o of S.gorbs||[]){const pu=.75+.25*Math.sin(performance.now()/260+o.x),r=CS*(.3+Math.min(.3,o.v*.04))*pu,px=o.x*CS+CS/2,py=o.y*CS+CS/2;g.fillStyle='rgba(255,215,90,.25)';g.beginPath();g.arc(px,py,r*2,0,7);g.fill();g.fillStyle='#ffd84a';g.beginPath();g.arc(px,py,r,0,7);g.fill();}
+ for(const o of S.gorbs||[]){const pu=.75+.25*Math.sin(performance.now()/260+o.x),r=CS*(.1+Math.min(.08,o.v*.01))*pu,px=o.x*CS+CS/2,py=o.y*CS+CS/2;/* v305: experiencia discreta (antes tapaba a los enemigos) */g.fillStyle='rgba(255,215,90,.12)';g.beginPath();g.arc(px,py,r*1.8,0,7);g.fill();g.fillStyle='rgba(255,216,74,.65)';g.beginPath();g.arc(px,py,r,0,7);g.fill();}
  for(const o of S.orbs||[]){const r=CS*(.35+Math.min(.6,o.v*.05)),px=o.x*CS+CS/2,py=o.y*CS+CS/2;g.fillStyle='rgba(255,215,90,.35)';g.beginPath();g.arc(px,py,r*1.8,0,7);g.fill();g.fillStyle='#ffe27a';g.beginPath();g.arc(px,py,r,0,7);g.fill();}
  if(S.hero){const H=S.hero,q=H.s,sel=S.aim==='hero',now=performance.now(),ga=sel?1:Math.max(0,1-(now-(H.xpT||0))/1100),lf=Math.max(0,1-(now-(H.lvT||0))/700);
   const hov=!sel&&!S.aim&&S.hover&&heroAt(S.hover);/* al pasar el ratón por encima, también: su rango (a distancia) o la distancia a la que sale a pelear (cuerpo a cuerpo) */
