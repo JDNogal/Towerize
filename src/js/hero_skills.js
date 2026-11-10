@@ -95,11 +95,14 @@ function mechaTick(dt){const M=S.mecha;if(!M)return;if(M.cd>0)M.cd=Math.max(0,M.
 function drawMecha(lw){if(S.aim!=='mecha')return;const h=S.hover;if(!h||!inb(h.x,h.y))return;const X=v=>v*CS+CS/2;g.strokeStyle='rgba(232,176,106,.95)';g.lineWidth=lw(1.5);g.setLineDash([lw(4),lw(4)]);g.beginPath();g.arc(X(h.x),X(h.y),1.3*K*CS,0,7);g.stroke();g.setLineDash([]);}
 // habilidades automáticas (opción de accesibilidad): en cuanto están listas, sobre el grupo de enemigos más grande
 // (pendiente: perfiles por habilidad, p. ej. los soldados de Reinhart solo con un grupo de 5-6 enemigos)
-function habAutoTarget(){let b=null,bn=0;const H=S.hero,q=H.s,R=(H.def.ranged?hsAt(H.id,H.lvl).range:3*K)+1*K;/* solo cerca del héroe, donde puede aprovecharla */const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&Math.hypot(e.x-q.x,e.y-q.y)<=R);
- for(const e of L){let n=0;for(const o of L)if(Math.hypot(o.x-e.x,o.y-e.y)<=1.5*K)n+=isBoss(o)?3:1;if(n>bn){bn=n;b=e;}}return b;}
+function habAutoTarget(){let b=null,bn=0;const H=S.hero,q=H.s,R=H.def.ranged?hsAt(H.id,H.lvl).range:1.8*K;/* v305: solo los enemigos con los que el héroe está peleando o tiene a su alcance (antes llegaba hasta los portales) *//* solo cerca del héroe, donde puede aprovecharla */const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&Math.hypot(e.x-q.x,e.y-q.y)<=R);
+ for(const e of L){let n=(q.en===e?2:0);for(const o of L)if(Math.hypot(o.x-e.x,o.y-e.y)<=1.5*K)n+=isBoss(o)?3:1;if(n>bn){bn=n;b=e;}}return b;}
+// invocaciones (soldados, bestia): junto al héroe, no encima de los enemigos
+const HABSUM={reinhart:'b',sylvana:'u'};
 function habAutoTick(){if(!S||!S.hero||S.phase!=='wave'||S.tut||PREVIEWING)return;
  for(const k of ['b','u']){if(!(k==='b'?OPT.autoB:OPT.autoU)||habOk(k)||S.aim==='hab'+k)continue;const e=habAutoTarget();if(!e)return;
-  const a=S.aim,m=S.msg;castHab({x:e.x,y:e.y},k);if(S.hero.id!=='sylvana'||k==='b')S.msg=m;S.aim=a;ui();renderRelics();}}
+  const H0=S.hero,sum=HABSUM[H0.id]===k,pt=sum?{x:Math.round(H0.s.x),y:Math.round(H0.s.y)}:{x:e.x,y:e.y};if(sum&&!(inb(pt.x,pt.y)&&S.cells[pt.y][pt.x]===2)){pt.x=Math.round(e.x);pt.y=Math.round(e.y);}
+  const a=S.aim,m=S.msg;castHab(pt,k);if(S.hero.id!=='sylvana'||k==='b')S.msg=m;S.aim=a;ui();renderRelics();}}
 function habAutoToggle(k){const key=k==='u'?'autoU':'autoB';OPT[key]=!OPT[key];saveOpt();try{sfx('btn');}catch(e){}
  if(S&&S.aim==='hab'+k){S.aim=null;S.msg='';}const n=S&&S.hero?HAB[S.hero.id][k].n:'Habilidad';toast((OPT[key]?'🤖 ':'✋ ')+'<b>'+n+'</b>: '+(OPT[key]?'automática':'manual'));hpanTick.sg='';hpanTick();}
 setInterval(()=>{try{habAutoTick();}catch(e){}},250);

@@ -37,7 +37,7 @@ function drawHeroSay(g,lw){const q=S.hsay,H=S.hero;if(!q||!H||H.s.hp<=0)return;c
  g.beginPath();g.moveTo(px-lw(6),py-lw(.5));g.lineTo(px,py+lw(7));g.lineTo(px+lw(6),py-lw(.5));g.closePath();g.fill();
  g.fillStyle='#1b1e26';g.fillText(q.txt,px,y0+hh/2+lw(.5));g.restore();}
 // retrato del héroe como imagen para dibujarlo en el mapa
-const HIMG={};function heroImg(id){if(HIMG[id])return HIMG[id];const im=new Image();try{const u=++PUID;let s=PORT[id].replace(/@U/g,u);im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="${PCROP[id]||'0 0 120 120'}">${s}</svg>`);}catch(e){}return HIMG[id]=im;}
+const HIMG={};function heroImg(id){if(HIMG[id])return HIMG[id];const im=new Image();try{const u=++PUID;let s=PORT[id].replace(/@U/g,u).replace(/<metadata>[\s\S]*?<\/metadata>/g,'');/* v305: los metadatos c2pa (prefijo sin declarar) rompían la imagen del retrato de Vega en el mapa */im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="${PCROP[id]||'0 0 120 120'}">${s}</svg>`);}catch(e){}return HIMG[id]=im;}
 // galones de nivel (mapa): cx,top = centro arriba; u = tamaño de la torre
 const twFull=t=>t.lvl>=4&&!!t.spec&&!!SPECS[t.type]&&!!SPECS[t.type][t.spec]&&(SPECS[t.type][t.spec].ab||[]).every(k=>AB[k]&&(t.ab&&t.ab[k]||0)>=AB[k].ranks.length);
 function starPath(c,cx,cy,R){c.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?R*.45:R;c.lineTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);}c.closePath();}
