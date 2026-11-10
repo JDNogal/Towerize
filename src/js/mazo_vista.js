@@ -45,3 +45,7 @@ function rcardAlign(){const rl=$('relic');if(!rl||!rl.classList.contains('open')
  for(const k of ['.rps','.rac']){const bx=cs.map(c=>c.querySelector(k)).filter(Boolean);if(bx.length<2)continue;bx.forEach(b=>b.style.minHeight='');const tops=new Set(bx.map(b=>Math.round(b.getBoundingClientRect().top)));
   const z=parseFloat(getComputedStyle(rl.querySelector('.cgrid')).zoom)||1;const h=Math.max(...bx.map(b=>b.getBoundingClientRect().height))/z;bx.forEach(b=>b.style.minHeight=Math.ceil(h)+'px');}}
 setInterval(()=>{try{rcardAlign();}catch(e){}},300);
+// v305 · detalles de la oferta de torres: sin repetir nombre ni coste (ya salen arriba en la carta); solo quedan los botones de Nv
+function tdtClean(){document.querySelectorAll('#relic .tof .tdt .ttl:not([data-cl])').forEach(t=>{const keep=t.querySelector('.lvtabs');[...t.childNodes].forEach(n=>{if(n!==keep)n.remove();});t.dataset.cl=1;if(!keep)t.style.display='none';});}
+{const _r=renderTowerOffer;renderTowerOffer=function(){const r=_r.apply(this,arguments);try{tdtClean();}catch(e){}return r;};}
+setInterval(()=>{try{tdtClean();}catch(e){}},250);
