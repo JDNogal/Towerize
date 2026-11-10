@@ -102,7 +102,7 @@ body.mfs.pcpick #panel{max-width:calc(100vw - 20px)!important;max-height:calc(10
 body.pcpick #panel:has(.prow){top:50%!important;bottom:auto!important;transform:translate(-50%,-50%)!important}body.mfs.pcpick #panel:has(.prow){max-width:calc(100vw - 20px)!important;max-height:calc(100vh - 16px)!important;overflow:auto!important}
 body.mfs .pcpeek{top:4px;right:8px;width:30px;height:26px;font-size:15px}body.pcpick #panel #ui>small{padding:0 34px}
 /* iconos de enemigos en la interfaz */
-#emap .eml i.emi{width:18px!important;height:18px!important;display:inline-grid!important;place-items:center;font-size:12px;font-style:normal;line-height:1;box-shadow:0 0 0 1.5px #1a1008!important}
+#emap .eml i.emi{width:18px!important;height:18px!important;display:inline-grid!important;place-items:center;font-size:10.5px;overflow:visible;flex:none;font-style:normal;line-height:1;box-shadow:0 0 0 1.5px #1a1008!important}
 .bdot.beic{display:inline-grid;place-items:center;font-size:24px;line-height:1;box-shadow:0 0 0 2px #1a1008}
 .bken i{display:grid!important;place-items:center;font-style:normal;font-size:26px;line-height:1;box-shadow:0 0 0 2px #1a1008,inset -4px -5px 0 rgba(0,0,0,.18)!important}
 /* opciones de evento: todas del mismo alto y el texto arriba (no se ve una más grande que otra) */

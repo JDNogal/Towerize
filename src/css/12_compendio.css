@@ -41,3 +41,4 @@
 .bktiles+.bktiles{margin-top:8px}
 /* v289: iconos SVG de enemigos dentro de su círculo */
 .icesvg{display:inline-flex;width:1.2em;height:1.2em;vertical-align:middle;line-height:0}.icesvg svg{width:100%;height:100%}
+.neeye{display:grid;place-items:center;width:30px;height:30px;margin-left:4px;border-radius:50%;background:#c0622e;font-size:16px;line-height:1;box-shadow:0 0 0 2px #f5e9cf inset;animation:neeye 1.6s ease-in-out infinite}@keyframes neeye{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}

@@ -103,7 +103,7 @@ const NEC={q:[],cur:null,open:false,tm:0};
 const necIc=k=>`<span class="necic" style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</span>`;
 const necShort=k=>{const s=ETIP[k]||'';const i=s.indexOf(':');return i>0&&i<60?s.slice(0,i)+'.':s.split('. ')[0].replace(/\.?$/,'.');};
 function necShow(k){let el=$('nenot');if(!el){el=document.createElement('div');el.id='nenot';document.body.appendChild(el);}NEC.cur=k;
- el.innerHTML=`<button class="nenot" data-k="${k}">${necIc(k)}<span class="nentx"><b>¡Nuevo enemigo!</b><span>${ET[k].n}</span><small>${necShort(k)}</small></span></button>`;el.classList.add('on');try{sfx('page');}catch(e){}
+ el.innerHTML=`<button class="nenot" data-k="${k}">${necIc(k)}<span class="nentx"><b>¡Nuevo enemigo!</b><span>${ET[k].n}</span></span><span class="neeye">👁️</span></button>`;el.classList.add('on');try{sfx('page');}catch(e){}
  clearTimeout(NEC.tm);NEC.tm=setTimeout(()=>{if(NEC.cur===k&&!NEC.open)necHide();},8000);}
 function necHide(){const el=$('nenot');if(el)el.classList.remove('on');NEC.cur=null;}
 function necOpen(k){necHide();NEC.open=true;NEC.k=k;let el=$('necard');if(!el){el=document.createElement('div');el.id='necard';document.body.appendChild(el);}

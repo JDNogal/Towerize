@@ -112,7 +112,7 @@ button[data-a="mback"]:hover,button[data-a="pback"]:hover,button[data-a="cback"]
 
 body.mfs #relics{overflow-y:auto!important;overflow-x:hidden!important;padding-top:5px!important}body.mfs #relics .rl{overflow:hidden!important}
 body.mfs>#emap{position:fixed;left:50%;bottom:6px;top:auto;transform:translateX(-50%);z-index:30;width:auto;max-width:calc(100vw - 2*190px);box-sizing:border-box;white-space:nowrap;padding:3px 10px;font-size:11px}
-body.mfs>#emap.on{display:flex;align-items:center;gap:9px}body.mfs>#emap .eml{margin:0;flex-wrap:nowrap;overflow:hidden;gap:3px 7px}body.mfs>#emap .emf{font-size:10px;opacity:.85}
-body.mfs>#emap .eml i.emi{width:15px!important;height:15px!important;font-size:10px}
+body.mfs>#emap.on{display:flex;align-items:center;gap:9px}body.mfs>#emap .eml{margin:0;flex-wrap:nowrap;gap:3px 7px;align-items:center}body.mfs>#emap .emf{font-size:10px;opacity:.85}
+body.mfs>#emap .eml i.emi{width:17px!important;height:17px!important;font-size:9px;flex:none}
 body.pcpick>#emap,body.lbopen>#emap,body:has(#relic.open)>#emap{display:none!important}
 body.mfs.emb #nenot{bottom:44px}body.mfs.emb #panel{bottom:40px}body.mfs.emb #pcback{bottom:44px}
