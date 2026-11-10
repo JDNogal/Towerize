@@ -28,7 +28,7 @@ const r=await p.evaluate(async()=>{const out={};INTRO.on=false;STO.intro=1;OPT.h
  S.phase='build';startWave();for(const p of S.portals.slice(1)){p.q=[];p.qf=[];}
  for(let i=0;i<500&&S.enemies.length<7;i++)update(.05);const Lr=S.enemies.find(e=>e.sqlead&&e.t==='seal');const lanes={};let far=0;
  if(Lr){for(let i=0;i<260;i++){update(.05);for(const e of S.enemies)if(e.sqid===Lr.sqid&&e!==Lr&&e.hp>0){(lanes[S.enemies.indexOf(e)]=lanes[S.enemies.indexOf(e)]||new Set()).add(e.fln);far=Math.max(far,Math.hypot(e.x-Lr.x,e.y-Lr.y));}}}
- out.ring=!!Lr&&Object.values(lanes).some(s=>s.size>=2);out.ringNear=far>0&&far<3*K;out.ringFar=far;
+ out.ring=!!Lr&&Object.values(lanes).some(s=>s.size>=2);out.ringNear=far>0&&far<4*K;out.ringFar=far;
  // auras: el Tamborilero da armadura y el Portador resistencia mágica
  const e1={t:'norm',x:5,y:5,hp:10,max:10,fx:{}},c1={t:'seal',x:5,y:5.5,hp:10,max:10,fx:{}};
  out.auraM=ET.seal.aura.m===1&&!ET.custodian.aura.m;
