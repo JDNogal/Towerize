@@ -11,7 +11,7 @@ let PV=null;const PVN=P*K,PVX=14*K,PVY=14*K,PVC=288/PVN,PVCX=PVX+(PVN>>1);
 function newPrev(k,en){if(TW[k].uniq&&!uPrevOk(k,(CP.ulv&&CP.ulv[k])||1)){PV=null;return;}
  const cells=Array.from({length:N},()=>Array(N).fill(0)),buff=Array.from({length:N},()=>Array(N).fill(null));
  for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=Math.abs(x-PVCX)<=1?2:1;
- const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:PVCX,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:0,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:0,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:k,selT:null,hover:null,core:{x:PVCX,y:PVY+PVN-1},speed:1,field:null,msg:'',espd:CP.spd};
+ const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:PVCX,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:0,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:0,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:k,selT:null,hover:null,core:{x:PVCX,y:PVY+PVN-1},speed:1,field:null,msg:'',espd:CP.spd,pvT:1};
  const real=S;S=st;try{st.field=field();const tx=PVCX-3,ty=PVY+7,tw={id:1,type:k,lvl:cpState(k).lv,spec:cpState(k).spec,ab:{},acd:{},x:tx,y:ty,cells:[[tx,ty]],sq:[[tx,ty]],cd:0,tgt:null,mode:'core'};if(TW[k].unit){mkSoldiers(tw);tw.flag={x:PVCX,y:ty};tw.sd.forEach(q=>{const o=slotOf(tw,q.i);q.x=o.x;q.y=o.y;q.lock=false;});}if(tw.spec)for(const id of SPECS[k][tw.spec].ab)tw.ab[id]=AB[id].ranks.length;st.list.push(tw);st.occ[tx+','+ty]=tw;}finally{S=real;}
  if(TW[k].uniq)uPrevFix(st,k);
  PV={S:st,k,en,rt:.3};

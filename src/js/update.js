@@ -124,6 +124,7 @@ function update(dt){
   if(e.t==='boss'&&S.round===15&&ROUNDS>15){const before=S.rc||0;S.rc=Math.min(3,before+2);if(S.rc>before)S.msg='¡Jefe derrotado! Recuperas '+(S.rc-before)+' carga'+(S.rc-before===1?'':'s')+' de Reintentar.';}
   return false;});
  if(S.hp<=0&&S.tut&&tutRetry())return;
+ /* v305: en las previsualizaciones el núcleo no cae nunca (un jefe que llega le quitaba toda la vida y paraba la vista previa) */if(S.hp<=0&&(S.pvE||S.pvH||S.pvT||(typeof PREVIEWING!=='undefined'&&PREVIEWING))){S.hp=1e9;}
  if(S.hp<=0){S.hp=0;S.phase='lost';S.proj=[];S.fx=[];S.msg='El núcleo ha caído.';ui();endGame();return;}
  if(bossDead){S.phase='won';S.proj=[];S.fx=[];S.msg='¡Jefe derrotado! Has completado la expedición.';ui();endGame();return;}
  if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){if(S.gorbs&&S.gorbs.length){(S.orbs=S.orbs||[]).push(...S.gorbs.map(o=>({x:o.x,y:o.y,v:o.v,t:0})));S.gorbs=[];}if(!S.hero||S.hero.s.hp<=0)orbFlush();if(S.relics.includes('notebook')&&S.hp>=(S.hpW||0))S.nbN=Math.min(10,(S.nbN||0)+1);}

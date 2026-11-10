@@ -100,6 +100,8 @@
   "pendientes_evento.js",
   "linea_rondas.js",
   "filtros_era.js",
+  "vista_enemigos.js",
+  "piezas_compendio.js",
   "sonidos_e2.js",
   "musica.js",
   "mazo_vista.js",

@@ -1479,7 +1479,7 @@ body.mfs #pinbar .pnl{display:none;margin-top:6px}body.mfs #pinbar.open .pnl{dis
 /* v305 · novedades del compendio por ficha */
 .bti.nov{position:relative}.bti.nov::after{content:"";position:absolute;top:3px;right:3px;width:9px;height:9px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2),0 0 6px var(--gbtn);pointer-events:none}
 .bkmk.new{position:relative}.bkmk.new::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2);pointer-events:none}
-.bknovall{display:inline-block;margin:6px 0 2px;padding:3px 10px;font-size:12px;border-radius:12px}
+.bknovall{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;margin:6px 0 2px;padding:3px 10px;font-size:12px;border-radius:12px}.bknovall small{display:inline!important;margin:0!important}
 /* v305 · comparación de mejora con los colores de cada estadística */
 .tmcmp .tmold{opacity:.7;font-weight:500}
 /* v305 · pasar página: debajo se ve otra página (su mismo color), nunca la tapa; sin destellos */
@@ -1548,6 +1548,11 @@ body.mfs #evpend{width:150px;font-size:10.5px;padding:4px 7px}body.pcpick #evpen
 #rtl .rtm{font-size:10.5px;opacity:.6;margin:0 6px}
 body.mfs #rtl{top:30px;padding:2px 10px 11px;font-size:10px;zoom:.72}body.mfs #rtl .rts{width:30px}
 body.pcpick #rtl,body.lbopen #rtl,body:has(#relic.open) #rtl{display:none!important}
+/* v305: elegir enemigo en las vistas previas: tarjeta con scroll propio y filtros */
+.bkpvr .pvfr{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 5px}.bkpvr .pvfr .bkpill{font-size:11px!important;padding:1px 8px!important}
+.bkpvr .bkpven{display:flex;flex-wrap:wrap;gap:5px;align-content:flex-start;max-height:132px;overflow-y:auto;padding:6px;border:1px solid var(--pline2);border-radius:8px;background:color-mix(in srgb,var(--paper) 70%,transparent);scrollbar-width:thin}
+/* v305: piezas del compendio: era del decorado y otro decorado */
+.pcbar{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:8px 0 0}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -3175,7 +3180,7 @@ let PV=null;const PVN=P*K,PVX=14*K,PVY=14*K,PVC=288/PVN,PVCX=PVX+(PVN>>1);
 function newPrev(k,en){if(TW[k].uniq&&!uPrevOk(k,(CP.ulv&&CP.ulv[k])||1)){PV=null;return;}
  const cells=Array.from({length:N},()=>Array(N).fill(0)),buff=Array.from({length:N},()=>Array(N).fill(null));
  for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=Math.abs(x-PVCX)<=1?2:1;
- const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:PVCX,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:0,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:0,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:k,selT:null,hover:null,core:{x:PVCX,y:PVY+PVN-1},speed:1,field:null,msg:'',espd:CP.spd};
+ const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:PVCX,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:0,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:0,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:k,selT:null,hover:null,core:{x:PVCX,y:PVY+PVN-1},speed:1,field:null,msg:'',espd:CP.spd,pvT:1};
  const real=S;S=st;try{st.field=field();const tx=PVCX-3,ty=PVY+7,tw={id:1,type:k,lvl:cpState(k).lv,spec:cpState(k).spec,ab:{},acd:{},x:tx,y:ty,cells:[[tx,ty]],sq:[[tx,ty]],cd:0,tgt:null,mode:'core'};if(TW[k].unit){mkSoldiers(tw);tw.flag={x:PVCX,y:ty};tw.sd.forEach(q=>{const o=slotOf(tw,q.i);q.x=o.x;q.y=o.y;q.lock=false;});}if(tw.spec)for(const id of SPECS[k][tw.spec].ab)tw.ab[id]=AB[id].ranks.length;st.list.push(tw);st.occ[tx+','+ty]=tw;}finally{S=real;}
  if(TW[k].uniq)uPrevFix(st,k);
  PV={S:st,k,en,rt:.3};
@@ -5417,6 +5422,7 @@ function update(dt){
   if(e.t==='boss'&&S.round===15&&ROUNDS>15){const before=S.rc||0;S.rc=Math.min(3,before+2);if(S.rc>before)S.msg='¡Jefe derrotado! Recuperas '+(S.rc-before)+' carga'+(S.rc-before===1?'':'s')+' de Reintentar.';}
   return false;});
  if(S.hp<=0&&S.tut&&tutRetry())return;
+ /* v305: en las previsualizaciones el núcleo no cae nunca (un jefe que llega le quitaba toda la vida y paraba la vista previa) */if(S.hp<=0&&(S.pvE||S.pvH||S.pvT||(typeof PREVIEWING!=='undefined'&&PREVIEWING))){S.hp=1e9;}
  if(S.hp<=0){S.hp=0;S.phase='lost';S.proj=[];S.fx=[];S.msg='El núcleo ha caído.';ui();endGame();return;}
  if(bossDead){S.phase='won';S.proj=[];S.fx=[];S.msg='¡Jefe derrotado! Has completado la expedición.';ui();endGame();return;}
  if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){if(S.gorbs&&S.gorbs.length){(S.orbs=S.orbs||[]).push(...S.gorbs.map(o=>({x:o.x,y:o.y,v:o.v,t:0})));S.gorbs=[];}if(!S.hero||S.hero.s.hp<=0)orbFlush();if(S.relics.includes('notebook')&&S.hp>=(S.hpW||0))S.nbN=Math.min(10,(S.nbN||0)+1);}
@@ -8247,7 +8253,7 @@ Object.assign(ETIP,{troll:'Se regenera sin parar: quémalo, envenénalo o hazle 
 // · Rey Goblin: va en su trono a hombros de 4 Porteadores (matables). Mientras quede alguno va rápido y lanza «Lluvia de riquezas» a tus unidades;
 //   los tesoros quedan brillando en el camino y, si lo matas, te los quedas. Sin porteadores se cae (atontado 3 s) y sigue a pie, lento, con «Cetrazo real».
 // · ARGOS: invulnerable mientras vivan sus Generadores de escudo, que salen de otros portales con escolta, avanzan despacio con su escolta y le apuntan con un láser.
-//   Si pasa 60 s sin escudo, llama a otro generador.
+//   Cuando caen sus 3 generadores, el escudo cae para siempre.
 const ESVG4={"kgob": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><path d=\"M4 64 Q32 44 60 64Z\" fill=\"#c0392b\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M6 60 Q32 46 58 60 L58 64 L6 64Z\" fill=\"#f4ecd6\" stroke=\"#1b1712\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"58\" r=\"1.3\" fill=\"#1b1712\"/><circle cx=\"32\" cy=\"52\" r=\"1.3\" fill=\"#1b1712\"/><circle cx=\"48\" cy=\"58\" r=\"1.3\" fill=\"#1b1712\"/><path d=\"M1 24 L13 32 L11 39Z M63 24 L51 32 L53 39Z\" fill=\"#8cc04a\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M8 38 Q8 20 32 20 Q56 20 56 38 Q56 54 32 56 Q8 54 8 38Z\" fill=\"#8cc04a\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M22 52 Q32 56 42 52\" fill=\"none\" stroke=\"#5a8a2a\" stroke-width=\"1.8\"/><circle cx=\"16\" cy=\"42\" r=\"3.5\" fill=\"#e88a7a\" opacity=\".55\"/><circle cx=\"48\" cy=\"42\" r=\"3.5\" fill=\"#e88a7a\" opacity=\".55\"/><path d=\"M19 32 Q24 29 29 32 M35 32 Q40 29 45 32\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"24\" cy=\"34.5\" r=\"2\" fill=\"#1b1712\"/><circle cx=\"40\" cy=\"34.5\" r=\"2\" fill=\"#1b1712\"/><path d=\"M28 36 Q32 33 36 36 Q38 42 32 43 Q26 42 28 36Z\" fill=\"#7aae3a\" stroke=\"#1b1712\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M22 46 Q32 52 42 45 Q32 48 22 46Z\" fill=\"#3a1a12\" stroke=\"#1b1712\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M24.8 47.4 L26.2 41.6 L29.6 47.8Z M39.2 46.8 L37.8 41 L34.4 47.4Z\" fill=\"#fff\" stroke=\"#1b1712\" stroke-width=\"1.3\" stroke-linejoin=\"round\"/><path d=\"M12 23 L10 6 L20 13 L32 2 L44 13 L54 6 L52 23Z\" fill=\"#e8c34a\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M12.5 19 L51.5 19\" stroke=\"#b8902a\" stroke-width=\"2\"/><circle cx=\"32\" cy=\"13\" r=\"2.8\" fill=\"#c0392b\" stroke=\"#1b1712\" stroke-width=\"1.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"21\" cy=\"17\" r=\"1.8\" fill=\"#3a8ae0\"/><circle cx=\"43\" cy=\"17\" r=\"1.8\" fill=\"#3a8ae0\"/></svg>", "argos": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><circle cx=\"32\" cy=\"33\" r=\"29\" fill=\"none\" stroke=\"#3fe8ff\" stroke-width=\"2\" stroke-dasharray=\"6 4\" opacity=\".8\"/><path d=\"M32 13 V5 M24 15 L20 8 M40 15 L44 8\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"32\" cy=\"34\" r=\"20\" fill=\"#6a7484\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M14 30 Q32 24 50 30 M14 40 Q32 46 50 40\" fill=\"none\" stroke=\"#4a5464\" stroke-width=\"1.8\"/><circle cx=\"32\" cy=\"34\" r=\"10\" fill=\"#13222e\" stroke=\"#1b1712\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"32\" cy=\"34\" r=\"6\" fill=\"#ff4f4f\"/><circle cx=\"32\" cy=\"34\" r=\"2.2\" fill=\"#1b1712\"/><circle cx=\"19\" cy=\"24\" r=\"2.6\" fill=\"#13222e\"/><circle cx=\"19\" cy=\"24\" r=\"1.3\" fill=\"#ff4f4f\"/><circle cx=\"45\" cy=\"24\" r=\"2.6\" fill=\"#13222e\"/><circle cx=\"45\" cy=\"24\" r=\"1.3\" fill=\"#ff4f4f\"/><circle cx=\"19\" cy=\"45\" r=\"2.6\" fill=\"#13222e\"/><circle cx=\"19\" cy=\"45\" r=\"1.3\" fill=\"#ff4f4f\"/><circle cx=\"45\" cy=\"45\" r=\"2.6\" fill=\"#13222e\"/><circle cx=\"45\" cy=\"45\" r=\"1.3\" fill=\"#ff4f4f\"/></svg>", "gen": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><path d=\"M20 58 L24 30 L40 30 L44 58Z\" fill=\"#5a6474\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M32 4 L46 14 L46 30 L32 38 L18 30 L18 14Z\" fill=\"#7e8898\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"32\" cy=\"21\" r=\"7\" fill=\"#13222e\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"32\" cy=\"21\" r=\"4\" fill=\"#3fe8ff\"/><path d=\"M26 44 h12 M25 50 h14\" stroke=\"#3a4250\" stroke-width=\"2.2\"/><path d=\"M8 18 Q4 22 8 26 M56 18 Q60 22 56 26\" fill=\"none\" stroke=\"#3fe8ff\" stroke-width=\"2.2\" stroke-linecap=\"round\"/></svg>", "porter": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><path d=\"M2 12 L62 12\" stroke=\"#1b1712\" stroke-width=\"7\" stroke-linecap=\"round\"/><path d=\"M2 12 L62 12\" stroke=\"#a0703a\" stroke-width=\"4\" stroke-linecap=\"round\"/><g transform=\"translate(6.4 10) scale(.8)\"><path d=\"M4 22 L20 30 L18 36Z M60 22 L44 30 L46 36Z\" fill=\"#8cc04a\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M18 32 Q18 16 32 16 Q46 16 46 32 Q46 50 32 52 Q18 50 18 32Z\" fill=\"#8cc04a\" stroke=\"#1b1712\" stroke-width=\"2.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"26\" cy=\"31\" r=\"4\" fill=\"#fff\" stroke=\"#1b1712\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"38\" cy=\"31\" r=\"4\" fill=\"#fff\" stroke=\"#1b1712\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"27\" cy=\"31.5\" r=\"1.8\" fill=\"#1b1712\"/><circle cx=\"37\" cy=\"31.5\" r=\"1.8\" fill=\"#1b1712\"/><path d=\"M32 33 Q36 40 31 41\" fill=\"#7aae3a\" stroke=\"#1b1712\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M24 45 Q32 50 40 44\" fill=\"#3a1a12\" stroke=\"#1b1712\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M27 46 L28 48 L29 46.5 M35 46 L36 48 L37 46\" stroke=\"#fff\" stroke-width=\"1.4\" fill=\"none\"/></g></svg>"};
 {const B=ET.boss,mk=(k,o)=>{ET[k]=Object.assign({},B,o);EIC[k]={esvg:ESVG4[k]};};
  mk('kgob',{n:'Rey Goblin',col:'#c9a24a',fac:'g',story:1,el:0});
@@ -8285,7 +8291,7 @@ function bossTick(dt){const SL=liveUnits().filter(s=>!s.charm);
   if(e.carry){if(e.carry.hp>0){e.x=e.carry.x+e.ox;e.y=e.carry.y+e.oy;e.tx=e.carry.tx;e.ty=e.carry.ty;}else e.carry=null;}
   if(e.t==='kgob')kgobTick(e,dt,SL);
   if(e.t==='argos'){const gs=S.enemies.filter(g=>g.t==='gen'&&g.boss===e&&g.hp>0);const was=e.sh;e.sh=gs.length>0?1:0;if(was&&!e.sh){S.msg='¡El escudo de ARGOS ha caído!';e.shT=0;}
-   if(!e.sh){e.shT+=dt;if(e.shT>=ARGOSCALL){e.shT=0;argosCall(e,1,null);}}}}
+   /* v305: una vez caen sus 3 generadores, ARGOS ya no llama a más */}}
  // tesoros brillando en el camino
  if(S.treas)for(const q of S.treas)q.a=(q.a||0)+dt;}
 function kgobTick(e,dt,SL){const alive=(e.prt||[]).some(q=>q.hp>0);
@@ -8313,7 +8319,7 @@ function bossDraw(g,lw){if(!S)return;
  if(id==='throne')return '<b>Trono</b><small>Va a hombros de '+KGP+' Porteadores goblin, que se pueden matar. Mientras quede alguno va un 40 % más rápido y usa Lluvia de riquezas. Sin porteadores se cae, se queda atontado '+FALLT+' s y sigue a pie, más lento, con Cetrazo real.</small>';
  if(id==='riches')return '<b>Lluvia de riquezas</b><small>Cada '+RICHCD+' s, desde el trono, lanza monedas, copas y joyas a tus unidades ('+f(RICHR/K)+' casillas): daño en un área pequeña. Los tesoros se quedan brillando en el camino y, si matas al Rey, te los quedas como oro.</small>';
  if(id==='scepter')return '<b>Cetrazo real</b><small>A pie, cada '+SCEPCD+' s despide hacia atrás a tus unidades cercanas y les hace algo de daño.</small>';
- if(id==='gens')return '<b>Escudo de generadores</b><small>Es invulnerable mientras vivan sus Generadores de escudo: salen de otros portales con una escuadra de escolta, avanzan despacio por el camino y le apuntan con un láser. Si pasa '+ARGOSCALL+' s sin escudo, llama a otro generador.</small>';
+ if(id==='gens')return '<b>Escudo de generadores</b><small>Es invulnerable mientras vivan sus Generadores de escudo: salen de otros portales con una escuadra de escolta, avanzan despacio por el camino y le apuntan con un láser.</small>';
  if(id==='anchor')return '<b>Plataforma móvil</b><small>Avanza despacio por el camino, escoltado por una escuadra de autómatas, y alimenta el escudo de ARGOS con un láser. Si cae su escolta, sigue avanzando él solo. Destrúyelo para dejar a ARGOS sin escudo.</small>';
  return _k(id,src);};}
 {const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(['throne','Trono','🪑'],['riches','Lluvia de riquezas','💰'],['scepter','Cetrazo real','👑'],['gens','Escudo de generadores','🔷'],['anchor','Plataforma móvil','⚓']);}
@@ -9489,6 +9495,57 @@ let _bkItemsRaw=null;
  CP.flt=CP.flt||{};const has=eraSeen(t);if(!(has[1]&&has[2])){if(CP.flt.era)CP.flt.era='';return h;}
  const row=`<div class="bkfr"><span class="bkfl">Era:</span><button class="${CP.flt.era?'':'on'}" data-a="cflt" data-f="era" data-v="">Todas</button>`+[['1',ERADEF[1]],['2',ERADEF[2]]].map(([v,E])=>`<button class="${CP.flt.era===v?'on':''}" data-a="cflt" data-f="era" data-v="${v}">${E.ic} ${E.n}</button>`).join('')+'</div>';
  return h&&h.startsWith('<div class="bkflt">')?h.replace('<div class="bkflt">','<div class="bkflt">'+row):'<div class="bkflt">'+row+'</div>'+h;};}
+// ==================== v305 · Elegir enemigo en las vistas previas ====================
+// La lista de enemigos de las vistas previas (torre y héroe) va dentro de una tarjeta con su propio scroll, para no perder de vista
+// la previsualización, y con filtros arriba: era (si ya has visto las dos) y tipo (normales, élites, jefes, de evento).
+CP.pvf=CP.pvf||{era:'',ty:''};
+const pvTy=k=>{const E=ET[k]||{};if(typeof isBoss==='function'&&isBoss({t:k})||E.story||k==='gen'||k==='porter')return 'b';if(E.evn)return 'v';if(E.el)return 'e';return 'n';};
+function pvFiltered(btn){const f=CP.pvf,k=btn.dataset.v;if(!ET[k])return true;return (!f.era||String(ET[k].era||1)===f.era)&&(!f.ty||pvTy(k)===f.ty);}
+function pvApply(root){const box=(root||document).querySelector('.bkpven');if(!box)return;
+ for(const b of box.querySelectorAll('.bkpill'))b.style.display=pvFiltered(b)||b.classList.contains('on')?'':'none';
+ for(const b of box.parentElement.querySelectorAll('[data-a="pvenf"]'))b.classList.toggle('on',(CP.pvf[b.dataset.f]||'')===b.dataset.v);}
+{const _bp=bkPreview;bkPreview=function(){const P=_bp.apply(this,arguments);try{
+ const fix=h=>{if(typeof h!=='string')return h;
+  return h.replace(/<div class="bkpvr"><b>Enemigo<\/b><div>([\s\S]*?)<\/div><\/div>(?=<div class="bkpvr">)/,(m,inner)=>{
+   const es=Object.keys(ET).filter(e=>seen('en',e)),eras=new Set(es.map(e=>ET[e].era||1)),tys=new Set(es.map(pvTy));
+   const pill=(f,v,l)=>`<button class="bkpill${(CP.pvf[f]||'')===v?' on':''}" data-a="pvenf" data-f="${f}" data-v="${v}">${l}</button>`;
+   let fl='';if(eras.size>1&&typeof era2Ok==='function'&&era2Ok())fl+=`<div class="pvfr">${pill('era','','Todas')}${pill('era','1',ERADEF[1].ic+' '+ERADEF[1].n)}${pill('era','2',ERADEF[2].ic+' '+ERADEF[2].n)}</div>`;
+   const T=[['n','Normales'],['e','Élites'],['b','Jefes'],['v','De evento']].filter(([v])=>tys.has(v));if(T.length>1)fl+=`<div class="pvfr">${pill('ty','','Todos')}${T.map(([v,l])=>pill('ty',v,l)).join('')}</div>`;
+   return `<div class="bkpvr"><b>Enemigo</b>${fl}<div class="bkpven">${inner}</div></div>`;});};
+ if(typeof P==='string')return fix(P);if(P&&typeof P==='object'){for(const k in P)if(typeof P[k]==='string')P[k]=fix(P[k]);}
+ }catch(e){}return P;};}
+// tras pintar el libro: aplicar el filtro y dejar a la vista el enemigo elegido
+{const _rc=lbRender;lbRender=function(){const r=_rc.apply(this,arguments);try{const box=document.querySelector('#comp .bkpven');if(box){pvApply(document.getElementById('comp'));const on=box.querySelector('.bkpill.on');if(on)box.scrollTop=Math.max(0,on.offsetTop-box.offsetTop-box.clientHeight/2+on.offsetHeight/2);}}catch(e){}return r;};}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="pvenf"]');if(!b)return;e.stopPropagation();e.preventDefault();CP.pvf[b.dataset.f]=b.dataset.v;pvApply(document.getElementById('comp'));},true);
+// ==================== v305 · Piezas en el compendio: variantes vistas y decorado de cada era ====================
+// · V1/V2…: solo las disposiciones de solares que ya te han salido en partida (se apuntan al repartir las piezas).
+// · Era: con la era 2 alcanzada, la pieza se puede ver con el decorado de la Fantástica o de la Distópica. 🎲 cambia el decorado.
+let PCVS={};try{PCVS=JSON.parse(localStorage.getItem('rt-pcvs')||'{}')||{};}catch(e){PCVS={};}
+const pcvSeen=n=>{const a=(PCVS[n]||[]).slice();if(!a.includes(0))a.unshift(0);return a.sort((x,y)=>x-y);};
+{const _s=solarize;solarize=function(o,v,all){const L=SOLARES[o&&o.n];if(v===undefined&&L&&L.length>1){v=Math.floor(Math.random()*L.length);
+  try{if(typeof S!=='undefined'&&S&&!S.tut&&!(typeof PREVIEWING!=='undefined'&&PREVIEWING)){const a=PCVS[o.n]=PCVS[o.n]||[];if(!a.includes(v)){a.push(v);localStorage.setItem('rt-pcvs',JSON.stringify(PCVS));}}}catch(e){}}
+ return _s.call(this,o,v,all);};}
+CP.pce=CP.pce||{};CP.pcd=CP.pcd||{};
+// azar con semilla, para que el decorado no cambie cada vez que se repinta el libro
+function seeded(seed,fn){let s=(seed*2654435761)>>>0||1;const R=Math.random;Math.random=()=>{s^=s<<13;s>>>=0;s^=s>>>17;s^=s<<5;s>>>=0;return (s%1e6)/1e6;};try{return fn();}finally{Math.random=R;}}
+function pcDraw(cn){const i=+cn.dataset.pi,P0=PIECES[i];if(!P0)return;const v=(CP.pcv||{})[i]||0,era=CP.pce[i]||((typeof S!=='undefined'&&S&&S.era)||1),sd=CP.pcd[i]||0;
+ const real=typeof S!=='undefined'?S:null;try{S=Object.assign(Object.create(null),real||{},{era});
+  const o={n:P0.n,p:P0.p,b:[]};seeded(1+i*97+sd*7919+era*31,()=>{solarize(o,v,1);decorate(o);});
+  const c=cn.getContext('2d');c.clearRect(0,0,cn.width,cn.height);drawPat(c,o,24,0,0,1);}finally{S=real;}}
+{const _bd=bkDetail;bkDetail=function(t,id){let h=_bd.apply(this,arguments);if(t!=='pc')return h;try{const i=+id,o=PIECES[i];if(!o||!seen('pc',o.n))return h;
+ const vs=pcvSeen(o.n),v=(CP.pcv||{})[i]||0;
+ // el botón de variante solo aparece si has visto más de una, y pasa solo por las vistas
+ h=h.replace(/<button class="stbtn lvbtn" data-a="cpcv"[^>]*>V\d+<\/button>/,vs.length>1?`<button class="stbtn lvbtn" data-a="cpcv2" data-v="${i}" title="Ver otra disposición de solares que ya te haya salido">V${v+1}</button>`:'');
+ const e2=typeof era2Ok==='function'&&era2Ok(),era=CP.pce[i]||((typeof S!=='undefined'&&S&&S.era)||1);
+ const bar=`<div class="pcbar">${e2?[1,2].map(e=>`<button class="bkpill${era===e?' on':''}" data-a="cpce" data-i="${i}" data-v="${e}">${ERADEF[e].ic} ${ERADEF[e].n}</button>`).join(''):''}<button class="bkpill" data-a="cpcd" data-i="${i}" title="Otro decorado">🎲 Otro decorado</button></div>`;
+ h=h.replace(/(<canvas width="168" height="168" data-pi=")/,bar+'$1');}catch(e){}return h;};}
+{const _lr=lbRender;lbRender=function(){const r=_lr.apply(this,arguments);try{document.querySelectorAll('#comp canvas[data-pi]').forEach(pcDraw);}catch(e){}return r;};}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="cpcv2"],[data-a="cpce"],[data-a="cpcd"]');if(!b)return;e.stopPropagation();e.preventDefault();const a=b.dataset.a;
+ const sc=$('comp')?$('comp').scrollTop:0;
+ if(a==='cpcv2'){const i=+b.dataset.v,vs=pcvSeen(PIECES[i].n);CP.pcv=CP.pcv||{};const k=vs.indexOf(CP.pcv[i]||0);CP.pcv[i]=vs[(k+1)%vs.length];}
+ else if(a==='cpce'){CP.pce[+b.dataset.i]=+b.dataset.v;}
+ else CP.pcd[+b.dataset.i]=(CP.pcd[+b.dataset.i]||0)+1;
+ renderComp();if($('comp'))$('comp').scrollTop=sc;},true);
 // ==================== v302 · SONIDOS DE LO NUEVO (Era Distópica, héroes, reliquias y Prototipo Omega) ====================
 // Todos sintetizados (sin muestras). Se añaden a «Probar sonidos» en un grupo propio.
 const SY2={

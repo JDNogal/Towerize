@@ -69,6 +69,8 @@ const T=[
  ['linea_rondas.js','Línea de rondas: 5 puntos que rotan, jefe, élites y mini-élites, y la línea se rellena con la oleada'],
  ['filtros_era.js','Compendio: familias sin partir por era y filtro por era en todas las pestañas'],
  ['red_electrica.js','Red eléctrica: se conecta con las torres dentro de su alcance'],
+ ['vista_enemigos.js','Vistas previas: enemigos en tarjeta con scroll y filtros; el núcleo no cae'],
+ ['piezas_compendio.js','Compendio de piezas: variantes vistas y decorado de cada era'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];
