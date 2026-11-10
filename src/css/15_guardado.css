@@ -15,3 +15,8 @@
 .achlk .bklink{text-align:left;font:inherit;padding:2px 6px;cursor:pointer}
 .achlk button.pinb{float:none;margin:0;opacity:.8;font-size:12px;padding:0 8px}
 .hmarks .bkmk.hmk.lk.on::after{top:15px!important}
+/* v305 · casillas especiales de las cartas de pieza: capa sin filtro de tinta */
+button.card{position:relative}button.card canvas.pctl{position:absolute;pointer-events:none;filter:none!important;mix-blend-mode:normal!important;opacity:1!important;margin:0!important}
+/* v305 · paneles de mazo y reliquias: se estrechan para caber al lado de la ventana (antes, con «Ver detalles» en pantallas de 1536 px pasaban a botones) */
+#mzside>div{width:var(--mzw,168px)}#mzside .mzd{left:10px}#mzside .mzr{right:10px}
+#relic .rlbar .wcomp.wcd{position:static;width:34px;height:34px;font-size:16px!important;border-radius:50%!important;padding:0!important}

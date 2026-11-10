@@ -331,7 +331,7 @@ function hoverTick(rdt){
  S.hover=null;
  const el=M.has?document.elementFromPoint(M.x,M.y):null;
  const kpEl=el&&el.closest('.kpanel'),kwEl=el&&el.closest('.kw');
- const inPrim=!!(el&&(el.closest('#tip')||el.closest('#side'))),inComp=!!(el&&(el.closest('#comp')||el.closest('#opts')||el.closest('#relic')||el.closest('#hint')||el.closest('#hpop')||el.closest('#focus')||el.closest('#tmcard')||el.closest('#bmcard')));
+ const inPrim=!!(el&&(el.closest('#tip')||el.closest('#side'))),inComp=!!(el&&(el.closest('#comp')||el.closest('#opts')||el.closest('#relic')||el.closest('#hint')||el.closest('#hpop')||el.closest('#focus')||el.closest('#tmcard')||el.closest('#bmcard')||el.closest('#mzside')||el.closest('#mzpop')));
  const lvl=kpEl?+kpEl.dataset.level:(inPrim||inComp?0:-1);
  const tg=(!inPrim&&!kpEl&&!inComp)?resolve(el):null;
  if(MFSQ()){const onL=el&&el.closest&&el.closest('#lupa');if(PR.pinned||RL.open||LB.open||(typeof PMU!=='undefined'&&PMU.open))hideLupa();else if(tg&&!LUPA.sticky){LUPA.tg=tg;placeLupa(tg.rect);}else if(LUPA.tg&&LUPA.sticky){const r=LUPA.tg.rect;if(r)placeLupa(r);else hideLupa();}else if(!onL)hideLupa();}

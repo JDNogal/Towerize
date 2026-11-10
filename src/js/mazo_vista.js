@@ -10,7 +10,9 @@ function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
  // ¿caben a los lados de la ventana? (si no, botones)
  const win=document.body.classList.contains('pcpick')?$('panel'):($('relic').querySelector('.pscr,.evwin,.cgrid')||$('relic').firstElementChild);
- const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&r.left>=186&&innerWidth-r.right>=186;
+ const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&gap>=150;if(fit)el.style.setProperty('--mzw',Math.round(Math.min(168,gap-20))+'px');
+ /* ventanas que ocupan todo el ancho (cofre, eventos): en PC grande se estrechan para dejar sitio a los paneles */
+ if(!fit&&!TOUCH&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
  document.body.classList.toggle('mzbtn',!fit);
  const sg=S.deck.join()+'|'+S.relics.join()+'|'+S.list.length;if(el.dataset.sg!==sg){el.dataset.sg=sg;
   el.querySelector('.mzd').innerHTML=`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres</small></h4>${mzDeck()}`;
@@ -25,7 +27,10 @@ function mzOpen(k){mzClose();const p=document.createElement('div');p.id='mzpop';
  p.addEventListener('click',e=>{if(e.target===p||e.target.closest('.mzx')){e.stopPropagation();mzClose();}});document.body.appendChild(p);MZ.pop=k;try{sfx('page');}catch(e){}}
 function mzClose(){const p=$('mzpop');if(p)p.remove();MZ.pop=null;}
 addEventListener('keydown',e=>{if(MZ.pop&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();mzClose();}},true);
-setInterval(()=>{try{mzSide();}catch(e){}},200);
+// v305 · el botón del compendio de las ventanas va con los demás botones redondos (antes, cuadrado arriba a la izquierda y tapado por los FPS)
+function wcompDock(){const rl=$('relic');if(!rl||!rl.classList.contains('open'))return;const w=rl.querySelector('.wcomp'),bar=rl.querySelector('.rlbar');if(!w||!bar||w.parentNode===bar)return;
+ const eye=bar.querySelector('[data-a="peek"]');w.classList.add('wcd');if(eye)bar.insertBefore(w,eye);else bar.appendChild(w);}
+setInterval(()=>{try{mzSide();}catch(e){}try{wcompDock();}catch(e){}},200);
 // clic (o segundo toque en móvil): abre esa ficha en el compendio
 {let last=null;document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('#mzside [data-cpt],#mzpop [data-cpt]');if(!a){last=null;return;}
  if(TOUCH&&last!==a){last=a;return;}last=null;e.stopPropagation();e.preventDefault();const hp=$('hpop');if(hp)hp.style.display='none';mzClose();try{cpGo(a.dataset.cpt,a.dataset.cpv);if(LB.open)LB.fromWin=1;}catch(x){}},true);}
