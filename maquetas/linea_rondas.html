@@ -1,0 +1,71 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Línea de rondas</title>
+<style>
+:root{--lea:#5a3a24;--lea2:#3a2416;--trim:#c8a060;--txt:#f5e6c8;--boss:#e8344a;--elite:#9a5cff;--mini:#d98a2a;--ev:#3fc9b0}
+body{margin:0;background:#111;font:600 13px system-ui,sans-serif;color:var(--txt)}
+.f{position:relative;width:1280px;height:720px;background:url(fondo_partida.png) 0 0/1280px 720px;overflow:hidden;margin:0 0 30px}
+.tag{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);background:#000c;padding:6px 14px;border-radius:8px;font-size:15px;color:#fff}
+.hide{position:absolute;background:#0d0f14}
+/* ---- A: bajo la barra de arriba ---- */
+.tl{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;padding:6px 16px;border-radius:12px;border:1px solid var(--lea2);background:linear-gradient(180deg,#6a4630,var(--lea) 45%,var(--lea2));box-shadow:inset 0 0 0 1.5px #c8a06099,0 3px 8px #0008}
+.tr{position:relative;display:flex;align-items:center}
+.seg{width:var(--w,30px);height:4px;background:#00000066;border-radius:2px;position:relative;overflow:hidden}.seg i{position:absolute;inset:0;width:0;background:#ffd75a}.seg.done i{width:100%}.seg.cur i{width:var(--p)}
+.d{width:12px;height:12px;border-radius:50%;background:#2a1a10;box-shadow:inset 0 0 0 2px #c8a06099;position:relative;flex:none;display:grid;place-items:center}
+.d.done{background:#ffd75a;box-shadow:none}.d.cur{background:#ffd75a;box-shadow:0 0 0 3px #ffd75a55,0 0 10px #ffd75a}
+.d.b{width:24px;height:24px;background:var(--boss);box-shadow:0 0 0 2px #fff;font-size:14px}
+.d.e{width:18px;height:18px;background:var(--elite);box-shadow:0 0 0 1.5px #e8d8ff;font-size:10px}
+.d.m{width:16px;height:16px;background:var(--mini);box-shadow:0 0 0 1.5px #ffe0b0;font-size:9px}
+.d.v{width:16px;height:16px;background:var(--ev);box-shadow:0 0 0 1.5px #d8fff6;font-size:9px}
+.d.done.b,.d.done.e,.d.done.m,.d.done.v{filter:grayscale(.7) brightness(.8)}
+.n{position:absolute;top:100%;margin-top:3px;font-size:10px;opacity:.7;left:50%;transform:translateX(-50%)}
+.lb{font-size:12px;margin-right:12px;white-space:nowrap}.lb b{font-size:15px}
+.tip{position:absolute;background:#f5e6c8;color:#3a2416;border:2px solid var(--lea);border-radius:9px;padding:7px 10px;font-weight:500;font-size:12px;box-shadow:0 4px 10px #0009;width:190px}
+.tip b{font-size:13px}
+.leg{position:absolute;right:16px;bottom:56px;background:#000b;border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.8}
+.leg span{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:middle}
+/* ---- C: vertical a la derecha ---- */
+.vt{position:absolute;right:62px;top:70px;bottom:120px;display:flex;flex-direction:column;align-items:center;padding:10px 8px;border-radius:12px;background:linear-gradient(90deg,#6a4630,var(--lea) 45%,var(--lea2));box-shadow:inset 0 0 0 1.5px #c8a06099,0 3px 8px #0008}
+.vt .seg{width:4px;height:var(--h,22px)}.vt .seg.cur i{width:100%;height:var(--p)}.vt .seg i{height:0}.vt .seg.done i{height:100%}
+.vt .n{top:50%;left:auto;right:100%;transform:translateY(-50%);margin:0 6px 0 0}
+</style></head><body>
+
+<!-- ============ A ============ -->
+<div class="f" id="A">
+ <div class="hide" style="left:560px;top:44px;width:160px;height:18px"></div>
+ <div class="tl" style="top:52px">
+  <div class="lb">Ronda <b>9</b>/15</div>
+  <div class="tr" id="trA"></div>
+ </div>
+ <div class="tip" style="left:672px;top:104px"><b>Ronda 10</b> · la próxima<br>💀 1 Élite</div>
+ <div class="leg"><span style="background:var(--boss)"></span>Jefe<br><span style="background:var(--elite)"></span>Élite<br><span style="background:var(--mini)"></span>Minijefe<br><span style="background:var(--ev)"></span>De un evento (encargo, dragona…)</div>
+ <div class="tag">A · Bajo la barra de arriba, toda la partida a la vista</div>
+</div>
+
+<!-- ============ B ============ -->
+<div class="f" id="B">
+ <div class="tl" style="top:auto;bottom:16px;padding:6px 14px">
+  <div class="lb">Ronda <b>9</b>/15</div>
+  <div class="tr" id="trB"></div>
+ </div>
+ <div class="tag" style="bottom:auto;top:60px">B · Abajo en el centro (en móvil choca con «Próxima oleada»)</div>
+</div>
+
+<!-- ============ C ============ -->
+<div class="f" id="C">
+ <div class="hide" style="left:560px;top:44px;width:160px;height:18px"></div>
+ <div class="tl" style="top:52px;padding:6px 12px">
+  <div class="lb">Ronda <b>18</b>/30</div>
+  <div class="tr" id="trC"></div>
+ </div>
+ <div class="tag">C · Partidas largas: solo las rondas cercanas (8 adelante), con flechas de «hay más»</div>
+</div>
+
+<script>
+function mk(id,R,cur,p,{from=1,to=R,w=30,arrows=false}={}){const T=document.getElementById(id);const ELI={4:'m',8:'e',10:'e',12:'e',13:'m',14:'e',16:'e',20:'e',24:'e',28:'e'};const EV={11:'v'};
+ let h='';if(arrows&&from>1)h+='<span style="opacity:.7;margin-right:6px">◀ '+(from-1)+'</span>';
+ for(let r=from;r<=to;r++){const boss=r===R||(r===15&&R>15),t=boss?'b':EV[r]||ELI[r]||'';const st=r<cur?'done':r===cur?'cur':'';
+  const ic=t==='b'?'💀':t==='e'?'☠':t==='m'?'☠':t==='v'?'📜':'';
+  h+=`<div class="d ${t} ${st}">${ic}<span class="n">${r}</span></div>`;
+  if(r<to)h+=`<div class="seg ${r<cur?'done':r===cur?'cur':''}" style="--w:${w}px;--p:${p}%"><i></i></div>`;}
+ if(arrows&&to<R)h+='<span style="opacity:.7;margin-left:6px">'+(R-to)+' ▶</span>';T.innerHTML=h;}
+mk('trA',15,9,55);mk('trB',15,9,55);mk('trC',30,18,40,{from:16,to:26,w:30,arrows:true});
+</script></body></html>
