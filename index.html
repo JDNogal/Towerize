@@ -9131,18 +9131,18 @@ function svxHTML(){const inG=!document.body.classList.contains('inmenu');const k
  return `<div class="svx">
  <h3 class="osec">Copiar a otro sitio</h3>
  <p class="svxp">Crea un código con tu progreso${inG?' y esta partida (se guarda tal como está)':' y la partida que tengas a medias'}.</p>
- <div class="svxb"><button class="go" data-sx="make"${SVX.busy?' disabled':''}>💾 Crear código</button>${SVX.code?`<button data-sx="copy">📋 Copiar</button><button data-sx="dl">⬇ Descargar .txt</button>`:''}</div>
- ${SVX.code?`<textarea class="svxt" readonly data-sx="out">${svxEsc(SVX.code)}</textarea><small class="svxs">${kb?kb+" KB":"menos de 1 KB"}</small>`:''}
+ <div class="svxb"><button class="go" data-svx="make"${SVX.busy?' disabled':''}>💾 Crear código</button>${SVX.code?`<button data-svx="copy">📋 Copiar</button><button data-svx="dl">⬇ Descargar .txt</button>`:''}</div>
+ ${SVX.code?`<textarea class="svxt" readonly data-svx="out">${svxEsc(SVX.code)}</textarea><small class="svxs">${kb?kb+" KB":"menos de 1 KB"}</small>`:''}
  <h3 class="osec">Cargar desde otro sitio</h3>
  <p class="svxp">Pega aquí el código (o abre el archivo .txt). <b>Sustituye</b> el progreso y la partida guardada de este navegador.</p>
- <textarea class="svxt" data-sx="in" placeholder="TWZ1.…">${svxEsc(SVX.inp)}</textarea>
- <div class="svxb"><button data-sx="file">📂 Abrir archivo…</button><button class="${SVX.ask?'warn':'go'}" data-sx="load"${SVX.busy||!SVX.inp.trim()?' disabled':''}>${SVX.ask?'¿Seguro? Pulsa otra vez':'Cargar código'}</button></div>
+ <textarea class="svxt" data-svx="in" placeholder="TWZ1.…">${svxEsc(SVX.inp)}</textarea>
+ <div class="svxb"><button data-svx="file">📂 Abrir archivo…</button><button class="${SVX.ask?'warn':'go'}" data-svx="load"${SVX.busy||!SVX.inp.trim()?' disabled':''}>${SVX.ask?'¿Seguro? Pulsa otra vez':'Cargar código'}</button></div>
  ${SVX.msg?`<div class="svxm">${svxEsc(SVX.msg)}</div>`:''}</div>`;}
 {const _b=optBody;optBody=function(book){const r=_b.apply(this,arguments);if(OP.tab==='sv')r.body=svxHTML();return r;};}
-document.addEventListener('input',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.sx==='in'){SVX.inp=t.value;SVX.ask=0;const b=document.querySelector('[data-sx="load"]');if(b){b.disabled=!SVX.inp.trim()||!!SVX.busy;b.classList.remove('warn');b.classList.add('go');b.textContent='Cargar código';}}});
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button[data-sx]');if(!b)return;e.preventDefault();e.stopPropagation();const a=b.dataset.sx;try{sfx('ui');}catch(er){}
+document.addEventListener('input',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.svx==='in'){SVX.inp=t.value;SVX.ask=0;const b=document.querySelector('[data-svx="load"]');if(b){b.disabled=!SVX.inp.trim()||!!SVX.busy;b.classList.remove('warn');b.classList.add('go');b.textContent='Cargar código';}}});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button[data-svx]');if(!b)return;e.preventDefault();e.stopPropagation();const a=b.dataset.svx;try{sfx('ui');}catch(er){}
  if(a==='make')svxMake();
- else if(a==='copy'){const t=document.querySelector('[data-sx="out"]');const done=()=>{SVX.msg='✓ Copiado. Pégalo en «Cargar código» en el otro ordenador.';renderOpts();};
+ else if(a==='copy'){const t=document.querySelector('[data-svx="out"]');const done=()=>{SVX.msg='✓ Copiado. Pégalo en «Cargar código» en el otro ordenador.';renderOpts();};
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(SVX.code).then(done,()=>{if(t){t.select();document.execCommand('copy');}done();});else{if(t){t.select();document.execCommand('copy');}done();}}
  else if(a==='dl'){const d=new Date(),p=n=>String(n).padStart(2,'0');const a2=document.createElement('a');a2.href=URL.createObjectURL(new Blob([SVX.code],{type:'text/plain'}));
   a2.download=`towerize-guardado-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}.txt`;document.body.appendChild(a2);a2.click();setTimeout(()=>{URL.revokeObjectURL(a2.href);a2.remove();},500);}
