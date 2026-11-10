@@ -4530,9 +4530,10 @@ function placePiece(bx,by){
  for(let i=ends.length-1;i>=0;i--)if(!(ends[i].d<1e9))ends.splice(i,1);
  // primero el extremo más lejano de la pieza nueva; el resto, al azar (antes, siempre los más alejados: los enemigos tardaban mucho en llegar)
  ends.sort((a,b)=>a.nw===b.nw?b.d-a.d:a.nw?-1:1);{const nw=ends.filter(e=>e.nw),rest=shuf(ends.filter(e=>!e.nw));ends.length=0;ends.push(...nw.slice(0,1),...shuf(nw.slice(1).concat(rest)));}
- if(!ends.length)ends.push({...any,nw:true});
+ if(!ends.length)ends.push({...any,nw:true,fake:1});
  S.ends=addMids(ends);
- const boss=bossRound(S.round)?(ends.find(e=>e.nw)||any):null;
+ /* v305: si la pieza cierra el camino y ya hay un portal en medio, no se abre otro de relleno en la pieza */if(S.ends.some(e=>e.mid)&&S.ends.some(e=>e.fake))S.ends=S.ends.filter(e=>!e.fake);
+ /* v305: si la pieza cierra el camino (sin extremo propio), el jefe sale del portal de en medio y no de un portal aparte solo para él */const boss=bossRound(S.round)?(S.ends.find(e=>e.nw&&!e.fake)||S.ends.find(e=>e.mid)||S.ends[0]||any):null;
  makePortals(boss);S.phase='build';if(solF&&showSolarFocus(bx,by)){S.tut.solf=1;FO.after=()=>setTimeout(()=>tutPhase('build'),0);}else setTimeout(()=>tutPhase('build'),0);
  S.msg=(S.round===ROUNDS&&ROUNDS===30?'¡Se ha abierto un portal enorme… algo peor que el jefe se acerca! ':bossRound(S.round)?'¡Se ha abierto el portal del jefe! ':'')+(ELITES[S.round]&&!bossRound(S.round)?'Esta ronda trae '+Object.entries(ELITES[S.round]).map(([t,n])=>n+' '+ET[t].n.toLowerCase()).join(' y ')+'.':'');ui();
  pieceWarn(p);S.lastBk=bx+','+by;
