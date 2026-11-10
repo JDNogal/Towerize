@@ -10,9 +10,9 @@ function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
  // ¿caben a los lados de la ventana? (si no, botones)
  const win=document.body.classList.contains('pcpick')?$('panel'):($('relic').querySelector('.pscr,.evwin,.cgrid')||$('relic').firstElementChild);
- const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&gap>=150;if(fit)el.style.setProperty('--mzw',Math.round(Math.min(168,gap-20))+'px');
+ const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&(gap>=150||(!TOUCH&&innerWidth>=900));if(fit)el.style.setProperty('--mzw',Math.round(Math.max(132,Math.min(168,gap-20)))+'px');
  /* ventanas que ocupan todo el ancho (cofre, eventos): en PC grande se estrechan para dejar sitio a los paneles */
- if(!fit&&!TOUCH&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
+ if(gap<150&&!TOUCH&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
  document.body.classList.toggle('mzbtn',!fit);
  const sg=S.deck.join()+'|'+S.relics.join()+'|'+S.list.length;if(el.dataset.sg!==sg){el.dataset.sg=sg;
   el.querySelector('.mzd').innerHTML=`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres</small></h4>${mzDeck()}`;
@@ -35,7 +35,7 @@ setInterval(()=>{try{mzSide();}catch(e){}try{wcompDock();}catch(e){}},200);
 {let last=null;document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('#mzside [data-cpt],#mzpop [data-cpt]');if(!a){last=null;return;}
  if(TOUCH&&last!==a){last=a;return;}last=null;e.stopPropagation();e.preventDefault();const hp=$('hpop');if(hp)hp.style.display='none';mzClose();try{cpGo(a.dataset.cpt,a.dataset.cpv);if(LB.open)LB.fromWin=1;}catch(x){}},true);}
 // v305 · las ventanas (oferta de torres, cofre, eventos) se encogen un poco si no caben a lo alto, para que no salga la barra de scroll del navegador
-function relFit(){const rl=$('relic');if(!rl||!rl.classList.contains('open'))return;if(!rl.firstElementChild)return;
+function relFit(){const rl=$('relic');if(!rl||!rl.classList.contains('open')||rl.querySelector('.toff'))return;if(!rl.firstElementChild)return;
  const kids=[...rl.children].filter(k=>!k.classList.contains('rlbar'));if(!kids.length)return;let tot=0;for(const k of kids)k.style.zoom='';
  const z=parseFloat(getComputedStyle(kids[0]).zoom)||1;const top=Math.min(...kids.map(k=>k.getBoundingClientRect().top)),bot=Math.max(...kids.map(k=>k.getBoundingClientRect().bottom));tot=bot-top;
  const room=innerHeight-48;if(tot>room){const nz=Math.max(.8,z*room/tot);for(const k of kids)k.style.zoom=String(nz);}}

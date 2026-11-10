@@ -1489,6 +1489,12 @@ body.mfs #pinbar .pnl{display:none;margin-top:6px}body.mfs #pinbar.open .pnl{dis
 .achlk.achc .bklink{text-align:center;padding:2px 6px}
 /* v305 · bocadillos de palabras clave también dentro del libro (antes se ocultaban siempre con el libro abierto) */
 .kpanel.inbk{z-index:400!important}
+/* v305 · oferta de torres: «Ver detalles» no agranda el pergamino ni encoge la letra; la zona de estadísticas tiene la misma altura
+   en los dos modos y, con detalles, se desplaza dentro de cada carta */
+body:not(.mfs) #relic:not(.tdeton) .toff .tof .tgl{min-height:160px;display:flex;flex-direction:column;justify-content:center}
+body:not(.mfs) #relic.tdeton .toff .tof .tdt{height:166px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--trim) transparent;padding-right:2px}
+body:not(.mfs) #relic.tdeton .toff .tof .tdt::-webkit-scrollbar{width:6px}
+body:not(.mfs) #relic.tdeton .toff .tof .tdt::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--trim) 80%,transparent);border-radius:3px}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -9292,9 +9298,9 @@ function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
  // ¿caben a los lados de la ventana? (si no, botones)
  const win=document.body.classList.contains('pcpick')?$('panel'):($('relic').querySelector('.pscr,.evwin,.cgrid')||$('relic').firstElementChild);
- const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&gap>=150;if(fit)el.style.setProperty('--mzw',Math.round(Math.min(168,gap-20))+'px');
+ const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&(gap>=150||(!TOUCH&&innerWidth>=900));if(fit)el.style.setProperty('--mzw',Math.round(Math.max(132,Math.min(168,gap-20)))+'px');
  /* ventanas que ocupan todo el ancho (cofre, eventos): en PC grande se estrechan para dejar sitio a los paneles */
- if(!fit&&!TOUCH&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
+ if(gap<150&&!TOUCH&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
  document.body.classList.toggle('mzbtn',!fit);
  const sg=S.deck.join()+'|'+S.relics.join()+'|'+S.list.length;if(el.dataset.sg!==sg){el.dataset.sg=sg;
   el.querySelector('.mzd').innerHTML=`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres</small></h4>${mzDeck()}`;
@@ -9317,7 +9323,7 @@ setInterval(()=>{try{mzSide();}catch(e){}try{wcompDock();}catch(e){}},200);
 {let last=null;document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('#mzside [data-cpt],#mzpop [data-cpt]');if(!a){last=null;return;}
  if(TOUCH&&last!==a){last=a;return;}last=null;e.stopPropagation();e.preventDefault();const hp=$('hpop');if(hp)hp.style.display='none';mzClose();try{cpGo(a.dataset.cpt,a.dataset.cpv);if(LB.open)LB.fromWin=1;}catch(x){}},true);}
 // v305 · las ventanas (oferta de torres, cofre, eventos) se encogen un poco si no caben a lo alto, para que no salga la barra de scroll del navegador
-function relFit(){const rl=$('relic');if(!rl||!rl.classList.contains('open'))return;if(!rl.firstElementChild)return;
+function relFit(){const rl=$('relic');if(!rl||!rl.classList.contains('open')||rl.querySelector('.toff'))return;if(!rl.firstElementChild)return;
  const kids=[...rl.children].filter(k=>!k.classList.contains('rlbar'));if(!kids.length)return;let tot=0;for(const k of kids)k.style.zoom='';
  const z=parseFloat(getComputedStyle(kids[0]).zoom)||1;const top=Math.min(...kids.map(k=>k.getBoundingClientRect().top)),bot=Math.max(...kids.map(k=>k.getBoundingClientRect().bottom));tot=bot-top;
  const room=innerHeight-48;if(tot>room){const nz=Math.max(.8,z*room/tot);for(const k of kids)k.style.zoom=String(nz);}}

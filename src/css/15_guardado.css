@@ -61,3 +61,9 @@ body.mfs #pinbar .pnl{display:none;margin-top:6px}body.mfs #pinbar.open .pnl{dis
 .achlk.achc .bklink{text-align:center;padding:2px 6px}
 /* v305 · bocadillos de palabras clave también dentro del libro (antes se ocultaban siempre con el libro abierto) */
 .kpanel.inbk{z-index:400!important}
+/* v305 · oferta de torres: «Ver detalles» no agranda el pergamino ni encoge la letra; la zona de estadísticas tiene la misma altura
+   en los dos modos y, con detalles, se desplaza dentro de cada carta */
+body:not(.mfs) #relic:not(.tdeton) .toff .tof .tgl{min-height:160px;display:flex;flex-direction:column;justify-content:center}
+body:not(.mfs) #relic.tdeton .toff .tof .tdt{height:166px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--trim) transparent;padding-right:2px}
+body:not(.mfs) #relic.tdeton .toff .tof .tdt::-webkit-scrollbar{width:6px}
+body:not(.mfs) #relic.tdeton .toff .tof .tdt::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--trim) 80%,transparent);border-radius:3px}
