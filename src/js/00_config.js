@@ -22,12 +22,12 @@ const KEYS=new Set();
 const kcOn=()=>!TOUCH&&OPT.kcap!==false;
 const kcap=t=>kcOn()?`<span class="kcap">${t}</span>`:'';
 // ---- atajos de teclado configurables (los de siempre son los predeterminados) ----
-const KBDEF={up:'w',left:'a',down:'s',right:'d',zin:'e',zout:'q',hab:'f',ult:'g',hero:'h',pigs:'c',pause:' ',speed:'v',wave:'enter',upg:'u',flag:'b',ptips:'p',rot:'r',peek:'tab',nu:'w',nl:'a',nd:'s',nr:'d',nok:'enter'};
+const KBDEF={up:'w',left:'a',down:'s',right:'d',zin:'e',zout:'q',hab:'f',ult:'g',hero:'h',ally:'j',pigs:'c',pause:' ',speed:'v',wave:'enter',upg:'u',flag:'b',ptips:'p',rot:'r',peek:'tab',nu:'w',nl:'a',nd:'s',nr:'d',nok:'enter'};
 // segunda tecla (alternativa): solo las lógicas vienen rellenas
 const KB2DEF={up:'arrowup',left:'arrowleft',down:'arrowdown',right:'arrowright',nu:'arrowup',nl:'arrowleft',nd:'arrowdown',nr:'arrowright',nok:' '};
 const KBMENU=['nu','nl','nd','nr','nok'];
 const KBL=[['Mapa',[['up','Mover el mapa arriba','⬆️'],['left','Mover el mapa a la izquierda','⬅️'],['down','Mover el mapa abajo','⬇️'],['right','Mover el mapa a la derecha','➡️'],['zin','Acercar','🔍'],['zout','Alejar','🔭']]],
- ['Héroe',[['hab','Habilidad del héroe','✨'],['ult','Habilidad definitiva','🌟'],['hero','Mover al héroe','🦸'],['pigs','Mover a los cerditos','🐷']]],
+ ['Héroe',[['hab','Habilidad del héroe','✨'],['ult','Habilidad definitiva','🌟'],['hero','Mover al héroe','🦸'],['ally','Mover a la criatura aliada','👽'],['pigs','Mover a los cerditos','🐷']]],
  ['Partida',[['pause','Pausar / reanudar','⏯️'],['speed','Cambiar la velocidad','⏩'],['wave','Empezar la oleada','⚔️'],['upg','Mejorar torre (con Mayús: marcar la mejora)','⬆️'],['flag','Mover la bandera de la torre elegida (o su nube / su luz)','🚩'],['ptips','Mostrar u ocultar lo que sale de cada portal','💀'],['rot','Girar la pieza','🔄'],['peek','Ver el mapa en eventos y ofertas','👁']]],
  ['Menús',[['nu','Subir','⬆️'],['nl','Izquierda','⬅️'],['nd','Bajar','⬇️'],['nr','Derecha','➡️'],['nok','Aceptar / pulsar','✅']]]];
 const KBFIX=[['1 – 7','Construir torre (en el solar abierto o con el ratón encima)','🗼'],['Mayús + 1 – 9','Usar reliquia','💎'],['Esc','Pausa / cancelar / volver','⏸️'],['Q / E','Cambiar de sección en el libro (compendio, opciones…)','📖']];
@@ -58,6 +58,7 @@ addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.r
  else if(kbIs('ult',k)){clickA('[data-a="hult"]');e.preventDefault();}
  else if(kbIs('hero',k)){clickA('[data-a="hero"]');e.preventDefault();}
  else if(kbIs('pigs',k)){clickA('[data-a="pigs"]');e.preventDefault();}
+ else if(kbIs('ally',k)){if(clickA('[data-a="ally"]'))e.preventDefault();}
  else if(kbIs('pause',k)){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
  else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2,3],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(kbIs('wave',k)&&S.phase==='build'){const wb=document.querySelector('[data-a="wave"]');if(wb&&hitOk(wb)){WARM=0;startWave();}e.preventDefault();}

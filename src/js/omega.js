@@ -83,3 +83,7 @@ function omDrones(t,L,dt){let u=OMD.get(t);if(!u){/* tras cargar o reintentar: r
  const n=Math.min(3,L),k=(L>=4?2:1)*(1+.05*Math.max(0,S.round-1));u={type:'bastion',lvl:2,summ:1,odr:1,otid:t.id,olv:L,ttl:9999,x:t.x,y:t.y,cells:[],flag:{x:b.x,y:b.y},ab:{},acd:{},sd:[],xap:5,tinf:{n:'Dron de combate',ic:'🛸',col:'#9aa4b4',dt:'phys',range:2.5,dmg:6,rate:1.2,unit:{n:3,hp:45,ap:10,rez:9,spd:2.4}},ovr:{dmg:6*k,rate:1.2,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
  const hp=45*k;u.sd=Array.from({length:n},(_,i)=>({i,x:t.x,y:t.y,hp,max:hp,en:null,cd:0,rt:0,tw:u,lock:true,fight:false}));(S.summ=S.summ||[]).push(u);OMD.set(t,u);}
 H2T.push(dt=>omegaTick(dt));
+
+// v305 · poner en cola (clic derecho o mantener) lo que el Prototipo Omega va a absorber, como el resto de compras
+{const _o=wishOk;wishOk=function(w){if(w&&w.a==='ofeed'){const t=S.list.find(o=>o.id===w.id);if(!t||t.type!=='omega')return null;const x=omAvail(t).find(o=>o.k===w.v);return x?{t,c:x.c}:null;}return _o.apply(this,arguments);};}
+{const _t=wishTick;wishTick=function(){try{if(S&&S.wish&&S.wish.length&&S.wish[0].a==='ofeed'&&!RL.open&&(S.phase==='build'||S.phase==='wave')){const w=S.wish[0],o=wishOk(w);if(!o){S.wish.shift();wishDeco();return;}if(S.gold<o.c)return;S.wish.shift();if(omegaFeed(o.t,w.v))toast('🔖 <b>Prototipo Omega</b>: absorbe '+TW[w.v].n);wishDeco();ui();return;}}catch(e){}return _t.apply(this,arguments);};}

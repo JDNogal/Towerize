@@ -1554,12 +1554,12 @@ const KEYS=new Set();
 const kcOn=()=>!TOUCH&&OPT.kcap!==false;
 const kcap=t=>kcOn()?`<span class="kcap">${t}</span>`:'';
 // ---- atajos de teclado configurables (los de siempre son los predeterminados) ----
-const KBDEF={up:'w',left:'a',down:'s',right:'d',zin:'e',zout:'q',hab:'f',ult:'g',hero:'h',pigs:'c',pause:' ',speed:'v',wave:'enter',upg:'u',flag:'b',ptips:'p',rot:'r',peek:'tab',nu:'w',nl:'a',nd:'s',nr:'d',nok:'enter'};
+const KBDEF={up:'w',left:'a',down:'s',right:'d',zin:'e',zout:'q',hab:'f',ult:'g',hero:'h',ally:'j',pigs:'c',pause:' ',speed:'v',wave:'enter',upg:'u',flag:'b',ptips:'p',rot:'r',peek:'tab',nu:'w',nl:'a',nd:'s',nr:'d',nok:'enter'};
 // segunda tecla (alternativa): solo las lógicas vienen rellenas
 const KB2DEF={up:'arrowup',left:'arrowleft',down:'arrowdown',right:'arrowright',nu:'arrowup',nl:'arrowleft',nd:'arrowdown',nr:'arrowright',nok:' '};
 const KBMENU=['nu','nl','nd','nr','nok'];
 const KBL=[['Mapa',[['up','Mover el mapa arriba','⬆️'],['left','Mover el mapa a la izquierda','⬅️'],['down','Mover el mapa abajo','⬇️'],['right','Mover el mapa a la derecha','➡️'],['zin','Acercar','🔍'],['zout','Alejar','🔭']]],
- ['Héroe',[['hab','Habilidad del héroe','✨'],['ult','Habilidad definitiva','🌟'],['hero','Mover al héroe','🦸'],['pigs','Mover a los cerditos','🐷']]],
+ ['Héroe',[['hab','Habilidad del héroe','✨'],['ult','Habilidad definitiva','🌟'],['hero','Mover al héroe','🦸'],['ally','Mover a la criatura aliada','👽'],['pigs','Mover a los cerditos','🐷']]],
  ['Partida',[['pause','Pausar / reanudar','⏯️'],['speed','Cambiar la velocidad','⏩'],['wave','Empezar la oleada','⚔️'],['upg','Mejorar torre (con Mayús: marcar la mejora)','⬆️'],['flag','Mover la bandera de la torre elegida (o su nube / su luz)','🚩'],['ptips','Mostrar u ocultar lo que sale de cada portal','💀'],['rot','Girar la pieza','🔄'],['peek','Ver el mapa en eventos y ofertas','👁']]],
  ['Menús',[['nu','Subir','⬆️'],['nl','Izquierda','⬅️'],['nd','Bajar','⬇️'],['nr','Derecha','➡️'],['nok','Aceptar / pulsar','✅']]]];
 const KBFIX=[['1 – 7','Construir torre (en el solar abierto o con el ratón encima)','🗼'],['Mayús + 1 – 9','Usar reliquia','💎'],['Esc','Pausa / cancelar / volver','⏸️'],['Q / E','Cambiar de sección en el libro (compendio, opciones…)','📖']];
@@ -1590,6 +1590,7 @@ addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.r
  else if(kbIs('ult',k)){clickA('[data-a="hult"]');e.preventDefault();}
  else if(kbIs('hero',k)){clickA('[data-a="hero"]');e.preventDefault();}
  else if(kbIs('pigs',k)){clickA('[data-a="pigs"]');e.preventDefault();}
+ else if(kbIs('ally',k)){if(clickA('[data-a="ally"]'))e.preventDefault();}
  else if(kbIs('pause',k)){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
  else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2,3],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(kbIs('wave',k)&&S.phase==='build'){const wb=document.querySelector('[data-a="wave"]');if(wb&&hitOk(wb)){WARM=0;startWave();}e.preventDefault();}
@@ -2291,7 +2292,7 @@ function renderHeroPickOld(){
  fitHero();
 }
 const abRank=(t,id)=>t.ab&&t.ab[id]?AB[id].ranks[t.ab[id]-1]:null;
-const TRI=.9,ALERT=2.75*K,SCONTACT=1.1,RANGED_R=3*K,MELR=1.6*K,SREGEN=3,SREGP=.05,SREGT=3;
+const TRI=.9,ALERT=2.3*K/* v305: era 2,75 (y antes de la v278, 2) */,SCONTACT=1.1,RANGED_R=3*K,MELR=1.6*K,SREGEN=3,SREGP=.05,SREGT=3;
 const uRegen=(s,dt)=>{if(S.wt-(s.lh===undefined?-99:s.lh)>=SREGT)s.hp=Math.min(s.max,s.hp+s.max*SREGP*dt);};
 // Las tablas se escriben en 'casillas viejas'; aquí pasan a casillas de la rejilla fina (x K). Los radios de enemigos se reducen para que quepan varios por camino.
 for(const k in TW){const T=TW[k];T.range*=K;if(T.ps)T.ps*=K;if(T.splash)T.splash*=K;if(T.pr)T.pr*=K;if(T.unit)T.unit.spd*=K;}
@@ -2338,25 +2339,26 @@ function see(t,k){if(!SEEOK||SEEN[t][k])return;SEEN[t][k]=1;try{localStorage.set
 const CP={open:false,tab:'tw',sup:{},prev:null,pen:'norm',flt:{},lv:{},spd:1};
 // Para añadir una opción basta una línea aquí: tab, type (toggle | slider | choice | note), key, def, label y desc.
 const OPTS=[
- {tab:'jg',type:'choice',dev:'pc',label:'Posición del panel de información',desc:'Dónde aparece la ficha con los datos de lo que señalas: fija a la derecha, fija a la izquierda o junto al propio elemento.',get:()=>PM,set:v=>setPM(v),choices:[['right','Derecha'],['left','Izquierda'],['near','Junto al elemento']]},
- {tab:'jg',type:'toggle',key:'fs',def:true,dev:'touch',show:()=>FSOK,label:'Pantalla completa al empezar partida',desc:'Al pulsar Nueva partida, el juego ocupa toda la pantalla y se queda en horizontal. Siempre puedes entrar o salir con el botón de las cuatro esquinas, junto al zoom.'},
- {tab:'jg',type:'toggle',key:'kcap',def:true,dev:'pc',label:'Teclas sobre los botones',desc:'Muestra encima de los botones del héroe y de las reliquias la tecla que los activa (las que tengas puestas en Atajos).'},
- {tab:'jg',type:'toggle',key:'emap',def:true,label:'Enemigos en el mapa',desc:'Durante la oleada, un panel arriba a la izquierda muestra cuántos enemigos de cada tipo hay en el mapa, cuántos llevas eliminados y cuántos quedan por salir.'},
+ {tab:'gf',type:'toggle',key:'hpbar',def:true,label:'Barras de vida de los enemigos',desc:'La barrita verde sobre cada enemigo. Desactívala si prefieres ver el mapa más limpio (las barras de los jefes siguen saliendo).'},
+ {tab:'gf',type:'choice',dev:'pc',label:'Posición del panel de información',desc:'Dónde aparece la ficha con los datos de lo que señalas: fija a la derecha, fija a la izquierda o junto al propio elemento.',get:()=>PM,set:v=>setPM(v),choices:[['right','Derecha'],['left','Izquierda'],['near','Junto al elemento']]},
+ {tab:'gf',type:'toggle',key:'fs',def:true,dev:'touch',show:()=>FSOK,label:'Pantalla completa al empezar partida',desc:'Al pulsar Nueva partida, el juego ocupa toda la pantalla y se queda en horizontal. Siempre puedes entrar o salir con el botón de las cuatro esquinas, junto al zoom.'},
+ {tab:'gf',type:'toggle',key:'kcap',def:true,dev:'pc',label:'Teclas sobre los botones',desc:'Muestra encima de los botones del héroe y de las reliquias la tecla que los activa (las que tengas puestas en Atajos).'},
+ {tab:'gf',type:'toggle',key:'emap',def:true,label:'Enemigos en el mapa',desc:'Durante la oleada, un panel arriba a la izquierda muestra cuántos enemigos de cada tipo hay en el mapa, cuántos llevas eliminados y cuántos quedan por salir.'},
  {tab:'jg',type:'toggle',key:'autoB',def:false,label:'Habilidad básica automática',desc:'El héroe usa su habilidad básica él solo en cuanto está lista, sobre el grupo de enemigos más grande que tenga cerca. Atajo en partida: clic derecho (o mantener pulsado) sobre el botón de la habilidad.'},
  {tab:'jg',type:'toggle',key:'autoU',def:false,label:'Definitiva automática',desc:'El héroe usa su definitiva él solo en cuanto está lista, sobre el grupo de enemigos más grande que tenga cerca. Atajo en partida: clic derecho (o mantener pulsado) sobre el botón de la definitiva.'},
- {tab:'jg',type:'toggle',key:'tmin',def:false,label:'Tiempos en minutos',desc:'Muestra las recargas largas como «1 min 30 s» en lugar de «90 s».'},
+ {tab:'gf',type:'toggle',key:'tmin',def:false,label:'Tiempos en minutos',desc:'Muestra las recargas largas como «1 min 30 s» en lugar de «90 s».'},
  {tab:'jg',type:'toggle',key:'ffwd',def:true,label:'Avance rápido automático',desc:'Desde la ronda 5, mientras ningún enemigo esté al alcance de tus torres ni de tu héroe, el juego va a ×3. En cuanto el primero entra en rango, vuelve a tu velocidad.'},
- {tab:'jg',type:'toggle',key:'dnum',def:true,label:'Números de daño',desc:'Muestra el daño que reciben los enemigos. Los golpes seguidos se suman en un solo número, con el color de su tipo de daño; los críticos salen más grandes y con «!». Debajo puedes elegir el estilo y qué números se muestran.'},
- {tab:'jg',type:'choice',label:'Estilo de los números',desc:'Salto lateral: cada golpe salta en arco hacia fuera del camino. Al costado: el contador sigue al enemigo por fuera del camino. Encima: sobre el enemigo, como antes.',get:()=>OPT.dnst||'jump',set:v=>{OPT.dnst=v;saveOpt();},choices:[['jump','Salto lateral'],['side','Al costado'],['over','Encima']],dep:'dnum'},
- {tab:'jg',type:'choice',label:'Números en qué enemigos',desc:'Todos; solo los importantes (élites, jefes y los fuertes de cada escuadra: ogros, tamborileros, portadores de sellos, chamanes, súcubos, gárgolas); o solo los jefes.',get:()=>OPT.dnwho||'all',set:v=>{OPT.dnwho=v;saveOpt();},choices:[['all','Todos'],['imp','Importantes'],['boss','Jefes']],dep:'dnum'},
- {tab:'jg',type:'choice',label:'Qué golpes',desc:'Todos los golpes, o solo los críticos y los golpes grandes (al menos un 8% de la vida del enemigo).',get:()=>OPT.dnhit||'all',set:v=>{OPT.dnhit=v;saveOpt();},choices:[['all','Todos'],['big','Críticos y grandes']],dep:'dnum'},
- {tab:'jg',type:'choice',label:'Opacidad de los números',desc:'Lo opacos que se ven los números de daño.',get:()=>String(OPT.dnop||1),set:v=>{OPT.dnop=+v;saveOpt();},choices:[['1','100%'],['0.75','75%'],['0.5','50%']],dep:'dnum'},
- {tab:'jg',type:'choice',label:'Tamaño de los números',desc:'El tamaño de los números de daño.',get:()=>OPT.dnsz||'n',set:v=>{OPT.dnsz=v;saveOpt();},choices:[['s','Pequeño'],['n','Normal'],['l','Grande']],dep:'dnum'},
+ {tab:'gf',type:'toggle',key:'dnum',def:true,label:'Números de daño',desc:'Muestra el daño que reciben los enemigos. Los golpes seguidos se suman en un solo número, con el color de su tipo de daño; los críticos salen más grandes y con «!». Debajo puedes elegir el estilo y qué números se muestran.'},
+ {tab:'gf',type:'choice',label:'Estilo de los números',desc:'Salto lateral: cada golpe salta en arco hacia fuera del camino. Al costado: el contador sigue al enemigo por fuera del camino. Encima: sobre el enemigo, como antes.',get:()=>OPT.dnst||'jump',set:v=>{OPT.dnst=v;saveOpt();},choices:[['jump','Salto lateral'],['side','Al costado'],['over','Encima']],dep:'dnum'},
+ {tab:'gf',type:'choice',label:'Números en qué enemigos',desc:'Todos; solo los importantes (élites, jefes y los fuertes de cada escuadra: ogros, tamborileros, portadores de sellos, chamanes, súcubos, gárgolas); o solo los jefes.',get:()=>OPT.dnwho||'all',set:v=>{OPT.dnwho=v;saveOpt();},choices:[['all','Todos'],['imp','Importantes'],['boss','Jefes']],dep:'dnum'},
+ {tab:'gf',type:'choice',label:'Qué golpes',desc:'Todos los golpes, o solo los críticos y los golpes grandes (al menos un 8% de la vida del enemigo).',get:()=>OPT.dnhit||'all',set:v=>{OPT.dnhit=v;saveOpt();},choices:[['all','Todos'],['big','Críticos y grandes']],dep:'dnum'},
+ {tab:'gf',type:'choice',label:'Opacidad de los números',desc:'Lo opacos que se ven los números de daño.',get:()=>String(OPT.dnop||1),set:v=>{OPT.dnop=+v;saveOpt();},choices:[['1','100%'],['0.75','75%'],['0.5','50%']],dep:'dnum'},
+ {tab:'gf',type:'choice',label:'Tamaño de los números',desc:'El tamaño de los números de daño.',get:()=>OPT.dnsz||'n',set:v=>{OPT.dnsz=v;saveOpt();},choices:[['s','Pequeño'],['n','Normal'],['l','Grande']],dep:'dnum'},
  {tab:'jg',type:'toggle',key:'hints',def:true,label:'Pistas',desc:'La primera vez que pasa algo nuevo (un enemigo con armadura, un cofre, una reliquia…), una pista corta te lo explica. Si sale en plena oleada, el juego frena poco a poco hasta pararse. Cada pista sale una sola vez.'},
- {tab:'jg',type:'toggle',key:'ptip',def:false,show:()=>false,label:'Tooltips de portales abiertos en fase de construcción',desc:'Durante la fase de construcción, los bocadillos con las escuadras de cada portal se quedan siempre abiertos, sin tener que pasar el ratón por encima.',descT:'Durante la fase de construcción, los bocadillos con las escuadras de cada portal se quedan siempre abiertos, sin tener que tocarlos.'},
- {tab:'jg',type:'toggle',key:'ptipw',def:false,show:()=>false,label:'Tooltips de portales abiertos en fase de combate',desc:'Durante la oleada, cada portal muestra siempre la escuadra que está saliendo y la siguiente. Al pasar el ratón por encima ves todo lo que le queda por salir.',descT:'Durante la oleada, cada portal muestra siempre la escuadra que está saliendo y la siguiente. Al tocarlo ves todo lo que le queda por salir.'},
- {tab:'jg',type:'toggle',key:'treal',def:false,label:'Mostrar tiempo real',desc:'Muestra arriba el tiempo real que llevas de partida, contando todo: pausas, menús y lo que tardes en pensar.'},
- {tab:'jg',type:'toggle',key:'tcomb',def:false,label:'Mostrar tiempo de combate',desc:'Muestra arriba el tiempo de juego: solo avanza con el juego en marcha y va al ritmo de la velocidad (a ×2 cuenta el doble de rápido; en pausa se detiene).'},
+ {tab:'gf',type:'toggle',key:'ptip',def:false,show:()=>false,label:'Tooltips de portales abiertos en fase de construcción',desc:'Durante la fase de construcción, los bocadillos con las escuadras de cada portal se quedan siempre abiertos, sin tener que pasar el ratón por encima.',descT:'Durante la fase de construcción, los bocadillos con las escuadras de cada portal se quedan siempre abiertos, sin tener que tocarlos.'},
+ {tab:'gf',type:'toggle',key:'ptipw',def:false,show:()=>false,label:'Tooltips de portales abiertos en fase de combate',desc:'Durante la oleada, cada portal muestra siempre la escuadra que está saliendo y la siguiente. Al pasar el ratón por encima ves todo lo que le queda por salir.',descT:'Durante la oleada, cada portal muestra siempre la escuadra que está saliendo y la siguiente. Al tocarlo ves todo lo que le queda por salir.'},
+ {tab:'gf',type:'toggle',key:'treal',def:false,label:'Mostrar tiempo real',desc:'Muestra arriba el tiempo real que llevas de partida, contando todo: pausas, menús y lo que tardes en pensar.'},
+ {tab:'gf',type:'toggle',key:'tcomb',def:false,label:'Mostrar tiempo de combate',desc:'Muestra arriba el tiempo de juego: solo avanza con el juego en marcha y va al ritmo de la velocidad (a ×2 cuenta el doble de rápido; en pausa se detiene).'},
  {tab:'jg',type:'toggle',key:'slow',def:true,label:'Ralentizar el juego al consultar información',desc:'Al mantener el ratón sobre un elemento o un panel, el juego baja hasta ×0,25.',descT:'Al mantener pulsado un elemento o mientras tienes un panel abierto, el juego baja hasta ×0,25.'},
  {tab:'hs',type:'choice',label:'Velocidad de escritura',desc:'A qué ritmo aparecen las letras en los diálogos de la historia. Puedes pulsar en cualquier momento para ver la frase entera.',get:()=>OPT.dspd||'n',set:v=>{OPT.dspd=v;saveOpt();},choices:[['l','Lenta'],['n','Normal'],['r','Rápida']]},
  {tab:'hs',type:'toggle',key:'dtype',def:true,label:'Efecto máquina de escribir',desc:'El texto de los diálogos aparece letra a letra. Desactivado, aparece de golpe.'},
@@ -5448,7 +5450,7 @@ function draw(){
  if(S.aim==='dism'||S.aim==='hammer'||S.aim==='sharp'||S.aim==='vch'){for(const t of S.list){const ok=S.aim==='dism'?lv1Ok(t):S.aim==='sharp'?sharpOk(t):S.aim==='vch'?vchOk(S.vty,t):(t.lvl<3&&!TW[t.type].uniq);if(!ok)continue;const sel=(S.dsel&&S.dsel.includes(t))||(S.acf&&S.acf.t===t);g.strokeStyle=sel?'#ff6b5e':'#c9b8ff';g.lineWidth=lw(sel?4:2.5);g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,K*CS*.62,0,7);g.stroke();}}
  if(S.aim==='uplace'&&S.uq&&S.uq[0]){g.fillStyle='rgba(255,215,90,.35)';g.strokeStyle='#ffd75a';g.lineWidth=lw(2);for(const q of uSpots(S.uq[0].bk)){g.fillRect(q.kx*K*CS,q.ky*K*CS,K*CS,K*CS);g.strokeRect(q.kx*K*CS+lw(1),q.ky*K*CS+lw(1),K*CS-lw(2),K*CS-lw(2));}
   const u=S.upc;if(u){const T=TW[S.uq[0].type],pu=.6+.4*Math.sin(performance.now()/180);g.fillStyle=`rgba(255,240,170,${.35+.3*pu})`;g.fillRect(u.kx*K*CS,u.ky*K*CS,K*CS,K*CS);g.strokeStyle='#fff';g.lineWidth=lw(3);g.strokeRect(u.kx*K*CS+lw(1.5),u.ky*K*CS+lw(1.5),K*CS-lw(3),K*CS-lw(3));g.globalAlpha=.75;g.fillStyle='#14161c';icDraw(g,twIcO(T),(u.kx+.5)*K*CS,(u.ky+.5)*K*CS,K*CS*.6);g.globalAlpha=1;}}
- if(S.aim==='hero'||S.aim==='barricade'){const C=S.cells,pa=(x,y)=>x>=0&&y>=0&&x<N&&y<N&&C[y][x]===2;
+ if(S.aim==='hero'||S.aim==='barricade'||S.aim==='ally'){const C=S.cells,pa=(x,y)=>x>=0&&y>=0&&x<N&&y<N&&C[y][x]===2;
   g.fillStyle='rgba(255,226,122,.24)';g.strokeStyle='#ffe27a';g.lineWidth=lw(3);g.beginPath();
   for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(C[y][x]!==2)continue;const X0=x*CS,Y0=y*CS;g.fillRect(X0,Y0,CS,CS);
    if(!pa(x,y-1)){g.moveTo(X0,Y0);g.lineTo(X0+CS,Y0);}if(!pa(x,y+1)){g.moveTo(X0,Y0+CS);g.lineTo(X0+CS,Y0+CS);}
@@ -5515,7 +5517,7 @@ function draw(){
   if(E.el){g.strokeStyle='#f0b429';g.lineWidth=lw(2);g.beginPath();g.arc(px,py,r+lw(2),0,7);g.stroke();}
   if(S.fury){const pu=.45+.35*Math.sin(performance.now()/160+e.x);g.strokeStyle='rgba(255,60,40,'+pu+')';g.lineWidth=lw(2.5);g.beginPath();g.arc(px,py,r+lw(5),0,7);g.stroke();}
   {const mk=emarks(e);if(mk){g.fillStyle='#e8f2c8';g.font='bold '+Math.round(lw(10))+'px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';g.textAlign='center';g.textBaseline='bottom';g.fillText(mk,px,py-r-lw(5));}}
-  const bw=Math.max(r*2.2,lw(8)),bh=lw(2.5);g.fillStyle='#000';g.fillRect(px-bw/2,py-r-lw(4),bw,bh);g.fillStyle='#6fe07a';g.fillRect(px-bw/2,py-r-lw(4),bw*Math.max(0,e.hp/e.max),bh);}
+  if(OPT.hpbar!==false||isBoss(e)){const bw=Math.max(r*2.2,lw(8)),bh=lw(2.5);g.fillStyle='#000';g.fillRect(px-bw/2,py-r-lw(4),bw,bh);g.fillStyle='#6fe07a';g.fillRect(px-bw/2,py-r-lw(4),bw*Math.max(0,e.hp/e.max),bh);}}
  g.globalAlpha=1;if(typeof eEliteDraw==='function')eEliteDraw(g,lw);if(typeof bossDraw==='function')bossDraw(g,lw);
  try{dnDraw(lw);}catch(e){}
  // portales encima de los enemigos: salen «de debajo» y el portal siempre se ve y se puede pulsar
@@ -5543,7 +5545,7 @@ function draw(){
   
   g.strokeStyle=p.col;g.lineWidth=lw(2);g.beginPath();g.moveTo(px-p.vx*CS*.9,py-p.vy*CS*.9);g.lineTo(px,py);g.stroke();
   g.fillStyle=p.col;g.beginPath();g.arc(px,py,lw(p.area?3.5:2.5),0,7);g.fill();}
- if(h&&S.aim==='hero'&&inb(h.x,h.y)&&S.cells[h.y][h.x]===2){g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.arc(h.x*CS+CS/2,h.y*CS+CS/2,CS*.48,0,7);g.fill();}
+ if(h&&(S.aim==='hero'||S.aim==='ally')&&inb(h.x,h.y)&&S.cells[h.y][h.x]===2){g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.arc(h.x*CS+CS/2,h.y*CS+CS/2,CS*.48,0,7);g.fill();}
  if(S.aim==='barricade'){const pc=(a,b)=>inbc(a,b)&&S.cc[b][a]===2;g.fillStyle='rgba(230,60,60,.45)';for(let y=0;y<NC;y++)for(let x=0;x<NC;x++)if(pc(x,y)&&pc(x-1,y)+pc(x+1,y)+pc(x,y-1)+pc(x,y+1)>=3)g.fillRect(x*K*CS,y*K*CS,K*CS,K*CS);
   if(h)drawBarr(barrPick(h.x,h.y),.65);}
  if(h&&S.aim==='balance'){g.fillStyle='rgba(200,120,200,.2)';g.strokeStyle='rgba(225,150,225,.95)';g.lineWidth=lw(1.5);g.beginPath();g.arc(h.x*CS+CS/2,h.y*CS+CS/2,3*K*CS,0,7);g.fill();g.stroke();}
@@ -6280,7 +6282,7 @@ setInterval(()=>{try{wqTick();}catch(e){}},150);
  document.addEventListener('touchstart',e=>{const b=e.target.closest&&e.target.closest(HS);clearTimeout(ht);if(!b)return;ht=setTimeout(()=>{const k=hk(b);if(!k)return;hAt=performance.now();habAutoToggle(k);try{navigator.vibrate&&navigator.vibrate(20);}catch(x){}},500);},{passive:true,capture:true});
  for(const ev of ['touchend','touchmove','touchcancel'])document.addEventListener(ev,()=>clearTimeout(ht),{passive:true,capture:true});
  document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest(HS);if(b&&performance.now()-hAt<1500){hAt=0;e.stopPropagation();e.preventDefault();}},true);}
-{const SEL='button[data-a="up"],button[data-a="spec"],button[data-a="abuy"],#tmenu [data-tm="up"],#tmenu [data-tm="spec"],#tmenu [data-tm="abuy"],#bmenu [data-tm="build"]';let lpT=null,lpAt=0,lpEat=false;
+{const SEL='button[data-a="up"],button[data-a="spec"],button[data-a="abuy"],#tmenu [data-tm="up"],#tmenu [data-tm="spec"],#tmenu [data-tm="abuy"],#tmenu [data-tm="ofeed"],#bmenu [data-tm="build"]';let lpT=null,lpAt=0,lpEat=false;
  document.addEventListener('contextmenu',e=>{const b=e.target.closest&&e.target.closest(SEL);if(!b)return;e.preventDefault();if(performance.now()-lpAt<900)return;wishToggle(b);},true);
  document.addEventListener('touchstart',e=>{const b=e.target.closest&&e.target.closest(SEL);clearTimeout(lpT);if(!b)return;lpT=setTimeout(()=>{lpAt=performance.now();lpEat=true;wishToggle(b);try{navigator.vibrate&&navigator.vibrate(20);}catch(e){}},500);},{passive:true,capture:true});
  for(const ev of ['touchend','touchmove','touchcancel'])document.addEventListener(ev,()=>clearTimeout(lpT),{passive:true,capture:true});
@@ -8756,7 +8758,7 @@ function mkAlly(){const c=S.core;let b=null,bd=1e9;for(let y=0;y<N;y++)for(let x
  const k=1+.06*Math.max(0,S.round-1),hp=150*k,old=S.ally,fl=old&&old.flag?old.flag:b;
  const t={type:'bastion',lvl:3,ally:1,tinf:{n:'Criatura alienígena',ic:'👽',col:'#8a4fd0',dt:'phys',range:2.5,dmg:11,rate:1.1,unit:{n:1,hp:150,ap:10,rez:12,spd:2.2}},x:fl.x,y:fl.y,cells:[],flag:{x:fl.x,y:fl.y},ab:{},acd:{},sd:[],uov:{n:1,hp,ap:10,rez:12,spd:2.2},ovr:{dmg:11*k,rate:1.1,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
  t.sd=[{i:0,x:fl.x,y:fl.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,wt:2,ally:1}];S.ally=t;try{hpanTick.sg='';}catch(e){}S.fx.push({x:fl.x,y:fl.y,t:.6,m:.6,r:1.2*K,col:'#ff4fd8'});return t;}
-{const _hp=heroPanel;heroPanel=function(){let h=_hp.apply(this,arguments);try{if(h&&S.ally){const s=S.ally.sd[0];h=h.replace('<div class="hpan">',`<div class="hpan"><button class="hpb hpally${S.aim==='ally'?' aim':''}${s.hp<=0?' off':''}" data-a="ally" data-tip="ally:x" style="background:#8a4fd0">${portrait('ally',1)}${s.hp<=0?`<span class="bdg">${Math.ceil(s.rt)}s</span>`:''}</button>`);}}catch(e){}return h;};}
+{const _hp=heroPanel;heroPanel=function(){let h=_hp.apply(this,arguments);try{if(h&&S.ally){const s=S.ally.sd[0];h=h.replace('<div class="hpan">',`<div class="hpan"><button class="hpb hpally${S.aim==='ally'?' aim':''}${s.hp<=0?' off':''}" data-a="ally" data-tip="ally:x" style="background:#8a4fd0">${portrait('ally',1)}${s.hp<=0?`<span class="bdg">${Math.ceil(s.rt)}s</span>`:''}${typeof kcap==='function'?kcap(kbN('ally')):''}</button>`);}}catch(e){}return h;};}
 if(typeof document!=='undefined'){document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="ally"]');if(!b||typeof S==='undefined'||!S||!S.ally||RL.open)return;e.stopPropagation();
   if(S.aim==='ally'){S.aim=null;S.msg='';}else if(S.aim){S.msg='Primero termina o cancela la acción en curso.';}else{try{closePrim();}catch(x){}S.aim='ally';S.msg='Elige una casilla del camino para la criatura (Esc para cancelar).';}try{hpanTick.sg='';}catch(x){}renderRelics();ui();},true);
  const cw=document.getElementById('cw');if(cw)cw.addEventListener('click',e=>{if(typeof S==='undefined'||!S||S.aim!=='ally'||e.target!==cv)return;e.stopPropagation();if(DRAGGED)return;const c=cell(e);
@@ -8854,6 +8856,10 @@ function omDrones(t,L,dt){let u=OMD.get(t);if(!u){/* tras cargar o reintentar: r
  const n=Math.min(3,L),k=(L>=4?2:1)*(1+.05*Math.max(0,S.round-1));u={type:'bastion',lvl:2,summ:1,odr:1,otid:t.id,olv:L,ttl:9999,x:t.x,y:t.y,cells:[],flag:{x:b.x,y:b.y},ab:{},acd:{},sd:[],xap:5,tinf:{n:'Dron de combate',ic:'🛸',col:'#9aa4b4',dt:'phys',range:2.5,dmg:6,rate:1.2,unit:{n:3,hp:45,ap:10,rez:9,spd:2.4}},ovr:{dmg:6*k,rate:1.2,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
  const hp=45*k;u.sd=Array.from({length:n},(_,i)=>({i,x:t.x,y:t.y,hp,max:hp,en:null,cd:0,rt:0,tw:u,lock:true,fight:false}));(S.summ=S.summ||[]).push(u);OMD.set(t,u);}
 H2T.push(dt=>omegaTick(dt));
+
+// v305 · poner en cola (clic derecho o mantener) lo que el Prototipo Omega va a absorber, como el resto de compras
+{const _o=wishOk;wishOk=function(w){if(w&&w.a==='ofeed'){const t=S.list.find(o=>o.id===w.id);if(!t||t.type!=='omega')return null;const x=omAvail(t).find(o=>o.k===w.v);return x?{t,c:x.c}:null;}return _o.apply(this,arguments);};}
+{const _t=wishTick;wishTick=function(){try{if(S&&S.wish&&S.wish.length&&S.wish[0].a==='ofeed'&&!RL.open&&(S.phase==='build'||S.phase==='wave')){const w=S.wish[0],o=wishOk(w);if(!o){S.wish.shift();wishDeco();return;}if(S.gold<o.c)return;S.wish.shift();if(omegaFeed(o.t,w.v))toast('🔖 <b>Prototipo Omega</b>: absorbe '+TW[w.v].n);wishDeco();ui();return;}}catch(e){}return _t.apply(this,arguments);};}
 // ==================== v303 · RELIQUIAS DE LA ERA 2 · SEGUNDA TANDA (todas de cofre) ====================
 // Virus troyano, Dron de reconocimiento, Implante cibernético, Bidón radiactivo, Mapa estelar, Mochila cohete, Rastreador de combate,
 // Satélite láser, Generador de gravedad, Cápsula de clonación, Chip de IA táctica y Baliza de teletransporte.
@@ -9218,6 +9224,9 @@ addEventListener('keydown',e=>{try{if(!(e.key==='Enter'||e.key===' ')||e.repeat|
  if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(LB.open||RL.open||ctlBlocked()||!M.has)return;
  const el=document.elementFromPoint(M.x,M.y);if(el!==cv)return;e.preventDefault();e.stopImmediatePropagation();
  cv.dispatchEvent(new MouseEvent('click',{clientX:M.x,clientY:M.y,bubbles:true}));}catch(er){}},true);
+// ---- criatura aliada (y cualquier unidad que se mueva como un héroe): al elegirla se ve su alcance, como con el héroe ----
+H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.ally.sd[0];if(!s||s.hp<=0)return;const R=S.ally.alert||ALERT;
+ g.save();g.fillStyle='rgba(90,180,255,.10)';g.strokeStyle='rgba(110,190,255,.85)';g.lineWidth=lw(1.5);g.beginPath();g.arc(s.x*CS+CS/2,s.y*CS+CS/2,R*CS,0,7);g.fill();g.stroke();g.restore();});
 // ==================== v305 · Novedades del compendio, ítem a ítem ====================
 // Cada cosa nueva (torre, enemigo, reliquia, mecánica, logro conseguido…) lleva su puntito hasta que abres su ficha.
 // La pestaña y la cinta del área solo se apagan cuando ya no queda ninguna por ver. «Marcar todos como vistos» limpia solo la pestaña en la que estás.

@@ -45,3 +45,6 @@ addEventListener('keydown',e=>{try{if(!(e.key==='Enter'||e.key===' ')||e.repeat|
  if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(LB.open||RL.open||ctlBlocked()||!M.has)return;
  const el=document.elementFromPoint(M.x,M.y);if(el!==cv)return;e.preventDefault();e.stopImmediatePropagation();
  cv.dispatchEvent(new MouseEvent('click',{clientX:M.x,clientY:M.y,bubbles:true}));}catch(er){}},true);
+// ---- criatura aliada (y cualquier unidad que se mueva como un héroe): al elegirla se ve su alcance, como con el héroe ----
+H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.ally.sd[0];if(!s||s.hp<=0)return;const R=S.ally.alert||ALERT;
+ g.save();g.fillStyle='rgba(90,180,255,.10)';g.strokeStyle='rgba(110,190,255,.85)';g.lineWidth=lw(1.5);g.beginPath();g.arc(s.x*CS+CS/2,s.y*CS+CS/2,R*CS,0,7);g.fill();g.stroke();g.restore();});
