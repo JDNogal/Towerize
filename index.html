@@ -1973,7 +1973,7 @@ orb:{
  foco:{n:'Foco Arcano',ic:'🌑',col:'#9d86ff',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['hex','nova','poly'],d:'Orbes que maldicen: debilitan frente a la magia, cargan novas y pueden convertir a los enemigos en ranas.'},
  reap:{n:'Segador de Almas',ic:'🪦',col:'#9fb4d8',lv:{dmg:L4D*.85,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['raise','knight','harvest'],d:'Orbes más débiles: los enemigos que matan se alzan como espectros aliados.'}},
 laser:{
- red:{n:'Red eléctrica',ic:'🔗',col:'#9fe8ff',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{net:1},ab:['fence','shortc','overload'],d:'Se une con un arco a las demás Redes eléctricas a 3 casillas o menos: cada torre conectada da +15% de daño a todas. Los enemigos que cruzan un arco sufren.'},
+ red:{n:'Red eléctrica',ic:'🔗',col:'#9fe8ff',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{net:1},ab:['fence','shortc','overload'],d:'Se une con un arco a las demás Redes eléctricas que estén dentro de su alcance: cada torre conectada da +15% de daño a todas. Los enemigos que cruzan un arco sufren.'},
  volt:{n:'Arco voltaico',ic:'⚡',col:'#fff08a',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{volt:1},ab:['hv','ground','jump'],d:'El arco carga de electricidad a su objetivo; con la carga llena, descarga: un golpe de 15× y lo aturde.'}},
 bunker:{
  sup:{n:'Supresión',ic:'🔩',col:'#c9b06a',lv:{dmg:L4D*.9,cd:.7*.8,range:1.2,area:1.3,hp:L4H,pen:0},o:{mag:45,ramp:1.2},ab:['trigger','magz','expan'],d:'Cargadores de 45 balas y la cadencia sube mucho más mientras dispara. Pensada para hordas.'},
@@ -7702,7 +7702,8 @@ function infPass(e,src,fromKill){const inf=abRank(src,'infect');if(!inf)return;l
 const VMAX=20;
 function laserTick(dt){const reds=S.list.filter(t=>t.type==='laser'&&t.spec==='red');S.net=[];
  for(const t of reds)t.netN=0;
- for(let i=0;i<reds.length;i++)for(let j=i+1;j<reds.length;j++){const a=reds[i],b=reds[j];if(Math.hypot(a.x-b.x,a.y-b.y)<=3.5*K){a.netN++;b.netN++;S.net.push([a,b]);}}
+ /* v305: se conectan las que estén dentro del alcance de una de las dos torres (antes, 3 casillas fijas) */const rg=new Map(reds.map(t=>{let r=3.5*K;try{r=stats(t).range;}catch(e){}return[t,r];}));
+ for(let i=0;i<reds.length;i++)for(let j=i+1;j<reds.length;j++){const a=reds[i],b=reds[j];if(Math.hypot(a.x-b.x,a.y-b.y)<=Math.max(rg.get(a),rg.get(b))){a.netN++;b.netN++;S.net.push([a,b]);}}
  for(const t of S.list){if(t.type!=='laser'||!t.acd)continue;for(const k in t.acd)t.acd[k]=Math.max(0,(t.acd[k]||0)-dt);}
  if(S.phase!=='wave')return;
  // valla eléctrica

@@ -104,7 +104,8 @@ function infPass(e,src,fromKill){const inf=abRank(src,'infect');if(!inf)return;l
 const VMAX=20;
 function laserTick(dt){const reds=S.list.filter(t=>t.type==='laser'&&t.spec==='red');S.net=[];
  for(const t of reds)t.netN=0;
- for(let i=0;i<reds.length;i++)for(let j=i+1;j<reds.length;j++){const a=reds[i],b=reds[j];if(Math.hypot(a.x-b.x,a.y-b.y)<=3.5*K){a.netN++;b.netN++;S.net.push([a,b]);}}
+ /* v305: se conectan las que estén dentro del alcance de una de las dos torres (antes, 3 casillas fijas) */const rg=new Map(reds.map(t=>{let r=3.5*K;try{r=stats(t).range;}catch(e){}return[t,r];}));
+ for(let i=0;i<reds.length;i++)for(let j=i+1;j<reds.length;j++){const a=reds[i],b=reds[j];if(Math.hypot(a.x-b.x,a.y-b.y)<=Math.max(rg.get(a),rg.get(b))){a.netN++;b.netN++;S.net.push([a,b]);}}
  for(const t of S.list){if(t.type!=='laser'||!t.acd)continue;for(const k in t.acd)t.acd[k]=Math.max(0,(t.acd[k]||0)-dt);}
  if(S.phase!=='wave')return;
  // valla eléctrica

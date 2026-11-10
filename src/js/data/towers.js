@@ -246,7 +246,7 @@ orb:{
  foco:{n:'Foco Arcano',ic:'🌑',col:'#9d86ff',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['hex','nova','poly'],d:'Orbes que maldicen: debilitan frente a la magia, cargan novas y pueden convertir a los enemigos en ranas.'},
  reap:{n:'Segador de Almas',ic:'🪦',col:'#9fb4d8',lv:{dmg:L4D*.85,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['raise','knight','harvest'],d:'Orbes más débiles: los enemigos que matan se alzan como espectros aliados.'}},
 laser:{
- red:{n:'Red eléctrica',ic:'🔗',col:'#9fe8ff',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{net:1},ab:['fence','shortc','overload'],d:'Se une con un arco a las demás Redes eléctricas a 3 casillas o menos: cada torre conectada da +15% de daño a todas. Los enemigos que cruzan un arco sufren.'},
+ red:{n:'Red eléctrica',ic:'🔗',col:'#9fe8ff',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{net:1},ab:['fence','shortc','overload'],d:'Se une con un arco a las demás Redes eléctricas que estén dentro de su alcance: cada torre conectada da +15% de daño a todas. Los enemigos que cruzan un arco sufren.'},
  volt:{n:'Arco voltaico',ic:'⚡',col:'#fff08a',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{volt:1},ab:['hv','ground','jump'],d:'El arco carga de electricidad a su objetivo; con la carga llena, descarga: un golpe de 15× y lo aturde.'}},
 bunker:{
  sup:{n:'Supresión',ic:'🔩',col:'#c9b06a',lv:{dmg:L4D*.9,cd:.7*.8,range:1.2,area:1.3,hp:L4H,pen:0},o:{mag:45,ramp:1.2},ab:['trigger','magz','expan'],d:'Cargadores de 45 balas y la cadencia sube mucho más mientras dispara. Pensada para hordas.'},
