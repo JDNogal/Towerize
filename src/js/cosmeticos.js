@@ -75,7 +75,7 @@ function drawShip(g,cx,cy,B,st){if(st==null)st=(STO.p||0)>=3?2:(STO.p||0)>=1?1:0
  else{const w=st===2?40:62;g.fillStyle='#1f2e1a';g.beginPath();g.ellipse(x,y+32,w,w*.3,0,0,7);g.fill();g.fillStyle='#3a2a1a';g.beginPath();g.ellipse(x,y+32,w*.82,w*.22,0,0,7);g.fill();}
  const ang=[1.45,.75,0][st],dep=[30,14,0][st],fl=st===2?Math.sin(t*1.6)*3-6:0;
  g.save();if(st<2){g.beginPath();g.rect(-200,-400,400,400+y+34);g.clip();}g.translate(x,y+dep+fl);g.rotate(-ang);shipSaucer(g,st===2);g.restore();
- if(st===0){for(let i=0;i<4;i++){const k=(t*.4+i/4)%1;g.fillStyle=`rgba(90,90,90,${.5*(1-k)})`;g.beginPath();g.arc(x-10+k*24,y-30-k*60,7+k*14,0,7);g.fill();}
+ if(st===0){for(let i=0;i<4;i++){const k=(t*.4+i/4)%1;g.fillStyle=`rgba(90,90,90,${.5*(1-k)})`;g.beginPath();g.arc(x+4+k*14+Math.sin(t*1.3+i)*3,y-2-k*62,4+k*13,0,7);/* v305: el humo sale de la nave (de la grieta junto al cuerpo), no del aire */g.fill();}
   g.fillStyle='#ffd84a';g.font='18px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('⚠',x+60,y-20);
   for(const dx of[-40,-24,30,44]){g.fillStyle='#6b5a44';g.beginPath();g.arc(x+dx,y+30+(dx%3),5,0,7);g.fill();}}
  if(st===1){g.strokeStyle='#8a6a3a';g.lineWidth=3;for(const dx of[-56,56]){g.beginPath();g.moveTo(x+dx,y+26);g.lineTo(x+dx,y-50);g.stroke();}

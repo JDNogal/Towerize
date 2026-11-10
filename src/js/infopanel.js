@@ -121,7 +121,7 @@ function kwHtml0(id,src){
  if(id==='area'){const ok=c&&c.T.shape,T=ok?c.T:TW.cannon,a=ok?c.s.area:T.splash;
   return `<b>Área</b> · ${T.shape.toLowerCase()}`+`<small>${T.areaTxt}</small>`;}
  if(id==='aoedmg'){const ok=c&&c.T.splash,T=ok?c.T:TW.cannon,d=ok?c.s.dmg:T.dmg;
-  return `<b>Daño AdE</b> · daño en área de efecto`+R('','Porcentaje del daño',Math.round(SPLASH*100)+'%')+'<small>El objetivo recibe el daño completo. Los demás enemigos dentro del radio reciben este porcentaje.</small>';}
+  return `<b>Daño AdE</b> · daño en área de efecto`+R('','Porcentaje del daño',Math.round((ok&&c.T.augur?AUGSPL:SPLASH)*100)+'%')+'<small>El objetivo recibe el daño completo. Los demás enemigos dentro del radio reciben este porcentaje.</small>';}
  if(id==='crit'){const p=c?c.s.crit:CRIT;
   return `<b>Crítico</b>`+'<small>Cada disparo tiene una probabilidad (5% de base) de multiplicar su daño (×2 de base); al impactar aparece una «!» roja junto al enemigo. En los efectos de estado se calcula al aplicarlos y multiplica los stacks que aplican.</small>';}
  if(id==='chain'){const ch=(c&&c.T.chain)||TW.tesla.chain;
@@ -166,7 +166,7 @@ function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith(
 // fuera del compendio, el tipo de daño ya lo dice el icono junto a «Daño»: no hace falta su fila
 const dtRowOn=src=>!!(CP&&CP.open);
 function rows(s,T,src,extra){
- const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*SPLASH)+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
+ const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
   return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
@@ -297,7 +297,7 @@ function openPrim(tg){
 function refreshPrim(){if(!PR.open)return;closeKS();const h=PR.html();if(PMN())$('tip').innerHTML=h;else $('side').innerHTML=h;}
 function openKw(a,pl){
  closeKS(pl);
- const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.dataset.kself=a.dataset.kw||'';d.style.setProperty('--kc',getComputedStyle(a).color);
+ const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.dataset.kself=a.dataset.kw||'';if(a.closest('#comp')||a.closest('.kpanel.inbk'))d.classList.add('inbk');d.style.setProperty('--kc',getComputedStyle(a).color);
  document.body.appendChild(d);
  const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth,ht=d.offsetHeight;
  // la caja sale junto a la palabra (debajo; si no cabe, encima), aunque tape parte del panel del que sale: así no se va lejos de donde miras

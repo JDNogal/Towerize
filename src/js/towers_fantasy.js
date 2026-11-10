@@ -2,10 +2,12 @@
 const WETT=3,WETF=1.5,CLR=2.1,HCH=8,HJM=6,FULGD=.25;
 const ezM=e=>1+EZAMP*(e.ez?e.ez.n:0);
 const cloudR=t=>{const cu=abRank(t,'cumulo');return CLR*K*(1+(cu?cu.r:0)+(t.cg||0));};
+// v305 · el rayo del Augur: el objetivo recibe el daño completo y los de alrededor solo un 35 % (antes el 60 % general del daño en área)
+const AUGSPL=.35;
 function augurShot(t,tg,s,dm,crit,nq){if(t.spec==='herald')return;
  let e0=tg;if(t.spec==='lord'){if(!t.flag)autoFlag(t);if(!t.flag)return;const R=cloudR(t),c=S.enemies.filter(e=>e.hp>0&&Math.hypot(e.x-t.flag.x,e.y-t.flag.y)<=R);if(!c.length)return;e0=c[Math.floor(Math.random()*c.length)];}
  const x=e0.x,y=e0.y,ar=Math.max(s.area,.4*K);
- for(let q=0;q<nq;q++)for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-x,e.y-y)<=ar){if(e===e0){sfxHit(t,'elem');strike(e,dm*ezM(e),t,'elem',0);}else hurt(e,dm*SPLASH*ezM(e),t,'elem');}
+ for(let q=0;q<nq;q++)for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-x,e.y-y)<=ar){if(e===e0){sfxHit(t,'elem');strike(e,dm*ezM(e),t,'elem',0);}else hurt(e,dm*AUGSPL*ezM(e),t,'elem');}
  if(crit)critMark(e0);S.fx.push({bolt:[[x+(Math.random()-.5)*1.5,y-4*K],[x+(Math.random()-.5)*.6,y-2*K],[x,y]],t:.18,m:.18});S.fx.push({x,y,t:.25,m:.25,r:ar,col:'#9fd4ff'});}
 function augTick(dt){for(const t of S.list){if(t.type!=='augur'||!t.spec)continue;const s=stats(t);
  if(t.spec==='lord'){if(!t.flag)autoFlag(t);if(!t.flag)continue;const R=cloudR(t),ins=S.enemies.filter(e=>e.hp>0&&Math.hypot(e.x-t.flag.x,e.y-t.flag.y)<=R),dr=abRank(t,'drench'),hl=abRank(t,'hail'),cu=abRank(t,'cumulo');
@@ -15,7 +17,7 @@ function augTick(dt){for(const t of S.list){if(t.type!=='augur'||!t.spec)continu
  for(const e of S.enemies)if(e.fx.wet&&e.bn>0)e.bn=0;}
 function heraldBolt(t,s,be){const wr=abRank(t,'wrath'),fk=abRank(t,'fork'),fg=abRank(t,'fulg'),dm=s.dmg*HJM,ar=Math.max(s.area,.6*K);
  const hit=(e,m)=>{hurt(e,(dm*m+(m===1&&wr?e.hp*wr.p*(isBoss(e)?BOSSRES:1):0))*ezM(e),t,'elem');};
- const pts=[[be.x,be.y]];hit(be,1);for(const o of S.enemies)if(o!==be&&o.hp>0&&Math.hypot(o.x-be.x,o.y-be.y)<=ar)hurt(o,dm*SPLASH*ezM(o),t,'elem');
+ const pts=[[be.x,be.y]];hit(be,1);for(const o of S.enemies)if(o!==be&&o.hp>0&&Math.hypot(o.x-be.x,o.y-be.y)<=ar)hurt(o,dm*AUGSPL*ezM(o),t,'elem');
  if(fk){const nr=S.enemies.filter(o=>o!==be&&o.hp>0&&Math.hypot(o.x-be.x,o.y-be.y)<=2.5*K).sort((a,b)=>Math.hypot(a.x-be.x,a.y-be.y)-Math.hypot(b.x-be.x,b.y-be.y)).slice(0,fk.n);for(const o of nr){hit(o,.5);pts.push([o.x,o.y]);}}
  for(const[x,y]of pts){S.fx.push({bolt:[[x+(Math.random()-.5)*1.5,y-5*K],[x+(Math.random()-.5)*.8,y-2.5*K],[x,y]],t:.3,m:.3,big:1});if(fg)(S.cz=S.cz||[]).push({k:'fulg',x,y,r:.8*K,t:fg.t,tk:0,dm:s.dmg*FULGD,src:t});}
  S.fx.push({x:be.x,y:be.y,t:.45,m:.45,r:ar,col:'#ffe58a'});}

@@ -841,7 +841,7 @@ body.inmenu #comp.bkm{background:rgba(8,9,12,.22)!important}
 body.inmenu.lbsetup #comp.bkm{display:none!important}
 @media (prefers-reduced-motion:reduce){.lbgrow,.lbshrink,.coreflash{animation-duration:.01s!important}}
 /* con el libro abierto en partida, el panel de piezas y los bocadillos del mapa se esconden */
-body.lbopen #panel,body.lbopen #tip,body.lbopen #bmenu,body.lbopen #bmcard,body.lbopen #tmenu,body.lbopen #tmcard,body.lbopen .kpanel,body.lbopen #ptips,body.lbopen #peekb{display:none!important}
+body.lbopen #panel,body.lbopen #tip,body.lbopen #bmenu,body.lbopen #bmcard,body.lbopen #tmenu,body.lbopen #tmcard,body.lbopen .kpanel:not(.inbk),body.lbopen #ptips,body.lbopen #peekb{display:none!important}
 /* ---- final de partida en el libro ---- */
 .lbend h2{margin:0 0 2px;font:700 34px/1.1 Georgia,"Times New Roman",serif;color:var(--inkh)}.lbend>small{display:block;font:italic 14px Georgia,serif;color:var(--ink2);margin-bottom:12px}
 .lbend .esum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}.lbend .esum>div{background:var(--paper1);border:1px solid var(--pline2);border-radius:12px;padding:10px 12px}.lbend .esum small{display:block;font-size:12px;color:var(--ink2);margin:0 0 2px;opacity:1}.lbend .esum b{font:700 22px Georgia,serif;color:var(--ink)}
@@ -1482,6 +1482,13 @@ body.mfs #pinbar .pnl{display:none;margin-top:6px}body.mfs #pinbar.open .pnl{dis
 .bknovall{display:inline-block;margin:6px 0 2px;padding:3px 10px;font-size:12px;border-radius:12px}
 /* v305 · comparación de mejora con los colores de cada estadística */
 .tmcmp .tmold{opacity:.7;font-weight:500}
+/* v305 · pasar página: debajo se ve otra página (su mismo color), nunca la tapa; sin destellos */
+.bk::before{content:"";position:absolute;inset:0;z-index:0;background:var(--paper);pointer-events:none}
+@keyframes bkflip{0%{transform:perspective(1400px) rotateY(-14deg);transform-origin:left center;filter:brightness(.88)}100%{transform:none;filter:none}}
+.achlk.achc{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%}
+.achlk.achc .bklink{text-align:center;padding:2px 6px}
+/* v305 · bocadillos de palabras clave también dentro del libro (antes se ocultaban siempre con el libro abierto) */
+.kpanel.inbk{z-index:400!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2611,7 +2618,7 @@ function drawShip(g,cx,cy,B,st){if(st==null)st=(STO.p||0)>=3?2:(STO.p||0)>=1?1:0
  else{const w=st===2?40:62;g.fillStyle='#1f2e1a';g.beginPath();g.ellipse(x,y+32,w,w*.3,0,0,7);g.fill();g.fillStyle='#3a2a1a';g.beginPath();g.ellipse(x,y+32,w*.82,w*.22,0,0,7);g.fill();}
  const ang=[1.45,.75,0][st],dep=[30,14,0][st],fl=st===2?Math.sin(t*1.6)*3-6:0;
  g.save();if(st<2){g.beginPath();g.rect(-200,-400,400,400+y+34);g.clip();}g.translate(x,y+dep+fl);g.rotate(-ang);shipSaucer(g,st===2);g.restore();
- if(st===0){for(let i=0;i<4;i++){const k=(t*.4+i/4)%1;g.fillStyle=`rgba(90,90,90,${.5*(1-k)})`;g.beginPath();g.arc(x-10+k*24,y-30-k*60,7+k*14,0,7);g.fill();}
+ if(st===0){for(let i=0;i<4;i++){const k=(t*.4+i/4)%1;g.fillStyle=`rgba(90,90,90,${.5*(1-k)})`;g.beginPath();g.arc(x+4+k*14+Math.sin(t*1.3+i)*3,y-2-k*62,4+k*13,0,7);/* v305: el humo sale de la nave (de la grieta junto al cuerpo), no del aire */g.fill();}
   g.fillStyle='#ffd84a';g.font='18px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('⚠',x+60,y-20);
   for(const dx of[-40,-24,30,44]){g.fillStyle='#6b5a44';g.beginPath();g.arc(x+dx,y+30+(dx%3),5,0,7);g.fill();}}
  if(st===1){g.strokeStyle='#8a6a3a';g.lineWidth=3;for(const dx of[-56,56]){g.beginPath();g.moveTo(x+dx,y+26);g.lineTo(x+dx,y-50);g.stroke();}
@@ -3019,7 +3026,7 @@ const bkPrevBtn=(a,v,l)=>`<button class="bkgo" data-a="${a}" data-v="${v}">▶ $
 function bkDetail(t,id){
  const sh=(ic,txt)=>`<div class="bkun"><span class="sil bkbig">${ic}</span><h4>???</h4><p>${txt}</p></div>`;
  if(t==='tw'){const T=TW[id];if(!T)return'';
-  if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+achLink(a);}return sh(T.ic,'Aún no descubierto.');}
+  if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+achLink(a,'',1);}return sh(T.ic,'Aún no descubierto.');}
   const bi=`<span class="bkbic" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
   if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   return bkSheet(bi,shopInfo(id,1).replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id);}
@@ -5115,10 +5122,12 @@ function abilities(t,tg,s){
 const WETT=3,WETF=1.5,CLR=2.1,HCH=8,HJM=6,FULGD=.25;
 const ezM=e=>1+EZAMP*(e.ez?e.ez.n:0);
 const cloudR=t=>{const cu=abRank(t,'cumulo');return CLR*K*(1+(cu?cu.r:0)+(t.cg||0));};
+// v305 · el rayo del Augur: el objetivo recibe el daño completo y los de alrededor solo un 35 % (antes el 60 % general del daño en área)
+const AUGSPL=.35;
 function augurShot(t,tg,s,dm,crit,nq){if(t.spec==='herald')return;
  let e0=tg;if(t.spec==='lord'){if(!t.flag)autoFlag(t);if(!t.flag)return;const R=cloudR(t),c=S.enemies.filter(e=>e.hp>0&&Math.hypot(e.x-t.flag.x,e.y-t.flag.y)<=R);if(!c.length)return;e0=c[Math.floor(Math.random()*c.length)];}
  const x=e0.x,y=e0.y,ar=Math.max(s.area,.4*K);
- for(let q=0;q<nq;q++)for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-x,e.y-y)<=ar){if(e===e0){sfxHit(t,'elem');strike(e,dm*ezM(e),t,'elem',0);}else hurt(e,dm*SPLASH*ezM(e),t,'elem');}
+ for(let q=0;q<nq;q++)for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-x,e.y-y)<=ar){if(e===e0){sfxHit(t,'elem');strike(e,dm*ezM(e),t,'elem',0);}else hurt(e,dm*AUGSPL*ezM(e),t,'elem');}
  if(crit)critMark(e0);S.fx.push({bolt:[[x+(Math.random()-.5)*1.5,y-4*K],[x+(Math.random()-.5)*.6,y-2*K],[x,y]],t:.18,m:.18});S.fx.push({x,y,t:.25,m:.25,r:ar,col:'#9fd4ff'});}
 function augTick(dt){for(const t of S.list){if(t.type!=='augur'||!t.spec)continue;const s=stats(t);
  if(t.spec==='lord'){if(!t.flag)autoFlag(t);if(!t.flag)continue;const R=cloudR(t),ins=S.enemies.filter(e=>e.hp>0&&Math.hypot(e.x-t.flag.x,e.y-t.flag.y)<=R),dr=abRank(t,'drench'),hl=abRank(t,'hail'),cu=abRank(t,'cumulo');
@@ -5128,7 +5137,7 @@ function augTick(dt){for(const t of S.list){if(t.type!=='augur'||!t.spec)continu
  for(const e of S.enemies)if(e.fx.wet&&e.bn>0)e.bn=0;}
 function heraldBolt(t,s,be){const wr=abRank(t,'wrath'),fk=abRank(t,'fork'),fg=abRank(t,'fulg'),dm=s.dmg*HJM,ar=Math.max(s.area,.6*K);
  const hit=(e,m)=>{hurt(e,(dm*m+(m===1&&wr?e.hp*wr.p*(isBoss(e)?BOSSRES:1):0))*ezM(e),t,'elem');};
- const pts=[[be.x,be.y]];hit(be,1);for(const o of S.enemies)if(o!==be&&o.hp>0&&Math.hypot(o.x-be.x,o.y-be.y)<=ar)hurt(o,dm*SPLASH*ezM(o),t,'elem');
+ const pts=[[be.x,be.y]];hit(be,1);for(const o of S.enemies)if(o!==be&&o.hp>0&&Math.hypot(o.x-be.x,o.y-be.y)<=ar)hurt(o,dm*AUGSPL*ezM(o),t,'elem');
  if(fk){const nr=S.enemies.filter(o=>o!==be&&o.hp>0&&Math.hypot(o.x-be.x,o.y-be.y)<=2.5*K).sort((a,b)=>Math.hypot(a.x-be.x,a.y-be.y)-Math.hypot(b.x-be.x,b.y-be.y)).slice(0,fk.n);for(const o of nr){hit(o,.5);pts.push([o.x,o.y]);}}
  for(const[x,y]of pts){S.fx.push({bolt:[[x+(Math.random()-.5)*1.5,y-5*K],[x+(Math.random()-.5)*.8,y-2.5*K],[x,y]],t:.3,m:.3,big:1});if(fg)(S.cz=S.cz||[]).push({k:'fulg',x,y,r:.8*K,t:fg.t,tk:0,dm:s.dmg*FULGD,src:t});}
  S.fx.push({x:be.x,y:be.y,t:.45,m:.45,r:ar,col:'#ffe58a'});}
@@ -5658,7 +5667,7 @@ function kwHtml0(id,src){
  if(id==='area'){const ok=c&&c.T.shape,T=ok?c.T:TW.cannon,a=ok?c.s.area:T.splash;
   return `<b>Área</b> · ${T.shape.toLowerCase()}`+`<small>${T.areaTxt}</small>`;}
  if(id==='aoedmg'){const ok=c&&c.T.splash,T=ok?c.T:TW.cannon,d=ok?c.s.dmg:T.dmg;
-  return `<b>Daño AdE</b> · daño en área de efecto`+R('','Porcentaje del daño',Math.round(SPLASH*100)+'%')+'<small>El objetivo recibe el daño completo. Los demás enemigos dentro del radio reciben este porcentaje.</small>';}
+  return `<b>Daño AdE</b> · daño en área de efecto`+R('','Porcentaje del daño',Math.round((ok&&c.T.augur?AUGSPL:SPLASH)*100)+'%')+'<small>El objetivo recibe el daño completo. Los demás enemigos dentro del radio reciben este porcentaje.</small>';}
  if(id==='crit'){const p=c?c.s.crit:CRIT;
   return `<b>Crítico</b>`+'<small>Cada disparo tiene una probabilidad (5% de base) de multiplicar su daño (×2 de base); al impactar aparece una «!» roja junto al enemigo. En los efectos de estado se calcula al aplicarlos y multiplica los stacks que aplican.</small>';}
  if(id==='chain'){const ch=(c&&c.T.chain)||TW.tesla.chain;
@@ -5703,7 +5712,7 @@ function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith(
 // fuera del compendio, el tipo de daño ya lo dice el icono junto a «Daño»: no hace falta su fila
 const dtRowOn=src=>!!(CP&&CP.open);
 function rows(s,T,src,extra){
- const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*SPLASH)+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
+ const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
   return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
@@ -5834,7 +5843,7 @@ function openPrim(tg){
 function refreshPrim(){if(!PR.open)return;closeKS();const h=PR.html();if(PMN())$('tip').innerHTML=h;else $('side').innerHTML=h;}
 function openKw(a,pl){
  closeKS(pl);
- const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.dataset.kself=a.dataset.kw||'';d.style.setProperty('--kc',getComputedStyle(a).color);
+ const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.dataset.kself=a.dataset.kw||'';if(a.closest('#comp')||a.closest('.kpanel.inbk'))d.classList.add('inbk');d.style.setProperty('--kc',getComputedStyle(a).color);
  document.body.appendChild(d);
  const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth,ht=d.offsetHeight;
  // la caja sale junto a la palabra (debajo; si no cabe, encima), aunque tape parte del panel del que sale: así no se va lejos de donde miras
@@ -9137,8 +9146,8 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 // ==================== v305 · Logros que se piden en otros sitios: clic al compendio y fijar ====================
 // Donde se pide un logro (héroe bloqueado, torre por desbloquear, cosméticos…), el texto lleva a ese logro en 🏆 Logros.
 // Si el logro está oculto, lleva igual (allí sigue saliendo como «???», no se desvela nada). Si ya se ve y no lo tienes, 📌 lo fija.
-function achLink(id,fallback){const A=ACH[id];if(!A)return fallback||'';const f=achFound(id),got=!!ACHS[id],pin=PINS.includes(id);
- return `<span class="achlk"><button class="bklink" data-a="cachgo" data-v="${id}" title="Ver en Logros">${f?`🏆 <b>${A.n}</b>: ${A.d}`:'🏆 Un logro oculto: sigue jugando para descubrirlo.'}</button>`+
+function achLink(id,fallback,compact){const A=ACH[id];if(!A)return fallback||'';const f=achFound(id),got=!!ACHS[id],pin=PINS.includes(id);
+ return `<span class="achlk${compact?' achc':''}"><button class="bklink" data-a="cachgo" data-v="${id}" title="Ver en Logros">${compact?`🏆 ${f?A.n:'Logro oculto'}`:f?`🏆 <b>${A.n}</b>: ${A.d}`:'🏆 Un logro oculto: sigue jugando para descubrirlo.'}</button>`+
   (f&&!got?`<button class="pinb${pin?' on':''}" data-a="apin" data-id="${id}" title="${pin?'Quitar de fijados':'Fijar para seguirlo en partida'}">📌${pin?' Fijado':' Fijar'}</button>`:'')+`</span>`;}
 // volver a donde estabas (p. ej. la elección de héroe) al salir de Logros con «atrás»
 {const _g=cpGo;cpGo=function(t,v){const from=LB.open&&!LB.cover?LB.area:null,tab=CP.tab,win=RL.open&&RL.hpick;const r=_g.apply(this,arguments);try{if(from==='prep'||from==='op'||(from==='cp'&&t==='lg')){LB.ret=from;LB.retTab=tab;}else if(win&&LB.open)LB.fromWin=1;}catch(e){}return r;};}
@@ -9161,6 +9170,8 @@ function pinbarTick(){let el=$('pinbar');if(!el){el=document.createElement('div'
   const sec=achSec(id);return `<button class="pnr" data-pin="${id}" title="Ver en Logros"><b>📌 ${sec?'???':A.n}</b>${v!=null&&mx?`<span class="pnb"><i style="width:${Math.min(100,v/mx*100)}%"></i></span><small>${Math.min(mx,v)}/${mx}</small>`:''}</button>`;};
  const h=`<button class="pbt" title="Logros fijados">📌<small>${ids.length}</small></button><div class="pnl">${ids.map(row).join('')}</div>`;if(el.dataset.sg!==h){el.dataset.sg=h;el.innerHTML=h;}}
 setInterval(()=>{try{pinbarTick();}catch(e){}},400);
+// v305 · seguro: si el libro está cerrado y no se está cerrando, que no quede la marca «libro abierto» (ocultaba todos los bocadillos de palabras clave)
+setInterval(()=>{try{const c=$('comp');if(!LB.open&&document.body.classList.contains('lbopen')&&!(c&&c.classList.contains('lbout')))document.body.classList.remove('lbopen');}catch(e){}},500);
 // ==================== v305 · Novedades del compendio, ítem a ítem ====================
 // Cada cosa nueva (torre, enemigo, reliquia, mecánica, logro conseguido…) lleva su puntito hasta que abres su ficha.
 // La pestaña y la cinta del área solo se apagan cuando ya no queda ninguna por ver. «Marcar todos como vistos» limpia solo la pestaña en la que estás.

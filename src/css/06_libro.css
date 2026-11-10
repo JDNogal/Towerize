@@ -166,7 +166,7 @@ body.inmenu #comp.bkm{background:rgba(8,9,12,.22)!important}
 body.inmenu.lbsetup #comp.bkm{display:none!important}
 @media (prefers-reduced-motion:reduce){.lbgrow,.lbshrink,.coreflash{animation-duration:.01s!important}}
 /* con el libro abierto en partida, el panel de piezas y los bocadillos del mapa se esconden */
-body.lbopen #panel,body.lbopen #tip,body.lbopen #bmenu,body.lbopen #bmcard,body.lbopen #tmenu,body.lbopen #tmcard,body.lbopen .kpanel,body.lbopen #ptips,body.lbopen #peekb{display:none!important}
+body.lbopen #panel,body.lbopen #tip,body.lbopen #bmenu,body.lbopen #bmcard,body.lbopen #tmenu,body.lbopen #tmcard,body.lbopen .kpanel:not(.inbk),body.lbopen #ptips,body.lbopen #peekb{display:none!important}
 /* ---- final de partida en el libro ---- */
 .lbend h2{margin:0 0 2px;font:700 34px/1.1 Georgia,"Times New Roman",serif;color:var(--inkh)}.lbend>small{display:block;font:italic 14px Georgia,serif;color:var(--ink2);margin-bottom:12px}
 .lbend .esum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}.lbend .esum>div{background:var(--paper1);border:1px solid var(--pline2);border-radius:12px;padding:10px 12px}.lbend .esum small{display:block;font-size:12px;color:var(--ink2);margin:0 0 2px;opacity:1}.lbend .esum b{font:700 22px Georgia,serif;color:var(--ink)}
