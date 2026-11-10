@@ -636,6 +636,11 @@ button[data-a="mback"]:hover,button[data-a="pback"]:hover,button[data-a="cback"]
 .nug{display:flex;flex-direction:column;gap:12px;max-width:560px;margin:0 auto 6px;text-align:left}.nus>b{display:block;color:var(--acc);font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}.nul{display:flex;flex-wrap:wrap;gap:6px}.nui{display:flex;align-items:center;gap:8px;background:var(--btn);border:1px solid var(--line);border-radius:7px;padding:6px 10px}.nui>span{font-size:22px}.nui small{display:block;opacity:.75}
 
 body.mfs #relics{overflow-y:auto!important;overflow-x:hidden!important;padding-top:5px!important}body.mfs #relics .rl{overflow:hidden!important}
+body.mfs>#emap{position:fixed;left:50%;bottom:6px;top:auto;transform:translateX(-50%);z-index:30;width:auto;max-width:calc(100vw - 2*190px);box-sizing:border-box;white-space:nowrap;padding:3px 10px;font-size:11px}
+body.mfs>#emap.on{display:flex;align-items:center;gap:9px}body.mfs>#emap .eml{margin:0;flex-wrap:nowrap;overflow:hidden;gap:3px 7px}body.mfs>#emap .emf{font-size:10px;opacity:.85}
+body.mfs>#emap .eml i.emi{width:15px!important;height:15px!important;font-size:10px}
+body.pcpick>#emap,body.lbopen>#emap,body:has(#relic.open)>#emap{display:none!important}
+body.mfs.emb #nenot{bottom:44px}body.mfs.emb #panel{bottom:40px}body.mfs.emb #pcback{bottom:44px}
 /* ===== COLORES · único sitio donde se definen =====
    Encuadernaciones: --lea cuero (tapa, cintas, controles) · --lea2 cuero oscuro · --trim remate · --paper papel · --ink tinta · --acc acento (texto) · --acc2 acento (relleno) · --gbtn / --gbtnf botón principal y su texto
    Derivados: --paper1 (fichas, más claro) · --paper2 (botones) · --paper3 (cajas de icono) · --pline/--pline2/--pline3 bordes · --ink2 texto secundario · --inkh títulos · --leatxt texto sobre cuero
@@ -6713,6 +6718,10 @@ function applyUnl(){
  if(!OPT.u_rd)MR=Math.min(MR,rMax());}
 applyUnl();
 
+// móvil: el contador de enemigos va abajo en el centro, en una línea; los mensajes de abajo suben un poco para no taparlo
+{const _e=emapTick;emapTick=function(){const r=_e.apply(this,arguments);const el=document.getElementById('emap');if(el){const m=document.body.classList.contains('mfs');
+ if(m){if(el.parentNode!==document.body)document.body.appendChild(el);}else if(el.parentNode!==lstack())lstack().prepend(el);
+ document.body.classList.toggle('emb',m&&el.classList.contains('on'));}return r;};}
 // ======================= HISTORIA: ÉTER y la Era Fantástica =======================
 let STO={p:0,name:'',intro:0};try{STO={...STO,...(JSON.parse(localStorage.getItem('rt-story'))||{})};}catch(e){}
 const saveSto=()=>{try{localStorage.setItem('rt-story',JSON.stringify(STO));}catch(e){}};

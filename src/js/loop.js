@@ -56,3 +56,7 @@ function applyUnl(){
  if(!OPT.u_rd)MR=Math.min(MR,rMax());}
 applyUnl();
 
+// móvil: el contador de enemigos va abajo en el centro, en una línea; los mensajes de abajo suben un poco para no taparlo
+{const _e=emapTick;emapTick=function(){const r=_e.apply(this,arguments);const el=document.getElementById('emap');if(el){const m=document.body.classList.contains('mfs');
+ if(m){if(el.parentNode!==document.body)document.body.appendChild(el);}else if(el.parentNode!==lstack())lstack().prepend(el);
+ document.body.classList.toggle('emb',m&&el.classList.contains('on'));}return r;};}
