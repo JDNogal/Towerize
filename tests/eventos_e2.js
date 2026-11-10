@@ -14,7 +14,8 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  const bk=Object.keys(S.blocks).find(k=>uSpots(k).length>1);out.block=!!bk;
  const ev=(id,i)=>{openEvent(id,bk);const o=RL.open&&RL.ev===id;chooseEvent(i);return o;};const done=()=>{closeEvent();};
  // Cápsula caída
- out.capOpen=ev('capsule',0)&&!!S.ally&&unitTowers().includes(S.ally)&&S.allyOn===1&&STO.h_korr===1&&!HEROES.korr.lockTxt;done();out.capPanel=heroPanel().includes('data-a="ally"');
+ out.capOpen=ev('capsule',0)&&!!S.ally&&unitTowers().includes(S.ally)&&S.allyOn===1&&STO.h_korr===1&&!HEROES.korr.lockTxt;done();out.capPanel=heroPanel().includes('data-a="ally"');out.capKorr=S.allyKorr===1&&S.ally.sd[0].port==='korr'&&heroPanel().includes('#5ad0e0');
+ S.h2just={};S.ally=null;mkAlly();out.capOther=S.allyKorr===0&&!S.ally.sd[0].port&&chip('hero:korr')==='';
  let g=S.gold;ev('capsule',1);done();out.capGold=S.gold===g+150;let hp=S.hp;ev('capsule',2);done();out.capRel=S.relics.includes('sample')&&S.hp===hp-2;
  // Laboratorio
  let el=S.portals[0].plan.elite||0;ev('lab',0);done();out.labRel=S.relics.includes('repro')&&(S.portals[0].plan.elite||0)===el+1;

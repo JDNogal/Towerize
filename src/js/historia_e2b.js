@@ -53,3 +53,14 @@ const KORRL=[{sp:'Korr',who:'korr',t:'⟒⌇⍜… ⋔⏃… ¿hu… ma… no?'}
 {const _cg=chooseHero;chooseHero=function(id){const r=_cg.apply(this,arguments);try{if(id==='korr'&&!STO.korr1&&!(S&&S.tut)){STO.korr1=1;saveSto();setTimeout(()=>dlgQueue([{sp:'Korr',who:'korr',t:'Korr ⌖ protege ⟒ núcleo. Máquinas… ⍜ romper.'},{sp:'Vega',t:'Lo tomaré como un «estoy listo».'}]),600);}}catch(e){}return r;};}
 // v305: los soldados de la radio de Vega no pueden morir (por si algún daño no pasa por hitUnit)
 H2T.push(()=>{for(const t of S.summ||[])if(t.pat)for(const q of t.sd||[])if(q.pat&&q.hp<q.max)q.hp=q.max;});
+// ---- v305: la Cápsula caída. La primera vez sale Korr (y se desbloquea); con Korr ya desbloqueado, sale otra criatura distinta (el retrato antiguo) ----
+{const _m=mkAlly;mkAlly=function(){const korr=!!(S&&!S.tut&&!S.pvE&&!h2Has('korr')&&(typeof ev2Real!=='function'||ev2Real()));const t=_m.apply(this,arguments);
+ try{if(t){S.allyKorr=korr?1:0;if(korr){t.tinf.n='Korr';t.tinf.ic='👾';t.tinf.col='#5ad0e0';t.sd[0].port='korr';}}}catch(e){}return t;};}
+{const _u=h2Unlock;h2Unlock=function(id){const nw=!h2Has(id);const r=_u.apply(this,arguments);try{if(nw&&S)(S.h2just=S.h2just||{})[id]=1;}catch(e){}return r;};}
+{const _c=chip;chip=function(k){const[a,b]=k.split(':');
+ if(a==='ally'&&S&&S.allyKorr)return '<span class="cf">👾 Korr lucha contigo toda la partida</span>';
+ // el «héroe nuevo» que recuerda la opción no se vuelve a anunciar si ya lo tienes (salvo en la partida en que lo desbloqueas)
+ if(a==='hero'&&H2[b]&&h2Has(b)&&!(S&&S.h2just&&S.h2just[b]))return '';
+ return _c.apply(this,arguments);};}
+{const _hp=heroPanel;heroPanel=function(){let h=_hp.apply(this,arguments);try{if(h&&S&&S.ally&&S.allyKorr)h=h.replace(/(<button class="hpb hpally[^>]*style="background:)#8a4fd0("[^>]*>)/,'$1#5ad0e0$2').replace(portrait('ally',1),portrait('korr',1));}catch(e){}return h;};}
+{const _k=kwHtml0;kwHtml0=function(id){if(id==='ally'&&typeof S!=='undefined'&&S&&S.allyKorr)return '<b>👾 Korr</b><small>Salió de la cápsula caída y pelea de tu lado toda la partida: bloquea a 2 enemigos y, si cae, reaparece a los 12 s. Pulsa su retrato y elige una casilla del camino para moverlo.</small>';return _k.apply(this,arguments);};}

@@ -67,6 +67,7 @@ const T=[
  ['cruces_reparto.js','Cruces: los enemigos se reparten entre ramas igual de largas; cada escuadra va entera por una'],
  ['pendientes_evento.js','Pendientes de eventos: oro de la cámara, élites de encargo y extras de la oleada con su cuenta atrás'],
  ['linea_rondas.js','Línea de rondas: 5 puntos que rotan, jefe, élites y mini-élites, y la línea se rellena con la oleada'],
+ ['filtros_era.js','Compendio: familias sin partir por era y filtro por era en todas las pestañas'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];

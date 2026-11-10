@@ -106,7 +106,7 @@ const EVRES={
 const evRes=(id,i,keys)=>{const r=(EVRES[id]||[])[i];return typeof r==='function'?r(keys):r||'';};
 let EVK=null;
 function optHtml(id,o,i,live){const known=memOf(id,i),why=live&&o.req?o.req():'';
- const desc=(o.c?`<small>${o.c}</small>`:'')+`<small>Obtienes: ${known.length?known.map(chip).join(' · '):'???'}</small>`;
+ const desc=(o.c?`<small>${o.c}</small>`:'')+`<small>Obtienes: ${known.length?known.map(chip).filter(Boolean).join(' · '):'???'}</small>`;
  // sin spoilers: una opción bloqueada sale como «???» hasta desbloquearla (solo se ve qué hace falta)
  const lk=o.req?o.req():'';
  if(!live)return lk?`<div class="evo lk"><b>???</b><small class="cd">🔒 ${lk}</small></div>`:`<div class="evo"><b>${o.l}</b>${desc}</div>`;

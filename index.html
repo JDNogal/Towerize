@@ -4233,7 +4233,7 @@ const EVRES={
 const evRes=(id,i,keys)=>{const r=(EVRES[id]||[])[i];return typeof r==='function'?r(keys):r||'';};
 let EVK=null;
 function optHtml(id,o,i,live){const known=memOf(id,i),why=live&&o.req?o.req():'';
- const desc=(o.c?`<small>${o.c}</small>`:'')+`<small>Obtienes: ${known.length?known.map(chip).join(' · '):'???'}</small>`;
+ const desc=(o.c?`<small>${o.c}</small>`:'')+`<small>Obtienes: ${known.length?known.map(chip).filter(Boolean).join(' · '):'???'}</small>`;
  // sin spoilers: una opción bloqueada sale como «???» hasta desbloquearla (solo se ve qué hace falta)
  const lk=o.req?o.req():'';
  if(!live)return lk?`<div class="evo lk"><b>???</b><small class="cd">🔒 ${lk}</small></div>`:`<div class="evo"><b>${o.l}</b>${desc}</div>`;
@@ -9365,6 +9365,17 @@ const KORRL=[{sp:'Korr',who:'korr',t:'⟒⌇⍜… ⋔⏃… ¿hu… ma… no?'}
 {const _cg=chooseHero;chooseHero=function(id){const r=_cg.apply(this,arguments);try{if(id==='korr'&&!STO.korr1&&!(S&&S.tut)){STO.korr1=1;saveSto();setTimeout(()=>dlgQueue([{sp:'Korr',who:'korr',t:'Korr ⌖ protege ⟒ núcleo. Máquinas… ⍜ romper.'},{sp:'Vega',t:'Lo tomaré como un «estoy listo».'}]),600);}}catch(e){}return r;};}
 // v305: los soldados de la radio de Vega no pueden morir (por si algún daño no pasa por hitUnit)
 H2T.push(()=>{for(const t of S.summ||[])if(t.pat)for(const q of t.sd||[])if(q.pat&&q.hp<q.max)q.hp=q.max;});
+// ---- v305: la Cápsula caída. La primera vez sale Korr (y se desbloquea); con Korr ya desbloqueado, sale otra criatura distinta (el retrato antiguo) ----
+{const _m=mkAlly;mkAlly=function(){const korr=!!(S&&!S.tut&&!S.pvE&&!h2Has('korr')&&(typeof ev2Real!=='function'||ev2Real()));const t=_m.apply(this,arguments);
+ try{if(t){S.allyKorr=korr?1:0;if(korr){t.tinf.n='Korr';t.tinf.ic='👾';t.tinf.col='#5ad0e0';t.sd[0].port='korr';}}}catch(e){}return t;};}
+{const _u=h2Unlock;h2Unlock=function(id){const nw=!h2Has(id);const r=_u.apply(this,arguments);try{if(nw&&S)(S.h2just=S.h2just||{})[id]=1;}catch(e){}return r;};}
+{const _c=chip;chip=function(k){const[a,b]=k.split(':');
+ if(a==='ally'&&S&&S.allyKorr)return '<span class="cf">👾 Korr lucha contigo toda la partida</span>';
+ // el «héroe nuevo» que recuerda la opción no se vuelve a anunciar si ya lo tienes (salvo en la partida en que lo desbloqueas)
+ if(a==='hero'&&H2[b]&&h2Has(b)&&!(S&&S.h2just&&S.h2just[b]))return '';
+ return _c.apply(this,arguments);};}
+{const _hp=heroPanel;heroPanel=function(){let h=_hp.apply(this,arguments);try{if(h&&S&&S.ally&&S.allyKorr)h=h.replace(/(<button class="hpb hpally[^>]*style="background:)#8a4fd0("[^>]*>)/,'$1#5ad0e0$2').replace(portrait('ally',1),portrait('korr',1));}catch(e){}return h;};}
+{const _k=kwHtml0;kwHtml0=function(id){if(id==='ally'&&typeof S!=='undefined'&&S&&S.allyKorr)return '<b>👾 Korr</b><small>Salió de la cápsula caída y pelea de tu lado toda la partida: bloquea a 2 enemigos y, si cae, reaparece a los 12 s. Pulsa su retrato y elige una casilla del camino para moverlo.</small>';return _k.apply(this,arguments);};}
 // ==================== v305 · Pendientes de eventos ====================
 // Lo que un evento te ha dejado a deber y aún no ha llegado: oro de la cámara, élites de encargo, la Mamá dragona,
 // enemigos extra de esta oleada, casas por defender, la torre a mitad de precio, el cofre de 4 reliquias…
@@ -9445,6 +9456,28 @@ function rtlTip(r){const{o}=rtlDot(r),d=r-S.round,w=d<=0?(S.phase==='wave'?'en c
  for(const k of o.ex)L.push((typeof seen==='function'&&!seen('en',k))?'???':(ET[k]||{}).n||k);
  return `<div class="ttl"><b>Ronda ${r}</b> · ${w}</div><small style="margin:0">${L.length?L.join('<br>'):'Sin élites ni jefe.'}</small>`;}
 {const _rs=resolve;resolve=function(el){const d=el&&el.closest&&el.closest('[data-tip^="rtl:"]');if(d){const r=+d.dataset.tip.slice(4),b=d.getBoundingClientRect();return{key:'rtl:'+r+':'+RTL.sg,html:()=>rtlTip(r),rect:{l:b.left,t:b.top,r:b.right,b:b.bottom},dom:1};}return _rs.apply(this,arguments);};}
+// ==================== v305 · Filtro por era en el compendio ====================
+// Las secciones ya no se parten por era («Guerreros · Distópica», «Torres de la Era Distópica»…): cada familia es una sola
+// y se filtra por era con un filtro más. El filtro solo sale si ya has visto cosas de las dos eras (sin spoilers).
+// familias de enemigos: «X · Distópica» se une a «X»
+{const M=[];for(const [n,l] of EFAM){const base=n.replace(/ · Distópica$/,'');const f=M.find(x=>x[0]===base);if(f)f[1].push(...l.filter(k=>!f[1].includes(k)));else M.push([base,l.slice()]);}EFAM.splice(0,EFAM.length,...M);}
+const ERAF_T=['tw','en','hr','rl','ev'];
+function eraOfItem(t,id){try{if(t==='tw')return TW[id]?TW[id].era||1:0;if(t==='en')return ET[id]?ET[id].era||1:0;if(t==='hr')return HEROES[id]?HEROES[id].era||1:0;
+ if(t==='rl'){const r=RELIC[id];return r?r.era||1:0;}if(t==='ev')return EVENTS[id]?EVENTS[id].era||1:0;}catch(e){}return 0;}
+// lo que sale en la lista de cada era (con la era 2 alcanzada sus casillas ya se ven en silueta, así que el filtro no destripa nada)
+function eraSeen(t){const has={};const L=_bkItemsRaw(t);for(const it of L){if(it.id==null||it.hid)continue;const e=eraOfItem(t,it.id);if(e)has[e]=1;}return has;}
+let _bkItemsRaw=null;
+{const _bi=bkItems;_bkItemsRaw=_bi;bkItems=function(t){let L=_bi.apply(this,arguments);if(!ERAF_T.includes(t))return L;
+ // torres: una sola sección (más la de evento)
+ if(t==='tw'){L=L.filter(it=>!(it.sec==='Torres de la Era Distópica'));for(const it of L)if(it.sec==='Torres de la Era Fantástica'||it.sec==='Torres normales')it.sec='Torres';}
+ const v=CP.flt&&CP.flt.era;if(!v||!(typeof era2Ok==='function'&&era2Ok()))return L;
+ const out=L.filter(it=>it.sec!=null||it.id==null||eraOfItem(t,it.id)===+v||!eraOfItem(t,it.id));
+ // quitar secciones que se han quedado vacías
+ return out.filter((it,i)=>it.sec==null||(i+1<out.length&&out[i+1].sec==null));};}
+{const _bf=bkFilters;bkFilters=function(t){let h=_bf.apply(this,arguments);if(!ERAF_T.includes(t)||!(typeof era2Ok==='function'&&era2Ok()))return h;
+ CP.flt=CP.flt||{};const has=eraSeen(t);if(!(has[1]&&has[2])){if(CP.flt.era)CP.flt.era='';return h;}
+ const row=`<div class="bkfr"><span class="bkfl">Era:</span><button class="${CP.flt.era?'':'on'}" data-a="cflt" data-f="era" data-v="">Todas</button>`+[['1',ERADEF[1]],['2',ERADEF[2]]].map(([v,E])=>`<button class="${CP.flt.era===v?'on':''}" data-a="cflt" data-f="era" data-v="${v}">${E.ic} ${E.n}</button>`).join('')+'</div>';
+ return h&&h.startsWith('<div class="bkflt">')?h.replace('<div class="bkflt">','<div class="bkflt">'+row):'<div class="bkflt">'+row+'</div>'+h;};}
 // ==================== v302 · SONIDOS DE LO NUEVO (Era Distópica, héroes, reliquias y Prototipo Omega) ====================
 // Todos sintetizados (sin muestras). Se añaden a «Probar sonidos» en un grupo propio.
 const SY2={
