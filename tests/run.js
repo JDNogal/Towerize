@@ -65,6 +65,7 @@ const T=[
  ['construir_anillo.js','Construir con el anillo y el ratón (dos clics en la torre)'],
  ['historia_kai.js','Historia de Kai: aparece con Vega en la ronda de jefe y se une si la oleada sale perfecta'],
  ['cruces_reparto.js','Cruces: los enemigos se reparten entre ramas igual de largas; cada escuadra va entera por una'],
+ ['pendientes_evento.js','Pendientes de eventos: oro de la cámara, élites de encargo y extras de la oleada con su cuenta atrás'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];

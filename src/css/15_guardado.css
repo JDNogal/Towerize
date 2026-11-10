@@ -88,3 +88,11 @@ body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:var(--wz,
 .hsrun{grid-template-columns:26px 40px 1fr auto!important}
 .hsera{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:15px;background:color-mix(in srgb,var(--ec) 30%,var(--paper));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--ec) 70%,#000)}
 .hsera.e2{background:#1d2238;box-shadow:inset 0 0 0 1.5px var(--ec)}
+/* v305: pendientes de eventos, encima del contador de enemigos */
+#evpend{display:none;width:200px;box-sizing:border-box;padding:6px 9px;border-radius:9px;border:1px solid var(--lea2);background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2));color:var(--leatxt);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 3px 8px rgba(0,0,0,.45);font:600 12px system-ui,sans-serif;pointer-events:auto}
+#evpend.on{display:block}#evpend .emh{margin-bottom:3px}
+#evpend .evp{display:flex;align-items:center;gap:7px;padding:3px 0;border-top:1px solid color-mix(in srgb,var(--leatxt) 14%,transparent)}
+#evpend .evpi{flex:none;width:18px;text-align:center;font-size:14px;display:grid;place-items:center}#evpend .evpi i.emi{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:9px;box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+#evpend .evpt{display:flex;flex-direction:column;line-height:1.2}#evpend .evpt small{font-weight:500;font-size:10.5px;opacity:.8}
+#evpend .evp.bad .evpt small{color:#ff9a8a;opacity:1}
+body.mfs #evpend{width:150px;font-size:10.5px;padding:4px 7px}body.pcpick #evpend,body.lbopen #evpend,body:has(#relic.open) #evpend{display:none!important}
