@@ -54,6 +54,7 @@ const T=[
  ['heroes_e2.js','Héroes de la era 2: Korr, Ferro y Kai con sus habilidades, reliquias y charcos en franja'],
  ['reliquias_e2.js','Reliquias de la era 2: cuatro de cofre y cinco de evento'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
+ ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);

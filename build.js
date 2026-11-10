@@ -16,7 +16,9 @@ for(const k of ['@@CSS@@','@@JS@@','@@VER@@'])if(!tpl.includes(k))throw new Erro
 const html=tpl.replace('@@CSS@@',()=>css).replace('@@JS@@',()=>js).replace('@@VER@@',ver);
 const outs=[path.join(ROOT,'index.html')];
 const i=process.argv.indexOf('--out');if(i>0&&process.argv[i+1])outs.push(path.join(process.argv[i+1],'towerize-v'+ver+'.html'));
-// música de prueba: solo en las copias de --out (no en el index.html público) y solo si existe musica/tema.mp3 (fuera del repositorio)
-const mp=path.join(ROOT,'musica','tema.mp3'),mus=fs.existsSync(mp)?'<script>window.MUSIC_SRC="data:audio/mpeg;base64,'+fs.readFileSync(mp).toString('base64')+'";</script>':'';
+// música de prueba: solo en las copias de --out (no en el index.html público) y solo si existen los archivos de musica/ (fuera del repositorio)
+// tema.mp3 = música de la Era Fantástica y del menú; tema2.mp3 = música de la Era Distópica
+const b64=f=>{const p=path.join(ROOT,'musica',f);return fs.existsSync(p)?'data:audio/mpeg;base64,'+fs.readFileSync(p).toString('base64'):'';};
+const m1=b64('tema.mp3'),m2=b64('tema2.mp3'),mus=m1||m2?'<script>'+(m1?'window.MUSIC_SRC="'+m1+'";':'')+(m2?'window.MUSIC_SRC2="'+m2+'";':'')+'</script>':'';
 outs.forEach((o,k)=>fs.writeFileSync(o,k&&mus?html.replace('</body>',()=>mus+'</body>'):html));
 console.log('Towerize v'+ver+' → '+outs.map(o=>path.relative(process.cwd(),o)||'.').join(', ')+' ('+(html.length/1024).toFixed(0)+' KB)');
