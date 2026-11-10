@@ -1504,6 +1504,11 @@ body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border
 #relic .tof .lvout{display:none}
 #relic.tdeton .tof .lvout{display:inline-flex;vertical-align:middle;margin-left:10px}
 .kpanel.hascp,#tip.hascp{position:fixed!important}
+/* v305 · historial con los colores de la paleta (fondos claros fijos dejaban el texto ilegible fuera de Pergamino) */
+.hsnote{background:color-mix(in srgb,var(--paper) 82%,var(--acc) 18%)!important;color:var(--ink)!important}
+.hsrun.on{background:color-mix(in srgb,var(--paper) 82%,var(--acc) 18%)!important;color:var(--ink)}
+
+.hsrun.on .hsrt b,.hsrun.on .hsrt small{color:var(--ink)!important}.hsrun.on .hsrt small{opacity:.75}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2419,9 +2424,9 @@ function heroWinCount(){if(!S||S.tut||!S.hero||S.pvE)return;const id=S.hero.id,t
 const NUKL={era:'Eras',tw:'Torres',hr:'Héroes',rl:'Reliquias',ux:'Funciones',pal:'Encuadernaciones',core:'Núcleos',dec:'Decoración del mapa',frame:'Marcos de héroe'};
 // ficha de un desbloqueo (página derecha)
 function nuDetail(u){if(!u)return '';
- if(u.k==='tw'&&u.id&&TW[u.id]){const T=TW[u.id];return bkSheet(`<span class="bkbic" style="background:${T.col}">${T.ic}</span>`,(T.uniq?uniqGlance(u.id,1):shopInfo(u.id,1)).replace(/<b>[^<]*? /,'<b>'))+'<p class="bknote">A partir de ahora puede salirte en las ofertas de torres de cada partida.</p>';}
+ if(u.k==='tw'&&u.id&&TW[u.id]){const T=TW[u.id];return bkSheet(`<span class="bkbic" style="background:${T.col}">${T.ic}</span>`,(T.uniq?uniqGlance(u.id,1):shopInfo(u.id,1)).replace(/<b>[^\p{L}<\s]+ /u,'<b>'))+'<p class="bknote">A partir de ahora puede salirte en las ofertas de torres de cada partida.</p>';}
  if(u.k==='rl'&&u.id&&RELIC[u.id]){const r=RELIC[u.id];return bkSheet(`<span class="bkbic" style="background:${r.col}">${r.ic}</span>`,relicInfo(u.id,1))+'<p class="bknote">A partir de ahora puede salirte en los cofres.</p>';}
- if(u.k==='hr'&&u.id&&HEROES[u.id]){const D=HEROES[u.id];return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(u.id)}</span>`,heroInfo(u.id,1).replace(/<b>[^<]*? /,'<b>'))+'<p class="bknote">Ya puedes elegirlo al empezar una partida.</p>';}
+ if(u.k==='hr'&&u.id&&HEROES[u.id]){const D=HEROES[u.id];return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(u.id)}</span>`,heroInfo(u.id,1).replace(/<b>[^\p{L}<\s]+ /u,'<b>'))+'<p class="bknote">Ya puedes elegirlo al empezar una partida.</p>';}
  const why={era:'Se elige al empezar una partida, en el paso «Era».',ux:'Ya está disponible en el menú.',pal:'Se elige en Opciones › Personalización.',core:'Se elige en Opciones › Personalización.',dec:'Se activa o desactiva en Opciones › Personalización.',frame:'Se pone solo en el retrato del héroe.'}[u.k]||'';
  return `<div class="bksh"><span class="bkbic">${u.ic}</span><div class="ttl bksht"><b>${u.n}</b>${u.x?`<br><small>${u.x}</small>`:''}</div></div><p class="bknote">${why}</p>`;}
 function renderUnlocks(){if(!NEWU.length)return;const list=NEWU.slice();NEWU=[];saveNewu();
@@ -9199,6 +9204,8 @@ H2D.push((g,lw)=>{const X=v=>v*CS+CS/2,dt=1/60;for(const e of S.enemies){if(!(e.
  g.save();g.globalAlpha=a;g.font='900 '+Math.round(CS*1.1)+'px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.lineWidth=lw(3);g.strokeStyle='#1b1712';g.strokeText('!',X(e.x),y);g.fillStyle='#ffd23a';g.fillText('!',X(e.x),y);g.restore();}});
 // ---- lo que tienes en la partida queda descubierto en el compendio al momento (reliquias de evento, torres del mazo, tu héroe…) ----
 setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.round||!SEEOK||PREVIEWING||S.pvE)return;for(const r of S.relics||[])if(RELIC[r])see('rl',r);for(const k of S.deck||[])if(TW[k])see('tw',k);for(const t of S.list||[])if(TW[t.type])see('tw',t.type);if(S.hero&&S.hero.id)see('hr',S.hero.id);}catch(e){}},1000);
+// v305 · al continuar una partida guardada también se descubren cosas (antes solo al empezar una nueva: el Martillo del herrero no aparecía en el compendio)
+{const _l=loadRun;loadRun=function(){const r=_l.apply(this,arguments);try{if(r)SEEOK=true;}catch(e){}return r;};}
 // ==================== v305 · Novedades del compendio, ítem a ítem ====================
 // Cada cosa nueva (torre, enemigo, reliquia, mecánica, logro conseguido…) lleva su puntito hasta que abres su ficha.
 // La pestaña y la cinta del área solo se apagan cuando ya no queda ninguna por ver. «Marcar todos como vistos» limpia solo la pestaña en la que estás.

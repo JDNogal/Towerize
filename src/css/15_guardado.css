@@ -76,3 +76,8 @@ body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border
 #relic .tof .lvout{display:none}
 #relic.tdeton .tof .lvout{display:inline-flex;vertical-align:middle;margin-left:10px}
 .kpanel.hascp,#tip.hascp{position:fixed!important}
+/* v305 · historial con los colores de la paleta (fondos claros fijos dejaban el texto ilegible fuera de Pergamino) */
+.hsnote{background:color-mix(in srgb,var(--paper) 82%,var(--acc) 18%)!important;color:var(--ink)!important}
+.hsrun.on{background:color-mix(in srgb,var(--paper) 82%,var(--acc) 18%)!important;color:var(--ink)}
+
+.hsrun.on .hsrt b,.hsrun.on .hsrt small{color:var(--ink)!important}.hsrun.on .hsrt small{opacity:.75}
