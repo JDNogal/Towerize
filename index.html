@@ -6535,7 +6535,7 @@ function act(e){
  else if(a==='rnd')setRounds(MR+ +b.dataset.v);
  else if(a==='menu')showMenu();
  else if(a==='menuask'){if(S.mask){S.mask=0;showMenu();}else{S.mask=1;S.msg='Pulsa ⏻ otra vez para abandonar la partida.';ui();setTimeout(()=>{if(S.mask){S.mask=0;if(S.msg.startsWith('Pulsa ⏻'))S.msg='';ui();}},3000);}}
- else if(a==='retry'){if(b.dataset.now||S.rask){S.rask=0;retryWave();}else if(S.phase==='wave'&&S.snap&&S.rc>0){S.rask=1;S.msg='Pulsa ↺ otra vez para reintentar la oleada (gasta 1 carga).';ui();setTimeout(()=>{if(S.rask){S.rask=0;if(S.msg.startsWith('Pulsa ↺'))S.msg='';ui();}},3000);}}
+ else if(a==='retry'){if(b.dataset.now||S.rask){S.rask=0;retryWave();/* v305: desde el libro (fin de partida o pausa) se cierra para ver la oleada reintentada */try{if(LB.open)lbClose(true,true);}catch(e){}}else if(S.phase==='wave'&&S.snap&&S.rc>0){S.rask=1;S.msg='Pulsa ↺ otra vez para reintentar la oleada (gasta 1 carga).';ui();setTimeout(()=>{if(S.rask){S.rask=0;if(S.msg.startsWith('Pulsa ↺'))S.msg='';ui();}},3000);}}
  else if(a==='results'){if(LB.end)lbOpen('end');}
  else if(a==='hideend'){if(LB.open&&LB.area==='end')lbClose(true);}
 }
