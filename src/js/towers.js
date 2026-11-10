@@ -144,7 +144,7 @@ function monkTick(dt){for(const t of S.list){const T=TW[t.type];if(!T||!T.monk||
      for(const e of S.enemies){if(e.hp<=0)continue;const dx=e.x-s.x,dy=e.y-s.y;if(Math.hypot(dx,dy)>1.5*K)continue;let da=Math.abs(Math.atan2(dy,dx)-a);if(da>Math.PI)da=2*Math.PI-da;if(da<=Math.PI/4||e===tg)addBurn(e,t,n);}
      S.fx.push({x:s.x+Math.cos(a)*.6*K,y:s.y+Math.sin(a)*.6*K,t:.45,m:.45,r:.8*K,col:'#ff8a3c'});}}}}}}
 function unitCombat(dt){
- const SL=[];for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)SL.push(s);
+ const SL=[];for(const t of unitTowers())for(const s of t.sd)if(s.hp>0&&!(s.H&&s.H.camo>0))SL.push(s);
  for(const e of S.enemies){e.stopped=false;e.nb=0;e.ct=0;}
  const fl=s=>s.tw.flag||s.tw;
  for(const s of SL)s.w=s.wt||(s.H?s.H.def.w+(s.H.id==='reinhart'&&s.H.lvl>=4?1:0):s.cls==='tank'?2:abRank(s.tw,'wall')?2:1);
@@ -170,13 +170,13 @@ function unitCombat(dt){
    const ck=abRank(t,'cut');if(ck&&s.en.hp>0){const q=s.en;if(q.bl&&q.bl.length){DNK='bleed';hurt(q,q.bl.length*BLEEDD,t,'elem');DNK=null;}if(Math.random()<ck.p)addBleed(q,t,1);}}}
  for(const e of S.enemies){const E=ET[e.t];let tg=null;
   if(e.hp<=0||e.fx.freeze||e.fx.poly||e.fx.fear){e.acd=E.ac;continue;}
-  if(E.rg==='ranged'){if(e.rw>0)e.rw-=dt;else{let bd=RANGED_R;for(const s of SL){const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;tg=s;}}
+  if(E.rg==='ranged'){if(e.rw>0)e.rw-=dt;else{let bd=RANGED_R;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;tg=s;}}
    if(tg){if(e.rsH===undefined||e.hp<e.rsH-.01){e.rsH=e.hp;e.rsT=0;}else e.rsT=(e.rsT||0)+dt;if(e.rsT>20){e.rsT=0;e.rw=3;tg=null;}else{e.stopped=true;if(!tg.en&&!tg.lock&&!(tg.H&&tg.H.def.ranged)&&!tg.rng&&!isFly(e)){tg.en=e;tg.enR=e;e.nb=(e.nb||0)+tg.w;}}}else e.rsT=0;}}
   else if(e.ct>0){/* cuerpo a cuerpo: a cada unidad solo le pega el enemigo con el que está peleando (los que retiene de más esperan) */tg=SL.find(s=>s.fight&&s.en===e)||null;if(tg&&Math.hypot(tg.x-e.x,tg.y-e.y)>MELR)tg=null;e.stopped=e.ct>=(E.need||1);}
   if(tg){const U=unitOf(tg.tw);e.acd=(e.acd===undefined?E.ac:e.acd)-dt;
    while(e.acd<=0&&tg.hp>0){e.acd+=E.ac;if(E.rg==='ranged')S.fx.push({x:tg.x,y:tg.y,t:.25,m:.25,r:.35*K,col:E.dt==='magic'?'#a58bff':'#d9c08a'});const sg=tg.drunk>0&&abRank(tg.tw,'stagger');if(sg&&Math.random()<sg.p){if(S.pvE&&S.dn)dnAdd(tg,0,'taken');continue;}
     {const co=abRank(tg.tw,'counter');if(co&&Math.random()<co.p){const cs=stats(tg.tw),cd=cs.dmg;hurt(e,cd,tg.tw,'phys');const MT=TW[tg.tw.type],ch=abRank(tg.tw,'chi');if(MT&&MT.monk){DNK='magic';hurt(e,cd*(ch?ch.m:MT.mhit),tg.tw,'magic');DNK=null;}S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.4*K,col:'#ffd27a'});}}
-    const ua=E.dt==='magic'?auraAP(tg):(uapOf(tg.tw)+auraAP(tg)+((CLS[tg.cls]||CLS0).ap))*(1-(E.pierce||0)),wl=abRank(tg.tw,'wall'),dg=abRank(tg.tw,'dodge');if(!(dg&&Math.random()<dg.p)){const ud=(tg.H&&tg.H.inv>0)?0:E.ud*udM(e)*furyM()*(1-ua/(ua+ARM_K))*(1-(wl?wl.red:0))*(tg.H&&tg.H.id==='reinhart'&&tg.H.lvl>=4?.85:1);tg.hp-=ud;tg.lh=S.wt;if(S.pvE&&S.dn)dnAdd(tg,ud,'taken');if(E.splashU&&typeof splashUnits==='function')splashUnits(tg,ud*.5,e);if(E.upois&&typeof uAddPois==='function')uAddPois(tg,E.upois,e);}if(tg.hp<=0&&!tg.H&&ra('banner'))tg.hp=1;if(tg.hp<=0){if(tg.H&&S.st)S.st.hDie=(S.st.hDie||0)+1;tg.rt=U.rez*(!tg.H&&rp('banner')?.7:1);tg.en=null;tg.fight=false;}}}
+    const ua=E.dt==='magic'?auraAP(tg):(uapOf(tg.tw)+auraAP(tg)+((CLS[tg.cls]||CLS0).ap))*(1-(E.pierce||0)),wl=abRank(tg.tw,'wall'),dg=abRank(tg.tw,'dodge');if(!(dg&&Math.random()<dg.p)){let ud=(tg.H&&tg.H.inv>0)?0:E.ud*udM(e)*furyM()*(1-ua/(ua+ARM_K))*(1-(wl?wl.red:0))*(tg.H&&tg.H.id==='reinhart'&&tg.H.lvl>=4?.85:1);if(ud>0&&typeof uHitMod==='function')ud=uHitMod(tg,ud,e);tg.hp-=ud;tg.lh=S.wt;if(S.pvE&&S.dn)dnAdd(tg,ud,'taken');if(E.splashU&&typeof splashUnits==='function')splashUnits(tg,ud*.5,e);if(E.upois&&typeof uAddPois==='function')uAddPois(tg,E.upois,e);}if(tg.hp<=0&&!tg.H&&ra('banner'))tg.hp=1;if(tg.hp<=0){if(tg.H&&S.st)S.st.hDie=(S.st.hDie||0)+1;tg.rt=U.rez*(!tg.H&&rp('banner')?.7:1);tg.en=null;tg.fight=false;}}}
   else e.acd=E.ac;}
  monkTick(dt);
  for(const b of S.barr)for(const e of S.enemies)if(e.hp>0&&!isFly(e)&&segD(e.x+.5,e.y+.5,b.seg)<=1.1){e.stopped=true;if(!e.bq){e.bq=1;RS('barricade').n++;}}

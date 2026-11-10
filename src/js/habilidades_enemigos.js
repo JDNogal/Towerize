@@ -24,7 +24,7 @@ FORM.gyro=3;
 SQUADS.bombardeo.m={norm:3,javelin:2,gyro:1};SQF.bombardeo=[[['norm',0,-1],['norm',0,0],['norm',0,1],['javelin',1.4,-1],['gyro',1.6,0],['javelin',1.5,1]]];
 EFAM.find(x=>x[0]==='Voladores')[1].push('gyro');
 // ---- daño a una unidad (soldado o héroe), con su muerte si cae ----
-function hitUnit(s,d,e){if(!s||s.hp<=0||d<=0)return;if(s.H&&s.H.inv>0)return;s.hp-=d;s.lh=S.wt;if(S.pvE&&S.dn)dnAdd(s,d,'taken');
+function hitUnit(s,d,e){if(!s||s.hp<=0||d<=0)return;if(s.H&&s.H.inv>0)return;if(typeof uHitMod==='function'){d=uHitMod(s,d,e);if(!(d>0))return;}s.hp-=d;s.lh=S.wt;if(S.pvE&&S.dn)dnAdd(s,d,'taken');
  if(s.hp<=0){if(!s.H&&typeof ra==='function'&&ra('banner')){s.hp=1;return;}const U=unitOf(s.tw);if(s.H&&S.st)S.st.hDie=(S.st.hDie||0)+1;s.rt=U.rez*(!s.H&&typeof rp==='function'&&rp('banner')?.7:1);s.en=null;s.fight=false;s.charm=null;}}
 const liveUnits=()=>{const L=[];for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)L.push(s);return L;};
 // ---- habilidades de campeón ----
