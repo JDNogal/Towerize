@@ -31,5 +31,32 @@ body.mfs .rlbar{display:grid!important;grid-template-columns:auto auto;gap:6px!i
 body.mfs .rlbar .rlg{grid-column:1;grid-row:1}body.mfs .rlbar [data-a="peek"]{grid-column:2;grid-row:1}
 body.mfs .rlbar [data-mz="deck"]{grid-column:2;grid-row:2}body.mfs .rlbar [data-mz="rel"]{grid-column:2;grid-row:3}
 #hpop{z-index:130!important}
-#hpop small.cc{display:none}
+
 #mzside [data-cpt]{cursor:pointer}
+/* bocadillo de reliquia: icono a la altura del nombre y estado como etiqueta en la cabecera del activo */
+b.rttl{display:flex!important;align-items:center;gap:7px}b.rttl i{width:24px;height:24px;flex:none;border-radius:6px;display:grid;place-items:center;font-style:normal;font-size:15px;line-height:1;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.rbt .rstag{float:right;font:700 11px system-ui,sans-serif;letter-spacing:0;text-transform:none;padding:1px 8px;border-radius:10px;margin-left:6px}
+.rstag.rok{background:#d9f2d0;color:#2a6a1a;border:1px solid #8cc87a}.rstag.ron{background:#fff0c4;color:#8a5a00;border:1px solid #e0b850}.rstag.rrec{background:#f6d8d0;color:#9a3020;border:1px solid #d89080}
+.rbx.roff{opacity:.6}
+.rbt .rstag{float:none;margin-left:auto!important}.rbt .rstag+small{margin-left:8px!important}
+/* cartas de piezas: opacas, para que la luz del mapa de detrás no se cuele en el dibujo */#panel .prow .card{isolation:isolate;background-color:#f8efdc!important}
+/* el destello del núcleo al cerrar el libro no se pinta encima de la ventana de piezas (se colaba sobre la carta del centro) */body.pcpick .coreflash,body:has(#relic.open) .coreflash{display:none!important}
+/* móvil: la oferta de torres cabe entera sin hacer scroll (icono y nombre en línea, todo más apretado) */
+body.mfs #relic .ppap{padding-top:6px!important;padding-bottom:6px!important}
+body.mfs #relic .ptt{font-size:16px!important;margin:0!important;line-height:1.2}
+body.mfs #relic .pst{font-size:10.5px!important;line-height:1.3!important;margin:1px 70px 4px!important;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.mfs #relic .pdet{position:absolute;top:8px;left:24px;margin:0!important}body.mfs #relic .pdet button{font-size:11px!important;padding:3px 9px!important;min-height:0!important}
+body.mfs #relic .toff{gap:8px!important;margin-top:2px!important}
+body.mfs #relic .tof{display:grid!important;grid-template-columns:34px 1fr auto;grid-template-rows:auto auto 1fr auto;column-gap:8px;row-gap:2px;align-items:center;align-content:stretch;padding:6px 9px 7px!important;text-align:left}
+body.mfs #relic .tof .tic{grid-column:1;grid-row:1/3;width:34px!important;height:34px!important;font-size:20px!important;margin:0!important;border-radius:8px!important}
+body.mfs #relic .tof .tnm{grid-column:2;grid-row:1;font-size:14.5px!important;margin:0!important;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.mfs #relic .tof .chips{grid-column:2/4;grid-row:2;justify-content:flex-start!important;margin:0!important;gap:3px!important;flex-wrap:nowrap;overflow:hidden}
+body.mfs #relic .tof .chips span{font-size:9.5px!important;padding:0 5px!important;line-height:1.5!important;white-space:nowrap;flex:none}
+body.mfs #relic .tof>.gd{grid-column:3;grid-row:1;font-size:12px!important;margin:0!important;white-space:nowrap}
+body.mfs #relic .tof .tgl,body.mfs #relic .tof .tdt,body.mfs #relic .tof>button{grid-column:1/4}
+body.mfs #relic .tof .tgl{margin:4px 0 0!important;align-self:start}
+body.mfs #relic .tof .grow{margin:1px 0!important;font-size:12px!important;row-gap:1px!important}body.mfs #relic .tof .gtr{height:5px!important}
+body.mfs #relic .tof .tun{margin:0 0 2px!important;font-size:12px!important}body.mfs #relic .tof .tun .tuic{width:20px!important;height:20px!important;font-size:12px!important}
+body.mfs #relic .tof>button{grid-row:4;align-self:end;padding:5px 8px!important;margin-top:4px!important;font-size:13px!important;min-height:0!important}
+body.mfs #relic .pskip{display:flex!important;align-items:center;justify-content:center;gap:10px;margin:6px 0 0!important}body.mfs #relic .pskip button{padding:4px 12px!important;font-size:12.5px!important;margin:0!important}
+body.mfs #relic .pskip small{font-size:10px!important;max-width:46%;text-align:left;margin:0!important;line-height:1.25}

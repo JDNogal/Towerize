@@ -41,11 +41,12 @@ RELICS.forEach(r=>{Object.assign(r,RDEF[r.id]);r.cd=RCDS[r.cd]||r.cd*40;});
 const RELIC=Object.fromEntries(RELICS.map(r=>[r.id,r]));
 const RL={open:false,choices:[]};
 // pasivo y activo en dos recuadros, con título grande; el activo lleva su recarga
-const rdesc=id=>{const r=RELIC[id];return `<div class="rbx rps"><div class="rbt">♾ Pasivo</div>${r.pas()}</div><div class="rbx rac"><div class="rbt">⚡ Activo<small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small></div>${r.act()}</div>`;};
+// st: estado en partida (si la tienes). Lista / en curso / recargando va como etiqueta en la cabecera del activo, no como frase suelta
+const rdesc=(id,st)=>{const r=RELIC[id],tag=!st?`<small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`:st.t>0?`<small class="rstag ron">⚡ En curso · ${f(st.t)} s</small>`:st.cd>0?`<small class="rstag rrec">⏳ ${fmtT(st.cd)}</small>`:`<small class="rstag rok">✓ Lista</small><small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`;
+ return `<div class="rbx rps${st&&st.cd>0&&!(st.t>0)?' roff':''}"><div class="rbt">♾ Pasivo${st&&st.cd>0&&!(st.t>0)?'<small class="rstag rrec">Desactivado</small>':''}</div>${r.pas()}</div><div class="rbx rac"><div class="rbt">⚡ Activo${tag}</div>${r.act()}</div>`;};
 const rcdTag=id=>`<span class="rcdt">${kw('rcd','⏳ '+RELIC[id].cd,'','st')}</span>`;
 const relicInfo=(id,quiet)=>{const r=RELIC[id],st=!quiet&&S.relics&&S.relics.includes(id)&&S.rs[id];
- const state=st?(st.t>0?`<small class="gd">Activo en curso: ${f(st.t)} s.</small>`:st.cd>0?`<small class="cr">Pasivo desactivado: ${fmtT(st.cd)} más de oleada.</small>`:'<small class="cc">Lista: pulsa el icono para usar el activo.</small>'):'';
- return `<div class="ttl">${r.evr?`<small style="display:block;margin:0 0 2px">Reliquia de evento · «${EVENTS[r.ev]?EVENTS[r.ev].n:''}»</small>`:''}<b><i style="background:${r.col};border-radius:4px;text-align:center;font-style:normal;font-size:11px;line-height:12px;width:14px;height:14px">${r.ic}</i>${r.n}</b></div>`+rdesc(id)+state;};
+ return `<div class="ttl">${r.evr?`<small style="display:block;margin:0 0 2px">Reliquia de evento · «${EVENTS[r.ev]?EVENTS[r.ev].n:''}»</small>`:''}<b class="rttl"><i style="background:${r.col}">${r.ic}</i>${r.n}</b></div>`+rdesc(id,st||null);};
 const rp=id=>S.relics.includes(id)&&S.rs[id].cd===0,ra=id=>S.relics.includes(id)&&S.rs[id].t>0;
 const chestInfo=()=>'<div class="ttl"><b>Cofre</b></div><small style="margin:0">Coloca una pieza en este hueco y obtendrás una reliquia para esta partida.</small>';
 function renderRelics(){
