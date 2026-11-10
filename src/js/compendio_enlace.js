@@ -92,9 +92,11 @@ function cpPrimDecor(){try{const box=PMN()?$('tip'):$('side');box.classList.remo
 {const _k=openKw;openKw=function(a,pl){const r=_k.apply(this,arguments);try{const d=KS[KS.length-1]&&KS[KS.length-1].el,id=a.dataset.kw||'';
   const tg=MECI[id]&&mecOk(id)?['mc',id]:id.startsWith('tw_')?['tw',id.slice(3)]:id.startsWith('en_')?['en',id.slice(3)]:id.startsWith('hr_')?['hr',id.slice(3)]:id.startsWith('rl_')?['rl',id.slice(3)]:null;
   if(d&&tg)cpDecorate(d,tg);}catch(e){}return r;};}
-function cpGo(t,v){if(!compOk())return;if(NEC.open)necClose();try{closeKS();}catch(e){}
+// los logros viven en su propia sección del libro (🏆 Logros): hay que saltar de sección, no solo cambiar la pestaña
+function cpGo(t,v){if(t!=='lg'&&!compOk())return;if(NEC.open)necClose();try{closeKS();}catch(e){}
  CP.tab=t;CP.sel[t]=v;CP.flt={};CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=true;CP.hl=v;
- if(LB.open&&!LB.cover&&(LB.area==='cp'))renderComp();else lbOpen('cp');}
+ if(t==='lg'){CP.af='all';CP.as='all';}
+ const area=t==='lg'?'lg':'cp';if(LB.open&&!LB.cover&&LB.area===area)renderComp();else{PMU.ask=0;lbOpen(area);}}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.cpgo,.mecuse');if(!b)return;e.stopPropagation();e.preventDefault();cpGo(b.dataset.t,b.dataset.v);},true);
 
 // ---- aviso de «¡Nuevo enemigo!» ----

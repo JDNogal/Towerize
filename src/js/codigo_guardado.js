@@ -84,3 +84,9 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
   a2.download=`towerize-guardado-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}.txt`;document.body.appendChild(a2);a2.click();setTimeout(()=>{URL.revokeObjectURL(a2.href);a2.remove();},500);}
  else if(a==='file'){const f=document.createElement('input');f.type='file';f.accept='.txt,text/plain';f.onchange=()=>{const x=f.files&&f.files[0];if(!x)return;x.text().then(t=>{SVX.inp=t.trim();SVX.ask=0;SVX.msg='Archivo leído: '+x.name;renderOpts();});};f.click();}
  else if(a==='load'){if(!SVX.inp.trim())return;if(!SVX.ask){SVX.ask=1;renderOpts();return;}svxLoad(SVX.inp);}},true);
+// ---- frecuencia de sonidos: junto al % se ve qué significa de verdad ----
+{const fq=(q,v)=>{if(!v)return 'No suena nunca.';const cds=Object.keys(SFXK).filter(k=>SFQ(k)===q).map(k=>{const d=sfxDef(k);return d&&d.cd||0;}).filter(x=>x>0);
+  const fm=1/Math.max(.25,v/100),lo=Math.min(...cds)*fm,hi=Math.max(...cds)*fm,F=x=>String(Math.round(x*100)/100).replace('.',',');
+  const rg=(a,b)=>Math.abs(b-a)<.005?F(a):F(a)+'–'+F(b),l0=Math.min(...cds),h0=Math.max(...cds);
+  return v>=100?`Como mucho 1 cada ${rg(l0,h0)} s (de base).`:`Como mucho 1 cada ${rg(lo,hi)} s (de base, ${rg(l0,h0)} s).`;};
+ for(const o of OPTS)if(o.key==='fq_coin'||o.key==='fq_kill'||o.key==='fq_hit')o.real=v=>fq(o.key,v);}

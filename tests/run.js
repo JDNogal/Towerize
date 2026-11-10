@@ -60,6 +60,7 @@ const T=[
  ['recompensa_evento.js','Torre de evento al acabar la oleada antes de la ronda siguiente'],
  ['teclas_bloqueo.js','Teclas rápidas bloqueadas cuando el ratón no puede pulsar el control'],
  ['codigo_guardado.js','Código de guardado: copiar progreso y partida a otro navegador'],
+ ['logro_enlace.js','Logros pedidos: enlace a Logros desde torres y héroes bloqueados, fijar y volver'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];

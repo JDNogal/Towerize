@@ -1434,6 +1434,15 @@ body.mfs .toftg{top:-9px;left:10px;right:auto;flex-direction:row;gap:3px}body.mf
 .svx .svxt{width:100%;box-sizing:border-box;height:84px;resize:vertical;font:11px/1.3 ui-monospace,Consolas,monospace;word-break:break-all;background:color-mix(in srgb,var(--paper,#f4ead8) 80%,#fff 20%);color:#3a2a1a;border:1px solid rgba(90,60,30,.45);border-radius:6px;padding:6px}
 .svx .svxs{opacity:.7;font-size:11px;margin-top:-2px}
 .svx .svxm{font-size:13px;padding:6px 8px;border-radius:6px;background:rgba(201,162,74,.18);border:1px solid rgba(201,162,74,.45)}
+.oreal{display:block;font-size:11.5px;opacity:.8;margin-top:1px;font-variant-numeric:tabular-nums}
+/* v305 · candado de los héroes bloqueados: siempre en la esquina de su marcapáginas y algo más grande */
+.hmarks .bkmk.hmk{position:relative}
+.hmk.lk::after{right:6px!important;top:7px!important;font-size:14px!important;line-height:1;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+/* v305 · logro pedido: enlace a Logros y botón para fijarlo */
+.achlk{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}
+.achlk .bklink{text-align:left;font:inherit;padding:2px 6px;cursor:pointer}
+.achlk button.pinb{float:none;margin:0;opacity:.8;font-size:12px;padding:0 8px}
+.hmarks .bkmk.hmk.lk.on::after{top:15px!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2163,7 +2172,7 @@ addEventListener('resize',()=>{if(RL.open&&RL.hpick)fitHero();});
 const HVIS={},heroVis=h=>!HVIS[h]||HVIS[h]();
 const ACHVIS={marathon:()=>false,circuit:()=>false},achVis=id=>!!ACHS[id]||!ACHVIS[id]||ACHVIS[id]();
 const HUNL={yrsa:'elem'};
-function heroLockBox(id){const D=HEROES[id],a=HUNL[id]&&ACH[HUNL[id]];return `<div class="hbox"><div class="hbt">🔒 Héroe bloqueado</div><small class="hdesc">${a?achReq(HUNL[id]):D.lockTxt}</small></div>`;}
+function heroLockBox(id){const D=HEROES[id],a=HUNL[id]&&ACH[HUNL[id]];return `<div class="hbox"><div class="hbt">🔒 Héroe bloqueado</div><small class="hdesc">${a?achLink(HUNL[id]):D.lockTxt}</small></div>`;}
 const HIDS=()=>S&&S.tut?['reinhart','sylvana']:Object.keys(HEROES).filter(heroVis);
 const HMOB=()=>innerWidth<=640||(TOUCH&&innerHeight<520);
 function heroNav(d){RL.hconf=null;const ids=HIDS();let k=ids.indexOf(RL.hsel);k=(k+d+ids.length)%ids.length;RL.hsel=ids[k];RL.hdir=d;try{sfx('page');}catch(e){}renderHeroPick();}
@@ -2171,7 +2180,7 @@ function renderHeroPick(){if(typeof LB!=='undefined'&&LB.open&&LB.area==='prep')
 // ficha de un héroe (texto de la página derecha); se usa en la ventana antigua y en el libro
 function heroSheet(id){const D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;
  const bar=(l,v,c)=>`<div class="hbar"><span>${l}</span><span class="bt"><span class="bf" style="width:${Math.round(Math.min(1,v)*100)}%;background:${c}"></span></span></div>`;
- return lk?`<div class="hnm">???</div><div class="hcl">???</div><div class="hsec">🔒 Héroe bloqueado</div><small class="hds">${HUNL[id]?achReq(HUNL[id]):D.lockTxt}</small>`:
+ return lk?`<div class="hnm">???</div><div class="hcl">???</div><div class="hsec">🔒 Héroe bloqueado</div><small class="hds">${HUNL[id]?achLink(HUNL[id]):D.lockTxt}</small>`:
   `<div class="hnm">${D.n}<small>Récord: Nv ${HLV[id]||1}</small></div><div class="chips">${(D.tags||[]).filter(t=>t!=='Cuerpo a cuerpo'&&t!=='A distancia').map(t=>`<span>${t}</span>`).join('')}</div><div class="hcl">${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</div>`+
   `<p class="hds">${D.d}</p>`+bar('Vida',b.hp/HMX.hp,'#6fe07a')+bar('Daño',b.dmg/b.cd*(D.area?1.3:1)/HMX.dp,'#e0605a')+bar('Alcance',(b.range||.5)/HMX.rg,'#5ab4ff')+
   (HAB[id]?`<div class="hsec">Habilidades</div><div class="habs">${[['b',1],['p4',4],['p8',8],['u',10]].map(([k2,l])=>`<span data-tip="habp:${id}.${k2}">${HAB[id][k2].ic}<em>${l}</em></span>`).join('')}</div>`:'')+
@@ -2181,7 +2190,7 @@ function heroSheet(id){const D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt
 function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];const id=RL.hsel,D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;ids.forEach(h=>see('hr',h));
  const bar=(l,v,c)=>`<div class="hbar"><span>${l}</span><span class="bt"><span class="bf" style="width:${Math.round(Math.min(1,v)*100)}%;background:${c}"></span></span></div>`;
  const roster=ids.map(h=>{const L=!!HEROES[h].lockTxt;return `<button class="rt${h===id?' on':''}${L?' lk':''}" data-a="hgo" data-id="${h}" title="${L?'???':HEROES[h].n}">${portrait(h,1,L)}${L?'<span class="lc">🔒</span>':''}</button>`;}).join('');
- const info=lk?`<div class="hnm">???</div><div class="hcl">???</div><div class="hsec">🔒 Héroe bloqueado</div><small class="hds">${HUNL[id]?achReq(HUNL[id]):D.lockTxt}</small>`:
+ const info=lk?`<div class="hnm">???</div><div class="hcl">???</div><div class="hsec">🔒 Héroe bloqueado</div><small class="hds">${HUNL[id]?achLink(HUNL[id]):D.lockTxt}</small>`:
   `<div class="hnm">${D.n}<small>Récord: Nv ${HLV[id]||1}</small></div><div class="chips">${(D.tags||[]).filter(t=>t!=='Cuerpo a cuerpo'&&t!=='A distancia').map(t=>`<span>${t}</span>`).join('')}</div><div class="hcl">${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</div>`+
   `<p class="hds">${D.d}</p>`+bar('Vida',b.hp/HMX.hp,'#6fe07a')+bar('Daño',b.dmg/b.cd*(D.area?1.3:1)/HMX.dp,'#e0605a')+bar('Alcance',(b.range||.5)/HMX.rg,'#5ab4ff')+
   (HAB[id]?`<div class="hsec">Habilidades</div><div class="habs">${[['b',1],['p4',4],['p8',8],['u',10]].map(([k2,l])=>`<span data-tip="habp:${id}.${k2}">${HAB[id][k2].ic}<em>${l}</em></span>`).join('')}</div>`:'')+
@@ -2361,9 +2370,9 @@ function renderUnlocks(){if(!NEWU.length)return;const list=NEWU.slice();NEWU=[];
   right:()=>nuDetail(LB.msg.list[LB.msg.sel]),footR:`<button class="gbtn" data-a="nuok">Continuar ›</button>`};
  lbOpen('msg');}
 function cosmHTML(){const lockTxt=c=>c.def?'':cosOwn(c)?'':'🔒 '+achReq(c.ach);
- const pal=COSM.pal.map(c=>{const o=cosOwn(c),on=(OPT.pal||'perg')===c.id;return `<button class="csw${on?' on':''}${o?'':' lk'}" ${o?`data-a="cspal" data-v="${c.id}"`:'disabled'} title="${o?c.n:lockTxt(c).replace(/<[^>]+>/g,'')}"><i class="cswbk" style="background:linear-gradient(90deg,${c.sw[0]} 0 26%,${c.sw[1]} 26%);border-color:${c.sw[0]};box-shadow:inset 0 0 0 2px ${c.sw[0]},inset 0 0 0 3px color-mix(in srgb,${c.sw[1]} 60%,${c.sw[0]})"></i><span>${o?c.n:'🔒 ???'}</span></button>`;}).join('');
- const core=COSM.core.map(c=>{const o=cosOwn(c),on=(OPT.core||'base')===c.id;return `<button class="csw${on?' on':''}${o?'':' lk'}" ${o?`data-a="cscore" data-v="${c.id}"`:'disabled'} title="${o?c.n:lockTxt(c).replace(/<[^>]+>/g,'')}"><canvas width="44" height="44" data-core="${c.id}"></canvas><span>${o?c.n:'🔒 ???'}</span></button>`;}).join('');
- const dec=COSM.dec.map(c=>{const o=cosOwn(c),on=o&&!(OPT.decoff||{})[c.id];return `<button class="csw cdec${on?' on':''}${o?'':' lk'}" ${o?`data-a="csdec" data-v="${c.id}" aria-pressed="${on}"`:'disabled'} title="${o?c.n+(on?' · activada':' · apagada'):lockTxt(c).replace(/<[^>]+>/g,'')}"><canvas width="44" height="44" data-dec="${c.ch}"></canvas><span>${o?c.n:'🔒 ???'}</span><em>${o?(on?'Activada':'Apagada'):''}</em></button>`;}).join('');
+ const pal=COSM.pal.map(c=>{const o=cosOwn(c),on=(OPT.pal||'perg')===c.id;return `<button class="csw${on?' on':''}${o?'':' lk'}" ${o?`data-a="cspal" data-v="${c.id}"`:(c.ach&&ACH[c.ach]?`data-a="cachgo" data-v="${c.ach}"`:'disabled')} title="${o?c.n:lockTxt(c).replace(/<[^>]+>/g,'')}"><i class="cswbk" style="background:linear-gradient(90deg,${c.sw[0]} 0 26%,${c.sw[1]} 26%);border-color:${c.sw[0]};box-shadow:inset 0 0 0 2px ${c.sw[0]},inset 0 0 0 3px color-mix(in srgb,${c.sw[1]} 60%,${c.sw[0]})"></i><span>${o?c.n:'🔒 ???'}</span></button>`;}).join('');
+ const core=COSM.core.map(c=>{const o=cosOwn(c),on=(OPT.core||'base')===c.id;return `<button class="csw${on?' on':''}${o?'':' lk'}" ${o?`data-a="cscore" data-v="${c.id}"`:(c.ach&&ACH[c.ach]?`data-a="cachgo" data-v="${c.ach}"`:'disabled')} title="${o?c.n:lockTxt(c).replace(/<[^>]+>/g,'')}"><canvas width="44" height="44" data-core="${c.id}"></canvas><span>${o?c.n:'🔒 ???'}</span></button>`;}).join('');
+ const dec=COSM.dec.map(c=>{const o=cosOwn(c),on=o&&!(OPT.decoff||{})[c.id];return `<button class="csw cdec${on?' on':''}${o?'':' lk'}" ${o?`data-a="csdec" data-v="${c.id}" aria-pressed="${on}"`:(c.ach&&ACH[c.ach]?`data-a="cachgo" data-v="${c.ach}"`:'disabled')} title="${o?c.n+(on?' · activada':' · apagada'):lockTxt(c).replace(/<[^>]+>/g,'')}"><canvas width="44" height="44" data-dec="${c.ch}"></canvas><span>${o?c.n:'🔒 ???'}</span><em>${o?(on?'Activada':'Apagada'):''}</em></button>`;}).join('');
  const fr=Object.keys(HEROES).filter(h=>UNLOCK_ALL||heroVis(h)).map(id=>{const t=hTier(id),n=HWIN[id]||0,nx=FRT.slice().reverse().find(([a])=>n<a);return `<div class="frw"><span class="hfr fr${t}" style="background:${HEROES[id].col}">${portrait(id,1)}</span><div><b>${HEROES[id].n}</b><small>${n} victoria${n===1?'':'s'}${t?' · marco de '+hTierN(t):''}${nx?' · siguiente marco a las '+nx[0]:''}</small></div></div>`;}).join('');
  return `<div class="orow"><div>Encuadernación</div><div class="cswr">${pal}</div></div><div class="orow"><div>Núcleo</div><div class="cswr">${core}</div></div><div class="orow"><div>Decoración del mapa</div><small>Las decoraciones aparecen al azar en las piezas nuevas. Pulsa una para activarla o apagarla.</small><div class="cswr">${dec}</div></div><div class="orow"><div>Marcos de héroe</div><small>Se consiguen solos al ganar con cada héroe: bronce con 1 victoria, plata con 5 y oro con 10.</small><div class="frl">${fr}</div></div>`;}
 function cosmPaint(){document.querySelectorAll('#comp canvas[data-core]').forEach(cv=>{const g=cv.getContext('2d');g.clearRect(0,0,44,44);g.fillStyle='#22301f';g.fillRect(0,0,44,44);drawCore(g,22,22,30,cv.dataset.core);});
@@ -2462,7 +2471,7 @@ function optBody(book){
  const R=(o,i,cls,inner)=>`<div class="orow otg${cls}" data-ok="${oKey(o)}" data-oi="${i}">${inner}</div>`;
  const body=OPTS.map((o,i)=>{if(o.tab!==OP.tab||!optVis(o))return '';const k=oKey(o),sh=OP.tab==='jg'&&OSEC[k]&&OSEC[k]!==sec?(sec=OSEC[k],`<h3 class="osec">${sec}</h3>`):'';
   if(o.type==='toggle')return sh+R(o,i,'',`${ic(o)}<div class="otl"><div>${o.label}</div>${d(o)}</div><button class="sw${OPT[o.key]?' on':''}" role="switch" aria-checked="${!!OPT[o.key]}" aria-label="${o.label}" data-a="opt" data-i="${i}"><i></i></button>`);
-  if(o.type==='slider')return sh+R(o,i,' osl',`${ic(o)}<div class="otl"><div>${o.label}</div>${d(o)}</div><label class="osr"><input type="range" data-o="${i}" min="${o.min}" max="${o.max}" step="${o.step}" value="${OPT[o.key]}"><output>${o.fmt(OPT[o.key])}</output></label>`);
+  if(o.type==='slider')return sh+R(o,i,' osl',`${ic(o)}<div class="otl"><div>${o.label}</div>${o.real?`<span class="oreal">${o.real(OPT[o.key])}</span>`:''}${d(o)}</div><label class="osr"><input type="range" data-o="${i}" min="${o.min}" max="${o.max}" step="${o.step}" value="${OPT[o.key]}"><output>${o.fmt(OPT[o.key])}</output></label>`);
   if(o.type==='cname')return sh+(STO.name?R(o,i,'',`${ic(o)}<div class="otl"><div>${o.label}</div>${book?'':'<small>Cómo te llama ÉTER.</small>'}</div><div class="ocn"><input id="cname" maxlength="16" value="${escH(STO.name)}"><button data-a="sname">Guardar</button></div>`):R(o,i,'',`${ic(o)}<div class="otl"><div>${o.label}</div><small>ÉTER aún no recuerda tu nombre. Sigue jugando…</small></div>`));
   if(o.type==='reset'){danger=`<div class="odanger"><div><b>⚠️ ${o.label}</b>${d(o)}</div><button data-a="preset" class="${OP.rst?'warn':''}">${OP.rst?'¿Seguro? Pulsa otra vez':'Borrar…'}</button></div>`;return '';}
   if(o.type==='cosm')return cosmHTML();
@@ -2578,8 +2587,8 @@ function cosmPrev(cv,k,id){const g=cv.getContext('2d'),W=cv.width;g.clearRect(0,
  else if(k==='tfr'){const t={lvl:id==='obs'?4:1,id:1};drawTFr(g,t,W/2,W/2,W*.8,id);g.fillStyle='#e8b04a';g.beginPath();g.arc(W/2,W/2,W*.8*.4,0,7);g.fill();g.font=Math.round(W*.36)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🏹',W/2,W/2+1);}
  else if(k==='fx'){const B=W*.62,Y=W*.6;drawHalo(g,W/2,Y,B);g.fillStyle='#8a7dff';g.beginPath();g.arc(W/2,Y,B*.4,0,7);g.fill();drawCrown(g,W/2,Y,B);}}
 function cosmHTML2(){const lk=c=>'🔒 '+achReq(c.ach).replace(/<[^>]+>/g,'');
- const ex=k=>COSM[k].map(c=>{const o=cosOwn(c),on=cosSel(k,COSM[k][0].id)===c.id;return `<button class="csw${on?' on':''}${o?'':' lk'}" ${o?`data-a="csex" data-k="${k}" data-v="${c.id}"`:'disabled'} title="${o?c.n:lk(c)}"><canvas width="44" height="44" data-cs="${k}" data-v="${c.id}"></canvas><span>${o?c.n:'🔒 ???'}</span></button>`;}).join('');
- const fx=COSM.fx.map(c=>{const o=cosOwn(c),on=o&&!(OPT.fxoff||{})[c.id];return `<button class="csw cdec${on?' on':''}${o?'':' lk'}" ${o?`data-a="csfx" data-v="${c.id}" aria-pressed="${on}"`:'disabled'} title="${o?c.n+(on?' · activado':' · apagado'):lk(c)}"><canvas width="44" height="44" data-cs="fx" data-v="${c.id}"></canvas><span>${o?c.n:'🔒 ???'}</span><em>${o?(on?'Activado':'Apagado'):''}</em></button>`;}).join('');
+ const ex=k=>COSM[k].map(c=>{const o=cosOwn(c),on=cosSel(k,COSM[k][0].id)===c.id;return `<button class="csw${on?' on':''}${o?'':' lk'}" ${o?`data-a="csex" data-k="${k}" data-v="${c.id}"`:(c.ach&&ACH[c.ach]?`data-a="cachgo" data-v="${c.ach}"`:'disabled')} title="${o?c.n:lk(c)}"><canvas width="44" height="44" data-cs="${k}" data-v="${c.id}"></canvas><span>${o?c.n:'🔒 ???'}</span></button>`;}).join('');
+ const fx=COSM.fx.map(c=>{const o=cosOwn(c),on=o&&!(OPT.fxoff||{})[c.id];return `<button class="csw cdec${on?' on':''}${o?'':' lk'}" ${o?`data-a="csfx" data-v="${c.id}" aria-pressed="${on}"`:(c.ach&&ACH[c.ach]?`data-a="cachgo" data-v="${c.ach}"`:'disabled')} title="${o?c.n+(on?' · activado':' · apagado'):lk(c)}"><canvas width="44" height="44" data-cs="fx" data-v="${c.id}"></canvas><span>${o?c.n:'🔒 ???'}</span><em>${o?(on?'Activado':'Apagado'):''}</em></button>`;}).join('');
  return `<div class="orow"><div>Camino</div><div class="cswr">${ex('path')}</div></div><div class="orow"><div>Marco de torre</div><div class="cswr">${ex('tfr')}</div></div><div class="orow"><div>Efectos en partida</div><small>La corona va sobre la torre que más daño lleva en la partida y cambia de dueña en directo. Pulsa para activarla o apagarla.</small><div class="cswr">${fx}</div></div>`;}
 {const _h=cosmHTML;cosmHTML=function(){const h=_h(),i=h.indexOf('<div class="orow"><div>Marcos de héroe');return i<0?h+cosmHTML2():h.slice(0,i)+cosmHTML2()+h.slice(i);};
  const _p=cosmPaint;cosmPaint=function(){_p();document.querySelectorAll('#comp canvas[data-cs]').forEach(cv=>cosmPrev(cv,cv.dataset.cs,cv.dataset.v));};}
@@ -2971,7 +2980,7 @@ const bkPrevBtn=(a,v,l)=>`<button class="bkgo" data-a="${a}" data-v="${v}">▶ $
 function bkDetail(t,id){
  const sh=(ic,txt)=>`<div class="bkun"><span class="sil bkbig">${ic}</span><h4>???</h4><p>${txt}</p></div>`;
  if(t==='tw'){const T=TW[id];if(!T)return'';
-  if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+`<button class="bklink" data-a="cachgo" data-v="${a}">🏆 ${fn?ACH[a].n:'Logro oculto'}</button>`;}return sh(T.ic,'Aún no descubierto.');}
+  if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+achLink(a);}return sh(T.ic,'Aún no descubierto.');}
   const bi=`<span class="bkbic" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
   if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   return bkSheet(bi,shopInfo(id,1).replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id);}
@@ -6337,7 +6346,7 @@ function act(e){
  else if(a==='ctab'){CP.tab=b.dataset.v;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;renderComp();}
  else if(a==='csel'){CP.sel[CP.tab]=b.dataset.v;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=true;renderComp();}
  else if(a==='cbkl'){CP.pageR=false;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;renderComp();}
- else if(a==='cachgo'){CP.tab='lg';CP.af='all';CP.as='all';CP.sel.lg=b.dataset.v;CP.hl=b.dataset.v;CP.prev=null;CP.eprev=null;CP.hprev=null;PE=null;PHV=null;CP.pageR=true;renderComp();}
+ else if(a==='cachgo'){cpGo('lg',b.dataset.v);}
  else if(a==='cprev'){const es=Object.keys(ET).filter(e=>seen('en',e));if(!es.includes(CP.pen))CP.pen=es[0]||'norm';CP.prev=b.dataset.v;newPrev(CP.prev,CP.pen);$('comp').scrollTop=0;renderComp();}
  else if(a==='cflt'){const sc=$('comp').scrollTop;if(b.dataset.v)CP.flt[b.dataset.f]=b.dataset.v;else delete CP.flt[b.dataset.f];renderComp();$('comp').scrollTop=sc;}
  else if(a==='pvpill'){const sl=$(b.dataset.s);if(sl){sl.value=b.dataset.v;sl.dispatchEvent(new Event('change',{bubbles:true}));}b.parentElement.querySelectorAll('.bkpill').forEach(x=>x.classList.toggle('on',x===b));}
@@ -6428,7 +6437,7 @@ function act(e){
  else if(a==='ulv'){CP.ulv=CP.ulv||{};if(lvSec(b.dataset.k,+b.dataset.v)){errBubble('No has alcanzado aún ese nivel.');CP.ulv[b.dataset.k]=1;}else CP.ulv[b.dataset.k]=+b.dataset.v;if(CP.prev===b.dataset.k)newPrev(CP.prev,CP.pen);const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}
  else if(a==='achm'){APAN.open=false;apanTick();lbOpen('lg');}
  else if(a==='apan'){APAN.open=!APAN.open;apanTick();}
- else if(a==='apin'){const id=b.dataset.id;if(PINS.includes(id))PINS=PINS.filter(x=>x!==id);else if(PINS.length>=3){toast('📌 Ya tienes 3 logros fijados: quita uno para fijar este.');return;}else PINS.push(id);savePins();if(CP.open){const sc=$('comp').scrollTop;renderComp();$('comp').scrollTop=sc;}apanTick(1);}
+ else if(a==='apin'){const id=b.dataset.id;if(PINS.includes(id))PINS=PINS.filter(x=>x!==id);else if(PINS.length>=3){toast('📌 Ya tienes 3 logros fijados: quita uno para fijar este.');return;}else PINS.push(id);savePins();if(LB.open&&!LB.cover){const sc=$('comp').scrollTop;lbRender();$('comp').scrollTop=sc;}else if(RL.open&&RL.hpick&&typeof renderHeroPick==='function')renderHeroPick();apanTick(1);}
  else if(a==='tutfull'){try{localStorage.setItem('rt-tutchoice','full');}catch(e){}closeQuick();startTut();}
  else if(a==='tutquick'){const first=!tutChosen();try{localStorage.setItem('rt-tutchoice','quick');}catch(e){}openQuick(first?'setup':'help');}
  else if(a==='qprev'){if(QS.i>0){QS.i--;renderQuick();}}
@@ -6448,7 +6457,7 @@ function act(e){
  else if(a==='hideend'){if(LB.open&&LB.area==='end')lbClose(true);}
 }
 $('ui').addEventListener('click',act);$('apan').addEventListener('click',act);$('mtl').addEventListener('click',act);$('mbl').addEventListener('click',act);$('mbr').addEventListener('click',act);$('relic').addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.k&&d.open)curSeen(d.dataset.k);if(d.classList&&d.classList.contains('hpvd')){RL.hpvo=d.open;fitHero();}if(d.classList&&d.classList.contains('hdet')&&d.dataset.id){RL.dman=RL.dman||{};RL.dman[d.dataset.id]=d.open;}if(d.classList&&d.classList.contains('rdet')&&d.dataset.id){RL.rman=RL.rman||{};RL.rman[d.dataset.id]=d.open;}},true);$('menu').addEventListener('click',act);$('focus').addEventListener('click',act);$('menu').addEventListener('input',e=>{if(e.target.id==='rrange')setRounds(+e.target.value);});$('comp').addEventListener('input',e=>{if(e.target.id==='rrange')setRounds(+e.target.value);});$('endscr').addEventListener('click',act);$('ctl').addEventListener('click',act);$('opt').addEventListener('click',act);$('comp').addEventListener('click',act);document.addEventListener('change',e=>{const el=e.target;if(el.classList&&el.classList.contains('tsel')){const t=S.list.find(o=>o.id===+el.dataset.id);if(t&&!S.aim){t.mode=el.value;t.tgt=null;refreshPrim();ui();}}});$('comp').addEventListener('change',e=>{if(e.target.id==='pvs'){CP.spd=+e.target.value;if(PV&&PV.S)PV.S.espd=CP.spd;}if(e.target.id==='pve'){CP.pen=e.target.value;newPrev(CP.prev,CP.pen);}if(e.target.id==='pvs2'){CP.spd=+e.target.value;if(PE&&PE.S)PE.S.espd=CP.spd;}if(e.target.id==='pve2'){CP.eprev=e.target.value;newEPrev(CP.eprev,CP.ph||'hero:reinhart');renderComp();}if(e.target.id==='pvh'){CP.ph=e.target.value;newEPrev(CP.eprev,CP.ph);}if(e.target.id==='pve3'){CP.hen=e.target.value;newHPrev(CP.hprev,CP.hen,CP.hlv);}if(e.target.id==='pvl'){CP.hlv=+e.target.value;newHPrev(CP.hprev,CP.hen,CP.hlv);}if(e.target.id==='pvs3'){CP.spd=+e.target.value;if(PHV&&PHV.S)PHV.S.espd=CP.spd;}});$('relic').addEventListener('click',act);$('relics').addEventListener('click',act);$('tip').addEventListener('click',act);$('side').addEventListener('click',act);$('opts').addEventListener('click',act);
-for(const _el of [$('opts'),$('comp')])_el.addEventListener('input',e=>{if(e.target.dataset.o===undefined)return;const o=OPTS[+e.target.dataset.o];OPT[o.key]=+e.target.value;saveOpt();e.target.closest('label').querySelector('output').textContent=o.fmt(OPT[o.key]);});
+for(const _el of [$('opts'),$('comp')])_el.addEventListener('input',e=>{if(e.target.dataset.o===undefined)return;const o=OPTS[+e.target.dataset.o];OPT[o.key]=+e.target.value;saveOpt();e.target.closest('label').querySelector('output').textContent=o.fmt(OPT[o.key]);if(o.real){const rw=e.target.closest('.orow'),rl=rw&&rw.querySelector('.oreal');if(rl)rl.textContent=o.real(OPT[o.key]);}});
 
 setTimeout(()=>{try{const b=$('ptb');if(b)b.classList.toggle('on',!!(OPT.ptip||OPT.ptipw));}catch(e){}},0);
 // ======================= EL LIBRO: portada (pausa y menú principal) y áreas =======================
@@ -7948,9 +7957,11 @@ function cpPrimDecor(){try{const box=PMN()?$('tip'):$('side');box.classList.remo
 {const _k=openKw;openKw=function(a,pl){const r=_k.apply(this,arguments);try{const d=KS[KS.length-1]&&KS[KS.length-1].el,id=a.dataset.kw||'';
   const tg=MECI[id]&&mecOk(id)?['mc',id]:id.startsWith('tw_')?['tw',id.slice(3)]:id.startsWith('en_')?['en',id.slice(3)]:id.startsWith('hr_')?['hr',id.slice(3)]:id.startsWith('rl_')?['rl',id.slice(3)]:null;
   if(d&&tg)cpDecorate(d,tg);}catch(e){}return r;};}
-function cpGo(t,v){if(!compOk())return;if(NEC.open)necClose();try{closeKS();}catch(e){}
+// los logros viven en su propia sección del libro (🏆 Logros): hay que saltar de sección, no solo cambiar la pestaña
+function cpGo(t,v){if(t!=='lg'&&!compOk())return;if(NEC.open)necClose();try{closeKS();}catch(e){}
  CP.tab=t;CP.sel[t]=v;CP.flt={};CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=true;CP.hl=v;
- if(LB.open&&!LB.cover&&(LB.area==='cp'))renderComp();else lbOpen('cp');}
+ if(t==='lg'){CP.af='all';CP.as='all';}
+ const area=t==='lg'?'lg':'cp';if(LB.open&&!LB.cover&&LB.area===area)renderComp();else{PMU.ask=0;lbOpen(area);}}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.cpgo,.mecuse');if(!b)return;e.stopPropagation();e.preventDefault();cpGo(b.dataset.t,b.dataset.v);},true);
 
 // ---- aviso de «¡Nuevo enemigo!» ----
@@ -9057,6 +9068,21 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
   a2.download=`towerize-guardado-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}.txt`;document.body.appendChild(a2);a2.click();setTimeout(()=>{URL.revokeObjectURL(a2.href);a2.remove();},500);}
  else if(a==='file'){const f=document.createElement('input');f.type='file';f.accept='.txt,text/plain';f.onchange=()=>{const x=f.files&&f.files[0];if(!x)return;x.text().then(t=>{SVX.inp=t.trim();SVX.ask=0;SVX.msg='Archivo leído: '+x.name;renderOpts();});};f.click();}
  else if(a==='load'){if(!SVX.inp.trim())return;if(!SVX.ask){SVX.ask=1;renderOpts();return;}svxLoad(SVX.inp);}},true);
+// ---- frecuencia de sonidos: junto al % se ve qué significa de verdad ----
+{const fq=(q,v)=>{if(!v)return 'No suena nunca.';const cds=Object.keys(SFXK).filter(k=>SFQ(k)===q).map(k=>{const d=sfxDef(k);return d&&d.cd||0;}).filter(x=>x>0);
+  const fm=1/Math.max(.25,v/100),lo=Math.min(...cds)*fm,hi=Math.max(...cds)*fm,F=x=>String(Math.round(x*100)/100).replace('.',',');
+  const rg=(a,b)=>Math.abs(b-a)<.005?F(a):F(a)+'–'+F(b),l0=Math.min(...cds),h0=Math.max(...cds);
+  return v>=100?`Como mucho 1 cada ${rg(l0,h0)} s (de base).`:`Como mucho 1 cada ${rg(lo,hi)} s (de base, ${rg(l0,h0)} s).`;};
+ for(const o of OPTS)if(o.key==='fq_coin'||o.key==='fq_kill'||o.key==='fq_hit')o.real=v=>fq(o.key,v);}
+// ==================== v305 · Logros que se piden en otros sitios: clic al compendio y fijar ====================
+// Donde se pide un logro (héroe bloqueado, torre por desbloquear, cosméticos…), el texto lleva a ese logro en 🏆 Logros.
+// Si el logro está oculto, lleva igual (allí sigue saliendo como «???», no se desvela nada). Si ya se ve y no lo tienes, 📌 lo fija.
+function achLink(id,fallback){const A=ACH[id];if(!A)return fallback||'';const f=achFound(id),got=!!ACHS[id],pin=PINS.includes(id);
+ return `<span class="achlk"><button class="bklink" data-a="cachgo" data-v="${id}" title="Ver en Logros">${f?`🏆 <b>${A.n}</b>: ${A.d}`:'🏆 Un logro oculto: sigue jugando para descubrirlo.'}</button>`+
+  (f&&!got?`<button class="pinb${pin?' on':''}" data-a="apin" data-id="${id}" title="${pin?'Quitar de fijados':'Fijar para seguirlo en partida'}">📌${pin?' Fijado':' Fijar'}</button>`:'')+`</span>`;}
+// volver a donde estabas (p. ej. la elección de héroe) al salir de Logros con «atrás»
+{const _g=cpGo;cpGo=function(t,v){const from=LB.open&&!LB.cover?LB.area:null,tab=CP.tab,win=RL.open&&RL.hpick;const r=_g.apply(this,arguments);try{if(from==='prep'||from==='op'||(from==='cp'&&t==='lg')){LB.ret=from;LB.retTab=tab;}else if(win&&LB.open)LB.fromWin=1;}catch(e){}return r;};}
+{const _b=lbBack;lbBack=function(){if(LB.ret&&LB.open&&(LB.area==='lg'||LB.area==='cp')){const r=LB.ret;LB.ret=0;if(r==='cp'&&LB.retTab){CP.tab=LB.retTab;CP.pageR=true;}lbOpen(r);return;}LB.ret=0;return _b.apply(this,arguments);};}
 // ==================== v302 · SONIDOS DE LO NUEVO (Era Distópica, héroes, reliquias y Prototipo Omega) ====================
 // Todos sintetizados (sin muestras). Se añaden a «Probar sonidos» en un grupo propio.
 const SY2={

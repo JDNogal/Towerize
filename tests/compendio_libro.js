@@ -9,6 +9,7 @@ await p.evaluate(()=>{toggleComp(true);CP.tab='tw';renderComp();});await shot('t
 if(mob){await p.click('.bti[data-v="arrow"]');await shot('tw_det');await p.click('[data-a="cbkl"]');}
 await p.click('.bti[data-v="frost"]');await shot('frost');
 await p.click('[data-a="cachgo"]');await p.waitForTimeout(200);await shot('lg');
+if(await p.evaluate(()=>LB.area)!=='lg')errs.push('el logro de la torre no salta a Logros');await p.evaluate(()=>{lbOpen('cp');});
 if(mob)await p.evaluate(()=>{CP.pageR=false;});
 for(const t of ['hr','pc','bf','rl','en','ev']){await p.evaluate(t=>{CP.tab=t;CP.pageR=false;renderComp();},t);await shot(t);}
 await p.evaluate(()=>{CP.tab='tw';CP.sel.tw='arrow';CP.pageR=true;renderComp();});await p.click('.bkgo');await shot('prev');
