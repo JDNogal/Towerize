@@ -1,6 +1,6 @@
 // ---- v291 · Habilidades de las unidades enemigas normales ----
 // · Súcubo: embelesa a un soldado cercano (aro rosa, 10 s): deja de luchar por ti, sigue a la Súcubo y ataca a tus otros soldados. El héroe es inmune.
-// · Pirata de sistemas: canaliza 4 s un campo de interferencia (2,5 casillas) que apaga las torres de dentro; descansa 6 s.
+// · Pirata de sistemas: se para 1 s a lanzar una interferencia (2,5 casillas) que apaga 6 s las torres de dentro; recarga 12 s.
 // · Bombardero goblin y Cohetero sintético: disparan en arco; el golpe salpica a las unidades de alrededor (50 %).
 // · Girocóptero goblin (nuevo) y Dron artillero: voladores que se paran a atacar a tus unidades y a tu héroe.
 // · Caudillo orco (Hachazo giratorio, círculo), Campeón infernal (Estallido de llamas, chorro hacia delante), Centurión (Golpe sísmico, círculo + aturde)
@@ -17,7 +17,7 @@ const ESK={whirl:{n:'Hachazo giratorio',r:1.2,m:2,col:'#f0b429',d:'Cada 25 s, si
  jet:{n:'Estallido de llamas',r:2.2,a:.6,m:1.5,col:'#ff7a3c',d:'Cada 25 s, si tiene unidades cerca, lanza un chorro de fuego hacia delante (cono de 2 casillas): 1,5 veces su daño a las unidades alcanzadas.'},
  quake:{n:'Golpe sísmico',r:1.2,m:1.5,st:.5,col:'#8fb0d0',d:'Cada 25 s, si tiene unidades cerca, golpea el suelo: onda circular a 1 casilla o menos (1,5 veces su daño) que aturde a tus unidades 0,5 s.'},
  claw:{n:'Barrido de garras',r:1.5,a:.8,m:2,col:'#ff4fd8',d:'Cada 25 s, si tiene unidades cerca, barre con las garras en arco hacia delante (1,5 casillas): doble de su daño a las unidades alcanzadas.'}};
-const SKCD=25,CHARMT=10,CHARMCD=8,CHARMR=3*K,JAMR=2.5*K,JAMT=4,JAMREST=6;
+const SKCD=25,CHARMT=10,CHARMCD=8,CHARMR=3*K,JAMR=2.5*K,JAMT=1,JAMOFF=6,JAMREST=12;
 for(const k of['gyro'])if(!REGT.includes(k))REGT.push(k);
 FORM.gyro=3;
 // escuadras: el Girocóptero se suma al Bombardeo
@@ -54,7 +54,7 @@ function withoutCharmed(fn){const saved=[];for(const t of unitTowers())if(t.sd&&
 {const _w=unitWalk;unitWalk=function(dt){return withoutCharmed(()=>_w(dt));};}
 {const _c=unitCombat;unitCombat=function(dt){return withoutCharmed(()=>_c(dt));};}
 // ---- Pirata de sistemas: campo de interferencia ----
-function jamTick(e,dt){if(e.chan>0){e.chan-=dt;for(const t of S.list){if(TW[t.type].uniq||TW[t.type].unit)continue;if(Math.hypot(t.x-e.x,t.y-e.y)<=JAMR)t.jam=Math.max(t.jam||0,.15);}if(e.chan<=0)e.jc=JAMREST;return;}
+function jamTick(e,dt){if(e.chan>0){e.chan-=dt;if(e.chan<=0){for(const t of S.list){if(TW[t.type].uniq||TW[t.type].unit)continue;if(Math.hypot(t.x-e.x,t.y-e.y)<=JAMR)t.jam=Math.max(t.jam||0,JAMOFF);}S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:JAMR,col:'#3fe8ff'});e.jc=JAMREST-JAMT;}return;}
  e.jc=(e.jc===undefined?2:e.jc)-dt;if(e.jc>0)return;let any=false;for(const t of S.list)if(!TW[t.type].uniq&&!TW[t.type].unit&&Math.hypot(t.x-e.x,t.y-e.y)<=JAMR){any=true;break;}
  if(any){e.chan=JAMT;}else e.jc=.5;}
 // las torres interferidas no disparan (las de disparo normal se saltan; el resto ve su cadencia casi a cero)
@@ -84,12 +84,12 @@ function eSkillsDraw(g,lw){if(!S)return;
 // palabras clave nuevas
 {const _k=kwHtml0;kwHtml0=function(id,src){
  if(id==='charm')return '<b>Embeleso</b><small>Cada '+CHARMCD+' s elige a uno de tus soldados cercanos (3 casillas), que pasa a ser un enemigo rosa durante '+CHARMT+' s: camina por el camino con el grupo y pelea contra tus unidades. Si llega al núcleo quita 1 de vida y el soldado vuelve a su torre. Si lo matas, el soldado cae y reaparece como siempre. Si la Súcubo muere o se acaba el tiempo, vuelve a ser tuyo. El héroe es inmune.</small>';
- if(id==='jam')return '<b>Interferencia</b><small>Se para '+JAMT+' s y despliega un campo holográfico de '+f(JAMR/K)+' casillas: las torres dentro se apagan y no disparan. Luego descansa '+JAMREST+' s. Las torres de unidades siguen luchando.</small>';
+ if(id==='jam')return '<b>Interferencia</b><small>Se para '+JAMT+' s a lanzar un pulso de '+f(JAMR/K)+' casillas: las torres alcanzadas se apagan '+JAMOFF+' s, aunque él muera. Recarga '+JAMREST+' s. Las torres de unidades siguen luchando.</small>';
  if(id==='arcsh')return '<b>Disparo en arco</b><small>Su ataque cae en arco y salpica: las unidades a menos de 0,9 casillas del objetivo reciben la mitad del daño.</small>';
  if(id==='airatk')return '<b>Ataque aéreo</b><small>Vuela, pero se para en el aire para atacar a tus unidades y a tu héroe desde lejos. Solo las unidades a distancia y las torres que alcancen el aire pueden darle.</small>';
  if(ESK[id])return '<b>'+ESK[id].n+'</b><small>'+ESK[id].d+'</small>';
  return _k(id,src);};}
 const MECG2=[['charm','Embeleso','💗'],['jam','Interferencia','📡'],['arcsh','Disparo en arco','💣'],['airatk','Ataque aéreo','🛩️'],['whirl','Hachazo giratorio','🪓'],['jet','Estallido de llamas','🔥'],['quake','Golpe sísmico','💥'],['claw','Barrido de garras','🐾']];
 const MECUSE2={curse:[],charm:['en:warlock'],jam:['en:hack'],arcsh:['en:javelin','en:rocket','en:gyro','en:gundr'],airatk:['en:gyro','en:gundr'],whirl:['en:champ'],jet:['en:dchamp'],quake:['en:centu'],claw:['en:praet']};
-Object.assign(ETIP2,{hack:'Apaga las torres dentro de su campo: mátalo pronto o ataca desde fuera de su alcance.',rocket:'Sus cohetes caen en arco y salpican a tus unidades: sepáralas o quítalo pronto.',gundr:'Se para en el aire a disparar a tus unidades: usa torres que den al aire.',
+Object.assign(ETIP2,{hack:'Apaga durante un rato las torres cercanas: mátalo antes de que lance el pulso o ataca desde fuera de su alcance.',rocket:'Sus cohetes caen en arco y salpican a tus unidades: sepáralas o quítalo pronto.',gundr:'Se para en el aire a disparar a tus unidades: usa torres que den al aire.',
  centu:'Mucha armadura y cada 25 s un golpe sísmico que aturde a tus unidades.',praet:'Mucha resistencia mágica y cada 25 s un barrido de garras hacia delante.'});

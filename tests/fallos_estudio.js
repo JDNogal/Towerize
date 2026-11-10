@@ -17,7 +17,10 @@ setTimeout(()=>{let r;try{r=w.eval(`(()=>{const o={};ERA=2;startGame(15);chooseH
  const g={t:'gen',x:3,y:3,anch:1,fx:{},trail:[[9,3]]};knock(g,K);o.anch=g.x===3;
  const a={t:'argos',x:5,y:5,sh:1,fx:{},trail:[[9,5]]};knock(a,K);o.argosSh=a.x===5;
  // jefes: empujones seguidos cada vez más flojos, hasta no moverlo
- const b={t:'atroll',x:0,y:0,fx:{},trail:[[100,0]],hp:10,max:10};let last=1e9,dec=true;const ds=[];for(let i=0;i<5;i++){const x0=b.x;knock(b,K);const d=b.x-x0;ds.push(+d.toFixed(2));if(d>last+1e-9)dec=false;last=d;}
- o.bossKb=isBoss(b)&&dec&&ds[0]>0&&ds[ds.length-1]===0;o.ds=ds.join(',');
+ const b={t:'atroll',x:0,y:0,fx:{},trail:[[100,0]],hp:10,max:10};const ds=[];const kb=()=>{const x0=b.x;knock(b,K);return +(b.x-x0).toFixed(2);};for(let i=0;i<5;i++)ds.push(kb());
+ const w0=S.wt;S.wt=w0+8.5;ds.push(kb());S.wt=w0;
+ o.bossKb=isBoss(b)&&ds[0]>ds[1]&&ds[1]>ds[2]&&ds[2]>0&&ds[3]===0&&ds[4]===0&&ds[5]>0;o.ds=ds.join(',');
+ // Pirata: el pulso apaga 6 s las torres aunque él muera y recarga 12 s
+ so.jam=0;so.cd=0;const pe={t:'hack',x:so.x+1,y:so.y,hp:1e9,max:1e9,fx:{},jc:0};jamTick(pe,.1);o.cast=pe.chan>0;jamTick(pe,1.05);o.jamOn=Math.abs(so.jam-JAMOFF)<1e-6;o.jamRest=pe.jc>10;
  return o;})()`);}catch(e){console.log('EXC '+e.stack);process.exit(1);}
  console.log(JSON.stringify(r));const bad=Object.entries(r).filter(([k,v])=>v===false).map(([k])=>k);if(bad.length){console.log('FALLOS '+bad.join(', '));process.exit(1);}console.log('ok');process.exit(0);},400);
