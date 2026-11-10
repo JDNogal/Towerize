@@ -27,3 +27,7 @@ function pinbarTick(){let el=$('pinbar');if(!el){el=document.createElement('div'
 setInterval(()=>{try{pinbarTick();}catch(e){}},400);
 // v305 · seguro: si el libro está cerrado y no se está cerrando, que no quede la marca «libro abierto» (ocultaba todos los bocadillos de palabras clave)
 setInterval(()=>{try{const c=$('comp');if(!LB.open&&document.body.classList.contains('lbopen')&&!(c&&c.classList.contains('lbout')))document.body.classList.remove('lbopen');}catch(e){}},500);
+// ---- Escuadra del arquitecto (activo): después de colocar la pieza, vuelves a elegir otra de las que quedan ----
+{const _p=placePiece;placePiece=function(bx,by){const ex=S.extraPc&&S.offers&&S.offers.length>1,i=S.pi;const r=_p.apply(this,arguments);
+ try{if(ex){S.extraPc=0;S.offers=S.offers.filter((o,j)=>j!==i);const can=S.offers.some(o=>{for(let k=0;k<4;k++){for(let y=0;y<BN;y++)for(let x=0;x<BN;x++)if(check(x,y,o.p)===0)return true;rotO(o);}return false;});
+  if(can){S.phase='place';S.pi=null;S.msg='📐 Escuadra del arquitecto: coloca la segunda pieza.';ui();}}}catch(e){}return r;};}

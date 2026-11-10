@@ -29,7 +29,7 @@ const RDEF={
  notebook:{cd:3,pas:()=>`Cada oleada sin perder vida: torres <span class="cd">+2% de daño</span> permanente (máx. +20%; ahora: <span class="cd">+${Math.min(20,2*((typeof S!=='undefined'&&S&&S.nbN)||0))}%</span>).`,act:()=>'Esta oleada, cada baja da <span class="cf">+1 de experiencia</span> a tu héroe.'},
  balance:{cd:3,dur:8,pas:()=>`Enemigos con ${kw('burn','quemadura','')} e ${kw('chill','hipotermia','')} a la vez: <span class="cd">+25% de stacks</span>.`,act:()=>`<b>8 s</b>, en un área: ${kw('slow','ralentiza','')} un 30% y aplica 3 de ${kw('burn','quemadura','')} y 1 de ${kw('chill','hipotermia','')} por segundo.`},
  tome:{cd:3,dur:8,pas:()=>'Lo que hace daño mágico: <span class="cmg">+10 de penetración mágica</span>.',act:()=>'<b>8 s</b>: los enemigos de un área reciben <span class="cd">+25% de daño</span> de todo (como <span class="cmg">daño mágico</span>).'},
- square:{cd:3,pas:()=>'Te ofrecen <span class="cf">4 piezas</span> en vez de 3.',act:()=>'Vuelves a sacar las piezas de esta ronda.'},
+ square:{cd:3,pas:()=>'Te ofrecen <span class="cf">4 piezas</span> en vez de 3.',act:()=>'Esta ronda colocas <span class="cf">dos piezas</span> de las que te ofrecen.'},
  harpoon:{cd:3,dur:8,pas:()=>`<span class="cd">+25% de daño</span> contra ${kw('fly','voladores','')}.`,act:()=>`<b>8 s</b>: los ${kw('fly','voladores','')} de un área caen al suelo y se pueden bloquear.`},
  banner:{cd:3,dur:10,pas:()=>'Tus soldados reaparecen un <span class="cr">30% más rápido</span>.',act:()=>'<b>10 s</b>: tus soldados <span class="cf">no pueden morir</span>.'},
  crystal:{cd:5,pas:()=>'El primer enemigo que llega al núcleo cada oleada <span class="cf">no quita vida</span> (salvo jefes).',act:()=>'Recuperas <span class="chp">3 de vida</span>.'},

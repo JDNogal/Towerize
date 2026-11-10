@@ -2680,7 +2680,7 @@ const RDEF={
  notebook:{cd:3,pas:()=>`Cada oleada sin perder vida: torres <span class="cd">+2% de daño</span> permanente (máx. +20%; ahora: <span class="cd">+${Math.min(20,2*((typeof S!=='undefined'&&S&&S.nbN)||0))}%</span>).`,act:()=>'Esta oleada, cada baja da <span class="cf">+1 de experiencia</span> a tu héroe.'},
  balance:{cd:3,dur:8,pas:()=>`Enemigos con ${kw('burn','quemadura','')} e ${kw('chill','hipotermia','')} a la vez: <span class="cd">+25% de stacks</span>.`,act:()=>`<b>8 s</b>, en un área: ${kw('slow','ralentiza','')} un 30% y aplica 3 de ${kw('burn','quemadura','')} y 1 de ${kw('chill','hipotermia','')} por segundo.`},
  tome:{cd:3,dur:8,pas:()=>'Lo que hace daño mágico: <span class="cmg">+10 de penetración mágica</span>.',act:()=>'<b>8 s</b>: los enemigos de un área reciben <span class="cd">+25% de daño</span> de todo (como <span class="cmg">daño mágico</span>).'},
- square:{cd:3,pas:()=>'Te ofrecen <span class="cf">4 piezas</span> en vez de 3.',act:()=>'Vuelves a sacar las piezas de esta ronda.'},
+ square:{cd:3,pas:()=>'Te ofrecen <span class="cf">4 piezas</span> en vez de 3.',act:()=>'Esta ronda colocas <span class="cf">dos piezas</span> de las que te ofrecen.'},
  harpoon:{cd:3,dur:8,pas:()=>`<span class="cd">+25% de daño</span> contra ${kw('fly','voladores','')}.`,act:()=>`<b>8 s</b>: los ${kw('fly','voladores','')} de un área caen al suelo y se pueden bloquear.`},
  banner:{cd:3,dur:10,pas:()=>'Tus soldados reaparecen un <span class="cr">30% más rápido</span>.',act:()=>'<b>10 s</b>: tus soldados <span class="cf">no pueden morir</span>.'},
  crystal:{cd:5,pas:()=>'El primer enemigo que llega al núcleo cada oleada <span class="cf">no quita vida</span> (salvo jefes).',act:()=>'Recuperas <span class="chp">3 de vida</span>.'},
@@ -2791,7 +2791,7 @@ function useRelic(id){
  else if(id==='quiver'){S.aim='quiver';S.msg='Elige el área donde las torres dispararán doble.'+CANC();renderRelics();ui();return;}
  else if(id==='frost'){S.aim='frost';S.msg='Elige el área que congelar.'+CANC();renderRelics();ui();return;}
  else if(id==='venom')venomBlast();
- else if(id==='square'){S.pi=null;deal();S.msg='La Escuadra del arquitecto saca piezas nuevas.';}
+ else if(id==='square'){S.extraPc=1;S.msg='Escuadra del arquitecto: esta ronda colocas también una segunda pieza.';}
  else if(id==='crystal'){if(S.hp>=20){S.mimFor=null;S.msg='Tu núcleo ya tiene la vida al máximo.';ui();return;}S.hp=Math.min(20,S.hp+3);S.fx.push({x:S.core.x,y:S.core.y,t:.7,m:.7,r:1.5*K,col:'#8fe3ff'});S.msg='💎 Recuperas vida.';}
  else if(id==='harpoon'){S.aim='harpoon';S.msg='Elige el área del Arpón celeste.'+CANC();renderRelics();ui();return;}
  else if(id==='notebook'){S.nbR=S.round;S.msg='Cuaderno del aprendiz: en esta oleada, cada baja da +1 de experiencia a tu héroe.';}
@@ -9183,6 +9183,10 @@ function pinbarTick(){let el=$('pinbar');if(!el){el=document.createElement('div'
 setInterval(()=>{try{pinbarTick();}catch(e){}},400);
 // v305 · seguro: si el libro está cerrado y no se está cerrando, que no quede la marca «libro abierto» (ocultaba todos los bocadillos de palabras clave)
 setInterval(()=>{try{const c=$('comp');if(!LB.open&&document.body.classList.contains('lbopen')&&!(c&&c.classList.contains('lbout')))document.body.classList.remove('lbopen');}catch(e){}},500);
+// ---- Escuadra del arquitecto (activo): después de colocar la pieza, vuelves a elegir otra de las que quedan ----
+{const _p=placePiece;placePiece=function(bx,by){const ex=S.extraPc&&S.offers&&S.offers.length>1,i=S.pi;const r=_p.apply(this,arguments);
+ try{if(ex){S.extraPc=0;S.offers=S.offers.filter((o,j)=>j!==i);const can=S.offers.some(o=>{for(let k=0;k<4;k++){for(let y=0;y<BN;y++)for(let x=0;x<BN;x++)if(check(x,y,o.p)===0)return true;rotO(o);}return false;});
+  if(can){S.phase='place';S.pi=null;S.msg='📐 Escuadra del arquitecto: coloca la segunda pieza.';ui();}}}catch(e){}return r;};}
 // ==================== v305 · Novedades del compendio, ítem a ítem ====================
 // Cada cosa nueva (torre, enemigo, reliquia, mecánica, logro conseguido…) lleva su puntito hasta que abres su ficha.
 // La pestaña y la cinta del área solo se apagan cuando ya no queda ninguna por ver. «Marcar todos como vistos» limpia solo la pestaña en la que estás.

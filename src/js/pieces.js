@@ -43,7 +43,7 @@ function useRelic(id){
  else if(id==='quiver'){S.aim='quiver';S.msg='Elige el área donde las torres dispararán doble.'+CANC();renderRelics();ui();return;}
  else if(id==='frost'){S.aim='frost';S.msg='Elige el área que congelar.'+CANC();renderRelics();ui();return;}
  else if(id==='venom')venomBlast();
- else if(id==='square'){S.pi=null;deal();S.msg='La Escuadra del arquitecto saca piezas nuevas.';}
+ else if(id==='square'){S.extraPc=1;S.msg='Escuadra del arquitecto: esta ronda colocas también una segunda pieza.';}
  else if(id==='crystal'){if(S.hp>=20){S.mimFor=null;S.msg='Tu núcleo ya tiene la vida al máximo.';ui();return;}S.hp=Math.min(20,S.hp+3);S.fx.push({x:S.core.x,y:S.core.y,t:.7,m:.7,r:1.5*K,col:'#8fe3ff'});S.msg='💎 Recuperas vida.';}
  else if(id==='harpoon'){S.aim='harpoon';S.msg='Elige el área del Arpón celeste.'+CANC();renderRelics();ui();return;}
  else if(id==='notebook'){S.nbR=S.round;S.msg='Cuaderno del aprendiz: en esta oleada, cada baja da +1 de experiencia a tu héroe.';}
