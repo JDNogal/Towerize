@@ -81,3 +81,6 @@ body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border
 .hsrun.on{background:color-mix(in srgb,var(--paper) 82%,var(--acc) 18%)!important;color:var(--ink)}
 
 .hsrun.on .hsrt b,.hsrun.on .hsrt small{color:var(--ink)!important}.hsrun.on .hsrt small{opacity:.75}
+/* v305 · tamaño de la interfaz según la pantalla, sin saltos: crece de forma continua con el lado más corto (también en panorámicas o con la ventana no maximizada) */
+body.dsk:not(.mfs) #mtl,body.dsk:not(.mfs) #zm,body.dsk:not(.mfs) #mbl,body.dsk:not(.mfs) #mbr,body.dsk:not(.mfs) #stats,body.dsk:not(.mfs) #lstack{zoom:var(--uiz,1)}
+body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:var(--wz,1)}

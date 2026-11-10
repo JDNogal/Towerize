@@ -51,3 +51,6 @@ function tdtClean(){document.querySelectorAll('#relic .tof .tdt .ttl:not([data-c
  if(tof&&tabs){let o=tof.querySelector('.lvout');if(!o){o=document.createElement('span');o.className='lvout';const gd=tof.querySelector(':scope>.gd');if(gd)gd.appendChild(o);else continue;}o.innerHTML='';o.appendChild(tabs);}}});}
 {const _r=renderTowerOffer;renderTowerOffer=function(){const r=_r.apply(this,arguments);try{tdtClean();}catch(e){}return r;};}
 setInterval(()=>{try{tdtClean();}catch(e){}},250);
+// v305 · escala de la interfaz en PC: proporcional a la pantalla (1280×720 = 1), entre 1 y 1,75; las ventanas, algo menos
+function uiScale(){const z=Math.max(1,Math.min(1.75,Math.min(innerWidth/1280,innerHeight/720))),q=Math.round(z*20)/20,w=Math.round(Math.max(1,Math.min(1.6,1+(q-1)*.92))*20)/20,r=document.documentElement.style;if(r.getPropertyValue('--uiz')!==String(q))r.setProperty('--uiz',String(q));if(r.getPropertyValue('--wz')!==String(w))r.setProperty('--wz',String(w));}
+uiScale();addEventListener('resize',uiScale);
