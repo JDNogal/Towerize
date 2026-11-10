@@ -67,3 +67,8 @@ body:not(.mfs) #relic:not(.tdeton) .toff .tof .tgl{min-height:160px;display:flex
 body:not(.mfs) #relic.tdeton .toff .tof .tdt{height:166px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--trim) transparent;padding-right:2px}
 body:not(.mfs) #relic.tdeton .toff .tof .tdt::-webkit-scrollbar{width:6px}
 body:not(.mfs) #relic.tdeton .toff .tof .tdt::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--trim) 80%,transparent);border-radius:3px}
+/* v305 · detalles de la oferta: el marco va en la caja que hace scroll, así la línea de arriba no se corta */
+body:not(.mfs) #relic.tdeton .toff .tof .tdt{border:1px solid var(--line2);border-radius:6px;background:var(--btn)}
+body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border-radius:0!important;background:transparent!important}
+/* v305 · cartas de reliquia: pasivo con pasivo y activo con activo a la misma altura */
+#relic .cgrid .rcard .rbx{box-sizing:border-box}

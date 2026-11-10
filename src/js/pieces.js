@@ -51,7 +51,7 @@ function useRelic(id){
  else if(id==='idol'){if(S.hp<=2){S.mimFor=null;S.msg='Necesitas más de 2 de vida.';ui();return;}hpLoss(2);st.t=15;}
  else if(id==='ember'){S.aim='ember';S.msg='Elige el área de la lluvia de fuego.'+CANC();renderRelics();ui();return;}
  else if(id==='badge'){if(S.merc){S.mimFor=null;S.msg='Los mercenarios ya están luchando.';ui();return;}if(!spawnMerc()){S.mimFor=null;return;}S.msg='Los mercenarios del gremio se unen a la batalla.';}
- else if(id==='dice'){const v=1+Math.floor(Math.random()*6);S.dice=v;st.t=R.dur;S.msg=['','🎲 ¡Pifia! Sale un 1: tus torres hacen menos daño un rato.','🎲 Sale un 2: torres +25% de daño.','🎲 Sale un 3: torres +25% de daño.','🎲 Sale un 4: torres +50% de daño y más rápidas.','🎲 Sale un 5: torres +50% de daño y más rápidas.','🎲 ¡Un 6! Torres +100% de daño y mucho más rápidas.'][v];setCD(id);if(v===1||v===6){const c=v===1?40:80;if(S.mimFor){S.rs.mimic.cd=Math.min(S.rs.mimic.cd,c);}else st.cd=c;}heroSync();renderRelics();ui();return;}
+ else if(id==='dice'){const v=1+Math.floor(Math.random()*6);S.dice=v;st.t=R.dur;S.msg=['','🎲 ¡Pifia! Sale un 1: tus torres hacen menos daño un rato.','🎲 Sale un 2: torres +25% de daño.','🎲 Sale un 3: torres +25% de daño.','🎲 Sale un 4: torres +50% de daño y más rápidas.','🎲 Sale un 5: torres +50% de daño y más rápidas.','🎲 ¡Un 6! Torres +100% de daño y mucho más rápidas.'][v];setCD(id);if(v===6){const c=80;/* v305: la pifia ya no recarga antes (era mejor sacar un 1 que un 2 o un 3) */if(S.mimFor){S.rs.mimic.cd=Math.min(S.rs.mimic.cd,c);}else st.cd=c;}heroSync();renderRelics();ui();return;}
  else st.t=R.dur;
  setCD(id);heroSync();renderRelics();ui();
 }

@@ -1495,6 +1495,11 @@ body:not(.mfs) #relic:not(.tdeton) .toff .tof .tgl{min-height:160px;display:flex
 body:not(.mfs) #relic.tdeton .toff .tof .tdt{height:166px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--trim) transparent;padding-right:2px}
 body:not(.mfs) #relic.tdeton .toff .tof .tdt::-webkit-scrollbar{width:6px}
 body:not(.mfs) #relic.tdeton .toff .tof .tdt::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--trim) 80%,transparent);border-radius:3px}
+/* v305 · detalles de la oferta: el marco va en la caja que hace scroll, así la línea de arriba no se corta */
+body:not(.mfs) #relic.tdeton .toff .tof .tdt{border:1px solid var(--line2);border-radius:6px;background:var(--btn)}
+body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border-radius:0!important;background:transparent!important}
+/* v305 · cartas de reliquia: pasivo con pasivo y activo con activo a la misma altura */
+#relic .cgrid .rcard .rbx{box-sizing:border-box}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2660,7 +2665,7 @@ const RDEF={
  lens:{cd:3,dur:20,pas:()=>'Torres: <span class="cc">+10% de crítico</span>.',act:()=>'<b>20 s</b>: <span class="cc">+20% de crítico</span> y críticos <span class="cc">×3</span>.'},
  anvil:{cd:3,dur:20,pas:()=>'Las casillas especiales dan <span class="cf">+50% de su bonus</span>.',act:()=>'<b>20 s</b>: torres sobre casillas especiales con <span class="cr">−50% de enfriamiento</span> y <span class="cd">+50% de daño</span>.'},
  frost:{cd:3,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de <span class="kw" data-kw="slow">ralentizar</span>.',act:()=>'<span class="kw" data-kw="freeze">Congela</span> <b>10 s</b> a los enemigos de un área.'},
- dice:{cd:3,dur:10,pas:()=>'Puedes <span class="cf">volver a tirar</span> una vez en cada elección: piezas, ofertas de torres y cofres.',act:()=>'Tiras el dado; dura <b>10 s</b>:<br>⚀ Pifia: torres <span class="cd">−25% de daño</span> (recarga de 40 s).<br>⚁⚂ Torres <span class="cd">+25% de daño</span>.<br>⚃⚄ Torres <span class="cd">+50% de daño</span> y <span class="cr">−25% de enfriamiento</span>.<br>⚅ Torres <span class="cd">+100% de daño</span> y <span class="cr">−50% de enfriamiento</span> (recarga de 80 s).'},
+ dice:{cd:3,dur:10,pas:()=>'Puedes <span class="cf">volver a tirar</span> una vez en cada elección.',act:()=>'Tiras el dado; dura <b>10 s</b>:<br>⚀ Pifia: torres <span class="cd">−25% de daño</span>.<br>⚁⚂ Torres <span class="cd">+25% de daño</span>.<br>⚃⚄ Torres <span class="cd">+50% de daño</span> y <span class="cr">−25% de enfriamiento</span>.<br>⚅ Torres <span class="cd">+100% de daño</span> y <span class="cr">−50% de enfriamiento</span> (recarga de 80 s).'},
  horn:{cd:3,dur:10,pas:()=>'Tras 30 s de oleada: torres <span class="cd">+20% de daño</span>.',act:()=>'<b>10 s</b>: torres <span class="cd">+100% de daño</span>.'},
  compass:{cd:5,dur:10,pas:()=>'En cada cruce, un enemigo tiene un <span class="cf">50%</span> de tomar la rama que se aleja del núcleo (una vez por enemigo).',act:()=>'<b>10 s</b>: los enemigos retroceden por donde han venido.'},
  venom:{cd:4,pas:()=>`Cada impacto de torre: <span class="cc">20%</span> de aplicar 1 de ${kw('poison','veneno','')}.`,act:()=>`Todo el ${kw('poison','veneno','')} explota de golpe; si mata, salta al enemigo más cercano.`},
@@ -2794,7 +2799,7 @@ function useRelic(id){
  else if(id==='idol'){if(S.hp<=2){S.mimFor=null;S.msg='Necesitas más de 2 de vida.';ui();return;}hpLoss(2);st.t=15;}
  else if(id==='ember'){S.aim='ember';S.msg='Elige el área de la lluvia de fuego.'+CANC();renderRelics();ui();return;}
  else if(id==='badge'){if(S.merc){S.mimFor=null;S.msg='Los mercenarios ya están luchando.';ui();return;}if(!spawnMerc()){S.mimFor=null;return;}S.msg='Los mercenarios del gremio se unen a la batalla.';}
- else if(id==='dice'){const v=1+Math.floor(Math.random()*6);S.dice=v;st.t=R.dur;S.msg=['','🎲 ¡Pifia! Sale un 1: tus torres hacen menos daño un rato.','🎲 Sale un 2: torres +25% de daño.','🎲 Sale un 3: torres +25% de daño.','🎲 Sale un 4: torres +50% de daño y más rápidas.','🎲 Sale un 5: torres +50% de daño y más rápidas.','🎲 ¡Un 6! Torres +100% de daño y mucho más rápidas.'][v];setCD(id);if(v===1||v===6){const c=v===1?40:80;if(S.mimFor){S.rs.mimic.cd=Math.min(S.rs.mimic.cd,c);}else st.cd=c;}heroSync();renderRelics();ui();return;}
+ else if(id==='dice'){const v=1+Math.floor(Math.random()*6);S.dice=v;st.t=R.dur;S.msg=['','🎲 ¡Pifia! Sale un 1: tus torres hacen menos daño un rato.','🎲 Sale un 2: torres +25% de daño.','🎲 Sale un 3: torres +25% de daño.','🎲 Sale un 4: torres +50% de daño y más rápidas.','🎲 Sale un 5: torres +50% de daño y más rápidas.','🎲 ¡Un 6! Torres +100% de daño y mucho más rápidas.'][v];setCD(id);if(v===6){const c=80;/* v305: la pifia ya no recarga antes (era mejor sacar un 1 que un 2 o un 3) */if(S.mimFor){S.rs.mimic.cd=Math.min(S.rs.mimic.cd,c);}else st.cd=c;}heroSync();renderRelics();ui();return;}
  else st.t=R.dur;
  setCD(id);heroSync();renderRelics();ui();
 }
@@ -9328,6 +9333,11 @@ function relFit(){const rl=$('relic');if(!rl||!rl.classList.contains('open')||rl
  const z=parseFloat(getComputedStyle(kids[0]).zoom)||1;const top=Math.min(...kids.map(k=>k.getBoundingClientRect().top)),bot=Math.max(...kids.map(k=>k.getBoundingClientRect().bottom));tot=bot-top;
  const room=innerHeight-48;if(tot>room){const nz=Math.max(.8,z*room/tot);for(const k of kids)k.style.zoom=String(nz);}}
 setInterval(()=>{try{relFit();}catch(e){}},300);
+// v305 · cartas de reliquia del cofre: los recuadros de pasivo (y los de activo) miden lo mismo en todas las cartas
+function rcardAlign(){const rl=$('relic');if(!rl||!rl.classList.contains('open'))return;const cs=[...rl.querySelectorAll('.cgrid .rcard')];if(cs.length<2)return;
+ for(const k of ['.rps','.rac']){const bx=cs.map(c=>c.querySelector(k)).filter(Boolean);if(bx.length<2)continue;bx.forEach(b=>b.style.minHeight='');const tops=new Set(bx.map(b=>Math.round(b.getBoundingClientRect().top)));
+  const z=parseFloat(getComputedStyle(rl.querySelector('.cgrid')).zoom)||1;const h=Math.max(...bx.map(b=>b.getBoundingClientRect().height))/z;bx.forEach(b=>b.style.minHeight=Math.ceil(h)+'px');}}
+setInterval(()=>{try{rcardAlign();}catch(e){}},300);
 // ==================== v304 · Alcance de las torres a distancia ====================
 // Los solares los pone el juego: con poco alcance una torre a distancia apenas llega a la pieza de al lado
 // (medido en mapas reales: con 2,2 casillas solo el 11 % de los solares alcanza otra pieza; con 3, el 35 %; con 3,4, el 70 %).

@@ -40,3 +40,8 @@ function relFit(){const rl=$('relic');if(!rl||!rl.classList.contains('open')||rl
  const z=parseFloat(getComputedStyle(kids[0]).zoom)||1;const top=Math.min(...kids.map(k=>k.getBoundingClientRect().top)),bot=Math.max(...kids.map(k=>k.getBoundingClientRect().bottom));tot=bot-top;
  const room=innerHeight-48;if(tot>room){const nz=Math.max(.8,z*room/tot);for(const k of kids)k.style.zoom=String(nz);}}
 setInterval(()=>{try{relFit();}catch(e){}},300);
+// v305 · cartas de reliquia del cofre: los recuadros de pasivo (y los de activo) miden lo mismo en todas las cartas
+function rcardAlign(){const rl=$('relic');if(!rl||!rl.classList.contains('open'))return;const cs=[...rl.querySelectorAll('.cgrid .rcard')];if(cs.length<2)return;
+ for(const k of ['.rps','.rac']){const bx=cs.map(c=>c.querySelector(k)).filter(Boolean);if(bx.length<2)continue;bx.forEach(b=>b.style.minHeight='');const tops=new Set(bx.map(b=>Math.round(b.getBoundingClientRect().top)));
+  const z=parseFloat(getComputedStyle(rl.querySelector('.cgrid')).zoom)||1;const h=Math.max(...bx.map(b=>b.getBoundingClientRect().height))/z;bx.forEach(b=>b.style.minHeight=Math.ceil(h)+'px');}}
+setInterval(()=>{try{rcardAlign();}catch(e){}},300);
