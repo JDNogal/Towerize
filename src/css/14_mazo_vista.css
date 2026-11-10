@@ -79,5 +79,5 @@ body.mfs #relic .tof .tubdg{right:auto;left:50%;top:auto;bottom:-9px;transform:t
 body.mfs .toftg{top:-9px;left:10px;right:auto;flex-direction:row;gap:3px}body.mfs #relic .toff{margin-top:12px!important}body.mfs .toftg span{width:18px;height:18px;font-size:10px;background:#f4e6c4}
 /* efectos de la carta: iconos centrados, sin rótulo */
 .tofx{display:flex;justify-content:center;gap:6px;margin-top:6px}.tofx .gico{margin:0!important}
-/* curación: doble cruz (no parece un botón de «más información») y un verde más claro que el del veneno */
-.gico[data-kw="mheal"]{width:auto!important;min-width:30px;padding:0 4px;font-size:12px!important;letter-spacing:0;color:#4e9a1c!important;background:#e4f4cf;border-color:#7cbf45!important}
+/* curación: una cruz grande y dos pequeñas (no parece un botón de «más información»), en el verde de la curación */
+.gico[data-kw="mheal"]{background:#e4f4cf;border-color:#7cbf45!important;color:#7cbf45!important}
