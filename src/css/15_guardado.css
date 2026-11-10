@@ -84,3 +84,7 @@ body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border
 /* v305 · tamaño de la interfaz según la pantalla, sin saltos: crece de forma continua con el lado más corto (también en panorámicas o con la ventana no maximizada) */
 body.dsk:not(.mfs) #mtl,body.dsk:not(.mfs) #zm,body.dsk:not(.mfs) #mbl,body.dsk:not(.mfs) #mbr,body.dsk:not(.mfs) #stats,body.dsk:not(.mfs) #lstack{zoom:var(--uiz,1)}
 body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:var(--wz,1)}
+/* v305: icono de la era en cada fila del registro de partidas */
+.hsrun{grid-template-columns:26px 40px 1fr auto!important}
+.hsera{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:15px;background:color-mix(in srgb,var(--ec) 30%,var(--paper));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--ec) 70%,#000)}
+.hsera.e2{background:#1d2238;box-shadow:inset 0 0 0 1.5px var(--ec)}

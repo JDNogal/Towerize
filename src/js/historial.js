@@ -41,19 +41,22 @@ const svLiveId=()=>{try{return (SAV.meta&&SAV.meta.runId)||null;}catch(e){return
 function hsLoad(){if(HIST.list)return;HIST.list=[];hsAll().then(L=>{HIST.list=L.sort((a,b)=>b.t0-a.t0);if(LB.open&&LB.area==='pt')lbRender();});}
 function hsFiltered(){const L=HIST.list||[];return HIST.flt==='w'?L.filter(r=>r.res==='w'):HIST.flt==='l'?L.filter(r=>r.res!=='w'):HIST.flt==='s'?L.filter(r=>r.star):L;}
 function hsPor(id,big){const D=HEROES[id];return `<span class="hspor${big?' big':''}" style="background:${D?D.col:'#888'}">${typeof portrait==='function'?portrait(id,1):D?D.ic:'?'}</span>`;}
-function hsMini(r,W){const g=hsUnmap(r.map),n=r.N||g.length;
+// v305: el fondo del minimapa depende de la era (bosque en la Fantástica, asfalto de neón en la Distópica)
+const HSMC={1:{bg:'#26391f',path:'#a8875a',sol:'#2f4a2a'},2:{bg:'#171a2c',path:'#4a5677',sol:'#252a44'}};
+const hsEraIc=r=>{const E=ERADEF[r.era||1]||ERADEF[1];return `<span class="hsera e${r.era||1}" style="--ec:${E.col}">${E.ic}</span>`;};
+function hsMini(r,W){const g=hsUnmap(r.map),n=r.N||g.length,MC=HSMC[r.era||1]||HSMC[1];
  // solo la zona construida (con un margen), no todo el tablero vacío
  let x0=n,y0=n,x1=0,y1=0;g.forEach((row,y)=>{for(let x=0;x<row.length;x++)if(row[x]!=='.'){x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);}});
  if(x1<x0){x0=0;y0=0;x1=n-1;y1=n-1;}const m=2;x0=Math.max(0,x0-m);y0=Math.max(0,y0-m);x1=Math.min(n-1,x1+m);y1=Math.min(n-1,y1+m);
  const span=Math.max(x1-x0+1,y1-y0+1),s=W/span,ox=x0-(span-(x1-x0+1))/2,oy=y0-(span-(y1-y0+1))/2,X=v=>((v-ox)*s).toFixed(1),Y=v=>((v-oy)*s).toFixed(1),u=Math.max(1,(typeof K!=='undefined'?K:3));
- let h=`<svg class="hsmap" viewBox="0 0 ${W} ${W}" width="${W}" height="${W}" data-ox="${ox}" data-oy="${oy}" data-s="${s}"><rect width="${W}" height="${W}" fill="#26391f"/>`;
- g.forEach((row,y)=>{for(let x=0;x<row.length;x++){const c=row[x];if(c==='.')continue;h+=`<rect x="${X(x)}" y="${Y(y)}" width="${(s+.4).toFixed(1)}" height="${(s+.4).toFixed(1)}" fill="${c==='#'?'#a8875a':'#2f4a2a'}"/>`;}});
+ let h=`<svg class="hsmap" viewBox="0 0 ${W} ${W}" width="${W}" height="${W}" data-ox="${ox}" data-oy="${oy}" data-s="${s}"><rect width="${W}" height="${W}" fill="${MC.bg}"/>`;
+ g.forEach((row,y)=>{for(let x=0;x<row.length;x++){const c=row[x];if(c==='.')continue;h+=`<rect x="${X(x)}" y="${Y(y)}" width="${(s+.4).toFixed(1)}" height="${(s+.4).toFixed(1)}" fill="${c==='#'?MC.path:MC.sol}"/>`;}});
  for(const t of r.tw)if(t[5]>=0&&!t[7]){const T=TW[t[0]],c=t[5]+.5,d=t[6]+.5,z=u*.42;h+=`<rect x="${X(c-z)}" y="${Y(d-z)}" width="${(2*z*s).toFixed(1)}" height="${(2*z*s).toFixed(1)}" rx="${(z*s*.35).toFixed(1)}" fill="${T?T.col:'#ccc'}" stroke="#14161c" stroke-width="${Math.max(.8,s*.2).toFixed(1)}"/><text x="${X(c)}" y="${Y(d)}" font-size="${(z*s*1.25).toFixed(1)}" text-anchor="middle" dominant-baseline="central">${t[8]||''}</text>`;}
  for(const p of r.pt)h+=`<circle cx="${X(p[0]+.5)}" cy="${Y(p[1]+.5)}" r="${Math.max(3,s*1.1).toFixed(1)}" fill="#e8344a" stroke="#fff" stroke-width="${Math.max(.8,s*.25).toFixed(1)}"/>`;
  h+=`<circle cx="${X(r.core[0]+.5)}" cy="${Y(r.core[1]+.5)}" r="${Math.max(3.5,s*1.3).toFixed(1)}" fill="#3fe8ff" stroke="#0a4a5a" stroke-width="${Math.max(.8,s*.25).toFixed(1)}"/>`;return h+'</svg>';}
 function histParts(){hsLoad();const L=hsFiltered(),all=HIST.list||[],won=all.filter(r=>r.res==='w').length;if(HIST.sel>=L.length)HIST.sel=0;const r=L[HIST.sel];
  const fl=[['all','Todas'],['w','Ganadas'],['l','Perdidas'],['s','⭐ Guardadas']].map(([k,l])=>`<button class="pill${HIST.flt===k?' on':''}" data-a="hsflt" data-v="${k}">${l}</button>`).join('');
- const rows=L.map((x,i)=>{const H=HEROES[x.hero],[rt,rc]=hsRes(x);return `<button class="hsrun${i===HIST.sel?' on':''}" data-a="hssel" data-v="${i}">${hsPor(x.hero)}<span class="hsrt"><b>${H?H.n:x.hero} · Nv ${x.hlv}${x.star?' ⭐':''}</b><small>${hsWhen(x.t0)} · ${x.tut?'Tutorial':(ERADEF[x.era||1]||ERADEF[1]).n} · ${x.res==='w'?x.R+' rondas · '+hsDur(x.time):'ronda '+x.r+'/'+x.R}</small></span><span class="hsres ${rc}">${rt}</span></button>`;}).join('');
+ const rows=L.map((x,i)=>{const H=HEROES[x.hero],[rt,rc]=hsRes(x);return `<button class="hsrun${i===HIST.sel?' on':''}" data-a="hssel" data-v="${i}">${hsEraIc(x)}${hsPor(x.hero)}<span class="hsrt"><b>${H?H.n:x.hero} · Nv ${x.hlv}${x.star?' ⭐':''}</b><small>${hsWhen(x.t0)} · ${x.tut?'Tutorial':(ERADEF[x.era||1]||ERADEF[1]).n} · ${x.res==='w'?x.R+' rondas · '+hsDur(x.time):'ronda '+x.r+'/'+x.R}</small></span><span class="hsres ${rc}">${rt}</span></button>`;}).join('');
  const left=`<h3>Partidas</h3><div class="bksub">${all.length?`Tus partidas · ${all.length} jugada${all.length===1?'':'s'}, ${won} ganada${won===1?'':'s'}`:'Aquí aparecerán tus partidas'}</div><div class="hsflt">${fl}</div>${rows||'<p class="hsempty">'+(all.length?'Ninguna partida con este filtro.':'Todavía no hay partidas registradas. A partir de esta versión, cada partida queda apuntada aquí.')+'</p>'}`;
  let right='<div class="lbdet"><span class="lbdic">📚</span><h4>Registro de partidas</h4><p>Elige una partida para ver cómo fue: el mapa, las torres, el daño y dónde perdiste vida.</p></div>';
  if(r){const H=HEROES[r.hero],[rt]=hsRes(r),tot=r.tw.reduce((a,t)=>a+t[3],0)||1,tws=r.tw.filter(t=>t[3]>0||t[0].startsWith('hero:')).sort((a,b)=>b[3]-a[3]),mx=tws.length?tws[0][3]:1;
