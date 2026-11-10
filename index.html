@@ -3464,10 +3464,10 @@ function waveSquads(r){
  // barajado ponderado: las escuadras de más nivel pesan más, así que en rondas altas las básicas salen poco
  const wsh=a=>a.map(k=>[k,Math.pow(Math.random(),1/Math.pow(SQUADS[k].min+2,2))]).sort((x,y)=>y[1]-x[1]).map(x=>x[0]);
  const rest=wsh(av.filter(k=>!th.includes(k)&&!last.includes(k))),rest2=wsh(av.filter(k=>!th.includes(k)&&last.includes(k)));
- const hasT=(k,t)=>!!SQUADS[k].m[t],clash=(a,k)=>r<10&&a.some(o=>(hasT(o,'shaman')&&hasT(k,'custodian'))||(hasT(o,'custodian')&&hasT(k,'shaman')));
+ const hasT=(k,t)=>!!SQUADS[k].m[t],aur=k=>Object.keys(SQUADS[k].m).some(t=>ET[t]&&ET[t].aura),clash=(a,k)=>(aur(k)&&a.some(aur))||(r<10&&a.some(o=>(hasT(o,'shaman')&&hasT(k,'custodian'))||(hasT(o,'custodian')&&hasT(k,'shaman'))));/* v305: como mucho un tipo de escuadra con aura por oleada */
  for(const k of rest.concat(rest2))if(th.length<nt&&!clash(th,k))th.push(k);
  S.lastTh=th;let B=waveBudget(r);const out=[];let i=0;for(const k of ext){out.push(k);B-=sqVal(k);}
- let gd=0;while(B>0&&th.length&&out.length<100&&gd++<400){const k=th[i++%th.length],v=sqVal(k);if(out.length&&B<v*.5)break;out.push(k);B-=v;}
+ let gd=0,na=0;const mix=th.some(k=>!aur(k));while(B>0&&th.length&&out.length<100&&gd++<400){const k=th[i++%th.length],v=sqVal(k);/* v305: la escuadra con aura sale una vuelta sí y otra no (más salteada) */if(mix&&aur(k)&&(na++%2===1))continue;if(out.length&&B<v*.5)break;out.push(k);B-=v;}
  return out;}
 // ---- v289 · Enemigos de la Era Fantástica por facciones ----
 // · Dos facciones: 🟢 pieles verdes (orcos, goblins, ogros) y 😈 demonios. Nombres e iconos nuevos (SVG propios) para los tipos de siempre,
