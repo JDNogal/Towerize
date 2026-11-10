@@ -12,7 +12,8 @@
   "10_pergamino_enrollado.css",
   "11_era2.css",
   "12_compendio.css",
-  "13_novedades.css"
+  "13_novedades.css",
+  "14_mazo_vista.css"
  ],
  "js": [
   "00_config.js",
@@ -88,6 +89,7 @@
   "omega.js",
   "reliquias_e2b.js",
   "sonidos_e2.js",
-  "musica.js"
+  "musica.js",
+  "mazo_vista.js"
  ]
 }

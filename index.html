@@ -1343,6 +1343,40 @@ body.mfs .tk{width:26px;height:38px}body.mfs .tk .tki{font-size:12px;top:3px}bod
 #tmenu .tmb.oback{border-radius:50%;font-weight:800;color:#ffd75a;border-color:#ffd75a;z-index:3}
 .omf{display:flex;gap:8px;align-items:center;margin:4px 0}.omf .omi{flex:none;width:26px;height:26px;border-radius:50%;background:#2a2f3a;display:grid;place-items:center}.omf .omi svg{width:19px;height:19px;display:block}.omf small{display:block;margin:0}
 .hpb.hpally svg{width:100%;height:100%;display:block;border-radius:inherit}
+/* v304 · mazo y reliquias a la vista mientras eliges */
+#mzside{display:none}#mzside.on{display:block}
+#mzside>div{position:fixed;top:50%;transform:translateY(-50%);z-index:62;width:168px;max-height:80vh;overflow-y:auto;padding:12px 11px 10px;box-sizing:border-box;font:13px system-ui,sans-serif}
+#mzside .mzd,#mzpop .mzd{color:#3a2410;background:linear-gradient(180deg,#f4e6c4,#e9d4a6);border:2px solid #6a4428;border-radius:6px 14px 14px 6px;box-shadow:4px 6px 14px rgba(0,0,0,.5),inset 0 0 0 3px rgba(106,68,40,.18)}
+#mzside .mzr,#mzpop .mzr{color:#f4e6c4;background:linear-gradient(180deg,#7a4e2a,#5a3618);border:2px solid #2e1a0c;border-radius:10px;box-shadow:4px 6px 14px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,220,160,.25)}
+#mzside .mzd{left:14px}#mzside .mzr{right:14px}
+body.mzbtn #mzside{display:none!important}
+#mzside h4,#mzpop h4{margin:0 0 8px;font:700 15px Georgia,serif;text-align:center}.mzr h4{color:#ffd88a}
+#mzside h4 small,#mzpop h4 small{display:block;font:500 11px system-ui,sans-serif;opacity:.75;margin-top:2px}
+.mzrow{display:flex;align-items:center;gap:7px;padding:4px 2px;border-bottom:1px dashed rgba(106,68,40,.3);cursor:help}.mzrow:last-child{border-bottom:0}
+.mzrow i{width:26px;height:26px;border-radius:6px;display:grid;place-items:center;font-style:normal;font-size:16px;flex:none;box-shadow:0 0 0 1.5px rgba(0,0,0,.35)}
+.mzrow b{font-weight:600;font-size:12.5px;flex:1}.mzrow em{font-style:normal;font-size:11px;opacity:.7}
+.mzgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:rgba(0,0,0,.28);border-radius:6px;padding:6px;box-shadow:inset 0 2px 6px rgba(0,0,0,.5)}
+.mzgrid i{aspect-ratio:1;border-radius:6px;display:grid;place-items:center;font-style:normal;font-size:20px;background:radial-gradient(circle,#8a6038,#4a2c14);box-shadow:0 0 0 1.5px #c9a060;cursor:help}
+.mzvac{font-size:12px;text-align:center;opacity:.8;padding:6px}
+/* botones redondos junto al ojo: mismo alto que el oro */
+.rlbar{gap:6px!important}.rlbar .rlg{height:34px;box-sizing:border-box;display:inline-flex;align-items:center;padding:0 12px!important;border-radius:17px!important}
+.rlbar button{width:34px;height:34px;padding:0!important;border-radius:50%!important;display:inline-grid;place-items:center;font-size:16px!important;line-height:1!important}
+.mzb{display:none!important}body.mzbtn .mzb{display:inline-grid!important}
+#mzpk{position:absolute;top:10px;right:60px;display:flex;gap:6px}#mzpk .mzb{width:34px;height:34px;border-radius:50%;padding:0!important;font-size:16px}
+body.mfs #mzpk{top:4px;right:42px}body.mfs #mzpk .mzb{width:26px;height:26px;font-size:13px}
+.pcpeek{border-radius:50%!important;width:34px!important;height:34px!important}body.mfs .pcpeek{width:26px!important;height:26px!important}
+body.mfs .rlbar .rlg{height:30px;font-size:13px}body.mfs .rlbar button{width:30px;height:30px;font-size:14px!important}
+/* ventana con la lista (móvil o si no caben los paneles) */
+#mzpop{position:fixed;inset:0;z-index:95;background:rgba(10,8,6,.45);display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box}
+#mzpop .mzbox{position:relative;width:min(440px,86vw);max-height:calc(100dvh - 24px);overflow-y:auto;padding:14px 16px 12px;box-sizing:border-box;font:13px system-ui,sans-serif}
+#mzpop .mzcols{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}#mzpop .mzgrid{grid-template-columns:repeat(auto-fill,minmax(44px,1fr))}
+#mzpop .mzx{position:absolute;top:6px;right:8px;width:28px;height:28px;border-radius:50%;padding:0;font-size:14px;line-height:1;background:rgba(0,0,0,.15);border:1px solid rgba(0,0,0,.3);color:inherit}
+/* móvil: baraja y cofre debajo del ojo, en columna, para no tapar el título */
+body.mfs .rlbar{display:grid!important;grid-template-columns:auto auto;gap:6px!important;justify-items:end;align-items:center}
+body.mfs .rlbar .rlg{grid-column:1;grid-row:1}body.mfs .rlbar [data-a="peek"]{grid-column:2;grid-row:1}
+body.mfs .rlbar [data-mz="deck"]{grid-column:2;grid-row:2}body.mfs .rlbar [data-mz="rel"]{grid-column:2;grid-row:3}
+#hpop{z-index:130!important}
+#hpop small.cc{display:none}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -5803,7 +5837,7 @@ setInterval(()=>{try{for(const el of document.querySelectorAll(SMSEL)){const on=
 (()=>{const p=document.createElement('div');p.id='hpop';p.className='tipc';document.body.appendChild(p);let cur=null;
  const show=a=>{const tg=resolve(a);if(!tg)return;p.innerHTML=tg.html();p.style.display='block';const r=a.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight;let l=r.right+8;if(l+w>innerWidth-8)l=r.left-8-w;if(l<8)l=Math.max(8,Math.min(innerWidth-8-w,r.left));let t=r.top;if(t+h>innerHeight-8)t=innerHeight-8-h;if(t<8)t=8;p.style.left=l+'px';p.style.top=t+'px';cur=a;};
  const hide=()=>{p.style.display='none';cur=null;};
- const tgt=e=>e.target.closest&&e.target.closest('#relic [data-tip^="habp:"],[data-tip^="achrw:"],#comp .lbhpc [data-tip]');
+ const tgt=e=>e.target.closest&&e.target.closest('#relic [data-tip^="habp:"],[data-tip^="achrw:"],#comp .lbhpc [data-tip],#mzside [data-tip],#mzpop [data-tip]');
  document.addEventListener('click',e=>{const a=tgt(e);if(a){if(cur===a&&TOUCH)hide();else show(a);e.stopPropagation();return;}if(!(e.target.closest&&e.target.closest('#hpop')))hide();},true);
  document.addEventListener('mouseover',e=>{if(TOUCH)return;const a=tgt(e);if(a)show(a);else if(cur&&!(e.target.closest&&e.target.closest('#hpop')))hide();});
  setInterval(()=>{if(cur&&!document.body.contains(cur))hide();},300);})();
@@ -8852,4 +8886,32 @@ if(typeof window!=='undefined'){
  for(const ev of['pointerdown','keydown'])window.addEventListener(ev,musStart,{capture:true});
  setInterval(()=>{try{musTick();}catch(e){}},100);
  document.addEventListener('visibilitychange',()=>{if(!MUS.el)return;if(document.hidden)MUS.el.pause();else MUS.el.play().catch(()=>{});});}
+// ==================== v304 · Ver tu mazo y tus reliquias mientras eliges (torre, reliquia, evento o pieza) ====================
+// PC: dos paneles a los lados de la ventana (la hoja del mazo y el cofre de reliquias). Si no caben, o en móvil:
+// dos botones redondos junto al ojo (baraja y cofre) que abren la lista. Todo es de consulta: bocadillo al pasar o mantener.
+const MZ={pop:null};
+const mzOn=()=>{if(typeof S==='undefined'||!S||!S.deck)return false;if(document.body.classList.contains('pcpick'))return !document.body.classList.contains('pcpeek');
+ return !!(RL.open&&!RL.hpick&&!RL.peek&&$('relic').querySelector('.rlbar'));};
+const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}"><i style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
+const mzRel=()=>S.relics.length?`<div class="mzgrid">${S.relics.map(id=>`<i data-tip="relic:${id}">${icHtml(RELIC[id].ic)}</i>`).join('')}</div>`:'<div class="mzvac">Aún no tienes reliquias.</div>';
+function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el.id='mzside';el.innerHTML='<div class="mzd"></div><div class="mzr"></div>';document.body.appendChild(el);}
+ const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
+ // ¿caben a los lados de la ventana? (si no, botones)
+ const win=document.body.classList.contains('pcpick')?$('panel'):($('relic').querySelector('.pscr,.evwin,.cgrid')||$('relic').firstElementChild);
+ const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&r.left>=186&&innerWidth-r.right>=186;
+ document.body.classList.toggle('mzbtn',!fit);
+ const sg=S.deck.join()+'|'+S.relics.join()+'|'+S.list.length;if(el.dataset.sg!==sg){el.dataset.sg=sg;
+  el.querySelector('.mzd').innerHTML=`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres</small></h4>${mzDeck()}`;
+  el.querySelector('.mzr').innerHTML=`<h4>Cofre de reliquias<small>${S.relics.length} ${S.relics.length===1?'reliquia':'reliquias'}</small></h4>${mzRel()}`;}
+ // botones junto al ojo
+ const bar=$('relic').querySelector('.rlbar'),pk=document.querySelector('.pcpeek');
+ const add=host=>{if(!host||host.querySelector('[data-mz]'))return;const eye=host.matches&&host.matches('.pcpeek')?null:host.querySelector('[data-a="peek"]');
+  const mk=(k,ic,t)=>{const b=document.createElement('button');b.dataset.mz=k;b.className='mzb';b.title=t;b.innerHTML=ic;b.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();mzOpen(k);});return b;};
+  const d=mk('deck','🃏','Ver tu mazo'),rl=mk('rel','🧰','Ver tus reliquias');if(eye){host.insertBefore(d,eye);host.insertBefore(rl,eye);}else{host.appendChild(d);host.appendChild(rl);}};
+ add(bar);if(pk&&document.body.classList.contains('pcpick')){let w=$('mzpk');if(!w){w=document.createElement('div');w.id='mzpk';pk.parentNode.insertBefore(w,pk);}add(w);}}
+function mzOpen(k){mzClose();const p=document.createElement('div');p.id='mzpop';p.innerHTML=`<div class="mzbox ${k==='deck'?'mzd':'mzr'}"><button class="mzx" aria-label="Cerrar">✕</button>${k==='deck'?`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres · toca una para ver su ficha</small></h4><div class="mzcols">${mzDeck()}</div>`:`<h4>Cofre de reliquias<small>Toca una para ver qué hace</small></h4>${mzRel()}`}</div>`;
+ p.addEventListener('click',e=>{if(e.target===p||e.target.closest('.mzx')){e.stopPropagation();mzClose();}});document.body.appendChild(p);MZ.pop=k;try{sfx('page');}catch(e){}}
+function mzClose(){const p=$('mzpop');if(p)p.remove();MZ.pop=null;}
+addEventListener('keydown',e=>{if(MZ.pop&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();mzClose();}},true);
+setInterval(()=>{try{mzSide();}catch(e){}},200);
 </script></body></html>

@@ -1,0 +1,28 @@
+// ==================== v304 · Ver tu mazo y tus reliquias mientras eliges (torre, reliquia, evento o pieza) ====================
+// PC: dos paneles a los lados de la ventana (la hoja del mazo y el cofre de reliquias). Si no caben, o en móvil:
+// dos botones redondos junto al ojo (baraja y cofre) que abren la lista. Todo es de consulta: bocadillo al pasar o mantener.
+const MZ={pop:null};
+const mzOn=()=>{if(typeof S==='undefined'||!S||!S.deck)return false;if(document.body.classList.contains('pcpick'))return !document.body.classList.contains('pcpeek');
+ return !!(RL.open&&!RL.hpick&&!RL.peek&&$('relic').querySelector('.rlbar'));};
+const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}"><i style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
+const mzRel=()=>S.relics.length?`<div class="mzgrid">${S.relics.map(id=>`<i data-tip="relic:${id}">${icHtml(RELIC[id].ic)}</i>`).join('')}</div>`:'<div class="mzvac">Aún no tienes reliquias.</div>';
+function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el.id='mzside';el.innerHTML='<div class="mzd"></div><div class="mzr"></div>';document.body.appendChild(el);}
+ const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
+ // ¿caben a los lados de la ventana? (si no, botones)
+ const win=document.body.classList.contains('pcpick')?$('panel'):($('relic').querySelector('.pscr,.evwin,.cgrid')||$('relic').firstElementChild);
+ const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&r.left>=186&&innerWidth-r.right>=186;
+ document.body.classList.toggle('mzbtn',!fit);
+ const sg=S.deck.join()+'|'+S.relics.join()+'|'+S.list.length;if(el.dataset.sg!==sg){el.dataset.sg=sg;
+  el.querySelector('.mzd').innerHTML=`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres</small></h4>${mzDeck()}`;
+  el.querySelector('.mzr').innerHTML=`<h4>Cofre de reliquias<small>${S.relics.length} ${S.relics.length===1?'reliquia':'reliquias'}</small></h4>${mzRel()}`;}
+ // botones junto al ojo
+ const bar=$('relic').querySelector('.rlbar'),pk=document.querySelector('.pcpeek');
+ const add=host=>{if(!host||host.querySelector('[data-mz]'))return;const eye=host.matches&&host.matches('.pcpeek')?null:host.querySelector('[data-a="peek"]');
+  const mk=(k,ic,t)=>{const b=document.createElement('button');b.dataset.mz=k;b.className='mzb';b.title=t;b.innerHTML=ic;b.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();mzOpen(k);});return b;};
+  const d=mk('deck','🃏','Ver tu mazo'),rl=mk('rel','🧰','Ver tus reliquias');if(eye){host.insertBefore(d,eye);host.insertBefore(rl,eye);}else{host.appendChild(d);host.appendChild(rl);}};
+ add(bar);if(pk&&document.body.classList.contains('pcpick')){let w=$('mzpk');if(!w){w=document.createElement('div');w.id='mzpk';pk.parentNode.insertBefore(w,pk);}add(w);}}
+function mzOpen(k){mzClose();const p=document.createElement('div');p.id='mzpop';p.innerHTML=`<div class="mzbox ${k==='deck'?'mzd':'mzr'}"><button class="mzx" aria-label="Cerrar">✕</button>${k==='deck'?`<h4>Tu mazo<small>${S.deck.length}/${DECKMAX} torres · toca una para ver su ficha</small></h4><div class="mzcols">${mzDeck()}</div>`:`<h4>Cofre de reliquias<small>Toca una para ver qué hace</small></h4>${mzRel()}`}</div>`;
+ p.addEventListener('click',e=>{if(e.target===p||e.target.closest('.mzx')){e.stopPropagation();mzClose();}});document.body.appendChild(p);MZ.pop=k;try{sfx('page');}catch(e){}}
+function mzClose(){const p=$('mzpop');if(p)p.remove();MZ.pop=null;}
+addEventListener('keydown',e=>{if(MZ.pop&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();mzClose();}},true);
+setInterval(()=>{try{mzSide();}catch(e){}},200);
