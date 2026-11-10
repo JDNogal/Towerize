@@ -33,7 +33,7 @@ Object.assign(EVENTS,{
   {l:'Vender las coordenadas a la Resistencia',run:()=>{goldEv(120);return['gold:120'];}},
   {l:'Descargar los registros de la terminal',c:'Salta la alarma: la próxima oleada trae una Élite extra',run:()=>{addNow('elite',1);giveVch('ab',1);return['vch:ab','elite'];}}]},
  omega2:{n:'Proyecto Omega · El prototipo',ic:'Ω',era:2,sub:1,txt:'Sobre la plataforma descansa un prototipo inacabado, lleno de huecos vacíos, con un núcleo apagado en el centro. Los sistemas de seguridad siguen vivos.',opts:[
-  {l:'Activar el prototipo',c:'Pierdes 4 de vida (descarga del sistema de seguridad)',req:()=>S.hp<5?'Necesitas al menos 5 de vida':!uSpots(EVK).length?'No queda ningún solar libre en esta pieza':S.list.some(t=>t.type==='omega')?'Ya tienes un Prototipo Omega':'',run:()=>{hpLoss(4);S.uq.push({type:'omega',bk:EVK});return['hp:-4','tower:omega'];}},
+  {l:'Activar el prototipo',c:'Pierdes 4 de vida (descarga del sistema de seguridad)',req:()=>S.hp<5?'Necesitas al menos 5 de vida':EVK&&!uSpots(EVK).length?'No queda ningún solar libre en esta pieza':S.list.some(t=>t.type==='omega')?'Ya tienes un Prototipo Omega':'',run:()=>{hpLoss(4);S.uq.push({type:'omega',bk:EVK});return['hp:-4','tower:omega'];}},
   {l:'Extraer su núcleo',c:'Pierdes 2 de vida',req:()=>S.hp<3?'Necesitas al menos 3 de vida':'',run:()=>{hpLoss(2);return['hp:-2'].concat(ev2Relic('core2'));}},
   {l:'Llevarte los planos',c:'La próxima oleada trae un 20% más de enemigos',run:()=>{moreEnemies(.2);giveVch('up',1);return['vch:up','more:20'];}}]}});
 Object.assign(EVRES,{
