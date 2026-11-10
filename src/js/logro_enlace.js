@@ -19,12 +19,14 @@ function achLink(id,fallback,compact){const A=ACH[id];if(!A)return fallback||'';
 // ---- logros fijados a la vista en partida, solo con el mapa a la vista (no encima del libro ni de las ventanas): arriba a la izquierda, junto al menú y «Reintentar» (antes solo se veían en el compendio) ----
 function pinbarTick(){let el=$('pinbar');if(!el){el=document.createElement('div');el.id='pinbar';document.body.appendChild(el);
   el.addEventListener('click',e=>{const r=e.target.closest('[data-pin]');if(r){e.stopPropagation();if(MFSQ()&&!el.classList.contains('open')){el.classList.add('open');return;}cpGo('lg',r.dataset.pin);el.classList.remove('open');return;}if(e.target.closest('.pbt')){e.stopPropagation();el.classList.toggle('open');}});}
- const ids=PINS.filter(id=>ACH[id]&&!ACHS[id]),B=document.body.classList,mapa=!LB.open&&(!RL.open||RL.peek)&&(!B.contains('pcpick')||B.contains('pcpeek'))&&!(typeof NEC!=='undefined'&&NEC.open)&&!(typeof FO!=='undefined'&&FO.open)&&!(typeof PMU!=='undefined'&&PMU.open)&&!(typeof DLG!=='undefined'&&DLG.on),on=ids.length>0&&inRun()&&!PREVIEWING&&mapa;el.classList.toggle('on',on);if(!on){el.dataset.sg='';return;}
- const m=$('mtl');if(m){const r=m.getBoundingClientRect();el.style.left=Math.round(r.right+8)+'px';el.style.top=Math.round(r.top)+'px';}
+ const ids=PINS.filter(id=>ACH[id]&&!ACHS[id]),B=document.body.classList,mapa=!LB.open&&(!RL.open||RL.peek)&&(!B.contains('pcpick')||B.contains('pcpeek'))&&!(typeof NEC!=='undefined'&&NEC.open)&&!(typeof FO!=='undefined'&&FO.open)&&!(typeof PMU!=='undefined'&&PMU.open)&&!(typeof DLG!=='undefined'&&DLG.on),rl=$('relic'),dom=!B.contains('lbopen')&&!B.contains('inmenu')&&!(rl&&rl.classList.contains('open')&&!RL.peek),want=ids.length>0&&inRun()&&!PREVIEWING&&mapa&&dom;
+ /* sin parpadeos: se oculta al momento, pero solo vuelve a salir si sigue tocando 0,6 s seguidos */
+ if(!want){el._ok=0;el.classList.remove('on');el.dataset.sg='';return;}el._ok=(el._ok||0)+1;if(el._ok<2)return;el.classList.add('on');
+ /* sitio reservado: a la derecha del segundo botón de arriba a la izquierda (↺); la fila del ☰ es para los FPS */const bs=document.querySelectorAll('#mtl button'),b2=bs[1]||bs[0];if(b2){const r=b2.getBoundingClientRect();el.style.left=Math.round(r.right+8)+'px';el.style.top=Math.round(r.top)+'px';}
  const row=id=>{const A=ACH[id],M=APM[id];let v=null,mx=null;try{if(M){mx=M.max;v=M.cur?M.cur():M.best?Math.max((S.gbest||{})[id]||0,0):null;}}catch(e){}
   const sec=achSec(id);return `<button class="pnr" data-pin="${id}" title="Ver en Logros"><b>📌 ${sec?'???':A.n}</b>${v!=null&&mx?`<span class="pnb"><i style="width:${Math.min(100,v/mx*100)}%"></i></span><small>${Math.min(mx,v)}/${mx}</small>`:''}</button>`;};
  const h=`<button class="pbt" title="Logros fijados">📌<small>${ids.length}</small></button><div class="pnl">${ids.map(row).join('')}</div>`;if(el.dataset.sg!==h){el.dataset.sg=h;el.innerHTML=h;}}
-setInterval(()=>{try{pinbarTick();}catch(e){}},400);
+setInterval(()=>{try{pinbarTick();}catch(e){}},300);
 // v305 · seguro: si el libro está cerrado y no se está cerrando, que no quede la marca «libro abierto» (ocultaba todos los bocadillos de palabras clave)
 setInterval(()=>{try{const c=$('comp');if(!LB.open&&document.body.classList.contains('lbopen')&&!(c&&c.classList.contains('lbout')))document.body.classList.remove('lbopen');}catch(e){}},500);
 // ---- Escuadra del arquitecto (activo): después de colocar la pieza, vuelves a elegir otra de las que quedan ----

@@ -289,7 +289,7 @@ function act(e){
  else if(a==='chback'){CP.hprev=null;PHV=null;renderComp();}
  else if(a==='glv'){const sc=$('comp').scrollTop;for(const k in TW)if(!TW[k].uniq)CP.lv[k]=glState(k,b.dataset.v);renderComp();$('comp').scrollTop=sc;}
  else if(a==='clvs'){const k=b.dataset.v,n=+b.dataset.n;if(!tlvOk(k,n)){errBubble('No has alcanzado aún ese nivel.');return;}CP.lv[k]=n;
-  if(RL.open&&b.closest('#relic')){const c=b.closest('.tcard');if(c)c.innerHTML=shopInfo(k,1);const gl=b.closest('.tof')&&b.closest('.tof').querySelector('.tgl');if(gl)gl.innerHTML=tofGlance(k);}
+  if(RL.open&&b.closest('#relic')){const c=b.closest('.tcard')||(b.closest('.tof')&&b.closest('.tof').querySelector('.tdt .tcard'));if(c)c.innerHTML=shopInfo(k,1);const gl=b.closest('.tof')&&b.closest('.tof').querySelector('.tgl');if(gl)gl.innerHTML=tofGlance(k);}
   else{const sc=$('comp').scrollTop;if(CP.prev===k)newPrev(k,CP.pen);renderComp();$('comp').scrollTop=sc;}}
  else if((a==='clv'||a==='cbr')&&RL.open&&b.closest('#relic')){/* Nv dentro de «Ver detalles» de la oferta de torres: se cambia ahí mismo */const k=b.dataset.v;CP.lv[k]=a==='cbr'?otherSpec(k):nextLv(k);const c=b.closest('.tcard');if(c)c.innerHTML=shopInfo(k,1);const gl=b.closest('.tof')&&b.closest('.tof').querySelector('.tgl');if(gl)gl.innerHTML=tofGlance(k);}
  else if(a==='cbr'){const sc=$('comp').scrollTop,k=b.dataset.v;CP.lv[k]=otherSpec(k);if(CP.prev===k)newPrev(k,CP.pen);renderComp();$('comp').scrollTop=sc;}

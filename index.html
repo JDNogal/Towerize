@@ -1500,6 +1500,9 @@ body:not(.mfs) #relic.tdeton .toff .tof .tdt{border:1px solid var(--line2);borde
 body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border-radius:0!important;background:transparent!important}
 /* v305 · cartas de reliquia: pasivo con pasivo y activo con activo a la misma altura */
 #relic .cgrid .rcard .rbx{box-sizing:border-box}
+/* botones de Nv de la oferta, fuera de la caja que se desplaza; solo con «Ver detalles» */
+#relic .tof .lvout{display:none}
+#relic.tdeton .tof .lvout{display:inline-flex;vertical-align:middle;margin-left:10px}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -6436,7 +6439,7 @@ function act(e){
  else if(a==='chback'){CP.hprev=null;PHV=null;renderComp();}
  else if(a==='glv'){const sc=$('comp').scrollTop;for(const k in TW)if(!TW[k].uniq)CP.lv[k]=glState(k,b.dataset.v);renderComp();$('comp').scrollTop=sc;}
  else if(a==='clvs'){const k=b.dataset.v,n=+b.dataset.n;if(!tlvOk(k,n)){errBubble('No has alcanzado aún ese nivel.');return;}CP.lv[k]=n;
-  if(RL.open&&b.closest('#relic')){const c=b.closest('.tcard');if(c)c.innerHTML=shopInfo(k,1);const gl=b.closest('.tof')&&b.closest('.tof').querySelector('.tgl');if(gl)gl.innerHTML=tofGlance(k);}
+  if(RL.open&&b.closest('#relic')){const c=b.closest('.tcard')||(b.closest('.tof')&&b.closest('.tof').querySelector('.tdt .tcard'));if(c)c.innerHTML=shopInfo(k,1);const gl=b.closest('.tof')&&b.closest('.tof').querySelector('.tgl');if(gl)gl.innerHTML=tofGlance(k);}
   else{const sc=$('comp').scrollTop;if(CP.prev===k)newPrev(k,CP.pen);renderComp();$('comp').scrollTop=sc;}}
  else if((a==='clv'||a==='cbr')&&RL.open&&b.closest('#relic')){/* Nv dentro de «Ver detalles» de la oferta de torres: se cambia ahí mismo */const k=b.dataset.v;CP.lv[k]=a==='cbr'?otherSpec(k):nextLv(k);const c=b.closest('.tcard');if(c)c.innerHTML=shopInfo(k,1);const gl=b.closest('.tof')&&b.closest('.tof').querySelector('.tgl');if(gl)gl.innerHTML=tofGlance(k);}
  else if(a==='cbr'){const sc=$('comp').scrollTop,k=b.dataset.v;CP.lv[k]=otherSpec(k);if(CP.prev===k)newPrev(k,CP.pen);renderComp();$('comp').scrollTop=sc;}
@@ -9175,12 +9178,14 @@ function achLink(id,fallback,compact){const A=ACH[id];if(!A)return fallback||'';
 // ---- logros fijados a la vista en partida, solo con el mapa a la vista (no encima del libro ni de las ventanas): arriba a la izquierda, junto al menú y «Reintentar» (antes solo se veían en el compendio) ----
 function pinbarTick(){let el=$('pinbar');if(!el){el=document.createElement('div');el.id='pinbar';document.body.appendChild(el);
   el.addEventListener('click',e=>{const r=e.target.closest('[data-pin]');if(r){e.stopPropagation();if(MFSQ()&&!el.classList.contains('open')){el.classList.add('open');return;}cpGo('lg',r.dataset.pin);el.classList.remove('open');return;}if(e.target.closest('.pbt')){e.stopPropagation();el.classList.toggle('open');}});}
- const ids=PINS.filter(id=>ACH[id]&&!ACHS[id]),B=document.body.classList,mapa=!LB.open&&(!RL.open||RL.peek)&&(!B.contains('pcpick')||B.contains('pcpeek'))&&!(typeof NEC!=='undefined'&&NEC.open)&&!(typeof FO!=='undefined'&&FO.open)&&!(typeof PMU!=='undefined'&&PMU.open)&&!(typeof DLG!=='undefined'&&DLG.on),on=ids.length>0&&inRun()&&!PREVIEWING&&mapa;el.classList.toggle('on',on);if(!on){el.dataset.sg='';return;}
- const m=$('mtl');if(m){const r=m.getBoundingClientRect();el.style.left=Math.round(r.right+8)+'px';el.style.top=Math.round(r.top)+'px';}
+ const ids=PINS.filter(id=>ACH[id]&&!ACHS[id]),B=document.body.classList,mapa=!LB.open&&(!RL.open||RL.peek)&&(!B.contains('pcpick')||B.contains('pcpeek'))&&!(typeof NEC!=='undefined'&&NEC.open)&&!(typeof FO!=='undefined'&&FO.open)&&!(typeof PMU!=='undefined'&&PMU.open)&&!(typeof DLG!=='undefined'&&DLG.on),rl=$('relic'),dom=!B.contains('lbopen')&&!B.contains('inmenu')&&!(rl&&rl.classList.contains('open')&&!RL.peek),want=ids.length>0&&inRun()&&!PREVIEWING&&mapa&&dom;
+ /* sin parpadeos: se oculta al momento, pero solo vuelve a salir si sigue tocando 0,6 s seguidos */
+ if(!want){el._ok=0;el.classList.remove('on');el.dataset.sg='';return;}el._ok=(el._ok||0)+1;if(el._ok<2)return;el.classList.add('on');
+ /* sitio reservado: a la derecha del segundo botón de arriba a la izquierda (↺); la fila del ☰ es para los FPS */const bs=document.querySelectorAll('#mtl button'),b2=bs[1]||bs[0];if(b2){const r=b2.getBoundingClientRect();el.style.left=Math.round(r.right+8)+'px';el.style.top=Math.round(r.top)+'px';}
  const row=id=>{const A=ACH[id],M=APM[id];let v=null,mx=null;try{if(M){mx=M.max;v=M.cur?M.cur():M.best?Math.max((S.gbest||{})[id]||0,0):null;}}catch(e){}
   const sec=achSec(id);return `<button class="pnr" data-pin="${id}" title="Ver en Logros"><b>📌 ${sec?'???':A.n}</b>${v!=null&&mx?`<span class="pnb"><i style="width:${Math.min(100,v/mx*100)}%"></i></span><small>${Math.min(mx,v)}/${mx}</small>`:''}</button>`;};
  const h=`<button class="pbt" title="Logros fijados">📌<small>${ids.length}</small></button><div class="pnl">${ids.map(row).join('')}</div>`;if(el.dataset.sg!==h){el.dataset.sg=h;el.innerHTML=h;}}
-setInterval(()=>{try{pinbarTick();}catch(e){}},400);
+setInterval(()=>{try{pinbarTick();}catch(e){}},300);
 // v305 · seguro: si el libro está cerrado y no se está cerrando, que no quede la marca «libro abierto» (ocultaba todos los bocadillos de palabras clave)
 setInterval(()=>{try{const c=$('comp');if(!LB.open&&document.body.classList.contains('lbopen')&&!(c&&c.classList.contains('lbout')))document.body.classList.remove('lbopen');}catch(e){}},500);
 // ---- Escuadra del arquitecto (activo): después de colocar la pieza, vuelves a elegir otra de las que quedan ----
@@ -9343,7 +9348,9 @@ function rcardAlign(){const rl=$('relic');if(!rl||!rl.classList.contains('open')
   const z=parseFloat(getComputedStyle(rl.querySelector('.cgrid')).zoom)||1;const h=Math.max(...bx.map(b=>b.getBoundingClientRect().height))/z;bx.forEach(b=>b.style.minHeight=Math.ceil(h)+'px');}}
 setInterval(()=>{try{rcardAlign();}catch(e){}},300);
 // v305 · detalles de la oferta de torres: sin repetir nombre ni coste (ya salen arriba en la carta); solo quedan los botones de Nv
-function tdtClean(){document.querySelectorAll('#relic .tof .tdt .ttl:not([data-cl])').forEach(t=>{const keep=t.querySelector('.lvtabs');[...t.childNodes].forEach(n=>{if(n!==keep)n.remove();});t.dataset.cl=1;if(!keep)t.style.display='none';});}
+// los botones de Nv salen fuera de la caja que se desplaza (junto al coste), para cambiar de nivel sin volver arriba; el scroll se conserva
+function tdtClean(){document.querySelectorAll('#relic .tof .tdt .ttl:not([data-cl])').forEach(t=>{for(const _ of [0]){const tof=t.closest('.tof'),tabs=t.querySelector('.lvtabs');[...t.childNodes].forEach(n=>n.remove());t.dataset.cl=1;t.style.display='none';
+ if(tof&&tabs){let o=tof.querySelector('.lvout');if(!o){o=document.createElement('span');o.className='lvout';const gd=tof.querySelector(':scope>.gd');if(gd)gd.appendChild(o);else continue;}o.innerHTML='';o.appendChild(tabs);}}});}
 {const _r=renderTowerOffer;renderTowerOffer=function(){const r=_r.apply(this,arguments);try{tdtClean();}catch(e){}return r;};}
 setInterval(()=>{try{tdtClean();}catch(e){}},250);
 // ==================== v304 · Alcance de las torres a distancia ====================

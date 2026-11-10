@@ -72,3 +72,6 @@ body:not(.mfs) #relic.tdeton .toff .tof .tdt{border:1px solid var(--line2);borde
 body:not(.mfs) #relic.tdeton .toff .tof .tdt>.ce.tcard{border:0!important;border-radius:0!important;background:transparent!important}
 /* v305 · cartas de reliquia: pasivo con pasivo y activo con activo a la misma altura */
 #relic .cgrid .rcard .rbx{box-sizing:border-box}
+/* botones de Nv de la oferta, fuera de la caja que se desplaza; solo con «Ver detalles» */
+#relic .tof .lvout{display:none}
+#relic.tdeton .tof .lvout{display:inline-flex;vertical-align:middle;margin-left:10px}
