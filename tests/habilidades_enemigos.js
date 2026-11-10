@@ -22,10 +22,11 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
  for(const s of sd){s.x=bt.x;s.y=bt.y;s.hp=s.max;s.charm=null;}const h0=sd.reduce((a,s)=>a+s.hp,0);const ch=mk('champ',bt.x+.5,bt.y);for(let i=0;i<180;i++)eSkillsTick(.05);out.whirl=sd.reduce((a,s)=>a+s.hp,0)<h0&&ch.skc>15;S.enemies=[];
  // disparo en arco
  for(const s of sd){s.x=bt.x;s.y=bt.y;s.hp=s.max;}splashUnits(sd[0],5,null);out.splash=sd.slice(1).every(s=>s.hp<s.max);
+ {const s0=sd[0];s0.hp=s0.max;s0.ps=[];uAddPois(s0,5,null);for(let i=0;i<20;i++)uStatusTick(.05);out.upois=s0.hp<s0.max&&s0.ps.length===1&&ET.spit.upois>0;}
  out.gyro=!!(ET.gyro&&ET.gyro.fly&&ET.gyro.rg==='ranged'&&ET.gyro.splashU&&EIC.gyro);out.gundr=ET.gundr.rg==='ranged';out.sk=ET.champ.sk==='whirl'&&ET.praet.sk==='claw';
  out.kw=['charm','jam','arcsh','airatk','whirl','jet','quake','claw'].every(k=>kwHtml0(k,'').includes('<b>'));
  return out;});
 const f=[];const ck=(c,m)=>{if(!c)f.push(m);};
 ck(r.charm,'la Súcubo no embelesa');ck(r.hidden,'el embelesado sigue contando como soldado');ck(r.release,'el embeleso no acaba');ck(r.thrall,'el embelesado no pasa a ser enemigo');ck(r.thKill,'matar al embelesado no tumba al soldado');ck(r.jam,'el Pirata no interfiere');ck(r.jamRate,'la torre interferida sigue disparando');ck(r.unjam,'la interferencia no se va');
-ck(r.whirl,'el Caudillo no usa el Hachazo');ck(r.splash,'el disparo en arco no salpica');ck(r.gyro&&r.gundr,'voladores con ataque mal');ck(r.sk,'habilidades de campeón sin asignar');ck(r.kw,'faltan palabras clave');
+ck(r.whirl,'el Caudillo no usa el Hachazo');ck(r.upois,'el veneno no funciona en tus unidades');ck(r.splash,'el disparo en arco no salpica');ck(r.gyro&&r.gundr,'voladores con ataque mal');ck(r.sk,'habilidades de campeón sin asignar');ck(r.kw,'faltan palabras clave');
 console.log(f.length?'FALLOS '+JSON.stringify(f)+' '+JSON.stringify(r):'habilidades_enemigos ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

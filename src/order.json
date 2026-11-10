@@ -78,6 +78,7 @@
   "casillas_nuevas.js",
   "elites.js",
   "jefes.js",
+  "estados_unidades.js",
   "musica.js"
  ]
 }

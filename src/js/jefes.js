@@ -81,7 +81,7 @@ const ABREG=.015,ABST=[1,.4,.25,.15],ABBLK=.75,STOMPCD=7,STOMPR=1.6*K,STOMPST=1.
 // orden: en la historia sale el jefe que toca (1.º, 2.º…); en partidas largas, el de la ronda 15 es el anterior. Con la historia de la era completa: uno al azar (15 rondas) o dos en orden.
 storyBoss=function(){const era=S&&S.era===2?2:1,L=SBOSS[era],pr=era===2?(STO.bb||0):(STO.p||0),fin=S.round>=ROUNDS;
  if(pr>=3){if(!S.sbP){const ix=shuf(L.map((_,i)=>i));S.sbP={one:ix[0],two:ix.slice(0,2).sort((a,b)=>a-b)};}return L[ROUNDS<=15?S.sbP.one:fin?S.sbP.two[S.sbP.two.length-1]:S.sbP.two[0]];}
- const i=Math.min(pr,L.length-1);return L[fin?i:Math.max(0,i-1)];};
+ const i=Math.min(pr,L.length-1);if(!fin&&pr===0)return 'egroup';return L[fin?i:Math.max(0,i-1)];};
 {const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','atroll','argos','gen','forge','bob','colossus'];}
 for(const k of['atroll','forge']){DNIMP.add(k);DNBOSS.add(k);if(!PSPEC.includes(k))PSPEC.push(k);}
 function boss2Tick(dt){const SL=liveUnits().filter(s=>!s.charm);
@@ -150,3 +150,7 @@ function boss3Tick(dt){
 Object.assign(MECUSE,{rift:['en:alord'],penta:['en:alord'],wings:['en:alord'],shell:['en:symb'],pulse:['en:symb'],core2:['en:symb']});
 Object.assign(ETIP,{alord:'Su pentagrama apaga torres: repártelas. Ten área para sus demonios y antiaéreas para cuando vuele. Si llega al núcleo, pierdes.',
  symb:'Con caparazón, usa daño mágico. Con el núcleo fuera, daño físico y estados. Mata lo que tenga cerca para que no lo devore. Si llega al núcleo, pierdes.'});
+
+// ---- grupo de élites: en la primera partida larga de cada era, la ronda 15 trae 2 élites y 2 mini-élites (uno de cada) en lugar de un jefe ----
+ET.egroup={n:'Grupo de élites',gold:0,hp:1,hf:1,sp:1,r:.3,col:'#f0b429',dmg:0,ap:0,am:0,gen:1,el:1};EIC.egroup='⚔️';SBALL.push('egroup');if(!PSPEC.includes('egroup'))PSPEC.push('egroup');
+{const _s=spawnEnemy;spawnEnemy=function(t,p,fo){if(t!=='egroup')return _s.call(this,t,p,fo);const L=ELV[S.era===2?2:1];let r;for(const k of L.elite.concat(L.mini))r=_s.call(this,k,p,null);S.msg='¡Un grupo de élites ocupa el lugar del jefe!';return r;};}
