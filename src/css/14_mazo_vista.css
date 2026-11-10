@@ -72,3 +72,8 @@ body.mfs #relic .pskip small{font-size:10px!important;max-width:46%;text-align:l
 .tubdg{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:2px;background:#f4e6c4;border:1.5px solid #6a4428;border-radius:14px;padding:2px 9px 2px 3px;font:700 14px system-ui,sans-serif;color:#8a3a1a;box-shadow:0 2px 4px rgba(0,0,0,.3);white-space:nowrap;line-height:1}
 .tubdg .tuic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:15px;flex:none}
 body.mfs #relic .tof .tubdg{right:auto;left:50%;top:auto;bottom:-9px;transform:translateX(-50%);font-size:10px;padding:0 5px 0 1px}body.mfs #relic .tof .tubdg .tuic{width:15px;height:15px;font-size:9px}
+/* oferta de torres: a qué golpea, en la esquina de arriba a la izquierda (en gris si no llega) */
+#relic .tof{position:relative}.toftg{position:absolute;top:8px;left:9px;display:flex;flex-direction:column;gap:4px;z-index:1}
+.toftg span{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;background:#efe0bf;border:1px solid #c9a87a;cursor:help}
+.toftg span.off{opacity:.3;filter:grayscale(1)}
+body.mfs .toftg{top:-9px;left:10px;right:auto;flex-direction:row;gap:3px}body.mfs #relic .toff{margin-top:12px!important}body.mfs .toftg span{width:18px;height:18px;font-size:10px;background:#f4e6c4}
