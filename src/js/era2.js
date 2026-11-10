@@ -45,7 +45,9 @@ function e2Path(g,X,Y,gx,gy,B,a){const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2,cf=e
  const es=[];if(!isP(gx,gy-1))es.push([X,Y+L,X+B,Y+L]);if(!isP(gx,gy+1))es.push([X,Y+B-L,X+B,Y+B-L]);if(!isP(gx-1,gy))es.push([X+L,Y,X+L,Y+B]);if(!isP(gx+1,gy))es.push([X+B-L,Y,X+B-L,Y+B]);
  for(const e of es)edge(...e);g.lineWidth=L;g.strokeStyle=col(.95);for(const e of es)edge(...e);
  // flecha hacia el núcleo
- if(cf&&cf[gy]&&cf[gy][gx]<1e9){let d=null,v=cf[gy][gx];for(const[dx,dy]of D){const nx=gx+dx,ny=gy+dy;if(isP(nx,ny)&&cf[ny][nx]<v){v=cf[ny][nx];d=[dx,dy];}}
+ if(cf&&cf[gy]&&cf[gy][gx]<1e9){let d=null,v=cf[gy][gx];const v0=v;let dn=0,up=[];for(const[dx,dy]of D){const nx=gx+dx,ny=gy+dy;if(!isP(nx,ny))continue;if(cf[ny][nx]<v0)dn++;else if(cf[ny][nx]>v0&&cf[ny][nx]<1e9)up.push([dx,dy]);if(cf[ny][nx]<v){v=cf[ny][nx];d=[dx,dy];}}
+  /* v305: en un cruce que se abre en dos (o más) ramas, la flecha del centro sigue recta, en la dirección por la que llegan; ya se dividen al empezar cada rama */
+  if(dn>=2&&up.length===1)d=[-up[0][0],-up[0][1]];
   if(d){const cx=X+B/2,cy=Y+B/2,s=B*.16;g.strokeStyle=`rgba(${Math.round(180+(255-180)*a)},${Math.round(250-(250-150)*a)},255,.55)`;g.lineWidth=L;g.beginPath();g.moveTo(cx-d[0]*s-d[1]*s*.8,cy-d[1]*s-d[0]*s*.8);g.lineTo(cx,cy);g.lineTo(cx-d[0]*s+d[1]*s*.8,cy-d[1]*s+d[0]*s*.8);g.stroke();}}}
 function e2Solar(g,X,Y,B){const cx=X+B/2,cy=Y+B/2;g.fillStyle='#2e3340';g.beginPath();for(let k=0;k<6;k++){const a=k/6*Math.PI*2+Math.PI/6;g.lineTo(cx+Math.cos(a)*B*.42,cy+Math.sin(a)*B*.42);}g.closePath();g.fill();
  g.strokeStyle='rgba(255,79,216,.35)';g.lineWidth=Math.max(1,B*.1);g.beginPath();for(let k=0;k<6;k++){const a=k/6*Math.PI*2+Math.PI/6;g.lineTo(cx+Math.cos(a)*B*.34,cy+Math.sin(a)*B*.34);}g.closePath();g.stroke();g.strokeStyle='#ff4fd8';g.lineWidth=Math.max(1,B*.045);g.stroke();
