@@ -61,7 +61,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  H=game('korr');a=mk(8,1000);const ax=a.x,ay=a.y,rr=h2Route(Math.round(H.s.x),Math.round(H.s.y),5),ctr=rr[Math.min(rr.length-1,4)];useRelic('seal');out.sAim=S.aim==='seal';NR.seal.use(ctr);out.sPull=!!a.fx.slow&&Math.hypot(a.x-ctr.x,a.y-ctr.y)<=Math.hypot(ax-ctr.x,ay-ctr.y);S.aim=null;
  const e5=mk(1,1000);S.rs.seal.cd=0;const u=unitTowers().map(t=>t.sd).flat().find(s=>s.hp>0);hitUnit(u,20,e5);out.sReflect=e5.hp<1000;
  // logro de Kai
- OPT.u_hr=false;delete ACHS.bounty;S.elK=0;for(let k=0;k<3;k++){const el=mk(2,100,Object.keys(ET).find(t=>ET[t].el));hurt(el,1e6,null,'elem');}run(.1);out.ach=!!ACHS.bounty;
+ OPT.u_hr=false;delete ACHS.caza;S.elK=0;for(let k=0;k<3;k++){const el=mk(2,100,Object.keys(ET).find(t=>ET[t].el));hurt(el,1e6,null,"elem");}run(.1);out.ach=!ACHS.caza&&!h2Has("kai");
  return out;});
 await p.screenshot({path:__dirname+'/out/heroes_e2.png'});
 const bad=Object.entries(r).filter(([k,v])=>v!==true).map(([k])=>k);console.log(JSON.stringify(r));if(bad.length){console.log('FALLA: '+bad.join(', '));process.exit(1);}

@@ -18,9 +18,14 @@ function r2Shields(){for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)s
 {const _sw=startWave;startWave=function(){const was=S.phase;const r=_sw.apply(this,arguments);try{if(was!=='wave'&&S.phase==='wave'){S.prR=S.prR||0;if(S.relics.includes('shgen')&&rp('shgen'))r2Shields();if(S.hero)S.hero.adrW=0;}}catch(e){}return r;};}
 // ---- Impresora 3D ----
 const PRDUR=[0,40,35,30,25];
-const prFree=t=>!!(t&&S&&S.relics&&S.relics.includes('printer')&&rp('printer')&&t.lvl===1&&!t.holo&&!TW[t.type].uniq&&!TW[t.type].guild&&S.prR!==S.round);
+const prFree=t=>!!(t&&S&&S.prAuto&&S.relics&&S.relics.includes('printer')&&rp('printer')&&t.lvl===1&&!t.holo&&!TW[t.type].uniq&&!TW[t.type].guild&&S.prR!==S.round);
 {const _tc=tCost;tCost=function(t,c){if(c!=null&&prFree(t))return 0;return _tc.apply(this,arguments);};}
-{const _u=upgrade;upgrade=function(t){if(t&&t.holo){S.msg='Una copia impresa no se puede mejorar.';ui();return;}const fr=prFree(t),l0=t&&t.lvl;const r=_u.apply(this,arguments);if(fr&&t.lvl>l0){S.prR=S.round;S.msg=tinfo(t).n+' sube a Nv 2 gratis (Impresora 3D).';RS('printer').n++;ui();}return r;};}
+{const _u=upgrade;upgrade=function(t){if(t&&t.holo){S.msg='Una copia impresa no se puede mejorar.';ui();return;}const fr=prFree(t),l0=t&&t.lvl;const r=_u.apply(this,arguments);if(fr&&t.lvl>l0){S.prR=S.round;S.msg=tinfo(t).n+' sube a Nv 2 gratis (Impresora 3D).';RS('printer').n++;S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.3*K,col:'#3fe8ff'});ui();}return r;};}
+// v305: la pasiva ya no espera a que mejores tú: al empezar cada oleada, una torre de Nv 1 al azar sube a Nv 2 gratis
+function prAuto(){if(!S||!S.relics||!S.relics.includes('printer')||!rp('printer')||S.prR===S.round||S.tut||S.pvE)return;
+ const L=S.list.filter(t=>t.lvl===1&&!t.holo&&!t.sold&&!TW[t.type].uniq&&!TW[t.type].guild);if(!L.length)return;const t=L[Math.floor(Math.random()*L.length)];
+ S.prAuto=1;try{upgrade(t);}finally{S.prAuto=0;}}
+{const _sw=startWave;startWave=function(){if(S&&S.phase!=='wave')try{prAuto();}catch(e){}return _sw.apply(this,arguments);};}
 {const _s=sell;sell=function(t){if(t&&t.holo){S.msg='Una copia impresa no se puede vender.';ui();return;}return _s.apply(this,arguments);};}
 {const _c=chooseSpec;chooseSpec=function(t,sp){if(t&&t.holo&&!R2.pr)return;return _c.apply(this,arguments);};}
 {const _b=buyAb;buyAb=function(t,id){if(t&&t.holo)return;return _b.apply(this,arguments);};}
@@ -32,7 +37,7 @@ function prCopy(src,cx,cy){const g0=S.gold,sp0=S.st?S.st.spent:0,ts=S.tsel,n0=S.
  finally{R2.pr=0;S.deck=dk;S.tsel=ts;S.gold=g0;if(S.st)S.st.spent=sp0;S.half=hf;S.freeT=fr;S.msg=msg;}return t;}
 function prRemove(t){t.sold=1;S.list=S.list.filter(o=>o!==t);for(const[a,b]of t.sq||[])if(S.occ[a+','+b]===t)delete S.occ[a+','+b];if(S.selT===t){S.selT=null;try{tmClose();}catch(e){}}try{if(PR.pinned&&PR.key==='tw:'+t.id)closePrim();}catch(e){}S.fx.push({x:t.x,y:t.y,t:.5,m:.5,r:1.2*K,col:'#3fe8ff'});}
 nrAdd({id:'printer',n:'Impresora 3D',ic:'🖨️',col:'#4a5a6a',era:2,cd:3,
- pas:()=>'Una vez por ronda, mejorar una torre de <b>Nv 1 a Nv 2</b> sale <span class="gd">gratis</span>.',
+ pas:()=>'Al empezar cada oleada, una torre tuya de <b>Nv 1</b> al azar sube a <b>Nv 2</b> <span class="gd">gratis</span>.',
  act:()=>'Copias una torre tuya, con su nivel y sus habilidades, en un solar vacío. Es un holograma: dura <b>40 s</b> si es de Nv 1, 35 s de Nv 2, 30 s de Nv 3 y 25 s de Nv 4.'},
  {aim:'Elige la torre que quieres copiar.',start:()=>{S.prSrc=null;},use:c=>{const t=S.occ[c.x+','+c.y];
   if(!S.prSrc){if(!t||t.holo||TW[t.type].uniq||TW[t.type].guild){S.msg='Impresora 3D: elige una de tus torres (las únicas no se pueden copiar).';return false;}S.prSrc=t.id;S.msg='Ahora elige un solar vacío para la copia.';return false;}

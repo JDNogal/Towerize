@@ -36,10 +36,12 @@ function vegaDraw(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000;
 {const _nr=nextRound;nextRound=function(){try{S.flares=[];S.planes=[];}catch(e){}return _nr.apply(this,arguments);};}
 // ---- Radio de la Resistencia ----
 RELICS.push({id:'radio',n:'Radio de la Resistencia',ic:'📻',col:'#6a2a5a',ini:1,cd:RCDS[2]||80,
- pas:()=>'<b>Patrulla de la Resistencia</b>: al empezar cada oleada, 2 soldados se apostan junto al núcleo y disparan a lo que se acerque hasta que caen.',
+ pas:()=>'<b>Patrulla de la Resistencia</b>: al empezar cada oleada, 2 soldados <b>invulnerables</b> se apostan junto al núcleo y disparan a lo que se acerque.',
  act:()=>'<b>Pedir suministros</b>: cae un paquete y eliges <b>1 de 2</b> recompensas al azar: oro, la siguiente torre de Nv 1 gratis, un ticket de mejora, una carga de otra reliquia o, rara vez, un ticket de habilidad.'});
 RELIC.radio=RELICS[RELICS.length-1];
 {const _sw=startWave;startWave=function(){const was=S.phase;const r=_sw.apply(this,arguments);try{if(was!=='wave'&&S.phase==='wave'&&rp('radio')&&S.hero)radioPatrol();}catch(e){}return r;};}
+// v305: los soldados de la radio no pueden morir
+{const _h=hitUnit;hitUnit=function(s,d,e){if(s&&s.pat)return;return _h.apply(this,arguments);};}
 function radioPatrol(){const c=S.core;let b=null,bd=1e9;for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(S.cells[y][x]!==2||(x===c.x&&y===c.y))continue;const d=Math.hypot(x-c.x,y-c.y);if(d<bd){bd=d;b={x,y};}}if(!b)return;
  const t={type:'bastion',lvl:2,summ:1,pat:1,ttl:9999,x:b.x,y:b.y,cells:[],flag:{x:b.x,y:b.y},ab:{},acd:{},sd:[],xap:5,ovr:{dmg:TW.bastion.dmg*1.6,rate:1.2,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
  const hp=sdHp(t);t.sd=[0,1].map(i=>({i,x:b.x,y:b.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,rng:1,pat:1}));(S.summ=S.summ||[]).push(t);S.fx.push({x:b.x,y:b.y,t:.6,m:.6,r:1.2*K,col:'#ff4fd8'});}

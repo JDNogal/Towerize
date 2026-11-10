@@ -21,7 +21,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  let H=game(1,'reinhart');let seen1=new Set();for(let k=0;k<300;k++)seen1.add(rndRelic());out.chestEra1=!NEW.some(id=>seen1.has(id));
  H=game(2,'vega');let seen2=new Set();for(let k=0;k<400;k++)seen2.add(rndRelic());out.chestEra2=['emp','shgen','printer','adren'].every(id=>seen2.has(id))&&!['cryo','jammer','repro','sample','core2'].some(id=>seen2.has(id));
  // Impresora 3D: pasiva
- give('printer');const t1=bld('bunker');const g0=S.gold;out.prFree=tCost(t1,upCost(TW.bunker,2))===0;upgrade(t1);out.prUp=t1.lvl===2&&S.gold===g0&&S.prR===S.round;const t2=bld('bunker');out.prOnce=tCost(t2,upCost(TW.bunker,2))>0;
+ give('printer');const t1=bld('bunker');const g0=S.gold;out.prFree=tCost(t1,upCost(TW.bunker,2))>0;S.prR=-1;prAuto();out.prUp=t1.lvl===2&&S.gold===g0&&S.prR===S.round;const t2=bld('bunker');prAuto();out.prOnce=t2.lvl===1;
  // Generador de escudo
  give('shgen');const tr=bld('robots');wave();const s0=tr.sd[0];out.shOn=s0.shd>0&&H.s.shd>0;const e1=mk(1,500);const hp0=s0.hp,sh0=s0.shd;hitUnit(s0,3,e1);out.shAbs=s0.hp===hp0&&s0.shd<sh0;
  useRelic('shgen');out.shAim=S.aim==='shgen';NR.shgen.use({x:s0.x,y:s0.y});S.aim=null;s0.shd=0;const hp1=s0.hp;hitUnit(s0,30,e1);out.dome=s0.hp===hp1;S.dome=null;hitUnit(s0,3,e1);out.domeOff=s0.hp<hp1;

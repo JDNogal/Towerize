@@ -63,6 +63,8 @@ const T=[
  ['logro_enlace.js','Logros pedidos: enlace a Logros desde torres y héroes bloqueados, fijar y volver'],
  ['novedades.js','Novedades del compendio por ficha y marcar todos como vistos'],
  ['construir_anillo.js','Construir con el anillo y el ratón (dos clics en la torre)'],
+ ['historia_kai.js','Historia de Kai: aparece con Vega en la ronda de jefe y se une si la oleada sale perfecta'],
+ ['cruces_reparto.js','Cruces: los enemigos se reparten entre ramas igual de largas; cada escuadra va entera por una'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];

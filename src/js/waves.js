@@ -64,7 +64,7 @@ function startWave(){
    const lo=cut.filter(j=>j>=p.q.length*.5),at=lo.length?lo[Math.floor(Math.random()*lo.length)]:p.q.length;p.q.splice(at,0,t);p.qf.splice(at,0,null);}
   const add=t=>{p.q.push(t);p.qf.push(null);};
   if(p.plan.boss)add('boss');for(const bk of(typeof SBALL!=='undefined'?SBALL:[]))if(p.plan[bk])add(bk);if(p.plan.colossus)add('colossus');if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');if(p.plan.bob)add('bob');p.t=0;}
- if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.forks={};S.fbag={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
+ if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.forks={};S.fbag={};S.fsq={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
  // duración prevista: lo que tarda en salir toda la cola + lo que tarda el enemigo más lento en recorrer el camino más largo
  {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:(t==='boss'||t==='colossus')?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
    const ds=S.field&&S.field[p.y]?S.field[p.y][p.x]:60,slow=Math.min(...p.q.filter(t=>t!=='|').map(t=>ET[t==='wanted'?'elite':t.replace('#','')].sp),9);if(ds<1e9)tr=Math.max(tr,ds/Math.max(.1,slow));}
@@ -106,8 +106,12 @@ function forkRoutes(cx,cy){const key=cx+','+cy;S.forks=S.forks||{};if(S.forks[ke
 function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!S.cc[cy]||!S.cf||ra("compass"))return;
  const rs=forkRoutes(cx,cy).filter(r=>!(prev&&r.n[0]===prev[0]&&r.n[1]===prev[1]));if(rs.length<2)return;
  const best=Math.min(...rs.map(r=>r.len)),ok=rs.filter(r=>r.len<=best+FORKTOL);if(ok.length<2)return;
- const key=cx+','+cy+':'+ok.length;S.fbag=S.fbag||{};let bag=S.fbag[key];if(!bag||!bag.length)bag=S.fbag[key]=shuf(ok.map((r,i)=>i));const r=ok[bag.pop()];if(!r)return;
- if(r.len===best&&S.cf[r.n[1]][r.n[0]]<S.cf[cy][cx])return;/* la más corta: la sigue el camino normal */
+ const key=cx+','+cy+':'+ok.length;S.fbag=S.fbag||{};S.fsq=S.fsq||{};
+ /* v305: una escuadra en formación toma toda la misma rama (la elige el primero que llega); las escuadras y los sueltos se reparten con la bolsa */
+ const sk=e.sqid&&!e.loose?e.sqid+'@'+key:null;let i=sk!=null?S.fsq[sk]:undefined;
+ if(i==null){let bag=S.fbag[key];if(!bag||!bag.length)bag=S.fbag[key]=shuf(ok.map((r,j)=>j));i=bag.pop();if(sk!=null)S.fsq[sk]=i;}
+ const r=ok[i];if(!r)return;
+ /* antes, si tocaba una de las más cortas se dejaba al camino normal, que en un empate siempre sigue recto: ahora se sigue la rama elegida */
  e.wps=r.path.slice();}
 // ---- carriles: cada enemigo conserva su carril (izquierda, centro o derecha respecto a su marcha) también en las curvas,
 // para que las formaciones no se deshagan en fila de a uno. La dirección de marcha es la de la casilla de pieza vecina más cercana al destino.

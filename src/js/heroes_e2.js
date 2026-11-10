@@ -10,11 +10,9 @@ Object.assign(HSAY,{korr:['La colmena ya no me llama.','Que vengan a mí.','Voy.
 const H2={korr:1,ferro:1,kai:1},HX={arc:0,beam:null};
 for(const id in H2)HVIS[id]=()=>{if(typeof era2Ok!=='function'||!era2Ok())return false;if(typeof S!=='undefined'&&S&&S.hero)return true;const picking=(typeof RL!=='undefined'&&RL.hpick)||(typeof LB!=='undefined'&&LB.open&&LB.area==='prep');return !picking||ERA===2;};
 // ---- desbloqueo: Korr (evento Cápsula caída), Ferro (derrotar a la Forja), Kai (logro Caza mayor) ----
-ACH.bounty={c:'jg',n:'Caza mayor',d:'En una partida de la Era Distópica, elimina 3 élites.',hr:'kai'};
-if(typeof ACHVIS!=='undefined')ACHVIS.bounty=()=>typeof era2Ok==='function'&&era2Ok();
-HUNL.kai='bounty';
+/* v305: «Caza mayor» es ahora el logro de la historia de Kai (ver historia_e2b.js); el antiguo (3 élites) se ha quitado */
 const H2LOCK={korr:'Abre una cápsula caída en la Era Distópica.',ferro:'Derrota al segundo jefe de la Era Distópica.',kai:'Logro «Caza mayor».'};
-const h2Has=id=>!!((typeof OPT!=='undefined'&&OPT.u_hr)||(typeof UNLOCK_ALL!=='undefined'&&UNLOCK_ALL)||(id==='kai'?ACHS.bounty:STO['h_'+id]));
+const h2Has=id=>!!((typeof OPT!=='undefined'&&OPT.u_hr)||(typeof UNLOCK_ALL!=='undefined'&&UNLOCK_ALL)||(id==='kai'?ACHS.caza:STO['h_'+id]));
 function h2Locks(){for(const id in H2){if(h2Has(id))delete HEROES[id].lockTxt;else HEROES[id].lockTxt=H2LOCK[id];}}
 function h2Unlock(id,why){if(h2Has(id))return;STO['h_'+id]=1;try{saveSto();}catch(e){}h2Locks();try{newU('hr',HEROES[id].ic,HEROES[id].n,why,id);toast(`🦸 <b>Nuevo héroe: ${HEROES[id].n}</b><br><small>${why}</small>`);}catch(e){}}
 h2Locks();if(typeof window!=='undefined')setInterval(()=>{try{h2Locks();}catch(e){}},1500);
@@ -131,7 +129,7 @@ function h2Kills(){for(const e of S.enemies){if(e.hp>0||e.leak||e._k2)continue;e
   if(e.ctr>0){const gd=Math.max(10,Math.round(killGoldF(e.t)*2));goldEv(gd);RS('board').gold+=gd;S.msg='Contrato cumplido: +'+gd+' 🪙.';S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:K,col:'#ffd75a'});}
   const real=!S.tut&&!S.pvE&&!S.pvH;
   if(real&&e.t==='forge')h2Unlock('ferro','Has derrotado a la Forja');
-  if(real&&S.era===2&&ET[e.t].el){S.elK=(S.elK||0)+1;try{recBest('bounty',S.elK);}catch(x){}if(S.elK>=3)achieve('bounty');}
+  if(real&&S.era===2&&ET[e.t].el){S.elK=(S.elK||0)+1;}
   for(const f of H2K)try{f(e);}catch(x){}}}
 // ---- registro de reliquias nuevas: NR[id]={any, aim, r, col, dur, use(c)} ----
 const NR={};

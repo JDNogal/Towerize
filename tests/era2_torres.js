@@ -15,7 +15,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  for(const t of built){while(t.lvl<3)upgrade(t);chooseSpec(t,specs[t.type]);for(const id of SPECS[t.type][t.spec].ab)for(let k=0;k<3;k++)buyAb(t,id);}
  out.allAb=built.every(t=>SPECS[t.type][t.spec].ab.every(id=>(t.ab[id]||0)>=AB[id].ranks.length));out.kami4=(built.find(t=>t.type==='robots')||{sd:[]}).sd.length;
  out.sw3=(built.find(t=>t.type==='nano')||{sw:[]}).sw.length;out.chapa=!!ACHS.chapa;
- S.tsel=null;startWave();out.patrol=(S.summ||[]).filter(t=>t.pat).length;for(let i=0;i<120;i++){update(.05);draw();}
+ S.tsel=null;startWave();out.patrol=(S.summ||[]).filter(t=>t.pat).length;{const pq=((S.summ||[]).find(t=>t.pat)||{sd:[]}).sd[0];if(pq){const h0=pq.hp;hitUnit(pq,1e6,null);out.patImm=pq.hp===h0;}else out.patImm=false;}for(let i=0;i<120;i++){update(.05);draw();}
  out.kills=S.st.kills;out.magN=built.find(t=>t.type==='bunker').magN;
  S.hero.bcd=0;castHab({x:S.core.x,y:S.core.y},'b');out.flare=(S.flares||[]).length;S.hero.lvl=10;S.hero.ucd=0;let pc=null;for(let y=0;y<N&&!pc;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===2&&S.field[y][x]>5){pc={x,y};break;}castHab(pc,'u');out.planes=(S.planes||[]).length;
  for(let i=0;i<60;i++){update(.05);}
