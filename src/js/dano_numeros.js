@@ -7,7 +7,7 @@
 const DNIMP=new Set(['mini','elite','greyw','bigw','wanted','momdrg','boss','colossus','bob','tank','armored','custodian','shaman','warlock','griffin','champ','dchamp','seal']);
 const DNBOSS=new Set(['boss','colossus','bob','momdrg']);
 const dnStyle=()=>OPT.dnst||'jump',dnSz=()=>({s:.8,n:1,l:1.25}[OPT.dnsz||'n']||1),dnOp=()=>+(OPT.dnop||1);
-function dnShowE(e){const w=OPT.dnwho||'all';if(!e.t)return w==='all';if(w==='all')return true;if(w==='boss')return DNBOSS.has(e.t);return DNIMP.has(e.t)||!!e.wanted;}
+function dnShowE(e){const w=OPT.dnwho||'all';if(!e.t)return w==='all';if(w==='all')return true;const E=ET[e.t]||{},bs=DNBOSS.has(e.t)||(typeof isBoss==='function'&&isBoss(e));if(w==='boss')return bs;return bs||DNIMP.has(e.t)||!!E.el||!!e.wanted;}
 // lado hacia el que salta/se coloca: perpendicular a la marcha, hacia el borde del camino más cercano a su carril
 function dnSide(d){const e=d.e;let fd=e.fd||[0,1];const px=fd[1],py=-fd[0];let s=e.fln!=null&&e.fln!==0?Math.sign(e.fln):((d.k=(d.k||0)+1)%2?1:-1);if(d.side!=null)s=d.side;d.side=s;
  const cx=Math.floor(e.x/K)*K+1,cy=Math.floor(e.y/K)*K+1,base=(e.x-cx)*px+(e.y-cy)*py;const off=(K/2+.9)-base*s;return{px:px*s,py:py*s,off};}

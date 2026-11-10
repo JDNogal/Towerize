@@ -56,6 +56,7 @@ const T=[
  ['heroes_e2.js','Héroes de la era 2: Korr, Ferro y Kai con sus habilidades, reliquias y charcos en franja'],
  ['reliquias_e2.js','Reliquias de la era 2: cuatro de cofre y cinco de evento'],
  ['reliquias_e2b.js','Reliquias de la era 2: segunda tanda de doce'],
+ ['alienigenas.js','Criaturas alienígenas: enjambre, Colmena, Depredadores y desbloqueo con Korr'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];
