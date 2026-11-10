@@ -19,7 +19,7 @@ function omegaSvg(fams){fams=fams||[];const key=OMORD.filter(k=>fams.includes(k)
   h+=fams.includes(k)?`<circle cx="${x}" cy="${y}" r="8" fill="#2a2f3a" stroke="${OMF[k].col}" stroke-width="2"/><g transform="translate(${x} ${y}) scale(.8)">${OMPC[k]}</g>`:`<circle cx="${x}" cy="${y}" r="6" fill="#2a2f3a" stroke="#14101e" stroke-width="1.4"/><circle cx="${x}" cy="${y}" r="2.2" fill="#14101e"/>`;});
  const on=fams.length>0;h+=`<circle cx="50" cy="48" r="13" fill="#13222e" ${O}/><circle cx="50" cy="48" r="10" fill="${on?'#3fe8ff':'#3a4a5a'}"/><text x="50" y="53.5" text-anchor="middle" font-family="Georgia,serif" font-weight="bold" font-size="15" fill="#13222e">Ω</text>`;
  return OMSV[key]=`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${h}</svg>`;}
-TW.omega={n:'Prototipo Omega',ic:'Ω',dt:'elem',era:2,cost:0,range:2.8,dmg:2,rate:.5,col:'#3fe8ff',l:'Ω',fx:'Absorbe torres y gana sus efectos',uniq:1,custom:1,omega:1,ev:'omega',upc:OMUP,icsvg:omegaSvg([])};
+TW.omega={n:'Prototipo Omega',ic:'Ω',dt:'elem',era:2,cost:0,range:2.8,dmg:2,rate:.5,col:'#3fe8ff',l:'Ω',fx:'Absorbe torres y gana sus efectos',uniq:1,custom:1,omega:1,ev:'omega',upc:OMUP,icsvg:omegaSvg([])};TW.omega.range*=K;/* v305: el rango estaba en casillas sin pasar a celdas (salía a 0,9 casillas) */
 const OMT={};function omegaT(t){const key=OMORD.filter(k=>(t.fam||[]).includes(k)).join();return OMT[key]||(OMT[key]=Object.assign({},TW.omega,{icsvg:omegaSvg(t.fam)}));}
 // familias que puede absorber ahora: de cada familia que le falta, la torre más barata de tu mazo
 function omAvail(t){const out=[],have=t.fam||[];for(const fk of OMORD){if(have.includes(fk))continue;let b=null;for(const k of S.deck||[]){const T=TW[k];if(!T||T.uniq||TWFAM[k]!==fk)continue;if(!b||T.cost<TW[b].cost)b=k;}if(b)out.push({k:b,f:fk,c:Math.ceil(TW[b].cost*1.5/5)*5});}return out;}
@@ -30,10 +30,10 @@ function omegaFeed(t,k){const a=omAvail(t).find(x=>x.k===k);if(!a)return false;i
 function omegaUp(t){if(placeLock()){plMsg();return false;}if(t.lvl>=4)return false;const need=omCap(t);if((t.fam||[]).length<need){const m='Necesita '+need+' familias para subir a Nv '+(t.lvl+1)+'.';S.msg=m;try{errBubble(m);}catch(e){}return false;}
  const c=OMUP[t.lvl+1];if(S.gold<c){S.msg='Oro insuficiente para mejorar.';ui();return false;}S.gold-=c;if(S.st)S.st.spent+=c;t.inv=(t.inv||0)+c;t.lvl++;S.msg='Prototipo Omega a Nv '+t.lvl+': mejoran todas sus piezas.';S.fx.push({x:t.x,y:t.y,t:.7,m:.7,r:1.8*K,col:'#3fe8ff'});try{sfx(t.lvl>=4?'nv4':'up');}catch(e){}return true;}
 // ---- ficha ----
-function omegaInfo(t,lvo){const fam=t?t.fam||[]:[],lv=t?t.lvl:(lvo||1),rg=t?stats(t).range/K:TW.omega.range;
+function omegaInfo(t,lvo){const fam=t?t.fam||[]:[],lv=t?t.lvl:(lvo||1),rg=t?stats(t).range/K:TW.omega.range/K;
  let h=`<div class="ttl ttlg"><b>Ω Prototipo Omega</b></div>`+R('','Nivel',lv)+(t?R('','Familias',fam.length+' / '+2*lv):'')+R('cg','Rango',f(rg)+' casillas');
  if(t)h+=fam.length?OMORD.filter(k=>fam.includes(k)).map(k=>`<div class="omf"><span class="omi">${omPc(k)}</span><span><b style="color:${OMF[k].col}">${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small></span></div>`).join(''):'<small>Todavía no ha absorbido ninguna torre: solo lanza un pulso muy débil.</small>';
- return h+'<small>Un prototipo de la Forja que asimila otras torres. Pulsa «Construir encima» y elige una torre de tu mazo: paga 1,5 veces su precio y gana la pieza de su familia (una por familia). Cada nivel admite 2 familias más y, al subir, mejoran todas sus piezas a la vez.</small><small>Las torres únicas no se pueden vender.</small>';}
+ return h+'<small>Asimila torres de tu mazo: «Construir encima» cuesta 1,5 veces su precio y le da la pieza de esa familia. Cada Nv admite 2 familias más. No se vende.</small>';}
 {const _u=uniqInfo;uniqInfo=function(t,k,lvo){if(k==='omega')return omegaInfo(t,lvo);return _u.apply(this,arguments);};}
 // ---- menú: anillo normal (subir, construir encima, lupa) y submenú con las torres ----
 {const _o=tmOpts;tmOpts=function(t){if(!t||t.type!=='omega')return _o.apply(this,arguments);const av=omAvail(t),fam=t.fam||[];

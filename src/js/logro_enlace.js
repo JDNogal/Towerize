@@ -40,3 +40,8 @@ H2D.push((g,lw)=>{const X=v=>v*CS+CS/2,dt=1/60;for(const e of S.enemies){if(!(e.
 setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.round||!SEEOK||PREVIEWING||S.pvE)return;for(const r of S.relics||[])if(RELIC[r])see('rl',r);for(const k of S.deck||[])if(TW[k])see('tw',k);for(const t of S.list||[])if(TW[t.type])see('tw',t.type);if(S.hero&&S.hero.id)see('hr',S.hero.id);}catch(e){}},1000);
 // v305 · al continuar una partida guardada también se descubren cosas (antes solo al empezar una nueva: el Martillo del herrero no aparecía en el compendio)
 {const _l=loadRun;loadRun=function(){const r=_l.apply(this,arguments);try{if(r)SEEOK=true;}catch(e){}return r;};}
+// ---- colocar la pieza con el teclado (Intro o Espacio) donde está el ratón, solo mientras colocas una pieza ----
+addEventListener('keydown',e=>{try{if(!(e.key==='Enter'||e.key===' ')||e.repeat||typeof S==='undefined'||!S||S.phase!=='place'||S.pi==null)return;
+ if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(LB.open||RL.open||ctlBlocked()||!M.has)return;
+ const el=document.elementFromPoint(M.x,M.y);if(el!==cv)return;e.preventDefault();e.stopImmediatePropagation();
+ cv.dispatchEvent(new MouseEvent('click',{clientX:M.x,clientY:M.y,bubbles:true}));}catch(er){}},true);
