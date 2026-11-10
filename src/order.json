@@ -13,7 +13,8 @@
   "11_era2.css",
   "12_compendio.css",
   "13_novedades.css",
-  "14_mazo_vista.css"
+  "14_mazo_vista.css",
+  "15_guardado.css"
  ],
  "js": [
   "00_config.js",
@@ -90,6 +91,8 @@
   "reliquias_e2b.js",
   "alienigenas.js",
   "recompensa_evento.js",
+  "teclas_bloqueo.js",
+  "codigo_guardado.js",
   "sonidos_e2.js",
   "musica.js",
   "mazo_vista.js",

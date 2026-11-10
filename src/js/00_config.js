@@ -49,8 +49,8 @@ addEventListener('keydown',e=>{if(!KBC.on)return;e.preventDefault();e.stopImmedi
  if(o&&!(o[0]===a&&o[1]===s)){const OM=o[1]?KB2:KB;OM[o[0]]=old||'';const nm=KBL.flatMap(x=>x[1]).find(r=>r[0]===o[0]);KBC.note=`Esa tecla ya la usaba «${nm?nm[1]:o[0]}»; ahora usa <b>${kbN(o[0],o[1])}</b>.`;}
  M[a]=k;kbSave();KBC.on=null;renderOpts();},true);
 
-const clickA=(sel,i)=>{const L=[...document.querySelectorAll(sel)].filter(b=>b.offsetParent||b.getClientRects().length);const b=L[i||0];if(b&&!b.disabled){b.click();return true;}return false;};
-addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.repeat||RL.open||PMU.open)return;const k=e.key.toLowerCase(),c=e.code||'';
+const clickA=(sel,i)=>{const L=[...document.querySelectorAll(sel)].filter(b=>b.offsetParent||b.getClientRects().length);const b=L[i||0];if(b&&!b.disabled&&hitOk(b)){b.click();return true;}return false;};
+addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.repeat||RL.open||PMU.open||ctlBlocked())return;const k=e.key.toLowerCase(),c=e.code||'';
  const dg=/^Digit([1-9])$/.exec(c);
  if(dg&&e.shiftKey){if(clickA('#relics [data-a="ract"]',+dg[1]-1))e.preventDefault();return;}
  if(dg&&!e.shiftKey){if(bmKey(+dg[1]-1))e.preventDefault();return;}
@@ -60,7 +60,7 @@ addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.r
  else if(kbIs('pigs',k)){clickA('[data-a="pigs"]');e.preventDefault();}
  else if(kbIs('pause',k)){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
  else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2,3],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
- else if(kbIs('wave',k)&&S.phase==='build'){if(document.querySelector('[data-a="wave"]')){WARM=0;startWave();}e.preventDefault();}
+ else if(kbIs('wave',k)&&S.phase==='build'){const wb=document.querySelector('[data-a="wave"]');if(wb&&hitOk(wb)){WARM=0;startWave();}e.preventDefault();}
  else if(kbIs('ptips',k)){togglePtips();e.preventDefault();}
  else if(kbIs('flag',k)&&S.selT&&!S.aim){quickFlag(S.selT);e.preventDefault();}
  else if(kbIs('upg',k)){if(e.shiftKey){const b=document.querySelector('#tmenu.on [data-tm="up"],#side [data-a="up"],#tip [data-a="up"]');if(b){wishToggle(b);e.preventDefault();}}else{const b=document.querySelector('#tmenu.on [data-tm="up"],#tmenu.on [data-tm="gup"]');if(b){tmDo(b);e.preventDefault();}else if(clickA('[data-a="up"]'))e.preventDefault();}}});

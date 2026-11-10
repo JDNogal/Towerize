@@ -25,7 +25,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  S.tsel=null;startWave();for(let k=0;k<3;k++)update(.05);const e=S.enemies.find(x=>!ET[x.t].el&&!isBoss(x));
  if(e){e.hp=e.max*.1;alienHit(bb,bb.sd[0],e,1);out.devour=e.hp<=0;}
  // corrosión: cambia el multiplicador mágico
- const e2=S.enemies.find(x=>x.hp>0);if(e2){const m0=e2DmgM(e2,a,'magic');e2.mrsw=24;out.corr=e2DmgM(e2,a,'magic')/m0;e2.mrsw=0;}
+ let e2=S.enemies.find(x=>x.hp>0);if(!e2){spawnEnemy(Object.keys(ET).find(k=>!ET[k].el&&!ET[k].story&&!ET[k].fly&&!isBoss({t:k})),S.portals[0]);e2=S.enemies[S.enemies.length-1];}if(e2){const m0=e2DmgM(e2,a,'magic');e2.mrsw=24;out.corr=e2DmgM(e2,a,'magic')/m0;e2.mrsw=0;}
  for(let k=0;k<200;k++){update(.05);draw();}
  out.kills=S.st.kills;out.ach=ACH.suyos&&TLOCK.alien==='suyos';
  out.card=document.querySelector('#hpop')?1:1;

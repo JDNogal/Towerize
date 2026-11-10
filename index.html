@@ -1426,6 +1426,14 @@ body.mfs .toftg{top:-9px;left:10px;right:auto;flex-direction:row;gap:3px}body.mf
 .tofx{display:flex;justify-content:center;gap:6px;margin-top:6px}.tofx .gico{margin:0!important}
 /* curación: una cruz grande y dos pequeñas (no parece un botón de «más información»), en el verde de la curación */
 .gico[data-kw="mheal"]{background:#e4f4cf;border-color:#7cbf45!important;color:#7cbf45!important}
+/* v305 · código de guardado (Opciones → Guardado) */
+.svx{display:flex;flex-direction:column;gap:6px}
+.svx .svxp{margin:0 0 2px;font-size:13px;line-height:1.35}
+.svx .svxb{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 4px}
+.svx .svxb button{padding:6px 12px}
+.svx .svxt{width:100%;box-sizing:border-box;height:84px;resize:vertical;font:11px/1.3 ui-monospace,Consolas,monospace;word-break:break-all;background:color-mix(in srgb,var(--paper,#f4ead8) 80%,#fff 20%);color:#3a2a1a;border:1px solid rgba(90,60,30,.45);border-radius:6px;padding:6px}
+.svx .svxs{opacity:.7;font-size:11px;margin-top:-2px}
+.svx .svxm{font-size:13px;padding:6px 8px;border-radius:6px;background:rgba(201,162,74,.18);border:1px solid rgba(201,162,74,.45)}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -1495,8 +1503,8 @@ addEventListener('keydown',e=>{if(!KBC.on)return;e.preventDefault();e.stopImmedi
  if(o&&!(o[0]===a&&o[1]===s)){const OM=o[1]?KB2:KB;OM[o[0]]=old||'';const nm=KBL.flatMap(x=>x[1]).find(r=>r[0]===o[0]);KBC.note=`Esa tecla ya la usaba «${nm?nm[1]:o[0]}»; ahora usa <b>${kbN(o[0],o[1])}</b>.`;}
  M[a]=k;kbSave();KBC.on=null;renderOpts();},true);
 
-const clickA=(sel,i)=>{const L=[...document.querySelectorAll(sel)].filter(b=>b.offsetParent||b.getClientRects().length);const b=L[i||0];if(b&&!b.disabled){b.click();return true;}return false;};
-addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.repeat||RL.open||PMU.open)return;const k=e.key.toLowerCase(),c=e.code||'';
+const clickA=(sel,i)=>{const L=[...document.querySelectorAll(sel)].filter(b=>b.offsetParent||b.getClientRects().length);const b=L[i||0];if(b&&!b.disabled&&hitOk(b)){b.click();return true;}return false;};
+addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.repeat||RL.open||PMU.open||ctlBlocked())return;const k=e.key.toLowerCase(),c=e.code||'';
  const dg=/^Digit([1-9])$/.exec(c);
  if(dg&&e.shiftKey){if(clickA('#relics [data-a="ract"]',+dg[1]-1))e.preventDefault();return;}
  if(dg&&!e.shiftKey){if(bmKey(+dg[1]-1))e.preventDefault();return;}
@@ -1506,7 +1514,7 @@ addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.r
  else if(kbIs('pigs',k)){clickA('[data-a="pigs"]');e.preventDefault();}
  else if(kbIs('pause',k)){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
  else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2,3],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
- else if(kbIs('wave',k)&&S.phase==='build'){if(document.querySelector('[data-a="wave"]')){WARM=0;startWave();}e.preventDefault();}
+ else if(kbIs('wave',k)&&S.phase==='build'){const wb=document.querySelector('[data-a="wave"]');if(wb&&hitOk(wb)){WARM=0;startWave();}e.preventDefault();}
  else if(kbIs('ptips',k)){togglePtips();e.preventDefault();}
  else if(kbIs('flag',k)&&S.selT&&!S.aim){quickFlag(S.selT);e.preventDefault();}
  else if(kbIs('upg',k)){if(e.shiftKey){const b=document.querySelector('#tmenu.on [data-tm="up"],#side [data-a="up"],#tip [data-a="up"]');if(b){wishToggle(b);e.preventDefault();}}else{const b=document.querySelector('#tmenu.on [data-tm="up"],#tmenu.on [data-tm="gup"]');if(b){tmDo(b);e.preventDefault();}else if(clickA('[data-a="up"]'))e.preventDefault();}}});
@@ -2275,7 +2283,7 @@ const OPTS=[
  {tab:'hs',type:'choice',label:'Velocidad de escritura',desc:'A qué ritmo aparecen las letras en los diálogos de la historia. Puedes pulsar en cualquier momento para ver la frase entera.',get:()=>OPT.dspd||'n',set:v=>{OPT.dspd=v;saveOpt();},choices:[['l','Lenta'],['n','Normal'],['r','Rápida']]},
  {tab:'hs',type:'toggle',key:'dtype',def:true,label:'Efecto máquina de escribir',desc:'El texto de los diálogos aparece letra a letra. Desactivado, aparece de golpe.'},
  {tab:'hs',type:'toggle',key:'dauto',def:false,label:'Avance automático',desc:'Los diálogos pasan solos tras una pausa, sin tener que pulsar.'},
- {tab:'hs',type:'slider',key:'dwait',def:2,min:1,max:5,step:.5,fmt:v=>String(v).replace('.',',')+' s',label:'Pausa del avance automático',desc:'Lo que espera cada diálogo, además de un poco más cuanto más largo es el texto.'},
+ {tab:'hs',type:'slider',key:'dwait',def:2,min:1,max:5,step:.1,fmt:v=>String(v).replace('.',',')+' s',label:'Pausa del avance automático',desc:'Lo que espera cada diálogo, además de un poco más cuanto más largo es el texto.'},
  {tab:'hs',type:'toggle',key:'dglitch',def:true,label:'Efectos de fallo de ÉTER',desc:'Caracteres corruptos y parpadeos mientras el núcleo está dañado. Desactívalo si te molestan o usas lector de pantalla.'},
  {tab:'hs',type:'toggle',key:'eter',def:true,label:'ÉTER habla en partida',desc:'De vez en cuando, ÉTER comenta lo que pasa desde el núcleo con un bocadillo corto: al ganar una oleada sin daños, cuando se cuela un enemigo, al ver un jefe… No para el juego.'},
  {tab:'hs',type:'toggle',key:'dbig',def:false,label:'Texto de diálogos grande',desc:'Letra más grande en los diálogos de la historia, para leerlos con más comodidad.'},
@@ -2293,19 +2301,19 @@ const OPTS=[
  {tab:'un',type:'toggle',key:'u_cpa',def:false,label:'Abrir el Compendio',desc:'Solo da acceso al Compendio, como al conseguir Mente curiosa: verás lo que hayas descubierto y el resto en sombra.'},
  {tab:'un',type:'toggle',key:'u_cp',def:false,label:'Compendio completo',desc:'Desbloquea el Compendio y muestra todas sus entradas, incluidos los niveles secretos de las torres de evento.'},
  {tab:'un',type:'toggle',key:'u_sec',def:false,label:'Revelar logros secretos',desc:'Muestra la descripción de los logros ocultos.'},
- {tab:'vol',type:'slider',key:'vm',def:80,min:0,max:100,step:5,fmt:v=>v+'%',label:'Volumen general',desc:'Volumen de todo el sonido del juego. Los otros dos se aplican sobre este.'},
- {tab:'vol',type:'slider',key:'vu',def:60,min:0,max:100,step:5,fmt:v=>v+'%',label:'Música',desc:'Volumen de la música de fondo. Empieza a sonar con el primer clic o tecla y vuelve a empezar al terminar.'},
- {tab:'vol',type:'slider',key:'vf',def:80,min:0,max:100,step:5,fmt:v=>v+'%',label:'Efectos',desc:'Volumen de los efectos: disparos, impactos, botones, avisos y pasar página.'},
- {tab:'vol',type:'slider',key:'fq_coin',def:100,min:0,max:100,step:25,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · oro por baja',desc:'Cuántas veces suena la moneda al matar a un enemigo. Al 100% suena siempre (con un pequeño límite para que no se amontone); más bajo, solo algunas veces.'},
- {tab:'vol',type:'slider',key:'fq_kill',def:100,min:0,max:100,step:25,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · bajas',desc:'Cuántas veces suena la muerte de los enemigos. Los jefes suenan siempre.'},
- {tab:'vol',type:'slider',key:'fq_hit',def:100,min:0,max:100,step:25,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · ataques',desc:'Cuántas veces suenan los disparos e impactos de torres, unidades y héroe.'},
+ {tab:'vol',type:'slider',key:'vm',def:80,min:0,max:100,step:1,fmt:v=>v+'%',label:'Volumen general',desc:'Volumen de todo el sonido del juego. Los otros dos se aplican sobre este.'},
+ {tab:'vol',type:'slider',key:'vu',def:60,min:0,max:100,step:1,fmt:v=>v+'%',label:'Música',desc:'Volumen de la música de fondo. Empieza a sonar con el primer clic o tecla y vuelve a empezar al terminar.'},
+ {tab:'vol',type:'slider',key:'vf',def:80,min:0,max:100,step:1,fmt:v=>v+'%',label:'Efectos',desc:'Volumen de los efectos: disparos, impactos, botones, avisos y pasar página.'},
+ {tab:'vol',type:'slider',key:'fq_coin',def:100,min:0,max:100,step:1,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · oro por baja',desc:'Cuántas veces suena la moneda al matar a un enemigo. Al 100% suena siempre (con un pequeño límite para que no se amontone); más bajo, solo algunas veces.'},
+ {tab:'vol',type:'slider',key:'fq_kill',def:100,min:0,max:100,step:1,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · bajas',desc:'Cuántas veces suena la muerte de los enemigos. Los jefes suenan siempre.'},
+ {tab:'vol',type:'slider',key:'fq_hit',def:100,min:0,max:100,step:1,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · ataques',desc:'Cuántas veces suenan los disparos e impactos de torres, unidades y héroe.'},
  {tab:'vol',type:'sfxt',label:'Probar sonidos',desc:'Escucha cada sonido. Donde hay varias versiones (Nuevo / Actual), la marcada es la que suena en el juego: pulsa otra para cambiarla.'},
  {tab:'gf',type:'toggle',key:'fps',def:false,label:'Mostrar FPS',desc:'Muestra en una esquina los fotogramas por segundo a los que va el juego (verde: 50 o más; amarillo: 30–49; rojo: menos de 30).'},
  {tab:'gf',type:'toggle',key:'fx',def:true,label:'Destellos de impacto y explosiones',desc:'Los círculos que se dibujan al impactar un proyectil o explotar un cañonazo.'},
  {tab:'ac',type:'toggle',key:'dpsx',def:true,label:'Tooltips de DPS avanzados',desc:'Al señalar el DPS de una torre, muestra también cómo se calcula.'},
  {tab:'ac',type:'toggle',key:'dabbr',def:false,label:'Abreviar números de daño grandes',desc:'1.000 se muestra como 1K, 1.000.000 como 1M, y así sucesivamente.'},
  {tab:'ac',type:'toggle',key:'dsci',def:false,label:'Notación científica en números de daño',desc:'A partir de 1.000.000, los números se muestran como 1,2e6. Tiene prioridad sobre la abreviatura.'},
- {tab:'ac',type:'slider',key:'delay',def:.6,min:.1,max:2,step:.05,fmt:v=>f(v)+' s',label:'Tiempo de apertura del panel de información',descT:'Lo que tarda en completarse la rueda de carga al mantener pulsado algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.',desc:'Lo que tarda en completarse la rueda de carga al señalar algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.'}];
+ {tab:'ac',type:'slider',key:'delay',def:.6,min:.1,max:2,step:.01,fmt:v=>f(v)+' s',label:'Tiempo de apertura del panel de información',descT:'Lo que tarda en completarse la rueda de carga al mantener pulsado algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.',desc:'Lo que tarda en completarse la rueda de carga al señalar algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.'}];
 const OTABS=[['jg','Juego','⚙️'],['kb','Atajos','⌨️'],['ps','Personalización','🎨'],['hs','Diálogos','💬'],['vol','Sonido','🔊'],['gf','Gráficos','🖥️'],['ac','Accesibilidad','♿'],['un','Desbloqueos','🔓']];
 // icono y apartado de cada opción en la ventana de opciones
 const OIC={kcap:'🔤',pm:'📌',fs:'⛶',dnum:'💥',hints:'💡',ptip:'🎯',ptipw:'🌀',treal:'🕒',tcomb:'⏱️',slow:'🐢',keys:'⌨️',reset:'🗑️',dspd:'✍️',dtype:'📝',dauto:'⏩',dwait:'⏳',dglitch:'📺',dbig:'🔠',cname:'🪪',u_tw:'🗼',u_hr:'🦸',u_rl:'💎',u_cs:'🎨',u_rd:'📅',u_cp:'📖',u_cpa:'📘',u_sec:'🕵️',vm:'🔊',vu:'🎵',vf:'💫',fps:'📈',fx:'✨',dpsx:'🧮',dabbr:'🔢',dsci:'🔬',delay:'⌛'};
@@ -8950,6 +8958,105 @@ function uqFinish(){if(!S||S.phase!=='reward')return;S.uqNR=0;S.aim=null;nextRou
 {const _u=uPlaceAt;uPlaceAt=function(c){const r=_u.apply(this,arguments);try{if(S.phase==='reward'&&!S.uq.length)uqFinish();}catch(e){}return r;};}
 // por si algo quita el modo de colocar (Esc, un menú…): se vuelve a pedir el hueco; si ya no queda nada, sigue la partida
 {const _r=relicTick;relicTick=function(){const r=_r.apply(this,arguments);try{if(S&&S.phase==='reward'&&!RL.open){if(!S.uq||!S.uq.length)uqFinish();else if(S.aim!=='uplace')startUPlace();}}catch(e){}return r;};}
+// ==================== v305 · Teclas rápidas bloqueadas cuando el ratón lo está ====================
+// Si una pista, el tutorial o una ventana (foco de portal, aviso de enemigo nuevo, eventos, libro, diálogo…) impide pulsar con el ratón,
+// las teclas rápidas de esos controles tampoco hacen nada hasta que se avance.
+function ctlBlocked(){try{
+ if(typeof hintBlocks==='function'&&hintBlocks())return true;
+ if(typeof HQ!=='undefined'&&HQ.cur){const c=HQ.cur,w=c.steps&&c.steps[c.si]&&c.steps[c.si][2];if(!w)return true;}/* pista oculta tras otra ventana: sigue pendiente */
+ if((typeof FO!=='undefined'&&FO.open)||(typeof NEC!=='undefined'&&NEC.open)||(typeof LB!=='undefined'&&LB.open)||(typeof DLG!=='undefined'&&DLG.on)||(typeof RL!=='undefined'&&RL.open))return true;
+ if(typeof S!=='undefined'&&S&&S.phase==='reward')return true;
+}catch(e){}return false;}
+// ¿se podría pulsar este botón con el ratón ahora mismo? (que no lo tape nada: pista, ventana, velo del tutorial…)
+function hitOk(b){try{if(!document.elementFromPoint)return true;const r=b.getBoundingClientRect();if(!r.width&&!r.height)return true;const x=r.left+r.width/2,y=r.top+r.height/2;
+ if(x<0||y<0||x>innerWidth||y>innerHeight)return true;const el=document.elementFromPoint(x,y);if(!el)return true;if(el===b||b.contains(el))return true;
+ /* bocadillos y avisos que solo informan no cuentan */if(el.closest&&el.closest('#hpop,#tip,.toast,#toast,.ttb'))return true;return false;}catch(e){return true;}}
+// ==================== v305 · Código de guardado (copiar el progreso y la partida a otro ordenador) ====================
+// Opciones → 💾 Guardado. «Crear código» junta todo: el progreso (lo que guarda el navegador con rt-…) y la partida en curso
+// (la de IndexedDB). Sale un texto que se puede copiar o descargar como .txt. En el otro ordenador, «Cargar código» lo pega
+// (o abre el .txt), sustituye lo que hubiera y recarga la página.
+// El estado de la partida tiene referencias cruzadas (unidades ↔ torre, enemigos ↔ objetivos…), Map, Set, Infinity…:
+// se guarda como un grafo (cada objeto una vez, con referencias) para que al cargar quede exactamente igual.
+const SVX={code:'',inp:'',msg:'',ask:0,busy:0};
+const SVXP='TWZ1.',SVXP0='TWZ0.';
+function svxEnc(root){const ids=new Map(),N=[];
+ const ref=v=>{if(v===undefined)return{$u:1};if(v===null||typeof v==='boolean'||typeof v==='string')return v;
+  if(typeof v==='number')return Number.isFinite(v)?v:{$n:Number.isNaN(v)?'nan':v>0?'inf':'-inf'};
+  if(typeof v==='bigint')return{$b:String(v)};if(typeof v==='function'||typeof v==='symbol')return{$u:1};
+  if(ids.has(v))return{$r:ids.get(v)};const id=N.length;ids.set(v,id);N.push(null);N[id]=node(v);return{$r:id};};
+ const node=v=>{if(Array.isArray(v))return{a:v.map(ref)};if(v instanceof Map)return{m:[...v].map(([k,x])=>[ref(k),ref(x)])};if(v instanceof Set)return{s:[...v].map(ref)};
+  if(v instanceof Date)return{d:v.getTime()};if(ArrayBuffer.isView(v))return{t:v.constructor.name,v:Array.from(v)};
+  if(typeof Element!=='undefined'&&v instanceof Element)return{o:{}};const o={};for(const k of Object.keys(v))o[k]=ref(v[k]);return{o};};
+ const r=ref(root);return{r,N};}
+function svxDec(g){const N=g.N,out=new Array(N.length),done=new Array(N.length);
+ const val=x=>{if(x===null||typeof x!=='object')return x;if(x.$u)return undefined;if(x.$n)return x.$n==='nan'?NaN:x.$n==='inf'?Infinity:-Infinity;if(x.$b!=null)return BigInt(x.$b);if(x.$r!=null)return mk(x.$r);return x;};
+ const mk=id=>{if(out[id]!==undefined||done[id])return out[id];const n=N[id];let o;
+  if(n.a){o=new Array(n.a.length);out[id]=o;done[id]=1;n.a.forEach((x,i)=>{o[i]=val(x);});}
+  else if(n.m){o=new Map();out[id]=o;done[id]=1;for(const [k,x] of n.m)o.set(val(k),val(x));}
+  else if(n.s){o=new Set();out[id]=o;done[id]=1;for(const x of n.s)o.add(val(x));}
+  else if(n.d!=null){o=new Date(n.d);out[id]=o;done[id]=1;}
+  else if(n.t){const C=globalThis[n.t]||Array;o=C.from?C.from(n.v):n.v;out[id]=o;done[id]=1;}
+  else{o={};out[id]=o;done[id]=1;for(const k in n.o)o[k]=val(n.o[k]);}
+  return o;};
+ return val(g.r);}
+// texto ↔ bytes comprimidos ↔ base64
+const svxB64=u8=>{let s='';for(let i=0;i<u8.length;i+=0x8000)s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000));return btoa(s);};
+const svxU8=b=>{const s=atob(b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u;};
+async function svxPack(obj){const txt=JSON.stringify(obj);
+ if(typeof CompressionStream==='undefined')return SVXP0+svxB64(new TextEncoder().encode(txt));
+ const buf=await new Response(new Blob([txt]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer();return SVXP+svxB64(new Uint8Array(buf));}
+async function svxUnpack(code){code=String(code||'').replace(/\s+/g,'');let txt;
+ if(code.startsWith(SVXP)){if(typeof DecompressionStream==='undefined')throw new Error('Este navegador no puede leer códigos comprimidos.');
+  txt=await new Response(new Blob([svxU8(code.slice(SVXP.length))]).stream().pipeThrough(new DecompressionStream('gzip'))).text();}
+ else if(code.startsWith(SVXP0))txt=new TextDecoder().decode(svxU8(code.slice(SVXP0.length)));
+ else throw new Error('Eso no parece un código de guardado de Towerize.');
+ const o=JSON.parse(txt);if(!o||o.f!=='towerize')throw new Error('Eso no parece un código de guardado de Towerize.');return o;}
+// crear el código: progreso + partida en curso (si estás jugando, primero se guarda tal como está)
+async function svxMake(){SVX.busy=1;SVX.msg='Creando el código…';renderOpts();
+ try{try{if(typeof svLive==='function'&&svLive())await saveRun('build');}catch(e){}
+  const ls={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('rt-'))ls[k]=localStorage.getItem(k);}
+  let run=null;try{if(svOk())run=await svGet();}catch(e){}
+  const ver=(($('ver')&&$('ver').textContent)||'').trim();
+  SVX.code=await svxPack({f:'towerize',v:1,ver,t:Date.now(),ls,run:run?svxEnc(run):null});
+  const m=run&&run.meta;SVX.msg='Código listo'+(m?` (con la partida en curso: ${m.heroN||''} · ronda ${m.round}/${m.rounds})`:' (sin partida en curso)')+'. Cópialo o descárgalo y pégalo en el otro ordenador.';}
+ catch(e){SVX.code='';SVX.msg='⚠️ No se ha podido crear el código: '+e.message;}
+ SVX.busy=0;renderOpts();}
+// cargar un código: sustituye el progreso y la partida guardada de este navegador y recarga
+async function svxLoad(code){SVX.busy=1;renderOpts();
+ try{const o=await svxUnpack(code);
+  const old=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('rt-'))old.push(k);}for(const k of old)localStorage.removeItem(k);
+  for(const k in o.ls)localStorage.setItem(k,o.ls[k]);
+  if(svOk()){if(o.run)await svPut(svxDec(o.run));else await svDel().catch(()=>{});}
+  try{SAV.meta=null;}catch(e){}SVX.msg='✓ Cargado. Recargando…';renderOpts();  SVX.reloading=1;setTimeout(()=>location.reload(),400);}
+ catch(e){SVX.msg='⚠️ '+e.message;SVX.busy=0;SVX.ask=0;renderOpts();}}
+// al recargar tras cargar un código no hay que volver a guardar la partida que estaba abierta (pisaría la cargada)
+{const _s=saveRun;saveRun=function(){if(SVX.reloading)return Promise.resolve(false);return _s.apply(this,arguments);};}
+// ---- pestaña de opciones ----
+OTABS.push(['sv','Guardado','💾']);
+OPTS.push({tab:'sv',type:'svx',label:'Código de guardado',desc:'Copia tu progreso y la partida en curso a otro ordenador o navegador.'});
+LBOPTXT.sv='Crea un código con todo tu progreso (compendio, logros, desbloqueos, opciones) y la partida que tengas a medias. En el otro ordenador, pégalo en «Cargar código» (o abre el archivo .txt): sustituye lo que hubiera allí.';
+const svxEsc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function svxHTML(){const inG=!document.body.classList.contains('inmenu');const kb=SVX.code?Math.round(SVX.code.length/1024):0;
+ return `<div class="svx">
+ <h3 class="osec">Copiar a otro sitio</h3>
+ <p class="svxp">Crea un código con tu progreso${inG?' y esta partida (se guarda tal como está)':' y la partida que tengas a medias'}.</p>
+ <div class="svxb"><button class="go" data-sx="make"${SVX.busy?' disabled':''}>💾 Crear código</button>${SVX.code?`<button data-sx="copy">📋 Copiar</button><button data-sx="dl">⬇ Descargar .txt</button>`:''}</div>
+ ${SVX.code?`<textarea class="svxt" readonly data-sx="out">${svxEsc(SVX.code)}</textarea><small class="svxs">${kb?kb+" KB":"menos de 1 KB"}</small>`:''}
+ <h3 class="osec">Cargar desde otro sitio</h3>
+ <p class="svxp">Pega aquí el código (o abre el archivo .txt). <b>Sustituye</b> el progreso y la partida guardada de este navegador.</p>
+ <textarea class="svxt" data-sx="in" placeholder="TWZ1.…">${svxEsc(SVX.inp)}</textarea>
+ <div class="svxb"><button data-sx="file">📂 Abrir archivo…</button><button class="${SVX.ask?'warn':'go'}" data-sx="load"${SVX.busy||!SVX.inp.trim()?' disabled':''}>${SVX.ask?'¿Seguro? Pulsa otra vez':'Cargar código'}</button></div>
+ ${SVX.msg?`<div class="svxm">${svxEsc(SVX.msg)}</div>`:''}</div>`;}
+{const _b=optBody;optBody=function(book){const r=_b.apply(this,arguments);if(OP.tab==='sv')r.body=svxHTML();return r;};}
+document.addEventListener('input',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.sx==='in'){SVX.inp=t.value;SVX.ask=0;const b=document.querySelector('[data-sx="load"]');if(b){b.disabled=!SVX.inp.trim()||!!SVX.busy;b.classList.remove('warn');b.classList.add('go');b.textContent='Cargar código';}}});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button[data-sx]');if(!b)return;e.preventDefault();e.stopPropagation();const a=b.dataset.sx;try{sfx('ui');}catch(er){}
+ if(a==='make')svxMake();
+ else if(a==='copy'){const t=document.querySelector('[data-sx="out"]');const done=()=>{SVX.msg='✓ Copiado. Pégalo en «Cargar código» en el otro ordenador.';renderOpts();};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(SVX.code).then(done,()=>{if(t){t.select();document.execCommand('copy');}done();});else{if(t){t.select();document.execCommand('copy');}done();}}
+ else if(a==='dl'){const d=new Date(),p=n=>String(n).padStart(2,'0');const a2=document.createElement('a');a2.href=URL.createObjectURL(new Blob([SVX.code],{type:'text/plain'}));
+  a2.download=`towerize-guardado-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}.txt`;document.body.appendChild(a2);a2.click();setTimeout(()=>{URL.revokeObjectURL(a2.href);a2.remove();},500);}
+ else if(a==='file'){const f=document.createElement('input');f.type='file';f.accept='.txt,text/plain';f.onchange=()=>{const x=f.files&&f.files[0];if(!x)return;x.text().then(t=>{SVX.inp=t.trim();SVX.ask=0;SVX.msg='Archivo leído: '+x.name;renderOpts();});};f.click();}
+ else if(a==='load'){if(!SVX.inp.trim())return;if(!SVX.ask){SVX.ask=1;renderOpts();return;}svxLoad(SVX.inp);}},true);
 // ==================== v302 · SONIDOS DE LO NUEVO (Era Distópica, héroes, reliquias y Prototipo Omega) ====================
 // Todos sintetizados (sin muestras). Se añaden a «Probar sonidos» en un grupo propio.
 const SY2={
