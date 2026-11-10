@@ -5,7 +5,7 @@ function enterFS(){if(!FSOK||isFS())return;try{const r=(FSEL.requestFullscreen||
  const lock=()=>{try{const o=screen.orientation;if(o&&o.lock)o.lock('landscape').catch(()=>{});}catch(e){}};if(r&&r.then)r.then(lock).catch(()=>{});else lock();}catch(e){}}
 function exitFS(){try{(document.exitFullscreen||document.webkitExitFullscreen).call(document);}catch(e){}}
 function toggleFS(){if(isFS())exitFS();else enterFS();}
-function fsMark(){const b=$('fsb');if(!b)return;b.style.display=FSOK?'':'none';b.classList.toggle('on',isFS());b.title=isFS()?'Salir de pantalla completa':'Pantalla completa';}
+function fsMark(){const b=$('fsb');if(!b)return;b.style.display=FSOK||(typeof IOS!=='undefined'&&IOS)?'':'none';b.classList.toggle('on',isFS());b.title=isFS()?'Salir de pantalla completa':'Pantalla completa';}
 document.addEventListener('fullscreenchange',fsMark);document.addEventListener('webkitfullscreenchange',fsMark);
 let RUNL=15;try{RUNL=Math.min(30,Math.max(15,+localStorage.getItem('rt-runl')||15));}catch(e){}
 const rMax=()=>UNLOCK_ALL||OPT.u_rd?30:RUNL;

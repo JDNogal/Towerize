@@ -39,6 +39,7 @@
   "habilidades_enemigos.js",
   "stats.js",
   "fullscreen.js",
+  "iphone.js",
   "tutorial.js",
   "hero_skills.js",
   "help.js",

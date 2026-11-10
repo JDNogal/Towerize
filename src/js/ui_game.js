@@ -150,7 +150,7 @@ $('rotx').addEventListener('click',()=>{document.body.classList.add('vert');setT
 $('rotfs').addEventListener('click',()=>{enterFS();});if(!FSOK)$('rotfs').style.display='none';
 $('rot').classList.add('on');try{if(sessionStorage.getItem('rt-rot'))document.body.classList.add('vert');}catch(e){}
 $('zm').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const z=b.dataset.z;
- if(z==='pt'){togglePtips();return;}if(z==='+')zoomSmooth(1.4,VIEW/2,VH/2);else if(z==='-')zoomSmooth(1/1.4,VIEW/2,VH/2);else if(z==='0'){camGo(ZMIN,N/2-.5,N/2-.5);}else if(z==='c'){camFit();}else if(z==='f')toggleFS();});
+ if(z==='f'&&IOS){iosNote(1);return;}if(z==='pt'){togglePtips();return;}if(z==='+')zoomSmooth(1.4,VIEW/2,VH/2);else if(z==='-')zoomSmooth(1/1.4,VIEW/2,VH/2);else if(z==='0'){camGo(ZMIN,N/2-.5,N/2-.5);}else if(z==='c'){camFit();}else if(z==='f')toggleFS();});
 cv.addEventListener('contextmenu',e=>{e.preventDefault();if(!S||!S.list)return;if(S.aim&&S.aim!=='flag')return;const c=cell(e),t=S.occ[c.x+','+c.y];if(t)quickFlag(t);else if(S.aim==='flag'){S.aim=null;S.aimT=null;S.msg='';renderRelics();ui();}});
 // móvil: mantener pulsada una torre ~0,5 s = mover su bandera
 {let lp=null;cv.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||!S||!S.list||S.aim)return;const c=cell(e),t=S.occ[c.x+','+c.y];if(!t)return;const x=e.clientX,y=e.clientY;lp={x,y,tm:setTimeout(()=>{if(lp&&quickFlag(t)){LPF=performance.now();try{navigator.vibrate&&navigator.vibrate(25);}catch(er){}}lp=null;},500)};});
@@ -256,7 +256,7 @@ function act(e){
  else if(a==='stab'){STW.tab=b.dataset.v;CP.pageR=false;lbRender();}
  else if(a==='lbhp'){LB.hp=b.dataset.v;LB.note='';CP.pageR=false;lbRender();}
  else if(a==='lbgo'){const [ar,tb]=b.dataset.v.split(':');if(ar==='op'&&tb)OP.tab=tb;lbOpen(ar);}
- else if(a==='pfs'){toggleFS();setTimeout(renderPause,200);}
+ else if(a==='pfs'){if(IOS){iosNote(1);return;}toggleFS();setTimeout(renderPause,200);}
  else if(a==='pquit'){if(PMU.ask){closePause(false);saveClear();showMenu();}else{PMU.ask=1;renderPause();}}
  else if(a==='psave'){if(S.phase==='wave'&&!PMU.svask){PMU.svask=1;toast('💾 La partida se reanudará al principio de esta oleada (ronda '+Math.min(S.round,ROUNDS)+'). Pulsa otra vez para guardar y salir.');return;}PMU.svask=0;saveAndExit();}
  else if(a==='lbload'){LB.ask=0;continueRun();}

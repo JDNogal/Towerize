@@ -257,3 +257,9 @@ button.dim{border-color:var(--acc);opacity:.55}
 
 .cnf{display:inline-block;width:.95em;height:.95em;border-radius:50%;vertical-align:-.12em;background:radial-gradient(circle at 35% 30%,#fff6c8 0 12%,#f6cf45 35%,#d79b16 75%,#a8700c);box-shadow:inset 0 0 0 .08em #9a6a0e,0 0 0 .02em rgba(0,0,0,.25);font-style:normal}
 .dti{display:inline-block;vertical-align:-.15em;margin-right:3px;font-style:normal;line-height:1}
+html,body{overscroll-behavior:none}
+#iosfs{display:none;position:fixed;inset:0;z-index:120;background:rgba(10,8,6,.62);align-items:center;justify-content:center;padding:12px;box-sizing:border-box}#iosfs.on{display:flex}
+#iosfs .iosb{max-width:min(440px,94vw);max-height:calc(100dvh - 24px);overflow-y:auto;box-sizing:border-box;padding:14px 18px;border-radius:14px;border:1px solid var(--lea2,#5a3a20);background:linear-gradient(180deg,#f4e6c4,#e6d0a0);color:#3a2410;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+#iosfs .ioic{font-size:34px;line-height:1}#iosfs b{font:700 18px/1.2 Georgia,"Times New Roman",serif}#iosfs .iosb>span{font-size:13.5px;line-height:1.4}#iosfs .iosn{font-size:12px;opacity:.8}
+#iosfs ol{text-align:left;margin:2px 0;padding-left:22px;font-size:14px;line-height:1.5}#iosfs ol b{font:700 14px system-ui,sans-serif}#iosfs em{font-style:normal}
+#iosfs button{margin-top:6px;min-width:150px;padding:9px 18px;font:700 15px system-ui,sans-serif;border-radius:10px;border:1px solid #5a3a20;background:linear-gradient(180deg,#8a5a30,#5a3a20);color:#f4e6c4}

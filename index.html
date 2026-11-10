@@ -2,6 +2,7 @@
 <html lang="es"><head>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Towerize">
 <title>Towerize</title>
 <style>
 :root{--bg:#ece9e1;--fg:#1d1f26;--panel:#dedad0;--line:#bdb8a8;--btn:#fbfaf6;--acc:#a86400;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
@@ -263,6 +264,12 @@ button.dim{border-color:var(--acc);opacity:.55}
 
 .cnf{display:inline-block;width:.95em;height:.95em;border-radius:50%;vertical-align:-.12em;background:radial-gradient(circle at 35% 30%,#fff6c8 0 12%,#f6cf45 35%,#d79b16 75%,#a8700c);box-shadow:inset 0 0 0 .08em #9a6a0e,0 0 0 .02em rgba(0,0,0,.25);font-style:normal}
 .dti{display:inline-block;vertical-align:-.15em;margin-right:3px;font-style:normal;line-height:1}
+html,body{overscroll-behavior:none}
+#iosfs{display:none;position:fixed;inset:0;z-index:120;background:rgba(10,8,6,.62);align-items:center;justify-content:center;padding:12px;box-sizing:border-box}#iosfs.on{display:flex}
+#iosfs .iosb{max-width:min(440px,94vw);max-height:calc(100dvh - 24px);overflow-y:auto;box-sizing:border-box;padding:14px 18px;border-radius:14px;border:1px solid var(--lea2,#5a3a20);background:linear-gradient(180deg,#f4e6c4,#e6d0a0);color:#3a2410;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+#iosfs .ioic{font-size:34px;line-height:1}#iosfs b{font:700 18px/1.2 Georgia,"Times New Roman",serif}#iosfs .iosb>span{font-size:13.5px;line-height:1.4}#iosfs .iosn{font-size:12px;opacity:.8}
+#iosfs ol{text-align:left;margin:2px 0;padding-left:22px;font-size:14px;line-height:1.5}#iosfs ol b{font:700 14px system-ui,sans-serif}#iosfs em{font-style:normal}
+#iosfs button{margin-top:6px;min-width:150px;padding:9px 18px;font:700 15px system-ui,sans-serif;border-radius:10px;border:1px solid #5a3a20;background:linear-gradient(180deg,#8a5a30,#5a3a20);color:#f4e6c4}
 /* Móvil en horizontal: mapa a la izquierda (cuadrado a la altura de la pantalla) y columna de controles a la derecha */
 @media (orientation:landscape) and (pointer:coarse) and (max-height:820px){
  #game{flex-wrap:nowrap;padding:6px;align-items:stretch}
@@ -3561,7 +3568,7 @@ function enterFS(){if(!FSOK||isFS())return;try{const r=(FSEL.requestFullscreen||
  const lock=()=>{try{const o=screen.orientation;if(o&&o.lock)o.lock('landscape').catch(()=>{});}catch(e){}};if(r&&r.then)r.then(lock).catch(()=>{});else lock();}catch(e){}}
 function exitFS(){try{(document.exitFullscreen||document.webkitExitFullscreen).call(document);}catch(e){}}
 function toggleFS(){if(isFS())exitFS();else enterFS();}
-function fsMark(){const b=$('fsb');if(!b)return;b.style.display=FSOK?'':'none';b.classList.toggle('on',isFS());b.title=isFS()?'Salir de pantalla completa':'Pantalla completa';}
+function fsMark(){const b=$('fsb');if(!b)return;b.style.display=FSOK||(typeof IOS!=='undefined'&&IOS)?'':'none';b.classList.toggle('on',isFS());b.title=isFS()?'Salir de pantalla completa':'Pantalla completa';}
 document.addEventListener('fullscreenchange',fsMark);document.addEventListener('webkitfullscreenchange',fsMark);
 let RUNL=15;try{RUNL=Math.min(30,Math.max(15,+localStorage.getItem('rt-runl')||15));}catch(e){}
 const rMax=()=>UNLOCK_ALL||OPT.u_rd?30:RUNL;
@@ -3574,6 +3581,21 @@ function updSetup(){const n=MR,m=mapFor(n);if(!$('rnum'))return;$('rnum').textCo
  $('rinfo').innerHTML=`Mapa de ${m}×${m} piezas · ${chestsFor(n)} cofres<br>${n===15?'Jefe en la ronda 15':'Jefes en las rondas 15 y '+n}${n===30?'<br>La ronda 30 esconde algo peor que el jefe…':''}${rMax()<30?'<br>🔒 Gana una partida de '+rMax()+' rondas para desbloquear partidas de hasta '+(rMax()+5)+'.':''}`;}
 function setRounds(n){MR=Math.min(rMax(),Math.max(15,n));try{localStorage.setItem('rt-rounds',MR);}catch(e){}updSetup();}
 
+// ---- iPhone: Safari no deja poner pantalla completa. Evitamos el «tirar para recargar» y explicamos cómo jugar sin barras ----
+const IOS=/iPhone|iPod/.test(navigator.userAgent||'')&&!(window.navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches));
+// fuera de las zonas que tienen scroll, deslizar no mueve la página (así no recarga ni rebota)
+{const canScroll=el=>{for(let n=el;n&&n!==document.body&&n.nodeType===1;n=n.parentElement){const st=getComputedStyle(n),oy=st.overflowY,ox=st.overflowX;
+  if((oy==='auto'||oy==='scroll')&&n.scrollHeight>n.clientHeight+1)return true;if((ox==='auto'||ox==='scroll')&&n.scrollWidth>n.clientWidth+1)return true;}return false;};
+ if(/iPhone|iPod|iPad/.test(navigator.userAgent||'')||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1))
+  document.addEventListener('touchmove',e=>{if(e.touches.length>1)return;if(!canScroll(e.target)&&e.cancelable)e.preventDefault();},{passive:false});}
+function iosNote(force){if(!IOS)return;if(!force){try{if(localStorage.getItem('rt-iosfs'))return;}catch(e){}}
+ let el=document.getElementById('iosfs');if(!el){el=document.createElement('div');el.id='iosfs';document.body.appendChild(el);}
+ el.innerHTML='<div class="iosb"><div class="ioic">📱</div><b>Pantalla completa en iPhone</b><span>En iPhone, Safari no deja que el juego se ponga en pantalla completa. Para jugar sin las barras del navegador:</span>'+
+  '<ol><li>Pulsa <b>Compartir</b> <em>⬆︎</em> en la barra de Safari.</li><li>Elige <b>Añadir a pantalla de inicio</b>.</li><li>Abre Towerize desde ese icono.</li></ol>'+
+  '<span class="iosn">Si en algún momento se te sale el juego, vuelve a abrirlo desde el icono. Puedes volver a ver esto en el menú de pausa.</span><button>Entendido</button></div>';
+ el.classList.add('on');el.querySelector('button').onclick=()=>{el.classList.remove('on');try{localStorage.setItem('rt-iosfs','1');}catch(e){}};}
+// la primera vez, en cuanto termina la intro
+if(IOS&&!navigator.webdriver){const iv=setInterval(()=>{if(typeof INTRO!=='undefined'&&INTRO.on)return;clearInterval(iv);setTimeout(()=>iosNote(0),400);},300);}
 // ==================== TUTORIAL COMPLETO ====================
 // Partida guionizada de 10 rondas: el guion controla lo que se ofrece (piezas, torres, oleadas) y el jugador siempre elige.
 let TUTON=false,TUTR=0,TUTHS={};
@@ -6060,7 +6082,7 @@ $('rotx').addEventListener('click',()=>{document.body.classList.add('vert');setT
 $('rotfs').addEventListener('click',()=>{enterFS();});if(!FSOK)$('rotfs').style.display='none';
 $('rot').classList.add('on');try{if(sessionStorage.getItem('rt-rot'))document.body.classList.add('vert');}catch(e){}
 $('zm').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const z=b.dataset.z;
- if(z==='pt'){togglePtips();return;}if(z==='+')zoomSmooth(1.4,VIEW/2,VH/2);else if(z==='-')zoomSmooth(1/1.4,VIEW/2,VH/2);else if(z==='0'){camGo(ZMIN,N/2-.5,N/2-.5);}else if(z==='c'){camFit();}else if(z==='f')toggleFS();});
+ if(z==='f'&&IOS){iosNote(1);return;}if(z==='pt'){togglePtips();return;}if(z==='+')zoomSmooth(1.4,VIEW/2,VH/2);else if(z==='-')zoomSmooth(1/1.4,VIEW/2,VH/2);else if(z==='0'){camGo(ZMIN,N/2-.5,N/2-.5);}else if(z==='c'){camFit();}else if(z==='f')toggleFS();});
 cv.addEventListener('contextmenu',e=>{e.preventDefault();if(!S||!S.list)return;if(S.aim&&S.aim!=='flag')return;const c=cell(e),t=S.occ[c.x+','+c.y];if(t)quickFlag(t);else if(S.aim==='flag'){S.aim=null;S.aimT=null;S.msg='';renderRelics();ui();}});
 // móvil: mantener pulsada una torre ~0,5 s = mover su bandera
 {let lp=null;cv.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||!S||!S.list||S.aim)return;const c=cell(e),t=S.occ[c.x+','+c.y];if(!t)return;const x=e.clientX,y=e.clientY;lp={x,y,tm:setTimeout(()=>{if(lp&&quickFlag(t)){LPF=performance.now();try{navigator.vibrate&&navigator.vibrate(25);}catch(er){}}lp=null;},500)};});
@@ -6166,7 +6188,7 @@ function act(e){
  else if(a==='stab'){STW.tab=b.dataset.v;CP.pageR=false;lbRender();}
  else if(a==='lbhp'){LB.hp=b.dataset.v;LB.note='';CP.pageR=false;lbRender();}
  else if(a==='lbgo'){const [ar,tb]=b.dataset.v.split(':');if(ar==='op'&&tb)OP.tab=tb;lbOpen(ar);}
- else if(a==='pfs'){toggleFS();setTimeout(renderPause,200);}
+ else if(a==='pfs'){if(IOS){iosNote(1);return;}toggleFS();setTimeout(renderPause,200);}
  else if(a==='pquit'){if(PMU.ask){closePause(false);saveClear();showMenu();}else{PMU.ask=1;renderPause();}}
  else if(a==='psave'){if(S.phase==='wave'&&!PMU.svask){PMU.svask=1;toast('💾 La partida se reanudará al principio de esta oleada (ronda '+Math.min(S.round,ROUNDS)+'). Pulsa otra vez para guardar y salir.');return;}PMU.svask=0;saveAndExit();}
  else if(a==='lbload'){LB.ask=0;continueRun();}
@@ -6362,7 +6384,7 @@ function lbCoverHTML(){
  const sv=!inG&&SAV.meta;
  const main=inG?`<button class="lbmain" data-a="lbcont">▶ Continuar</button>`:sv?`<button class="lbmain" data-a="lbload">▶ Continuar partida</button><div class="lbsv">${sv.tut?'🎓 Tutorial':'⏳ Ronda '+sv.round+'/'+sv.rounds}${sv.heroN?' · '+sv.heroIc+' '+sv.heroN:''} · ${svWhen(sv.t)}</div><button class="lbnew${LB.ask?' warn':''}" data-a="newgame">${LB.ask?'¿Seguro? Se perderá la partida guardada':'Nueva partida'}</button>`:`<button class="lbmain" data-a="newgame">▶ Nueva partida</button>`;
  const areas=lbAreas();
- const tiles=`<div class="lbtiles">${areas.map(([k,l,i])=>`<button data-a="lbarea" data-v="${k}" class="${k==='cp'&&!compOk()?'dim':''}${lbHasNew(k)?' new':''}"><em>${i}</em>${l}</button>`).join('')}${FSOK&&B?`<button data-a="pfs"><em>⛶</em>${isFS()?'Salir de pantalla completa':'Pantalla completa'}</button>`:''}</div>`;
+ const tiles=`<div class="lbtiles">${areas.map(([k,l,i])=>`<button data-a="lbarea" data-v="${k}" class="${k==='cp'&&!compOk()?'dim':''}${lbHasNew(k)?' new':''}"><em>${i}</em>${l}</button>`).join('')}${(FSOK||IOS)&&B?`<button data-a="pfs"><em>⛶</em>${IOS?'Pantalla completa en iPhone':isFS()?'Salir de pantalla completa':'Pantalla completa'}</button>`:''}</div>`;
  const rt=inG&&S.phase==='wave'&&S.snap&&S.rc>0;
  const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}${svOk()?`<button data-a="psave" title="${S.phase==='wave'?'Se guardará el principio de esta oleada':'Guarda la partida tal como está'}">💾 Guardar y salir</button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Se perderá la partida':'🏳 Abandonar partida'}</button></div>`:`<div class="lbbot"><button data-a="pexit" class="pquit">${LB.exit?'¿Seguro? Pulsa otra vez para salir':'🚪 Salir del juego'}</button></div>`;
  return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:'🏰'}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
