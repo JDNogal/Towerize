@@ -96,3 +96,7 @@ body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:var(--wz,
 #evpend .evpt{display:flex;flex-direction:column;line-height:1.2}#evpend .evpt small{font-weight:500;font-size:10.5px;opacity:.8}
 #evpend .evp.bad .evpt small{color:#ff9a8a;opacity:1}
 body.mfs #evpend{width:150px;font-size:10.5px;padding:4px 7px}body.pcpick #evpend,body.lbopen #evpend,body:has(#relic.open) #evpend{display:none!important}
+/* v305: descargar el historial */
+.hsexp{display:flex;align-items:center;gap:10px;margin:2px 0 10px}
+.hsexp button{all:unset;cursor:pointer;white-space:nowrap;flex:none;padding:6px 12px;border-radius:8px;border:1.5px solid var(--pline2,#c8a060);font-weight:700;font-size:13px;color:var(--ink)}
+.hsexp button:hover{border-color:var(--acc)}.hsexp small{font-size:11.5px;opacity:.75;color:var(--ink)}

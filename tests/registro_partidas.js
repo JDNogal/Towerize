@@ -13,6 +13,8 @@ const n=await p.evaluate(()=>hsAll().then(L=>L.map(r=>r.res+':'+r.hero+':'+r.tw.
 ck(/w:sylvana/.test(n)&&/l:sylvana/.test(n)&&/a:reinhart/.test(n),'faltan partidas en el registro: '+n);ck(/w:sylvana:2:norm/.test(n),'no guarda torres o el enemigo que más daño hizo: '+n);
 await p.evaluate(()=>{NEWU=[];STO.intro=1;showMenu();try{document.querySelectorAll('#toast,.story,#story').forEach(e=>e.remove());}catch(e){}if(LB.open)lbClose(false,true);HIST.list=null;lbOpen('pt');});await p.waitForTimeout(800);
 ck(await p.evaluate(()=>document.querySelectorAll('#comp .hsrun').length>=3),'el libro no muestra las partidas');
+ck(await p.evaluate(()=>!!document.querySelector('#comp [data-a="hsexp"]')),'falta el botón de descargar el historial');
+{const ex=await p.evaluate(()=>hsExport());ck(ex.f==='towerize-historial'&&ex.runs.length>=3&&ex.runs.every(r=>r.tw&&r.hl!==undefined),'el historial descargado no trae las partidas');require('fs').writeFileSync(OUT+'/historial.json',JSON.stringify(ex));}
 await p.evaluate(()=>{const b=document.querySelector('#comp .hsrun');if(b)b.click();});await p.waitForTimeout(300);
 ck(await p.evaluate(()=>!!document.querySelector('#comp .hsmap')&&/Victoria|Derrota|Abandonada|En curso/.test(document.querySelector('#comp .hshd').textContent)),'no se ve la ficha de la partida');
 ck(await p.evaluate(()=>document.querySelectorAll('#comp .hsrun .hsera').length>=3&&!!document.querySelector('#comp .hsrun .hsera.e2')&&(()=>{const L=hsFiltered(),i=L.findIndex(r=>r.era===2);HIST.sel=i;lbRender();const f=document.querySelector('#comp .hsmap rect').getAttribute('fill');HIST.sel=0;lbRender();return f==='#171a2c';})()),'falta el icono de la era o el color del mapa por era');

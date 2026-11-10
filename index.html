@@ -1524,6 +1524,10 @@ body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:var(--wz,
 #evpend .evpt{display:flex;flex-direction:column;line-height:1.2}#evpend .evpt small{font-weight:500;font-size:10.5px;opacity:.8}
 #evpend .evp.bad .evpt small{color:#ff9a8a;opacity:1}
 body.mfs #evpend{width:150px;font-size:10.5px;padding:4px 7px}body.pcpick #evpend,body.lbopen #evpend,body:has(#relic.open) #evpend{display:none!important}
+/* v305: descargar el historial */
+.hsexp{display:flex;align-items:center;gap:10px;margin:2px 0 10px}
+.hsexp button{all:unset;cursor:pointer;white-space:nowrap;flex:none;padding:6px 12px;border-radius:8px;border:1.5px solid var(--pline2,#c8a060);font-weight:700;font-size:13px;color:var(--ink)}
+.hsexp button:hover{border-color:var(--acc)}.hsexp small{font-size:11.5px;opacity:.75;color:var(--ink)}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -7382,6 +7386,16 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
  else if(a==='hsbigx'){const el=$('hsbig');if(el)el.classList.remove('on');}
  else return;e.stopPropagation();},true);
 addEventListener('keydown',e=>{const el=$('hsbig');if(e.key==='Escape'&&el&&el.classList.contains('on')){el.classList.remove('on');e.stopImmediatePropagation();e.preventDefault();}},true);
+// ==================== v305 · Descargar el historial de partidas ====================
+// Un botón en «Partidas» descarga todas las partidas registradas en un .json, para pasárselo al equipo y estudiar el equilibrio
+// (en qué ronda se pierde, qué torres hacen el daño, qué enemigos quitan más vida…). tools/analizar_historial.js lo resume.
+function hsExport(){return hsAll().then(L=>{const o={f:'towerize-historial',v:1,ver:($('ver')&&$('ver').textContent)||'',t:Date.now(),n:L.length,runs:L.sort((a,b)=>a.t0-b.t0)};
+ const txt=JSON.stringify(o),d=new Date(),p=n=>String(n).padStart(2,'0'),name=`towerize-historial-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.json`;
+ try{const b=new Blob([txt],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove();},500);
+  toast('⬇️ Historial descargado: <b>'+L.length+'</b> partida'+(L.length===1?'':'s')+'<br><small>'+name+'</small>');}catch(e){toast('No se ha podido descargar el historial.');}
+ return o;});}
+{const _hp=histParts;histParts=function(){const P=_hp.apply(this,arguments);try{if((HIST.list||[]).length)P.left=P.left.replace(/(<div class="hsflt">[\s\S]*?<\/div>)/,'$1'+'<div class="hsexp"><button data-a="hsexp">⬇️ Descargar historial</button><small>Un archivo con todas tus partidas, para enviárnoslo y ayudarnos a equilibrar el juego.</small></div>');}catch(e){}return P;};}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="hsexp"]');if(!b)return;e.stopPropagation();hsExport();},true);
 // ==================== ERAS · la segunda era: Distópica (escenario: Ruinas de Neón) ====================
 // ERA = era elegida para la próxima partida; S.era = era de la partida en curso. La era 2 se abre al reparar a ÉTER (3 victorias).
 const ERADEF={1:{n:'Fantástica',ic:'🐉',col:'#4a8a4a'},2:{n:'Distópica',ic:'🌆',col:'#3fe8ff',esc:'Ruinas de Neón'}};
