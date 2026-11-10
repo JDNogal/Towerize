@@ -60,3 +60,8 @@ body.mfs #relic .tof .tun{margin:0 0 2px!important;font-size:12px!important}body
 body.mfs #relic .tof>button{grid-row:4;align-self:end;padding:5px 8px!important;margin-top:4px!important;font-size:13px!important;min-height:0!important}
 body.mfs #relic .pskip{display:flex!important;align-items:center;justify-content:center;gap:10px;margin:6px 0 0!important}body.mfs #relic .pskip button{padding:4px 12px!important;font-size:12.5px!important;margin:0!important}
 body.mfs #relic .pskip small{font-size:10px!important;max-width:46%;text-align:left;margin:0!important;line-height:1.25}
+/* cabecera del activo: título, etiqueta de estado y recarga en la misma línea */
+.rbx .rbt{line-height:1;min-height:22px}.rbx .rbt small{display:inline-flex;align-items:center;line-height:1;align-self:center;height:20px;box-sizing:border-box}
+.rbt .rstag{padding:0 8px!important}
+/* flecha de «hay más abajo» en las ventanas: a la derecha, para no tapar los botones del centro */
+#relic.smore::after,#relic .smore::after{text-align:right;padding-right:16px;box-sizing:border-box}
