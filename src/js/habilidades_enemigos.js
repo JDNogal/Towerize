@@ -62,7 +62,7 @@ function jamTick(e,dt){if(e.chan>0){e.chan-=dt;for(const t of S.list){if(TW[t.ty
 {const _m=move;move=function(e,dt){if(e.chan>0)return false;return _m(e,dt);};}
 // ---- tick general ----
 function eSkillsTick(dt){const SL=liveUnits().filter(s=>!s.charm);
- for(const t of S.list)if(t.jam>0)t.jam-=dt;
+ for(const t of S.list)if(t.jam>0){t.jam-=dt;/* al acabar la interferencia, la recarga vuelve a la normal (las torres especiales la calculaban con la cadencia casi a cero y se quedaban sin disparar toda la partida) */if(t.jam<=0){t.jam=0;const r=stats(t).rate||1;if(t.cd>1/r)t.cd=1/r;if(t.sw)for(const w of t.sw)if(w.tk>1/r)w.tk=1/r;}}
  for(const e of S.enemies){if(e.hp<=0||e.fx.freeze||e.fx.stun||e.fx.poly)continue;const E=ET[e.t];
   if(E.sk)skTick(e,E,dt,SL);if(E.charm)charmTick(e,dt,SL);if(E.jam)jamTick(e,dt);}
  charmedTick(dt);

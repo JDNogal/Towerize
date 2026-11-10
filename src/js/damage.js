@@ -4,8 +4,10 @@ function slowE(e,m,t){if(e.fx.freeze)return;if(isBoss(e))m=1-(1-m)*BOSSRES;const
 function freezeE(e,t){if(e.fx.freeze||e.fx.fimm)return false;e.fx.freeze={t:(isBoss(e)?t*BOSSRES:t)*(e.fx.wet?WETF:1)};delete e.fx.slow;return true;}
 function addBleed(e,src,n){e.bl=e.bl||[];const c=stkN(e,n||1);for(let i=0;i<c;i++)e.bl.push({t:BLEEDT,src});}
 // resistencia al control: cada empujón o aturdimiento seguido sobre el mismo enemigo rinde menos (−25% por golpe, hasta −75%) y se recupera en unos segundos
-const CCSTEP=.25,CCMAX=.75,CCREC=.3;function ccRes(e,k){const now=S.wt||0,r=Math.max(0,(e[k]||0)-((now-(e[k+'t']||now))*CCREC));const m=1-r;e[k]=Math.min(CCMAX,r+CCSTEP);e[k+'t']=now;return m;}
-function knock(e,d){e.fsp=0;if(isBoss(e))d*=BOSSRES;d*=ccRes(e,'kbR');const tr=e.trail;if(!tr)return;
+const CCSTEP=.25,CCMAX=.75,CCREC=.3;// jefes: cada empujón seguido empuja menos y, tras unos pocos, deja de empujar hasta que se recupera (así no se les puede tener parados para siempre)
+function ccResB(e){const now=S.wt||0,r=Math.max(0,(e.kbB||0)-((now-(e.kbBt!=null?e.kbBt:now))*.08)),m=1-r;e.kbB=Math.min(1,r+.35);e.kbBt=now;return Math.max(0,m);}
+function ccRes(e,k){const now=S.wt||0,r=Math.max(0,(e[k]||0)-((now-(e[k+'t']||now))*CCREC));const m=1-r;e[k]=Math.min(CCMAX,r+CCSTEP);e[k+'t']=now;return m;}
+function knock(e,d){if(e.anch||(e.t==='argos'&&e.sh))return;e.fsp=0;if(isBoss(e)){d*=BOSSRES*ccResB(e);}else d*=ccRes(e,'kbR');const tr=e.trail;if(!tr)return;
  while(d>1e-6&&tr.length){const p=tr[tr.length-1],dx=p[0]-e.x,dy=p[1]-e.y,dd=Math.hypot(dx,dy);
   if(dd>d){e.x+=dx/dd*d;e.y+=dy/dd*d;return;}
   e.x=p[0];e.y=p[1];d-=dd;e.tx=p[0];e.ty=p[1];tr.pop();e.pv=tr.length?tr[tr.length-1]:null;}}
