@@ -89,6 +89,7 @@ function afield(c){
 function placePiece(bx,by){
  const solF=S.tut&&S.round===1&&!S.tut.solf;
  const o=S.offers[S.pi],p=o.p,pc=payOn()?pcost(o):0;if(pc){S.gold-=pc;if(S.st)S.st.bfpay=(S.st.bfpay||0)+pc;}stamp(bx,by,p,o.b);
+ if(joinsAt(bx,by)>=2&&!S.tut)(S.joins=S.joins||[]).push(bx+','+by);
  const d=field();let any=null,ad=-1;
  for(let y=0;y<P;y++)for(let x=0;x<P;x++){if(p[y][x]!=='.')continue;const fx=(bx*P+x)*K+1,fy=(by*P+y)*K+1,dd=d[fy][fx];if(dd<1e9&&dd>ad){ad=dd;any={x:fx,y:fy,d:dd,dir:[0,0]};}}
  // prioridad: extremos de la pieza nueva (más lejanos primero) y después el resto, de más lejos a más cerca de la base
@@ -123,6 +124,10 @@ function skipPlace(){
 // (no está en ninguna ruta más corta de una salida al núcleo), se abre un portal en medio y sus enemigos salen
 // mitad hacia un lado y mitad hacia el otro (e.dest: casilla de unión con el camino usado)
 const DEADMIN=7;
+// piezas que han unido dos o más extremos del camino al colocarlas: ahí puede abrirse un portal en medio
+const inJoin=c=>!!(S.joins&&S.joins.includes(Math.floor(c[0]/P)+','+Math.floor(c[1]/P)));
+function joinsAt(bx,by){let n=0;const x0=bx*P,y0=by*P,isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2;
+ for(let i=0;i<P;i++){if(isP(x0+i,y0)&&isP(x0+i,y0-1))n++;if(isP(x0+i,y0+P-1)&&isP(x0+i,y0+P))n++;if(isP(x0,y0+i)&&isP(x0-1,y0+i))n++;if(isP(x0+P-1,y0+i)&&isP(x0+P,y0+i))n++;}return n;}
 function deadMids(ends){const cf=cfield(),isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2&&cf[y][x]<1e9,used=new Set(),q=[];
  const c0=[Math.floor(S.core.x/K),Math.floor(S.core.y/K)];used.add(c0[0]+','+c0[1]);
  for(const e of ends){const cx=Math.floor(e.x/K),cy=Math.floor(e.y/K);if(isP(cx,cy)&&!used.has(cx+','+cy)){used.add(cx+','+cy);q.push([cx,cy]);}}
@@ -133,10 +138,11 @@ function deadMids(ends){const cf=cfield(),isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2&&
   for(let i=0;i<comp.length;i++){const[cx,cy]=comp[i];for(const[a,b]of D){const nx=cx+a,ny=cy+b,nk=nx+','+ny;if(!isP(nx,ny))continue;
    if(used.has(nk)){if(!J.some(j=>j[0]===nx&&j[1]===ny))J.push([nx,ny]);}else if(!seen.has(nk)){seen.add(nk);comp.push([nx,ny]);}}}
   if(comp.length<DEADMIN||!J.length)continue;
+  /* solo cuentan los tramos muertos que aparecen al unir dos extremos con una pieza (no los bucles que ya trae una pieza) */if(!comp.concat(J).some(inJoin))continue;
   // casilla del medio: la que queda más lejos de las uniones (por dentro del tramo)
   const dist=new Map(),bq=[];for(const[cx,cy]of comp)for(const[jx,jy]of J)if(Math.abs(cx-jx)+Math.abs(cy-jy)===1&&!dist.has(cx+','+cy)){dist.set(cx+','+cy,0);bq.push([cx,cy]);}
   for(let i=0;i<bq.length;i++){const[cx,cy]=bq[i],d0=dist.get(cx+','+cy);for(const[a,b]of D){const nk=(cx+a)+','+(cy+b);if(seen.has(nk)&&!used.has(nk)&&!dist.has(nk)&&comp.some(c=>c[0]===cx+a&&c[1]===cy+b)){dist.set(nk,d0+1);bq.push([cx+a,cy+b]);}}}
-  let m=comp[0],md=-1;for(const c of comp){const v=dist.get(c[0]+','+c[1])||0;if(v>md){md=v;m=c;}}
+  let m=comp[0],md=-1;const jc=comp.filter(inJoin),cand=jc.length?jc:comp;for(const c of cand){const v=dist.get(c[0]+','+c[1])||0;if(v>md){md=v;m=c;}}
   // las dos uniones más alejadas entre sí (si solo hay una, los enemigos salen todos hacia ella)
   const sp=J.length>1?J.slice(0,2):[J[0]];
   out.push({x:m[0]*K+1,y:m[1]*K+1,dir:[0,0],d:cf[m[1]][m[0]],nw:false,mid:1,split:sp.map(j=>[j[0]*K+1,j[1]*K+1])});}
