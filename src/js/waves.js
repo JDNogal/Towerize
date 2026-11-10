@@ -62,8 +62,13 @@ function startWave(){
   // los especiales (élites, lobos…) salen entre escuadras, nunca en mitad de una formación
   for(const t of['mini','elite','greyw','bigw','wanted','momdrg'])for(let i=0;i<(p.plan[t]||0);i++){const cut=[];for(let j=0;j<=p.q.length;j++)if(j===p.q.length||p.q[j]==='|'||!p.qf[j]||(j>0&&p.qf[j-1]&&p.qf[j-1].sid!==p.qf[j].sid))cut.push(j);
    const lo=cut.filter(j=>j>=p.q.length*.5),at=lo.length?lo[Math.floor(Math.random()*lo.length)]:p.q.length;p.q.splice(at,0,t);p.qf.splice(at,0,null);}
-  const add=t=>{p.q.push(t);p.qf.push(null);};
-  if(p.plan.boss)add('boss');for(const bk of(typeof SBALL!=='undefined'?SBALL:[]))if(p.plan[bk])add(bk);if(p.plan.colossus)add('colossus');if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');if(p.plan.bob)add('bob');p.t=0;}
+  // v305: el jefe (con su escolta) ya no sale el último, cuando el resto ha muerto: entra entre escuadras hacia la mitad de la oleada
+  const blk=[];const add=t=>blk.push(t);
+  if(p.plan.boss)add('boss');for(const bk of(typeof SBALL!=='undefined'?SBALL:[]))if(p.plan[bk])add(bk);if(p.plan.colossus)add('colossus');if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');if(p.plan.bob)add('bob');
+  if(blk.length){const cut=[];for(let j=0;j<=p.q.length;j++)if(j===p.q.length||p.q[j]==='|'||!p.qf[j]||(j>0&&p.qf[j-1]&&p.qf[j-1].sid!==p.qf[j].sid))cut.push(j);
+   const L=p.q.length,mid=cut.filter(j=>j>=L*.3&&j<=L*.6),at=L<6?L:mid.length?mid[Math.floor(Math.random()*mid.length)]:(cut.filter(j=>j>=L*.3)[0]??L);
+   p.q.splice(at,0,...blk);p.qf.splice(at,0,...blk.map(()=>null));}
+  p.t=0;}
  if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.forks={};S.fbag={};S.fsq={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
  // duración prevista: lo que tarda en salir toda la cola + lo que tarda el enemigo más lento en recorrer el camino más largo
  {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:(t==='boss'||t==='colossus')?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
