@@ -144,12 +144,12 @@ function nrAdd(def,o){def.cd=RCDS[def.cd]||def.cd*40;RELICS.push(def);RELIC[def.
  if(!Dn.any&&S.phase!=='wave'){S.msg=R.n+': este activo solo se puede usar durante una oleada.';ui();return;}
  if(Dn.any&&!(S.phase==='build'||S.phase==='wave'||S.phase==='place')){ui();return;}
  S.mimFor=mim?id:null;
- if(Dn.aim){try{closePrim();}catch(e){}S.aim=id;S.msg=Dn.aim+(typeof CANC==='function'?CANC():'');renderRelics();ui();return;}
+ if(Dn.aim){try{closePrim();}catch(e){}if(Dn.start)Dn.start();S.aim=id;S.msg=Dn.aim+(typeof CANC==='function'?CANC():'');renderRelics();ui();return;}
  let ok=false;try{ok=Dn.use(null);}catch(e){ok=false;}if(ok===false){S.mimFor=null;renderRelics();ui();return;}
  setCD(id);if(Dn.dur)st.t=Dn.dur;try{sfx('relic');}catch(e){}renderRelics();ui();};}
 {const _ru=relUsable;relUsable=function(id){const Dn=NR[id];if(!Dn||!Dn.any)return _ru.apply(this,arguments);const st=S.rs&&S.rs[id];return !!(st&&!(st.cd>0)&&!(st.t>0)&&!RL.open&&(S.phase==='build'||S.phase==='wave'||S.phase==='place'));};}
 if(typeof document!=='undefined'){const cw=document.getElementById('cw');if(cw)cw.addEventListener('click',e=>{if(typeof S==='undefined'||!S||!NR[S.aim]||e.target!==cv)return;e.stopPropagation();if(DRAGGED)return;const id=S.aim,Dn=NR[id],c=cell(e);if(!inb(c.x,c.y))return;
-  let ok=false;try{ok=Dn.use(c);}catch(x){ok=false;}if(ok===false){ui();return;}setCD(id);if(Dn.dur)S.rs[id].t=Dn.dur;S.aim=null;S.msg='';try{sfx('relic');}catch(x){}renderRelics();ui();},true);}
+  let ok=false;try{ok=Dn.use(c);}catch(x){ok=false;}if(ok===false){ui();return;}setCD(id);if(Dn.dur)S.rs[id].t=Dn.dur;S.aim=null;if(ok!=='msg')S.msg='';try{sfx('relic');}catch(x){}renderRelics();ui();},true);}
 // ---- Sello psiónico (Korr) ----
 nrAdd({id:'seal',n:'Sello psiónico',ic:'🧿',col:'#3a3a7a',ini:1,cd:2,
  pas:()=>'Los enemigos que golpean a tus unidades o a tu héroe reciben el <span class="cmg">10% del golpe</span> como <span class="cmg">daño mágico</span>.',

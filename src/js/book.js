@@ -15,8 +15,8 @@ function bkItems(t){const L=[];
  else if(t==='hr'){for(const id of Object.keys(HEROES).filter(h=>UNLOCK_ALL||heroVis(h)))L.push({id,por:1,col:HEROES[id].col,n:HEROES[id].n,ok:UNLOCK_ALL||!HEROES[id].lockTxt,lk:!UNLOCK_ALL&&!!HEROES[id].lockTxt});}
  else if(t==='pc'){PIECES.forEach((o,i)=>L.push({id:String(i),pc:i,n:o.n,ok:seen('pc',o.n)}));}
  else if(t==='bf'){for(const k of BK)L.push({id:k,bf:k,n:bname?bname(k):BF[k].n,ok:seen('bf',k)});}
- else if(t==='rl'){L.push({sec:'Reliquias normales'});for(const r of RELICS.filter(r=>!r.evr))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});
-  L.push({sec:'Reliquias de evento'});for(const r of RELICS.filter(r=>r.evr))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});}
+ else if(t==='rl'){L.push({sec:'Reliquias normales'});for(const r of RELICS.filter(r=>!r.evr&&relSeeEra(r)))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});
+  L.push({sec:'Reliquias de evento'});for(const r of RELICS.filter(r=>r.evr&&relSeeEra(r)))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});}
  else if(t==='en'){const fl=CFILTERS.en,act=fl.filter(f=>CP.flt[f.key]),ok=k=>act.every(f=>seen('en',k)&&f.test(k,CP.flt[f.key]));
   const nm=Object.keys(ET).filter(k=>!ET[k].evn&&!ET[k].gen&&ok(k)&&(typeof enEraOk!=='function'||enEraOk(k))),ev=Object.keys(ET).filter(k=>ET[k].evn&&ok(k));
   const fams=ks=>{const out=EFAM.map(([n,l])=>[n,l.filter(k=>ks.includes(k))]).filter(x=>x[1].length),used=new Set(EFAM.flatMap(x=>x[1])),rest=ks.filter(k=>!used.has(k));if(rest.length)out.push(['Otros',rest]);return out;};

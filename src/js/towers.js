@@ -131,7 +131,7 @@ function unitWalk(dt){
     if(dd>r){tx=e.x-dx/dd*r;ty=e.y-dy/dd*r;}else{tx=s.x;ty=s.y;}}
    else{const q=slotOf(t,s.i);tx=q.x;ty=q.y;}
    const dx=tx-s.x,dy=ty-s.y,dd=Math.hypot(dx,dy);
-   if(dd>.02){/* fuera de combate = no está atacando ni le están atacando (no basta con que haya oleada o un objetivo lejos) */const ooc=s.H&&(S.phase!=='wave'||(!s.fight&&S.wt-(s.lh??-99)>=2&&S.wt-(s.la??-99)>=1.5));const st=Math.min(dd,U.spd*(t.uspdx||tinfo(t).uspd||1)*(ooc?HOOC:1)*dt);s.x+=dx/dd*st;s.y+=dy/dd*st;}
+   if(dd>.02){/* fuera de combate = no está atacando ni le están atacando (no basta con que haya oleada o un objetivo lejos) */const ooc=s.H&&(S.phase!=='wave'||(!s.fight&&S.wt-(s.lh??-99)>=2&&S.wt-(s.la??-99)>=1.5));const st=Math.min(dd,U.spd*(t.uspdx||tinfo(t).uspd||1)*(typeof uSpdM==='function'?uSpdM(t):1)*(ooc?HOOC:1)*dt);s.x+=dx/dd*st;s.y+=dy/dd*st;}
    if(s.lock&&Math.hypot(tx-s.x,ty-s.y)<=.15)s.lock=false;}}
 }
 // ---- Monasterio: curación al grupo, trago de calabaza y embriaguez ----

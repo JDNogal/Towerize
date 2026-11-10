@@ -52,6 +52,7 @@ const T=[
  ['jefes.js','Jefes de historia: los tres de cada era y su orden'],
  ['vales_boton.js','Vales y tickets: el botón de mejorar los ofrece cuando no llega el oro'],
  ['heroes_e2.js','Héroes de la era 2: Korr, Ferro y Kai con sus habilidades, reliquias y charcos en franja'],
+ ['reliquias_e2.js','Reliquias de la era 2: cuatro de cofre y cinco de evento'],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);

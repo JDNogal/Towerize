@@ -27,7 +27,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  // definitiva
  H.lvl=10;heroSync();H.s.hp=H.s.max;clr();H.bcd=0;H.ucd=0;a=mk(3,5000);const d0=stats(H.pt).dmg;startHab('u');out.kForm=H.form>0&&H.big===1&&!!a.fx.fear&&stats(H.pt).dmg>d0*1.4;
  const h2=H.s.hp;hitUnit(H.s,50,a);out.kFormRed=Math.abs((h2-H.s.hp)-30)<.01;
- H.bcd=0;delete a.fx.fear;a.x=a.tx=h2Route(Math.round(H.s.x),Math.round(H.s.y),2)[2].x;a.y=a.ty=h2Route(Math.round(H.s.x),Math.round(H.s.y),2)[2].y;const ah=a.hp;startHab('b');out.kCharge=!!H.chg&&a.hp<ah&&H.bcd===10;
+ H.bcd=0;delete a.fx.fear;{const r2=h2Route(Math.round(H.s.x),Math.round(H.s.y),2),c2=r2[r2.length-1];a.x=a.tx=c2.x;a.y=a.ty=c2.y;}const ah=a.hp;startHab('b');out.kCharge=!!H.chg&&a.hp<ah&&H.bcd===10;
  run(26);out.kFormEnd=!(H.form>0)&&!H.big;
  // ---------- Ferro ----------
  H=game('ferro');out.fRelic=S.relics[0]==='cell';H.lvl=1;
@@ -58,7 +58,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  a=mk(3,300);b2=mk(4,9000);useRelic('board');out.bContract=b2.ctr>0&&b2.mk&&b2.mk.t>=19&&S.rs.board.cd>0&&!a.ctr;
  g0=S.gold;hurt(b2,1e6,null,'elem');run(.1);const base=killGoldF(b2.t);out.bTriple=S.gold-g0>=base*2;
  // Sello psiónico
- H=game('korr');a=mk(8,1000);const ax=a.x,ay=a.y,rr=h2Route(Math.round(H.s.x),Math.round(H.s.y),5),ctr=rr[Math.min(rr.length-1,4)];useRelic('seal');out.sAim=S.aim==='seal';NR.seal.use(ctr);out.sPull=(a.x!==ax||a.y!==ay)&&!!a.fx.slow;S.aim=null;
+ H=game('korr');a=mk(8,1000);const ax=a.x,ay=a.y,rr=h2Route(Math.round(H.s.x),Math.round(H.s.y),5),ctr=rr[Math.min(rr.length-1,4)];useRelic('seal');out.sAim=S.aim==='seal';NR.seal.use(ctr);out.sPull=!!a.fx.slow&&Math.hypot(a.x-ctr.x,a.y-ctr.y)<=Math.hypot(ax-ctr.x,ay-ctr.y);S.aim=null;
  const e5=mk(1,1000);S.rs.seal.cd=0;const u=unitTowers().map(t=>t.sd).flat().find(s=>s.hp>0);hitUnit(u,20,e5);out.sReflect=e5.hp<1000;
  // logro de Kai
  OPT.u_hr=false;delete ACHS.bounty;S.elK=0;for(let k=0;k<3;k++){const el=mk(2,100,Object.keys(ET).find(t=>ET[t].el));hurt(el,1e6,null,'elem');}run(.1);out.ach=!!ACHS.bounty;

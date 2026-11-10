@@ -6,7 +6,8 @@ const evCount=()=>(ROUNDS<19?2:ROUNDS<24?3:ROUNDS<29?4:5)+(Math.random()<.5?1:0)
 function placeEvents(c,A){const pool=shuf(Object.keys(EVENTS)),n=Math.min(evCount(),pool.length),cand=[];
  for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k]||(bx===c&&by===c))continue;if(Math.abs(bx-A[0])+Math.abs(by-A[1])<2)continue;cand.push(k);}
  shuf(cand);for(let i=0;i<n&&i<cand.length;i++)S.evts[cand[i]]=pool[i];}
-const rndRelic=()=>{const p=RELICS.filter(r=>!r.ini&&!r.evr&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id));return p.length?p[Math.floor(Math.random()*p.length)].id:null;};
+const relEra=r=>!(r.era===2&&!(typeof S!=='undefined'&&S&&S.era===2)),relSeeEra=r=>r.era!==2||(typeof era2Ok==='function'&&era2Ok());
+const rndRelic=()=>{const p=RELICS.filter(r=>!r.ini&&!r.evr&&relEra(r)&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id));return p.length?p[Math.floor(Math.random()*p.length)].id:null;};
 function gainRelic(id){S.relics.push(id);S.rs[id]={cd:0,t:0};if(id==='mimic')setTimeout(mimPlace,0);see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
 function goldEv(v){S.gold+=v;if(S.st&&v>0)S.st.gEv+=v;}
 function addNow(k,v){const p=S.portals[0];if(p)p.plan[k]=(p.plan[k]||0)+v;}
@@ -146,7 +147,7 @@ function spawnMerc(){const H=S.hero;if(!H)return false;const p=H.pt,m={type:'gui
  m.sd=['war','heal'].map((c,i)=>{const hp=base*CLS[c].hp;return{i,x:H.s.x,y:H.s.y,hp,max:hp,en:null,cd:0,rt:0,tw:m,lock:false,fight:false,cls:c,rng:!!CLS[c].rng};});S.merc=m;S.fx.push({x:H.s.x,y:H.s.y,t:.6,m:.6,r:1.5*K,col:'#c9a24a'});return true;}
 // Vales: up = cualquier torre de Nv 1-2 sube un nivel; l3 = solo torres de Nv 2, suben a Nv 3
 const VCH={up:{n:'Vale de mejora',ic:'🎟️',ok:t=>t.lvl<3,d:'Una torre de Nv 1 o 2 sube un nivel gratis.'},l3:{n:'Vale de Nv 3',ic:'🎫',ok:t=>t.lvl===2,d:'Una torre de Nv 2 sube a Nv 3 gratis.'}};
-const vchOk=(ty,t)=>!TW[t.type].uniq&&VCH[ty].ok(t);
+const vchOk=(ty,t)=>!t.holo&&!TW[t.type].uniq&&VCH[ty].ok(t);
 function giveVch(ty,n){S.vch[ty]=(S.vch[ty]||0)+(n||1);renderRelics();hint('vch','Vales de mejora','Un vale sube gratis un nivel a una torre. Se guarda hasta que decidas usarlo: púlsalo y elige la torre.',tgEl('#relics [data-a="vch"]'));}
 function useVch(ty){if(!(S.vch[ty]>0))return;if(S.aim==='vch'&&S.vty===ty){S.aim=null;S.msg='';renderRelics();ui();return;}if(S.aim){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(!S.list.some(t=>vchOk(ty,t))){S.msg=VCH[ty].n+': no tienes ninguna torre donde usarlo.';ui();return;}closePrim();S.aim='vch';S.vty=ty;S.msg='Elige la torre que quieres mejorar con el '+VCH[ty].n.toLowerCase()+' (Esc o el mismo icono para cancelar).';renderRelics();ui();}
