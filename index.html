@@ -3353,7 +3353,9 @@ FACN.m='Máquinas';FACN.a='Alienígenas';
 // los tipos de la Fantástica ya están escalados (casillas finas), así que se copian tal cual
 for(const k in E2SRC){const B=ET[E2SRC[k]],E=Object.assign({},B,{n:E2N[k],col:ECOL2[k],era:2});if(B.aura)E.aura=Object.assign({},B.aura);if(B.hf)E.hf=Math.round(B.hf*1.15);E.hp=B.hp*1.15;ET[k]=E;EIC[k]={esvg:ESVG2[k]};}
 for(const f in E2FAC)for(const k of E2FAC[f])ET[k].fac=f;
+// las líneas de guerreros de resistencia mágica (demonios y alienígenas) pegan con daño mágico; las de armadura (orcos y robots), físico
 // el Titán es más resistente que el Bruto injertado (acorazado puro); los robots, algo más de armadura física; los alienígenas, de resistencia mágica
+for(const k of['minion','demon','dchamp','drone','hivew','praet'])ET[k].dt='magic';
 ET.titan.ap=55;ET.titan.am=0;ET.brute.ap=30;ET.brute.am=15;ET.auto.ap=10;ET.drone.am=10;
 // evoluciones de la era 2
 Object.assign(PROMO,{auto:PROMO.norm.map(([r,u,p])=>[r,u==='vet'?'autoas':'centu',p]),drone:PROMO.norm.map(([r,u,p])=>[r,u==='vet'?'hivew':'praet',p]),stalk:PROMO.fast.map(([r,u,p])=>[r,'stalkm',p]),brutep:PROMO.tank.map(([r,u,p])=>[r,'brute',p]),swarm:[[8,'gundr',.15]]});
