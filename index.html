@@ -5281,7 +5281,7 @@ function update(dt){
  if(bossDead){S.phase='won';S.proj=[];S.fx=[];S.msg='¡Jefe derrotado! Has completado la expedición.';ui();endGame();return;}
  if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){if(S.gorbs&&S.gorbs.length){(S.orbs=S.orbs||[]).push(...S.gorbs.map(o=>({x:o.x,y:o.y,v:o.v,t:0})));S.gorbs=[];}if(!S.hero||S.hero.s.hp<=0)orbFlush();if(S.relics.includes('notebook')&&S.hp>=(S.hpW||0))S.nbN=Math.min(10,(S.nbN||0)+1);}
  if(!S.portals.some(p=>p.q.length)&&!S.enemies.length&&S.tut&&S.round>=ROUNDS){tutEnd();return;}
- if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){tutPhase('end');S.gold+=50+S.round*10;if(S.st)S.st.gRound+=50+S.round*10;roundRewards();S.pools=[];S.mines=[];S.cz=[];S.rolls=[];nextRound();dragonGrow();if(S.uq&&S.uq.length)startUPlace();}
+ if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){tutPhase('end');S.gold+=50+S.round*10;if(S.st)S.st.gRound+=50+S.round*10;roundRewards();S.pools=[];S.mines=[];S.cz=[];S.rolls=[];if(S.uq&&S.uq.length){S.phase='reward';S.uqNR=1;startUPlace();}else{nextRound();dragonGrow();}}
 }
 // ---- dibujo ----
 function mark(c,k,x,y,cs){const B=BF[k];c.fillStyle=B.col;c.globalAlpha=.9;c.fillRect(x+cs*.15,y+cs*.15,cs*.7,cs*.7);c.globalAlpha=1;
@@ -5861,7 +5861,7 @@ function ui(){
  else if(S.phase==='place'){
   h=(S.pi==null?'<div class="pctt">Elige una pieza</div><button class="pcpeek" data-a="ppeek" title="Ver el mapa">👁</button>'+diceRr('pc'):'')+'<small style="display:block;margin-bottom:12px">'+(S.pi==null?(S.tut?'Puedes girarla antes de colocarla.':'Puedes girarla antes de colocarla. Después podrás cancelar y volver aquí.'):(BARX.pc=1,'Pulsa un hueco marcado que conecte con el camino.'+(HSEEN.barpc?'':' Vuelve a pulsar la pieza para dejar de elegirla.')))+'</small><div class="prow">'+
   S.offers.map((o,i)=>`<div class="cardw"><button class="card ${i===S.pi?'on':''}" data-a="pick" data-i="${i}" data-tip="piece:${i}"><canvas width="98" height="98" data-i="${i}"></canvas>${o.n}${!payOn()?'':pcost(o)?`<span class="pcst gd">${pcost(o)} 🪙</span>`:'<span class="pcst pfree">Gratis</span>'}</button><button class="rbtn${TOUCH?'':' wide'}" data-a="prot" data-i="${i}" title="Girar la pieza${TOUCH?'':' ('+kbN('rot')+')'}"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13.2 8.4A5.2 5.2 0 1 1 11.6 4.3"/><path d="M12.6 1.8v3.4H9.2"/></svg>${TOUCH?'':'R'}</button></div>`).join('')+'</div>';}
- else if(S.phase==='build'||S.phase==='wave'){h='';}
+ else if(S.phase==='build'||S.phase==='wave'||S.phase==='reward'){h='';}
  else h=(S.phase==='lost'&&S.snap&&S.rc>0?`<button class="go" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="go" data-a="results">Ver resultados</button><button data-a="reset">Jugar de nuevo</button><button data-a="menu">Menú principal</button>';
  $('ui').innerHTML=h;$('panel').classList.toggle('pempty',!h&&!S.msg);
  {/* elegir pieza: ventana centrada y grande, sin poder hacer nada más; 👁 para mirar el mapa */document.body.classList.toggle('revl',S.revAt>0&&S.phase==='place');const pk=S.phase==='place'&&S.pi==null&&!(S.revAt>0)&&!(S.tut&&HQ.cur&&HQ.cur.id==='tut_welcome'&&!HQ.cur.si)&&!(typeof LB!=='undefined'&&LB.open)&&!document.body.classList.contains('inmenu')&&!(typeof DLG!=='undefined'&&DLG.on);if(!pk)S.ppk=0;document.body.classList.toggle('pcpick',pk&&!S.ppk);document.body.classList.toggle('pcpeek',pk&&!!S.ppk);
@@ -8943,6 +8943,13 @@ TLOCK.alien='suyos';
 // iconos SVG para unidades: {img:svg} en el mapa (canvas) y en las fichas (HTML)
 {const _d=icDraw;icDraw=function(c,ic,x,y,sz){if(ic&&typeof ic==='object'&&ic.img){const im=svgImg(ic.img);if(im.complete&&im.naturalWidth){const w=sz*1.15;c.drawImage(im,x-w/2,y-w/2,w,w);}return;}return _d.apply(this,arguments);};}
 {const _h=icHtml;icHtml=function(ic){if(ic&&typeof ic==='object'&&ic.img)return `<img class="icimg" alt="" src="${svgImg(ic.img).src}" style="width:1.15em;height:1.15em;vertical-align:-.2em">`;return _h.apply(this,arguments);};}
+// ==================== v305 · Recompensa de evento al acabar la oleada ====================
+// Si al acabar la oleada toca colocar una torre de evento (p. ej. la casa de los cerditos), primero se coloca la torre (fase «reward»)
+// y después empieza la ronda siguiente (colocar pieza, ofertas…). Antes se mezclaban las dos cosas y la pieza nueva no se podía poner.
+function uqFinish(){if(!S||S.phase!=='reward')return;S.uqNR=0;S.aim=null;nextRound();dragonGrow();}
+{const _u=uPlaceAt;uPlaceAt=function(c){const r=_u.apply(this,arguments);try{if(S.phase==='reward'&&!S.uq.length)uqFinish();}catch(e){}return r;};}
+// por si algo quita el modo de colocar (Esc, un menú…): se vuelve a pedir el hueco; si ya no queda nada, sigue la partida
+{const _r=relicTick;relicTick=function(){const r=_r.apply(this,arguments);try{if(S&&S.phase==='reward'&&!RL.open){if(!S.uq||!S.uq.length)uqFinish();else if(S.aim!=='uplace')startUPlace();}}catch(e){}return r;};}
 // ==================== v302 · SONIDOS DE LO NUEVO (Era Distópica, héroes, reliquias y Prototipo Omega) ====================
 // Todos sintetizados (sin muestras). Se añaden a «Probar sonidos» en un grupo propio.
 const SY2={

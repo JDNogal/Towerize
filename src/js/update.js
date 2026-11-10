@@ -128,5 +128,5 @@ function update(dt){
  if(bossDead){S.phase='won';S.proj=[];S.fx=[];S.msg='¡Jefe derrotado! Has completado la expedición.';ui();endGame();return;}
  if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){if(S.gorbs&&S.gorbs.length){(S.orbs=S.orbs||[]).push(...S.gorbs.map(o=>({x:o.x,y:o.y,v:o.v,t:0})));S.gorbs=[];}if(!S.hero||S.hero.s.hp<=0)orbFlush();if(S.relics.includes('notebook')&&S.hp>=(S.hpW||0))S.nbN=Math.min(10,(S.nbN||0)+1);}
  if(!S.portals.some(p=>p.q.length)&&!S.enemies.length&&S.tut&&S.round>=ROUNDS){tutEnd();return;}
- if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){tutPhase('end');S.gold+=50+S.round*10;if(S.st)S.st.gRound+=50+S.round*10;roundRewards();S.pools=[];S.mines=[];S.cz=[];S.rolls=[];nextRound();dragonGrow();if(S.uq&&S.uq.length)startUPlace();}
+ if(!S.portals.some(p=>p.q.length)&&!S.enemies.length){tutPhase('end');S.gold+=50+S.round*10;if(S.st)S.st.gRound+=50+S.round*10;roundRewards();S.pools=[];S.mines=[];S.cz=[];S.rolls=[];if(S.uq&&S.uq.length){S.phase='reward';S.uqNR=1;startUPlace();}else{nextRound();dragonGrow();}}
 }
