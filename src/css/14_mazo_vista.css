@@ -65,3 +65,5 @@ body.mfs #relic .pskip small{font-size:10px!important;max-width:46%;text-align:l
 .rbt .rstag{padding:0 8px!important}
 /* flecha de «hay más abajo» en las ventanas: a la derecha, para no tapar los botones del centro */
 #relic.smore::after,#relic .smore::after{text-align:right;padding-right:16px;box-sizing:border-box}
+/* las mayúsculas de «ACTIVO» se veían más altas que la etiqueta: se bajan un poco y la etiqueta y la recarga se quedan donde estaban */
+.rbtt{position:relative;top:2.6px}
