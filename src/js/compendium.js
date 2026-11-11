@@ -22,7 +22,8 @@ function twAt(k,lv,spec){const T=TW[k],L=lvMods(k,lv,spec),TT=twm(k,spec);const 
 function twMax(lv){const o={dmg:0,dps:0,rate:0,range:0,uhp:0};for(const k of Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k))){const sp=lv>=4&&SPECS[k]?Object.keys(SPECS[k]):[null];for(const p of sp){const a=twAt(k,lv,p);if(a.st)o.dps=Math.max(o.dps,a.dv);else o.dmg=Math.max(o.dmg,a.dv);o.rate=Math.max(o.rate,a.s.rate);o.range=Math.max(o.range,a.s.range);o.uhp=Math.max(o.uhp,a.uhp);}}return o;}
 function twGlance(k){const st=cpState(k),a=twAt(k,st.lv,st.spec),M=twMax(st.lv),src='shop:'+k,full=shopInfo(k,1),head=full.slice(0,full.indexOf('</div>')+6);
  const dm=a.st?`<div class="grow"><span class="cd">${kst('dps','DPS',src)}</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,100*a.dv/M.dps))}%;background:${GCOL[a.st]}"></i></div><span class="gv ${a.st==='burn'?'cbu':'cpo'}">${f(a.dv)} ${GICO[a.st]}</span></div>`:gRow(dtLab(dtOf(a.T,a.TT),kst('dmg','Daño',src)),dtCls(dtOf(a.T,a.TT)),a.dv,M.dmg,f(a.dv));
- return head+'<div class="gbody">'+dm+gRow(kst('cool','Enfriamiento',src),'ccl',a.s.rate,M.rate,f(1/a.s.rate)+' s')+
+ const sp=a.T.bufo,cdv=sp?BUFOCD[k]:1/a.s.rate;/* v307: las de apoyo no disparan: sin daño y, si tienen, su ritmo real */
+ return head+'<div class="gbody">'+(sp?'':dm)+(cdv&&isFinite(cdv)?gRow(kst('cool','Enfriamiento',src),'ccl',1/cdv,M.rate,f(cdv)+' s'):'')+
   (a.T.unit?gRow(kst('uhp','Vida de unidades',src),'chp',a.uhp,M.uhp,Math.round(a.uhp)):'')+(effHtml(a.TT,src)?gTxt(kst('eff','Efectos',src),'cf',gIcons(a.TT,src)).replace('class="gv2"','class="gv2 gleft"'):'')+'</div>';}
 // tarjeta de vistazo rápido de una torre de evento (barras comparadas con las torres normales del mismo nivel, donde se puede)
 const uPrevOk=(k,cur)=>{const T=TW[k];return !T.faro&&!(T.dragon&&cur<=1);};
