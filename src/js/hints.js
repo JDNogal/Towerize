@@ -20,7 +20,7 @@ const tgEnemy=e=>()=>e.hp>0?tgCell(e.x,e.y,1.3)():null;
 const tgEl=sel=>()=>{const el=typeof sel==='string'?document.querySelector(sel):sel;if(!el||!el.offsetParent)return null;const b=el.getBoundingClientRect();return{x:b.left+b.width/2,y:b.top+b.height/2,r:Math.max(26,Math.max(b.width,b.height)/2+10)};};
 function hintShow(h){HQ.cur=h;if(S&&S.tut&&S.phase==='place')setTimeout(()=>{try{ui();}catch(e){}},0);try{if(PR.open)closePrim();}catch(e){}/* que la ficha de un portal no tape lo que señala la pista */let el=$('hint');if(!el){el=document.createElement('div');el.id='hint';document.body.appendChild(el);el.addEventListener('click',e=>{if(e.target.closest('[data-a="hintok"]')){const c=HQ.cur;if(c&&c.steps&&c.si<c.steps.length-1){c.si++;c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}else hintClose();}});}
  const ns=h.steps&&h.si<h.steps.length-1;const wt=h.steps&&h.steps[h.si][2];el.innerHTML=`<div class="hring"></div><div class="hmsg tipc"><b>${h.title}</b>${h.steps?`<small class="hstep">${h.si+1}/${h.steps.length}</small>`:''}<div style="margin:4px 0 ${wt?2:8}px">${h.txt}</div>${wt?'':`<div class="hbtn"><button class="go" data-a="hintok">${ns?'Siguiente ›':'Entendido'}</button></div>`}</div>`;el.className='open'+(S&&S.phase==='wave'?' slow':'')+(wt?'':' block')+(h.menu?' dim':'');
- /* v307: la cámara nunca salta: viaja a la vista y la pista espera a que llegue */if(h.cam&&!h.camDone){h.camDone=1;let z=CAM.z;if(h.cam.fit){const zf=VH/(BS*1.6*P*K*CS),zw=VIEW/(BS*1.6*P*K*CS);z=Math.max(ZMIN,Math.min(CAM.z,zf,zw));}camGo(z,h.cam.x,h.cam.y,3.2);}}
+ /* v307: la cámara nunca salta: viaja a la vista y la pista espera a que llegue */if(h.cam&&!h.camDone){h.camDone=1;h.camT=performance.now();let z=CAM.z;if(h.cam.fit){const zf=VH/(BS*1.6*P*K*CS),zw=VIEW/(BS*1.6*P*K*CS);z=Math.max(ZMIN,Math.min(CAM.z,zf,zw));}camGo(z,h.cam.x,h.cam.y,3.2);}}
 // ¿la pista abierta bloquea el resto del juego? Sí, salvo las que piden hacer algo para continuar («Pulsa este botón…»)
 function hintBlocks(){const c=HQ.cur;if(!c)return false;if(c.steps&&c.steps[c.si]&&c.steps[c.si][2])return false;const el=$('hint');return !!(el&&el.classList.contains('open')&&!el.classList.contains('hid'));}
 // teclado con una pista abierta: Intro/Espacio = Entendido; Esc sigue abriendo la pausa; nada más
@@ -42,7 +42,7 @@ function hintTick(rdt){
  const busy=RL.open||LB.open||FO.open||!realG()||(S&&S.revAt>0)||(($('comp')||{}).classList||{contains:()=>0}).contains('lbout');
  if(!HQ.cur&&!busy&&HQ.q.length&&hintPace())hintShow(HQ.q.shift());
  if(HQ.cur&&!realG())hintClose();
- const el=$('hint');if(el&&HQ.cur){el.classList.toggle('hid',busy||!!(HQ.cur.cam&&CAMA.on&&CAMA.cx!=null));el.classList.toggle('block',hintBlocks());el.classList.toggle('dim',HQ.f<.35||S.phase!=='wave');}
+ const el=$('hint');if(el&&HQ.cur){el.classList.toggle('hid',busy||!!(HQ.cur.cam&&CAMA.on&&CAMA.cx!=null&&performance.now()-(HQ.cur.camT||0)<1600/* como mucho 1,6 s de viaje: si la cámara no puede llegar (borde del mapa), la pista sale igual */));el.classList.toggle('block',hintBlocks());el.classList.toggle('dim',HQ.f<.35||S.phase!=='wave');}
  const tgt=HQ.cur&&S.phase==='wave'?0:1;HQ.f+=(tgt-HQ.f)*Math.min(1,rdt/.18);if(Math.abs(HQ.f-tgt)<.01)HQ.f=tgt;
  {const c=HQ.cur,w=c&&c.steps&&c.steps[c.si][2];if(w){const r=w();if(r===2||(r===1&&c.si>=c.steps.length-1))hintClose();else if(r===1||r===-1){c.si=Math.max(0,c.si+r);c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}}}
  hintPos();if(realG())hintScan();}

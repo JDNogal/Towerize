@@ -2,7 +2,7 @@
 const DECKMAX=7,SKIPG=[50,30,10];
 const eraOk=k=>!TW[k].era||TW[k].era===1||(TW[k].era===2&&eraHas2());
 const tPool=()=>Object.keys(TW).filter(k=>!TW[k].uniq&&eraOk(k)&&tunl(k)&&!S.deck.includes(k));
-function tryTowerOffer(){if(S&&S.tut){const o=S.tut.off;if(o&&!RL.open&&!S.aim&&S.phase==='build'&&!HQ.cur){S.tut.off=null;RL.towP=o.present?1:0;RL.towo=o.present?o.list.slice():o.list.filter(k=>!S.deck.includes(k));RL.towT=o.title;RL.towD=o.txt;RL.towNS=1;if(RL.towo.length)renderTowerOffer();}return;}if(!S||!S.towOff||RL.open||S.aim||!S.deck||!(S.phase==='place'||S.phase==='build'))return;S.towOff=0;
+function tryTowerOffer(){if(S&&S.tut){const o=S.tut.off;if(o&&!RL.open&&!S.aim&&S.phase==='build'&&!HQ.cur&&!FO.open/* v307: no se abre encima del aviso de «un extremo libre» */){S.tut.off=null;RL.towP=o.present?1:0;RL.towo=o.present?o.list.slice():o.list.filter(k=>!S.deck.includes(k));RL.towT=o.title;RL.towD=o.txt;RL.towNS=1;if(RL.towo.length)renderTowerOffer();}return;}if(!S||!S.towOff||RL.open||S.aim||!S.deck||!(S.phase==='place'||S.phase==='build'))return;S.towOff=0;
  const p=tPool();if(S.deck.length>=DECKMAX||!p.length)return;RL.towo=towPick3(p);(S.drr=S.drr||{}).tw=0;renderTowerOffer();}
 const twChips=k=>{const T=TW[k],o=[];o.push(T.unit?'Unidades':T.range<=2*K?'Corto alcance':'A distancia');o.push(DT[T.dt]?DT[T.dt].n:'Físico');if(T.splash||T.puddle||T.cone)o.push('Área');if(T.slow)o.push('Ralentiza');if(T.zap)o.push('Rebote');if(T.beam)o.push('Rayo continuo');if(T.burn)o.push('Quemadura');if(T.dot)o.push('Veneno');if(T.monk)o.push('Curación');return o;};
 // botón para consultar el compendio desde una ventana de elección (torre, reliquia, evento); al cerrar el libro se vuelve a la ventana
