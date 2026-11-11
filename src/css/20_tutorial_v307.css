@@ -21,3 +21,18 @@ body.dsk:not(.mfs).pcpick #panel>*{zoom:var(--wz,1)}
 .hdk2 i.twd .icsvg svg{width:22px!important;height:22px!important}
 /* marca de «compra en cola»: marcapáginas rojo con reloj colgado recto del borde de arriba (antes un emoji flotando fuera de la esquina) */
 #bmenu .tmb.wish::after,#tmenu .tmb.wish::after{content:""!important;position:absolute;top:-4px!important;right:3px!important;width:20px;height:20px;background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20stroke%3D%22%231b1712%22%20stroke-width%3D%222.6%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M12%204h24v39l-12-9-12%209z%22%20fill%3D%22%23d8453a%22/%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23fff6dc%22%20stroke-width%3D%222%22/%3E%3Cpath%20d%3D%22M24%2015v4.4l2.8%201.8%22%20stroke-width%3D%222%22/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;font-size:0!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.45));pointer-events:none}
+/* línea de rondas sin tarjeta: solo la línea y los puntos, con sombra para leerse sobre el mapa; iconos genéricos de peligro (calaveras) */
+#rtl{background:none!important;border:0!important;box-shadow:none!important;padding:2px 10px 13px!important;filter:drop-shadow(0 1px 2px rgba(0,0,0,.75))}
+#rtl .rtd::before{background:#0d1014!important;box-shadow:inset 0 0 0 2px #e9dcc0!important;width:11px!important;height:11px!important}
+#rtl .rtd.cur::before{background:#ffd75a!important;box-shadow:0 0 0 3px #ffd75a55,0 0 9px #ffd75a!important}
+#rtl .rts{background:rgba(13,16,20,.6)!important;box-shadow:0 0 0 1px rgba(233,220,192,.33)}
+#rtl .rtn{color:#e9dcc0;opacity:.9!important;font-weight:700}
+#rtl .rtm{color:#e9dcc0;opacity:.7;font-size:10px;margin:0 4px}
+#rtl .rti{background:none!important;box-shadow:none!important;overflow:visible!important;border-radius:0!important}
+#rtl .rti svg{width:100%!important;height:100%!important;display:block}
+#rtl .rti.fr{width:25px!important;height:25px!important}#rtl .rti.boss{width:31px!important;height:31px!important;top:-4px}
+#rtl .rti.sl,#rtl .rti.sr{width:15px!important;height:15px!important;top:9px!important}#rtl .rti.sl{left:-10px!important}#rtl .rti.sr{right:-10px!important}
+#rtl .rtd.cur .rti.fr,#rtl .rtd.cur .rti.boss{outline:0!important;filter:drop-shadow(0 0 5px #ffd75a)}
+/* iconos dibujados de la barra de arriba */
+#stats .hudi{width:1.25em;height:1.25em;vertical-align:-.27em;margin-right:.1em}
+#stats .srp{margin-left:.9em;white-space:nowrap}#stats .srp .hudi{margin-right:.28em;vertical-align:-.3em}

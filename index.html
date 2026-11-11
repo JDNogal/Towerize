@@ -1878,6 +1878,21 @@ body.dsk:not(.mfs).pcpick #panel>*{zoom:var(--wz,1)}
 .hdk2 i.twd .icsvg svg{width:22px!important;height:22px!important}
 /* marca de «compra en cola»: marcapáginas rojo con reloj colgado recto del borde de arriba (antes un emoji flotando fuera de la esquina) */
 #bmenu .tmb.wish::after,#tmenu .tmb.wish::after{content:""!important;position:absolute;top:-4px!important;right:3px!important;width:20px;height:20px;background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20stroke%3D%22%231b1712%22%20stroke-width%3D%222.6%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M12%204h24v39l-12-9-12%209z%22%20fill%3D%22%23d8453a%22/%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23fff6dc%22%20stroke-width%3D%222%22/%3E%3Cpath%20d%3D%22M24%2015v4.4l2.8%201.8%22%20stroke-width%3D%222%22/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;font-size:0!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.45));pointer-events:none}
+/* línea de rondas sin tarjeta: solo la línea y los puntos, con sombra para leerse sobre el mapa; iconos genéricos de peligro (calaveras) */
+#rtl{background:none!important;border:0!important;box-shadow:none!important;padding:2px 10px 13px!important;filter:drop-shadow(0 1px 2px rgba(0,0,0,.75))}
+#rtl .rtd::before{background:#0d1014!important;box-shadow:inset 0 0 0 2px #e9dcc0!important;width:11px!important;height:11px!important}
+#rtl .rtd.cur::before{background:#ffd75a!important;box-shadow:0 0 0 3px #ffd75a55,0 0 9px #ffd75a!important}
+#rtl .rts{background:rgba(13,16,20,.6)!important;box-shadow:0 0 0 1px rgba(233,220,192,.33)}
+#rtl .rtn{color:#e9dcc0;opacity:.9!important;font-weight:700}
+#rtl .rtm{color:#e9dcc0;opacity:.7;font-size:10px;margin:0 4px}
+#rtl .rti{background:none!important;box-shadow:none!important;overflow:visible!important;border-radius:0!important}
+#rtl .rti svg{width:100%!important;height:100%!important;display:block}
+#rtl .rti.fr{width:25px!important;height:25px!important}#rtl .rti.boss{width:31px!important;height:31px!important;top:-4px}
+#rtl .rti.sl,#rtl .rti.sr{width:15px!important;height:15px!important;top:9px!important}#rtl .rti.sl{left:-10px!important}#rtl .rti.sr{right:-10px!important}
+#rtl .rtd.cur .rti.fr,#rtl .rtd.cur .rti.boss{outline:0!important;filter:drop-shadow(0 0 5px #ffd75a)}
+/* iconos dibujados de la barra de arriba */
+#stats .hudi{width:1.25em;height:1.25em;vertical-align:-.27em;margin-right:.1em}
+#stats .srp{margin-left:.9em;white-space:nowrap}#stats .srp .hudi{margin-right:.28em;vertical-align:-.3em}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -1989,6 +2004,10 @@ const FLAGI='<svg class="flagi" viewBox="0 0 64 64" width="1.25em" height="1.25e
 const WISHSVG='<g stroke="#1b1712" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 4h24v39l-12-9-12 9z" fill="#d8453a"/><circle cx="24" cy="19" r="7" fill="#fff6dc" stroke-width="2"/><path d="M24 15v4.4l2.8 1.8" stroke-width="2"/></g>';
 const WISHI='<svg class="wishi" viewBox="8 0 32 48" width=".8em" height="1.2em" style="vertical-align:-.25em">'+WISHSVG+'</svg>';
 let WISHIM=null;function wishImg(){if(WISHIM)return WISHIM;try{WISHIM=new Image();WISHIM.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96">'+WISHSVG+'</svg>');}catch(e){}return WISHIM;}
+
+// v307: iconos de la barra de arriba (portales, vida, oro) e iconos genéricos de peligro de la línea de rondas (mini-élite, élite, jefe)
+const HUDI={port:'<svg class="hudi" viewBox="0 0 48 48"><g stroke="#1b1712" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M10 42V22a14 14 0 0128 0v20z" fill="#3a2a55" stroke="#f3e3c0"/><path d="M15.5 42V23a8.5 8.5 0 0117 0v19z" fill="#b46cff"/><path d="M24 20c3 2 3 6 0 8s-3 6 0 8" fill="none" stroke="#f1dcff" stroke-width="2"/><path d="M7 42h34" stroke="#f3e3c0" stroke-width="3.4"/></g></svg>',heart:'<svg class="hudi" viewBox="0 0 48 48"><g stroke="#1b1712" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M24 41C10 31 6 24 6 17a9 9 0 0118-2.5A9 9 0 0142 17c0 7-4 14-18 24z" fill="#e8434f"/><path d="M13 15.5c1-2.5 3-3.5 5-3.5" fill="none" stroke="#ffd0d4" stroke-width="2.4"/></g></svg>',heartlow:'<svg class="hudi" viewBox="0 0 48 48"><g stroke="#1b1712" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M24 41C10 31 6 24 6 17a9 9 0 0118-2.5A9 9 0 0142 17c0 7-4 14-18 24z" fill="#b8323c"/><path d="M24 15l-4 7 7 4-5 8" fill="none" stroke="#1b1712" stroke-width="2.600"/></g></svg>',coins:'<svg class="hudi" viewBox="0 0 48 48"><g stroke="#1b1712" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="24" cy="33" rx="15" ry="6" fill="#e0a82e"/><ellipse cx="24" cy="27" rx="15" ry="6" fill="#f2c94c"/><ellipse cx="24" cy="21" rx="15" ry="6" fill="#f2c94c"/><ellipse cx="24" cy="15" rx="15" ry="6" fill="#f8de7a"/></g></svg>'};
+const RTLI={mini:'<svg viewBox="0 0 48 48"><g stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M24 9c-8.5 0-14 5.5-14 12.5 0 4.6 2.2 7.6 5 9.4V36a2.5 2.5 0 002.5 2.5h13A2.5 2.5 0 0033 36v-5.1c2.8-1.8 5-4.8 5-9.4C38 14.5 32.5 9 24 9z" fill="#e9dfc8"/><circle cx="18.5" cy="22" r="3.4" fill="#1b1712"/><circle cx="29.5" cy="22" r="3.4" fill="#1b1712"/><path d="M24 27l-1.8 3.2h3.6z" fill="#1b1712" stroke-width="1"/><path d="M20 34v4M24 34v4M28 34v4" stroke-width="1.8"/></g></svg>',elite:'<svg viewBox="0 0 48 48"><g stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M11 17C6 15 4 10 5 5c3 4 6 6 10 6.5z" fill="#e9dfc8"/><path d="M37 17c5-2 7-7 6-12-3 4-6 6-10 6.5z" fill="#e9dfc8"/><path d="M24 9c-8.5 0-14 5.5-14 12.5 0 4.6 2.2 7.6 5 9.4V36a2.5 2.5 0 002.5 2.5h13A2.5 2.5 0 0033 36v-5.1c2.8-1.8 5-4.8 5-9.4C38 14.5 32.5 9 24 9z" fill="#e9dfc8"/><circle cx="18.5" cy="22" r="3.4" fill="#1b1712"/><circle cx="29.5" cy="22" r="3.4" fill="#1b1712"/><path d="M24 27l-1.8 3.2h3.6z" fill="#1b1712" stroke-width="1"/><path d="M20 34v4M24 34v4M28 34v4" stroke-width="1.8"/></g></svg>',boss:'<svg viewBox="0 0 48 48"><g stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><g transform="translate(0 6)"><path d="M10 16C5 14 3 9 4 4c3 4 6 6 10 6.500z" fill="#e9dfc8"/><path d="M38 16c5-2 7-7 6-12-3 4-6 6-10 6.500z" fill="#e9dfc8"/><path d="M24 9c-8.5 0-14 5.5-14 12.5 0 4.6 2.2 7.6 5 9.4V36a2.5 2.5 0 002.5 2.5h13A2.5 2.5 0 0033 36v-5.1c2.8-1.8 5-4.8 5-9.4C38 14.5 32.5 9 24 9z" fill="#f1c9c4"/><circle cx="18.5" cy="22" r="3.4" fill="#1b1712"/><circle cx="29.5" cy="22" r="3.4" fill="#1b1712"/><path d="M24 27l-1.8 3.2h3.6z" fill="#1b1712" stroke-width="1"/><path d="M20 34v4M24 34v4M28 34v4" stroke-width="1.8"/></g><path d="M15 13.5l-1.6-8.5 5.6 4.2L24 2.500l5 6.700 5.600-4.200-1.600 8.500z" fill="#f2c94c"/><circle cx="24" cy="9.600" r="1.500" fill="#d8453a" stroke-width="1"/></g></svg>'};
 // ======================= EMOJIS QUE EL SISTEMA NO TIENE =======================
 // Algunos equipos (Windows 10, navegadores antiguos) no tienen los emojis más nuevos (🪙, 🪽, 🪵…) y salen como un cuadrado.
 // Al arrancar se comprueba cuáles se dibujan igual que un carácter inexistente; esos se sustituyen por uno parecido más antiguo.
@@ -5985,7 +6004,7 @@ function draw(){
    g.strokeStyle=ok?'#50dc78':'#e64646';g.lineWidth=lw(2);g.strokeRect(bx*P*BCS+lw(1),by*P*BCS+lw(1),P*BCS-lw(2),P*BCS-lw(2));}}
  try{if(typeof e2DrawWorld==='function')e2DrawWorld(lw);if(typeof bufoDraw==='function')bufoDraw(lw);if(typeof vegaDraw==='function')vegaDraw(lw);}catch(e){}
  g.setTransform(1,0,0,1,0,0);
- $('sr').textContent='⏳ Ronda '+Math.min(S.round,ROUNDS)+'/'+ROUNDS+((S.phase==='build'||S.phase==='wave')&&S.portals&&S.portals.length?'  ·  ⭕ '+S.portals.length:'')+(S.fury?'  ·  💢 Furia ×'+String(furyM()).replace('.',','):'');$('sr').title=S.fury?'Furia: todos ganan daño mientras dure la oleada':'⭕ Portales activos esta ronda';{const a=$('stR'),b=$('stC');a.style.display=OPT.treal?'':'none';b.style.display=OPT.tcomb?'':'none';if(OPT.treal)a.textContent='🕒 '+fClk(GT.r);if(OPT.tcomb)b.textContent='⚔️ '+fClk(GT.c);}$('sh').textContent=(S.hp<=10?'💔':'❤️')+' Vida '+S.hp;{const iv=S.relics&&S.relics.includes('scale')?interest():0,h='🪙 Oro '+Math.floor(S.gold)+(iv>0?' <span class="sgint">+'+iv+'</span>':'');if($('sg')._h!==h){$('sg').innerHTML=h;$('sg')._h=h;}}
+ {const h='⏳ Ronda '+Math.min(S.round,ROUNDS)+'/'+ROUNDS+((S.phase==='build'||S.phase==='wave')&&S.portals&&S.portals.length?'<span class="srp" title="Portales activos esta ronda">'+HUDI.port+S.portals.length+'</span>':'')+(S.fury?'  ·  💢 Furia ×'+String(furyM()).replace('.',','):'');if($('sr')._h!==h){$('sr').innerHTML=h;$('sr')._h=h;}}$('sr').title=S.fury?'Furia: todos ganan daño mientras dure la oleada':'';{const a=$('stR'),b=$('stC');a.style.display=OPT.treal?'':'none';b.style.display=OPT.tcomb?'':'none';if(OPT.treal)a.textContent='🕒 '+fClk(GT.r);if(OPT.tcomb)b.textContent='⚔️ '+fClk(GT.c);}{const h=(S.hp<=10?HUDI.heartlow:HUDI.heart)+' Vida '+S.hp;if($('sh')._h!==h){$('sh').innerHTML=h;$('sh')._h=h;}}{const iv=S.relics&&S.relics.includes('scale')?interest():0,h=HUDI.coins+' Oro '+Math.floor(S.gold)+(iv>0?' <span class="sgint">+'+iv+'</span>':'');if($('sg')._h!==h){$('sg').innerHTML=h;$('sg')._h=h;}}
 }
 
 // v305 · en las cartas de pieza el dibujo pasa por un filtro de tinta (gris/sepia) que apagaba los colores de las casillas especiales:
@@ -9832,7 +9851,7 @@ if(typeof window!=='undefined')setInterval(()=>{try{evpTick();}catch(e){}},400);
 // según avanza la oleada. Cada punto dice lo que trae esa ronda: jefe (calavera roja), élite (delante) y mini-élites (a los lados).
 const RTL={sg:'',N:5};
 // qué trae la ronda r: {boss, el, mi, ex:[tipos extra de eventos]}
-function rtlInfo(r){const o={boss:false,el:0,mi:0,ex:[]};if(!S||S.tut)return o;
+function rtlInfo(r){const o={boss:false,el:0,mi:0,ex:[]};if(!S)return o;if(S.tut){o.boss=r===ROUNDS;return o;}/* v307: en el tutorial también sale la línea; solo marca a Bob en la última ronda */
  // la ronda que está por salir: lo que de verdad hay en los portales
  if(r===S.round&&S.phase==='build'&&S.portals&&S.portals.length){for(const p of S.portals)for(const t in p.plan||{}){const n=p.plan[t]||0;if(!n)continue;
    if(isBoss({t}))o.boss=true;else if(t==='elite'||t==='wanted')o.el+=n;else if(t==='mini')o.mi+=n;else if(ET[t]&&ET[t].evn)o.ex.push(t);}
@@ -9841,34 +9860,36 @@ function rtlInfo(r){const o={boss:false,el:0,mi:0,ex:[]};if(!S||S.tut)return o;
  const E=ELITES[r]||{};o.el+=E.elite||0;o.mi+=E.mini||0;
  for(const sc of S.sched||[])if(sc.r===r)for(const k in sc.add){if(k==='wanted'||k==='elite')o.el+=sc.add[k];else if(k==='mini')o.mi+=sc.add[k];else o.ex.push(k);}
  return o;}
-const rtlEnIc=(k,cls)=>{const ok=typeof seen!=='function'||seen('en',k);const ic=ok&&enIc(k)?icHtml(enIc(k)):'?';return `<i class="rti ${cls}" style="--c:${ET[k]?ET[k].col:'#888'}">${ic}</i>`;};
+// v307: iconos genéricos de peligro (no dicen qué enemigo es): mini-élite = calavera, élite = calavera con cuernos, jefe = con cuernos y corona.
+// Lo que no sea élite ni mini (enemigos de evento) cuenta como élite. El enemigo concreto se ve en el portal de su ronda.
+const rtlGen=(k,cls)=>`<i class="rti ${cls} g${k}">${RTLI[k]}</i>`;
 function rtlDot(r){const o=rtlInfo(r);let h='',c='';
- if(o.boss){c='b';h='<i class="rti boss">💀</i>';}
- else if(o.el||o.mi||o.ex.length){c='x';const front=o.el?'elite':o.ex.length?o.ex[0]:'mini';
+ if(o.boss){c='b';h=rtlGen('boss','boss');}
+ else if(o.el||o.mi||o.ex.length){c='x';const front=o.el||o.ex.length?'elite':'mini';
   const sides=o.el||o.ex.length?(o.mi>=2?['mini','mini']:o.mi===1?['mini']:[]):(o.mi>=2?['mini']:[]);
-  if(sides[0])h+=rtlEnIc('mini','sl');if(sides[1])h+=rtlEnIc('mini','sr');h+=rtlEnIc(front,'fr');}
+  if(sides[0])h+=rtlGen('mini','sl');if(sides[1])h+=rtlGen('mini','sr');h+=rtlGen(front,'fr');}
  return {c,h,o};}
 // progreso de la oleada en curso (0 a 1)
 function rtlProg(){if(!S||S.phase!=='wave')return 0;const N=S.rtlN||0;if(!N)return 0;let left=0;for(const e of S.enemies||[])if(e.hp>0&&!e.leak)left++;for(const p of S.portals||[])left+=(p.q||[]).filter(x=>x!=='|').length;return Math.max(0,Math.min(1,1-left/N));}
 {const _sw=startWave;startWave=function(){const was=S&&S.phase;const r=_sw.apply(this,arguments);try{if(was!=='wave'&&S.phase==='wave'){let n=0;for(const p of S.portals||[])for(const t in p.plan||{})n+=p.plan[t]||0;S.rtlN=n;}}catch(e){}return r;};}
 function rtlTick(){let el=document.getElementById('rtl');
- const on=S&&!S.tut&&(S.phase==='build'||S.phase==='wave'||S.phase==='place'||S.phase==='reward')&&!PREVIEWING&&!S.pvE&&!S.pvH&&!document.body.classList.contains('inmenu');
+ const on=S&&(S.phase==='build'||S.phase==='wave'||S.phase==='place'||S.phase==='reward')&&!PREVIEWING&&!S.pvE&&!S.pvH&&!document.body.classList.contains('inmenu');
  if(!on){if(el)el.classList.remove('on');document.body.classList.remove('rtlon');RTL.sg='';return;}
  if(!el){el=document.createElement('div');el.id='rtl';document.body.appendChild(el);}
  const r0=Math.max(1,Math.min(S.round,ROUNDS)),r1=Math.min(ROUNDS,r0+RTL.N-1),p=rtlProg();
  const dots=[];for(let r=r0;r<=r1;r++)dots.push([r,rtlDot(r)]);
  const sg=r0+'|'+S.phase+'|'+dots.map(([r,d])=>d.c+d.h).join(',');
  if(sg!==RTL.sg){RTL.sg=sg;let h='';
-  if(r0>1)h+=`<span class="rtm">${r0-1}◂</span>`;
+  if(r0>1)h+=`<span class="rtm">◂</span>`;
   dots.forEach(([r,d],i)=>{h+=`<div class="rtd ${d.c}${r===r0?' cur':''}" data-tip="rtl:${r}"><span class="rtb">${d.h}</span><span class="rtn">${r}</span></div>`;if(i<dots.length-1)h+=`<div class="rts${i===0?' now':''}"><i></i></div>`;});
-  if(r1<ROUNDS)h+=`<span class="rtm">▸${ROUNDS-r1}</span>`;
+  if(r1<ROUNDS)h+=`<span class="rtm">▸</span>`;
   el.innerHTML=h;}
  const f=el.querySelector('.rts.now i');if(f)f.style.width=Math.round(p*100)+'%';
  el.classList.add('on');document.body.classList.add('rtlon');}
 if(typeof window!=='undefined')setInterval(()=>{try{rtlTick();}catch(e){}},200);
 // bocadillo de cada punto
 function rtlTip(r){const{o}=rtlDot(r),d=r-S.round,w=d<=0?(S.phase==='wave'?'en curso':'esta ronda'):d===1?'la próxima':'dentro de '+d+' rondas';
- const L=[];if(o.boss)L.push('💀 <b>Jefe</b>'+(r===ROUNDS?' final':''));if(o.el)L.push('Élite'+(o.el>1?' ×'+o.el:''));if(o.mi)L.push('Mini-élite'+(o.mi>1?' ×'+o.mi:''));
+ const L=[];if(o.boss)L.push('<b>Jefe</b>'+(r===ROUNDS?' final':''));if(o.el)L.push('Élite'+(o.el>1?' ×'+o.el:''));if(o.mi)L.push('Mini-élite'+(o.mi>1?' ×'+o.mi:''));
  for(const k of o.ex)L.push((typeof seen==='function'&&!seen('en',k))?'???':(ET[k]||{}).n||k);
  return `<div class="ttl"><b>Ronda ${r}</b> · ${w}</div><small style="margin:0">${L.length?L.join('<br>'):'Sin élites ni jefe.'}</small>`;}
 {const _rs=resolve;resolve=function(el){const d=el&&el.closest&&el.closest('[data-tip^="rtl:"]');if(d){const r=+d.dataset.tip.slice(4),b=d.getBoundingClientRect();return{key:'rtl:'+r+':'+RTL.sg,html:()=>rtlTip(r),rect:{l:b.left,t:b.top,r:b.right,b:b.bottom},dom:1};}return _rs.apply(this,arguments);};}
