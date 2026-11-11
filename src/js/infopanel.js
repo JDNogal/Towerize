@@ -196,17 +196,17 @@ function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
  const X=tinfo(t);
- return `<div class="ttl ttlg"><b>${X.ic} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap):tgtRow(t,src,PR.pinned&&PR.key===src))+
+ return `<div class="ttl ttlg"><b>${icOf(X)} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap):tgtRow(t,src,PR.pinned&&PR.key===src))+
   (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
 function lvTabs(id,sn){let h='';for(let n=1;n<=nStates(id);n++){const ok=tlvOk(id,n);if(!ok)continue;/* sin spoilers: solo los niveles alcanzados */const X=n>=4?SPECS[id][Object.keys(SPECS[id])[n-4]]:null;
-  h+=`<button class="stbtn lvbtn lvt${n===sn?' on':''}${ok?'':' off'}" data-a="clvs" data-v="${id}" data-n="${n}" title="${ok?(X?'Nv 4 · '+X.n:'Nv '+n):'No has alcanzado aún ese nivel'}">${galSvg(Math.min(n,4),0,.75,1)}${X?`<span class="lvx">${X.ic}</span>`:''}</button>`;}return `<span class="lvtabs">${h}</span>`;}
+  h+=`<button class="stbtn lvbtn lvt${n===sn?' on':''}${ok?'':' off'}" data-a="clvs" data-v="${id}" data-n="${n}" title="${ok?(X?'Nv 4 · '+X.n:'Nv '+n):'No has alcanzado aún ese nivel'}">${galSvg(Math.min(n,4),0,.75,1)}${X?`<span class="lvx">${icOf(X)}</span>`:''}</button>`;}return `<span class="lvtabs">${h}</span>`;}
 function shopInfo(id,quiet){
  const T=TW[id],src='shop:'+id,st=quiet?cpState(id):{lv:1,spec:null},lv=st.lv,L=lvMods(id,lv,st.spec),X=st.spec?SPECS[id][st.spec]:T,
   s={dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:(T.splash||T.pr||0)*L.area,pen:L.pen||0},sn=CP.lv[id]||1;
  const lb=quiet?lvTabs(id,sn):'';
- return `<div class="ttl">${lb}<b>${X.n}</b> · ${X.ic}<br><span class="gd">${(quiet&&lv>1?kst('upc','Mejora '+upCost(T,lv)+' 🪙',src):kst('cost','Coste '+T.cost+' 🪙',src))}</span></div>`+rows(s,twm(id,st.spec),src,T.unit?unitRows(T,src,null,false,L.hp,X.uap):(quiet?'':R('',kst('tgt','Objetivo',src),TGT[S.dtg[id]||'core'].n)))+(st.spec?'<div style="margin-top:6px"><b>Habilidades</b></div>'+abList(id,st.spec,null):'')+(quiet?'':'<small>Valores base, sin bufos de casilla.</small>')+(T.unit?'':dpsRow(s,T,src));
+ return `<div class="ttl">${lb}<b>${X.n}</b> · ${icOf(X)}<br><span class="gd">${(quiet&&lv>1?kst('upc','Mejora '+upCost(T,lv)+' 🪙',src):kst('cost','Coste '+T.cost+' 🪙',src))}</span></div>`+rows(s,twm(id,st.spec),src,T.unit?unitRows(T,src,null,false,L.hp,X.uap):(quiet?'':R('',kst('tgt','Objetivo',src),TGT[S.dtg[id]||'core'].n)))+(st.spec?'<div style="margin-top:6px"><b>Habilidades</b></div>'+abList(id,st.spec,null):'')+(quiet?'':'<small>Valores base, sin bufos de casilla.</small>')+(T.unit?'':dpsRow(s,T,src));
 }
 
 // texto del bonus de una casilla con los multiplicadores que están activos ahora (valores reales: el jugador no tiene que calcular)

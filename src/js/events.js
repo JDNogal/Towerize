@@ -31,7 +31,7 @@ function chip(k){const[a,b]=k.split(':');
  if(a==='lvl')return '<span class="cf">⭐ +1 nivel de héroe</span>';
  if(a==='elite')return '💀 +1 Élite';
  if(a==='more')return '💀 +'+b+'% enemigos';
- if(a==='tower')return TW[b]?`<span class="gd">${TW[b].ic} ${TW[b].n}</span>`:'';
+ if(a==='tower')return TW[b]?`<span class="gd">${twIc(b)} ${TW[b].n}</span>`:'';
  if(a==='wanted')return '📜 Élite de encargo en 2 rondas';
  if(a==='temper')return '⚒ torres de Nv 1 → 2';if(a==='bless')return '✨ las casillas especiales de la pieza dan el doble de bonus';if(a==='less')return '🕯 −'+b+'% enemigos en la próxima oleada';
  if(a==='sharpen')return '🗡 +25% de daño (o de stacks, en torres de veneno y fuego) a la torre que elijas';
@@ -297,7 +297,7 @@ function drawDragons(){for(const t of S.list){if(!t.fly||t.fly.x===undefined)con
  if(t.stage>=3){g.fillStyle='rgba(255,110,40,.25)';g.beginPath();g.arc(px,py,CS*2,0,7);g.fill();}g.font=Math.round(CS*(t.stage>=3?3.3:2.6))+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🐉',px,py);}}
 // ---- ficha de las torres únicas ----
 function uniqInfo(t,k,lvo){const T=TW[k],src=t?'tw:'+t.id:'shop:'+k,X=t?tinfo(t):T,pin=t&&PR.pinned&&PR.key===src,ev=EVENTS[T.ev],CL=lvo||(t?(T.dragon?(t.stage||0)+1:t.lvl||1):1);
- let h=`<div class="ttl"><b>${X.ic} ${X.n}</b>${t&&(T.guild||T.pig||T.glut)?' · '+kst('lvl','Nv '+t.lvl,src):''}<br><small style="margin:0">Torre única · evento «${ev?ev.n:''}»</small></div>`;
+ let h=`<div class="ttl"><b>${icOf(X)} ${X.n}</b>${t&&(T.guild||T.pig||T.glut)?' · '+kst('lvl','Nv '+t.lvl,src):''}<br><small style="margin:0">Torre única · evento «${ev?ev.n:''}»</small></div>`;
  if(T.faro){const lv=CL,L=FARO[lv-1];h+=R('cd',kst('dmg','Daño',src),0)+R('ca','Radio',f(L.r)+' casillas')+R('cg','Alcance a torres iluminadas','+'+Math.round(L.rg*100)+'%')+(lv>=2?R('cd','Daño a torres iluminadas','+'+Math.round(L.d*100)+'%'):'')+(lv>=3?R('ccl','Enfriamiento de torres iluminadas','−'+Math.round(L.c*100)+'%'):'');
   h+=t&&lv<4?R('gd','Luz',fi(t.light||0)+' / '+fi(FARO[lv].need)):'';h+='<small>'+['No ataca: proyecta una zona de luz que puedes mover a cualquier parte del mapa (🔦 en su menú). Mejora las torres de dentro y acumula luz con el daño que hacen. Con 2.000 de luz sube a Nv 2.','Ahora también da daño a las torres que ilumina. Con 6.000 de luz sube a Nv 3.','Ahora también reduce el enfriamiento de las torres que ilumina. Con 15.000 de luz sube a Nv 4.','Gana una segunda zona de luz que también puedes mover. Si las pones una encima de otra, sus mejoras se suman.'][lv-1]+'</small>';}
  else if(T.dragon){const sg=CL-1;h+=R('','Forma',DRAG[sg].n)+(sg===0?R('cd',kst('dmg','Daño',src),0):sg===1?R('cd',kst('dmg','Daño',src)+' (fuego)',8)+R('ca','Área','0,4 casillas')+R('cg','Rango','2,5 casillas')+R('cd','Daño con garras','70%')+R('chp','Vida',60):sg===2?R('cd',kst('dmg','Daño',src)+' (bola de fuego)',18)+R('ca','Área','1 casilla')+R('cg','Rango','3,5 casillas'):R('cd',kst('dmg','Daño',src)+' (bola de fuego)',22)+R('ca','Área','1,2 casillas')+R('cg','Rango','3,5 casillas')+R('cd','Llamarada',DBRN+' stacks de '+kw('burn','Quemadura',src))+R('ccl','Enfriamiento de la llamarada',DBRCD+' s')+R('cr',kst('dur','Duración',src)+' de los charcos','4 s'))+

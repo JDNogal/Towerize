@@ -84,7 +84,7 @@ function endGame(){
  h+='<div class="esec">Torres</div>';
  if(!all.length)h+='<small>No construiste ninguna torre.</small>';
  for(const t of all){const X=tinfo(t),a=t.act||0,dm=t.dmgT||0;
-  h+=row(`${X.ic} <b>${X.n}</b> · Nv ${t.lvl}${t.sold?' <small>(vendida)</small>':''}<small>Ronda ${t.rd} · ${bj(t.kills||0)}</small>`,
+  h+=row(`${icOf(X)} <b>${X.n}</b> · Nv ${t.lvl}${t.sold?' <small>(vendida)</small>':''}<small>Ronda ${t.rd} · ${bj(t.kills||0)}</small>`,
    `<span>DPS <span class="cd">${a>0?fi(dm/a):0}</span></span><span>Daño <span class="cd">${fi(dm)}</span> (${pc(dm)}%)</span>`,pc(dm));}
  if(H){const dm=H.pt.dmgT||0;h+=row(`${H.def.ic} <b>${H.def.n}</b> · Nv ${H.lvl}<small>Héroe · ${bj(H.pt.kills||0)}</small>`,
    `<span>DPS <span class="cd">${H.pt.act>0?fi(dm/H.pt.act):0}</span></span><span>Daño <span class="cd">${fi(dm)}</span> (${pc(dm)}%)</span>`,pc(dm));}

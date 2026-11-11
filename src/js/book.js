@@ -50,7 +50,7 @@ const bkPrevBtn=(a,v,l)=>`<button class="bkgo" data-a="${a}" data-v="${v}">▶ $
 function bkDetail(t,id){
  const sh=(ic,txt)=>`<div class="bkun"><span class="sil bkbig">${ic}</span><h4>???</h4><p>${txt}</p></div>`;
  if(t==='tw'){const T=TW[id];if(!T)return'';
-  if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+achLink(a,'',1);}return sh(T.ic,'Aún no descubierto.');}
+  if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(icOf(T),`Aún no disponible.`)+achLink(a,'',1);}return sh(icOf(T),'Aún no descubierto.');}
   const bi=`<span class="bkbic bctw" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
   if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   return bkSheet(bi,shopInfo(id,1).replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id);}
@@ -64,7 +64,7 @@ function bkDetail(t,id){
  if(t==='ev'){const E=EVENTS[id];if(!E)return'';if(!seen('ev',id))return sh(E.ic||'❔','Aún no descubierto.');return `<div class="ce bkce">${eventCard(id)}</div><small class="bknote">Las opciones que nunca has elegido aparecen como ???.</small>`;}
  if(t==='lg'){const A=ACH[id];if(!A)return'';if(!achFound(id))return sh(trofIc(),'Logro oculto. Sigue jugando para descubrirlo.');
   const T=TW[A.tw],ok=!!ACHS[id],run=inRun(),dd=t=>{const d=new Date(t);return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();};
-  const rw=arw(ok,T&&[T.ic,T.n,'tw'],id)+arw(ok,A.rl&&[RELIC[A.rl].ic,RELIC[A.rl].n,'rl'],id)+arw(ok,A.hr&&[HEROES[A.hr].ic,HEROES[A.hr].n,'hr'],id)+arw(ok,A.ev&&EVENTS[A.ev]&&[EVENTS[A.ev].ic,EVENTS[A.ev].n,'ev'],id)+arw(ok,A.ux&&['📖','Compendio','cp'],id)+cosOf(id).map(([k,c])=>arw(ok,[CSKIND[k][0],c.n,'cs'],id)).join('');
+  const rw=arw(ok,T&&[icOf(T),T.n,'tw'],id)+arw(ok,A.rl&&[RELIC[A.rl].ic,RELIC[A.rl].n,'rl'],id)+arw(ok,A.hr&&[HEROES[A.hr].ic,HEROES[A.hr].n,'hr'],id)+arw(ok,A.ev&&EVENTS[A.ev]&&[EVENTS[A.ev].ic,EVENTS[A.ev].n,'ev'],id)+arw(ok,A.ux&&['📖','Compendio','cp'],id)+cosOf(id).map(([k,c])=>arw(ok,[CSKIND[k][0],c.n,'cs'],id)).join('');
   return bkSheet(`<span class="bkbic bkach${ok?'':' off'}">${A.ic||trofIc()}</span>`,`<div class="ttl">${ok?'':`<button class="pinb${PINS.includes(id)?' on':''}" data-a="apin" data-id="${id}" title="${PINS.includes(id)?'Quitar de fijados':'Fijar para seguirlo en partida'}">📌</button>`}<b>${A.n}</b></div>${achSec(id)?'<small style="margin:0">??? · <em>'+A.h+'</em></small>':'<small style="margin:0">'+A.d+'</small>'}<div class="abot">${rw}${ok?`<small class="agot">✓ Conseguido el ${dd(ACHS[id])}</small>`:achProg(id,run)}</div>`,'ach'+(ok?' got':'')+(CP.hl===id?' bkhl':''));}
  return '';}
 // filtros: cada opción solo si hay algo descubierto que encaje; una fila con menos de 2 opciones reales no se muestra

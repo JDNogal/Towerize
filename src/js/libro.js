@@ -70,7 +70,7 @@ function statParts(){const T=STABS.find(t=>t[0]===STW.tab)||STABS[0],st=S.st||{}
  let h=statsHTML(STW.tab),kp='';const m=h.match(/^<div class="kp">[\s\S]*?<\/div><\/div>/);if(m){kp=m[0];h=h.slice(m[0].length);}
  const K=(b,s)=>`<div><b>${b}</b><small>${s}</small></div>`;
  if(!kp){
-  if(STW.tab==='dmg'){const all=(st.all||[]).slice(),H=S.hero;let top=null,tv=0;for(const t of all)if((t.dmgT||0)>tv){tv=t.dmgT;top=tinfo(t).ic+' '+tinfo(t).n;}if(H&&(H.pt.dmgT||0)>tv){tv=H.pt.dmgT;top=H.def.ic+' '+H.def.n;}
+  if(STW.tab==='dmg'){const all=(st.all||[]).slice(),H=S.hero;let top=null,tv=0;for(const t of all)if((t.dmgT||0)>tv){tv=t.dmgT;top=icOf(tinfo(t))+' '+tinfo(t).n;}if(H&&(H.pt.dmgT||0)>tv){tv=H.pt.dmgT;top=H.def.ic+' '+H.def.n;}
    kp=`<div class="kp">${K(`<span class="cd">${fi(st.dmg||0)}</span>`,'Daño total')}${K(fi(st.kills||0),'Enemigos eliminados')}${K(top||'—','Quien más daño ha hecho')}${K(st.dmg>0&&tv?Math.round(tv/st.dmg*100)+'%':'—','Su parte del total')}</div>`;}
   else if(STW.tab==='rel')kp=`<div class="kp">${K((S.relics||[]).length,'Reliquias')}${K(`<span class="gd">${fi(st.gRel||0)} 🪙</span>`,'Oro generado por reliquias')}</div>`;
   else if(STW.tab==='en'){const ek=st.ek||{},ks=Object.keys(ek),sum=f=>ks.reduce((a,k)=>a+(ek[k][f]||0),0);kp=`<div class="kp">${K(fi(sum('k')),'Eliminados')}${K(`<span class="${sum('l')?'cd':''}">${fi(sum('l'))}</span>`,'Llegaron al núcleo')}${K(ks.length,'Tipos distintos')}${K(`<span class="gd">${fi(sum('g'))} 🪙</span>`,'Oro que dieron')}</div>`;}}

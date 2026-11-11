@@ -20,7 +20,7 @@ function evpList(){const o=[];if(!S||S.tut||PREVIEWING||S.pvE||S.pvH)return o;co
  // oro guardado en la cámara criogénica
  if(S.bank&&S.bank.g>0){const d=Math.max(1,S.bank.at-S.round);o.push({ic:'🏦',tx:`<span class="gd">+${S.bank.g} 🪙</span> de la cámara`,w:evpWhen(d),d});}
  // casas defendidas: la torre se cobra al acabar la oleada
- for(const p of S.pend||[]){if(p.r<S.round)continue;for(const ty of p.towers||[])if(TW[ty])o.push({ic:TW[ty].ic,tx:TW[ty].n,w:'al acabar la oleada',d:0});}
+ for(const p of S.pend||[]){if(p.r<S.round)continue;for(const ty of p.towers||[])if(TW[ty])o.push({ic:twIc(ty),tx:TW[ty].n,w:'al acabar la oleada',d:0});}
  if(S.half)o.push({ic:'🏷',tx:'Próxima torre a mitad de precio',w:'',d:99});
  if(S.chest4&&!(typeof r3On==='function'&&r3On('starmap')))o.push({ic:'🎁',tx:'Próximo cofre: 4 reliquias',w:'',d:99});
  return o.sort((a,b)=>a.d-b.d);}

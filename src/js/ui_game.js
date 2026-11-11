@@ -42,7 +42,7 @@ function statsHTML(tab){const st=S.st||{},g=n=>`<span class="gd">${fi(n||0)} �
   `<div class="cols"><div><h3 class="osec">Oro</h3>${R('Bajas',g(st.gKill))}${R('Fin de ronda',g(st.gRound))}${R('Casillas especiales',g(st.gTile))}${R('Reliquias',g(st.gRel))}${R('Eventos',g(st.gEv))}${R('Gastado en torres y mejoras',g(st.spent))}${R('Recuperado vendiendo',g(st.gSell))}</div>`+
   `<div><h3 class="osec">Partida</h3>${R('Ronda',Math.min(S.round,ROUNDS)+' / '+ROUNDS)}${R('Piezas colocadas',Math.max(0,Object.keys(S.blocks||{}).length-1))}${R('Torres construidas',all.length+(sold?' ('+sold+' vendidas)':''))}${R('Reliquias',(S.relics||[]).length)}${R('Reintentos usados',st.retries||0)}${R('Tiempo real',fClk(GT.r))}${R('Tiempo de combate',fClk(GT.c))}</div></div>`;}
  if(tab==='dmg'){const all=(st.all||[]).slice().sort((a,b)=>(b.dmgT||0)-(a.dmgT||0)),hd=H?(H.pt.dmgT||0):0,tdm=all.reduce((s2,t)=>s2+(t.dmgT||0),0),other=Math.max(0,(st.dmg||0)-tdm-hd),tot=st.dmg||0,pc=v=>tot>0?Math.round(v/tot*100):0;
-  const rows=all.map(t=>{const X=tinfo(t),dm=t.dmgT||0,a=t.act||0;return{ic:X.ic,n:X.n+(t.sold?' <small>(vendida)</small>':''),lv:'Nv '+t.lvl,col:X.col||'#e8b04a',dm,k:t.kills||0,dps:a>0?dm/a:0};});
+  const rows=all.map(t=>{const X=tinfo(t),dm=t.dmgT||0,a=t.act||0;return{ic:icOf(X),n:X.n+(t.sold?' <small>(vendida)</small>':''),lv:'Nv '+t.lvl,col:X.col||'#e8b04a',dm,k:t.kills||0,dps:a>0?dm/a:0};});
   if(H)rows.push({ic:H.def.ic,n:H.def.n+' <small>(héroe)</small>',lv:'Nv '+H.lvl,col:'#b8c4dd',dm:hd,k:H.pt.kills||0,dps:H.pt.act>0?hd/H.pt.act:0});
   if(other>0)rows.push({ic:'✨',n:'Otras fuentes <small>(reliquias, explosiones…)</small>',lv:'',col:'#9aa0ad',dm:other,k:'—',dps:null});
   rows.sort((a,b)=>b.dm-a.dm);const mx=Math.max(1,...rows.map(r=>r.dm));
@@ -102,7 +102,7 @@ function wqTick(){let el=document.getElementById('wishq');
  {/* en PC va bajo el contador de enemigos; en móvil, al margen derecho para que no se quede pequeño */const par=document.body.classList.contains('mfs')?rstack():lstack();if(el.parentNode!==par)par.appendChild(el);}
  let acc=0;const rows=[];
  L.forEach((w,i)=>{const o=wishOk(w);if(!o)return;let ic,nm,wt;
-  if(w.a==='build'){ic=TW[w.v].ic;nm=TW[w.v].n;wt='Construir';}
+  if(w.a==='build'){ic=twIc(w.v);nm=TW[w.v].n;wt='Construir';}
   else{const t=o.t,T=TW[t.type],X=t.spec&&SPECS[t.type]?SPECS[t.type][t.spec]:null;ic=(X||T).ic;nm=(X||T).n;
    wt=w.a==='up'?'Mejorar a Nv '+(t.lvl+1):w.a==='spec'?'→ '+SPECS[t.type][w.v].n:AB[w.v].n+' · rango '+((t.ab&&t.ab[w.v]||0)+1);}
   // la primera se paga con el oro de ahora; las siguientes, con lo que sobre tras las anteriores

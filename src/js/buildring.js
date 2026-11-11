@@ -34,7 +34,7 @@ const DTN={phys:'Físico',magic:'Mágico',elem:'Elemental'};
 function bmInfo(k){const T=TW[k],a=twAt(k,1,null),M=twMax(1),src='shop:'+k;
  const tags=T.bufo?['Apoyo']:[DTN[T.dt]||'',T.unit?'Unidades':T.splash||T.pr?'Área':T.beam||T.chain?'Rayo':'Un objetivo'].filter(Boolean);
  const dm=a.st?`<div class="grow"><span class="cd">DPS</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,100*a.dv/M.dps))}%;background:${GCOL[a.st]}"></i></div><span class="gv ${a.st==='burn'?'cbu':'cpo'}">${f(a.dv)} ${GICO[a.st]}</span></div>`:gRow(dtLab(dtOf(T,a.TT),T.unit?'Daño (unidad)':'Daño'),dtCls(dtOf(T,a.TT)),a.dv,M.dmg,f(a.dv));
- return `<div class="bmh"><b>${T.ic} ${T.n}</b><span class="bp">${bmCost(k)} 🪙</span></div><div class="bmt">${tags.map(t=>`<em>${t}</em>`).join('')}</div>`+(T.bufo?'':dm)+((cd=>cd&&isFinite(cd)?gRow('Enfriamiento','ccl',1/cd,M.rate,f(cd)+' s'):'')(T.bufo?BUFOCD[k]:1/a.s.rate));}
+ return `<div class="bmh"><b>${icOf(T)} ${T.n}</b><span class="bp">${bmCost(k)} 🪙</span></div><div class="bmt">${tags.map(t=>`<em>${t}</em>`).join('')}</div>`+(T.bufo?'':dm)+((cd=>cd&&isFinite(cd)?gRow('Enfriamiento','ccl',1/cd,M.rate,f(cd)+' s'):'')(T.bufo?BUFOCD[k]:1/a.s.rate));}
 function bmCard(){const c=$('bmcard');if(!c||!BM.s)return;const k=BM.arm||BM.hov;if(!k){c.classList.remove('on');return;}const cost=bmCost(k),no=S.gold<cost;
  let h=bmInfo(k)+(BM.arm===k?`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':'Pulsa otra vez para construir'}</div>`:`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':(TOUCH?'Toca':'Pulsa')+' otra vez para construir'}</div>`);
  if(no)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla ${WISHI} y construirla sola cuando tengas oro.</div>`;

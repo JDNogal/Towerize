@@ -68,7 +68,7 @@ function histParts(){hsLoad();const L=hsFiltered(),all=HIST.list||[],won=all.fil
  let right='<div class="lbdet"><span class="lbdic">📚</span><h4>Registro de partidas</h4><p>Elige una partida para ver cómo fue: el mapa, las torres, el daño y dónde perdiste vida.</p></div>';
  if(r){const H=HEROES[r.hero],[rt]=hsRes(r),tot=r.tw.reduce((a,t)=>a+t[3],0)||1,tws=r.tw.filter(t=>t[3]>0||t[0].startsWith('hero:')).sort((a,b)=>b[3]-a[3]),mx=tws.length?tws[0][3]:1;
   const hl=r.hl||[],hmx=Math.max(1,...hl.map(v=>v||0));
-  const twr=tws.slice(0,8).map(t=>{const T=TW[t[0]],hero=t[0].startsWith('hero:');return `<div class="hstw"><span class="hsic" style="background:${hero?(H?H.col:'#888'):T?T.col:'#ccc'}">${t[8]||''}</span><span>${t[9]}${hero?' (héroe)':' · Nv '+t[2]}${t[7]?' <small>(vendida)</small>':''}</span><span class="hsbar"><i style="width:${Math.round(100*t[3]/mx)}%"></i></span><span>${Math.round(100*t[3]/tot)}%</span></div>`;}).join('');
+  const twr=tws.slice(0,8).map(t=>{const T=TW[t[0]],hero=t[0].startsWith('hero:');return `<div class="hstw"><span class="hsic" style="background:${hero?(H?H.col:'#888'):T?T.col:'#ccc'}">${hsIc(t)}</span><span>${t[9]}${hero?' (héroe)':' · Nv '+t[2]}${t[7]?' <small>(vendida)</small>':''}</span><span class="hsbar"><i style="width:${Math.round(100*t[3]/mx)}%"></i></span><span>${Math.round(100*t[3]/tot)}%</span></div>`;}).join('');
   const ch=Array.from({length:r.R},(_,i)=>{const v=hl[i]||0;return `<i class="${v>0?'h':''}" style="height:${v>0?Math.max(8,Math.round(100*v/hmx)):4}%" title="Ronda ${i+1}: ${v} de vida"></i>`;}).join('');
   const W=r.worst&&ET[r.worst.t];
   right=`<div class="hshd">${hsPor(r.hero,1)}<div><h3>${rt}${r.res==='w'?' · '+r.R+' rondas':' · ronda '+r.r+'/'+r.R}</h3><div class="bksub" style="margin:0">${H?H.n:''} Nv ${r.hlv} · ${r.tut?'Tutorial':(ERADEF[r.era||1]||ERADEF[1]).n} · ${hsDur(r.time)} · ${hsWhen(r.t0)}</div></div></div>
@@ -83,7 +83,7 @@ function hsBig(){const L=hsFiltered(),r=L[HIST.sel];if(!r)return;let el=$('hsbig
  const W=Math.min(innerWidth-40,innerHeight-90);el.innerHTML=`<div class="hsbw"><div class="hsbt"><b>${(HEROES[r.hero]||{}).n||''} · ${hsWhen(r.t0)}</b><small>Pasa el ratón por una torre para ver su daño</small><button data-a="hsbigx">✕</button></div><div class="hsbm">${hsMini(r,W)}<div class="hsbtip"></div></div></div>`;
  el.classList.add('on');const svg=el.querySelector('svg'),tip=el.querySelector('.hsbtip'),s=+svg.dataset.s,ox=+svg.dataset.ox,oy=+svg.dataset.oy,u=Math.max(1,K),tot=r.dmg||1;
  svg.addEventListener('pointermove',e=>{const b=svg.getBoundingClientRect(),x=(e.clientX-b.left)/s+ox,y=(e.clientY-b.top)/s+oy;const t=r.tw.find(t=>t[5]>=0&&!t[7]&&Math.abs(t[5]+.5-x)<=u*.5&&Math.abs(t[6]+.5-y)<=u*.5);
-  if(!t){tip.style.display='none';return;}tip.style.display='block';tip.innerHTML=`<b>${t[8]} ${t[9]}</b> · Nv ${t[2]}<br>${fi(t[3])} de daño (${Math.round(100*t[3]/tot)}%) · ${t[4]} bajas`;tip.style.left=(e.clientX-b.left+14)+'px';tip.style.top=(e.clientY-b.top+14)+'px';});
+  if(!t){tip.style.display='none';return;}tip.style.display='block';tip.innerHTML=`<b>${hsIc(t)} ${t[9]}</b> · Nv ${t[2]}<br>${fi(t[3])} de daño (${Math.round(100*t[3]/tot)}%) · ${t[4]} bajas`;tip.style.left=(e.clientX-b.left+14)+'px';tip.style.top=(e.clientY-b.top+14)+'px';});
  svg.addEventListener('pointerleave',()=>tip.style.display='none');}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
  if(a==='hsflt'){HIST.flt=b.dataset.v;HIST.sel=0;lbRender();}
@@ -93,3 +93,6 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
  else if(a==='hsbigx'){const el=$('hsbig');if(el)el.classList.remove('on');}
  else return;e.stopPropagation();},true);
 addEventListener('keydown',e=>{const el=$('hsbig');if(e.key==='Escape'&&el&&el.classList.contains('on')){el.classList.remove('on');e.stopImmediatePropagation();e.preventDefault();}},true);
+
+// v307: en el historial, las torres sin especialización salen con su icono dibujado (lo guardado era el emoji)
+function hsIc(t){try{if(!t[1]&&TW[t[0]]&&TW[t[0]].icsvg)return twIc(t[0]);}catch(e){}return t[8]||'';}
