@@ -135,3 +135,48 @@ Lecturas:
 - **Los soldados de Nv 3 no aportan nada en la ronda 20**, y a veces estorban: retienen a los enemigos fuera del centro de la explosión. Baluarte, Monasterio (las dos ramas), Asesinos y Depredadores apenas suman.
 - Los que sí aportan son los que hacen daño en área o explotan (Kamikaze, Mechas).
 - Conclusión: a los soldados no les falta daño base (la subida casi no se nota); **les falta escalar con la partida**. Propuesta para decidir: que la vida y el daño de las unidades suban un poco con la ronda (como los enemigos), o que sus habilidades de Nv 4 den control en área.
+
+## Era 2: mucha más armadura que la era 1 (hallazgo, sin tocar)
+
+Midiendo las oleadas enteras de cada era en el mismo laboratorio (Catapulta Nv 3 sola, física):
+
+| Ronda | Era | Enemigos | Vida total | Armadura media | Velocidad media | Bajas de la Catapulta |
+|---|---|---|---|---|---|---|
+| 5 | Fantástica | 52 | 1 568 | 0,8 | 3,96 | 52 |
+| 5 | Distópica | 54 | 1 542 | 2,8 | 2,99 | 18 |
+| 10 | Fantástica | 337 | 17 335 | 0,5 | 3,92 | 271 |
+| 10 | Distópica | 227 | 17 962 | 7,7 | 2,84 | 85 |
+| 15 | Fantástica | 1 220 | 116 990 | 5,9 | 3,87 | 504 |
+| 15 | Distópica | 715 | 121 697 | 21,0 | 2,67 | 29 |
+| 20 | Fantástica | 1 226 | 192 496 | 6,0 | 3,86 | 352 |
+| 20 | Distópica | 746 | 207 258 | 21,1 | 2,67 | 15 |
+
+- La **vida total** de la oleada es casi la misma en las dos eras (un 4-8 % más en la Distópica), como estaba previsto.
+- La **armadura media es de 3 a 15 veces mayor** en la Distópica. No es porque cada enemigo tenga mucha más (el Autómata tiene 10 y el Orco 5; el Titán 55 y el Ogro acorazado 40): es la **composición**. La Fantástica va llena de goblins sin armadura; la Distópica, de autómatas, centuriones y titanes.
+- Consecuencia: las torres **físicas** se hunden en la era 2 (la misma Catapulta mata 271 en la ronda 10 de la era 1 y 85 en la de la era 2; 504 contra 29 en la ronda 15). Y el mazo inicial de la era 2 es casi todo físico: Búnker, Robots y Cañoneros.
+- Con el mismo bot: gana 3-4 de 6 partidas en la era 1 y **pierde las 6 de la era 2, todas en la ronda 9-10, sin haber perdido vida antes**.
+- Esto contradice el principio «la era nueva es algo más dura en vida, con la misma velocidad y armadura». Opciones para decidir: (a) bajar la armadura de los enemigos básicos de la era 2 (Autómata 10 → 5, como el Orco); (b) meter más enemigos sin armadura en sus escuadras; (c) dar penetración o daño mágico/elemental a alguna torre inicial de la era 2. He lanzado una prueba con la armadura de la era 2 a la mitad para ver si el bot pasa de la ronda 10 (resultado abajo, si llegó a tiempo).
+
+Las torres de la era 2 no son más flojas que las de la era 1: contra la oleada 20 de la era 2, las mejores son Arco voltaico (98 bajas), Kamikaze (85) y Sónica gigante (80), por delante de las mejores de la era 1 en ese mismo escenario (Ogros 69, Heraldo 61, Alquimista 59).
+
+## Partidas enteras con el bot (15 rondas)
+
+El bot coloca piezas, construye pocas torres y las mejora (unas 8-10 al final). No juega como una persona, pero sirve para comparar. Seis mapas por era, antes y después de los cambios:
+
+| Era | Antes | Después |
+|---|---|---|
+| Fantástica (Reinhart) | 3 de 6 ganadas | 4 de 6 ganadas |
+| Distópica (Vega) | 0 de 6 (todas caen en la ronda 9-10) | 0 de 6 (igual; una llega a la 12) |
+
+Los cambios de equilibrio no han hecho la era 1 más difícil para una partida normal: las bajadas tocan habilidades de Nv 4 al máximo, que en 15 rondas casi no se alcanzan.
+
+## Pendiente / propuestas
+
+1. **Era 2**: decidir cómo bajar la armadura efectiva de sus oleadas (ver arriba). Es lo más importante que ha salido.
+2. **Soldados**: que escalen con la ronda o den control en área (ahora, a partir de la ronda 15-20, no aportan).
+3. **Nube viajera**: repaso de diseño (no toca a enemigos sueltos).
+4. **Habilidades que escalan con la vida del objetivo** para Ballesteros y Electrocutor (la función `toughK` ya existe; la usa Toxina letal).
+5. **Combos de control + área** (Ventisca o Sónica gigante al máximo + una Catapulta Nv 3 limpian la oleada 20 en el mapa favorable): vigilar.
+6. **Colmena contra ARGOS**: sigue reteniéndolo mucho tiempo.
+7. **Estudio**: usar siempre varias semillas (el mapa 12345 es muy favorable) y añadir los escenarios nuevos al estudio del PC. Las herramientas están en `tools/lab/` del repositorio (`correr.js`, `tabla.js`, `lab2.js`, `bot4.js`).
+8. Sin tocar en esta sesión: daño en área decreciente torre a torre, Detonador (no se pasa), señuelo kamikaze que arrastra hacia delante.
