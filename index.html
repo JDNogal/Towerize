@@ -5402,6 +5402,9 @@ function dnTick(dt){if(!S.dn)return;for(const d of S.dn){d.age+=dt;d.idle+=dt;if
 const fmtD=n=>{n=Math.round(n);if(OPT.dsci&&n>=1e6){const s=n.toExponential(2).split('e+');return s[0].replace('.',',')+'e'+s[1];}
  if(OPT.dabbr&&n>=1000){const u=['K','M','B','T','Qa','Qi'];let i=-1,v=n;while(v>=1000&&i<u.length-1){v/=1000;i++;}return String(+v.toFixed(v<10?2:v<100?1:0)).replace('.',',')+u[i];}
  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');};
+// v307 · reserva de daño: los proyectiles de un solo objetivo apuntan en el enemigo lo que le van a quitar (tras armadura, a la baja) para que otras torres no malgasten disparos en él
+const RSVOK=T=>!T.splash&&!T.beam&&!T.chain;
+const rsvAdd=(e,dm,ty,pen)=>{const A=ty==='elem'?0:Math.max(-MAXPEN,armorOf(e,ty)-(pen||0)),v=dm*(1-A/(A+ARM_K))*.9;e.inc=(e.inc||0)+v;return v;};
 const hurt=(e,a,src,ty,pen)=>{if(e.hk>0&&!(typeof HKD!=='undefined'&&HKD))return 0;if(typeof eHurtMod==='function'){a=eHurtMod(e,a,src,ty);if(!(a>0))return 0;}if(e.fx&&e.fx.wet&&src&&(src.type==='augur'||src.type==='tesla'))a*=1+e.fx.wet.m;if(ty==='magic'&&e.fx&&e.fx.hex)a*=1+e.fx.hex.m;if(S.fury)a*=furyM();if(ET[e.t].fly&&rp('harpoon'))a*=1.25;if(e.prey>0)a*=1.15;if(typeof e2DmgM==='function')a*=e2DmgM(e,src,ty);if(src&&S.faros&&S.faros.length&&!src.hero)faroFeed(src,Math.min(Math.max(e.hp,0),a));if(ty==='phys'&&src&&src.ab&&src.ab.hollow)a*=1+abRank(src,'hollow').p*Math.max(0,armorOf(e,'phys'));const A=ty==='elem'?0:Math.max(-MAXPEN,armorOf(e,ty)-(pen||0)),m=1-A/(A+ARM_K);if(src&&src.hero&&src.hero.s&&S.phase==='wave')src.hero.s.la=S.wt;if(src&&src.hero&&e.hp>0)e.hx=(e.hx||0)+ET[e.t].xp*Math.min(e.hp,a*m)/e.max;if(src&&!src.hero){if(ty==='phys')e.ph=1;else if(ty==='magic')e.mh=1;}const dl=Math.min(Math.max(e.hp,0),a*m);e.hp-=a*m;if(src)e.src=src;e.kdn=DNK;if(S.tut&&src&&src.id)(e.hb=e.hb||{})[src.id]=S.wt;if(dl>0&&S.dn)dnAdd(e,dl,dnKey(src,ty));if(dl>0&&src&&typeof onDmg==='function')onDmg(e,dl,src,ty);if(S.st&&dl>0){S.st.dmg+=dl;if(src){src.dmgT=(src.dmgT||0)+dl;relDmg(src,dl);}}
  if(!TZX&&S.tz&&S.tz.length&&S.tz.some(z=>Math.hypot(e.x-z.x,e.y-z.y)<=z.r)){TZX=1;const d0=S.st?S.st.dmg:0;hurt(e,a*.25,src,'magic',0);if(S.st)RS('tome').dmg+=S.st.dmg-d0;TZX=0;}
  return m;};
@@ -5661,9 +5664,12 @@ function update(dt){
  for(const t of S.list){
   const T=TW[t.type],s=stats(t);if(T.unit||T.support||T.swarm||T.custom||t.jam>0)continue;t.cd=Math.max(-.1,t.cd-dt);if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);if(t.flash&&(t.flash.t-=dt)<=0)t.flash=null;if(t.fl&&(t.fl.ttl-=dt)<=0)t.fl=null;
   let tg=alive(t.tgt||{})&&!(t.tgt.hk>0)&&Math.hypot(t.tgt.x-t.x,t.tgt.y-t.y)<=s.range&&!(typeof camoHid==='function'&&camoHid(t.tgt,t))?t.tgt:null;
-  if(!tg){const md=(typeof tgtAI==='function'&&tgtAI(t,s))||TGT[t.mode]||TGT.core;let bs=0;
+  if(!tg){const md=(typeof tgtAI==='function'&&tgtAI(t,s))||TGT[t.mode]||TGT.core;let bs=0,tg2=null,bs2=0;const rsv=RSVOK(T);
    for(const e of S.enemies){if(e.hk>0||Math.hypot(e.x-t.x,e.y-t.y)>s.range||(T.ground&&isFly(e))||(typeof camoHid==='function'&&camoHid(e,t)))continue;const sc=md.score(e,prog);
-    if(!tg||sc>bs||(sc===bs&&prog(e)<prog(tg))){tg=e;bs=sc;}}}
+    // v307 · reserva de daño: si lo que ya va de camino basta para matarlo, mejor otro (y si no hay otro, a ese igual)
+    if(rsv&&(e.inc||0)>=e.hp){if(!tg2||sc>bs2||(sc===bs2&&prog(e)<prog(tg2))){tg2=e;bs2=sc;}continue;}
+    if(!tg||sc>bs||(sc===bs&&prog(e)<prog(tg))){tg=e;bs=sc;}}
+   if(!tg)tg=tg2;}
   t.tgt=T.beam?tg:null;
   volcHeat(t,!!tg,dt);
   if(!tg){t.rays=null;continue;}
@@ -5708,14 +5714,14 @@ function update(dt){
    if(T.cata){cataShot(t,tg,s,dm,crit,S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1);continue;}
    // el daño, el crítico y el área se fijan al disparar; los efectos se aplican al impactar
    let nb=1;{const bu=abRank(t,'burst');if(bu){t.shc=(t.shc||0)+1;if(t.shc>=bu.n){t.shc=0;nb=bu.a;}}}
-   for(let q=0,nq=(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1)*nb;q<nq;q++)S.proj.push({x:t.x+(nb>1?(q%3-1)*.35:0),y:t.y+(nb>1?(q%3-1)*.35:0),e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm:T.orb?dm*(1+soulB(t)):dm,orb:T.orb?Math.min(4,t.lvl||1):0,dt:T.dt,src:t,sp:T.ps,area:T.splash?s.area:0,slow:T.slow||0,slowt:T.slowt||SLOWT,slowA:T.slowA,pen:s.pen,col,crit,pz});
+   for(let q=0,nq=(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1)*nb;q<nq;q++)S.proj.push({inc:RSVOK(T)?rsvAdd(tg,T.orb?dm*(1+soulB(t)):dm,T.dt,s.pen):0,x:t.x+(nb>1?(q%3-1)*.35:0),y:t.y+(nb>1?(q%3-1)*.35:0),e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm:T.orb?dm*(1+soulB(t)):dm,orb:T.orb?Math.min(4,t.lvl||1):0,dt:T.dt,src:t,sp:T.ps,area:T.splash?s.area:0,slow:T.slow||0,slowt:T.slowt||SLOWT,slowA:T.slowA,pen:s.pen,col,crit,pz});
   }
  }
  S.proj=S.proj.filter(p=>{
   if(alive(p.e)){p.tx=p.e.x;p.ty=p.e.y;}
   const dx=p.tx-p.x,dy=p.ty-p.y,dd=Math.hypot(dx,dy),st=p.sp*dt;if(dd<=st&&p.crit&&alive(p.e))critMark(p.e);
   if(dd>st){p.vx=dx/dd;p.vy=dy/dd;p.x+=p.vx*st;p.y+=p.vy*st;return true;}
-  p.x=p.tx;p.y=p.ty;const hit=alive(p.e),sh=abRank(p.src,'shock'),kd=sh?sh.k*K:0;
+  p.x=p.tx;p.y=p.ty;if(p.inc&&p.e){p.e.inc=Math.max(0,(p.e.inc||0)-p.inc);p.inc=0;}const hit=alive(p.e),sh=abRank(p.src,'shock'),kd=sh?sh.k*K:0;
   if(hit){sfxHit(p.src,p.dt);strike(p.e,p.dm,p.src,p.dt,p.pen,p.pz);onHit(p.e,p.src);if(p.orb&&p.src&&p.src.ab)orbHit(p.src,p.e,stats(p.src),p.dm);if(p.slow)slowE(p.e,p.slow,p.slowt||SLOWT);if(kd&&p.e.hp>0&&p.area)knock(p.e,kd);}
   if(p.area){for(const e of S.enemies)if(e!==p.e&&e.hp>0&&!(p.cata&&isFly(e))&&Math.hypot(e.x-p.x,e.y-p.y)<=p.area){hurt(e,p.dm*SPLASH,p.src,p.dt,p.pen);if(p.slowA&&p.slow&&e.hp>0)slowE(e,p.slow,p.slowt||SLOWT);if(kd&&e.hp>0)knock(e,kd);}
    {const cr=p.src&&p.src.ab&&abRank(p.src,'cluster');if(cr)cluster(p,cr);}
