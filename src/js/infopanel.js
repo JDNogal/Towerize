@@ -166,7 +166,7 @@ function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith(
 // fuera del compendio, el tipo de daño ya lo dice el icono junto a «Daño»: no hace falta su fila
 const dtRowOn=src=>!!(CP&&CP.open);
 function rows(s,T,src,extra){
- const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
+ const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot||T.burn?''/* v307: no dañan al golpe (su daño va en DPS): sin fila «Daño 0» */:T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
   return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+

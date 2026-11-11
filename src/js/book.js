@@ -37,7 +37,7 @@ function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
  else if(it.pc!=null)ic=`<canvas width="44" height="44" data-bpi="${it.pc}"></canvas>`;
  else if(it.bf)ic=typeof bfIcon==='function'?bfIcon(it.bf):`<span class="bbf" style="background:${BF[it.bf].col}">${BF[it.bf].l||''}</span>`;
  else if(it.dot)ic=`<span class="bdot${it.ok&&enIc(it.id)?' beic':''}" style="background:${it.dot}">${it.ok&&enIc(it.id)?icHtml(enIc(it.id)):''}</span>`;
- else ic=`<span class="bic"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
+ else ic=`<span class="bic${t==='tw'?' bctw':''}"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
  return `<button class="bti${t==='lg'?' ach':''}${it.pin?' pin':''}${on?' on':''}${it.ok?'':' un'}${it.got?' got':''}${it.hid?' hid':''}${it.lk&&!it.ok?' lkd':''}" data-a="csel" data-v="${it.id}">${ic}<small>${it.ok?it.n:'???'}</small></button>`;}
 // ficha de la página derecha: icono y título en una fila; debajo, los datos en dos columnas con puntos («Daño ······ 6,5»)
 function bkSheet(ic,inner,cls){let ttl='',rest=inner;const a='<div class="ttl">';
@@ -51,7 +51,7 @@ function bkDetail(t,id){
  const sh=(ic,txt)=>`<div class="bkun"><span class="sil bkbig">${ic}</span><h4>???</h4><p>${txt}</p></div>`;
  if(t==='tw'){const T=TW[id];if(!T)return'';
   if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+achLink(a,'',1);}return sh(T.ic,'Aún no descubierto.');}
-  const bi=`<span class="bkbic" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
+  const bi=`<span class="bkbic bctw" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
   if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   return bkSheet(bi,shopInfo(id,1).replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id);}
  if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;

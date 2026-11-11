@@ -1845,6 +1845,16 @@ html:root[data-skin="holo"] .rbx.rhb.rult{border-color:#ffd75a!important;backgro
 /* v307 · consola solo con iconos: el nombre sale en el bocadillo al pasar el ratón */
 :root[data-skin="holo"] .lbcv .bkrib span,:root[data-skin="holo"] .bkribs .bkrib span{display:none!important}
 :root[data-skin="holo"] .lbcv .bkrib .latic,:root[data-skin="holo"] .bkribs .bkrib .latic{width:30px!important;height:30px!important}
+/* v307 · Compendio: las torres como en el mapa, un círculo de su color con borde negro y el icono encima (sin cuadrado ni disco oscuro) */
+.bic.bctw[style*="background"],.bkbic.bctw{border-radius:50%!important;box-shadow:0 0 0 2.5px #1b1712,0 2px 0 3px rgba(0,0,0,.18)!important}
+.bic.bctw[style*="background"] .icsvg svg,.bkbic.bctw .icsvg svg{background:none!important;width:1.45em!important;height:1.45em!important}
+.bti.got .bic.bctw[style*="background"]{box-shadow:0 0 0 2.5px #1b1712,0 0 0 5px var(--t6fdc8c)!important}
+/* en la tableta: casillas de cristal holográfico en vez de negras, para que el borde negro del círculo destaque */
+:root[data-skin="holo"] #comp .bti{background:linear-gradient(180deg,rgba(63,232,255,.13),rgba(63,232,255,.04))!important;box-shadow:inset 0 0 0 1px rgba(63,232,255,.35),inset 0 1px 0 rgba(255,255,255,.08)!important;border-color:transparent!important}
+:root[data-skin="holo"] #comp .bti:hover{background:linear-gradient(180deg,rgba(63,232,255,.2),rgba(63,232,255,.07))!important}
+:root[data-skin="holo"] #comp .bti.on{background:linear-gradient(180deg,rgba(63,232,255,.3),rgba(63,232,255,.1))!important;box-shadow:inset 0 0 0 1.5px #3fe8ff,0 0 10px rgba(63,232,255,.5)!important}
+/* las torres aún sin descubrir, también redondas (sin borde negro) */
+.bic.bctw:not([style*="background"]){border-radius:50%!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2649,7 +2659,8 @@ function drawFlame(c,t,tx,ty,cs){const f0=t.fl;if(!f0)return;const px=tx(t.x),py
  const hh=t.heat||0;c.fillStyle=t.blue?'rgba(90,150,255,.42)':`rgba(255,${Math.round(110-60*hh)},40,${.38+.2*hh})`;c.strokeStyle=t.blue?'rgba(150,200,255,.9)':'rgba(255,170,70,.85)';c.lineWidth=Math.max(1,cs*.12);c.beginPath();c.moveTo(px,py);c.arc(px,py,len,f0.a-f0.h,f0.a+f0.h);c.closePath();c.fill();
  if(f0.one){c.beginPath();c.moveTo(px,py);c.lineTo(px+Math.cos(f0.a)*len,py+Math.sin(f0.a)*len);c.stroke();}else c.stroke();}
 // oro por baja normalizado: el oro total de las bajas de una oleada sigue una curva fija (la de WGREF), aunque haya más enemigos
-let GOLDK=1,WGREF=1.3;const goldNorm=r=>S&&!S.tut?Math.min(1,Math.pow(WGREF,Math.min(r,15)-1)/wGrow(r)):1;const killGoldF=t=>ET[t].gold*GOLDK*goldNorm(S.round),rndG=v=>Math.floor(v)+(Math.random()<v%1?1:0),killGold=t=>rndG(killGoldF(t));;
+let GOLDK=1,WGREF=1.3;const goldNorm=r=>S&&!S.tut?Math.min(1,Math.pow(WGREF,Math.min(r,15)-1)/wGrow(r)):1;const GOLDE2=1.25;/* v307: los enemigos de la era 2 tienen +15 % de vida y dan el mismo oro que su familia de la era 1; con el oro real de partida la era 2 daba un 23 % menos hasta la ronda 9 */
+const killGoldF=t=>ET[t].gold*GOLDK*goldNorm(S.round)*((ET[t].era||1)===2?GOLDE2:1),rndG=v=>Math.floor(v)+(Math.random()<v%1?1:0),killGold=t=>rndG(killGoldF(t));;
 const espeed=e=>ET[e.t].sp*(e.fx.slow?e.fx.slow.m:1);
 const TGT={
  core:{n:'Más cercano al núcleo',d:'El enemigo más adelantado en el camino.',score:(e,pr)=>-pr(e)},
@@ -3377,7 +3388,7 @@ function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
  else if(it.pc!=null)ic=`<canvas width="44" height="44" data-bpi="${it.pc}"></canvas>`;
  else if(it.bf)ic=typeof bfIcon==='function'?bfIcon(it.bf):`<span class="bbf" style="background:${BF[it.bf].col}">${BF[it.bf].l||''}</span>`;
  else if(it.dot)ic=`<span class="bdot${it.ok&&enIc(it.id)?' beic':''}" style="background:${it.dot}">${it.ok&&enIc(it.id)?icHtml(enIc(it.id)):''}</span>`;
- else ic=`<span class="bic"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
+ else ic=`<span class="bic${t==='tw'?' bctw':''}"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
  return `<button class="bti${t==='lg'?' ach':''}${it.pin?' pin':''}${on?' on':''}${it.ok?'':' un'}${it.got?' got':''}${it.hid?' hid':''}${it.lk&&!it.ok?' lkd':''}" data-a="csel" data-v="${it.id}">${ic}<small>${it.ok?it.n:'???'}</small></button>`;}
 // ficha de la página derecha: icono y título en una fila; debajo, los datos en dos columnas con puntos («Daño ······ 6,5»)
 function bkSheet(ic,inner,cls){let ttl='',rest=inner;const a='<div class="ttl">';
@@ -3391,7 +3402,7 @@ function bkDetail(t,id){
  const sh=(ic,txt)=>`<div class="bkun"><span class="sil bkbig">${ic}</span><h4>???</h4><p>${txt}</p></div>`;
  if(t==='tw'){const T=TW[id];if(!T)return'';
   if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(T.ic,`Aún no disponible.`)+achLink(a,'',1);}return sh(T.ic,'Aún no descubierto.');}
-  const bi=`<span class="bkbic" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
+  const bi=`<span class="bkbic bctw" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
   if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   return bkSheet(bi,shopInfo(id,1).replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id);}
  if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;
@@ -6099,7 +6110,7 @@ function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith(
 // fuera del compendio, el tipo de daño ya lo dice el icono junto a «Daño»: no hace falta su fila
 const dtRowOn=src=>!!(CP&&CP.open);
 function rows(s,T,src,extra){
- const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot?R('cd',kst('dmg','Daño',src),'0'):T.burn?R('cd',kst('dmg','Daño',src),'0'):T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
+ const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot||T.burn?''/* v307: no dañan al golpe (su daño va en DPS): sin fila «Daño 0» */:T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
   return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+

@@ -18,7 +18,8 @@ function drawFlame(c,t,tx,ty,cs){const f0=t.fl;if(!f0)return;const px=tx(t.x),py
  const hh=t.heat||0;c.fillStyle=t.blue?'rgba(90,150,255,.42)':`rgba(255,${Math.round(110-60*hh)},40,${.38+.2*hh})`;c.strokeStyle=t.blue?'rgba(150,200,255,.9)':'rgba(255,170,70,.85)';c.lineWidth=Math.max(1,cs*.12);c.beginPath();c.moveTo(px,py);c.arc(px,py,len,f0.a-f0.h,f0.a+f0.h);c.closePath();c.fill();
  if(f0.one){c.beginPath();c.moveTo(px,py);c.lineTo(px+Math.cos(f0.a)*len,py+Math.sin(f0.a)*len);c.stroke();}else c.stroke();}
 // oro por baja normalizado: el oro total de las bajas de una oleada sigue una curva fija (la de WGREF), aunque haya más enemigos
-let GOLDK=1,WGREF=1.3;const goldNorm=r=>S&&!S.tut?Math.min(1,Math.pow(WGREF,Math.min(r,15)-1)/wGrow(r)):1;const killGoldF=t=>ET[t].gold*GOLDK*goldNorm(S.round),rndG=v=>Math.floor(v)+(Math.random()<v%1?1:0),killGold=t=>rndG(killGoldF(t));;
+let GOLDK=1,WGREF=1.3;const goldNorm=r=>S&&!S.tut?Math.min(1,Math.pow(WGREF,Math.min(r,15)-1)/wGrow(r)):1;const GOLDE2=1.25;/* v307: los enemigos de la era 2 tienen +15 % de vida y dan el mismo oro que su familia de la era 1; con el oro real de partida la era 2 daba un 23 % menos hasta la ronda 9 */
+const killGoldF=t=>ET[t].gold*GOLDK*goldNorm(S.round)*((ET[t].era||1)===2?GOLDE2:1),rndG=v=>Math.floor(v)+(Math.random()<v%1?1:0),killGold=t=>rndG(killGoldF(t));;
 const espeed=e=>ET[e.t].sp*(e.fx.slow?e.fx.slow.m:1);
 const TGT={
  core:{n:'Más cercano al núcleo',d:'El enemigo más adelantado en el camino.',score:(e,pr)=>-pr(e)},
