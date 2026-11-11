@@ -201,3 +201,19 @@ Cambio (`bufadores_tope.js`): como mucho 1 grupo con bufador por oleada hasta la
 - Era 1: 3 de 6 ganadas (como antes). Dos de las derrotas también son de golpe en la ronda 10 (20 vidas en una ronda).
 
 **Lo que se ve ahora:** el problema es **el salto de la ronda 10 en las dos eras**. Las oleadas pasan de ~110 enemigos (ronda 8) a 230-350 (ronda 10), y además muchos básicos ascienden a su versión mediana (Autómata de asalto, Guerrero de colmena, Demonio), con 4-5 veces la vida. En la era 2 lo que se escapa en la ronda 10 es casi todo **Autómata de asalto** (hasta 17 en una partida) y **Guerrero de colmena**. Propuestas, para decidir: suavizar el número de enemigos entre las rondas 8 y 11, o retrasar/bajar el porcentaje de ascensos a la versión mediana en la ronda 10.
+
+## 11-nov (tarde) · Ronda 10, oro y reserva de daño
+Bot (bot4, tr .5 lr 3.5). Era 2: Vega, semillas 1–8. Era 1: Reinhart, semillas 1–6.
+- **Curva entera ×1,52 (descartada):** endurecía las rondas 3–8 (la ronda 3 de la era 2 pasó a doler) sin arreglar la 10.
+- **Rampa solo en las rondas 8–12 (descartada):** la ronda 10 bajaba un 13 %, pero el salto pasaba a las rondas 11–12. Queda el enganche `WGR` (sin uso) para ajustar ronda a ronda.
+- **El oro por baja está normalizado** (`goldNorm`): el oro de cada oleada sigue ×1,3 por ronda, vengan los enemigos que vengan. Los enemigos crecen ×1,47 hasta la ronda 7 y ×1,65 después.
+- **Oro de la era 2 ×1,25** (`GOLDE2`, aplicado): sus enemigos tienen +15 % de vida y daban el mismo oro; hasta la ronda 9 se ganaba un 23 % menos que en la era 1. Ahora se gana 1323, frente a 1375 en la era 1.
+- **Oro que acelera desde la ronda 8 (descartado):** no cambió nada; el bot llega a la ronda 10 con oro sin gastar.
+- **Mini-élite en lugar de la Élite en la ronda 10 (descartado):** casi igual. La Élite no es la causa.
+- **Reserva de daño (aplicada):** los proyectiles de un solo objetivo apuntan el daño que llevan; las demás torres no gastan disparos en un enemigo que ya va a morir.
+  - Fugas en la ronda 10 de la era 2: de unas 14 de media a unas 8.
+  - Era 2: 1 de 8 ganadas (antes también 1 de 8), pero se cae más tarde: 2 partidas mueren en la ronda 10 (antes 3).
+  - Era 1: 5 de 6 ganadas (antes 4 de 6).
+- Lo que se cuela en la ronda 10 de la era 2 es la masa de básicos (Autómata, Zángano, Autómata de asalto).
+- Límite del bot: llega a la ronda 10 sin torres de Nv 4.
+- Pendiente: el Dron (2 s por ajuste, Overclock de 5 s que no para), cambiado esta tarde, aún sin medir con el bot.
