@@ -10154,9 +10154,11 @@ function etmPool(){const P=[...ETMN.go,...ETMN.joke];
   if(s.fav)P.push(`Su torre más usada: ${s.fav}. Le tiene cariño, se nota.`);if(s.won)P.push(`${s.won} ${s.won===1?'victoria':'victorias'}. No está mal para un humano.`);}
  return P;}
 function etmName(t){const nm=STO.name;return nm?t.replace(/Piloto/g,nm):t;}
-function etmSay(){const cv=document.querySelector('.lbcv.a');if(!cv)return;const now=performance.now();
- ETM.taps=ETM.taps.filter(x=>now-x<6000);ETM.taps.push(now);
- const P=(ETM.taps.length>=4?ETMN.tickle:etmPool()).filter(x=>x!==ETM.last);const txt=etmName(P[Math.floor(Math.random()*P.length)]||ETMN.go[0]);ETM.last=txt;
+function etmTips(){const P=[];for(const t of ETMN.tip)if(typeof t==='string')P.push(t);else if(t[1]())P.push(t[0]);return P;}
+// auto: lo dice solo (no cuenta como pulsación). En la pausa (.ing) solo consejos.
+function etmSay(auto){const cv=document.querySelector('.lbcv.a');if(!cv)return;const now=performance.now(),pau=cv.classList.contains('ing');ETM.at=now;
+ if(!auto){ETM.taps=ETM.taps.filter(x=>now-x<6000);ETM.taps.push(now);}
+ const P=(pau?etmTips():!auto&&ETM.taps.length>=4?ETMN.tickle:etmPool()).filter(x=>x!==ETM.last);const txt=etmName(P[Math.floor(Math.random()*P.length)]||ETMN.go[0]);ETM.last=txt;
  let b=cv.querySelector('.etmbub');if(!b){b=document.createElement('div');b.className='etmbub';b.setAttribute('role','status');b.setAttribute('aria-live','polite');cv.appendChild(b);}
  b.innerHTML='<b>ÉTER</b><span class="etmt"></span>';const sp=b.querySelector('.etmt');
  cv.classList.add('etmon');b.classList.remove('on');void b.offsetWidth;b.classList.add('on');
@@ -10166,8 +10168,19 @@ function etmSay(){const cv=document.querySelector('.lbcv.a');if(!cv)return;const
  ETM.hide=setTimeout(()=>{b.classList.remove('on');cv.classList.remove('etmon','etmtalk');},2600+ch.length*28+1800);
  try{sfx('eter');}catch(e){}}
 {const _lr=lbRender;lbRender=function(){const r=_lr.apply(this,arguments);try{
- const cv=document.querySelector('.lbcv.a');if(cv&&!cv.classList.contains('ing')&&!cv.querySelector('.etmbt')){
+ const cv=document.querySelector('.lbcv.a');if(cv&&!cv.querySelector('.etmbt')){
   cv.insertAdjacentHTML('beforeend','<button class="etmbt" data-a="etmsay" title="Hablar con ÉTER" aria-label="Hablar con ÉTER"></button><i class="etmgr" aria-hidden="true"></i>');
   if(!ETM.stats)etmStats();}}catch(e){}return r;};}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="etmsay"]');if(!b)return;e.stopPropagation();e.preventDefault();etmSay();},true);
+// ÉTER habla solo: en el menú, una frase cada ~35 s; al abrir la pausa, a veces un consejo. Se quita en Opciones › Diálogos.
+OPTS.splice(OPTS.findIndex(o=>o.key==='eter')+1,0,{tab:'hs',type:'toggle',key:'eterm',def:true,show:()=>typeof era2Ok==='function'&&era2Ok(),label:'ÉTER habla solo en el menú y la pausa',desc:'En el menú principal, ÉTER suelta una frase de vez en cuando; al pausar, a veces te da un consejo. Pulsando su pantalla habla igual aunque lo desactives.'});
+if(OPT.eterm===undefined)OPT.eterm=true;
+const ETMAUTO=35000;
+setInterval(()=>{try{const cv=document.querySelector('.lbcv.a');const bt=cv&&cv.querySelector('.etmbt'),vis=bt&&LB.open&&LB.cover&&getComputedStyle(bt).display!=='none'&&bt.getClientRects().length&&!document.hidden;
+ if(!vis){ETM.since=0;ETM.pau=false;return;}
+ const now=performance.now(),pau=cv.classList.contains('ing');if(!ETM.since)ETM.since=now;
+ if(pau&&!ETM.pau){ETM.pau=true;if(OPT.eterm!==false&&Math.random()<.6)setTimeout(()=>{const c=document.querySelector('.lbcv.a.ing');if(c&&!c.classList.contains('etmon'))etmSay(true);},900);return;}
+ if(!pau)ETM.pau=false;
+ if(OPT.eterm===false||pau||cv.classList.contains('etmon'))return;
+ if(now-Math.max(ETM.since,ETM.at||0)>=ETMAUTO)etmSay(true);}catch(e){}},1000);
 </script></body></html>
