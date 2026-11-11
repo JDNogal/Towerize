@@ -35,6 +35,7 @@ const OPTS=[
  {tab:'kb',type:'keys'},
  {tab:'jg',type:'reset',label:'Borrar progreso',desc:'Borra todo lo que has conseguido y descubierto: compendio, logros, récords y victorias de héroe, rondas, tutoriales, historia y tu nombre para ÉTER, los desbloqueos y la personalización (paletas, núcleos y decoraciones). Se mantienen el sonido, los atajos y tus preferencias de interfaz. No se puede deshacer.'},
  {tab:'un',type:'toggle',key:'u_rl',def:false,label:'Desbloquear todas las reliquias',desc:'Las reliquias que dependen de un logro también pueden salir en los cofres.'},
+ {tab:'un',type:'toggle',key:'u_ev',def:false,label:'Desbloquear todos los eventos',desc:'Los eventos que dependen de un logro también pueden salir en el mapa.'},
  {tab:'un',type:'toggle',key:'u_era',def:false,label:'Desbloquear todas las eras',desc:'La Era Distópica (Ruinas de Neón) disponible sin haber reparado a ÉTER.'},
  {tab:'un',type:'toggle',key:'u_cs',def:false,label:'Desbloquear toda la personalización',desc:'Encuadernaciones, núcleos y decoraciones disponibles sin conseguir sus logros.'},
  {tab:'ps',type:'cosm'},
@@ -57,7 +58,7 @@ const OPTS=[
  {tab:'ac',type:'slider',key:'delay',def:.6,min:.1,max:2,step:.01,fmt:v=>f(v)+' s',label:'Tiempo de apertura del panel de información',descT:'Lo que tarda en completarse la rueda de carga al mantener pulsado algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.',desc:'Lo que tarda en completarse la rueda de carga al señalar algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.'}];
 const OTABS=[['jg','Juego','⚙️'],['kb','Atajos','⌨️'],['ps','Personalización','🎨'],['hs','Diálogos','💬'],['vol','Sonido','🔊'],['gf','Gráficos','🖥️'],['ac','Accesibilidad','♿'],['un','Desbloqueos','🔓']];
 // icono y apartado de cada opción en la ventana de opciones
-const OIC={kcap:'🔤',pm:'📌',fs:'⛶',dnum:'💥',hints:'💡',ptip:'🎯',ptipw:'🌀',treal:'🕒',tcomb:'⏱️',slow:'🐢',keys:'⌨️',reset:'🗑️',dspd:'✍️',dtype:'📝',dauto:'⏩',dwait:'⏳',dglitch:'📺',dbig:'🔠',cname:'🪪',u_tw:'🗼',u_hr:'🦸',u_rl:'💎',u_cs:'🎨',u_rd:'📅',u_cp:'📖',u_cpa:'📘',u_sec:'🕵️',vm:'🔊',vu:'🎵',vf:'💫',fps:'📈',fx:'✨',dpsx:'🧮',dabbr:'🔢',dsci:'🔬',delay:'⌛'};
+const OIC={kcap:'🔤',pm:'📌',fs:'⛶',dnum:'💥',hints:'💡',ptip:'🎯',ptipw:'🌀',treal:'🕒',tcomb:'⏱️',slow:'🐢',keys:'⌨️',reset:'🗑️',dspd:'✍️',dtype:'📝',dauto:'⏩',dwait:'⏳',dglitch:'📺',dbig:'🔠',cname:'🪪',u_tw:'🗼',u_hr:'🦸',u_rl:'💎',u_ev:'🗺️',u_cs:'🎨',u_rd:'📅',u_cp:'📖',u_cpa:'📘',u_sec:'🕵️',vm:'🔊',vu:'🎵',vf:'💫',fps:'📈',fx:'✨',dpsx:'🧮',dabbr:'🔢',dsci:'🔬',delay:'⌛'};
 const OSEC={kcap:'Interfaz',pm:'Interfaz',fs:'Interfaz',dnum:'Interfaz',keys:'Interfaz',hints:'Ayudas',slow:'Tiempo',ptip:'Ayudas',ptipw:'Ayudas',treal:'Tiempo',tcomb:'Tiempo'};
 const oKey=o=>o.key||(o.type==='choice'&&o.tab==='jg'?'pm':o.type==='choice'&&o.tab==='hs'?'dspd':o.type);
 // cada sección sale una sola vez: se ordenan las opciones de Juego por sección (las de otras pestañas no se mueven)
@@ -87,13 +88,13 @@ const saveNewu=()=>{try{localStorage.setItem('rt-newu',JSON.stringify(NEWU));}ca
 function newU(kind,ic,n,extra,id){NEWU.push({k:kind,ic,n,x:extra||'',id:id||null});saveNewu();}
 function heroWinCount(){if(!S||S.tut||!S.hero||S.pvE)return;const id=S.hero.id,t0=hTier(id);HWIN[id]=(HWIN[id]||0)+1;try{localStorage.setItem('rt-hwin',JSON.stringify(HWIN));}catch(e){}
  const t1=hTier(id);if(t1>t0){const H=HEROES[id];newU('frame','🖼️','Marco de '+hTierN(t1)+' · '+H.n,(HWIN[id])+' victorias');toast(`🖼️ <b>Marco de ${hTierN(t1)} para ${H.n}</b><br><small>${HWIN[id]} victoria${HWIN[id]===1?'':'s'} con este héroe.</small>`);}}
-const NUKL={era:'Eras',tw:'Torres',hr:'Héroes',rl:'Reliquias',ux:'Funciones',pal:'Encuadernaciones',core:'Núcleos',dec:'Decoración del mapa',frame:'Marcos de héroe'};
+const NUKL={era:'Eras',tw:'Torres',hr:'Héroes',rl:'Reliquias',ev:'Eventos',ux:'Funciones',pal:'Encuadernaciones',core:'Núcleos',dec:'Decoración del mapa',frame:'Marcos de héroe'};
 // ficha de un desbloqueo (página derecha)
 function nuDetail(u){if(!u)return '';
  if(u.k==='tw'&&u.id&&TW[u.id]){const T=TW[u.id];return bkSheet(`<span class="bkbic" style="background:${T.col}">${T.ic}</span>`,(T.uniq?uniqGlance(u.id,1):shopInfo(u.id,1)).replace(/<b>[^\p{L}<\s]+ /u,'<b>'))+'<p class="bknote">A partir de ahora puede salirte en las ofertas de torres de cada partida.</p>';}
  if(u.k==='rl'&&u.id&&RELIC[u.id]){const r=RELIC[u.id];return bkSheet(`<span class="bkbic" style="background:${r.col}">${r.ic}</span>`,relicInfo(u.id,1))+'<p class="bknote">A partir de ahora puede salirte en los cofres.</p>';}
  if(u.k==='hr'&&u.id&&HEROES[u.id]){const D=HEROES[u.id];return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(u.id)}</span>`,heroInfo(u.id,1).replace(/<b>[^\p{L}<\s]+ /u,'<b>'))+'<p class="bknote">Ya puedes elegirlo al empezar una partida.</p>';}
- const why={era:'Se elige al empezar una partida, en el paso «Era».',ux:'Ya está disponible en el menú.',pal:'Se elige en Opciones › Personalización.',core:'Se elige en Opciones › Personalización.',dec:'Se activa o desactiva en Opciones › Personalización.',frame:'Se pone solo en el retrato del héroe.'}[u.k]||'';
+ const why={ev:'A partir de ahora puede salirte en el mapa, en los huecos de evento.',era:'Se elige al empezar una partida, en el paso «Era».',ux:'Ya está disponible en el menú.',pal:'Se elige en Opciones › Personalización.',core:'Se elige en Opciones › Personalización.',dec:'Se activa o desactiva en Opciones › Personalización.',frame:'Se pone solo en el retrato del héroe.'}[u.k]||'';
  return `<div class="bksh"><span class="bkbic">${u.ic}</span><div class="ttl bksht"><b>${u.n}</b>${u.x?`<br><small>${u.x}</small>`:''}</div></div><p class="bknote">${why}</p>`;}
 function renderUnlocks(){if(!NEWU.length)return;const list=NEWU.slice();NEWU=[];saveNewu();
  const g={};list.forEach((u,i)=>{u.i=i;(g[u.k]=g[u.k]||[]).push(u);});

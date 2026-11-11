@@ -127,3 +127,4 @@ body.pcpick #rtl,body.lbopen #rtl,body:has(#relic.open) #rtl{display:none!import
 .pcbar{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:8px 0 0}
 /* v305: en el compendio, los nombres de las habilidades se ven como palabra clave (pasa el ratón para leer qué hacen) */
 #comp .kw.st[data-kw^="ab_"]{text-decoration:underline dotted 1.5px;text-underline-offset:3px;cursor:help;color:var(--acc)}
+.evlk{display:flex;justify-content:center;margin:8px 0}

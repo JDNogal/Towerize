@@ -48,3 +48,5 @@ addEventListener('keydown',e=>{try{if(!(e.key==='Enter'||e.key===' ')||e.repeat|
 // ---- criatura aliada (y cualquier unidad que se mueva como un héroe): al elegirla se ve su alcance, como con el héroe ----
 H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.ally.sd[0];if(!s||s.hp<=0)return;const R=S.ally.alert||ALERT;
  g.save();g.fillStyle='rgba(90,180,255,.10)';g.strokeStyle='rgba(110,190,255,.85)';g.lineWidth=lw(1.5);g.beginPath();g.arc(s.x*CS+CS/2,s.y*CS+CS/2,R*CS,0,7);g.fill();g.stroke();g.restore();});
+// v305: eventos que se desbloquean con un logro: en el compendio, si aún no lo tienes, sale el logro que lo desbloquea
+{const _bd=bkDetail;bkDetail=function(t,id){const h=_bd.apply(this,arguments);try{if(t==='ev'&&typeof evLocked==='function'&&evLocked(id)&&!seen('ev',id))return h.replace('Aún no descubierto.','Aún no descubierto. Se desbloquea con un logro:')+`<div class="evlk">${achLink(EVLOCK[id],'',1)}</div>`;}catch(e){}return h;};}

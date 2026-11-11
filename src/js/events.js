@@ -3,8 +3,10 @@
 let MEM={ev:{},pigs:{}};try{MEM={ev:{},pigs:{},...(JSON.parse(localStorage.getItem('rt-evmem'))||{})};}catch(e){}
 const saveMem=()=>{try{localStorage.setItem('rt-evmem',JSON.stringify(MEM));}catch(e){}};
 const evCount=()=>(ROUNDS<19?2:ROUNDS<24?3:ROUNDS<29?4:5)+(Math.random()<.5?1:0);
+// v305: algunos eventos se desbloquean con un logro (el Nido abandonado, con «Todo arde»)
+const EVLOCK={nest:'pyro'},evLocked=k=>!!(EVLOCK[k]&&typeof ACHS!=='undefined'&&!ACHS[EVLOCK[k]]&&!(typeof OPT!=='undefined'&&OPT.u_ev));
 const evEraOk=k=>{const E=EVENTS[k];return !E.sub&&((S&&S.era===2)?E.era===2:E.era!==2);},evSeeEra=k=>EVENTS[k].era!==2||(typeof era2Ok==='function'&&era2Ok());
-function placeEvents(c,A){const pool=shuf(Object.keys(EVENTS).filter(evEraOk)),n=Math.min(evCount(),pool.length),cand=[];
+function placeEvents(c,A){const pool=shuf(Object.keys(EVENTS).filter(k=>evEraOk(k)&&!evLocked(k))),n=Math.min(evCount(),pool.length),cand=[];
  for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k]||(bx===c&&by===c))continue;if(Math.abs(bx-A[0])+Math.abs(by-A[1])<2)continue;cand.push(k);}
  shuf(cand);for(let i=0;i<n&&i<cand.length;i++)S.evts[cand[i]]=pool[i];}
 const relEra=r=>!(r.era===2&&!(typeof S!=='undefined'&&S&&S.era===2)),relSeeEra=r=>r.era!==2||(typeof era2Ok==='function'&&era2Ok());

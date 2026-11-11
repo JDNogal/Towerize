@@ -73,6 +73,7 @@ const T=[
  ['piezas_compendio.js','Compendio de piezas: variantes vistas y decorado de cada era'],
  ['habilidades_compendio.js','Compendio: el bocadillo de las habilidades de Nv 4'],
  ['equilibrio_v305.js','Retoques de equilibrio tras el estudio de torres'],
+ ['evento_logro.js','Salamandra desde el principio; «Todo arde» desbloquea el Nido abandonado'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];
