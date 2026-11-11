@@ -35,7 +35,7 @@ body.dsk:not(.mfs).pcpick #panel>*{zoom:var(--wz,1)}
 #rtl .rtd.cur .rti.fr,#rtl .rtd.cur .rti.boss{outline:0!important;filter:drop-shadow(0 0 5px #ffd75a)}
 /* iconos dibujados de la barra de arriba */
 #stats .hudi{width:1.25em;height:1.25em;vertical-align:-.27em;margin-right:.1em}
-#stats .srp{margin-left:.9em;white-space:nowrap}#stats .srp .hudi{margin-right:.28em;vertical-align:-.3em}
+#stats .srp{margin-left:.9em;white-space:nowrap}#stats .srp .hudi{margin-right:.28em;vertical-align:-.1em}
 #rtl .rti.ggroup{width:28px!important;height:31px!important;top:-3px}
 #rtl .rti.gminis{width:28px!important;height:27px!important}#rtl .rti.gelites{width:32px!important;height:29px!important;top:-2px}
 /* moneda de los precios: redonda con estrella (y crédito dorado de neón en la era 2) */
