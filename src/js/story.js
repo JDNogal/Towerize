@@ -23,11 +23,11 @@ const DLGC={reinhart:'#b8c4dd',sylvana:'#7ed47e',radagast:'#b48aff',yrsa:'#ff8a5
 let ETERIMG={k:null,u:null};
 function eterImg(){const sk=(typeof OPT!=='undefined'&&OPT.core)||'base';if(ETERIMG.k===sk&&ETERIMG.u)return ETERIMG.u;try{const cv=document.createElement('canvas');cv.width=cv.height=128;const g=cv.getContext('2d');g.fillStyle='#0e121a';g.fillRect(0,0,128,128);CORESTILL=1;try{drawCore(g,64,74,118,sk);}finally{CORESTILL=0;}ETERIMG={k:sk,u:cv.toDataURL()};}catch(e){ETERIMG={k:sk,u:''};}return ETERIMG.u;}
 function eterCol(){const sk=(typeof OPT!=='undefined'&&OPT.core)||'base',c=COSM.core.find(x=>x.id===sk),K0=(c&&cosOwn(c)&&CSK[sk])||CSK.base;return `rgb(${K0.r||K0.g||'63,232,255'})`;}
-function dlgWho(L,L0){if(L0.sys||!L.sp)return null;if(L.sp==='ÉTER'){const u=eterImg();return{c:eterCol(),p:u?`<img src="${u}" alt="">`:''};}
+function dlgWho(L,L0){if(L0.sys||!L.sp)return null;if(L0.pil)/* v307: el jugador habla: silueta con casco de piloto y su color */return{c:'#ffd75a',p:'<span class="dpb" style="background:#2a2618"><svg viewBox="0 0 64 64"><path d="M8 64c2-15 12-22 24-22s22 7 24 22z" fill="#0d1018"/><circle cx="32" cy="25" r="14" fill="#0d1018"/><path d="M21 23c2-6 7-8 11-8s9 2 11 8c-3 5-7 7-11 7s-8-2-11-7z" fill="#ffd75a" opacity=".85"/></svg></span>'};if(L.sp==='ÉTER'){const u=eterImg();return{c:eterCol(),p:u?`<img src="${u}" alt="">`:''};}
  const id=L.who||Object.keys(DLGC).find(k=>HEROES[k]&&HEROES[k].n.toUpperCase()===L.sp.toUpperCase())||(L.sp.toLowerCase()==='vega'?'vega':null);if(!id)return null;
  const p=PORT[id]?`<span class="dpb" style="background:${(HEROES[id]||{}).col||'#333'}">${portrait(id,1)}</span>`:`<span class="dpb" style="background:#3a2a4a"><svg viewBox="0 0 64 64"><circle cx="32" cy="24" r="12" fill="#0d1018"/><path d="M8 64c2-16 12-24 24-24s22 8 24 24z" fill="#0d1018"/></svg></span>`;
  return{c:DLGC[id]||'#dfeef5',p};}
-function dlgShow(){const L0=DLG.lines[DLG.i],L=L0.sys?{...L0,sp:'SISTEMA',g:0,gt:null}:L0,el=$('dlg'),nm=STO.name||'Piloto',txt=(OPT.dglitch&&L.gt?L.gt:L.t).replace(/\{N\}/g,nm);DLG.full=txt;DLG.n=OPT.dtype===false?txt.length:0;DLG.t=0;DLG.wait=0;
+function dlgShow(){const L0=DLG.lines[DLG.i],L=L0.sys?{...L0,sp:'SISTEMA',g:0,gt:null}:L0.pil?{...L0,sp:(STO.name||'Piloto').toUpperCase()}:L0,el=$('dlg'),nm=STO.name||'Piloto',txt=(OPT.dglitch&&L.gt?L.gt:L.t).replace(/\{N\}/g,nm);DLG.full=txt;DLG.n=OPT.dtype===false?txt.length:0;DLG.t=0;DLG.wait=0;
  const who=dlgWho(L,L0);
  el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L0.sys?' sys':''}${who?' who':''}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}"${who?` style="--dc:${who.c}"`:''}>${who&&who.p?`<span class="dpp">${who.p}</span>`:''}<div class="dcol">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}</div><div class="dnx"><i class="dtri"></i>continuar</div></div>`;
  dlgRender();if(L.input)setTimeout(()=>{const i=$('dname');if(i)i.focus();},50);}
@@ -51,7 +51,10 @@ const STORY={
   {sp:'ÉTER',g:3,gt:'Espere… detecto a gente acercán▓ose. Dos grupos, armados. No parecen ho-hostiles.',t:'Espere… detecto a gente acercándose. Dos grupos, armados. No parecen hostiles.'},
   {sp:'REINHART',who:'reinhart',t:'¡Alto ahí! Soy Reinhart, capitán de la guardia del reino. Vimos caer una estrella de fuego y vinimos a ver qué era.'},
   {sp:'SYLVANA',who:'sylvana',t:'Los árboles gritaron cuando cayó vuestro carro de hierro. Soy Sylvana, del bosque. No sois de este mundo, ¿verdad?'},
-  {sys:1,t:'Alerta: firmas hostiles. Muchas. Rumbo al núcleo.'},
+  {sp:'PILOTO',pil:1,t:'No. Y creedme, no era aquí adonde íbamos. ¿Venís a ayudar… o a rematarnos?'},
+  {sp:'REINHART',who:'reinhart',t:'Si quisiéramos remataros, no habría preguntado primero.'},
+  {sp:'ÉTER',g:3,gt:'Pi-Piloto, un momento. Detecto algo más acercándose… y no son e▒los.',t:'Piloto, un momento. Detecto algo más acercándose… y no son ellos.'},
+  {sys:1,t:'Confirmado: firmas hostiles. Muchas. Rumbo al núcleo.'},
   {sp:'ÉTER',g:3,gt:'Mi energía las está atrayendo. Si el núcleo cae, nos quedaremos aquí para siem░re.',t:'Mi energía las está atrayendo. Si el núcleo cae, nos quedaremos aquí para siempre.'},
   {sp:'REINHART',who:'reinhart',t:'Entonces os defenderemos. Mis soldados y yo aguantaremos en primera línea, donde más aprieten.'},
   {sp:'SYLVANA',who:'sylvana',t:'Y yo os cubriré desde lejos. Ninguna criatura llegará a vuestro núcleo sin una flecha clavada.'},
