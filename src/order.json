@@ -111,6 +111,7 @@
   "alcance_minimo.js",
   "casillas_estilo.js",
   "trofeos_bordes.js",
-  "torres_dibujos.js"
+  "torres_dibujos.js",
+  "bufadores_tope.js"
  ]
 }

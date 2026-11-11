@@ -1,0 +1,9 @@
+const {JSDOM,VirtualConsole}=require('jsdom');const vc=new VirtualConsole();const fs=require('fs');
+const dom=new JSDOM(fs.readFileSync(process.argv[2],'utf8'),{runScripts:'dangerously',pretendToBeVisual:true,url:'http://localhost/',virtualConsole:vc,beforeParse(w){const c=new Proxy({}, {get:(t,k)=>k==='measureText'?()=>({width:0}):()=>{},set:()=>true});w.matchMedia=()=>({matches:false});w.HTMLCanvasElement.prototype.getContext=()=>c;w.structuredClone=globalThis.structuredClone;w.Element.prototype.getBoundingClientRect=function(){return{left:0,top:0,right:900,bottom:900,width:900,height:900,x:0,y:0};};w.requestAnimationFrame=()=>0;}});
+setTimeout(()=>{const w=dom.window;w.eval(fs.readFileSync(__dirname+'/lab2.js','utf8'));
+const out=w.eval(`(function(){const R=[];for(const era of [1,2])for(const round of [6,8,10,11,12,15])for(const seed of [1,2]){let a=(seed*977)>>>0;Math.random=function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+ ERA=era;LAB2.setup();S.field=field();S.round=round;S.phase='build';makePortals(null);S.phase='build';startWave();
+ S.hp=1e9;const c={},seen=new Set(),sqs=new Set(),bsq=new Set();let n=0,T=0;while(T<500&&(S.phase==='wave')){update(.1);T+=.1;for(const e of S.enemies)if(!seen.has(e)){seen.add(e);n++;c[e.t]=(c[e.t]||0)+1;if(e.sqid){sqs.add(e.sqid);if(['custodian','seal','techm','weaver'].includes(e.t))bsq.add(e.sqid);}}}
+ R.push({era,round,seed,n,c,nsq:sqs.size,nbsq:bsq.size,sample:JSON.stringify((S.portals[0]&&S.portals[0].q[0])||null).slice(0,200)});}return JSON.stringify(R);})()`);
+for(const r of JSON.parse(out)){const buf=(r.c.custodian||0)+(r.c.seal||0)+(r.c.techm||0)+(r.c.weaver||0);console.log('era',r.era,'r',r.round,'s',r.seed,'enemigos',r.n,'escuadras',r.nsq,'con bufador',r.nbsq,'bufadores',buf, r.seed===1&&r.round>=10&&r.round<=12?JSON.stringify(r.c):'');}
+process.exit(0)},500);

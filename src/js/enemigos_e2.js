@@ -16,7 +16,9 @@ for(const f in E2FAC)for(const k of E2FAC[f])ET[k].fac=f;
 // las líneas de guerreros de resistencia mágica (demonios y alienígenas) pegan con daño mágico; las de armadura (orcos y robots), físico
 // el Titán es más resistente que el Bruto injertado (acorazado puro); los robots, algo más de armadura física; los alienígenas, de resistencia mágica
 for(const k of['minion','demon','dchamp','drone','hivew','praet'])ET[k].dt='magic';
-ET.titan.ap=55;ET.titan.am=0;ET.brute.ap=30;ET.brute.am=15;ET.auto.ap=10;ET.drone.am=10;
+ET.titan.ap=55;ET.titan.am=0;ET.brute.ap=30;ET.brute.am=15;
+// v307 · la base de la era 2 casi sin protección (la llevan los grandes): Autómata 3 de armadura, Zángano sin resistencia mágica
+ET.auto.ap=3;ET.drone.am=0;ET.autoas.ap=10;ET.hivew.am=10;
 // evoluciones de la era 2
 Object.assign(PROMO,{auto:PROMO.norm.map(([r,u,p])=>[r,u==='vet'?'autoas':'centu',p]),drone:PROMO.norm.map(([r,u,p])=>[r,u==='vet'?'hivew':'praet',p]),stalk:PROMO.fast.map(([r,u,p])=>[r,'stalkm',p]),brutep:PROMO.tank.map(([r,u,p])=>[r,'brute',p]),swarm:[[8,'gundr',.15]]});
 Object.assign(SQFAM,{autoas:'auto',centu:'auto',hivew:'drone',praet:'drone',stalkm:'stalk',brute:'brutep',gundr:'swarm'});
@@ -64,10 +66,10 @@ Object.assign(SQF,{
  abismo:[[['manta',0,0],['glider',1,-1],['glider',1,1],['glider',2,0]]]});
 for(const k in SQUADS)if(!SQUADS[k].era)SQUADS[k].era=SQUADS[k].tut?0:1;
 // ETIP de la era 2 (se fusiona en compendio_enlace)
-const ETIP2={auto:'Robot básico con algo de armadura: el daño mágico o elemental rinde más.',autoas:'Más vida y armadura: el daño mágico o elemental rinde más.',centu:'Mucha armadura: usa daño mágico, elemental o penetración.',
+const ETIP2={auto:'Robot básico, apenas blindado: cae con cualquier daño.',autoas:'Más vida y armadura: el daño mágico o elemental rinde más.',centu:'Mucha armadura: usa daño mágico, elemental o penetración.',
  titan:'Blindadísimo y lento: daño mágico, elemental o penetración, y rómpele la armadura.',swarm:'Drones débiles en grupo: torres de área que alcancen el aire.',gundr:'El dron enjambre armado: vuela y aguanta más. Usa torres que den al aire.',
  rocket:'Sus cohetes atraviesan media armadura de tus unidades: quítalo pronto.',techm:'Su aura da armadura a los de alrededor: mátalo primero o usa daño mágico.',hack:'Apaga un rato tus torres cercanas: mátalo primero.',
- scav:'Esquiva a tus soldados y te roba oro si llega: mátalo con torres.',drone:'Resiste un poco la magia: el daño físico rinde más.',hivew:'Más vida y resistencia mágica: usa daño físico o elemental.',praet:'Mucha resistencia mágica: usa daño físico, elemental o penetración.',
+ scav:'Esquiva a tus soldados y te roba oro si llega: mátalo con torres.',drone:'Débil pero en enjambre: cualquier torre de área lo barre.',hivew:'Más vida y resistencia mágica: usa daño físico o elemental.',praet:'Mucha resistencia mágica: usa daño físico, elemental o penetración.',
  stalk:'Corre mucho y aguanta poco: daño en área o ralentizarlo.',stalkm:'Muy rápido: ralentízalo o bloquéalo con tus unidades.',brutep:'Lento y con mucha vida: concentra en él el daño fuerte.',brute:'Blindado y resistente a la magia: mezcla tipos de daño.',
  glider:'Vuela rápido y aguanta poco: usa torres rápidas que den al aire.',manta:'Volador resistente: necesitas mucho daño contra el aire.',spit:'Se para a escupir ácido a tus unidades desde lejos: quítalo pronto con torres.',
  psy:'Resiste la magia y daña a tus unidades con ella: usa daño físico.',bioal:'Cura a los enemigos de alrededor: elimínalo antes que al resto.',weaver:'Su aura da resistencia mágica a los de alrededor: mátalo primero o usa daño físico.'};

@@ -188,3 +188,16 @@ Los cambios de equilibrio no han hecho la era 1 más difícil para una partida n
 6. **Colmena contra ARGOS**: sigue reteniéndolo mucho tiempo.
 7. **Estudio**: usar siempre varias semillas (el mapa 12345 es muy favorable) y añadir los escenarios nuevos al estudio del PC. Las herramientas están en `tools/lab/` del repositorio (`correr.js`, `tabla.js`, `lab2.js`, `bot4.js`).
 8. Sin tocar en esta sesión: daño en área decreciente torre a torre, Detonador (no se pasa), señuelo kamikaze que arrastra hacia delante.
+
+## Tope de bufadores y base de la era 2 (11-nov, mediodía)
+
+**Bufadores.** Medido antes del cambio: las oleadas repiten unos pocos tipos de escuadra y, si uno lleva bufador, salía en muchas. Era 2 ronda 10: 11 de 34 escuadras con Tejedor; ronda 15: 17-20 de 85-100. Era 1 rondas 11-12: 18-20 de ~100 con Portador de sellos.
+Cambio (`bufadores_tope.js`): como mucho 1 grupo con bufador por oleada hasta la ronda 10, 2 hasta la 15 y 3 después (uno más en la última ronda, para la escolta del jefe final). En las demás escuadras, el Tamborilero pasa a Orco, el Portador de sellos a Esbirro, el Tecnomante a Autómata y el Tejedor a Zángano. Medido después: 0-2 grupos bufados por oleada, 3 en la última.
+
+**Base de la era 2.** Autómata 10 → 3 de armadura; Zángano 10 → 0 de resistencia mágica; Autómata de asalto 15 → 10 de armadura; Guerrero de colmena 15 → 10 de resistencia mágica. Los grandes, igual.
+
+**Bot después de los dos cambios** (6 mapas por era):
+- Era 2: sigue perdiendo las 6, cinco en la ronda 10 y una en la 11. Pierde menos vida antes (en la ronda 9 ya casi no se le escapa nada), pero la ronda 10 le sigue pudiendo.
+- Era 1: 3 de 6 ganadas (como antes). Dos de las derrotas también son de golpe en la ronda 10 (20 vidas en una ronda).
+
+**Lo que se ve ahora:** el problema es **el salto de la ronda 10 en las dos eras**. Las oleadas pasan de ~110 enemigos (ronda 8) a 230-350 (ronda 10), y además muchos básicos ascienden a su versión mediana (Autómata de asalto, Guerrero de colmena, Demonio), con 4-5 veces la vida. En la era 2 lo que se escapa en la ronda 10 es casi todo **Autómata de asalto** (hasta 17 en una partida) y **Guerrero de colmena**. Propuestas, para decidir: suavizar el número de enemigos entre las rondas 8 y 11, o retrasar/bajar el porcentaje de ascensos a la versión mediana en la ronda 10.

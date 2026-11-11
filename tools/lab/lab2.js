@@ -16,7 +16,7 @@ function buildOne(type,lvl,spec,abMax,tile,q){S.gold=1e9;S.tsel=type;build(q.x,q
  while(t.lvl<Math.min(3,lvl))upgrade(t);
  if(lvl>=4&&spec&&SPECS[type]&&SPECS[type][spec]){chooseSpec(t,spec);if(abMax)for(let pass=0;pass<3;pass++)for(const id of SPECS[type][spec].ab)while((t.ab[id]||0)<AB[id].ranks.length&&!abReq(t,id))buyAb(t,id);}
  return t;}
-window.LAB2={TILES,
+window.LAB2={TILES,setup,
  // Jefe final contra una sola torre: la torre (con su especialización y habilidades al máximo) en el solar que más camino cubre (suele ser una curva),
  // el jefe sale por el portal cuyo camino pasa más por su alcance, en la última ronda (con su vida de jefe final). ¿Lo mata ella sola?
  boss(job){const {type,lvl,spec,abMax,tile}=job;
