@@ -139,3 +139,66 @@
 :root[data-skin="holo"] .lbcv.lbshrink::before{animation:hgl .6s var(--hE) reverse both!important}
 :root[data-skin="holo"] .lbcv.lbshrink::after,:root[data-skin="holo"] .lbcv.lbshrink .lbribs{animation:hgr .6s var(--hE) reverse both!important}
 @media (prefers-reduced-motion:reduce){:root[data-skin="holo"] *{animation-duration:.01s!important;animation-delay:0s!important}}
+
+/* ===== v306 · Animación de la tablet, rehecha =====
+   La consola y el emisor nunca desaparecen: se mueven y van descubriendo o tapando la proyección.
+   El contenido (fichas, pestañas de arriba, la X…) no se pinta hasta que está abierta del todo, y se apaga antes de cerrar. */
+html:root[data-skin="holo"]{--hE:cubic-bezier(.55,0,.25,1)}
+html:root[data-skin="holo"] .bkw{--W:min(1040px,calc(100vw - 230px));--Wc:min(470px,calc(100vw - 230px));--dx:calc((var(--W) - var(--Wc))/2);width:var(--W)!important;clip-path:none!important}
+html:root[data-skin="holo"] .lbcv.a{--Wc:min(470px,calc(100vw - 230px));--W:min(1040px,calc(100vw - 230px));--dx:calc((var(--W) - var(--Wc))/2);width:var(--Wc)!important}
+/* sitio: el emisor justo fuera de la proyección y las teclas centradas en la consola */
+html:root[data-skin="holo"] .bkcover::before{left:-42px!important}
+html:root[data-skin="holo"] .lbcv::before{left:-42px!important}
+html:root[data-skin="holo"] .bkribs{right:-113px!important}
+html:root[data-skin="holo"] .lbcv .lbribs{right:-109px!important}
+/* --- libro desde la portada: la consola se aleja y descubre la proyección --- */
+@keyframes hwL{from{transform:translateX(var(--dx))}to{transform:none}}
+@keyframes hwR{from{transform:translateX(calc(-1*var(--dx)))}to{transform:none}}
+@keyframes hwP{from{clip-path:inset(0 var(--dx))}to{clip-path:inset(0 0)}}
+@keyframes hshow{0%,82%{opacity:0}to{opacity:1}}
+@keyframes hhide{to{opacity:0}}
+html:root[data-skin="holo"] .bkw.lbanim{animation:none!important}
+html:root[data-skin="holo"] .bkw.lbanim .bkcover::before{animation:hwL 1.2s var(--hE) both!important}
+html:root[data-skin="holo"] .bkw.lbanim .bkcover::after,html:root[data-skin="holo"] .bkw.lbanim .bkribs{animation:hwR 1.2s var(--hE) both!important}
+html:root[data-skin="holo"] .bkw.lbanim .bk::before{animation:hwP 1.2s var(--hE) both!important}
+html:root[data-skin="holo"] .bkw.lbanim>:not(.bk),html:root[data-skin="holo"] .bkw.lbanim .bk>:not(.bkcover):not(.bkribs){animation:hshow 1.45s linear both!important}
+/* --- cerrar el libro en partida: se apaga el contenido, se pliega y luego vuela al núcleo --- */
+@keyframes hcL{to{transform:translateX(calc(var(--W)/2 + 14px))}}
+@keyframes hcR{to{transform:translateX(calc(var(--W)/-2 + 16px))}}
+@keyframes hcP{to{clip-path:inset(0 50%)}}
+html:root[data-skin="holo"] .bkw.lbshrink{animation:lbshrink .5s 1.05s cubic-bezier(.6,0,.9,.4) forwards!important}
+html:root[data-skin="holo"] .bkw.lbshrink>:not(.bk),html:root[data-skin="holo"] .bkw.lbshrink .bk>:not(.bkcover):not(.bkribs){animation:hhide .25s forwards!important}
+html:root[data-skin="holo"] .bkw.lbshrink .bkcover::before{animation:hcL .85s .2s var(--hE) forwards!important}
+html:root[data-skin="holo"] .bkw.lbshrink .bkcover::after,html:root[data-skin="holo"] .bkw.lbshrink .bkribs{animation:hcR .85s .2s var(--hE) forwards!important}
+html:root[data-skin="holo"] .bkw.lbshrink .bk::before{animation:hcP .85s .2s var(--hE) forwards!important}
+/* --- portada: abrir desde cerrada (menú, pausa) --- */
+@keyframes hoL{from{transform:translateX(calc(var(--Wc)/2 + 14px))}to{transform:none}}
+@keyframes hoR{from{transform:translateX(calc(var(--Wc)/-2 + 16px))}to{transform:none}}
+@keyframes hoP{from{clip-path:inset(0 50%)}to{clip-path:inset(0 0)}}
+html:root[data-skin="holo"] .lbcv::before{animation:hoL 1.3s .15s var(--hE) both!important}
+html:root[data-skin="holo"] .lbcv::after,html:root[data-skin="holo"] .lbcv .lbribs{animation:hoR 1.3s .15s var(--hE) both!important}
+html:root[data-skin="holo"] .lbcvin{animation:hoP 1.3s .15s var(--hE) both!important}
+html:root[data-skin="holo"] .lbcvin>*{animation:hshow 1.6s linear both!important}
+/* pausa en partida: primero vuela desde el núcleo, cerrada; luego se abre */
+html:root[data-skin="holo"] .lbcv.lbgrow{animation:lbgrow .5s cubic-bezier(.2,.8,.3,1.1)!important}
+html:root[data-skin="holo"] .lbcv.lbgrow::before{animation:hoL 1.3s .5s var(--hE) both!important}
+html:root[data-skin="holo"] .lbcv.lbgrow::after,html:root[data-skin="holo"] .lbcv.lbgrow .lbribs{animation:hoR 1.3s .5s var(--hE) both!important}
+html:root[data-skin="holo"] .lbcv.lbgrow .lbcvin{animation:hoP 1.3s .5s var(--hE) both!important}
+html:root[data-skin="holo"] .lbcv.lbgrow .lbcvin>*{animation:hshow 1.95s linear both!important}
+/* volver del libro a la portada: la consola se acerca desde lo ancho (no se pliega entera) */
+html:root[data-skin="holo"] .lbcv.hnarrow::before{animation:hwR 1.1s var(--hE) both!important}
+html:root[data-skin="holo"] .lbcv.hnarrow::after,html:root[data-skin="holo"] .lbcv.hnarrow .lbribs{animation:hwL 1.1s var(--hE) both!important}
+html:root[data-skin="holo"] .lbcv.hnarrow .lbcvin{animation:none!important}
+html:root[data-skin="holo"] .lbcv.hnarrow .lbcvin>*{animation:hshow 1.3s linear both!important}
+/* cerrar la pausa: se apaga, se pliega y vuela al núcleo */
+@keyframes hcLc{to{transform:translateX(calc(var(--Wc)/2 + 14px))}}
+@keyframes hcRc{to{transform:translateX(calc(var(--Wc)/-2 + 16px))}}
+html:root[data-skin="holo"] .lbcv.lbshrink{animation:lbshrink .5s 1.05s cubic-bezier(.6,0,.9,.4) forwards!important}
+html:root[data-skin="holo"] .lbcv.lbshrink .lbcvin>*{animation:hhide .25s forwards!important}
+html:root[data-skin="holo"] .lbcv.lbshrink::before{animation:hcLc .85s .2s var(--hE) forwards!important}
+html:root[data-skin="holo"] .lbcv.lbshrink::after,html:root[data-skin="holo"] .lbcv.lbshrink .lbribs{animation:hcRc .85s .2s var(--hE) forwards!important}
+html:root[data-skin="holo"] .lbcv.lbshrink .lbcvin{animation:hcP .85s .2s var(--hE) forwards!important}
+
+/* volver a la portada: la proyección se estrecha a la vez que la consola se acerca */
+@keyframes hnP{from{transform:scaleX(var(--hr,1))}to{transform:none}}
+html:root[data-skin="holo"] .lbcv.hnarrow .lbcvin{animation:hnP 1.1s var(--hE) both!important}

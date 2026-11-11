@@ -8,3 +8,6 @@ function skinNow(){const pref=OPT.skin||'auto';if(pref!=='auto'&&typeof era2Ok==
 if(typeof window!=='undefined')setInterval(()=>{try{const k=skinNow();if(document.documentElement.dataset.skin!==k)applyPal();}catch(e){}},300);
 // opción en Personalización (solo cuando ya has llegado a la era 2)
 {const i=OPTS.findIndex(o=>o.tab==='ps'&&o.type==='cosm');OPTS.splice(i<0?OPTS.length:i,0,{tab:'ps',type:'choice',show:()=>typeof era2Ok==='function'&&era2Ok(),label:'Libro',desc:'Cómo se ven el menú, el compendio y las opciones: el libro de pergamino de la Era Fantástica, la tablet holográfica de la Era Distópica o el de la era en la que juegas.',get:()=>OPT.skin||'auto',set:v=>{OPT.skin=v;saveOpt();applyPal();},choices:[['auto','Según la era'],['perg','📜 Libro'],['holo','💠 Tablet']]});}
+
+// la portada sabe si viene del libro abierto (para estrechar en vez de abrir desde cerrado)
+{const _lr=lbRender;lbRender=function(){const bk=document.querySelector('#comp .bkw'),bw=bk?bk.getBoundingClientRect().width:0;const r=_lr.apply(this,arguments);try{const cv=document.querySelector('#comp .lbcv');if(cv&&bw){cv.classList.add('hnarrow');const cw=cv.getBoundingClientRect().width||1;cv.style.setProperty('--hr',(bw/cw).toFixed(3));}}catch(e){}return r;};}
