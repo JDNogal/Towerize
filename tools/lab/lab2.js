@@ -80,7 +80,7 @@ window.LAB2={TILES,
   const d0=S.st.dmg,k0=S.st.kills,hp0=S.hp;let time=0,spawned=0;const seen=new Set(),M={alive:0,stall:0,maxStall:0,prog:0,exp:0,inR:0,cc:0};
   const dt=.05,cap=maxT||150;let rgs=[];const inRange=e=>ts.some((t,i)=>Math.hypot(e.x-t.x,e.y-t.y)<=rgs[i]);
   while(S.phase==='wave'&&time<cap){const pre=new Map();for(const e of S.enemies)pre.set(e,{x:e.x,y:e.y,kb:e.kbT||0,f:S.field[e.ty]&&S.field[e.ty][e.tx]!=null?S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y):null});
-   update(dt);time+=dt;rgs=ts.map(t=>stats(t).range);
+   update(dt);time+=dt;rgs=ts.map(t=>stats(t).range);for(const e of S.enemies)if(!e._c){e._c=1;M.tot=(M.tot||0)+e.max;M.nsp=(M.nsp||0)+1;M.arm=(M.arm||0)+(ET[e.t].ap||0);M.sp=(M.sp||0)+ET[e.t].sp;}
    for(const e of S.enemies){if(e.hp<=0)continue;const p=pre.get(e);if(!p)continue;const ir=inRange(e);if(ir)e._seen=1;if(!e._seen)continue;seen.add(e);
     M.alive+=dt;if(ir)M.inR+=dt;const moved=Math.hypot(e.x-p.x,e.y-p.y),cc=!!(e.fx.stun||e.fx.freeze||e.fx.root||e.fx.poly);if(cc)M.cc+=dt;
     const f1=S.field[e.ty]&&S.field[e.ty][e.tx]!=null?S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y):null;
@@ -88,6 +88,6 @@ window.LAB2={TILES,
     if(p.f!=null&&f1!=null)M.prog+=Math.max(0,p.f-f1);M.exp+=ET[e.t].sp*(S.espd||1)*dt;}}
   const dmg=S.st.dmg-d0,kills=S.st.kills-k0,leak=hp0-S.hp;const spawnedN=S.st.spawned||null;
   return{...job,ok:1,time:+time.toFixed(1),n:ts.length,inv,dmg:Math.round(dmg),dps:+(dmg/Math.max(1,time)).toFixed(1),kills,leakHp:leak,seen:seen.size,
-   stallPct:M.alive?+(100*M.stall/M.alive).toFixed(1):0,ccPct:M.alive?+(100*M.cc/M.alive).toFixed(1):0,maxStall:+M.maxStall.toFixed(2),speedPct:M.exp?+(100*M.prog/M.exp).toFixed(0):0,inRangePct:M.alive?+(100*M.inR/M.alive).toFixed(0):0,ended:S.phase!=='wave',dbg:M.dbg};}
+   stallPct:M.alive?+(100*M.stall/M.alive).toFixed(1):0,ccPct:M.alive?+(100*M.cc/M.alive).toFixed(1):0,maxStall:+M.maxStall.toFixed(2),speedPct:M.exp?+(100*M.prog/M.exp).toFixed(0):0,inRangePct:M.alive?+(100*M.inR/M.alive).toFixed(0):0,ended:S.phase!=='wave',dbg:M.dbg,totHp:Math.round(M.tot||0),nsp:M.nsp,avgArm:+((M.arm||0)/(M.nsp||1)).toFixed(1),avgSp:+((M.sp||0)/(M.nsp||1)).toFixed(2),pathLen:(()=>{let m=0;for(const r of S.field)for(const v of r)if(v<1e9&&v>m)m=v;return m;})(),portals:S.portals.length,cover:ts.map(t=>{let c=0;const rg=stats(t).range;for(let y=0;y<S.cells.length;y++)for(let x=0;x<S.cells[y].length;x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=rg)c++;return c;})};}
 };
 })();
