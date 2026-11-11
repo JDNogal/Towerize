@@ -1,8 +1,8 @@
 // ==================== v305 · Historia de la era 2: Kai, el reencuentro de Vega y Ferro, y Korr al salir de la cápsula ====================
 // Kai (CERRADO en plan_era2): solo jugando con Vega, en una ronda de jefe de la Era Distópica (con 15 rondas o más, siempre la 15).
 // Kai aparece cazando al jefe; pelea esa oleada como aliada controlada por la máquina (cerca de tu héroe, a por el jefe).
-// Si la oleada sale perfecta (no pierdes vida), Kai se une: logro «Caza mayor» (nuevo) y héroe desbloqueado. Si no, en otra partida.
-ACH.caza={c:'jg',n:'Caza mayor',d:'Con Vega, supera sin perder vida la oleada de jefe de la Era Distópica en la que aparece Kai.',hr:'kai'};
+// v305: logro de historia, sin dificultad añadida: si vences a ese jefe con su ayuda (el jefe no llega al núcleo), Kai se une: «Caza mayor» y héroe desbloqueado.
+ACH.caza={c:'jg',n:'Caza mayor',d:'Con Vega, derrota junto a Kai al jefe de la Era Distópica que ella está cazando.',hr:'kai'};
 if(typeof ACHVIS!=='undefined')ACHVIS.caza=()=>typeof era2Ok==='function'&&era2Ok();
 HUNL.kai='caza';
 // el logro antiguo (3 élites) desaparece: quien lo tuviera vuelve a tener a Kai bloqueada hasta vivir su historia
@@ -13,8 +13,8 @@ const KAIL={
  start:[{sp:'Kai',who:'kai',t:'Ese jefe tiene precio. Y es mío.'},
   {sp:'Vega',t:'¿Y tú quién eres? Esto es una operación de la Resistencia.'},
   {sp:'Kai',who:'kai',t:'Kai. Cazarrecompensas. Vosotros lleváis meses «operando» y la Forja sigue en pie.'},
-  {sp:'Vega',t:'{N}, no me fío de ella. Si quiere ayudar, que ayude… pero que no se nos cuele ni un enemigo.'}],
- win:[{sp:'Kai',who:'kai',t:'Limpio. Ni un rasguño en vuestro núcleo. Puede que no seáis tan inútiles.'},
+  {sp:'Vega',t:'{N}, no me fío de ella. Pero si quiere ayudarnos con ese jefe, que ayude.'}],
+ win:[{sp:'Kai',who:'kai',t:'Pieza cobrada. Puede que no seáis tan inútiles.'},
   {sp:'ÉTER',g:0,t:'Kai. Tengo algo que solo yo puedo darte. Quédate con nosotros y hablamos de tu precio.'},
   {sp:'Kai',who:'kai',t:'…Trato hecho. Pero cobro por adelantado.'},
   {sp:'Vega',t:'Genial. Otra que no sigue órdenes. Bienvenida… supongo.'}],
@@ -35,7 +35,7 @@ H2T.push(dt=>{try{kaiEvTick(dt);}catch(e){}});
 {const _sw=startWave;startWave=function(){const was=S.phase;const r=_sw.apply(this,arguments);
  try{if(was!=='wave'&&S.phase==='wave'&&kaiRound()&&!S.kaiEv){S.kaiEv={hp0:S.hp,r:S.round};mkKai();dlgQueue(KAIL.start);}}catch(e){}return r;};}
 // fin de la oleada: ¿perfecta?
-{const _nr=nextRound;nextRound=function(){const ev=S&&S.kaiEv&&S.kaiEv.r===S.round?S.kaiEv:null,ok=ev&&S.hp>=ev.hp0;const r=_nr.apply(this,arguments);
+{const _nr=nextRound;nextRound=function(){const ev=S&&S.kaiEv&&S.kaiEv.r===S.round?S.kaiEv:null,ok=!!ev&&S.hp>0;const r=_nr.apply(this,arguments);
  try{if(ev){S.kaiEv.done=1;S.kaiT=null;if(ok){achieve('caza');try{h2Locks();}catch(e){}dlgQueue(KAIL.win);}else dlgQueue(KAIL.lose);}}catch(e){}return r;};}
 // ---- reencuentro de Vega y Ferro: al derrotar a la Forja, Vega lo encuentra entre los restos ----
 const FERL=[{sp:'Vega',t:'Espera… esa placa. FR-0. ¿Ferro? ¡Ferro!'},
