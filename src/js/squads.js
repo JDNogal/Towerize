@@ -57,7 +57,8 @@ let sqValT=null;const sqVal=k=>sqValT?sqValT(k):Object.entries(sqM(k)).reduce((a
 // presupuesto (en «vida de Guerrero») equivalente a la composición antigua, para no romper la dificultad
 let WB=315,WG=1.47,WG2=1.65,WG3=1.38;
 // crecimiento acumulado de la vida total de las oleadas hasta la ronda r (tres tramos)
-const wGrow=r=>{let g=1;for(let i=2;i<=Math.min(r,15);i++)g*=i<=7?WG:i<=12?WG2:WG3;return g;};
+let WGR=null;/* v307: crecimiento propio por ronda (para suavizar solo una franja); si no hay, el de siempre */
+const wGrow=r=>{let g=1;for(let i=2;i<=Math.min(r,15);i++)g*=WGR&&WGR[i]?WGR[i]:i<=7?WG:i<=12?WG2:WG3;return g;};
 function waveBudget(r){if(!S.tut)return WB*wGrow(r)*(r>15?Math.pow(1.08,r-15)*hpR(r):1);let b=0;for(let i=0;i<8+5*r;i++)b+=ET[i%5===4?'tank':i%3===2?'fast':'norm'].hp;const nc=r>=5?1+Math.floor((r-5)/4):0;return b+nc*ET.custodian.hp;}
 
 // familias: a partir de ciertas rondas, parte de los básicos llegan como su versión más dura
