@@ -53,7 +53,7 @@ function sqForm(k,m){const fs=SQF[k];const units=[];for(const t in m)for(let i=0
 const FORM={raider:0,tank:0,armored:0,norm:1,vet:1,champ:1,fast:1,runner:1,bat:2,harpy:2,griffin:1,custodian:2,shaman:2,javelin:3,sling:3,acolyte:3,warlock:3};
 const REGT=['norm','fast','tank','custodian','sling','javelin','raider','acolyte','warlock','shaman'],SQGAP=1.6;
 const sqSz=()=>S&&!S.tut&&S.round>8?1+.15*(Math.min(S.round,15)-8):1,sqM=k=>{const m=SQUADS[k].m,z=sqSz(),o={};for(const t in m)o[t]=m[t]>=2?Math.round(m[t]*z):m[t];return o;};
-const sqVal=k=>Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*(S&&!S.tut&&ET[t].hf?ET[t].hf*promoF(t,S.round):ET[t].hp),0),sqN=k=>Object.values(sqM(k)).reduce((a,b)=>a+b,0);
+let sqValT=null;const sqVal=k=>sqValT?sqValT(k):Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*(S&&!S.tut&&ET[t].hf?ET[t].hf*promoF(t,S.round):ET[t].hp),0),sqN=k=>Object.values(sqM(k)).reduce((a,b)=>a+b,0);
 // presupuesto (en «vida de Guerrero») equivalente a la composición antigua, para no romper la dificultad
 let WB=315,WG=1.47,WG2=1.65,WG3=1.38;
 // crecimiento acumulado de la vida total de las oleadas hasta la ronda r (tres tramos)

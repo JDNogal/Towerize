@@ -3719,7 +3719,7 @@ function sqForm(k,m){const fs=SQF[k];const units=[];for(const t in m)for(let i=0
 const FORM={raider:0,tank:0,armored:0,norm:1,vet:1,champ:1,fast:1,runner:1,bat:2,harpy:2,griffin:1,custodian:2,shaman:2,javelin:3,sling:3,acolyte:3,warlock:3};
 const REGT=['norm','fast','tank','custodian','sling','javelin','raider','acolyte','warlock','shaman'],SQGAP=1.6;
 const sqSz=()=>S&&!S.tut&&S.round>8?1+.15*(Math.min(S.round,15)-8):1,sqM=k=>{const m=SQUADS[k].m,z=sqSz(),o={};for(const t in m)o[t]=m[t]>=2?Math.round(m[t]*z):m[t];return o;};
-const sqVal=k=>Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*(S&&!S.tut&&ET[t].hf?ET[t].hf*promoF(t,S.round):ET[t].hp),0),sqN=k=>Object.values(sqM(k)).reduce((a,b)=>a+b,0);
+let sqValT=null;const sqVal=k=>sqValT?sqValT(k):Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*(S&&!S.tut&&ET[t].hf?ET[t].hf*promoF(t,S.round):ET[t].hp),0),sqN=k=>Object.values(sqM(k)).reduce((a,b)=>a+b,0);
 // presupuesto (en «vida de Guerrero») equivalente a la composición antigua, para no romper la dificultad
 let WB=315,WG=1.47,WG2=1.65,WG3=1.38;
 // crecimiento acumulado de la vida total de las oleadas hasta la ronda r (tres tramos)
@@ -4950,7 +4950,7 @@ function makePortals(boss){
  let k=S.ends.length;while(k>1&&X/k<MINP)k--;
  const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],split:e.split||null,si:0,ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0},q:[],t:0});
  /* los portales de tramo muerto siempre se abren (si no, ese tramo seguiría sin usarse) */const mids=S.ends.filter(e=>e.mid),rest=S.ends.filter(e=>!e.mid),ps=rest.slice(0,Math.max(1,k-mids.length)).concat(mids).map(mk);
- sqs.forEach((sq,i)=>{const q=ps[i%ps.length];(q.sq=q.sq||[]).push(sq);const m={},sm=sqM(sq);for(const t in sm)for(let n=0;n<sm[t];n++){const u=promote(t,S.round);m[u]=(m[u]||0)+1;}(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});
+ sqs.forEach((sq,i)=>{const q=ps[i%ps.length];(q.sq=q.sq||[]).push(sq);const tr=typeof sqTierOf==='function'?sqTierOf(i,sqs.length,S.round):0,m=typeof sqTierM==='function'?sqTierM(sq,tr,S.round):sqM(sq);(q.sqt=q.sqt||[]).push(tr);(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});
  if(S.tut&&S.round===10)ps[0].plan.bob=1;
  if(!boss&&!S.tut&&ELITES[S.round])for(const t in ELITES[S.round])ps[0].plan[t]+=ELITES[S.round][t];
  for(const sc of S.sched||[])if(sc.r===S.round)for(const k in sc.add)ps[0].plan[k]=(ps[0].plan[k]||0)+sc.add[k];
@@ -10073,4 +10073,37 @@ const bufCap=r=>(r<=10?1:r<=15?2:3)+(r>=ROUNDS?1:0);
   const g=fo?(p.x+'.'+p.y+'.'+S.round+'.'+fo.sid):'solo'+(S.bufW.n=(S.bufW.n||0)+1);
   if(!S.bufW.g.has(g)){if(S.bufW.g.size<bufCap(S.round))S.bufW.g.add(g);else t=BUFSWAP[t];}}
  return _sp.call(this,t,p,fo);};}
+// ==================== v307 · Escuadras con línea evolutiva (sin azar) ====================
+// Antes cada enemigo básico tiraba un dado para ascender: en la ronda 10 media escuadra ya era de la segunda fase y más tarde salían
+// escuadras con 3-4 campeones. Además, la misma ronda podía ser mucho más dura en una partida que en otra.
+// Ahora cada escuadra tiene tres versiones fijas y la oleada saca un número exacto de cada una:
+//  · normal: como está escrita.
+//  · veterana: un tercio de sus básicos (al menos uno) sube a la segunda fase.
+//  · de élite: lo de la veterana y, además, uno de ellos sube a la tercera fase (como mucho un campeón por escuadra).
+//    Si la escuadra no tiene tercera fase (o aún no toca), sale como la veterana.
+// Los básicos nunca desaparecen. En los tanques, como mucho uno acorazado por escuadra.
+const SQTIER=r=>r<6?[0,0]:r<=8?[.25,0]:r<=12?[.4,.1]:[.45,.2];   // [fracción veterana, fracción de élite]
+const SQTN=['','veterana','de élite'];
+// la línea de cada básico: [segunda fase, ronda desde la que sale], [tercera fase, ronda]
+function lineOf(t){const P=PROMO[t];if(!P)return null;const L=[];for(const[r0,u]of P)if(!L.some(x=>x[0]===u))L.push([u,r0]);return L;}
+function sqTierM(sq,tier,r){const m=Object.assign({},sqM(sq));if(!tier||S.tut)return m;
+ const bases=Object.keys(m).filter(t=>{const L=lineOf(t);return L&&L[0]&&r>=L[0][1];});if(!bases.length)return m;
+ const tot=bases.reduce((a,t)=>a+m[t],0);let up=Math.max(1,Math.round(tot/3));const out=Object.assign({},m);
+ // reparte los ascensos entre los grupos, de mayor a menor (los tanques, como mucho uno)
+ const order=bases.slice().sort((a,b)=>m[b]-m[a]);let guard=0;
+ while(up>0&&guard++<20){let did=false;for(const t of order){if(up<=0)break;const L=lineOf(t),mid=L[0][0],isTank=!L[1];const have=out[mid]||0;
+  if(out[t]<=1)continue;if(isTank&&have>=1)continue;if(have>=Math.ceil(m[t]/2))continue;out[t]--;out[mid]=have+1;up--;did=true;}if(!did)break;}
+ if(tier>=2){// un solo ascenso a la tercera fase, del grupo más grande que la tenga
+  const t=order.find(t=>{const L=lineOf(t);return L[1]&&r>=L[1][1]&&((out[L[0][0]]||0)>0||out[t]>1);});
+  if(t){const L=lineOf(t),mid=L[0][0],top=L[1][0];if((out[mid]||0)>0){out[mid]--;if(!out[mid])delete out[mid];}else out[t]--;out[top]=(out[top]||0)+1;}
+}
+ for(const t in out)if(!out[t])delete out[t];return out;}
+// qué versión toca a la escuadra i de n: repartido a intervalos fijos, sin azar
+// (orden «dorado»: reparte las versiones sin que coincidan con el reparto entre portales, que va de uno en uno)
+function sqTierOf(i,n,r){const[pv,pe]=SQTIER(r),nE=Math.round(n*pe),nV=Math.round(n*pv);
+ const rank=Array.from({length:n},(_,j)=>j).sort((a,b)=>((a*.6180339887)%1)-((b*.6180339887)%1)).indexOf(i);
+ return rank<nE?2:rank<nE+nV?1:0;}
+// valor de una escuadra para el presupuesto: la media de sus versiones en esta ronda
+{const val=m=>Object.entries(m).reduce((a,[t,n])=>a+n*(ET[t].hf||ET[t].hp),0);
+ sqValT=k=>{if(!S||S.tut)return Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*ET[t].hp,0);const r=S.round,[pv,pe]=SQTIER(r);return (1-pv-pe)*val(sqTierM(k,0,r))+pv*val(sqTierM(k,1,r))+pe*val(sqTierM(k,2,r));};}
 </script></body></html>

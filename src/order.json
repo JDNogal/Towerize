@@ -112,6 +112,7 @@
   "casillas_estilo.js",
   "trofeos_bordes.js",
   "torres_dibujos.js",
-  "bufadores_tope.js"
+  "bufadores_tope.js",
+  "escuadras_linea.js"
  ]
 }
