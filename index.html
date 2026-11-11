@@ -1876,6 +1876,8 @@ body.dsk:not(.mfs).pcpick #panel>*{zoom:var(--wz,1)}
 .hdk2 i.twd{display:inline-grid;place-items:center}
 .hdk2 i.twd span{background:none!important;border:0!important;padding:0!important;gap:0!important;font-size:inherit!important}
 .hdk2 i.twd .icsvg svg{width:22px!important;height:22px!important}
+/* marca de «compra en cola»: marcapáginas rojo con reloj colgado recto del borde de arriba (antes un emoji flotando fuera de la esquina) */
+#bmenu .tmb.wish::after,#tmenu .tmb.wish::after{content:""!important;position:absolute;top:-4px!important;right:3px!important;width:20px;height:20px;background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20stroke%3D%22%231b1712%22%20stroke-width%3D%222.6%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M12%204h24v39l-12-9-12%209z%22%20fill%3D%22%23d8453a%22/%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23fff6dc%22%20stroke-width%3D%222%22/%3E%3Cpath%20d%3D%22M24%2015v4.4l2.8%201.8%22%20stroke-width%3D%222%22/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;font-size:0!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.45));pointer-events:none}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -1982,6 +1984,11 @@ const fmtT=(sec,c)=>{sec=Math.max(0,Math.ceil(sec));if(typeof OPT==='undefined'|
 
 // v307: bandera de las unidades (cola de golondrina roja clavada, con el círculo de «aquí»); trazo del color del texto
 const FLAGI='<svg class="flagi" viewBox="0 0 64 64" width="1.25em" height="1.25em" style="vertical-align:-.28em"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="30" cy="52" rx="20" ry="6.5" stroke-dasharray="5 5"/><path d="M30 52V7" stroke-width="4.2"/><path d="M30 9h26l-8 10 8 10H30z" fill="#d8453a"/></g></svg>';
+
+// v307: marca de «compra en cola»: marcapáginas rojo con reloj (antes el emoji 🔖)
+const WISHSVG='<g stroke="#1b1712" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 4h24v39l-12-9-12 9z" fill="#d8453a"/><circle cx="24" cy="19" r="7" fill="#fff6dc" stroke-width="2"/><path d="M24 15v4.4l2.8 1.8" stroke-width="2"/></g>';
+const WISHI='<svg class="wishi" viewBox="8 0 32 48" width=".8em" height="1.2em" style="vertical-align:-.25em">'+WISHSVG+'</svg>';
+let WISHIM=null;function wishImg(){if(WISHIM)return WISHIM;try{WISHIM=new Image();WISHIM.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96">'+WISHSVG+'</svg>');}catch(e){}return WISHIM;}
 // ======================= EMOJIS QUE EL SISTEMA NO TIENE =======================
 // Algunos equipos (Windows 10, navegadores antiguos) no tienen los emojis más nuevos (🪙, 🪽, 🪵…) y salen como un cuadrado.
 // Al arrancar se comprueba cuáles se dibujan igual que un carácter inexistente; esos se sustituyen por uno parecido más antiguo.
@@ -5859,7 +5866,7 @@ function draw(){
  if(h&&S.tsel&&(S.phase==='build'||S.phase==='wave')&&inb(h.x,h.y)&&S.cells[h.y][h.x]===1&&!ht){
   const q=sqOf(h.x,h.y),b=BF[S.buff[q.y][q.x]];rangeCircle(q.x,q.y,TW[S.tsel].range*(b&&b.rg||1));
   g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=lw(1.5);g.strokeRect(q.kx*BCS+lw(1),q.ky*BCS+lw(1),BCS-lw(2),BCS-lw(2));}
- for(const w of (S.wish||[]))if(w.a==='build'){const q=sqOf(w.x,w.y);g.globalAlpha=.85;g.font=Math.round(CS*1.4)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(TW[w.v].ic,(q.x+.5)*CS,(q.y+.5)*CS);g.font=Math.round(CS*.9)+'px sans-serif';g.fillText('🔖',(q.x+1.3)*CS,(q.y-.3)*CS);g.globalAlpha=1;}
+ for(const w of (S.wish||[]))if(w.a==='build'){const q=sqOf(w.x,w.y);g.globalAlpha=.85;g.font=Math.round(CS*1.4)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(TW[w.v].ic,(q.x+.5)*CS,(q.y+.5)*CS);{const im=wishImg(),z=CS*1.5;if(im&&im.complete&&im.naturalWidth)g.drawImage(im,(q.x+1.25)*CS-z/2,(q.y-.75)*CS,z,z);}g.globalAlpha=1;}
  if(S.tut&&S.tut.lock){const pu=.5+.5*Math.sin(performance.now()/250);g.strokeStyle='rgba(255,215,90,'+(.5+.5*pu)+')';g.lineWidth=lw(3);for(const q of S.tut.lock)g.strokeRect(q.x*CS-CS+lw(2),q.y*CS-CS+lw(2),K*CS-lw(4),K*CS-lw(4));}
  if(S.aim==='vch'&&S.tut&&S.tut.sug){const t=S.list.find(o=>o.id===S.tut.sug);if(t){g.strokeStyle='#ffd75a';g.lineWidth=lw(4);g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,K*CS*.8,0,7);g.stroke();}}
  for(const t of S.list)if(t.curse>0){g.strokeStyle='rgba(176,90,208,.9)';g.lineWidth=lw(2);g.setLineDash([lw(3),lw(3)]);g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,K*CS*.55,0,7);g.stroke();g.setLineDash([]);}
@@ -5909,7 +5916,7 @@ function draw(){
   /* galones de nivel en la esquina superior derecha: uno por nivel (Nv 1-3); Nv 4, tres dorados y estrella; con todo al máximo, estrella dorada */
   if(mt)drawCrown(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);
   if(!T.uniq||T.glut||T.omega)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
-  if(S.wish&&S.wish.some(w=>w.id===t.id)){g.font=Math.round(BCS*.34)+'px sans-serif';g.fillText('🔖',t.x*CS+CS/2-BCS*.36,t.y*CS+CS/2-BCS*.34);}
+  if(S.wish&&S.wish.some(w=>w.id===t.id)){{const im=wishImg(),z=BCS*.5;if(im&&im.complete&&im.naturalWidth)g.drawImage(im,t.x*CS+CS/2+BCS*.16,t.y*CS+CS/2-BCS*.62,z,z);}}
   if(t===S.selT){g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.strokeRect((t.x-1)*CS+lw(1),(t.y-1)*CS+lw(1),BCS-lw(2),BCS-lw(2));}
   if(t.rays&&S.phase==='wave'){g.lineWidth=lw(2);for(const r of t.rays)if(r.e.hp>0){g.strokeStyle=r.el.col;g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(r.e.x*CS+CS/2,r.e.y*CS+CS/2);g.stroke();}}
   else if(t.tgt&&S.phase==='wave'&&t.tgt.hp>0){g.strokeStyle=T.col;g.lineWidth=lw(2.5);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.tgt.x*CS+CS/2,t.tgt.y*CS+CS/2);g.stroke();}}
@@ -6484,7 +6491,7 @@ function bmInfo(k){const T=TW[k],a=twAt(k,1,null),M=twMax(1),src='shop:'+k;
  return `<div class="bmh"><b>${T.ic} ${T.n}</b><span class="bp">${bmCost(k)} 🪙</span></div><div class="bmt">${tags.map(t=>`<em>${t}</em>`).join('')}</div>`+(T.bufo?'':dm)+((cd=>cd&&isFinite(cd)?gRow('Enfriamiento','ccl',1/cd,M.rate,f(cd)+' s'):'')(T.bufo?BUFOCD[k]:1/a.s.rate));}
 function bmCard(){const c=$('bmcard');if(!c||!BM.s)return;const k=BM.arm||BM.hov;if(!k){c.classList.remove('on');return;}const cost=bmCost(k),no=S.gold<cost;
  let h=bmInfo(k)+(BM.arm===k?`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':'Pulsa otra vez para construir'}</div>`:`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':(TOUCH?'Toca':'Pulsa')+' otra vez para construir'}</div>`);
- if(no)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla 🔖 y construirla sola cuando tengas oro.</div>`;
+ if(no)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla ${WISHI} y construirla sola cuando tengas oro.</div>`;
  if(c._h!==h){c.innerHTML=h;c._h=h;}c.classList.add('on');bmCardPos();}
 function bmCardPos(){const c=$('bmcard'),m=$('bmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,w=c.offsetWidth,hh=c.offsetHeight,T0=58,g=P.R+30;
  const fit=(x,y)=>x>=6&&y>=T0&&x+w<=P.W-6&&y+hh<=P.H-6;
@@ -6556,7 +6563,7 @@ function tmInfo(k,t){const T=TW[t.type],[a,v]=k.split(':');
 function tmCard(){const c=$('tmcard'),t=TM.t;if(!c||!t)return;const k=TM.arm||TM.hov;if(!k){c.classList.remove('on');return;}const I=tmInfo(k,t);let h=I.h;
  if(TM.arm===k){if(I.sell)h+='<div class="cf">Pulsa otra vez para vender</div>';else if(I.buy)h+=`<div class="cf${S.gold<I.c?' no':''}">${S.gold<I.c?'Te faltan '+(I.c-S.gold)+' 🪙':'Pulsa otra vez para comprar · '+(I.c?I.c+' 🪙':'gratis')}</div>`;}
  else if(I.buy)h+=`<div class="cf${S.gold<I.c?' no':''}">${I.c?I.c+' 🪙':'gratis'}${S.gold<I.c?' · te faltan '+(I.c-S.gold):''}</div>`;
- if(I.w)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla 🔖 y comprarla sola cuando tengas oro.</div>`;
+ if(I.w)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla ${WISHI} y comprarla sola cuando tengas oro.</div>`;
  if(c._h!==h){c.innerHTML=h;c._h=h;}c.classList.add('on');c.dataset.k=k;tmCardPos();}
 function tmCardPos(){const c=$('tmcard'),m=$('tmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,k=c.dataset.k;
  const w=c.offsetWidth,h=c.offsetHeight,T0=58,L=P.px-P.R-74,Rr=P.px+P.R+(m._o&&m._o.side?82:74),top=P.ty-34,bot=P.by+40;
@@ -6666,11 +6673,11 @@ function wishTick(){if(typeof S==='undefined'||!S||!S.wish||!S.wish.length)retur
  S.wish=S.wish.filter(w=>wishOk(w));if(!S.wish.length){wishDeco();return;}
  if(RL.open||!(S.phase==='build'||S.phase==='wave'))return;
  const w=S.wish[0],o=wishOk(w);if(!o||S.gold<o.c)return;
- if(w.a==='build'){const n=S.list.length;bmBuildNow(w.v,o.q);S.wish.shift();if(S.list.length>n)toast('🔖 <b>'+TW[w.v].n+'</b>: construida');return;}
+ if(w.a==='build'){const n=S.list.length;bmBuildNow(w.v,o.q);S.wish.shift();if(S.list.length>n)toast(WISHI+' <b>'+TW[w.v].n+'</b>: construida');return;}
  const t=o.t,T=TW[t.type],lv=t.lvl,rk=t.ab&&t.ab[w.v]||0;
  if(w.a==='up')upgrade(t);else if(w.a==='spec')chooseSpec(t,w.v);else buyAb(t,w.v);
  S.wish.shift();
- if(t.lvl!==lv||(t.ab&&(t.ab[w.v]||0)!==rk))toast('🔖 <b>'+T.n+'</b>: '+(w.a==='up'?'mejorada a Nv '+t.lvl:w.a==='spec'?'ahora es '+SPECS[t.type][w.v].n:AB[w.v].n+' a rango '+t.ab[w.v]));
+ if(t.lvl!==lv||(t.ab&&(t.ab[w.v]||0)!==rk))toast(WISHI+' <b>'+T.n+'</b>: '+(w.a==='up'?'mejorada a Nv '+t.lvl:w.a==='spec'?'ahora es '+SPECS[t.type][w.v].n:AB[w.v].n+' a rango '+t.ab[w.v]));
  wishDeco();}
 setInterval(()=>{try{wishTick();wishDeco();}catch(e){}},150);
 // compras en cola: resumen en el margen izquierdo, en orden, con la barra de oro que falta para cada una
@@ -6689,7 +6696,7 @@ function wqTick(){let el=document.getElementById('wishq');
   // la primera se paga con el oro de ahora; las siguientes, con lo que sobre tras las anteriores
   const have=Math.max(0,S.gold-acc),pc=Math.min(1,have/o.c),f=Math.max(0,o.c-have);acc+=o.c;
   rows.push(`<div class="wqr${i===0?' nx':''}"><div class="wqh"><span class="wqi">${ic}</span><span class="wqn"><b>${nm}</b><small>${wt}</small></span><button data-wq="${i}" aria-label="Desmarcar">✕</button></div><div class="wqb"><i style="width:${Math.round(pc*100)}%"></i></div><div class="wqc"><em>${f>0?'Faltan <b>'+f+'</b> 🪙':'¡Lista!'}</em><span>${o.c} 🪙</span></div></div>`);});
- const h=`<div class="wqt">🔖 Compras en cola</div>${rows.join('')}`;
+ const h=`<div class="wqt">${WISHI} Compras en cola</div>${rows.join('')}`;
  if(h!==WQ.sg){WQ.sg=h;el.innerHTML=h;}el.classList.add('on');}
 setInterval(()=>{try{wqTick();}catch(e){}},150);
 {const HS='#mbr [data-a="hab"],#mbr [data-a="hult"]';let ht=null,hAt=0;
@@ -7062,13 +7069,13 @@ function helpParts(){
  if(!LBHELP.some(([k])=>k===LB.hp))LB.hp='play';const sec=LBHELP.find(([k])=>k===LB.hp),inG=lbInGame();let h='';
  if(LB.hp==='play')h=QSL.filter(q=>!q.mock).map(q=>`<div class="lbq"><h4>${q.t}</h4><p>${q.d}</p></div>`).join('')+`<div class="lbq"><h4>Ganar</h4><p>Resiste todas las rondas y derrota al jefe final. Entre partidas conservas los logros, lo que has descubierto en el compendio y los desbloqueos.</p></div>`;
  else if(LB.hp==='keys'){
-  if(TOUCH)h=`<h4>Táctil</h4><table class="lbkeys txt">${[['Mover el mapa','Arrastrar con un dedo'],['Acercar / alejar','Pellizcar o los botones ＋ / －'],['Ver información','Botón de lupa 🔍 y tocar lo que quieras'],['Construir','Tocar un solar libre: 1.er toque en una torre, su tarjeta; 2.º toque, se construye'],['Marcar una compra 🔖','Mantener pulsado lo que aún no puedas pagar'],['Mejorar o vender','Tocar la torre: salen sus botones alrededor'],['Mover al héroe','Tocar su retrato (o al héroe en el mapa) y luego una casilla del camino'],['Empezar la oleada','Doble toque en el botón'],['Pausa','Botón ☰']].map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</table>`;
-  else{h=`<h4>Ratón</h4><table class="lbkeys txt">${[['Mover el mapa','Arrastrar (clic izquierdo, derecho o rueda); en trackpad, con dos dedos'],['Acercar / alejar','Rueda o pellizcar'],['Ver información','Dejar el ratón encima'],['Construir','Clic en un solar libre: 1.er clic en una torre, su tarjeta; 2.º clic, se construye'],['Marcar una compra 🔖','Clic derecho en lo que aún no puedas pagar'],['Mejorar o vender','Clic en la torre: salen sus botones alrededor']].map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</table>`;
+  if(TOUCH)h=`<h4>Táctil</h4><table class="lbkeys txt">${[['Mover el mapa','Arrastrar con un dedo'],['Acercar / alejar','Pellizcar o los botones ＋ / －'],['Ver información','Botón de lupa 🔍 y tocar lo que quieras'],['Construir','Tocar un solar libre: 1.er toque en una torre, su tarjeta; 2.º toque, se construye'],['Marcar una compra '+WISHI,'Mantener pulsado lo que aún no puedas pagar'],['Mejorar o vender','Tocar la torre: salen sus botones alrededor'],['Mover al héroe','Tocar su retrato (o al héroe en el mapa) y luego una casilla del camino'],['Empezar la oleada','Doble toque en el botón'],['Pausa','Botón ☰']].map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</table>`;
+  else{h=`<h4>Ratón</h4><table class="lbkeys txt">${[['Mover el mapa','Arrastrar (clic izquierdo, derecho o rueda); en trackpad, con dos dedos'],['Acercar / alejar','Rueda o pellizcar'],['Ver información','Dejar el ratón encima'],['Construir','Clic en un solar libre: 1.er clic en una torre, su tarjeta; 2.º clic, se construye'],['Marcar una compra '+WISHI,'Clic derecho en lo que aún no puedas pagar'],['Mejorar o vender','Clic en la torre: salen sus botones alrededor']].map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</table>`;
    h+=KBL.map(([g,rows])=>`<h4>${g}</h4><table class="lbkeys">${rows.map(([a,l])=>`<tr><td>${l}</td><td>${lbK(kbN(a))}${KB2[a]?' <i>o</i> '+lbK(kbN(a,1)):''}</td></tr>`).join('')}</table>`).join('');
    h+=`<h4>Fijas</h4><table class="lbkeys">${KBFIX.map(([k,l])=>`<tr><td>${l}</td><td>${lbK(k)}</td></tr>`).join('')}</table>`;
    h+=`<p class="lbnote">Las teclas de arriba son las que tienes configuradas. <button class="bklink" data-a="lbgo" data-v="op:kb">Cambiarlas en Opciones → Atajos</button></p>`;}}
  else if(LB.hp==='tips'){const T=TOUCH;h=[
-  ['🔖','Compra marcada',`${T?'Mantén pulsada':'Haz clic derecho en'} una torre o mejora que aún no puedas pagar: se marca con 🔖 y se compra sola en cuanto tengas oro, también en plena oleada.`],
+  [WISHI,'Compra marcada',`${T?'Mantén pulsada':'Haz clic derecho en'} una torre o mejora que aún no puedas pagar: se marca con ${WISHI} y se compra sola en cuanto tengas oro, también en plena oleada.`],
   ['🗼','El anillo de construcción',`Al ${T?'tocar':'pulsar'} un solar libre salen las torres de tu mazo alrededor. El primer toque en una torre muestra su tarjeta; el segundo la construye.${T?'':' Con el solar abierto, las teclas 1–7 construyen directamente.'}`],
   ['↶','Deshacer una construcción','Si te arrepientes de una torre que has puesto en esta misma fase, su botón de vender pasa a ser ↶ y recuperas todo lo que pagaste.'],
   ['🦸','El héroe también se mueve en la oleada',`${T?'Toca':'Pulsa'} su retrato o al propio héroe en el mapa y elige una casilla del camino. Bloquea a los enemigos que le llegan.`],
@@ -9321,7 +9328,7 @@ H2T.push(dt=>omegaTick(dt));
 
 // v305 · poner en cola (clic derecho o mantener) lo que el Prototipo Omega va a absorber, como el resto de compras
 {const _o=wishOk;wishOk=function(w){if(w&&w.a==='ofeed'){const t=S.list.find(o=>o.id===w.id);if(!t||t.type!=='omega')return null;const x=omAvail(t).find(o=>o.k===w.v);return x?{t,c:x.c}:null;}return _o.apply(this,arguments);};}
-{const _t=wishTick;wishTick=function(){try{if(S&&S.wish&&S.wish.length&&S.wish[0].a==='ofeed'&&!RL.open&&(S.phase==='build'||S.phase==='wave')){const w=S.wish[0],o=wishOk(w);if(!o){S.wish.shift();wishDeco();return;}if(S.gold<o.c)return;S.wish.shift();if(omegaFeed(o.t,w.v))toast('🔖 <b>Prototipo Omega</b>: absorbe '+TW[w.v].n);wishDeco();ui();return;}}catch(e){}return _t.apply(this,arguments);};}
+{const _t=wishTick;wishTick=function(){try{if(S&&S.wish&&S.wish.length&&S.wish[0].a==='ofeed'&&!RL.open&&(S.phase==='build'||S.phase==='wave')){const w=S.wish[0],o=wishOk(w);if(!o){S.wish.shift();wishDeco();return;}if(S.gold<o.c)return;S.wish.shift();if(omegaFeed(o.t,w.v))toast(WISHI+' <b>Prototipo Omega</b>: absorbe '+TW[w.v].n);wishDeco();ui();return;}}catch(e){}return _t.apply(this,arguments);};}
 // ==================== v303 · RELIQUIAS DE LA ERA 2 · SEGUNDA TANDA (todas de cofre) ====================
 // Virus troyano, Dron de reconocimiento, Implante cibernético, Bidón radiactivo, Mapa estelar, Mochila cohete, Rastreador de combate,
 // Satélite láser, Generador de gravedad, Cápsula de clonación, Chip de IA táctica y Baliza de teletransporte.

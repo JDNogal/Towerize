@@ -86,4 +86,4 @@ H2T.push(dt=>omegaTick(dt));
 
 // v305 · poner en cola (clic derecho o mantener) lo que el Prototipo Omega va a absorber, como el resto de compras
 {const _o=wishOk;wishOk=function(w){if(w&&w.a==='ofeed'){const t=S.list.find(o=>o.id===w.id);if(!t||t.type!=='omega')return null;const x=omAvail(t).find(o=>o.k===w.v);return x?{t,c:x.c}:null;}return _o.apply(this,arguments);};}
-{const _t=wishTick;wishTick=function(){try{if(S&&S.wish&&S.wish.length&&S.wish[0].a==='ofeed'&&!RL.open&&(S.phase==='build'||S.phase==='wave')){const w=S.wish[0],o=wishOk(w);if(!o){S.wish.shift();wishDeco();return;}if(S.gold<o.c)return;S.wish.shift();if(omegaFeed(o.t,w.v))toast('🔖 <b>Prototipo Omega</b>: absorbe '+TW[w.v].n);wishDeco();ui();return;}}catch(e){}return _t.apply(this,arguments);};}
+{const _t=wishTick;wishTick=function(){try{if(S&&S.wish&&S.wish.length&&S.wish[0].a==='ofeed'&&!RL.open&&(S.phase==='build'||S.phase==='wave')){const w=S.wish[0],o=wishOk(w);if(!o){S.wish.shift();wishDeco();return;}if(S.gold<o.c)return;S.wish.shift();if(omegaFeed(o.t,w.v))toast(WISHI+' <b>Prototipo Omega</b>: absorbe '+TW[w.v].n);wishDeco();ui();return;}}catch(e){}return _t.apply(this,arguments);};}

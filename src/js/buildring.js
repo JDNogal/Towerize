@@ -37,7 +37,7 @@ function bmInfo(k){const T=TW[k],a=twAt(k,1,null),M=twMax(1),src='shop:'+k;
  return `<div class="bmh"><b>${T.ic} ${T.n}</b><span class="bp">${bmCost(k)} 🪙</span></div><div class="bmt">${tags.map(t=>`<em>${t}</em>`).join('')}</div>`+(T.bufo?'':dm)+((cd=>cd&&isFinite(cd)?gRow('Enfriamiento','ccl',1/cd,M.rate,f(cd)+' s'):'')(T.bufo?BUFOCD[k]:1/a.s.rate));}
 function bmCard(){const c=$('bmcard');if(!c||!BM.s)return;const k=BM.arm||BM.hov;if(!k){c.classList.remove('on');return;}const cost=bmCost(k),no=S.gold<cost;
  let h=bmInfo(k)+(BM.arm===k?`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':'Pulsa otra vez para construir'}</div>`:`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':(TOUCH?'Toca':'Pulsa')+' otra vez para construir'}</div>`);
- if(no)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla 🔖 y construirla sola cuando tengas oro.</div>`;
+ if(no)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla ${WISHI} y construirla sola cuando tengas oro.</div>`;
  if(c._h!==h){c.innerHTML=h;c._h=h;}c.classList.add('on');bmCardPos();}
 function bmCardPos(){const c=$('bmcard'),m=$('bmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,w=c.offsetWidth,hh=c.offsetHeight,T0=58,g=P.R+30;
  const fit=(x,y)=>x>=6&&y>=T0&&x+w<=P.W-6&&y+hh<=P.H-6;

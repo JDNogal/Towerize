@@ -86,3 +86,8 @@ const fmtT=(sec,c)=>{sec=Math.max(0,Math.ceil(sec));if(typeof OPT==='undefined'|
 
 // v307: bandera de las unidades (cola de golondrina roja clavada, con el círculo de «aquí»); trazo del color del texto
 const FLAGI='<svg class="flagi" viewBox="0 0 64 64" width="1.25em" height="1.25em" style="vertical-align:-.28em"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="30" cy="52" rx="20" ry="6.5" stroke-dasharray="5 5"/><path d="M30 52V7" stroke-width="4.2"/><path d="M30 9h26l-8 10 8 10H30z" fill="#d8453a"/></g></svg>';
+
+// v307: marca de «compra en cola»: marcapáginas rojo con reloj (antes el emoji 🔖)
+const WISHSVG='<g stroke="#1b1712" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 4h24v39l-12-9-12 9z" fill="#d8453a"/><circle cx="24" cy="19" r="7" fill="#fff6dc" stroke-width="2"/><path d="M24 15v4.4l2.8 1.8" stroke-width="2"/></g>';
+const WISHI='<svg class="wishi" viewBox="8 0 32 48" width=".8em" height="1.2em" style="vertical-align:-.25em">'+WISHSVG+'</svg>';
+let WISHIM=null;function wishImg(){if(WISHIM)return WISHIM;try{WISHIM=new Image();WISHIM.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96">'+WISHSVG+'</svg>');}catch(e){}return WISHIM;}

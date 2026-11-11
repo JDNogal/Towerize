@@ -85,11 +85,11 @@ function wishTick(){if(typeof S==='undefined'||!S||!S.wish||!S.wish.length)retur
  S.wish=S.wish.filter(w=>wishOk(w));if(!S.wish.length){wishDeco();return;}
  if(RL.open||!(S.phase==='build'||S.phase==='wave'))return;
  const w=S.wish[0],o=wishOk(w);if(!o||S.gold<o.c)return;
- if(w.a==='build'){const n=S.list.length;bmBuildNow(w.v,o.q);S.wish.shift();if(S.list.length>n)toast('🔖 <b>'+TW[w.v].n+'</b>: construida');return;}
+ if(w.a==='build'){const n=S.list.length;bmBuildNow(w.v,o.q);S.wish.shift();if(S.list.length>n)toast(WISHI+' <b>'+TW[w.v].n+'</b>: construida');return;}
  const t=o.t,T=TW[t.type],lv=t.lvl,rk=t.ab&&t.ab[w.v]||0;
  if(w.a==='up')upgrade(t);else if(w.a==='spec')chooseSpec(t,w.v);else buyAb(t,w.v);
  S.wish.shift();
- if(t.lvl!==lv||(t.ab&&(t.ab[w.v]||0)!==rk))toast('🔖 <b>'+T.n+'</b>: '+(w.a==='up'?'mejorada a Nv '+t.lvl:w.a==='spec'?'ahora es '+SPECS[t.type][w.v].n:AB[w.v].n+' a rango '+t.ab[w.v]));
+ if(t.lvl!==lv||(t.ab&&(t.ab[w.v]||0)!==rk))toast(WISHI+' <b>'+T.n+'</b>: '+(w.a==='up'?'mejorada a Nv '+t.lvl:w.a==='spec'?'ahora es '+SPECS[t.type][w.v].n:AB[w.v].n+' a rango '+t.ab[w.v]));
  wishDeco();}
 setInterval(()=>{try{wishTick();wishDeco();}catch(e){}},150);
 // compras en cola: resumen en el margen izquierdo, en orden, con la barra de oro que falta para cada una
@@ -108,7 +108,7 @@ function wqTick(){let el=document.getElementById('wishq');
   // la primera se paga con el oro de ahora; las siguientes, con lo que sobre tras las anteriores
   const have=Math.max(0,S.gold-acc),pc=Math.min(1,have/o.c),f=Math.max(0,o.c-have);acc+=o.c;
   rows.push(`<div class="wqr${i===0?' nx':''}"><div class="wqh"><span class="wqi">${ic}</span><span class="wqn"><b>${nm}</b><small>${wt}</small></span><button data-wq="${i}" aria-label="Desmarcar">✕</button></div><div class="wqb"><i style="width:${Math.round(pc*100)}%"></i></div><div class="wqc"><em>${f>0?'Faltan <b>'+f+'</b> 🪙':'¡Lista!'}</em><span>${o.c} 🪙</span></div></div>`);});
- const h=`<div class="wqt">🔖 Compras en cola</div>${rows.join('')}`;
+ const h=`<div class="wqt">${WISHI} Compras en cola</div>${rows.join('')}`;
  if(h!==WQ.sg){WQ.sg=h;el.innerHTML=h;}el.classList.add('on');}
 setInterval(()=>{try{wqTick();}catch(e){}},150);
 {const HS='#mbr [data-a="hab"],#mbr [data-a="hult"]';let ht=null,hAt=0;

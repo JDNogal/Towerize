@@ -52,7 +52,7 @@ function tmInfo(k,t){const T=TW[t.type],[a,v]=k.split(':');
 function tmCard(){const c=$('tmcard'),t=TM.t;if(!c||!t)return;const k=TM.arm||TM.hov;if(!k){c.classList.remove('on');return;}const I=tmInfo(k,t);let h=I.h;
  if(TM.arm===k){if(I.sell)h+='<div class="cf">Pulsa otra vez para vender</div>';else if(I.buy)h+=`<div class="cf${S.gold<I.c?' no':''}">${S.gold<I.c?'Te faltan '+(I.c-S.gold)+' 🪙':'Pulsa otra vez para comprar · '+(I.c?I.c+' 🪙':'gratis')}</div>`;}
  else if(I.buy)h+=`<div class="cf${S.gold<I.c?' no':''}">${I.c?I.c+' 🪙':'gratis'}${S.gold<I.c?' · te faltan '+(I.c-S.gold):''}</div>`;
- if(I.w)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla 🔖 y comprarla sola cuando tengas oro.</div>`;
+ if(I.w)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla ${WISHI} y comprarla sola cuando tengas oro.</div>`;
  if(c._h!==h){c.innerHTML=h;c._h=h;}c.classList.add('on');c.dataset.k=k;tmCardPos();}
 function tmCardPos(){const c=$('tmcard'),m=$('tmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,k=c.dataset.k;
  const w=c.offsetWidth,h=c.offsetHeight,T0=58,L=P.px-P.R-74,Rr=P.px+P.R+(m._o&&m._o.side?82:74),top=P.ty-34,bot=P.by+40;
