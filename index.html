@@ -2077,8 +2077,8 @@ flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:2.2,dmg:.45,rate
 acid:{n:'Chorro de ácido',ic:'☣️',dt:'elem',era:2,cost:105,range:2.4,dmg:2.8,rate:2,dot:1,acidj:1,custom:1,col:'#9be15d',l:'Q',fx:'Veneno y armadura rota'},
 sonic:{n:'Torre sónica',ic:'🔊',dt:'magic',era:2,cost:115,range:2.2,dmg:3.5,rate:.5,sonic:1,custom:1,shape:'Onda circular',areaTxt:'La onda se expande desde la torre hasta su alcance y golpea una vez a cada enemigo que atraviesa.',col:'#ff8ad8',l:'W',fx:'Onda que empuja'},
  sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.5,dmg:.45,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
-// v307: ritmo real de las torres de apoyo (no disparan): el Altar lanza una runa cada 3 s; el Dron va sin parar, sin enfriamiento
-const BUFOCD={altar:3};
+// v307: ritmo real de las torres de apoyo (no disparan): el Altar lanza una runa cada 3 s; el Dron tarda 2 s en ajustar cada torre
+const BUFOCD={altar:3,dron:2};
 const ET={vet:{n:'Veterano',gold:6,hp:4.4,hf:80,sp:1,r:.27,col:'#b8443f',dmg:1,ap:15,am:0},champ:{n:'Campeón',gold:14,hp:12,hf:220,sp:.9,r:.31,col:'#8e2a36',dmg:2,ap:30,am:10},runner:{n:'Corredor',gold:6,hp:2.5,hf:45,sp:1.9,r:.22,col:'#e3a33e',dmg:1,ap:0,am:0},armored:{n:'Acorazado',gold:18,hp:15,hf:280,sp:.55,r:.35,col:'#6c7484',dmg:3,ap:40,am:0},bat:{n:'Murciélago',gold:2,hp:.8,hf:14,sp:1.8,r:.18,col:'#6a5480',dmg:1,ap:0,am:0,fly:1},harpy:{n:'Arpía',gold:6,hp:3.3,hf:60,sp:1.2,r:.25,col:'#b07cc0',dmg:1,ap:0,am:10,fly:1},griffin:{n:'Grifo',gold:16,hp:12,hf:220,sp:1,r:.33,col:'#c9a052',dmg:2,ap:20,am:0,fly:1,el:1},norm:{n:'Guerrero',gold:3,hp:1,sp:1,r:.26,col:'#e05a5a',dmg:1,ap:0,am:0},fast:{n:'Asalto',gold:4,hp:.55,sp:1.7,r:.2,col:'#f08fb0',dmg:1,ap:0,am:0},
 tank:{n:'Tanque',gold:10,hp:2.6,sp:.65,r:.34,col:'#a04a7a',dmg:2,ap:10,am:0},
 custodian:{n:'Custodio',gold:5,hp:1.4,sp:.65,r:.3,col:'#4f9fb5',dmg:1,ap:0,am:10,aura:{r:2.5,v:10}},
@@ -2251,7 +2251,7 @@ const AB={
  major:{n:'Runa mayor',ranks:[{c:40,m:.5,t:2},{c:50,m:1,t:4}],txt:r=>`Los bufos de las runas son un <span class="cd">${Math.round(r.m*100)}%</span> más fuertes y duran <span class="cr">${r.t} s</span> más.`},
  affin:{n:'Afinidad',ranks:[{c:35,p:.5}],txt:r=>`Puedes marcar una torre favorita (botón de bandera): recibe la <span class="cd">mitad</span> de todas las runas.`},
  fleet:{n:'Flota',ranks:[{c:40,n:1},{c:50,n:2}],txt:r=>`<b>${1+r.n} drones</b> en vez de 1.`},
- overclock:{n:'Overclock',ranks:[{c:45,t:3,m:2},{c:55,t:4,m:2.5}],txt:r=>`La torre que visita un dron dispara <span class="cr">×${f(r.m)}</span> más rápido durante <span class="cr">${r.t} s</span>.`},
+ overclock:{n:'Overclock',ranks:[{c:45,t:5,m:2},{c:55,t:5,m:2.5}],txt:r=>`La torre que ajusta un dron dispara <span class="cr">×${f(r.m)}</span> más rápido durante <span class="cr">${r.t} s</span>. Con Overclock, el dron no se para: cuando ya ha dado todos los ajustes de crítico, sigue repartiendo Overclock (primero a las torres que están disparando).`},
  weld:{n:'Soldadura',ranks:[{c:35,h:.05,sh:.1},{c:45,h:.1,sh:.2}],txt:r=>`Mientras vuela, el dron cura cada segundo un <span class="chp">${Math.round(r.h*100)}%</span> a las unidades a 1,5 casillas y les da un escudo del <span class="chp">${Math.round(r.sh*100)}%</span> de su vida.`}};
 const SPECS={arrow:{
  rapid:{n:'Arqueros Raudos',ic:'🪶',col:'#f0c46a',lv:{dmg:L4D*1.15,cd:.7*.65,range:1.2,area:1.3,hp:L4H,pen:0},ab:['rain','poison','burst'],d:'Disparan mucho más rápido, a costa de algo de daño.'},
@@ -8091,8 +8091,9 @@ if(typeof ACHVIS!=='undefined')ACHVIS.chapa=()=>typeof era2Ok==='function'&&era2
 function chapaCheck(t){if(!S||S.tut||S.pvE||S.era!==2||!t||t.lvl!==4||!t.spec||S.round>=15)return;const ab=SPECS[t.type][t.spec].ab;if(ab.every(id=>(t.ab[id]||0)>=AB[id].ranks.length))achieve('chapa');}
 // Descripción de las torres de apoyo en la ficha: no disparan
 const BUFOTXT={altar:'No dispara. Cada 3 s lanza una runa a una torre a su alcance: la torre recibe un bufo de 5 s (por turnos: daño, cadencia o alcance). +25% en Nv 1, +30% en Nv 2, +35% en Nv 3 y +40% en Nv 4.',
- dron:'No dispara. Un dron sale del helipuerto y va de torre en torre dentro de su alcance; cada visita da +5% de probabilidad de crítico (+6% en Nv 2, +7% en Nv 3, +8% en Nv 4; máximo 4 visitas por torre). Los ajustes se pierden al acabar la oleada.'};
+ dron:'No dispara. Un dron sale del helipuerto y va de torre en torre dentro de su alcance y tarda 2 s en ajustar cada una; cada ajuste da +5% de probabilidad de crítico (+6% en Nv 2, +7% en Nv 3, +8% en Nv 4; máximo 4 visitas por torre). Los ajustes se pierden al acabar la oleada.'};
 // fuerza de cada runa y del ajuste del dron según el nivel de la torre de apoyo (Nv 1 → Nv 3/4)
+const DRWAIT=2;/* v307: lo que tarda el dron en ajustar cada torre (antes 0,8 s) */
 const runeM=t=>.25+.05*Math.min(3,(t&&t.lvl||1)-1),dronC=t=>.05+.01*Math.min(3,(t&&t.lvl||1)-1);
 const RUNEK=['d','r','rg'],RUNEN={d:'daño',r:'cadencia',rg:'alcance'},RUNEC={d:'#ff8a7a',r:'#c89aff',rg:'#7ad0ff'};
 // torres que puede bufar (dentro del alcance, que disparen o tengan unidades)
@@ -8104,9 +8105,15 @@ function bufoTick(dt){if(S.phase!=='wave')return;
   if(t.type==='dron'){const fl=abRank(t,'fleet'),n=1+(fl?fl.n:0);t.dr=t.dr||[];while(t.dr.length<n)t.dr.push({x:t.x,y:t.y,o:null,wait:0});t.dr.length=n;
    const wd=abRank(t,'weld'),oc=abRank(t,'overclock');
    for(const d of t.dr){if(d.o&&!S.list.includes(d.o))d.o=null;
-    if(!d.o){const tg=bufoTargets(t).filter(o=>(o.drc||0)<4&&!t.dr.some(q=>q!==d&&q.o===o));if(tg.length){tg.sort((a,b)=>(a.drc||0)-(b.drc||0)||Math.hypot(a.x-d.x,a.y-d.y)-Math.hypot(b.x-d.x,b.y-d.y));d.o=tg[0];}else{const tx=t.x,ty=t.y,dx=tx-d.x,dy=ty-d.y,dd=Math.hypot(dx,dy),sp=4*K*dt;if(dd>sp){d.x+=dx/dd*sp;d.y+=dy/dd*sp;}continue;}}
+    if(!d.o){const free=bufoTargets(t).filter(o=>!t.dr.some(q=>q!==d&&q.o===o)),tg=free.filter(o=>(o.drc||0)<4);
+     if(tg.length){tg.sort((a,b)=>(a.drc||0)-(b.drc||0)||Math.hypot(a.x-d.x,a.y-d.y)-Math.hypot(b.x-d.x,b.y-d.y));d.o=tg[0];}
+     // v307: con Overclock no se para al acabar las visitas de crítico: sigue dando Overclock, primero a las que están disparando y no lo tienen
+     else if(oc&&free.length){const busy=o=>{const r=stats(o).range;return S.enemies.some(e=>e.hp>0&&Math.hypot(e.x-o.x,e.y-o.y)<=r)?0:1;};
+      free.sort((a,b)=>busy(a)-busy(b)||(a.oc||0)-(b.oc||0)||Math.hypot(a.x-d.x,a.y-d.y)-Math.hypot(b.x-d.x,b.y-d.y));d.o=free[0];}
+     else{const tx=t.x,ty=t.y,dx=tx-d.x,dy=ty-d.y,dd=Math.hypot(dx,dy),sp=4*K*dt;if(dd>sp){d.x+=dx/dd*sp;d.y+=dy/dd*sp;}continue;}}
     const dx=d.o.x-d.x,dy=d.o.y-d.y,dd=Math.hypot(dx,dy),sp=4*K*dt;
-    if(dd>sp){d.x+=dx/dd*sp;d.y+=dy/dd*sp;d.wait=0;}else{d.x=d.o.x;d.y=d.o.y;d.wait+=dt;if(d.wait>=.8){const o=d.o;o.drc=Math.min(4,(o.drc||0)+1);o.drp=Math.max(o.drp||0,dronC(t));if(oc){o.oc=oc.t;o.ocm=oc.m;}S.fx.push({x:o.x,y:o.y,t:.5,m:.5,r:.8*K,col:'#ffd75a'});d.o=null;d.wait=0;}}
+    if(dd>sp){d.x+=dx/dd*sp;d.y+=dy/dd*sp;d.wait=0;}else{d.x=d.o.x;d.y=d.o.y;d.wait+=dt;d.sk=(d.sk||0)+dt;if(d.sk>=.22){d.sk=0;S.fx.push({x:d.x+(Math.random()-.5)*.5*K,y:d.y+(Math.random()-.5)*.5*K,t:.22,m:.22,r:.18*K,col:'#ffd75a'});}
+     if(d.wait>=DRWAIT){const o=d.o;o.drc=Math.min(4,(o.drc||0)+1);o.drp=Math.max(o.drp||0,dronC(t));if(oc){o.oc=oc.t;o.ocm=oc.m;}S.fx.push({x:o.x,y:o.y,t:.5,m:.5,r:.8*K,col:'#ffd75a'});d.o=null;d.wait=0;}}
     if(wd){d.wt=(d.wt||0)+dt;if(d.wt>=1){d.wt-=1;for(const u of unitTowers())for(const s of u.sd)if(s.hp>0&&Math.hypot(s.x-d.x,s.y-d.y)<=1.5*K){s.hp=Math.min(s.max,s.hp+s.max*wd.h);s.sh=Math.max(s.sh||0,s.max*wd.sh);}}}}}}
  // runas en vuelo
  if(S.runesB&&S.runesB.length){for(const r of S.runesB){r.t+=dt;if(r.t>=r.m){const o=r.o;if(S.list.includes(o)){const mj=abRank(r.src,'major');o.rb={k:r.k,m:runeM(r.src)*(1+(mj?mj.m:0)),t:5+(mj?mj.t:0)};S.fx.push({x:o.x,y:o.y,t:.4,m:.4,r:.7*K,col:RUNEC[r.k]});}}}S.runesB=S.runesB.filter(r=>r.t<r.m);}

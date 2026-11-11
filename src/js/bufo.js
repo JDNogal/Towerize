@@ -7,8 +7,9 @@ if(typeof ACHVIS!=='undefined')ACHVIS.chapa=()=>typeof era2Ok==='function'&&era2
 function chapaCheck(t){if(!S||S.tut||S.pvE||S.era!==2||!t||t.lvl!==4||!t.spec||S.round>=15)return;const ab=SPECS[t.type][t.spec].ab;if(ab.every(id=>(t.ab[id]||0)>=AB[id].ranks.length))achieve('chapa');}
 // Descripción de las torres de apoyo en la ficha: no disparan
 const BUFOTXT={altar:'No dispara. Cada 3 s lanza una runa a una torre a su alcance: la torre recibe un bufo de 5 s (por turnos: daño, cadencia o alcance). +25% en Nv 1, +30% en Nv 2, +35% en Nv 3 y +40% en Nv 4.',
- dron:'No dispara. Un dron sale del helipuerto y va de torre en torre dentro de su alcance; cada visita da +5% de probabilidad de crítico (+6% en Nv 2, +7% en Nv 3, +8% en Nv 4; máximo 4 visitas por torre). Los ajustes se pierden al acabar la oleada.'};
+ dron:'No dispara. Un dron sale del helipuerto y va de torre en torre dentro de su alcance y tarda 2 s en ajustar cada una; cada ajuste da +5% de probabilidad de crítico (+6% en Nv 2, +7% en Nv 3, +8% en Nv 4; máximo 4 visitas por torre). Los ajustes se pierden al acabar la oleada.'};
 // fuerza de cada runa y del ajuste del dron según el nivel de la torre de apoyo (Nv 1 → Nv 3/4)
+const DRWAIT=2;/* v307: lo que tarda el dron en ajustar cada torre (antes 0,8 s) */
 const runeM=t=>.25+.05*Math.min(3,(t&&t.lvl||1)-1),dronC=t=>.05+.01*Math.min(3,(t&&t.lvl||1)-1);
 const RUNEK=['d','r','rg'],RUNEN={d:'daño',r:'cadencia',rg:'alcance'},RUNEC={d:'#ff8a7a',r:'#c89aff',rg:'#7ad0ff'};
 // torres que puede bufar (dentro del alcance, que disparen o tengan unidades)
@@ -20,9 +21,15 @@ function bufoTick(dt){if(S.phase!=='wave')return;
   if(t.type==='dron'){const fl=abRank(t,'fleet'),n=1+(fl?fl.n:0);t.dr=t.dr||[];while(t.dr.length<n)t.dr.push({x:t.x,y:t.y,o:null,wait:0});t.dr.length=n;
    const wd=abRank(t,'weld'),oc=abRank(t,'overclock');
    for(const d of t.dr){if(d.o&&!S.list.includes(d.o))d.o=null;
-    if(!d.o){const tg=bufoTargets(t).filter(o=>(o.drc||0)<4&&!t.dr.some(q=>q!==d&&q.o===o));if(tg.length){tg.sort((a,b)=>(a.drc||0)-(b.drc||0)||Math.hypot(a.x-d.x,a.y-d.y)-Math.hypot(b.x-d.x,b.y-d.y));d.o=tg[0];}else{const tx=t.x,ty=t.y,dx=tx-d.x,dy=ty-d.y,dd=Math.hypot(dx,dy),sp=4*K*dt;if(dd>sp){d.x+=dx/dd*sp;d.y+=dy/dd*sp;}continue;}}
+    if(!d.o){const free=bufoTargets(t).filter(o=>!t.dr.some(q=>q!==d&&q.o===o)),tg=free.filter(o=>(o.drc||0)<4);
+     if(tg.length){tg.sort((a,b)=>(a.drc||0)-(b.drc||0)||Math.hypot(a.x-d.x,a.y-d.y)-Math.hypot(b.x-d.x,b.y-d.y));d.o=tg[0];}
+     // v307: con Overclock no se para al acabar las visitas de crítico: sigue dando Overclock, primero a las que están disparando y no lo tienen
+     else if(oc&&free.length){const busy=o=>{const r=stats(o).range;return S.enemies.some(e=>e.hp>0&&Math.hypot(e.x-o.x,e.y-o.y)<=r)?0:1;};
+      free.sort((a,b)=>busy(a)-busy(b)||(a.oc||0)-(b.oc||0)||Math.hypot(a.x-d.x,a.y-d.y)-Math.hypot(b.x-d.x,b.y-d.y));d.o=free[0];}
+     else{const tx=t.x,ty=t.y,dx=tx-d.x,dy=ty-d.y,dd=Math.hypot(dx,dy),sp=4*K*dt;if(dd>sp){d.x+=dx/dd*sp;d.y+=dy/dd*sp;}continue;}}
     const dx=d.o.x-d.x,dy=d.o.y-d.y,dd=Math.hypot(dx,dy),sp=4*K*dt;
-    if(dd>sp){d.x+=dx/dd*sp;d.y+=dy/dd*sp;d.wait=0;}else{d.x=d.o.x;d.y=d.o.y;d.wait+=dt;if(d.wait>=.8){const o=d.o;o.drc=Math.min(4,(o.drc||0)+1);o.drp=Math.max(o.drp||0,dronC(t));if(oc){o.oc=oc.t;o.ocm=oc.m;}S.fx.push({x:o.x,y:o.y,t:.5,m:.5,r:.8*K,col:'#ffd75a'});d.o=null;d.wait=0;}}
+    if(dd>sp){d.x+=dx/dd*sp;d.y+=dy/dd*sp;d.wait=0;}else{d.x=d.o.x;d.y=d.o.y;d.wait+=dt;d.sk=(d.sk||0)+dt;if(d.sk>=.22){d.sk=0;S.fx.push({x:d.x+(Math.random()-.5)*.5*K,y:d.y+(Math.random()-.5)*.5*K,t:.22,m:.22,r:.18*K,col:'#ffd75a'});}
+     if(d.wait>=DRWAIT){const o=d.o;o.drc=Math.min(4,(o.drc||0)+1);o.drp=Math.max(o.drp||0,dronC(t));if(oc){o.oc=oc.t;o.ocm=oc.m;}S.fx.push({x:o.x,y:o.y,t:.5,m:.5,r:.8*K,col:'#ffd75a'});d.o=null;d.wait=0;}}
     if(wd){d.wt=(d.wt||0)+dt;if(d.wt>=1){d.wt-=1;for(const u of unitTowers())for(const s of u.sd)if(s.hp>0&&Math.hypot(s.x-d.x,s.y-d.y)<=1.5*K){s.hp=Math.min(s.max,s.hp+s.max*wd.h);s.sh=Math.max(s.sh||0,s.max*wd.sh);}}}}}}
  // runas en vuelo
  if(S.runesB&&S.runesB.length){for(const r of S.runesB){r.t+=dt;if(r.t>=r.m){const o=r.o;if(S.list.includes(o)){const mj=abRank(r.src,'major');o.rb={k:r.k,m:runeM(r.src)*(1+(mj?mj.m:0)),t:5+(mj?mj.t:0)};S.fx.push({x:o.x,y:o.y,t:.4,m:.4,r:.7*K,col:RUNEC[r.k]});}}}S.runesB=S.runesB.filter(r=>r.t<r.m);}

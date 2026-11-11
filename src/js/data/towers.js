@@ -53,8 +53,8 @@ flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:2.2,dmg:.45,rate
 acid:{n:'Chorro de ácido',ic:'☣️',dt:'elem',era:2,cost:105,range:2.4,dmg:2.8,rate:2,dot:1,acidj:1,custom:1,col:'#9be15d',l:'Q',fx:'Veneno y armadura rota'},
 sonic:{n:'Torre sónica',ic:'🔊',dt:'magic',era:2,cost:115,range:2.2,dmg:3.5,rate:.5,sonic:1,custom:1,shape:'Onda circular',areaTxt:'La onda se expande desde la torre hasta su alcance y golpea una vez a cada enemigo que atraviesa.',col:'#ff8ad8',l:'W',fx:'Onda que empuja'},
  sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.5,dmg:.45,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
-// v307: ritmo real de las torres de apoyo (no disparan): el Altar lanza una runa cada 3 s; el Dron va sin parar, sin enfriamiento
-const BUFOCD={altar:3};
+// v307: ritmo real de las torres de apoyo (no disparan): el Altar lanza una runa cada 3 s; el Dron tarda 2 s en ajustar cada torre
+const BUFOCD={altar:3,dron:2};
 const ET={vet:{n:'Veterano',gold:6,hp:4.4,hf:80,sp:1,r:.27,col:'#b8443f',dmg:1,ap:15,am:0},champ:{n:'Campeón',gold:14,hp:12,hf:220,sp:.9,r:.31,col:'#8e2a36',dmg:2,ap:30,am:10},runner:{n:'Corredor',gold:6,hp:2.5,hf:45,sp:1.9,r:.22,col:'#e3a33e',dmg:1,ap:0,am:0},armored:{n:'Acorazado',gold:18,hp:15,hf:280,sp:.55,r:.35,col:'#6c7484',dmg:3,ap:40,am:0},bat:{n:'Murciélago',gold:2,hp:.8,hf:14,sp:1.8,r:.18,col:'#6a5480',dmg:1,ap:0,am:0,fly:1},harpy:{n:'Arpía',gold:6,hp:3.3,hf:60,sp:1.2,r:.25,col:'#b07cc0',dmg:1,ap:0,am:10,fly:1},griffin:{n:'Grifo',gold:16,hp:12,hf:220,sp:1,r:.33,col:'#c9a052',dmg:2,ap:20,am:0,fly:1,el:1},norm:{n:'Guerrero',gold:3,hp:1,sp:1,r:.26,col:'#e05a5a',dmg:1,ap:0,am:0},fast:{n:'Asalto',gold:4,hp:.55,sp:1.7,r:.2,col:'#f08fb0',dmg:1,ap:0,am:0},
 tank:{n:'Tanque',gold:10,hp:2.6,sp:.65,r:.34,col:'#a04a7a',dmg:2,ap:10,am:0},
 custodian:{n:'Custodio',gold:5,hp:1.4,sp:.65,r:.3,col:'#4f9fb5',dmg:1,ap:0,am:10,aura:{r:2.5,v:10}},
@@ -227,7 +227,7 @@ const AB={
  major:{n:'Runa mayor',ranks:[{c:40,m:.5,t:2},{c:50,m:1,t:4}],txt:r=>`Los bufos de las runas son un <span class="cd">${Math.round(r.m*100)}%</span> más fuertes y duran <span class="cr">${r.t} s</span> más.`},
  affin:{n:'Afinidad',ranks:[{c:35,p:.5}],txt:r=>`Puedes marcar una torre favorita (botón de bandera): recibe la <span class="cd">mitad</span> de todas las runas.`},
  fleet:{n:'Flota',ranks:[{c:40,n:1},{c:50,n:2}],txt:r=>`<b>${1+r.n} drones</b> en vez de 1.`},
- overclock:{n:'Overclock',ranks:[{c:45,t:3,m:2},{c:55,t:4,m:2.5}],txt:r=>`La torre que visita un dron dispara <span class="cr">×${f(r.m)}</span> más rápido durante <span class="cr">${r.t} s</span>.`},
+ overclock:{n:'Overclock',ranks:[{c:45,t:5,m:2},{c:55,t:5,m:2.5}],txt:r=>`La torre que ajusta un dron dispara <span class="cr">×${f(r.m)}</span> más rápido durante <span class="cr">${r.t} s</span>. Con Overclock, el dron no se para: cuando ya ha dado todos los ajustes de crítico, sigue repartiendo Overclock (primero a las torres que están disparando).`},
  weld:{n:'Soldadura',ranks:[{c:35,h:.05,sh:.1},{c:45,h:.1,sh:.2}],txt:r=>`Mientras vuela, el dron cura cada segundo un <span class="chp">${Math.round(r.h*100)}%</span> a las unidades a 1,5 casillas y les da un escudo del <span class="chp">${Math.round(r.sh*100)}%</span> de su vida.`}};
 const SPECS={arrow:{
  rapid:{n:'Arqueros Raudos',ic:'🪶',col:'#f0c46a',lv:{dmg:L4D*1.15,cd:.7*.65,range:1.2,area:1.3,hp:L4H,pen:0},ab:['rain','poison','burst'],d:'Disparan mucho más rápido, a costa de algo de daño.'},
