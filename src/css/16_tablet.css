@@ -202,3 +202,9 @@ html:root[data-skin="holo"] .lbcv.lbshrink .lbcvin{animation:hcP .85s .2s var(--
 /* volver a la portada: la proyección se estrecha a la vez que la consola se acerca */
 @keyframes hnP{from{transform:scaleX(var(--hr,1))}to{transform:none}}
 html:root[data-skin="holo"] .lbcv.hnarrow .lbcvin{animation:hnP 1.1s var(--hE) both!important}
+/* la portada mide lo mismo de alto que el libro abierto: al pasar al compendio solo se ensancha */
+html:root[data-skin="holo"] .lbcv.a{height:min(610px,calc(100vh - 130px))!important;margin-top:56px!important}
+html:root[data-skin="holo"] .lbcv::after{top:-24px!important;bottom:-24px!important}
+html:root[data-skin="holo"] .lbcv::before{top:-12px!important;bottom:-12px!important}
+html:root[data-skin="holo"] .lbcv::after{right:-146px!important}
+html:root[data-skin="holo"] .lbcv .lbribs{right:-113px!important;top:112px!important}
