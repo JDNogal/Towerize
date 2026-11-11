@@ -14,7 +14,7 @@ function rtlInfo(r){const o={boss:false,el:0,mi:0,ex:[]};if(!S)return o;if(S.tut
  return o;}
 // v307: iconos genéricos de peligro (no dicen qué enemigo es): mini-élite = calavera, élite = calavera con cuernos, jefe = con cuernos y corona.
 // Lo que no sea élite ni mini (enemigos de evento) cuenta como élite. El enemigo concreto se ve en el portal de su ronda.
-const rtlGen=(k,cls)=>`<i class="rti ${cls} g${k}">${RTLI[k]}</i>`;
+const rtlGen=(k,cls)=>`<i class="rti ${cls} g${k}">${rtlI()[k]}</i>`;
 function rtlDot(r){const o=rtlInfo(r);let h='',c='';
  if(o.boss){c='b';h=rtlGen('boss','boss');}
  else if(o.el||o.mi||o.ex.length){c='x';const E=o.el+o.ex.length;/* los enemigos de evento cuentan como élites */
@@ -29,7 +29,7 @@ function rtlTick(){let el=document.getElementById('rtl');
  if(!el){el=document.createElement('div');el.id='rtl';document.body.appendChild(el);}
  const r0=Math.max(1,Math.min(S.round,ROUNDS)),r1=Math.min(ROUNDS,r0+RTL.N-1),p=rtlProg();
  const dots=[];for(let r=r0;r<=r1;r++)dots.push([r,rtlDot(r)]);
- const sg=r0+'|'+S.phase+'|'+dots.map(([r,d])=>d.c+d.h).join(',');
+ const sg=(era2G()?'n':'f')+r0+'|'+S.phase+'|'+dots.map(([r,d])=>d.c+d.h).join(',');
  if(sg!==RTL.sg){RTL.sg=sg;let h='';
   if(r0>1)h+=`<span class="rtm">◂</span>`;
   dots.forEach(([r,d],i)=>{h+=`<div class="rtd ${d.c}${r===r0?' cur':''}" data-tip="rtl:${r}"><span class="rtb">${d.h}</span><span class="rtn">${r}</span></div>`;if(i<dots.length-1)h+=`<div class="rts${i===0?' now':''}"><i></i></div>`;});
