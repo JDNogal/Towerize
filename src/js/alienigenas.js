@@ -26,6 +26,8 @@ Object.assign(AB,{
  devour:{n:'Devorar',ranks:[{c:35,p:.15},{c:45,p:.2},{c:55,p:.25}],txt:r=>`Si el enemigo baja del <span class="cd">${Math.round(r.p*100)}%</span> de vida (élites y jefes no), se lo comen de golpe y se curan la mitad de su vida.`},
  ambush:{n:'Emboscada',ranks:[{c:40,cd:9,st:.6},{c:50,cd:6,st:1}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, un depredador salta sobre un enemigo a su alcance, le hace el doble de daño y lo aturde <span class="cr">${f(r.st)} s</span>.`},
  frenzy:{n:'Frenesí',ranks:[{c:35,m:.15},{c:45,m:.2},{c:55,m:.25}],txt:r=>`Al matar, ataca un <span class="cr">${Math.round(r.m*100)}%</span> más rápido durante 4 s (se acumula hasta 3 veces).`}});
+// v305: el coste de sus habilidades se escala con el de la torre, como en todas las demás (se definían después del ajuste general y salían unas 6 veces más baratas)
+{const r5=v=>Math.round(v/5)*5,b=TW.alien.cost;for(const sp of Object.values(SPECS.alien||{}))for(const a of sp.ab){const R=AB[a]&&AB[a].ranks;if(!R)continue;R.forEach((r,k)=>{r.c=R.length===1?r5(b*4.2):k===0?r5(b*2.8):r5(b*1.9);});}}
 // ---- cuántas criaturas toca tener ----
 const alienN=t=>t.spec==='pred'?3:t.spec==='hive'?ALHIVE:ALN[Math.min(3,t.lvl||1)];
 function alienSync(t){if(!t||t.type!=='alien'||!t.sd)return;const want=alienN(t),base=t.sd.filter(s=>!s.lar&&!s.xtr);

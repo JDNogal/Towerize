@@ -26,17 +26,17 @@ const bkey=k=>BF[k].base||k,bname=k=>BF[k].n+(BF[k].sup?' <span class="stg">★<
 function rollBuff(){const k=BK[Math.floor(Math.random()*BK.length)];
  if(Math.random()<S.sup){S.sup=SUP0;return k+'+';}S.sup=Math.min(1,S.sup+SUPUP);return k;}
 const TW={
-arrow:{n:'Arqueros',ic:'🏹',dt:'phys',cost:75,range:2.8,dmg:6.5,rate:2.5,ps:12,col:'#e8b04a',l:'F',fx:'Ninguno'},
+arrow:{n:'Arqueros',ic:'🏹',dt:'phys',cost:75,range:2.8,dmg:8.5,rate:2.5,ps:12,col:'#e8b04a',l:'F',fx:'Ninguno'},
 cannon:{n:'Cañoneros',ic:'💣',dt:'phys',era:2,cost:90,range:2.6,dmg:30,rate:.7,ps:6,splash:1.1,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#e07a3d',l:'N',fx:'Ninguno'},
  cata:{n:'Catapulta',ic:'🪨',dt:'phys',cata:1,ground:1,cost:90,range:2.8,dmg:38,rate:.55,ps:5,splash:1.15,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#a8977c',l:'C',fx:'Ninguno'},
 frost:{n:'Cryomago',ic:'🧊',dt:'elem',cost:70,range:2.4,dmg:3,rate:1.5,ps:9,slow:.5,col:'#6cc5ff',l:'H',fx:'Ralentiza 50% (1,5 s)'},
 laser:{n:'Láser de arco',ic:'⚡',dt:'elem',era:2,e2b:1,cost:110,range:2.8,dmg:2.6,rate:8,beam:1,arc:1,col:'#ffe24a',l:'L',fx:'Arco eléctrico continuo'},
-bunker:{n:'Búnker',ic:'🏚️',dt:'phys',era:2,e2b:1,cost:85,range:2.6,dmg:2.8,rate:5,ps:40,mag:30,reload:1.8,ramp:.6,col:'#9aa07a',l:'K',fx:'Cargador: la cadencia sube mientras dispara'},
+bunker:{n:'Búnker',ic:'🏚️',dt:'phys',era:2,e2b:1,cost:85,range:2.6,dmg:3.6,rate:5,ps:40,mag:30,reload:1.8,ramp:.6,col:'#9aa07a',l:'K',fx:'Cargador: la cadencia sube mientras dispara'},
 robots:{n:'Robots',ic:'🤖',dt:'phys',era:2,e2b:1,cost:90,range:2.5,dmg:5,rate:1,unit:{n:3,hp:50,ap:15,rez:9,spd:2},col:'#8aa0b8',l:'R',fx:'Ninguno'},
 nano:{n:'Enjambre de nanitos',ic:'🫧',dt:'magic',era:2,e2b:1,cost:105,range:2.6,dmg:3.6,rate:4,swarm:1,col:'#8fb4ff',l:'E',fx:'Enjambre que persigue a los enemigos'},
 altar:{n:'Altar de runas',ic:'🪬',dt:'magic',cost:90,range:2.6,dmg:0,rate:0,support:1,bufo:1,col:'#c89aff',l:'A',fx:'Bufos temporales a las torres cercanas'},
 dron:{n:'Dron de mantenimiento',ic:'🛸',dt:'phys',era:2,cost:95,range:3,dmg:0,rate:0,support:1,bufo:1,col:'#e8b04a',l:'D',fx:'Afina la puntería de las torres cercanas'},
- orb:{n:'Orbe arcano',ic:'🧿',dt:'magic',cost:110,range:2.8,dmg:22,rate:.85,ps:4.5,orb:1,col:'#8a7dff',l:'I',fx:'Orbe mágico'},
+ orb:{n:'Orbe arcano',ic:'🧿',dt:'magic',cost:110,range:2.8,dmg:28,rate:.85,ps:4.5,orb:1,col:'#8a7dff',l:'I',fx:'Orbe mágico'},
 poison:{n:'Envenenadora',ground:1,ic:'🧪',dt:'elem',cost:100,range:3,dmg:3,rate:.5,puddle:1,dot:1,dur:4,pr:1,shape:'Charco',areaTxt:'Todos los enemigos dentro del círculo reciben el efecto.',col:'#7bd34a',l:'V',fx:'Veneno acumulable'},
 faro:{n:'Faro arcano',ic:'🗼',dt:'magic',cost:0,range:3,dmg:0,rate:0,col:'#ffe27a',l:'F',fx:'Ninguno',uniq:1,support:1,faro:1,ev:'lighthouse'},
 dragon:{n:'Huevo de dragón',ic:'🥚',dt:'elem',cost:0,range:2.5,dmg:8,rate:.83,unit:{n:1,hp:60,ap:5,rez:8,spd:2},col:'#d0603a',l:'D',fx:'Ninguno',uniq:1,dragon:1,ev:'nest'},
@@ -49,10 +49,10 @@ bastion:{n:'Baluarte',ic:'🛡️',dt:'phys',cost:80,range:2.5,dmg:4,rate:1,unit
 monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:3.5,rate:1,unit:{n:2,hp:34,ap:0,rez:8,spd:2},col:'#d9a24e',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
 tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:3,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
  augur:{n:'Augur Voltaico',ic:'👁️',icb:'⚡',dt:'elem',augur:1,cost:100,range:2.6,dmg:22,rate:.8,splash:.9,shape:'Rayo del cielo',areaTxt:'El rayo cae sobre el objetivo y alcanza a los enemigos de alrededor.',col:'#8fd0ff',l:'U',fx:'Ninguno'},
-flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:2.2,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
+flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:2.2,dmg:.8,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
 acid:{n:'Chorro de ácido',ic:'☣️',dt:'elem',era:2,cost:105,range:2.4,dmg:2,rate:2,dot:1,acidj:1,custom:1,col:'#9be15d',l:'Q',fx:'Veneno y armadura rota'},
 sonic:{n:'Torre sónica',ic:'🔊',dt:'magic',era:2,cost:115,range:2.2,dmg:10,rate:.5,sonic:1,custom:1,shape:'Onda circular',areaTxt:'La onda se expande desde la torre hasta su alcance y golpea una vez a cada enemigo que atraviesa.',col:'#ff8ad8',l:'W',fx:'Onda que empuja'},
- sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.5,dmg:1,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
+ sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.5,dmg:.8,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
 const ET={vet:{n:'Veterano',gold:6,hp:4.4,hf:80,sp:1,r:.27,col:'#b8443f',dmg:1,ap:15,am:0},champ:{n:'Campeón',gold:14,hp:12,hf:220,sp:.9,r:.31,col:'#8e2a36',dmg:2,ap:30,am:10},runner:{n:'Corredor',gold:6,hp:2.5,hf:45,sp:1.9,r:.22,col:'#e3a33e',dmg:1,ap:0,am:0},armored:{n:'Acorazado',gold:18,hp:15,hf:280,sp:.55,r:.35,col:'#6c7484',dmg:3,ap:40,am:0},bat:{n:'Murciélago',gold:2,hp:.8,hf:14,sp:1.8,r:.18,col:'#6a5480',dmg:1,ap:0,am:0,fly:1},harpy:{n:'Arpía',gold:6,hp:3.3,hf:60,sp:1.2,r:.25,col:'#b07cc0',dmg:1,ap:0,am:10,fly:1},griffin:{n:'Grifo',gold:16,hp:12,hf:220,sp:1,r:.33,col:'#c9a052',dmg:2,ap:20,am:0,fly:1,el:1},norm:{n:'Guerrero',gold:3,hp:1,sp:1,r:.26,col:'#e05a5a',dmg:1,ap:0,am:0},fast:{n:'Asalto',gold:4,hp:.55,sp:1.7,r:.2,col:'#f08fb0',dmg:1,ap:0,am:0},
 tank:{n:'Tanque',gold:10,hp:2.6,sp:.65,r:.34,col:'#a04a7a',dmg:2,ap:10,am:0},
 custodian:{n:'Custodio',gold:5,hp:1.4,sp:.65,r:.3,col:'#4f9fb5',dmg:1,ap:0,am:10,aura:{r:2.5,v:10}},
@@ -228,7 +228,7 @@ const AB={
  overclock:{n:'Overclock',ranks:[{c:45,t:3,m:2},{c:55,t:4,m:2.5}],txt:r=>`La torre que visita un dron dispara <span class="cr">×${f(r.m)}</span> más rápido durante <span class="cr">${r.t} s</span>.`},
  weld:{n:'Soldadura',ranks:[{c:35,h:.05,sh:.1},{c:45,h:.1,sh:.2}],txt:r=>`Mientras vuela, el dron cura cada segundo un <span class="chp">${Math.round(r.h*100)}%</span> a las unidades a 1,5 casillas y les da un escudo del <span class="chp">${Math.round(r.sh*100)}%</span> de su vida.`}};
 const SPECS={arrow:{
- rapid:{n:'Arqueros Raudos',ic:'🪶',col:'#f0c46a',lv:{dmg:L4D*.85,cd:.7*.65,range:1.2,area:1.3,hp:L4H,pen:0},ab:['rain','poison','burst'],d:'Disparan mucho más rápido, a costa de algo de daño.'},
+ rapid:{n:'Arqueros Raudos',ic:'🪶',col:'#f0c46a',lv:{dmg:L4D*1.0,cd:.7*.65,range:1.2,area:1.3,hp:L4H,pen:0},ab:['rain','poison','burst'],d:'Disparan mucho más rápido, a costa de algo de daño.'},
  xbow:{n:'Ballesteros',ic:'🎯',col:'#c9783a',lv:{dmg:L4D*2.5,cd:.7*1.4,range:1.2,area:1.3,hp:L4H,pen:15},ab:['charged','pierce','mark'],d:'Disparan más lento, pero con mucho más daño y penetración de armadura.'}},
 cata:{
  treb:{n:'Trebuchet',ic:'🏯',col:'#b59a6a',lv:{dmg:L4D*1.9,cd:.7*1.45,range:1.2*1.3,area:1.3*1.2,hp:L4H,pen:0},ab:['arsenal','debris','breach'],d:'Alcance enorme y disparos muy lentos y potentes. Arma de asedio: lanza lo que tenga a mano.'},
@@ -250,7 +250,7 @@ laser:{
  volt:{n:'Arco voltaico',ic:'⚡',col:'#fff08a',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{volt:1},ab:['hv','ground','jump'],d:'El arco carga de electricidad a su objetivo; con la carga llena, descarga: un golpe de 15× y lo aturde.'}},
 bunker:{
  sup:{n:'Supresión',ic:'🔩',col:'#c9b06a',lv:{dmg:L4D*.9,cd:.7*.8,range:1.2,area:1.3,hp:L4H,pen:0},o:{mag:45,ramp:1.2},ab:['trigger','magz','expan'],d:'Cargadores de 45 balas y la cadencia sube mucho más mientras dispara. Pensada para hordas.'},
- nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*7,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['weak','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración. Para élites y jefes.'}},
+ nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*10,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['weak','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración. Para élites y jefes.'}},
 robots:{
  mecha:{n:'Mechas',ic:'🦾',col:'#e0884a',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.5,pen:0},o:{mecha:1},ab:['drill','react','shoulder'],d:'Uno de los robots se transforma en un mecha élite: mucha más vida, corpulencia 2 y golpes en área. Los otros dos le apoyan.'},
  kami:{n:'Androides kamikaze',ic:'💥',col:'#ff6a5a',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H*.5,pen:0},o:{kami:1},uspd:1.6,ab:['reens','decoy','scrap'],d:'4 androides rápidos y frágiles. Al caer explotan (3× su daño en 1 casilla) y la torre los reensambla enseguida.'}},
@@ -263,7 +263,7 @@ dron:{
  dron:{n:'Helipuerto',ic:'🛸',col:'#e8b04a',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},ab:['fleet','overclock','weld'],d:'Más alcance. Los drones se pueden mejorar.'}},
 poison:{
  alch:{n:'Alquimista',ic:'⚗️',col:'#58c9a0',lv:{dmg:L4D*1.6,cd:.7,range:1.2,area:1.3*1.3,hp:L4H,pen:0},ab:['plague','corr','flask'],d:'Charcos más grandes y más stacks. El veneno se contagia y corroe la armadura.'},
- pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*.7,cd:.7,range:1.2,area:1.3*.75,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},
+ pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*.9,cd:.7,range:1.2,area:1.3*.85,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},
 monk:{
  fist:{n:'Monjes de Batalla',ic:'🥋',col:'#e07a3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2,area:1.3,hp:L4H*1.1,pen:0},ab:['chi','fists','counter'],d:'Monjes élficos que pelean con más daño y más daño mágico. Siguen curando al grupo.'},
  drunk:{n:'Maestros Ebrios',ic:'🍶',col:'#b07ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2,area:1.3,hp:L4H*1.4,pen:0},o:{noheal:1},ab:['gourd','stagger','fireb'],d:'Beben de su calabaza: se curan solos, esquivan y escupen fuego. Ya no curan al grupo.'}},
@@ -275,10 +275,10 @@ tesla:{
  ele:{n:'Electrocutor',ic:'🔌',col:'#e8c21f',lv:{dmg:L4D*2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:null,ez:1},ab:['accum','short','reson'],d:'Sin rebotes: golpea a un solo enemigo y lo electriza (+5% de daño eléctrico por stack, máx. 10). Para élites y jefes.'}},
 sala:{
  volc:{n:'Corazón Volcánico',ic:'❤️‍🔥',col:'#ff6a2e',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['erupt','flare','embr'],d:'Acumula Calor mientras dispara (lleno en 8 s): el cono se abre hasta 110° y aplica hasta un 50% más de stacks. Sin objetivo, se enfría.'},
- forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*.9,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo. Para élites, jefes y enemigos con armadura.'}},
+ forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*3,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo. Para élites, jefes y enemigos con armadura.'}},
 flame:{
  detn:{n:'Detonador',ic:'🎆',col:'#ff8a3c',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['overp','chainr','tarb'],d:'Cuando un enemigo acumula 30 stacks de quemadura de esta torre, explota: pierde la mitad de sus stacks y hace daño en área (1 casilla).'},
- muro:{n:'Muro de fuego',ic:'🌋',col:'#ff5f3a',lv:{dmg:L4D*.9,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},o:{cone:0,fwall:1,shape:'Franja',areaTxt:'La franja ocupa toda la anchura del camino.'},ab:['morew','densef','ash'],d:'Ya no lanza llamas: enciende una franja de fuego en el camino, delante de su objetivo, que quema durante 4 s a todo el que la cruza.'}},
+ muro:{n:'Muro de fuego',ic:'🌋',col:'#ff5f3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},o:{cone:0,fwall:1,shape:'Franja',areaTxt:'La franja ocupa toda la anchura del camino.'},ab:['morew','densef','ash'],d:'Ya no lanza llamas: enciende una franja de fuego en el camino, delante de su objetivo, que quema durante 4 s a todo el que la cruza.'}},
 acid:{
  corr:{n:'Corrosión',ic:'🧫',col:'#7fd34a',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['conc','pudd','sores'],d:'Chorro más concentrado: más veneno y más armadura rota por golpe. Lo que mata se deshace en charcos.'},
  cloud:{n:'Nube viajera',ic:'🌫️',col:'#b8e07a',lv:{dmg:L4D*.9,cd:.7,range:1.2*1.1,area:1.3,hp:L4H,pen:0},o:{tcloud:1,shape:'Nube',areaTxt:'Envenena a todos los enemigos que atraviesa, también a los voladores.'},ab:['dfront','slowadv','trailx'],d:'Ya no dispara: cada 6 s suelta una nube tóxica en el camino que avanza contra corriente hacia los portales (6 casillas) envenenando a todo lo que atraviesa.'}},

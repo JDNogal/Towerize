@@ -64,8 +64,8 @@ function mechaTickE2(dt){for(const t of S.list){if(t.type!=='robots'||!t.sd)cont
   if(t.spec==='kami'){const dc=abRank(t,'decoy');for(const k in t.acd)t.acd[k]=Math.max(0,(t.acd[k]||0)-dt);
    if(dc&&!(t.acd.decoy>0)&&!t.sd.some(s=>s.beep>0)){const alive=t.sd.filter(s=>s.hp>0&&!s.lock),nearE=S.enemies.some(e=>e.hp>0&&Math.hypot(e.x-(t.flag||t).x,e.y-(t.flag||t).y)<=3*K);
     if(alive.length&&nearE){const s=alive[Math.floor(Math.random()*alive.length)];s.beep=1.5;s.beepR=dc.r*K;t.acd.decoy=dc.cd;}}
-   for(const s of t.sd)if(s.beep>0){s.beep-=dt;for(const e of S.enemies){if(e.hp<=0||isBoss(e)||isFly(e))continue;const d=Math.hypot(e.x-s.x,e.y-s.y);if(d>s.beepR||d<.3)continue;const mv=Math.min(d-.25,2.5*K*dt),q=pathNear(e.x+(s.x-e.x)/d*mv,e.y+(s.y-e.y)/d*mv);if(q){e.x=e.tx=q.x;e.y=e.ty=q.y;}}
-    if(s.beep<=0&&s.hp>0){s.boom=2;s.hp=0;s.dd=0;}}}}
+   for(const s of t.sd)if(s.beep>0){s.beep-=dt;const fs=(S.field[Math.round(s.y)]||[])[Math.round(s.x)];for(const e of S.enemies){if(e.hp<=0||isBoss(e)||isFly(e))continue;const d=Math.hypot(e.x-s.x,e.y-s.y);if(d>s.beepR||d<.3)continue;/* v305: solo tira hacia atrás de los que ya lo han pasado; a los que aún vienen no los adelanta hacia el núcleo */const fe=(S.field[e.ty]||[])[e.tx];if(fs!=null&&fe!=null&&fe>=fs)continue;const mv=Math.min(d-.25,2.5*K*dt),q=pathNear(e.x+(s.x-e.x)/d*mv,e.y+(s.y-e.y)/d*mv);if(q){e.x=e.tx=q.x;e.y=e.ty=q.y;}}
+    if(s.beep<=0&&s.hp>0){s.boom=2;s.hp=0;s.dd=0;/* v305: antes no se le ponía tiempo de reensamblaje y el androide del señuelo no volvía nunca: la torre se quedaba sin androides */s.rt=Math.min(unitOf(t).rez||8,3);s.en=null;}}}}
  // piezas de la chatarra volátil
  if(S.scrap&&S.scrap.length){for(const q of S.scrap){q.t-=dt;if(q.t<=0){for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-q.x,e.y-q.y)<=.6*K)hurt(e,q.dm,q.src,'phys',q.pen);S.fx.push({x:q.x,y:q.y,t:.3,m:.3,r:.6*K,col:'#ffb07a'});}}S.scrap=S.scrap.filter(q=>q.t>0);}}
 // ---- Enjambre de nanitos ----
