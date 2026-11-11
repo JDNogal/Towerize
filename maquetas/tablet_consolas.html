@@ -1,0 +1,144 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Consolas asimétricas</title>
+<style>
+:root{--cy:#3fe8ff;--mg:#ff4fd8}
+body{margin:0;background:#06080c;font:500 13px system-ui,sans-serif;color:#d8f8ff}
+.f{position:relative;width:1280px;height:720px;overflow:hidden;margin:0 0 24px;background:radial-gradient(ellipse at 50% 120%,#1b2433,#07090e 70%)}
+.ttl{position:absolute;left:24px;top:16px;font:700 20px system-ui;color:#fff}
+.tag{position:absolute;left:24px;right:24px;bottom:14px;background:#000c;padding:8px 14px;border-radius:8px;font-size:14px;color:#fff;line-height:1.45}.tag b{color:var(--cy)}
+.holo{position:absolute;left:400px;top:90px;width:420px;height:500px;overflow:hidden;box-sizing:border-box;text-align:center;padding-top:30px;
+ background:linear-gradient(180deg,#3fe8ff10,#3fe8ff22 50%,#3fe8ff10),repeating-linear-gradient(0deg,#3fe8ff0c 0 1px,transparent 1px 3px),#0a141bdd;
+ border-top:1.5px solid #3fe8ff99;border-bottom:1.5px solid #3fe8ff99;box-shadow:0 0 40px #3fe8ff33 inset}
+.holo h2{margin:0;font:700 34px system-ui;letter-spacing:.08em;color:#e8fdff;text-shadow:0 0 10px var(--cy)}
+.holo .sub{font-size:11px;letter-spacing:.2em;color:#7fdcf0;margin:4px 0 22px}
+.holo .btn{display:block;margin:10px auto;width:70%;padding:10px 0;border:1.5px solid #3fe8ffaa;border-radius:8px;background:#3fe8ff14;font-weight:700}
+.holo .btn.go{border-color:var(--mg);background:#ff4fd822}
+svg{position:absolute;overflow:visible}
+.mini{position:absolute;right:30px;top:100px;width:210px;height:320px;border:1px dashed #ffffff22;border-radius:10px}
+
+.mini .lb{position:absolute;bottom:-34px;left:0;right:0;text-align:center;font-size:12px;color:#9ab}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="drop" x="-30%" y="-10%" width="160%" height="130%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".7"/></filter>
+ <filter id="inset"><feOffset dx="0" dy="2"/><feGaussianBlur stdDeviation="2" result="o"/><feComposite in="SourceGraphic" in2="o" operator="over"/></filter>
+ <linearGradient id="face" x1="0" x2="1"><stop offset="0" stop-color="#596372"/><stop offset=".18" stop-color="#8e99a9"/><stop offset=".45" stop-color="#5b6574"/><stop offset="1" stop-color="#2b313b"/></linearGradient>
+ <linearGradient id="faceV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".22"/><stop offset=".3" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient>
+ <linearGradient id="side" x1="0" x2="1"><stop offset="0" stop-color="#1c2129"/><stop offset="1" stop-color="#0d1015"/></linearGradient>
+ <linearGradient id="key" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4250"/><stop offset="1" stop-color="#171b22"/></linearGradient>
+ <linearGradient id="keyOn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d5563"/><stop offset="1" stop-color="#0b232b"/></linearGradient>
+ <linearGradient id="rod" x1="0" x2="1"><stop offset="0" stop-color="#20252e"/><stop offset=".35" stop-color="#9aa6b6"/><stop offset=".6" stop-color="#4d5664"/><stop offset="1" stop-color="#1a1e25"/></linearGradient>
+ <radialGradient id="bulge" cx="30%" cy="45%" r="80%"><stop offset="0" stop-color="#8f9aaa"/><stop offset=".5" stop-color="#555f6d"/><stop offset="1" stop-color="#22272f"/></radialGradient>
+ <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#04090d"/><stop offset="1" stop-color="#0b1e26"/></linearGradient>
+ <linearGradient id="emit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fe8ff" stop-opacity=".2"/><stop offset=".5" stop-color="#3fe8ff"/><stop offset="1" stop-color="#3fe8ff" stop-opacity=".2"/></linearGradient>
+</defs></svg>
+
+<!-- emisor fino de la izquierda, común: cilindro con caras -->
+<template id="emitter"><svg style="left:366px;top:66px" width="40" height="548" filter="url(#drop)">
+ <rect x="8" y="0" width="22" height="548" rx="11" fill="url(#rod)"/><rect x="8" y="0" width="22" height="548" rx="11" fill="url(#faceV)"/>
+ <rect x="4" y="18" width="30" height="16" rx="5" fill="#2a303a" stroke="#0d1015"/><rect x="4" y="514" width="30" height="16" rx="5" fill="#2a303a" stroke="#0d1015"/>
+ <rect x="29" y="40" width="5" height="468" rx="2.5" fill="url(#emit)" filter="url(#glow)"/></svg></template>
+
+<!-- ============ 1 · Bloque biselado ============ -->
+<div class="f" id="A"><div class="ttl">1 · Bloque biselado</div>
+ <div class="holo"><h2>TOWERIZE</h2><div class="sub">EXPANDE · MEJORA · RESISTE</div><span class="btn go">Continuar</span><span class="btn">Nueva partida</span></div>
+ <div class="em"></div>
+ <svg style="left:818px;top:58px" width="160" height="570" filter="url(#drop)">
+  <!-- canto (grosor) visto de lado -->
+  <path d="M130 14 L142 22 V552 L130 560 Z" fill="url(#side)"/><path d="M16 560 H130 L142 552 V566 L130 574 H16 Z" fill="#0b0d11"/>
+  <!-- cara frontal en chaflán, con luz arriba y sombra abajo -->
+  <path d="M16 0 H116 L130 14 V546 L116 560 H16 L2 546 V14Z" fill="url(#face)"/><path d="M16 0 H116 L130 14 V546 L116 560 H16 L2 546 V14Z" fill="url(#faceV)"/>
+  <!-- bisel interior: luz arriba-izquierda, sombra abajo-derecha -->
+  <path d="M20 8 H112 L122 18" fill="none" stroke="#c8d2df" stroke-opacity=".7" stroke-width="1.5"/><path d="M10 18 V542" stroke="#c8d2df" stroke-opacity=".45" stroke-width="1.5"/>
+  <path d="M122 18 V542 L112 552 H20 L10 542" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="1.5"/>
+  <!-- costura y tornillos -->
+  <path d="M10 110 H122 M10 470 H122" stroke="#0e1116" stroke-width="2"/><path d="M10 112 H122 M10 472 H122" stroke="#9aa4b4" stroke-opacity=".35"/>
+  <g fill="#1b2027" stroke="#aab4c2" stroke-width="1"><circle cx="20" cy="24" r="3.5"/><circle cx="112" cy="24" r="3.5"/><circle cx="20" cy="536" r="3.5"/><circle cx="112" cy="536" r="3.5"/></g>
+  <!-- pantalla de ÉTER hundida -->
+  <rect x="22" y="36" width="88" height="56" rx="6" fill="#0a0d12"/><rect x="24" y="39" width="84" height="51" rx="5" fill="url(#screen)" stroke="#3fe8ff" stroke-opacity=".6"/>
+  <text x="66" y="60" fill="#3fe8ff" font-size="11" text-anchor="middle" font-family="monospace" filter="url(#glow)">ÉTER</text><text x="66" y="78" fill="#ff4fd8" font-size="10" text-anchor="middle" font-family="monospace">● EN LÍNEA</text>
+  <!-- teclas con relieve -->
+  <g id="keys1"></g>
+  <!-- rejilla de ventilación -->
+  <g stroke="#0c0f13" stroke-width="3" stroke-linecap="round"><path d="M34 490 H98 M34 500 H98 M34 510 H98 M34 520 H98"/></g>
+  <!-- borde que mira a la proyección: emisor de luz -->
+  <rect x="-2" y="40" width="5" height="480" rx="2.5" fill="url(#emit)" filter="url(#glow)"/></svg>
+ <div class="mini"><svg width="210" height="320" style="left:0;top:0"><g transform="translate(45,20)" filter="url(#drop)"><path d="M16 0 H106 L120 14 V266 L106 280 H16 L2 266 V14Z" fill="url(#face)"/><path d="M16 0 H106 L120 14 V266 L106 280 H16 L2 266 V14Z" fill="url(#faceV)"/><rect x="-16" y="10" width="18" height="260" rx="9" fill="url(#rod)"/><rect x="24" y="30" width="72" height="44" rx="5" fill="url(#screen)" stroke="#3fe8ff" stroke-opacity=".6"/></g></svg><div class="lb">cerrada: el emisor se encaja en el canto de la consola</div></div>
+ <div class="tag"><b>Bloque biselado.</b> La consola tiene grosor (se ve el canto), chaflanes con luz arriba y sombra abajo, costuras, tornillos, pantalla hundida y teclas con relieve. El borde que mira a la proyección es el que emite la luz.<br>Es la tuya pero con volumen: la más «aparato» y la más fácil de leer.</div></div>
+
+<!-- ============ 2 · Curva ergonómica ============ -->
+<div class="f" id="B"><div class="ttl">2 · Curva ergonómica</div>
+ <div class="holo"><h2>TOWERIZE</h2><div class="sub">EXPANDE · MEJORA · RESISTE</div><span class="btn go">Continuar</span><span class="btn">Nueva partida</span></div>
+ <div class="em"></div>
+ <svg style="left:818px;top:50px" width="170" height="590" filter="url(#drop)">
+  <!-- cuerpo abombado hacia fuera, como un mando que se agarra -->
+  <path d="M0 0 H70 C150 30 160 200 150 300 C140 420 150 540 70 590 H0 Z" fill="url(#bulge)"/>
+  <path d="M0 0 H70 C150 30 160 200 150 300 C140 420 150 540 70 590 H0 Z" fill="url(#faceV)"/>
+  <!-- brillo que sigue la curva -->
+  <path d="M74 14 C130 50 138 180 132 290" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="4" stroke-linecap="round"/>
+  <!-- carril hundido para las teclas -->
+  <rect x="18" y="96" width="78" height="330" rx="39" fill="#11151b"/><rect x="18" y="96" width="78" height="330" rx="39" fill="none" stroke="#000" stroke-opacity=".6" stroke-width="3"/>
+  <rect x="20" y="98" width="74" height="326" rx="37" fill="none" stroke="#9aa4b4" stroke-opacity=".25"/>
+  <g id="keys2"></g>
+  <!-- ojo de ÉTER arriba -->
+  <circle cx="58" cy="52" r="24" fill="#0a0d12"/><circle cx="58" cy="52" r="20" fill="url(#screen)" stroke="#3fe8ff" stroke-opacity=".7"/><circle cx="58" cy="52" r="7" fill="#3fe8ff" filter="url(#glow)"/>
+  <!-- estrías de agarre -->
+  <g stroke="#0d1015" stroke-width="4" stroke-linecap="round"><path d="M40 470 C70 466 100 470 118 476 M40 490 C70 486 100 490 116 496 M40 510 C70 506 98 510 112 516 M40 530 C66 526 92 530 104 536"/></g>
+  <rect x="-2" y="30" width="5" height="530" rx="2.5" fill="url(#emit)" filter="url(#glow)"/></svg>
+ <div class="mini"><svg width="210" height="320" style="left:0;top:0"><g transform="translate(55,10)" filter="url(#drop)"><path d="M0 0 H50 C100 20 106 120 100 150 C94 210 100 270 50 300 H0 Z" fill="url(#bulge)"/><rect x="-18" y="10" width="18" height="280" rx="9" fill="url(#rod)"/><circle cx="42" cy="36" r="12" fill="url(#screen)" stroke="#3fe8ff"/></g></svg><div class="lb">cerrada: forma de mando, con el emisor pegado</div></div>
+ <div class="tag"><b>Curva ergonómica.</b> La consola se abomba hacia fuera, como la empuñadura de un mando: brillo siguiendo la curva, carril hundido con las teclas, un «ojo» de ÉTER arriba y estrías de agarre abajo.<br>La más orgánica y la que más se nota que se coge con la mano; queda menos «caja».</div></div>
+
+<!-- ============ 3 · Módulos apilados ============ -->
+<div class="f" id="C"><div class="ttl">3 · Módulos apilados</div>
+ <div class="holo"><h2>TOWERIZE</h2><div class="sub">EXPANDE · MEJORA · RESISTE</div><span class="btn go">Continuar</span><span class="btn">Nueva partida</span></div>
+ <div class="em"></div>
+ <svg style="left:818px;top:56px" width="160" height="575" filter="url(#drop)">
+  <!-- espina central que se ve entre módulos, con luz -->
+  <rect x="44" y="20" width="44" height="530" rx="6" fill="#0d1015"/><rect x="62" y="20" width="8" height="530" fill="#3fe8ff" opacity=".7" filter="url(#glow)"/>
+  <!-- módulo superior: pantalla -->
+  <g><path d="M8 0 H124 L132 8 V96 L124 104 H8 L0 96 V8Z" fill="url(#face)"/><path d="M8 0 H124 L132 8 V96 L124 104 H8 L0 96 V8Z" fill="url(#faceV)"/><path d="M132 8 L140 14 V100 L132 104 Z" fill="url(#side)"/>
+   <rect x="14" y="14" width="104" height="72" rx="6" fill="url(#screen)" stroke="#3fe8ff" stroke-opacity=".6"/><text x="66" y="44" fill="#3fe8ff" font-size="11" text-anchor="middle" font-family="monospace">ÉTER</text><text x="66" y="66" fill="#ff4fd8" font-size="10" text-anchor="middle" font-family="monospace">● EN LÍNEA</text></g>
+  <!-- módulo central: teclado -->
+  <g transform="translate(6,116)"><path d="M8 0 H112 L120 8 V332 L112 340 H8 L0 332 V8Z" fill="url(#face)"/><path d="M8 0 H112 L120 8 V332 L112 340 H8 L0 332 V8Z" fill="url(#faceV)"/><path d="M120 8 L128 14 V336 L120 340 Z" fill="url(#side)"/></g>
+  <g id="keys3"></g>
+  <!-- módulo inferior: batería con indicador -->
+  <g transform="translate(0,470)"><path d="M8 0 H124 L132 8 V96 L124 104 H8 L0 96 V8Z" fill="url(#face)"/><path d="M8 0 H124 L132 8 V96 L124 104 H8 L0 96 V8Z" fill="url(#faceV)"/><path d="M132 8 L140 14 V100 L132 104 Z" fill="url(#side)"/>
+   <g><rect x="20" y="40" width="92" height="22" rx="4" fill="#0a0d12" stroke="#5a6474"/><rect x="24" y="44" width="62" height="14" rx="2" fill="#3fe8ff" filter="url(#glow)"/></g></g>
+  <rect x="-2" y="20" width="5" height="530" rx="2.5" fill="url(#emit)" filter="url(#glow)"/></svg>
+ <div class="mini"><svg width="210" height="320" style="left:0;top:0"><g transform="translate(50,10)" filter="url(#drop)"><rect x="34" y="6" width="40" height="290" fill="#0d1015"/><rect x="50" y="6" width="6" height="290" fill="#3fe8ff" opacity=".7"/><path d="M6 0 H104 L110 6 V74 L104 80 H6 L0 74 V6Z" fill="url(#face)"/><path d="M6 110 H104 L110 116 V184 L104 190 H6 L0 184 V116Z" fill="url(#face)"/><path d="M6 220 H104 L110 226 V294 L104 300 H6 L0 294 V226Z" fill="url(#face)"/><rect x="-18" y="10" width="18" height="280" rx="9" fill="url(#rod)"/></g></svg><div class="lb">cerrada: los módulos se juntan y la luz se apaga</div></div>
+ <div class="tag"><b>Módulos apilados.</b> Tres bloques (pantalla de ÉTER, teclado y batería) montados sobre una espina iluminada que se ve entre ellos. Cada módulo con su grosor y bisel.<br>Muy de «aparato montado por piezas»: encaja con la Resistencia y deja un hueco natural para la variante desbloqueable que dijiste.</div></div>
+
+<!-- ============ 4 · Cuña con aletas ============ -->
+<div class="f" id="D"><div class="ttl">4 · Cuña con aletas</div>
+ <div class="holo"><h2>TOWERIZE</h2><div class="sub">EXPANDE · MEJORA · RESISTE</div><span class="btn go">Continuar</span><span class="btn">Nueva partida</span></div>
+ <div class="em"></div>
+ <svg style="left:818px;top:56px" width="190" height="575" filter="url(#drop)">
+  <!-- aletas disipadoras que salen hacia fuera -->
+  <g><path d="M120 150 L176 170 L176 182 L120 176Z" fill="#3a4250" stroke="#0d1015"/><path d="M120 200 L182 222 L182 234 L120 226Z" fill="#3a4250" stroke="#0d1015"/><path d="M120 250 L176 270 L176 282 L120 276Z" fill="#3a4250" stroke="#0d1015"/>
+   <path d="M150 168 L176 176 M154 218 L182 228 M150 268 L176 276" stroke="#ff4fd8" stroke-width="3" opacity=".85"/></g>
+  <!-- cuerpo en cuña: ancho arriba, estrecho abajo -->
+  <path d="M0 0 H140 L150 16 L118 560 L106 572 H0 Z" fill="url(#face)"/><path d="M0 0 H140 L150 16 L118 560 L106 572 H0 Z" fill="url(#faceV)"/>
+  <path d="M150 16 L158 24 L126 562 L118 560 Z" fill="url(#side)"/>
+  <path d="M8 8 H136 L144 18" fill="none" stroke="#c8d2df" stroke-opacity=".6" stroke-width="1.5"/>
+  <!-- pantalla ancha arriba -->
+  <rect x="14" y="20" width="118" height="70" rx="6" fill="#0a0d12"/><rect x="16" y="22" width="114" height="66" rx="5" fill="url(#screen)" stroke="#3fe8ff" stroke-opacity=".6"/>
+  <text x="73" y="50" fill="#3fe8ff" font-size="11" text-anchor="middle" font-family="monospace">ÉTER</text><text x="73" y="72" fill="#ff4fd8" font-size="10" text-anchor="middle" font-family="monospace">● EN LÍNEA</text>
+  <g id="keys4"></g>
+  <!-- marca de la Resistencia, pintada -->
+  <path d="M30 500 L60 470 L90 500 L60 530Z" fill="none" stroke="#ff4fd8" stroke-width="3" opacity=".7"/>
+  <rect x="-2" y="30" width="5" height="520" rx="2.5" fill="url(#emit)" filter="url(#glow)"/></svg>
+ <div class="mini"><svg width="210" height="320" style="left:0;top:0"><g transform="translate(45,10)" filter="url(#drop)"><path d="M0 0 H110 L118 10 V290 L96 300 H0 Z" fill="url(#face)"/><path d="M110 70 L140 80 V88 L110 86Z M110 110 L144 122 V130 L110 126Z" fill="#3a4250"/><rect x="-18" y="10" width="18" height="280" rx="9" fill="url(#rod)"/></g></svg><div class="lb">cerrada: una cuña con aletas, el emisor pegado</div></div>
+ <div class="tag"><b>Cuña con aletas.</b> Ancha arriba (pantalla grande de ÉTER) y estrecha abajo, con aletas disipadoras que sobresalen hacia fuera y franjas magenta. Se ve el canto inclinado.<br>La silueta más reconocible y agresiva; la menos sobria de las cuatro.</div></div>
+
+<script>
+// teclas de las pestañas en cada consola (▶ jugar activo)
+const ICS=['▶','📖','🏆','📚','⚙️','❓'];
+function keys(id,x0,y0,w,h,gap,rx){const g=document.getElementById(id);let s='';ICS.forEach((ic,i)=>{const y=y0+i*(h+gap),on=i===0;
+ s+=`<rect x="${x0}" y="${y+3}" width="${w}" height="${h}" rx="${rx}" fill="#07090c"/>`;
+ s+=`<rect x="${x0}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="url(#${on?'keyOn':'key'})" stroke="${on?'#3fe8ff':'#6a7384'}" stroke-width="1.3" ${on?'filter="url(#glow)"':''}/>`;
+ s+=`<rect x="${x0+3}" y="${y+2}" width="${w-6}" height="2" rx="1" fill="#fff" opacity=".18"/>`;
+ s+=`<text x="${x0+w/2}" y="${y+h/2+6}" font-size="17" text-anchor="middle">${ic}</text>`;});g.innerHTML=s;}
+keys('keys1',30,124,72,44,14,7);keys('keys2',33,112,48,42,10,21);keys('keys3',30,130,72,40,12,6);keys('keys4',28,108,80,42,12,6);
+// emisor fino en cada marco
+const T=document.getElementById('emitter').innerHTML;document.querySelectorAll('.em').forEach(e=>e.outerHTML=T);
+</script>
+</body></html>
