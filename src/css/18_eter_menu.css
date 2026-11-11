@@ -1,0 +1,21 @@
+/* v307 · ÉTER habla en el menú principal (tableta): pantallita pulsable, altavoz que parpadea y bocadillo desde el altavoz */
+.etmbt,.etmgr,.etmbub{display:none}
+:root[data-skin="holo"] .lbcv.a .etmbt{display:block;position:absolute;left:calc(100% + 26px);top:13px;width:88px;height:54px;margin:0;padding:0;border:0;border-radius:6px;background:transparent;cursor:pointer;z-index:7}
+:root[data-skin="holo"] .lbcv.a .etmbt:hover,:root[data-skin="holo"] .lbcv.a .etmbt:focus-visible{box-shadow:0 0 0 1.5px #3fe8ff,0 0 12px #3fe8ffaa;outline:none}
+/* rejilla del altavoz: apagada (se ve la gris de la consola) y, al hablar, rayas cian que parpadean a ráfagas */
+:root[data-skin="holo"] .lbcv.a .etmgr{display:block;position:absolute;left:calc(100% + 37px);bottom:22px;width:66px;height:34px;z-index:7;pointer-events:none;opacity:0;
+ background:repeating-linear-gradient(180deg,transparent 0 0px,#3fe8ff 0 4px,transparent 4px 10px);border-radius:2px;filter:drop-shadow(0 0 4px #3fe8ff)}
+:root[data-skin="holo"] .lbcv.a.etmtalk .etmgr{animation:etmblink .9s steps(1,end) infinite}
+:root[data-skin="holo"] .lbcv.a.etmon:not(.etmtalk) .etmgr{opacity:0;transition:opacity .3s}
+@keyframes etmblink{0%{opacity:.85}12%{opacity:.25}22%{opacity:.95}35%{opacity:.4}47%{opacity:.8}58%{opacity:.15}70%{opacity:.9}84%{opacity:.35}93%{opacity:.7}}
+/* bocadillo: holograma con el pico hacia el altavoz */
+:root[data-skin="holo"] .lbcv.a .etmbub{display:block;position:absolute;right:-20px;bottom:74px;width:min(300px,calc(100% - 20px));box-sizing:border-box;padding:10px 14px 11px;z-index:8;pointer-events:none;
+ background:rgba(6,24,32,.94);border:1.5px solid #3fe8ff;border-radius:10px 10px 2px 10px;box-shadow:0 0 16px #3fe8ff88;color:#e8fdff;font-size:14px;line-height:1.35;text-align:left;
+ opacity:0;transform:translate(8px,6px) scale(.96);transform-origin:100% 100%;transition:opacity .2s,transform .2s}
+:root[data-skin="holo"] .lbcv.a .etmbub.on{opacity:1;transform:none}
+:root[data-skin="holo"] .lbcv.a .etmbub b{display:block;color:#3fe8ff;font-size:11px;letter-spacing:.14em;margin-bottom:3px}
+:root[data-skin="holo"] .lbcv.a .etmbub::after{content:"";position:absolute;right:-22px;bottom:-24px;width:34px;height:26px;background:#3fe8ff;clip-path:polygon(0 0,50% 0,100% 100%);filter:drop-shadow(0 0 4px #3fe8ff)}
+@media (prefers-reduced-motion:reduce){:root[data-skin="holo"] .lbcv.a.etmtalk .etmgr{animation:none;opacity:.6}}
+/* v307 · consola solo con iconos: el nombre sale en el bocadillo al pasar el ratón */
+:root[data-skin="holo"] .lbcv .bkrib span,:root[data-skin="holo"] .bkribs .bkrib span{display:none!important}
+:root[data-skin="holo"] .lbcv .bkrib .latic,:root[data-skin="holo"] .bkribs .bkrib .latic{width:30px!important;height:30px!important}

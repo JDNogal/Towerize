@@ -16,7 +16,8 @@
   "14_mazo_vista.css",
   "15_guardado.css",
   "16_tablet.css",
-  "17_letra_tablet.css"
+  "17_letra_tablet.css",
+  "18_eter_menu.css"
  ],
  "js": [
   "00_config.js",
@@ -113,6 +114,7 @@
   "trofeos_bordes.js",
   "torres_dibujos.js",
   "bufadores_tope.js",
-  "escuadras_linea.js"
+  "escuadras_linea.js",
+  "eter_menu.js"
  ]
 }

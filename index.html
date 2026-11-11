@@ -1824,6 +1824,27 @@ html:root[data-skin="holo"] .rbx.rhb.rult{border-color:#ffd75a!important;backgro
 /* el trofeo de la consola, al tamaño de los otros iconos */
 .bkrib .trof,.lbribs .trof{font-size:1.45em;margin:-2px 0}
 .latic{display:inline-block;vertical-align:-.12em}.bkrib .latic,.lbribs .latic{font-size:1.45em;margin:-2px 0}
+/* v307 · ÉTER habla en el menú principal (tableta): pantallita pulsable, altavoz que parpadea y bocadillo desde el altavoz */
+.etmbt,.etmgr,.etmbub{display:none}
+:root[data-skin="holo"] .lbcv.a .etmbt{display:block;position:absolute;left:calc(100% + 26px);top:13px;width:88px;height:54px;margin:0;padding:0;border:0;border-radius:6px;background:transparent;cursor:pointer;z-index:7}
+:root[data-skin="holo"] .lbcv.a .etmbt:hover,:root[data-skin="holo"] .lbcv.a .etmbt:focus-visible{box-shadow:0 0 0 1.5px #3fe8ff,0 0 12px #3fe8ffaa;outline:none}
+/* rejilla del altavoz: apagada (se ve la gris de la consola) y, al hablar, rayas cian que parpadean a ráfagas */
+:root[data-skin="holo"] .lbcv.a .etmgr{display:block;position:absolute;left:calc(100% + 37px);bottom:22px;width:66px;height:34px;z-index:7;pointer-events:none;opacity:0;
+ background:repeating-linear-gradient(180deg,transparent 0 0px,#3fe8ff 0 4px,transparent 4px 10px);border-radius:2px;filter:drop-shadow(0 0 4px #3fe8ff)}
+:root[data-skin="holo"] .lbcv.a.etmtalk .etmgr{animation:etmblink .9s steps(1,end) infinite}
+:root[data-skin="holo"] .lbcv.a.etmon:not(.etmtalk) .etmgr{opacity:0;transition:opacity .3s}
+@keyframes etmblink{0%{opacity:.85}12%{opacity:.25}22%{opacity:.95}35%{opacity:.4}47%{opacity:.8}58%{opacity:.15}70%{opacity:.9}84%{opacity:.35}93%{opacity:.7}}
+/* bocadillo: holograma con el pico hacia el altavoz */
+:root[data-skin="holo"] .lbcv.a .etmbub{display:block;position:absolute;right:-20px;bottom:74px;width:min(300px,calc(100% - 20px));box-sizing:border-box;padding:10px 14px 11px;z-index:8;pointer-events:none;
+ background:rgba(6,24,32,.94);border:1.5px solid #3fe8ff;border-radius:10px 10px 2px 10px;box-shadow:0 0 16px #3fe8ff88;color:#e8fdff;font-size:14px;line-height:1.35;text-align:left;
+ opacity:0;transform:translate(8px,6px) scale(.96);transform-origin:100% 100%;transition:opacity .2s,transform .2s}
+:root[data-skin="holo"] .lbcv.a .etmbub.on{opacity:1;transform:none}
+:root[data-skin="holo"] .lbcv.a .etmbub b{display:block;color:#3fe8ff;font-size:11px;letter-spacing:.14em;margin-bottom:3px}
+:root[data-skin="holo"] .lbcv.a .etmbub::after{content:"";position:absolute;right:-22px;bottom:-24px;width:34px;height:26px;background:#3fe8ff;clip-path:polygon(0 0,50% 0,100% 100%);filter:drop-shadow(0 0 4px #3fe8ff)}
+@media (prefers-reduced-motion:reduce){:root[data-skin="holo"] .lbcv.a.etmtalk .etmgr{animation:none;opacity:.6}}
+/* v307 · consola solo con iconos: el nombre sale en el bocadillo al pasar el ratón */
+:root[data-skin="holo"] .lbcv .bkrib span,:root[data-skin="holo"] .bkribs .bkrib span{display:none!important}
+:root[data-skin="holo"] .lbcv .bkrib .latic,:root[data-skin="holo"] .bkribs .bkrib .latic{width:30px!important;height:30px!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -10111,4 +10132,42 @@ function sqTierOf(i,n,r){const[pv,pe]=SQTIER(r),nE=Math.round(n*pe),nV=Math.roun
 // valor de una escuadra para el presupuesto: la media de sus versiones en esta ronda
 {const val=m=>Object.entries(m).reduce((a,[t,n])=>a+n*(ET[t].hf||ET[t].hp),0);
  sqValT=k=>{if(!S||S.tut)return Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*ET[t].hp,0);const r=S.round,[pv,pe]=SQTIER(r);return (1-pv-pe)*val(sqTierM(k,0,r))+pv*val(sqTierM(k,1,r))+pe*val(sqTierM(k,2,r));};}
+// ==================== v307 · ÉTER habla en el menú principal (tableta) ====================
+// Al pulsar la pantallita «ÉTER · EN LÍNEA» de la consola, ÉTER suelta una frase en un bocadillo que sale del altavoz.
+// El altavoz está gris (apagado) y solo parpadea en cian mientras habla. Nunca repite la frase anterior.
+// En la tableta ÉTER ya está reparado: habla limpio y usa tu nombre en lugar de «Piloto».
+// (En la recámara: frases según la reparación y un ÉTER «fantástico» al lado del libro en la era 1.)
+const ETMN={
+ go:['El núcleo no se va a defender solo, Piloto.','Botón grande, en el centro. Pone «Nueva partida». Solo lo comento.','Cuando quiera. Yo no tengo prisa. Bueno, un poco.','Llevo un rato mirando este menú. Es un menú precioso. Juguemos.','¿Otra partida? Prometo no quejarme si se cuela alguno. Mucho.'],
+ joke:['Mis sensores detectan… que sigue usted en el menú.','Diagnóstico: 0 % de enemigos derrotados hoy. Preocupante.','Me reconstruyeron con piezas de un campo de batalla. No pregunte.','No soy una tostadora. Aunque, con la pieza adecuada…','Si me vuelve a pulsar, le cuento otra cosa. Es una amenaza.'],
+ tickle:['Eso hace cosquillas.','Sí, sigo aquí. Siempre sigo aquí.'],
+ tip:[['Con Q y E se pasa de sección en el compendio.',()=>typeof compOk==='function'&&compOk()],'Fije hasta tres logros con 📌 y los seguirá durante la partida.','Las casillas especiales potencian a la torre que se ponga encima.','Algunos enemigos llevan armadura; otros, resistencia mágica. Mezcle tipos de daño.','El oro guardado no defiende nada.','Las escuadras con aura refuerzan a las de alrededor. Elimínelas primero.']};
+const ETM={last:'',taps:[],hide:0,type:0,stats:null};
+// datos de tus partidas (del registro); se leen una vez al abrir el menú
+function etmStats(){try{hsAll().then(L=>{L=(L||[]).filter(r=>r&&!r.tut);if(!L.length){ETM.stats=null;return;}
+ const tc={};for(const r of L)for(const t of r.tw||[])if(!String(t[0]).startsWith('hero:'))tc[t[9]||t[0]]=(tc[t[9]||t[0]]||0)+1;
+ const fav=Object.keys(tc).sort((a,b)=>tc[b]-tc[a])[0];
+ ETM.stats={n:L.length,best:Math.max(...L.map(r=>r.r||0)),won:L.filter(r=>r.res==='won').length,fav};});}catch(e){}}
+function etmPool(){const P=[...ETMN.go,...ETMN.joke];
+ for(const t of ETMN.tip)if(typeof t==='string')P.push(t);else if(t[1]())P.push(t[0]);
+ const s=ETM.stats;if(s){P.push(`Ha jugado ${s.n} ${s.n===1?'partida':'partidas'}. Yo las he contado todas.`,`Su mejor ronda: ${s.best}. Superarla sería… adecuado.`);
+  if(s.fav)P.push(`Su torre más usada: ${s.fav}. Le tiene cariño, se nota.`);if(s.won)P.push(`${s.won} ${s.won===1?'victoria':'victorias'}. No está mal para un humano.`);}
+ return P;}
+function etmName(t){const nm=STO.name;return nm?t.replace(/Piloto/g,nm):t;}
+function etmSay(){const cv=document.querySelector('.lbcv.a');if(!cv)return;const now=performance.now();
+ ETM.taps=ETM.taps.filter(x=>now-x<6000);ETM.taps.push(now);
+ const P=(ETM.taps.length>=4?ETMN.tickle:etmPool()).filter(x=>x!==ETM.last);const txt=etmName(P[Math.floor(Math.random()*P.length)]||ETMN.go[0]);ETM.last=txt;
+ let b=cv.querySelector('.etmbub');if(!b){b=document.createElement('div');b.className='etmbub';b.setAttribute('role','status');b.setAttribute('aria-live','polite');cv.appendChild(b);}
+ b.innerHTML='<b>ÉTER</b><span class="etmt"></span>';const sp=b.querySelector('.etmt');
+ cv.classList.add('etmon');b.classList.remove('on');void b.offsetWidth;b.classList.add('on');
+ clearInterval(ETM.type);clearTimeout(ETM.hide);let i=0;const ch=[...txt];
+ ETM.type=setInterval(()=>{i++;sp.textContent=ch.slice(0,i).join('');if(i>=ch.length){clearInterval(ETM.type);cv.classList.remove('etmtalk');}},28);
+ cv.classList.add('etmtalk');
+ ETM.hide=setTimeout(()=>{b.classList.remove('on');cv.classList.remove('etmon','etmtalk');},2600+ch.length*28+1800);
+ try{sfx('eter');}catch(e){}}
+{const _lr=lbRender;lbRender=function(){const r=_lr.apply(this,arguments);try{
+ const cv=document.querySelector('.lbcv.a');if(cv&&!cv.classList.contains('ing')&&!cv.querySelector('.etmbt')){
+  cv.insertAdjacentHTML('beforeend','<button class="etmbt" data-a="etmsay" title="Hablar con ÉTER" aria-label="Hablar con ÉTER"></button><i class="etmgr" aria-hidden="true"></i>');
+  if(!ETM.stats)etmStats();}}catch(e){}return r;};}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="etmsay"]');if(!b)return;e.stopPropagation();e.preventDefault();etmSay();},true);
 </script></body></html>
