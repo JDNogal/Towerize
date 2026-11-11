@@ -159,6 +159,14 @@ Midiendo las oleadas enteras de cada era en el mismo laboratorio (Catapulta Nv 3
 
 Las torres de la era 2 no son más flojas que las de la era 1: contra la oleada 20 de la era 2, las mejores son Arco voltaico (98 bajas), Kamikaze (85) y Sónica gigante (80), por delante de las mejores de la era 1 en ese mismo escenario (Ogros 69, Heraldo 61, Alquimista 59).
 
+### Prueba: armadura de la era 2 a la mitad (no aplicada)
+
+Con todos los enemigos de la era 2 a la mitad de armadura, el bot **sigue perdiendo**: 4 partidas, caídas en las rondas 10, 10, 11 y 11 (antes 9-10). Mejora una ronda, no más. Así que la armadura no es toda la explicación.
+
+Mirando qué se le escapa en esas rondas: sobre todo **Guerreros de colmena** y **Autómatas de asalto** (enemigos «medianos», con 5 veces la vida de un básico), más Pretorianos y Planeadores. En la ronda 10 la era 2 trae 227 enemigos contra 337 de la era 1 con la misma vida total: menos enemigos y más gordos, que las torres de área aprovechan peor y las de un objetivo de Nv 2-3 no llegan a matar. En la era 1, cuando el bot pierde en la ronda 10, lo que se escapa es una mezcla de pequeños (goblins, esbirros, demonios).
+
+Conclusión prudente: **la era 2 es bastante más dura que la 1 entre las rondas 9 y 11**, por armadura y por enemigos medianos en cantidad. Hay que mirarlo con partidas reales antes de tocar números; el bot juega peor que una persona, pero la diferencia entre eras (3-4 de 6 contra 0 de 6) es demasiado grande para ser solo cosa suya.
+
 ## Partidas enteras con el bot (15 rondas)
 
 El bot coloca piezas, construye pocas torres y las mejora (unas 8-10 al final). No juega como una persona, pero sirve para comparar. Seis mapas por era, antes y después de los cambios:
