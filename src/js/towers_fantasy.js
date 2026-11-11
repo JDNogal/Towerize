@@ -1,5 +1,5 @@
 // ===== Augur Voltaico (Era Fantástica): rayos que caen del cielo, nubes de tormenta y juicios =====
-const WETT=3,WETF=1.5,CLR=2.1,HCH=8,HJM=6,FULGD=.2,HCHK=.5;
+const WETT=3,WETF=1.5,CLR=2.1,HCH=8,HJM=6,FULGD=.2,HCHK=.35;
 // v307 · lo «duro» que es un enemigo, de 0 (pequeño) a 1 (élite o jefe): para habilidades que escalan con la vida del objetivo en vez de con su tipo
 const toughK=e=>isBoss(e)?1:Math.max(0,Math.min(1,((ET[e.t].hp||1)-1)/11));
 const ezM=e=>1+EZAMP*(e.ez?e.ez.n:0);
@@ -69,7 +69,7 @@ function cataHit(p){const t=p.src;if(!S.list.includes(t))return;S.cz=S.cz||[];
  else if(p.ammo==='hive'&&ar){const dps=p.bd*ar.bee;S.cz.push({k:'bee',x:p.x,y:p.y,r:1.1*K,t:3,tk:0,dps,pen:p.pen,src:t});if(rs)S.cz.push({k:'hive',x:p.x,y:p.y,t:rs.t,dps,pen:p.pen,src:t});}}
 function rollStart(t,x,y,cx,cy,big){const s=stats(t),rr=abRank(t,'roll'),av=abRank(t,'aval'),d=big?av.d:(rr?rr.d:3);
  S.rolls=S.rolls||[];S.rolls.push({src:t,x,y,cx,cy,left:d*K,dm:s.dmg*(big?av.m:ROLLM),r:(big?.8:.45)*K,hit:new Set(),big,fire:0,pen:s.pen});}
-function rollNext(x,y){const f0=S.field[y][x];let b=null;for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2)continue;const g=S.field[ny][nx];if(g<1e9&&g>f0&&(!b||g<b.g))b={x:nx,y:ny,g};}return b?[b.x,b.y]:null;}
+function rollNext(x,y){if(!S.field||!S.field[y])return null;const f0=S.field[y][x];let b=null;for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2)continue;const g=S.field[ny][nx];if(g<1e9&&g>f0&&(!b||g<b.g))b={x:nx,y:ny,g};}return b?[b.x,b.y]:null;}
 function rollTick(dt){if(!S.rolls||!S.rolls.length)return;
  S.rolls=S.rolls.filter(r=>{if(!S.list.includes(r.src))return false;let mv=ROLLSP*dt;
   while(mv>1e-6&&r.left>0){const dx=r.cx-r.x,dy=r.cy-r.y,dd=Math.hypot(dx,dy);
