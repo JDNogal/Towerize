@@ -229,7 +229,7 @@ const AB={
  weld:{n:'Soldadura',ranks:[{c:35,h:.05,sh:.1},{c:45,h:.1,sh:.2}],txt:r=>`Mientras vuela, el dron cura cada segundo un <span class="chp">${Math.round(r.h*100)}%</span> a las unidades a 1,5 casillas y les da un escudo del <span class="chp">${Math.round(r.sh*100)}%</span> de su vida.`}};
 const SPECS={arrow:{
  rapid:{n:'Arqueros Raudos',ic:'🪶',col:'#f0c46a',lv:{dmg:L4D*1.15,cd:.7*.65,range:1.2,area:1.3,hp:L4H,pen:0},ab:['rain','poison','burst'],d:'Disparan mucho más rápido, a costa de algo de daño.'},
- xbow:{n:'Ballesteros',ic:'🎯',col:'#c9783a',lv:{dmg:L4D*2.5,cd:.7*1.4,range:1.2,area:1.3,hp:L4H,pen:15},ab:['charged','pierce','mark'],d:'Disparan más lento, pero con mucho más daño y penetración de armadura.'}},
+ xbow:{n:'Ballesteros',ic:'🎯',col:'#c9783a',lv:{dmg:L4D*2.8,cd:.7*1.4,range:1.2,area:1.3,hp:L4H,pen:15},ab:['charged','pierce','mark'],d:'Disparan más lento, pero con mucho más daño y penetración de armadura.'}},
 cata:{
  treb:{n:'Trebuchet',ic:'🏯',col:'#b59a6a',lv:{dmg:L4D*1.9,cd:.7*1.45,range:1.2*1.3,area:1.3*1.2,hp:L4H,pen:0},ab:['arsenal','debris','breach'],d:'Alcance enorme y disparos muy lentos y potentes. Arma de asedio: lanza lo que tenga a mano.'},
  ogre:{n:'Ogros Lanzarrocas',ic:'👹',col:'#7e9a5a',lv:{dmg:L4D*.9,cd:.7*.75,range:1.2,area:1.3*.8,hp:L4H,pen:0},ab:['roll','crush','aval'],d:'Lanzan más a menudo. La roca rueda hacia los portales y golpea a cada enemigo (45% del daño). Si pasa por brea ardiendo, quema; si pasa por veneno, envenena.'}},
@@ -263,7 +263,7 @@ dron:{
  dron:{n:'Helipuerto',ic:'🛸',col:'#e8b04a',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},ab:['fleet','overclock','weld'],d:'Más alcance. Los drones se pueden mejorar.'}},
 poison:{
  alch:{n:'Alquimista',ic:'⚗️',col:'#58c9a0',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3*1.3,hp:L4H,pen:0},ab:['plague','corr','flask'],d:'Charcos más grandes y más stacks. El veneno se contagia y corroe la armadura.'},
- pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*1.15,cd:.7,range:1.2,area:1.3*.85,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},
+ pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3*.85,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},
 monk:{
  fist:{n:'Monjes de Batalla',ic:'🥋',col:'#e07a3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2,area:1.3,hp:L4H*1.1,pen:0},ab:['chi','fists','counter'],d:'Monjes élficos que pelean con más daño y más daño mágico. Siguen curando al grupo.'},
  drunk:{n:'Maestros Ebrios',ic:'🍶',col:'#b07ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2,area:1.3,hp:L4H*1.4,pen:0},o:{noheal:1},ab:['gourd','stagger','fireb'],d:'Beben de su calabaza: se curan solos, esquivan y escupen fuego. Ya no curan al grupo.'}},
@@ -272,7 +272,7 @@ bastion:{
  ass:{n:'Asesinos',ic:'🗡️',col:'#9a4bd6',lv:{dmg:L4D*1.6,cd:.7*.6,range:1.2,area:1.3,hp:L4H*.6,pen:0},uspd:1.5,ab:['dodge','cut','back'],d:'Soldados rápidos y frágiles que golpean mucho. Esquivan y provocan sangrado.'}},
 tesla:{
  cad:{n:'Cadena',ic:'🔗',col:'#fff08a',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:{n:5,f:.8}},ab:['cond','disch','storm'],d:'El rayo salta hasta 5 veces entre enemigos, con un 20% menos de daño por salto. Pensada para hordas.'},
- ele:{n:'Electrocutor',ic:'🔌',col:'#e8c21f',lv:{dmg:L4D*2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:null,ez:1},ab:['accum','short','reson'],d:'Sin rebotes: golpea a un solo enemigo y lo electriza (+5% de daño eléctrico por stack, máx. 10). Para élites y jefes.'}},
+ ele:{n:'Electrocutor',ic:'🔌',col:'#e8c21f',lv:{dmg:L4D*2.3,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:null,ez:1},ab:['accum','short','reson'],d:'Sin rebotes: golpea a un solo enemigo y lo electriza (+5% de daño eléctrico por stack, máx. 10). Para élites y jefes.'}},
 sala:{
  volc:{n:'Corazón Volcánico',ic:'❤️‍🔥',col:'#ff6a2e',lv:{dmg:L4D*.75,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['erupt','flare','embr'],d:'Acumula Calor mientras dispara (lleno en 8 s): el cono se abre hasta 110° y aplica hasta un 50% más de stacks. Sin objetivo, se enfría.'},
  forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*5.3,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo. Para élites, jefes y enemigos con armadura.'}},

@@ -64,7 +64,7 @@ function cataHit(p){const t=p.src;if(!S.list.includes(t))return;S.cz=S.cz||[];
  const ins=S.enemies.filter(e=>e.hp>0&&!isFly(e)&&Math.hypot(e.x-p.x,e.y-p.y)<=Math.max(p.area,.5*K)),rs=abRank(t,'debris'),ar=abRank(t,'arsenal');
  if(p.ammo==='rock'){const bw=abRank(t,'breach');if(bw)for(const e of ins)brkAdd(e,bw.a,bw.max);
   if(rs)S.cz.push({k:'rub',x:p.x,y:p.y,t:rs.t});
-  if(t.spec==='ogre'){const c=p.e&&p.e.pv?p.e.pv:[Math.round(p.x),Math.round(p.y)];if(inb(c[0],c[1])&&S.cells[c[1]][c[0]]===2)rollStart(t,p.x,p.y,c[0],c[1],false);}}
+  if(t.spec==='ogre'){const c=p.e&&p.e.pv?[Math.round(p.e.pv[0]),Math.round(p.e.pv[1])]:[Math.round(p.x),Math.round(p.y)];if(inb(c[0],c[1])&&S.cells[c[1]][c[0]]===2)rollStart(t,p.x,p.y,c[0],c[1],false);}}
  else if(p.ammo==='tar'&&ar)S.cz.push({k:'tar',x:p.x,y:p.y,r:Math.max(p.area,.8*K),t:ar.tar+(rs?rs.tar:0),m:ar.stk,src:t});
  else if(p.ammo==='hive'&&ar){const dps=p.bd*ar.bee;S.cz.push({k:'bee',x:p.x,y:p.y,r:1.1*K,t:3,tk:0,dps,pen:p.pen,src:t});if(rs)S.cz.push({k:'hive',x:p.x,y:p.y,t:rs.t,dps,pen:p.pen,src:t});}}
 function rollStart(t,x,y,cx,cy,big){const s=stats(t),rr=abRank(t,'roll'),av=abRank(t,'aval'),d=big?av.d:(rr?rr.d:3);
