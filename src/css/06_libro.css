@@ -48,7 +48,7 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 @media (max-height:430px){.lbcv.b .lbemb,.lbcv.b .lbtit .lbsub{display:none}.lbcv.b .lbtit b{font-size:22px}.lbcv.b .lbcvin{padding-top:10px}.lbtiles button{min-height:42px;flex-direction:row;gap:6px}.lbcv.b .lbbot{padding-top:6px}.lbcv.b .lbchips{margin-bottom:6px}.lbcv.b .lbmain{min-height:40px}.lbtiles button em{font-size:16px}}
 /* ---- interior ---- */
 .bkp.spread{flex:1;border-radius:14px;background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 90%,var(--trim)),var(--paper) 46%,var(--paper2) 50%,var(--paper) 54%,color-mix(in srgb,var(--paper) 82%,var(--trim)));box-shadow:inset 0 0 24px -14px rgba(90,60,20,.45);padding:22px 54px 22px 28px}
-.lbcols{column-count:2;column-gap:60px;column-rule:0}
+.lbcols{column-count:2;column-gap:60px;column-rule:0}.lbcols .lbq,.lbcols p,.lbcols table,.lbcols tr{break-inside:avoid}.lbcols h4{break-after:avoid}
 #comp.narrow .lbcols{column-count:1}
 .bkp.spread h4,.bkp.one h4,.lbdet h4{font:700 17px Georgia,serif;color:var(--inkh);margin:14px 0 4px;break-after:avoid}
 .bkp.spread p,.lbdet p{margin:2px 0 8px;font-size:13.5px;line-height:1.5}

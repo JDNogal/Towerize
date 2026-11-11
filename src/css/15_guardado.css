@@ -129,3 +129,6 @@ body.pcpick #rtl,body.lbopen #rtl,body:has(#relic.open) #rtl{display:none!import
 #comp .kw.st[data-kw^="ab_"]{text-decoration:underline dotted 1.5px;text-underline-offset:3px;cursor:help;color:var(--acc)}
 .evlk{display:flex;justify-content:center;margin:8px 0}
 
+.pcbar .pcdado{font-size:15px;padding-left:9px;padding-right:9px}
+.pcvs{display:inline-flex;align-items:center;gap:4px;margin-left:8px}.pcvl{font-size:11px;opacity:.75;margin-right:2px}
+.pcbar .pcvn{min-width:28px;justify-content:center;text-align:center}.pcbar .pcvn.lk{opacity:.45;cursor:default;font-size:10px}

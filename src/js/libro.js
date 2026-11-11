@@ -84,7 +84,7 @@ const LBHELP=[['play','Cómo se juega','🎮'],['keys','Controles y atajos','⌨
 const lbK=t=>`<span class="kcap lbk">${t}</span>`;
 function helpParts(){
  if(!LBHELP.some(([k])=>k===LB.hp))LB.hp='play';const sec=LBHELP.find(([k])=>k===LB.hp),inG=lbInGame();let h='';
- if(LB.hp==='play')h=QSL.filter(q=>!q.mock).map(q=>`<h4>${q.t}</h4><p>${q.d}</p>`).join('')+`<h4>Ganar</h4><p>Resiste todas las rondas y derrota al jefe final. Entre partidas conservas los logros, lo que has descubierto en el compendio y los desbloqueos.</p>`;
+ if(LB.hp==='play')h=QSL.filter(q=>!q.mock).map(q=>`<div class="lbq"><h4>${q.t}</h4><p>${q.d}</p></div>`).join('')+`<div class="lbq"><h4>Ganar</h4><p>Resiste todas las rondas y derrota al jefe final. Entre partidas conservas los logros, lo que has descubierto en el compendio y los desbloqueos.</p></div>`;
  else if(LB.hp==='keys'){
   if(TOUCH)h=`<h4>Táctil</h4><table class="lbkeys txt">${[['Mover el mapa','Arrastrar con un dedo'],['Acercar / alejar','Pellizcar o los botones ＋ / －'],['Ver información','Botón de lupa 🔍 y tocar lo que quieras'],['Construir','Tocar un solar libre: 1.er toque en una torre, su tarjeta; 2.º toque, se construye'],['Marcar una compra 🔖','Mantener pulsado lo que aún no puedas pagar'],['Mejorar o vender','Tocar la torre: salen sus botones alrededor'],['Mover al héroe','Tocar su retrato (o al héroe en el mapa) y luego una casilla del camino'],['Empezar la oleada','Doble toque en el botón'],['Pausa','Botón ☰']].map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</table>`;
   else{h=`<h4>Ratón</h4><table class="lbkeys txt">${[['Mover el mapa','Arrastrar (clic izquierdo, derecho o rueda); en trackpad, con dos dedos'],['Acercar / alejar','Rueda o pellizcar'],['Ver información','Dejar el ratón encima'],['Construir','Clic en un solar libre: 1.er clic en una torre, su tarjeta; 2.º clic, se construye'],['Marcar una compra 🔖','Clic derecho en lo que aún no puedas pagar'],['Mejorar o vender','Clic en la torre: salen sus botones alrededor']].map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</table>`;
@@ -148,7 +148,7 @@ function endParts(){const E=LB.end||{left:'',right:''};
 }
 // ---- créditos ----
 function credParts(){const ver=($('ver')&&$('ver').textContent)||'Towerize';
- return {marks:null,left:`<h3>Créditos</h3><div class="bksub">Quienes han hecho posible Towerize</div>${credHTML()}`,right:`<div class="lbdet"><span class="lbdic">🏰</span><h4>${ver}</h4><p>Gracias por jugar. Towerize está en desarrollo: lo que ves puede cambiar de una versión a otra.</p></div>`,one:true,key:'cr'};
+ return {marks:null,left:`<h3>Créditos</h3><div class="bksub">Quienes han hecho posible Towerize</div>${credHTML()}`,right:`<div class="lbdet"><span class="lbdic lbembic">🏰</span><h4>${ver}</h4><p>Gracias por jugar. Towerize está en desarrollo: lo que ves puede cambiar de una versión a otra.</p></div>`,one:true,key:'cr'};
 }
 // ---- montaje ----
 function lbRender(){
