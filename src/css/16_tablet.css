@@ -108,3 +108,34 @@
 /* la consola sobresale por arriba y por abajo: el libro un poco más bajo para que quepa entera */
 :root[data-skin="holo"] .bkw{height:min(610px,calc(100vh - 130px))!important;margin-top:56px!important}
 :root[data-skin="holo"] #comp.bkm.smore::after{display:none!important}
+
+/* ===== v306 · Animaciones de la tablet, más lentas y en dos tiempos =====
+   Abrir: sale del núcleo cerrada (consola y emisor juntos) y luego se separan y se despliega la proyección.
+   Cerrar: se juntan consola y emisor, se recoge la proyección, y entonces vuela al núcleo. */
+:root[data-skin="holo"]{--hT:.95s;--hD:.35s;--hE:cubic-bezier(.65,0,.25,1)}
+@keyframes hfold{from{clip-path:inset(-40px -200px -40px -80px)}to{clip-path:inset(-40px calc(50% - 40px) -40px calc(50% - 40px))}}
+@keyframes hfold2{from{clip-path:inset(-40px -160px -40px -40px)}to{clip-path:inset(-40px 50% -40px 50%)}}
+/* libro (compendio, logros…): abrir desde el menú o la portada */
+:root[data-skin="holo"] .bkw.lbanim{animation:hopen var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .bkw.lbanim .bkcover::before{animation:hgl2 var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .bkw.lbanim .bkcover::after,:root[data-skin="holo"] .bkw.lbanim .bkribs{animation:hgr2 var(--hT) var(--hE) both!important}
+/* abrir en partida: primero vuela desde el núcleo, luego se despliega */
+:root[data-skin="holo"] .bkw.lbgrow{animation:lbgrow .45s cubic-bezier(.2,.8,.3,1.1),hopen var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .bkw.lbgrow .bkcover::before{animation:hgl2 var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .bkw.lbgrow .bkcover::after,:root[data-skin="holo"] .bkw.lbgrow .bkribs{animation:hgr2 var(--hT) var(--hD) var(--hE) both!important}
+/* cerrar en partida: se pliega y luego vuela al núcleo */
+:root[data-skin="holo"] .bkw.lbshrink{animation:hfold .6s var(--hE) forwards,lbshrink .5s .6s cubic-bezier(.6,0,.9,.4) forwards!important}
+:root[data-skin="holo"] .bkw.lbshrink .bkcover::before{animation:hgl2 .6s var(--hE) reverse both!important}
+:root[data-skin="holo"] .bkw.lbshrink .bkcover::after,:root[data-skin="holo"] .bkw.lbshrink .bkribs{animation:hgr2 .6s var(--hE) reverse both!important}
+/* portada (menú principal y pausa) */
+:root[data-skin="holo"] .lbcvin{animation:hopen2 var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv::before{animation:hgl var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv::after,:root[data-skin="holo"] .lbcv .lbribs{animation:hgr var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv.lbgrow .lbcvin{animation:hopen2 var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv.lbgrow::before{animation:hgl var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv.lbgrow::after,:root[data-skin="holo"] .lbcv.lbgrow .lbribs{animation:hgr var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv.lbshrink{animation:lbshrink .5s .6s cubic-bezier(.6,0,.9,.4) forwards!important}
+:root[data-skin="holo"] .lbcv.lbshrink .lbcvin{animation:hfold2 .6s var(--hE) forwards!important}
+:root[data-skin="holo"] .lbcv.lbshrink::before{animation:hgl .6s var(--hE) reverse both!important}
+:root[data-skin="holo"] .lbcv.lbshrink::after,:root[data-skin="holo"] .lbcv.lbshrink .lbribs{animation:hgr .6s var(--hE) reverse both!important}
+@media (prefers-reduced-motion:reduce){:root[data-skin="holo"] *{animation-duration:.01s!important;animation-delay:0s!important}}

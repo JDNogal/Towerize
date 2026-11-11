@@ -35,7 +35,7 @@ function lbClose(resume,now){
  const el=$('comp');
  if(!now&&S&&S.core&&!document.body.classList.contains('inmenu')&&el.firstElementChild){// el libro se encoge y se mete en el núcleo
   lbSetOrigin();const w=el.firstElementChild,slow=!!LB.slowOut;el.classList.add('lbout');w.classList.add('lbshrink');if(slow)w.classList.add('lbslow');const tok=LB.ctok=(LB.ctok||0)+1;
-  setTimeout(()=>{if(LB.ctok!==tok||LB.open)return;el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');coreFlash();},slow?1150:520);}
+  setTimeout(()=>{if(LB.ctok!==tok||LB.open)return;el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');coreFlash();},slow?1150:(document.documentElement.dataset.skin==='holo'?1150:520));}
  else{el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');}
  if(PMU.open){PMU.open=false;if(resume!==false&&S)S.speed=PMU.spd||1;}
  if(typeof ui==='function'&&S)ui();

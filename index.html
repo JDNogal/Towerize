@@ -1667,6 +1667,37 @@ body.pcpick #rtl,body.lbopen #rtl,body:has(#relic.open) #rtl{display:none!import
 /* la consola sobresale por arriba y por abajo: el libro un poco más bajo para que quepa entera */
 :root[data-skin="holo"] .bkw{height:min(610px,calc(100vh - 130px))!important;margin-top:56px!important}
 :root[data-skin="holo"] #comp.bkm.smore::after{display:none!important}
+
+/* ===== v306 · Animaciones de la tablet, más lentas y en dos tiempos =====
+   Abrir: sale del núcleo cerrada (consola y emisor juntos) y luego se separan y se despliega la proyección.
+   Cerrar: se juntan consola y emisor, se recoge la proyección, y entonces vuela al núcleo. */
+:root[data-skin="holo"]{--hT:.95s;--hD:.35s;--hE:cubic-bezier(.65,0,.25,1)}
+@keyframes hfold{from{clip-path:inset(-40px -200px -40px -80px)}to{clip-path:inset(-40px calc(50% - 40px) -40px calc(50% - 40px))}}
+@keyframes hfold2{from{clip-path:inset(-40px -160px -40px -40px)}to{clip-path:inset(-40px 50% -40px 50%)}}
+/* libro (compendio, logros…): abrir desde el menú o la portada */
+:root[data-skin="holo"] .bkw.lbanim{animation:hopen var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .bkw.lbanim .bkcover::before{animation:hgl2 var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .bkw.lbanim .bkcover::after,:root[data-skin="holo"] .bkw.lbanim .bkribs{animation:hgr2 var(--hT) var(--hE) both!important}
+/* abrir en partida: primero vuela desde el núcleo, luego se despliega */
+:root[data-skin="holo"] .bkw.lbgrow{animation:lbgrow .45s cubic-bezier(.2,.8,.3,1.1),hopen var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .bkw.lbgrow .bkcover::before{animation:hgl2 var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .bkw.lbgrow .bkcover::after,:root[data-skin="holo"] .bkw.lbgrow .bkribs{animation:hgr2 var(--hT) var(--hD) var(--hE) both!important}
+/* cerrar en partida: se pliega y luego vuela al núcleo */
+:root[data-skin="holo"] .bkw.lbshrink{animation:hfold .6s var(--hE) forwards,lbshrink .5s .6s cubic-bezier(.6,0,.9,.4) forwards!important}
+:root[data-skin="holo"] .bkw.lbshrink .bkcover::before{animation:hgl2 .6s var(--hE) reverse both!important}
+:root[data-skin="holo"] .bkw.lbshrink .bkcover::after,:root[data-skin="holo"] .bkw.lbshrink .bkribs{animation:hgr2 .6s var(--hE) reverse both!important}
+/* portada (menú principal y pausa) */
+:root[data-skin="holo"] .lbcvin{animation:hopen2 var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv::before{animation:hgl var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv::after,:root[data-skin="holo"] .lbcv .lbribs{animation:hgr var(--hT) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv.lbgrow .lbcvin{animation:hopen2 var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv.lbgrow::before{animation:hgl var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv.lbgrow::after,:root[data-skin="holo"] .lbcv.lbgrow .lbribs{animation:hgr var(--hT) var(--hD) var(--hE) both!important}
+:root[data-skin="holo"] .lbcv.lbshrink{animation:lbshrink .5s .6s cubic-bezier(.6,0,.9,.4) forwards!important}
+:root[data-skin="holo"] .lbcv.lbshrink .lbcvin{animation:hfold2 .6s var(--hE) forwards!important}
+:root[data-skin="holo"] .lbcv.lbshrink::before{animation:hgl .6s var(--hE) reverse both!important}
+:root[data-skin="holo"] .lbcv.lbshrink::after,:root[data-skin="holo"] .lbcv.lbshrink .lbribs{animation:hgr .6s var(--hE) reverse both!important}
+@media (prefers-reduced-motion:reduce){:root[data-skin="holo"] *{animation-duration:.01s!important;animation-delay:0s!important}}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -6761,7 +6792,7 @@ function lbClose(resume,now){
  const el=$('comp');
  if(!now&&S&&S.core&&!document.body.classList.contains('inmenu')&&el.firstElementChild){// el libro se encoge y se mete en el núcleo
   lbSetOrigin();const w=el.firstElementChild,slow=!!LB.slowOut;el.classList.add('lbout');w.classList.add('lbshrink');if(slow)w.classList.add('lbslow');const tok=LB.ctok=(LB.ctok||0)+1;
-  setTimeout(()=>{if(LB.ctok!==tok||LB.open)return;el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');coreFlash();},slow?1150:520);}
+  setTimeout(()=>{if(LB.ctok!==tok||LB.open)return;el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');coreFlash();},slow?1150:(document.documentElement.dataset.skin==='holo'?1150:520));}
  else{el.classList.remove('open','lbout');el.innerHTML='';document.body.classList.remove('lbopen');}
  if(PMU.open){PMU.open=false;if(resume!==false&&S)S.speed=PMU.spd||1;}
  if(typeof ui==='function'&&S)ui();
