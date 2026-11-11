@@ -88,3 +88,50 @@ Bajas de 300 (mapa habitual / semilla 777 / semilla 4242) y vida que pierde el n
 | Augur Voltaico · Señor de la Tormenta | 234/57/153 | 150/350/283 | sin cambios | |
 
 Ya ninguna limpia sola ni en el mapa más favorable. Pestilencia y Ventisca siguen siendo las más fuertes en oleadas; si en partida siguen pareciendo demasiado, son las siguientes a tocar. Los Androides kamikaze al máximo suben algo (por la subida de Robots): vigilar.
+
+## Jefes: unidades que los retenían para siempre
+
+Al subir a las Criaturas alienígenas, los **Depredadores al máximo mataban solos a La Forja y a ARGOS** (en unos 230 s). No era por su daño: tres unidades fuertes tenían al jefe parado todo el tiempo que hiciera falta. Antes de la subida iban por el mismo camino (lo dejaban al 26-29 % cuando se acababa el tiempo de la prueba).
+
+Cambio: **un jefe retenido por unidades se enfurece**. Si lleva 8 s seguidos parado, pega a las unidades un 15 % más por cada segundo adicional; se le pasa en cuanto vuelve a andar. Resultado: Depredadores deja a La Forja y a ARGOS al 72-73 %, y ninguna torre mata sola a un jefe. La única prueba que sigue agotando el tiempo es Colmena contra ARGOS (lo deja al 46 %): vigilar.
+
+De paso, las Criaturas alienígenas se quedan en 2,6 de daño (no 3).
+
+Más cerca de matar a un jefe ella sola: Nido de francotirador contra La Forja (lo deja al 12 %). No lo he tocado, pero está en el límite.
+
+## Solo élites y un objetivo duro (después de los cambios)
+
+Contra 10 élites, vida quitada: Aliento de Forja al máximo 93 %, Nido de francotirador 92 %, Arco voltaico 86 %; sin habilidades, Forja 78 % y Nido 71 %. Las de área quedan entre el 5 % y el 30 %; Artilleros al máximo baja del 100 % al 43 %. Ballesteros y Electrocutor al máximo rondan el 42-44 % (les he subido el daño; siguen siendo los especialistas «de un objetivo» más flojos y son los primeros candidatos para una habilidad que escale con la vida del objetivo).
+
+Contra un Señor de la guerra solo: lo matan Nido (en 9-14 s), Forja (38-42 s), Arco voltaico, Ballesteros y Raudos al máximo, Electrocutor al máximo, Mechas y Asesinos. La **Nube viajera no le hace nada (0 de daño)**, con y sin habilidades: la nube sale hacia los portales y un enemigo suelto casi nunca la cruza. Es la especialización más floja del juego ahora mismo y necesita un repaso de diseño, no solo de números.
+
+## Torres de soldados y de control junto a una Catapulta
+
+La torre a prueba junto a una Catapulta Nv 3, comparada con esa misma Catapulta sola en el mismo solar (107 bajas).
+
+| Torre | Bajas con ella | Diferencia | Fugas |
+|---|---|---|---|
+| Guardián de la Ventisca (máx.) | 304 | +197 | 300 → 0 |
+| Torre sónica gigante (máx.) | 304 | +197 | 300 → 0 |
+| Rave de la Resistencia (máx.) | 286 | +179 | 300 → 36 |
+| Androides kamikaze (máx.) | 280 | +173 | 300 → 48 |
+| Mechas (máx.) | 210 | +103 | 300 → 163 |
+| Hechicero Helado (máx.) | 181 | +74 | 300 → 209 |
+| Torre sónica Nv 3 | 146 | +39 | |
+| Maestros Ebrios (máx.) | 136 | +29 | |
+| Paladines (máx.) | 128 | +21 | |
+| Colmena (máx.) | 126 | +19 | |
+| Cryomago Nv 3 | 123 | +16 | |
+| Baluarte Nv 3 | 112 | +5 | |
+| Depredadores (máx.) | 109 | +2 | |
+| Asesinos (máx.) | 99 | −8 | |
+| Monjes de Batalla (máx.) | 94 | −13 | |
+| Criaturas alienígenas Nv 3 | 90 | −17 | |
+| Robots Nv 3 | 88 | −19 | |
+| Monasterio Nv 3 | 81 | −26 | |
+
+Lecturas:
+- **El control es lo que más multiplica**: Ventisca o Sónica gigante al máximo, junto a una simple Catapulta Nv 3, ya limpian la oleada. Es un combo de dos torres (no rompe la regla de «una sola»), pero es barato para lo que da: si se quiere bajar algo más, es por aquí.
+- **Los soldados de Nv 3 no aportan nada en la ronda 20**, y a veces estorban: retienen a los enemigos fuera del centro de la explosión. Baluarte, Monasterio (las dos ramas), Asesinos y Depredadores apenas suman.
+- Los que sí aportan son los que hacen daño en área o explotan (Kamikaze, Mechas).
+- Conclusión: a los soldados no les falta daño base (la subida casi no se nota); **les falta escalar con la partida**. Propuesta para decidir: que la vida y el daño de las unidades suban un poco con la ronda (como los enemigos), o que sus habilidades de Nv 4 den control en área.
