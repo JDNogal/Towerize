@@ -23,15 +23,22 @@ function hsRec(res){if(!S||!S.hero||!S.st||PREVIEWING||S.pvE||S.pvH)return null;
  return {id:S.runId,v:HISTV,ver:($('ver')&&$('ver').textContent)||'',t0:S.t0||Date.now(),t1:Date.now(),res,tut:!!S.tut,era:S.era||1,R:ROUNDS,r:Math.min(S.round,ROUNDS),
   hero:H.id,hlv:H.lvl,hp:Math.max(0,S.hp),hp0:S.hp0||20,kills:S.st.kills||0,gold:Math.round((S.st.gKill||0)+(S.st.gTile||0)+(S.st.gRound||0)+(S.st.gRel||0)+(S.st.gEv||0)),
   dmg:Math.round(tot),time:Math.round(S.st.time||0),rc:S.st.retries||0,pcs:S.st.pcs||0,rel:(S.relics||[]).slice(),deck:(S.deck||[]).slice(),tw,hl:(S.st.hl||[]).slice(),worst,
-  map:hsMap(),core:[S.core.x,S.core.y],pt:(S.portals||[]).map(p=>[p.x,p.y]),N,star:S.runStar?1:0};}
+  rs:(S.st.rs||[]).slice(),map:hsMap(),core:[S.core.x,S.core.y],pt:(S.portals||[]).map(p=>[p.x,p.y]),N,star:S.runStar?1:0};}
 function hsSave(res){try{const r=hsRec(res);if(r){if(HIST.list){const i=HIST.list.findIndex(x=>x.id===r.id);if(i>=0){r.star=HIST.list[i].star||0;HIST.list[i]=r;}else HIST.list.unshift(r);}hsPut(r);}}catch(e){console.warn('registro',e);}}
 // enganches: empezar, fin de ronda, ganar/perder; vida perdida por ronda y quién la quitó
 function histLeak(t,n){try{if(!S||!S.st)return;S.st.lkN=(S.st.lkN||0)+1;const q=EKS(t);q.hpl=(q.hpl||0)+n;q.lr=S.round;S.st.hlr=(S.st.hlr||0)+n;}catch(e){}}
 {const _sg=startGame;startGame=function(...a){const r=_sg.apply(this,a);try{S.runId=null;S.t0=Date.now();S.hp0=S.hp;}catch(e){}return r;};}
 {const _ch=chooseHero;chooseHero=function(...a){const r=_ch.apply(this,a);try{if(S&&S.hero&&!S.runId){S.t0=S.t0||Date.now();S.hp0=S.hp0||S.hp;hsSave('a');}}catch(e){}return r;};}
-{const _nr=nextRound;nextRound=function(...a){try{if(S&&S.st&&S.round>=1){(S.st.hl=S.st.hl||[])[S.round-1]=S.st.hlr||0;S.st.hlr=0;}}catch(e){}const r=_nr.apply(this,a);try{if(S&&S.hero&&S.phase!=='won'&&S.phase!=='lost')hsSave('a');}catch(e){}return r;};}
+// v307 · foto de cada ronda al terminarla (para comparar cómo juega una persona con el bot): oro, vida, torres con nivel/especialización/sitio/objetivo,
+// qué se coló, bajas, nivel del héroe, reliquias y piezas. Unos pocos cientos de bytes por ronda.
+function hsSnap(){try{if(!S||!S.st||!S.hero||S.round<1)return;const st=S.st,rs=st.rs=st.rs||[];if(rs.length&&rs[rs.length-1].r===S.round)rs.pop();
+ rs.push({r:S.round,g:Math.round(S.gold),hp:Math.max(0,S.hp),k:(st.kills||0)-(st.k0||0),lk:st.lkt||{},hl:S.hero.lvl,rel:(S.relics||[]).length,pcs:st.pcs||0,ts:Math.round(st.time||0),
+  tw:(S.list||[]).filter(t=>!t.sold).map(t=>[t.type,t.spec||'',t.lvl||1,Math.round(t.x/K*10)/10,Math.round(t.y/K*10)/10,t.mode||'core',Object.keys(t.ab||{}).length])});
+ st.k0=st.kills||0;st.lkt={};}catch(e){}}
+{const _hl=histLeak;histLeak=function(t,n){const r=_hl.apply(this,arguments);try{if(S&&S.st){const L=S.st.lkt=S.st.lkt||{};L[t]=(L[t]||0)+1;}}catch(e){}return r;};}
+{const _nr=nextRound;nextRound=function(...a){hsSnap();try{if(S&&S.st&&S.round>=1){(S.st.hl=S.st.hl||[])[S.round-1]=S.st.hlr||0;S.st.hlr=0;}}catch(e){}const r=_nr.apply(this,a);try{if(S&&S.hero&&S.phase!=='won'&&S.phase!=='lost')hsSave('a');}catch(e){}return r;};}
 {const _pp=placePiece;placePiece=function(...a){const o=S&&S.offers?S.offers[S.pi]:null,pc=o&&typeof payOn==='function'&&payOn()?pcost(o):0;const r=_pp.apply(this,a);try{if(S&&S.st&&S.phase!=='place'){S.st.pcs=(S.st.pcs||0)+1;if(o&&(o.n==='Bifurcación'||o.n==='Cruce'))S.st.fork=1;if(pc>0)S.st.paid=1;}}catch(e){}return r;};}
-{const _eg=endGame;endGame=function(...a){try{if(S&&S.st){(S.st.hl=S.st.hl||[])[Math.min(S.round,ROUNDS)-1]=(S.st.hl[Math.min(S.round,ROUNDS)-1]||0)+(S.st.hlr||0);S.st.hlr=0;}hsSave(S.phase==='won'?'w':'l');}catch(e){}return _eg.apply(this,a);};}
+{const _eg=endGame;endGame=function(...a){hsSnap();try{if(S&&S.st){(S.st.hl=S.st.hl||[])[Math.min(S.round,ROUNDS)-1]=(S.st.hl[Math.min(S.round,ROUNDS)-1]||0)+(S.st.hlr||0);S.st.hlr=0;}hsSave(S.phase==='won'?'w':'l');}catch(e){}return _eg.apply(this,a);};}
 // ---- en el libro ----
 const hsWhen=t=>{const d=new Date(t),n=new Date(),hm=d.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});const days=Math.floor((new Date(n.toDateString())-new Date(d.toDateString()))/864e5);
  return days===0?'Hoy '+hm:days===1?'Ayer '+hm:d.toLocaleDateString('es-ES',{day:'numeric',month:'short'})+' '+hm;};
