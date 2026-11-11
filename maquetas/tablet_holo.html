@@ -1,0 +1,66 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Tablet holográfica</title>
+<style>
+:root{--cy:#3fe8ff;--mg:#ff4fd8;--bg:#0b0e15;--steel1:#5d6675;--steel2:#2a303b;--txt:#d8f8ff}
+body{margin:0;background:#06080c;font:500 13px system-ui,sans-serif;color:var(--txt)}
+.f{position:relative;width:1280px;height:720px;overflow:hidden;margin:0 0 24px;background:radial-gradient(ellipse at 50% 120%,#1b2433,#07090e 70%)}
+.f::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 63px,#ffffff06 63px 64px),repeating-linear-gradient(0deg,transparent 0 63px,#ffffff06 63px 64px)}
+.tag{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);background:#000c;padding:6px 14px;border-radius:8px;font-size:15px;color:#fff;white-space:nowrap}
+/* ---- el aparato ---- */
+.tab{position:absolute;left:50%;top:50%;height:var(--h,560px);width:var(--w,760px);transform:translate(-50%,-50%);transition:width .7s cubic-bezier(.6,.1,.2,1)}
+.grip{position:absolute;top:0;bottom:0;width:56px;border-radius:14px;background:linear-gradient(90deg,#3a414d,#7c8696 35%,#4b5260 60%,#272c35);box-shadow:inset 0 0 0 1.5px #9aa4b4,inset 0 0 0 4px #1a1e25,0 8px 24px #000a;z-index:3}
+.grip.l{left:0}.grip.r{right:0}
+.grip::after{content:'';position:absolute;left:50%;top:22px;bottom:22px;width:4px;transform:translateX(-50%);border-radius:2px;background:var(--cy);box-shadow:0 0 10px var(--cy),0 0 22px var(--cy);opacity:.9}
+.grip .lens{position:absolute;left:50%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,var(--cy) 40%,#0a4a5a);box-shadow:0 0 12px var(--cy);z-index:2}
+.grip .lens.a{top:30px;width:14px;height:14px}.grip .lens.b{top:52px;width:22px;height:22px}
+.grip .bt{position:absolute;left:50%;transform:translateX(-50%);width:34px;height:34px;border-radius:9px;background:#1a1f28;box-shadow:inset 0 0 0 1.5px #6a7384;display:grid;place-items:center;font-size:16px;z-index:2}
+.grip .bt.on{box-shadow:inset 0 0 0 1.5px var(--cy),0 0 10px var(--cy);background:#0f2a33}
+/* proyector: el holograma entre los dos agarres */
+.holo{position:absolute;left:46px;right:46px;top:16px;bottom:16px;overflow:hidden;z-index:1;
+ background:linear-gradient(180deg,#3fe8ff14,#3fe8ff2a 50%,#3fe8ff14),repeating-linear-gradient(0deg,#3fe8ff10 0 1px,transparent 1px 3px);
+ border-top:1.5px solid #3fe8ff99;border-bottom:1.5px solid #3fe8ff99;box-shadow:0 0 40px #3fe8ff33 inset;backdrop-filter:blur(2px)}
+.holo::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#3fe8ff33,transparent 6%,transparent 94%,#3fe8ff33)}
+.holo .in{position:absolute;inset:18px 26px;display:grid;grid-template-columns:1fr 1px 1fr;gap:22px;opacity:1;transition:opacity .25s}
+.holo .in.one{grid-template-columns:1fr}
+.holo .sep{background:linear-gradient(transparent,#3fe8ff88,transparent)}
+.holo h2{margin:0 0 4px;font:700 22px/1.1 'Orbitron',system-ui;color:#fff;letter-spacing:.06em;text-shadow:0 0 8px var(--cy)}
+.holo .sub{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#7fdcf0;margin-bottom:14px}
+.holo .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #3fe8ff33;font-size:13px}
+.holo .btn{display:block;margin:8px auto;width:72%;padding:10px 0;text-align:center;border:1.5px solid #3fe8ffaa;border-radius:8px;background:#3fe8ff14;font-weight:700;letter-spacing:.05em;text-shadow:0 0 6px #3fe8ff88}
+.holo .btn.go{border-color:var(--mg);background:#ff4fd822;text-shadow:0 0 6px #ff4fd8}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.tiles i{height:64px;border-radius:8px;border:1px solid #3fe8ff55;background:#3fe8ff10}
+.tiles i:nth-child(3){box-shadow:0 0 0 1.5px var(--mg) inset}
+.sheet{height:120px;border-radius:10px;border:1px solid #3fe8ff55;background:#3fe8ff10;margin-bottom:10px}
+/* estados */
+.closed{--w:126px}.closed .holo{right:63px;left:63px;opacity:0}
+.flick{animation:fl 3s infinite}@keyframes fl{0%,100%{opacity:1}47%{opacity:1}48%{opacity:.6}49%{opacity:1}}
+.closed .grip.l{border-radius:14px 0 0 14px}.closed .grip.r{border-radius:0 14px 14px 0}
+.lbl{position:absolute;font-size:12px;color:#9fb;opacity:.8}
+</style></head><body>
+
+<!-- A: cerrada -->
+<div class="f" id="A">
+ <div class="tab closed" style="--h:520px"><div class="grip l"><span class="lens a"></span><span class="lens b"></span></div><div class="holo"></div><div class="grip r"></div></div>
+ <div class="tag">A · Cerrada: los dos agarres juntos (al cerrarla en partida se va hacia el núcleo)</div>
+</div>
+
+<!-- B: menú (estrecha) -->
+<div class="f" id="B">
+ <div class="tab" style="--w:440px;--h:560px">
+  <div class="grip l"><span class="lens a"></span><span class="lens b"></span><span class="bt on" style="top:120px">▶</span><span class="bt" style="top:166px">📖</span><span class="bt" style="top:212px">🏆</span><span class="bt" style="top:258px">📚</span><span class="bt" style="top:304px">⚙️</span><span class="bt" style="top:350px">❓</span></div>
+  <div class="holo flick"><div class="in one"><div><h2>TOWERIZE</h2><div class="sub">Era Distópica · Ruinas de Neón</div>
+   <span class="btn go">CONTINUAR · ronda 7</span><span class="btn">Nueva partida</span><span class="btn">Tutorial</span><span class="btn">Créditos</span></div></div></div>
+  <div class="grip r"></div></div>
+ <div class="tag">B · Menú principal: se abre poco (formato móvil); las pestañas son botones en el agarre izquierdo</div>
+</div>
+
+<!-- C: compendio (ancha) -->
+<div class="f" id="C">
+ <div class="tab" style="--w:1120px;--h:600px">
+  <div class="grip l"><span class="lens a"></span><span class="lens b"></span><span class="bt" style="top:120px">▶</span><span class="bt on" style="top:166px">📖</span><span class="bt" style="top:212px">🏆</span><span class="bt" style="top:258px">📚</span><span class="bt" style="top:304px">⚙️</span><span class="bt" style="top:350px">❓</span></div>
+  <div class="holo"><div class="in"><div><h2>ENEMIGOS</h2><div class="sub">Lo que sale de los portales · 30 de 30</div><div class="tiles">${'<i></i>'.repeat(12)}</div></div><div class="sep"></div>
+   <div><div class="sheet"></div><div class="row"><span>Vida</span><b>29</b></div><div class="row"><span>Velocidad</span><b>1 casilla/s</b></div><div class="row"><span>Armadura</span><b>10</b></div><div class="row"><span>Daño al núcleo</span><b>1</b></div></div></div></div>
+  <div class="grip r"></div></div>
+ <div class="tag">C · Compendio, opciones: se abre del todo (formato tablet, dos páginas)</div>
+</div>
+<script>for(const t of document.querySelectorAll('.tiles'))t.innerHTML='<i></i>'.repeat(12);</script>
+</body></html>
