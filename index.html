@@ -2834,6 +2834,7 @@ const CSK={base:{c:['#1aa8c4','#bff8ff'],g:'63,232,255',e:'#0a4a5a',r:'63,232,25
  prism:{c:['#ff8ad8','#fff7a8','#9af7ff','#c0a8ff'],g:'255,255,255',e:'#3a3a5a',r:'255,255,255',facets:1,spark:1}};
 const CSKV={ruby1:{...{c:['#7a0f22','#ff6a85'],g:'255,60,90',e:'#3a0610',r:'255,90,120',pulse:1},cr:1},ruby2:{c:['#7a0f22','#ff6a85'],g:'255,60,90',e:'#3a0610',r:'255,90,120',pulse:1,cr:2},ruby3:{c:['#7a0f22','#ff6a85'],g:'255,60,90',e:'#3a0610',r:'255,90,120',pulse:1,cr:3},
  bast1:{c:['#1aa8c4','#bff8ff'],g:'63,232,255',e:'#0a4a5a',r:'63,232,255',wring:1},bast2:{c:['#1aa8c4','#bff8ff'],g:'63,232,255',e:'#0a4a5a',r:'63,232,255',wsq:1}};
+let CORESTILL=0;
 function coreCrystal(c,x,y,b,t,sk){try{coreCrystal0(c,x,y,b,t,CSK[sk]||CSKV[sk]||CSK.base);}catch(e){c.fillStyle='#3dd6c4';c.fillRect(x-b*.35,y-b*.35,b*.7,b*.7);}}
 function coreCrystal0(c,x,y,b,t,K0){const u=b*.95,rep=K0.crack?.4:K0.cr?1:Math.min(1,((typeof STO!=='undefined'&&STO.p)||0)/3),hit=(typeof S!=='undefined'&&S&&S.chit)?Math.max(0,1-(performance.now()-S.chit)/450):0;
  const tall=K0.tall?1.35:1;
@@ -2865,7 +2866,7 @@ function coreCrystal0(c,x,y,b,t,K0){const u=b*.95,rep=K0.crack?.4:K0.cr?1:Math.m
  if(K0.orbit){for(let o=0;o<K0.orbit;o++){c.strokeStyle=`rgba(170,110,255,${(.6+.3*Math.sin(t*2+o))*(o?.6:1)})`;c.lineWidth=Math.max(1,u*(o?.025:.04));c.beginPath();c.ellipse(x,fy,u*(.5+o*.12),u*(.17+o*.04),-.4,0,Math.PI);c.stroke();}}
  if(K0.spark)for(let k=0;k<3;k++){const ph=(t*.7+k*.33)%1;if(ph>.35)continue;const a=k*2.1+1,sx=x+Math.cos(a)*u*.3,sy=fy+Math.sin(a)*u*.28,r=u*.08*Math.sin(ph/.35*Math.PI);c.fillStyle='#fff';c.beginPath();c.moveTo(sx,sy-r);c.lineTo(sx+r*.25,sy-r*.25);c.lineTo(sx+r,sy);c.lineTo(sx+r*.25,sy+r*.25);c.lineTo(sx,sy+r);c.lineTo(sx-r*.25,sy+r*.25);c.lineTo(sx-r,sy);c.lineTo(sx-r*.25,sy-r*.25);c.fill();}
  if(rep<1){c.strokeStyle=K0.crack?'#3a0610':'#2a1a3a';c.lineWidth=Math.max(.8,u*.022);c.beginPath();c.moveTo(x-u*.05,fy-u*.25);c.lineTo(x+u*.04,fy-u*.08);c.lineTo(x-u*.03,fy+u*.05);if(rep<.5){c.moveTo(x+u*.1,fy-u*.05);c.lineTo(x+u*.02,fy+u*.1);}c.stroke();
-  if(rep<.5&&!K0.crack&&Math.sin(t*9)>.6){c.fillStyle='#ff6ad5';c.fillRect(x+u*.12,fy-u*.18,u*.045,u*.045);}}
+  if(rep<.5&&!K0.crack&&Math.sin(t*9)>.6&&!CORESTILL/* v307: en el retrato fijo de ÉTER no se queda congelada la chispa */){c.fillStyle='#ff6ad5';c.fillRect(x+u*.12,fy-u*.18,u*.045,u*.045);}}
  if(K0.cr){c.save();c.beginPath();c.moveTo(x,top);c.lineTo(x+wd,fy);c.lineTo(x,bot);c.lineTo(x-wd,fy);c.closePath();c.clip();c.lineCap='round';c.lineJoin='round';const lum=.55+.45*Math.max(0,Math.sin(t*3.2))**4;
   if(K0.cr===1){/* una fractura larga de lado a lado con luz que se escapa */c.strokeStyle=`rgba(255,200,210,${lum})`;c.lineWidth=Math.max(1.2,u*.03);c.beginPath();c.moveTo(x-wd,fy-u*.06);c.lineTo(x-wd*.35,fy-u*.02);c.lineTo(x-wd*.1,fy+u*.05);c.lineTo(x+wd*.4,fy+u*.02);c.lineTo(x+wd,fy+u*.09);c.stroke();c.strokeStyle='#2a040a';c.lineWidth=Math.max(.6,u*.012);c.stroke();}
   if(K0.cr===2){/* telaraña desde un golpe cerca de la punta */const ix=x+wd*.25,iy=fy-u*.16;c.strokeStyle='#2a040a';c.lineWidth=Math.max(.7,u*.014);for(let k=0;k<6;k++){const a=k/6*Math.PI*2+.3,L=u*(.1+.06*(k%2));c.beginPath();c.moveTo(ix,iy);c.lineTo(ix+Math.cos(a)*L*.5,iy+Math.sin(a)*L*.5+u*.01);c.lineTo(ix+Math.cos(a)*L,iy+Math.sin(a)*L);c.stroke();}c.beginPath();c.arc(ix,iy,u*.04,0,7);c.stroke();c.fillStyle=`rgba(255,220,230,${lum})`;c.beginPath();c.arc(ix,iy,u*.018,0,7);c.fill();}
@@ -7414,7 +7415,7 @@ function playDialog(lines,done){DLG.lines=lines;DLG.i=-1;DLG.done=done;DLG.on=tr
 // quién habla: retrato y color. ÉTER lleva el núcleo elegido (y su color); los héroes, su retrato y su color; SISTEMA, sin retrato
 const DLGC={reinhart:'#b8c4dd',sylvana:'#7ed47e',radagast:'#b48aff',yrsa:'#ff8a5a',vega:'#ff4fd8'};
 let ETERIMG={k:null,u:null};
-function eterImg(){const sk=(typeof OPT!=='undefined'&&OPT.core)||'base';if(ETERIMG.k===sk&&ETERIMG.u)return ETERIMG.u;try{const cv=document.createElement('canvas');cv.width=cv.height=128;const g=cv.getContext('2d');g.fillStyle='#0e121a';g.fillRect(0,0,128,128);drawCore(g,64,74,118,sk);ETERIMG={k:sk,u:cv.toDataURL()};}catch(e){ETERIMG={k:sk,u:''};}return ETERIMG.u;}
+function eterImg(){const sk=(typeof OPT!=='undefined'&&OPT.core)||'base';if(ETERIMG.k===sk&&ETERIMG.u)return ETERIMG.u;try{const cv=document.createElement('canvas');cv.width=cv.height=128;const g=cv.getContext('2d');g.fillStyle='#0e121a';g.fillRect(0,0,128,128);CORESTILL=1;try{drawCore(g,64,74,118,sk);}finally{CORESTILL=0;}ETERIMG={k:sk,u:cv.toDataURL()};}catch(e){ETERIMG={k:sk,u:''};}return ETERIMG.u;}
 function eterCol(){const sk=(typeof OPT!=='undefined'&&OPT.core)||'base',c=COSM.core.find(x=>x.id===sk),K0=(c&&cosOwn(c)&&CSK[sk])||CSK.base;return `rgb(${K0.r||K0.g||'63,232,255'})`;}
 function dlgWho(L,L0){if(L0.sys||!L.sp)return null;if(L.sp==='ÉTER'){const u=eterImg();return{c:eterCol(),p:u?`<img src="${u}" alt="">`:''};}
  const id=L.who||Object.keys(DLGC).find(k=>HEROES[k]&&HEROES[k].n.toUpperCase()===L.sp.toUpperCase())||(L.sp.toLowerCase()==='vega'?'vega':null);if(!id)return null;

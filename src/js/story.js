@@ -21,7 +21,7 @@ function playDialog(lines,done){DLG.lines=lines;DLG.i=-1;DLG.done=done;DLG.on=tr
 // quién habla: retrato y color. ÉTER lleva el núcleo elegido (y su color); los héroes, su retrato y su color; SISTEMA, sin retrato
 const DLGC={reinhart:'#b8c4dd',sylvana:'#7ed47e',radagast:'#b48aff',yrsa:'#ff8a5a',vega:'#ff4fd8'};
 let ETERIMG={k:null,u:null};
-function eterImg(){const sk=(typeof OPT!=='undefined'&&OPT.core)||'base';if(ETERIMG.k===sk&&ETERIMG.u)return ETERIMG.u;try{const cv=document.createElement('canvas');cv.width=cv.height=128;const g=cv.getContext('2d');g.fillStyle='#0e121a';g.fillRect(0,0,128,128);drawCore(g,64,74,118,sk);ETERIMG={k:sk,u:cv.toDataURL()};}catch(e){ETERIMG={k:sk,u:''};}return ETERIMG.u;}
+function eterImg(){const sk=(typeof OPT!=='undefined'&&OPT.core)||'base';if(ETERIMG.k===sk&&ETERIMG.u)return ETERIMG.u;try{const cv=document.createElement('canvas');cv.width=cv.height=128;const g=cv.getContext('2d');g.fillStyle='#0e121a';g.fillRect(0,0,128,128);CORESTILL=1;try{drawCore(g,64,74,118,sk);}finally{CORESTILL=0;}ETERIMG={k:sk,u:cv.toDataURL()};}catch(e){ETERIMG={k:sk,u:''};}return ETERIMG.u;}
 function eterCol(){const sk=(typeof OPT!=='undefined'&&OPT.core)||'base',c=COSM.core.find(x=>x.id===sk),K0=(c&&cosOwn(c)&&CSK[sk])||CSK.base;return `rgb(${K0.r||K0.g||'63,232,255'})`;}
 function dlgWho(L,L0){if(L0.sys||!L.sp)return null;if(L.sp==='ÉTER'){const u=eterImg();return{c:eterCol(),p:u?`<img src="${u}" alt="">`:''};}
  const id=L.who||Object.keys(DLGC).find(k=>HEROES[k]&&HEROES[k].n.toUpperCase()===L.sp.toUpperCase())||(L.sp.toLowerCase()==='vega'?'vega':null);if(!id)return null;
