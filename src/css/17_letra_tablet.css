@@ -10,10 +10,10 @@ html:root[data-skin="holo"] #comp .row>span:last-child,html:root[data-skin="holo
 html:root[data-skin="holo"] #comp .bkp h3{letter-spacing:.01em}
 /* trofeos */
 .trof{display:inline-block;vertical-align:-.12em}
-.bti.ach:not(.got):not(.hid) .bic i .trof{filter:brightness(0) opacity(.32)}
-html:root[data-skin="holo"] .bti.ach:not(.got):not(.hid) .bic i .trof{filter:brightness(0) invert(1) opacity(.22)}
+.bti.ach:not(.got) .bic i .trof{filter:brightness(0) opacity(.32)}
+html:root[data-skin="holo"] .bti.ach:not(.got) .bic i .trof{filter:brightness(0) invert(1) opacity(.22)}
 .bkach.off .trof{filter:brightness(0) opacity(.32)}html:root[data-skin="holo"] .bkach.off .trof{filter:brightness(0) invert(1) opacity(.22)}
-.bti.ach:not(.got):not(.hid) .bic i:has(.trof){filter:none;opacity:1}
+.bti.ach:not(.got) .bic i:has(.trof){filter:none;opacity:1}
 /* infinito */
 .inf{display:inline-block;vertical-align:middle;margin:-2px 1px 0 0;color:#3a2410}
 html:root[data-skin="holo"] .inf,:root[data-pal="noche"] .inf,:root[data-pal="amb"] .inf{color:#fff}

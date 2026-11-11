@@ -27,10 +27,10 @@ function bkItems(t){const L=[];
   // orden: fijados → en progreso (más avanzados primero) → resto → conseguidos (más recientes primero)
   const run=inRun(),frac=id=>{const M=APM[id];if(!M)return 0;const v=M.best&&!M.cur?(ACHBEST[id]||0):M.cur&&(run||id==='curious')?M.cur():0;return Math.min(1,v/M.max);},rk=id=>ACHS[id]?3:PINS.includes(id)?0:!achFound(id)?2.5:frac(id)>0?1:2,ord=(a,b)=>rk(a)-rk(b)||(rk(a)===1?frac(b)-frac(a):0)||(rk(a)===3?ACHS[b]-ACHS[a]:0);
   for(const [c,cn] of ACHCATS){const ids=Object.keys(ACH).filter(id=>achVis(id)&&(ACH[id].c||'cl')===c&&(CP.af==='all'||c===CP.af)&&(CP.as==='all'||(CP.as==='ok')===!!ACHS[id])).sort(ord);if(!ids.length)continue;
-   L.push({sec:cn});for(const id of ids){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||trofIc()):'❔',n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd,pin:PINS.includes(id)});}}
+   L.push({sec:cn});for(const id of ids){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||trofIc()):trofIc(),n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd,pin:PINS.includes(id)});}}
   const pn=PINS.filter(id=>ACH[id]&&achVis(id)&&!ACHS[id]&&achFound(id)&&(CP.as!=='ok'));if(pn.length)L.unshift({sec:'📌 Fijados'},...pn.map(id=>({id,ic:ACH[id].ic||trofIc(),n:ACH[id].n,ok:true,pin:true})));
   const rest=Object.keys(ACH).filter(id=>achVis(id)&&!ACHCATS.some(([c])=>(ACH[id].c||'cl')===c)&&(CP.af==='all')&&(CP.as==='all'||(CP.as==='ok')===!!ACHS[id]));
-  if(rest.length){L.push({sec:'Otros'});for(const id of rest){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||trofIc()):'❔',n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd});}}}
+  if(rest.length){L.push({sec:'Otros'});for(const id of rest){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||trofIc()):trofIc(),n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd});}}}
  return L;}
 function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
  if(it.por)ic=`<span class="bpor">${portrait(it.id,1,!it.ok)}</span>`;
@@ -62,7 +62,7 @@ function bkDetail(t,id){
  if(t==='rl'){const r=RELIC[id];if(!r)return'';if(!seen('rl',id))return sh(r.ic,'Aún no descubierta.');return bkSheet(`<span class="bkbic" style="background:${r.col}">${r.ic}</span>`,relicInfo(id,1));}
  if(t==='en'){if(!ET[id])return'';if(!seen('en',id))return sh('<span class="lsd bkdot"></span>','Aún no descubierto.');return bkSheet(`<span class="bkbic bken"><i style="background:${ET[id].col}">${enIc(id)?icHtml(enIc(id)):''}</i></span>`,enemyInfo(id))+bkPrevBtn('ceprev',id);}
  if(t==='ev'){const E=EVENTS[id];if(!E)return'';if(!seen('ev',id))return sh(E.ic||'❔','Aún no descubierto.');return `<div class="ce bkce">${eventCard(id)}</div><small class="bknote">Las opciones que nunca has elegido aparecen como ???.</small>`;}
- if(t==='lg'){const A=ACH[id];if(!A)return'';if(!achFound(id))return sh('🏆','Logro oculto. Sigue jugando para descubrirlo.');
+ if(t==='lg'){const A=ACH[id];if(!A)return'';if(!achFound(id))return sh(trofIc(),'Logro oculto. Sigue jugando para descubrirlo.');
   const T=TW[A.tw],ok=!!ACHS[id],run=inRun(),dd=t=>{const d=new Date(t);return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();};
   const rw=arw(ok,T&&[T.ic,T.n,'tw'],id)+arw(ok,A.rl&&[RELIC[A.rl].ic,RELIC[A.rl].n,'rl'],id)+arw(ok,A.hr&&[HEROES[A.hr].ic,HEROES[A.hr].n,'hr'],id)+arw(ok,A.ev&&EVENTS[A.ev]&&[EVENTS[A.ev].ic,EVENTS[A.ev].n,'ev'],id)+arw(ok,A.ux&&['📖','Compendio','cp'],id)+cosOf(id).map(([k,c])=>arw(ok,[CSKIND[k][0],c.n,'cs'],id)).join('');
   return bkSheet(`<span class="bkbic bkach${ok?'':' off'}">${A.ic||trofIc()}</span>`,`<div class="ttl">${ok?'':`<button class="pinb${PINS.includes(id)?' on':''}" data-a="apin" data-id="${id}" title="${PINS.includes(id)?'Quitar de fijados':'Fijar para seguirlo en partida'}">📌</button>`}<b>${A.n}</b></div>${achSec(id)?'<small style="margin:0">??? · <em>'+A.h+'</em></small>':'<small style="margin:0">'+A.d+'</small>'}<div class="abot">${rw}${ok?`<small class="agot">✓ Conseguido el ${dd(ACHS[id])}</small>`:achProg(id,run)}</div>`,'ach'+(ok?' got':'')+(CP.hl===id?' bkhl':''));}
