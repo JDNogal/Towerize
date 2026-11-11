@@ -31,3 +31,4 @@ html:root[data-skin="holo"] .rbx.rhb.rult{border-color:#ffd75a!important;backgro
 #comp .bkp .bkg .row>span{white-space:nowrap}
 /* el trofeo de la consola, al tamaño de los otros iconos */
 .bkrib .trof,.lbribs .trof{font-size:1.45em;margin:-2px 0}
+.latic{display:inline-block;vertical-align:-.12em}.bkrib .latic,.lbribs .latic{font-size:1.45em;margin:-2px 0}

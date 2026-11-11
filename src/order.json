@@ -110,6 +110,7 @@
   "mazo_vista.js",
   "alcance_minimo.js",
   "casillas_estilo.js",
-  "trofeos_bordes.js"
+  "trofeos_bordes.js",
+  "torres_dibujos.js"
  ]
 }
