@@ -3,12 +3,16 @@
 //   node tests/run.js                 → prueba el index.html de la raíz (haz antes «node build.js»)
 //   node tests/run.js ruta/al.html    → prueba otro archivo (p. ej. un towerize-vNNN.html)
 //   node tests/run.js faro libro      → solo las pruebas cuyo nombre contenga «faro» o «libro»
+//   node tests/run.js ui              → solo las de menús, libro y aspecto (rápidas, para cambios visuales); «juego» → el resto
 // Necesita: npm install (jsdom y playwright) y, la primera vez, «npx playwright install chromium».
 // Las capturas que hacen las pruebas quedan en tests/out/ (no se suben al repo).
 const {spawnSync}=require('child_process'),fs=require('fs'),path=require('path');
 const args=process.argv.slice(2),fileArg=args.find(a=>a.endsWith('.html'));
 const FILE=path.resolve(fileArg||path.join(__dirname,'..','index.html'));
-const only=args.filter(a=>a!==fileArg);
+// grupos: «ui» = solo pruebas de menús, libro y aspecto (para cambios visuales); «juego» = el resto
+const UI=['sintaxis.js','navegacion_teclado.js','compendio_libro.js','libro_filtros.js','libro_menus.js','bocadillo.js','libro_bordes.js','encuadernaciones.js','libro_flechas_puntitos.js','preparacion_partida.js','libro_nucleo.js','final_partida.js','registro_partidas.js','compendio_enlace.js','logro_enlace.js','novedades.js','filtros_era.js','vista_enemigos.js','piezas_compendio.js','habilidades_compendio.js','tablet.js'];
+const grp=args.includes('ui')?'ui':args.includes('juego')?'juego':null;
+const only=args.filter(a=>a!==fileArg&&a!=='ui'&&a!=='juego'&&!/^-j\d+$/.test(a));
 if(!fs.existsSync(FILE)){console.error('No existe '+FILE+'. Ejecuta antes «node build.js».');process.exit(1);}
 // [archivo, qué comprueba, variantes (pc / m = móvil), intentos]
 const T=[
@@ -81,19 +85,16 @@ const T=[
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);
 let pass=0,fail=0;const t0=Date.now();
 console.log('Probando '+path.relative(process.cwd(),FILE)+'\n');
-for(const [f,desc,vars,tries] of T){
- if(only.length&&!only.some(o=>f.includes(o)))continue;
- for(const v of vars||['pc']){
-  let res,last='',ok=false;
-  for(let i=0;i<(tries||1)&&!ok;i++){
-   res=spawnSync(process.execPath,[path.join(__dirname,f),FILE,...(v==='m'?['m']:[])],{encoding:'utf8',timeout:180000});
-   const out=((res.stdout||'')+(res.stderr||'')).split('\n').filter(l=>l.trim()&&!/agent-proxy|fonts\.g|Allowed|details/.test(l));
-   last=(out[out.length-1]||'').trim();ok=res.status===0&&okLast(last)&&!out.some(l=>/^FALLOS\b/.test(l.trim()))&&!/Error|Uncaught/.test(res.stderr||'');
-   if(!ok&&i+1<(tries||1))continue;
-   if(!ok){console.log('✗ '+f+(vars?' ('+v+')':'')+' — '+desc);console.log(out.slice(-12).map(l=>'    '+l).join('\n'));}
-  }
-  if(ok){pass++;console.log('✓ '+f+(vars?' ('+v+')':'')+' — '+desc);}else fail++;
- }
-}
-console.log(`\n${pass} bien · ${fail} mal · ${((Date.now()-t0)/1000).toFixed(0)} s`);
-process.exit(fail?1:0);
+// se lanzan varias a la vez (por defecto 2; «-j3» para cambiarlo)
+const J=+((args.find(a=>/^-j\d+$/.test(a))||'-j2').slice(2));
+const jobs=[];for(const [f,desc,vars,tries] of T){
+ if(only.length&&!only.some(o=>f.includes(o)&&!/^-j\d+$/.test(o)))continue;if(grp==='ui'&&!UI.includes(f))continue;if(grp==='juego'&&UI.includes(f)&&f!=='sintaxis.js')continue;
+ for(const v of vars||['pc'])jobs.push({f,desc,vars,tries,v});}
+const {spawn}=require('child_process');
+function runOne(jb){return new Promise(res=>{const p=spawn(process.execPath,[path.join(__dirname,jb.f),FILE,...(jb.v==='m'?['m']:[])]);let o='',e='';const to=setTimeout(()=>p.kill(),180000);
+ p.stdout.on('data',d=>o+=d);p.stderr.on('data',d=>e+=d);p.on('close',code=>{clearTimeout(to);res({code,stdout:o,stderr:e});});});}
+async function job(jb){let ok=false,out=[];for(let i=0;i<(jb.tries||1)&&!ok;i++){const r=await runOne(jb);out=((r.stdout||'')+(r.stderr||'')).split('\n').filter(l=>l.trim()&&!/agent-proxy|fonts\.g|Allowed|details/.test(l));
+  const last=(out[out.length-1]||'').trim();ok=r.code===0&&okLast(last)&&!out.some(l=>/^FALLOS\b/.test(l.trim()))&&!/Error|Uncaught/.test(r.stderr||'');}
+ const nm=jb.f+(jb.vars?' ('+jb.v+')':'')+' — '+jb.desc;if(ok){pass++;console.log('✓ '+nm);}else{fail++;console.log('✗ '+nm);console.log(out.slice(-12).map(l=>'    '+l).join('\n'));}}
+(async()=>{let k=0;await Promise.all(Array.from({length:Math.max(1,J)},async()=>{while(k<jobs.length)await job(jobs[k++]);}));
+ console.log(`\n${pass} bien · ${fail} mal · ${((Date.now()-t0)/1000).toFixed(0)} s`);process.exit(fail?1:0);})();
