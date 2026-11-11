@@ -72,7 +72,7 @@ const COSM={
  dec:[{id:'snow',n:'Pinos nevados',ach:'zero',ch:'n'},{id:'jung',n:'Selva',ach:'jungle',ch:'j'},{id:'farm',n:'Granja',ach:'pigs',ch:'k'},{id:'lamp',n:'Faroles',ach:'faro',ch:'l'},{id:'scrap',n:'Chatarra',ach:'cloink',ch:'g'},{id:'camp',n:'Campamento',ach:'party',ch:'e'},{id:'ruin',n:'Ruinas',ach:'rear',ch:'u'},{id:'gem',n:'Gemas',ach:'treasure',ch:'z'},{id:'tav',n:'Taberna',ach:'bowl',ch:'b'}]};
 const CSKIND={pal:['📕','Encuadernación','Encuadernaciones'],core:['💠','Núcleo','Núcleos'],dec:['🌲','Decoración','Decoración'],frame:['🖼️','Marco de héroe','Marcos de héroe']};
 const cosOwn=c=>!!(c.def||UNLOCK_ALL||OPT.u_cs||ACHS[c.ach]);
-const cosOf=aid=>{const r=[];for(const k of['pal','core','dec','path','tfr','fx'])for(const c of COSM[k]||[])if(c.ach===aid)r.push([k,c]);return r;};
+const cosOf=aid=>{const r=[];for(const k of['pal','core','dec','path','tfr','fx','tile'])for(const c of COSM[k]||[])if(c.ach===aid)r.push([k,c]);return r;};
 const decOn=id=>{const c=COSM.dec.find(d=>d.id===id);return !!c&&cosOwn(c)&&!(OPT.decoff||{})[id];};
 const COL={bg2:'#14161c'};
 try{document.fonts&&document.fonts.load('16px "Noto Color Emoji"','🪙🪨🪵🪶🪽🩸🪦🪺🫗🫠');}catch(e){}

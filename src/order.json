@@ -15,7 +15,8 @@
   "13_novedades.css",
   "14_mazo_vista.css",
   "15_guardado.css",
-  "16_tablet.css"
+  "16_tablet.css",
+  "17_letra_tablet.css"
  ],
  "js": [
   "00_config.js",
@@ -107,6 +108,8 @@
   "sonidos_e2.js",
   "musica.js",
   "mazo_vista.js",
-  "alcance_minimo.js"
+  "alcance_minimo.js",
+  "casillas_estilo.js",
+  "trofeos_bordes.js"
  ]
 }

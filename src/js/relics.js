@@ -1,3 +1,5 @@
+// infinito propio
+const INF='<svg class="inf" viewBox="0 0 24 12" width="1.35em" height=".7em"><path d="M12 6c-2.2-3-4.2-4.5-6.3-4.5A4.5 4.5 0 0 0 1.5 6a4.5 4.5 0 0 0 4.2 4.5c2.1 0 4.1-1.5 6.3-4.5s4.2-4.5 6.3-4.5A4.5 4.5 0 0 1 22.5 6a4.5 4.5 0 0 1-4.2 4.5c-2.1 0-4.1-1.5-6.3-4.5z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
 // Reliquias: de momento solo se eligen y se muestran; los efectos quedan por definir (un campo apply por reliquia).
 const RELICS=[
  {id:'coin',n:'Moneda antigua',ic:'🪙',col:'#7a5c14'},{id:'lens',n:'Lente de precisión',ic:'🔭',col:'#1f5a7a'},
@@ -43,7 +45,7 @@ const RL={open:false,choices:[]};
 // pasivo y activo en dos recuadros, con título grande; el activo lleva su recarga
 // st: estado en partida (si la tienes). Lista / en curso / recargando va como etiqueta en la cabecera del activo, no como frase suelta
 const rdesc=(id,st)=>{const r=RELIC[id],tag=!st?`<small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`:st.t>0?`<small class="rstag ron">⚡ En curso · ${f(st.t)} s</small>`:st.cd>0?`<small class="rstag rrec">⏳ ${fmtT(st.cd)}</small>`:`<small class="rstag rok">✓ Lista</small><small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`;
- return `<div class="rbx rps${st&&st.cd>0&&!(st.t>0)?' roff':''}"><div class="rbt"><span class="rbtt">♾ Pasivo</span>${st&&st.cd>0&&!(st.t>0)?'<small class="rstag rrec">Desactivado</small>':''}</div>${r.pas()}</div><div class="rbx rac"><div class="rbt"><span class="rbtt">⚡ Activo</span>${tag}</div>${r.act()}</div>`;};
+ return `<div class="rbx rrel rps${st&&st.cd>0&&!(st.t>0)?' roff':''}"><div class="rbt"><span class="rbtt">${INF} Pasivo</span>${st&&st.cd>0&&!(st.t>0)?'<small class="rstag rrec">Desactivado</small>':''}</div>${r.pas()}</div><div class="rbx rrel rac"><div class="rbt"><span class="rbtt">⚡ Activo</span>${tag}</div>${r.act()}</div>`;};
 const rcdTag=id=>`<span class="rcdt">${kw('rcd','⏳ '+RELIC[id].cd,'','st')}</span>`;
 const relicInfo=(id,quiet)=>{const r=RELIC[id],st=!quiet&&S.relics&&S.relics.includes(id)&&S.rs[id];
  return `<div class="ttl">${r.evr?`<small style="display:block;margin:0 0 2px">Reliquia de evento · «${EVENTS[r.ev]?EVENTS[r.ev].n:''}»</small>`:''}<b class="rttl"><i style="background:${r.col}">${r.ic}</i>${r.n}</b></div>`+rdesc(id,st||null);};

@@ -65,7 +65,7 @@ function alienTick(dt){for(const e of S.enemies)e.mrsw=0;
 {const _m=e2DmgM;e2DmgM=function(e,src,ty){let m=_m.apply(this,arguments);try{if(ty==='magic'&&e.mrsw>0){const A0=Math.max(-MAXPEN,armorOf(e,'magic')-(e.mrb||0)),A1=Math.max(-MAXPEN,A0-e.mrsw);m*=(1-A1/(A1+ARM_K))/(1-A0/(A0+ARM_K));}}catch(x){}return m;};}
 H2T.push(dt=>{try{alienTick(dt);}catch(e){}});
 // ficha: nº de unidades según el nivel
-{const _ur=unitRows;unitRows=function(T,src,t){const r=_ur.apply(this,arguments);try{if(T&&T.alien&&r&&r.u)r.n=R('',kst('usol','Nº de unidades',src),t?alienN(t):'4 · 5 · 6 (Nv 1-3)');}catch(e){}return r;};}
+{const _ur=unitRows;unitRows=function(T,src,t){const r=_ur.apply(this,arguments);try{if(T&&T.alien&&r&&r.u)r.n=R('',kst('usol','Nº de unidades',src),t?alienN(t):(()=>{try{const c=cpState('alien');return String(alienN({lvl:c.lv,spec:c.spec}));}catch(e){return '4 · 5 · 6 (Nv 1-3)';}})());}catch(e){}return r;};}
 // ---- desbloqueo: ganar una partida con Korr ----
 ACH.suyos={c:'jg',n:'Los suyos',d:'Gana una partida con Korr: convence a algunas criaturas de su colmena para que luchen a tu lado.',tw:'alien'};
 if(typeof ACHVIS!=='undefined')ACHVIS.suyos=()=>typeof era2Ok==='function'&&era2Ok();

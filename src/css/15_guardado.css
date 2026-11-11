@@ -132,3 +132,9 @@ body.pcpick #rtl,body.lbopen #rtl,body:has(#relic.open) #rtl{display:none!import
 .pcbar .pcdado{font-size:15px;padding-left:9px;padding-right:9px}
 .pcvs{display:inline-flex;align-items:center;gap:4px;margin-left:8px}.pcvl{font-size:11px;opacity:.75;margin-right:2px}
 .pcbar .pcvn{min-width:28px;justify-content:center;text-align:center}.pcbar .pcvn.lk{opacity:.45;cursor:default;font-size:10px}
+/* v307 · casillas especiales con dibujo */
+.bti .bbf2{width:44px;height:44px;display:grid;place-items:center;border-radius:10px;background:#3a5a30}html:root[data-skin="holo"] .bti .bbf2{background:#1b2027}.bti .bbf2 svg{display:block}
+.bti.un .bbf2 svg{filter:brightness(0) opacity(.3)}
+.bftbig{float:left;margin:0 12px 6px 0;line-height:0;border-radius:12px;background:#3a5a30}html:root[data-skin="holo"] .bftbig{background:#1b2027}
+.cstile{width:44px;height:44px;display:grid;place-items:center;border-radius:8px;background:#3a5a30}.cstile i{font-style:normal;color:#fff;opacity:.6}
+html:root[data-skin="holo"] .cstile{background:#23272e}
