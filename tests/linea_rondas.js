@@ -7,11 +7,11 @@ const r=await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.st
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
  RL.open=false;HQ.q=[];if(HQ.cur)hintClose();const out={};
  S.round=1;S.phase='build';rtlTick();const el=document.getElementById('rtl');out.on=el.classList.contains('on');out.n=el.querySelectorAll('.rtd').length;out.first=el.querySelector('.rtd.cur').dataset.tip;
- S.round=11;rtlTick();const d=n=>el.querySelector(`[data-tip="rtl:${n}"]`);out.boss=!!d(15).querySelector('.rti.boss');out.both=!!d(12).querySelector('.rti.fr.ggroup');out.miniOnly=!!d(13).querySelector('.rti.fr')&&!d(13).querySelector('.rti.boss');out.plain=!d(11).querySelector('.rti');
+ S.round=11;rtlTick();const d=n=>el.querySelector(`[data-tip="rtl:${n}"]`);out.boss=!!d(15).querySelector('.rti.boss');out.both=!!d(12).querySelector('.rti.fr.ggroup');out.miniOnly=!!d(13).querySelector('.rti.fr.gminis')&&!d(13).querySelector('.rti.boss');out.elites=!!d(14).querySelector('.rti.fr.gelites');out.plain=!d(11).querySelector('.rti');
  out.rot=el.querySelector('.rtd.cur').dataset.tip==='rtl:11'&&!d(10);
  S.sched.push({r:14,add:{wanted:1}});RTL.sg='';rtlTick();out.tip=/Élite ×3/.test(rtlTip(14));
  S.hp=999;startWave();for(let k=0;k<20;k++)update(.05);const w0=parseFloat(el.querySelector('.rts.now i').style.width)||0;const N=S.rtlN;S.rtlN=N*2;rtlTick();out.prog=S.phase==="wave"&&parseFloat(el.querySelector(".rts.now i").style.width)>=45;S.rtlN=N;
  return out;});
 await p.screenshot({path:OUT+'/linea_rondas.png'});
-for(const [k,v] of Object.entries({on:true,n:5,first:'rtl:1',boss:true,both:true,miniOnly:true,plain:true,rot:true,tip:true,prog:true}))ck(r[k]===v,k+'='+JSON.stringify(r[k]));
+for(const [k,v] of Object.entries({on:true,n:5,first:'rtl:1',boss:true,both:true,miniOnly:true,elites:true,plain:true,rot:true,tip:true,prog:true}))ck(r[k]===v,k+'='+JSON.stringify(r[k]));
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'linea ok');console.log('ERRS '+JSON.stringify(errs));await b.close();if(fails.length||errs.length)process.exit(1);})();
