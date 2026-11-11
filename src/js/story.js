@@ -12,7 +12,7 @@ const DLG={on:false};
 // fallos visuales de ÉTER: letras que se corrompen un instante y sacudidas; más a menudo cuanto más dañado (g 3 → 1)
 setInterval(()=>{try{if(!DLG.on||!OPT.dglitch)return;const L=DLG.lines&&DLG.lines[DLG.i];if(!L||!L.g)return;const el=$('dlg');
  if(DLG.gx&&performance.now()>=DLG.gx.u){DLG.gx=null;dlgRender();}
- if(!DLG.gx&&Math.random()<[0,.12,.22,.35][L.g]){const sh=DLG.full.slice(0,Math.floor(DLG.n)),ix=[];for(let i=0;i<sh.length;i++)if(/[a-záéíóúñ]/i.test(sh[i]))ix.push(i);
+ if(!DLG.gx&&Math.random()<[0,.05,.1,.17][L.g]/* v307: fallos menos frecuentes de serie */){const sh=DLG.full.slice(0,Math.floor(DLG.n)),ix=[];for(let i=0;i<sh.length;i++)if(/[a-záéíóúñ]/i.test(sh[i]))ix.push(i);
   if(ix.length){const i=ix[Math.floor(Math.random()*ix.length)],n=Math.random()<.3?Math.min(3,sh.length-i):1,G='▒░▓█';let c='';for(let k=0;k<n;k++)c+=G[Math.floor(Math.random()*G.length)];DLG.gx={i,c,u:performance.now()+90+Math.random()*120};dlgRender();}}
  if(L.g>=2&&Math.random()<(L.g===3?.018:.009)){const b=el.querySelector('.dbx');if(b){b.classList.remove('gk');void b.offsetWidth;b.classList.add('gk');}}}catch(e){}},110);
 // cola de diálogos: si ya hay uno abierto, este sale cuando acabe
@@ -29,7 +29,7 @@ function dlgWho(L,L0){if(L0.sys||!L.sp)return null;if(L.sp==='ÉTER'){const u=et
  return{c:DLGC[id]||'#dfeef5',p};}
 function dlgShow(){const L0=DLG.lines[DLG.i],L=L0.sys?{...L0,sp:'SISTEMA',g:0,gt:null}:L0,el=$('dlg'),nm=STO.name||'Piloto',txt=(OPT.dglitch&&L.gt?L.gt:L.t).replace(/\{N\}/g,nm);DLG.full=txt;DLG.n=OPT.dtype===false?txt.length:0;DLG.t=0;DLG.wait=0;
  const who=dlgWho(L,L0);
- el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L0.sys?' sys':''}${who?' who':''}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}"${who?` style="--dc:${who.c}"`:''}>${who&&who.p?`<span class="dpp">${who.p}</span>`:''}<div class="dcol">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}</div><div class="dnx">▶ continuar</div></div>`;
+ el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L0.sys?' sys':''}${who?' who':''}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}"${who?` style="--dc:${who.c}"`:''}>${who&&who.p?`<span class="dpp">${who.p}</span>`:''}<div class="dcol">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}</div><div class="dnx"><i class="dtri"></i>continuar</div></div>`;
  dlgRender();if(L.input)setTimeout(()=>{const i=$('dname');if(i)i.focus();},50);}
 function dlgRender(){const el=$('dlg'),t=el.querySelector('.dtx');if(!t)return;const sh=DLG.full.slice(0,Math.floor(DLG.n)),gx=DLG.gx;if(gx&&gx.i<sh.length&&performance.now()<gx.u){t.textContent='';t.append(sh.slice(0,gx.i));const sp=document.createElement('span');sp.className='gch';sp.textContent=gx.c;t.append(sp,sh.slice(gx.i+gx.c.length));}else t.textContent=sh;const fin=DLG.n>=DLG.full.length,L=DLG.lines[DLG.i];el.querySelector('.dnx').classList.toggle('on',fin&&!L.input);}
 function dlgNext(){const L=DLG.lines[DLG.i];if(L&&L.input&&!STO.name)return;DLG.i++;if(DLG.i>=DLG.lines.length){dlgEnd();return;}dlgShow();}

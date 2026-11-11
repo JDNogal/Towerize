@@ -82,7 +82,7 @@ function kwHtml0(id,src){
   if(id==='bres')return `<b>Resistencia a control</b>`+R('','Efectos de control','−50%')+'<small>Los jefes reducen un 50% la fuerza o la duración de cualquier efecto de control: la ralentización hace la mitad de efecto, y las congelaciones y los empujones duran o llegan la mitad.</small>';
   if(id==='penp')return '<b>Penetración</b><small>Armadura plana que ignoran los golpes de esta torre. Si el enemigo tiene menos armadura que la penetración, su armadura efectiva queda negativa y recibe más daño, hasta un máximo del doble (armadura efectiva mínima de −'+MAXPEN+'). No afecta al daño elemental.</small>';
   if(id==='tlv')return '<b>Nivel de torre</b><small>Nivel de mejora con el que se muestran las torres del compendio. Los niveles 2 y 3 mejoran estadísticas; el Nv 4 es una especialización (A y B son las dos opciones de cada torre) con habilidades propias.</small>';
-  if(id==='dtype'){const s=src||'';return `<b>Tipo de daño</b>`+(s.startsWith('en:')?'<small>Tipo de daño de los golpes de este enemigo a tus unidades. La armadura de tus unidades reduce el físico, su resistencia mágica reduce el mágico y el elemental no lo reduce nada.</small>':'<small>Tipo de daño que hace '+(s.startsWith('hero:')?'este héroe':'esta torre')+': físico, mágico o elemental. La armadura del enemigo reduce el físico, su resistencia mágica reduce el mágico y el elemental no lo reduce nada.</small>');}
+  if(id==='dtype'){const s=src||'';return `<b>Tipo de daño</b>`+(s.startsWith('en:')?'<small>Tipo de daño de los golpes de este enemigo a tus unidades. La armadura de tus unidades reduce el <b class="cph">físico</b>, su resistencia mágica reduce el <b class="cmg">mágico</b> y el <b class="cel">elemental</b> no lo reduce nada.</small>':'<small>Tipo de daño que hace '+(s.startsWith('hero:')?'este héroe':'esta torre')+': <b class="cph">físico</b>, <b class="cmg">mágico</b> o <b class="cel">elemental</b>. La armadura del enemigo reduce el <b class="cph">físico</b>, su resistencia mágica reduce el <b class="cmg">mágico</b> y el <b class="cel">elemental</b> no lo reduce nada.</small>');}
   if(id==='usol')return '<b>Soldados</b><small>Unidades aliadas de la torre. Se colocan en la bandera, bloquean a los enemigos que llegan hasta ellos y los combaten cuerpo a cuerpo. Cada soldado bloquea a un enemigo; los más duros necesitan varios soldados para ser detenidos. Si uno cae, reaparece en la torre y camina hasta la bandera; no se detiene por el camino, pero puede recibir daño.</small>';
   if(id==='uhp')return '<b>Vida del soldado</b><small>Daño que aguanta cada soldado antes de caer. Se regenera poco a poco fuera de combate y se restaura al terminar la ronda.</small>';
   if(id==='urez')return '<b>Reaparición</b><small>Tiempo que tarda un soldado caído en volver a la torre antes de caminar hacia la bandera.</small>';
@@ -166,7 +166,7 @@ function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith(
 // fuera del compendio, el tipo de daño ya lo dice el icono junto a «Daño»: no hace falta su fila
 const dtRowOn=src=>!!(CP&&CP.open);
 function rows(s,T,src,extra){
- const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot||T.burn?''/* v307: no dañan al golpe (su daño va en DPS): sin fila «Daño 0» */:T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
+ const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot||T.burn?''/* v307: no dañan al golpe (su daño va en DPS): sin fila «Daño 0» */:T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg))+/* v307: el golpe espiritual, en su propia fila como daño extra mágico */R(DT.magic.cls,kst('mhit','Daño extra',src),'+'+f(s.dmg*T.mhit)+' <small>('+Math.round(T.mhit*100)+'% del daño)</small>'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
   return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
@@ -283,7 +283,7 @@ function resolve(el){
  return null;
 }
 const PR={open:false,pinned:false,key:null,html:null,rect:null,dom:0,cell:null,dead:0};
-const KS=[],KD={el:null,t:0},GRACE=.3;
+const KS=[],KD={el:null,t:0},GRACE=.22;
 function closeKS(from){from=from||0;while(KS.length>from){const k=KS.pop();if(k.el.parentNode)k.el.parentNode.removeChild(k.el);}KD.el=null;KD.t=0;}
 let EID=0;
 function enemyInst(e){const E=ET[e.t],ap=(e.apx!=null?e.apx:(E.ap||0))+(e.cb||0),am=(e.amx!=null?e.amx:(E.am||0))+(e.cbm||0);
@@ -354,7 +354,7 @@ function hoverTick(rdt){
  if(kwEl&&(PR.open||inComp||kpEl)){
   const pl=kpEl?+kpEl.dataset.level:0;
   if(KS[pl]&&KS[pl].anchor===kwEl){KD.el=null;KD.t=0;}
-  else{if(KD.el!==kwEl){KD.el=kwEl;KD.t=0;}else KD.t=Math.min(1,KD.t+rdt/(OPT.delay*.58));if(KD.t>=1)openKw(kwEl,pl);}
+  else{if(KD.el!==kwEl){KD.el=kwEl;KD.t=0;}else KD.t=Math.min(1,KD.t+rdt/(/* v307: en el libro (compendio, elegir héroe…) las palabras clave se abren casi al instante, sin rueda */(inComp&&!kpEl&&typeof LB!=='undefined'&&LB.open&&el.closest('#comp'))?.12:OPT.delay*.58));if(KD.t>=1)openKw(kwEl,pl);}
  }else{KD.el=null;KD.t=0;}
  // rueda de carga
  const w=$('wheel'),pw=(tg&&!MFSQ()&&!PR.pinned&&!(PR.open&&PR.key===tg.key)&&HV.t<1)?HV.t:(KD.el&&KD.t<1?KD.t:-1);

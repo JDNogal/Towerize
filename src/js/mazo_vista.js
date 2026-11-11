@@ -4,7 +4,7 @@
 const MZ={pop:null};
 const mzOn=()=>{if(typeof S==='undefined'||!S||!S.deck||(typeof LB!=='undefined'&&LB.open))return false;if(document.body.classList.contains('pcpick'))return !document.body.classList.contains('pcpeek');
  return !!(RL.open&&!RL.hpick&&!RL.peek&&$('relic').querySelector('.rlbar'));};
-const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}" data-cpt="tw" data-cpv="${k}"><i style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
+const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}" data-cpt="tw" data-cpv="${k}"><i class="twd" style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
 const mzRel=()=>S.relics.length?`<div class="mzgrid">${S.relics.map(id=>`<i data-tip="relic:${id}" data-cpt="rl" data-cpv="${id}">${icHtml(RELIC[id].ic)}</i>`).join('')}</div>`:'<div class="mzvac">Aún no tienes reliquias.</div>';
 function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el.id='mzside';el.innerHTML='<div class="mzd"></div><div class="mzr"></div>';document.body.appendChild(el);}
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}

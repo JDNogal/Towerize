@@ -11,3 +11,11 @@
    calculaban su ancho sin ampliar y las piezas se salían por los lados (rodillos por encima de las cartas). Y sin transición de tamaño. */
 body.dsk:not(.mfs).pcpick #panel{zoom:1!important;transition:none!important;padding:calc(16px*var(--wz,1)) calc(34px*var(--wz,1)) calc(14px*var(--wz,1))!important;max-width:calc(100vw - 80px)!important}
 body.dsk:not(.mfs).pcpick #panel>*{zoom:var(--wz,1)}
+/* «continuar» de los diálogos: triángulo dibujado, no emoji */
+.dnx .dtri{display:inline-block;width:0;height:0;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent currentColor;margin-right:6px;vertical-align:1px}
+/* las torres, siempre como en el mapa: círculo de su color con borde negro e icono encima (ofertas, mazo, anillo de construir, elegir héroe) */
+.twd{border-radius:50%!important;box-shadow:0 0 0 2px #1b1712!important}
+.twd .icsvg svg{background:none!important;width:1.4em!important;height:1.4em!important}
+.hdk2 i.twd{display:inline-grid;place-items:center}
+.hdk2 i.twd span{background:none!important;border:0!important;padding:0!important;gap:0!important;font-size:inherit!important}
+.hdk2 i.twd .icsvg svg{width:22px!important;height:22px!important}

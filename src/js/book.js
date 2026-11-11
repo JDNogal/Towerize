@@ -91,7 +91,7 @@ function bkPreview(){const es=Object.keys(ET).filter(e=>seen('en',e)),enOpts=es.
   if(T.uniq){const o=T.dragon?['Huevo','Bebé','Adulto','Anciano']:T.guild?RANKS:['1','2','3','4'],cur=(CP.ulv&&CP.ulv[k])||1;nm=T.n;
    lv=`<button class="stbtn lvbtn" data-a="ulv" data-k="${k}" data-v="${cur>=o.length?1:cur+1}" title="Ver la torre en otro nivel">${cur>=o.length?'Nv Max':'Nv '+cur}</button>`;ok=uPrevOk(k,cur)&&!lvSec(k,cur);}
   else{const st=cpState(k),X=st.spec?SPECS[k][st.spec]:T;nm=X.n;lv=(shopInfo(k,1).match(/<span class="lvtabs">[\s\S]*?<\/button><\/span>|<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(st.spec&&X.d)extra='<div class="ddesc">'+X.d+'</div>';}
-  ic=`<span class="bkbic" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
+  ic=`<span class="bkbic bctw" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
   ctl=bkPvRow('Enemigo',bkPills('pve',enOpts,CP.pen))+bkPvRow('Velocidad',spd('pvs'));
   note='Estadísticas base del enemigo (ronda 0), sin bufos de casilla ni reliquias. Los enemigos aparecen sin parar.'+(cpState(k).spec?' Las habilidades se muestran al rango máximo.':'');}
  else if(CP.hprev){const id=CP.hprev,D=HEROES[id];back='chback';nm=D.n;ic=`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`;if(!es.includes(CP.hen))CP.hen=es[0]||'norm';

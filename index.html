@@ -1868,6 +1868,14 @@ html:root[data-skin="holo"] .rbx.rhb.rult{border-color:#ffd75a!important;backgro
    calculaban su ancho sin ampliar y las piezas se salían por los lados (rodillos por encima de las cartas). Y sin transición de tamaño. */
 body.dsk:not(.mfs).pcpick #panel{zoom:1!important;transition:none!important;padding:calc(16px*var(--wz,1)) calc(34px*var(--wz,1)) calc(14px*var(--wz,1))!important;max-width:calc(100vw - 80px)!important}
 body.dsk:not(.mfs).pcpick #panel>*{zoom:var(--wz,1)}
+/* «continuar» de los diálogos: triángulo dibujado, no emoji */
+.dnx .dtri{display:inline-block;width:0;height:0;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent currentColor;margin-right:6px;vertical-align:1px}
+/* las torres, siempre como en el mapa: círculo de su color con borde negro e icono encima (ofertas, mazo, anillo de construir, elegir héroe) */
+.twd{border-radius:50%!important;box-shadow:0 0 0 2px #1b1712!important}
+.twd .icsvg svg{background:none!important;width:1.4em!important;height:1.4em!important}
+.hdk2 i.twd{display:inline-grid;place-items:center}
+.hdk2 i.twd span{background:none!important;border:0!important;padding:0!important;gap:0!important;font-size:inherit!important}
+.hdk2 i.twd .icsvg svg{width:22px!important;height:22px!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2093,7 +2101,7 @@ wood:{n:'Casa de madera',ic:'🪵',dt:'phys',cost:0,range:3,dmg:5,rate:.5,col:'#
 brick:{n:'Casa de ladrillo',ic:'🧱',dt:'phys',cost:0,range:3,dmg:0,rate:1/12,col:'#c0563a',l:'L',fx:'Muro',uniq:1,pig:1,wall:1,upc:[0,0,40,70,120],ev:'pigs'},
 glut:{n:'Mímico glotón',ic:'🧰',dt:'phys',cost:0,range:1.6,dmg:16,rate:.9,col:'#8a5626',l:'X',fx:'Ninguno',uniq:1,glut:1,ev:'chest'},
 bastion:{n:'Baluarte',ic:'🛡️',dt:'phys',cost:80,range:2.5,dmg:5.5,rate:1,unit:{n:3,hp:48,ap:10,rez:8,spd:2},col:'#5b8def',l:'B',fx:'Ninguno'},
-monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:5,rate:1,unit:{n:2,hp:42,ap:0,rez:8,spd:2},col:'#d9a24e',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
+monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:5,rate:1,unit:{n:2,hp:42,ap:0,rez:8,spd:2},col:'#c9785c',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
 tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:3,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
  augur:{n:'Augur Voltaico',ic:'👁️',icb:'⚡',dt:'elem',augur:1,cost:100,range:2.6,dmg:12,rate:.8,splash:.9,shape:'Rayo del cielo',areaTxt:'El rayo cae sobre el objetivo y alcanza a los enemigos de alrededor.',col:'#8fd0ff',l:'U',fx:'Ninguno'},
 flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:2.2,dmg:.45,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
@@ -2580,7 +2588,7 @@ const tofTg=k=>{const T=TW[k];if(T.support||T.custom&&!T.dmg)return '';const g=T
 const tofBadge=k=>{const T=TW[k],u=T.unit&&UNAME[k];return T.unit?`<span class="tubdg" title="${u?u[0]:'Unidades'} ×${T.unit.n}">${u?`<span class="tuic" style="background:${T.col}">${icHtml(UIC[k])}</span>`:''}×${T.unit.n}</span>`:'';};
 function renderTowerOffer(){try{(RL.towo||[]).forEach(k=>see('tw',k));}catch(e){}closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.classList.toggle('tdeton',!!RL.tdet);el.scrollTop=0;const g=SKIPG[S.skips||0]||0;
  el.innerHTML=`<div class="pscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap"><b class="ptt">${RL.towT||'Nueva torre para tu mazo'}</b><small class="pst">${RL.towD||'Elige una torre: a partir de ahora podrás construirla en esta partida. Tu mazo: '+S.deck.length+'/'+DECKMAX+'.'} ${RL.towP?'':' El juego está en pausa.'}</small><div class="pdet"><button data-a="tdet">${RL.tdet?'− Ocultar detalles':'+ Ver detalles'}</button></div><div>`+
-  '</div><div class="toff">'+RL.towo.map(k=>{const T=TW[k];return `<div class="tof">${tofTg(k)}<div class="tic" style="background:${T.col}">${twIc(k)}${tofBadge(k)}</div><div class="tnm">${T.n}</div><div class="chips">${twChips(k).map(c=>`<span>${c}</span>`).join('')}</div><span class="gd">${T.cost} 🪙</span><div class="tgl">${tofGlance(k)}</div><div class="tdt" data-k="${k}"><div class="ce tcard" style="margin:0">${shopInfo(k,1)}</div></div>${RL.towP?'':`<button data-a="towpick" data-k="${k}">Añadir al mazo</button>`}</div>`;}).join('')+
+  '</div><div class="toff">'+RL.towo.map(k=>{const T=TW[k];return `<div class="tof">${tofTg(k)}<div class="tic twd" style="background:${T.col}">${twIc(k)}${tofBadge(k)}</div><div class="tnm">${T.n}</div><div class="chips">${twChips(k).map(c=>`<span>${c}</span>`).join('')}</div><span class="gd">${T.cost} 🪙</span><div class="tgl">${tofGlance(k)}</div><div class="tdt" data-k="${k}"><div class="ce tcard" style="margin:0">${shopInfo(k,1)}</div></div>${RL.towP?'':`<button data-a="towpick" data-k="${k}">Añadir al mazo</button>`}</div>`;}).join('')+
   `</div>`+(RL.towP?'<div class="pskip"><button class="go" data-a="towok">Entendido ›</button></div>':RL.towNS?'':`<div class="pskip">${diceRr('tw')}<button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><small>Conservas el hueco: en 2 rondas te ofrecerán torres otra vez.${g?' El oro que recibes se reduce cada vez.':''}</small></div>`)+'</div></div>'+wcompBtn('tw');try{sfx('page');}catch(e){}}
 // cerrar la presentación de las torres del héroe (tutorial): ya están en el mazo
 function towerOk(){RL.towo=null;RL.towP=0;RL.towT=RL.towD=null;RL.towNS=0;RL.open=false;$('relic').classList.remove('open');ui();}
@@ -2613,8 +2621,8 @@ function heroSheet(id){const D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt
   `<p class="hds">${D.d}</p>`+bar('Vida',b.hp/HMX.hp,'#6fe07a')+bar('Daño',b.dmg/b.cd*(D.area?1.3:1)/HMX.dp,'#e0605a')+bar('Alcance',(b.range||.5)/HMX.rg,'#5ab4ff')+
   (HAB[id]?`<div class="hsec">Habilidades</div><div class="habs">${[['b',1],['p4',4],['p8',8],['u',10]].map(([k2,l])=>`<span data-tip="habp:${id}.${k2}">${HAB[id][k2].ic}<em>${l}</em></span>`).join('')}</div>`:'')+
   `<div class="hsec">Reliquia inicial</div><div class="hrl"><span class="ri" style="background:${R.col}">${R.ic}</span><div style="flex:1;min-width:0"><b>${R.n}</b>${rdesc(R.id)}</div></div>`+
-  (`<div class="hsec">Mazo inicial</div><div class="hdk2">${(D.deck||[]).map(k=>{const T=TW[k];return `<span data-tip="shop:${k}"><i style="background:${T.col}">${T.ic}</i>${T.n}</span>`;}).join('')}</div>`)+
-  `<details><summary>+ Ver estadísticas</summary><div class="hst">${heroInfo(id,2)}</div></details>`;}
+  (`<div class="hsec">Mazo inicial</div><div class="hdk2">${(D.deck||[]).map(k=>{const T=TW[k];return `<span data-tip="shop:${k}"><i class="twd" style="background:${T.col}">${twIc(k)}</i>${T.n}</span>`;}).join('')}</div>`)+
+  `<details><summary>Ver estadísticas</summary><div class="hst">${heroInfo(id,2)}</div></details>`;}
 function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];const id=RL.hsel,D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;ids.forEach(h=>see('hr',h));
  const bar=(l,v,c)=>`<div class="hbar"><span>${l}</span><span class="bt"><span class="bf" style="width:${Math.round(Math.min(1,v)*100)}%;background:${c}"></span></span></div>`;
  const roster=ids.map(h=>{const L=!!HEROES[h].lockTxt;return `<button class="rt${h===id?' on':''}${L?' lk':''}" data-a="hgo" data-id="${h}" title="${L?'???':HEROES[h].n}">${portrait(h,1,L)}${L?'<span class="lc">🔒</span>':''}</button>`;}).join('');
@@ -2623,8 +2631,8 @@ function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hs
   `<p class="hds">${D.d}</p>`+bar('Vida',b.hp/HMX.hp,'#6fe07a')+bar('Daño',b.dmg/b.cd*(D.area?1.3:1)/HMX.dp,'#e0605a')+bar('Alcance',(b.range||.5)/HMX.rg,'#5ab4ff')+
   (HAB[id]?`<div class="hsec">Habilidades</div><div class="habs">${[['b',1],['p4',4],['p8',8],['u',10]].map(([k2,l])=>`<span data-tip="habp:${id}.${k2}">${HAB[id][k2].ic}<em>${l}</em></span>`).join('')}</div>`:'')+
   `<div class="hsec">Reliquia inicial</div><div class="hrl"><span class="ri" style="background:${R.col}">${R.ic}</span><div style="flex:1;min-width:0"><b>${R.n}</b>${rdesc(R.id)}</div></div>`+
-  (`<div class="hsec">Mazo inicial</div><div class="hdk2">${(D.deck||[]).map(k=>{const T=TW[k];return `<span data-tip="shop:${k}"><i style="background:${T.col}">${T.ic}</i>${T.n}</span>`;}).join('')}</div>`)+
-  `<details><summary>+ Ver estadísticas</summary><div class="hst">${heroInfo(id,2)}</div></details>`;
+  (`<div class="hsec">Mazo inicial</div><div class="hdk2">${(D.deck||[]).map(k=>{const T=TW[k];return `<span data-tip="shop:${k}"><i class="twd" style="background:${T.col}">${twIc(k)}</i>${T.n}</span>`;}).join('')}</div>`)+
+  `<details><summary>Ver estadísticas</summary><div class="hst">${heroInfo(id,2)}</div></details>`;
  el.innerHTML=`<div class="hpc" style="--hc:${D.col}"><div class="hart${lk?' lk':''} fr${hTier(id)}">${portrait(id,0,1)}</div><div class="hinfo">${info}</div>`+
   `<div class="hbot"><button class="hbk" data-a="menu" data-bk="1">← Menú</button><div class="rost">${roster}</div><button class="hok2" data-a="pickhero" data-id="${lk?'':id}"${lk?' disabled':''}>${lk?'Bloqueado':'Elegir a '+D.n+' ✓'}</button></div></div>`;}
 function renderHeroPickOld(){
@@ -2642,7 +2650,7 @@ function renderHeroPickOld(){
    `<div class="hright">`+(lk?heroLockBox(id):
     `<div class="hbox"><div class="hbt">Detalles <small class="hrec">· récord: Nv ${HLV[id]||1}</small></div><div class="htags">${(D.tags||[]).map(t=>`<span>${t}</span>`).join('')}</div><small class="hdesc">${lk?'🔒 '+lk:D.d}</small><div class="hst">${heroInfo(id,2)}</div></div>`+(HMOB()?`<details class="hbox hpvd"${RL.hpvo?' open':''}><summary>Ver a ${D.n} en acción</summary><div class="hpvc"><canvas id="pvc" width="288" height="288"></canvas></div></details>`:`<div class="hbox hpvb"><canvas id="pvc" width="288" height="288"></canvas></div>`)+
     `<div class="hbox"><div class="hbt">Reliquia inicial</div><div style="display:flex;gap:8px;align-items:flex-start"><span class="hric" style="background:${R.col}">${R.ic}</span><div style="flex:1;min-width:0"><b>${R.n}</b>${rdesc(R.id)}</div></div></div>`+
-    `<div class="hbox"><div class="hbt">Mazo inicial <small>· cada 2 rondas podrás añadir torres, hasta ${DECKMAX}</small></div><div class="hdeck">${(D.deck||[]).map(k=>{const T=TW[k];return `<div class="hdk" data-tip="shop:${k}"><span class="hdi" style="background:${T.col}">${T.ic}</span><div><b>${T.n}</b> <small class="${DT[T.dt].cls}">${DT[T.dt].n}</small>${T.unit?' <small>· unidades</small>':''}</div></div>`;}).join('')}</div></div>`)+
+    `<div class="hbox"><div class="hbt">Mazo inicial <small>· cada 2 rondas podrás añadir torres, hasta ${DECKMAX}</small></div><div class="hdeck">${(D.deck||[]).map(k=>{const T=TW[k];return `<div class="hdk" data-tip="shop:${k}"><span class="hdi twd" style="background:${T.col}">${twIc(k)}</span><div><b>${T.n}</b> <small class="${DT[T.dt].cls}">${DT[T.dt].n}</small>${T.unit?' <small>· unidades</small>':''}</div></div>`;}).join('')}</div></div>`)+
    `</div></div>`+
   `<button class="harr" data-a="hnav" data-v="1" aria-label="Héroe siguiente">›</button></div>`+
   `<div class="hgo2">${RL.hconf===id?`<span class="hcq">¿Empezar la partida con ${D.n}?</span><button class="hok" data-a="pickhero" data-id="${id}">Sí, empezar</button><button data-a="hcancel">Cancelar</button>`:`<button class="hok" data-a="hconf" data-id="${lk?'':id}"${lk?' disabled':''}>${lk?'Bloqueado':'Elegir a '+D.n}</button>`}</div></div>`;
@@ -2753,7 +2761,7 @@ const OPTS=[
  {tab:'ac',type:'toggle',key:'dpsx',def:true,label:'Tooltips de DPS avanzados',desc:'Al señalar el DPS de una torre, muestra también cómo se calcula.'},
  {tab:'ac',type:'toggle',key:'dabbr',def:false,label:'Abreviar números de daño grandes',desc:'1.000 se muestra como 1K, 1.000.000 como 1M, y así sucesivamente.'},
  {tab:'ac',type:'toggle',key:'dsci',def:false,label:'Notación científica en números de daño',desc:'A partir de 1.000.000, los números se muestran como 1,2e6. Tiene prioridad sobre la abreviatura.'},
- {tab:'ac',type:'slider',key:'delay',def:.6,min:.1,max:2,step:.01,fmt:v=>f(v)+' s',label:'Tiempo de apertura del panel de información',descT:'Lo que tarda en completarse la rueda de carga al mantener pulsado algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.',desc:'Lo que tarda en completarse la rueda de carga al señalar algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.'}];
+ {tab:'ac',type:'slider',key:'delay',def:.7,min:.1,max:2,step:.01,fmt:v=>f(v)+' s',label:'Tiempo de apertura del panel de información',descT:'Lo que tarda en completarse la rueda de carga al mantener pulsado algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.',desc:'Lo que tarda en completarse la rueda de carga al señalar algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.'}];
 const OTABS=[['jg','Juego','⚙️'],['kb','Atajos','⌨️'],['ps','Personalización','🎨'],['hs','Diálogos','💬'],['vol','Sonido','🔊'],['gf','Gráficos','🖥️'],['ac','Accesibilidad','♿'],['un','Desbloqueos','🔓']];
 // icono y apartado de cada opción en la ventana de opciones
 const OIC={kcap:'🔤',pm:'📌',fs:'⛶',dnum:'💥',hints:'💡',ptip:'🎯',ptipw:'🌀',treal:'🕒',tcomb:'⏱️',slow:'🐢',keys:'⌨️',reset:'🗑️',dspd:'✍️',dtype:'📝',dauto:'⏩',dwait:'⏳',dglitch:'📺',dbig:'🔠',cname:'🪪',u_tw:'🗼',u_hr:'🦸',u_rl:'💎',u_ev:'🗺️',u_cs:'🎨',u_rd:'📅',u_cp:'📖',u_cpa:'📘',u_sec:'🕵️',vm:'🔊',vu:'🎵',vf:'💫',fps:'📈',fx:'✨',dpsx:'🧮',dabbr:'🔢',dsci:'🔬',delay:'⌛'};
@@ -3455,7 +3463,7 @@ function bkPreview(){const es=Object.keys(ET).filter(e=>seen('en',e)),enOpts=es.
   if(T.uniq){const o=T.dragon?['Huevo','Bebé','Adulto','Anciano']:T.guild?RANKS:['1','2','3','4'],cur=(CP.ulv&&CP.ulv[k])||1;nm=T.n;
    lv=`<button class="stbtn lvbtn" data-a="ulv" data-k="${k}" data-v="${cur>=o.length?1:cur+1}" title="Ver la torre en otro nivel">${cur>=o.length?'Nv Max':'Nv '+cur}</button>`;ok=uPrevOk(k,cur)&&!lvSec(k,cur);}
   else{const st=cpState(k),X=st.spec?SPECS[k][st.spec]:T;nm=X.n;lv=(shopInfo(k,1).match(/<span class="lvtabs">[\s\S]*?<\/button><\/span>|<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(st.spec&&X.d)extra='<div class="ddesc">'+X.d+'</div>';}
-  ic=`<span class="bkbic" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
+  ic=`<span class="bkbic bctw" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
   ctl=bkPvRow('Enemigo',bkPills('pve',enOpts,CP.pen))+bkPvRow('Velocidad',spd('pvs'));
   note='Estadísticas base del enemigo (ronda 0), sin bufos de casilla ni reliquias. Los enemigos aparecen sin parar.'+(cpState(k).spec?' Las habilidades se muestran al rango máximo.':'');}
  else if(CP.hprev){const id=CP.hprev,D=HEROES[id];back='chback';nm=D.n;ic=`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`;if(!es.includes(CP.hen))CP.hen=es[0]||'norm';
@@ -6057,7 +6065,7 @@ function kwHtml0(id,src){
   if(id==='bres')return `<b>Resistencia a control</b>`+R('','Efectos de control','−50%')+'<small>Los jefes reducen un 50% la fuerza o la duración de cualquier efecto de control: la ralentización hace la mitad de efecto, y las congelaciones y los empujones duran o llegan la mitad.</small>';
   if(id==='penp')return '<b>Penetración</b><small>Armadura plana que ignoran los golpes de esta torre. Si el enemigo tiene menos armadura que la penetración, su armadura efectiva queda negativa y recibe más daño, hasta un máximo del doble (armadura efectiva mínima de −'+MAXPEN+'). No afecta al daño elemental.</small>';
   if(id==='tlv')return '<b>Nivel de torre</b><small>Nivel de mejora con el que se muestran las torres del compendio. Los niveles 2 y 3 mejoran estadísticas; el Nv 4 es una especialización (A y B son las dos opciones de cada torre) con habilidades propias.</small>';
-  if(id==='dtype'){const s=src||'';return `<b>Tipo de daño</b>`+(s.startsWith('en:')?'<small>Tipo de daño de los golpes de este enemigo a tus unidades. La armadura de tus unidades reduce el físico, su resistencia mágica reduce el mágico y el elemental no lo reduce nada.</small>':'<small>Tipo de daño que hace '+(s.startsWith('hero:')?'este héroe':'esta torre')+': físico, mágico o elemental. La armadura del enemigo reduce el físico, su resistencia mágica reduce el mágico y el elemental no lo reduce nada.</small>');}
+  if(id==='dtype'){const s=src||'';return `<b>Tipo de daño</b>`+(s.startsWith('en:')?'<small>Tipo de daño de los golpes de este enemigo a tus unidades. La armadura de tus unidades reduce el <b class="cph">físico</b>, su resistencia mágica reduce el <b class="cmg">mágico</b> y el <b class="cel">elemental</b> no lo reduce nada.</small>':'<small>Tipo de daño que hace '+(s.startsWith('hero:')?'este héroe':'esta torre')+': <b class="cph">físico</b>, <b class="cmg">mágico</b> o <b class="cel">elemental</b>. La armadura del enemigo reduce el <b class="cph">físico</b>, su resistencia mágica reduce el <b class="cmg">mágico</b> y el <b class="cel">elemental</b> no lo reduce nada.</small>');}
   if(id==='usol')return '<b>Soldados</b><small>Unidades aliadas de la torre. Se colocan en la bandera, bloquean a los enemigos que llegan hasta ellos y los combaten cuerpo a cuerpo. Cada soldado bloquea a un enemigo; los más duros necesitan varios soldados para ser detenidos. Si uno cae, reaparece en la torre y camina hasta la bandera; no se detiene por el camino, pero puede recibir daño.</small>';
   if(id==='uhp')return '<b>Vida del soldado</b><small>Daño que aguanta cada soldado antes de caer. Se regenera poco a poco fuera de combate y se restaura al terminar la ronda.</small>';
   if(id==='urez')return '<b>Reaparición</b><small>Tiempo que tarda un soldado caído en volver a la torre antes de caminar hacia la bandera.</small>';
@@ -6141,7 +6149,7 @@ function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith(
 // fuera del compendio, el tipo de daño ya lo dice el icono junto a «Daño»: no hace falta su fila
 const dtRowOn=src=>!!(CP&&CP.open);
 function rows(s,T,src,extra){
- const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot||T.burn?''/* v307: no dañan al golpe (su daño va en DPS): sin fila «Daño 0» */:T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('mhit','Golpe espiritual',src)+')',f(s.dmg)+' ('+f(s.dmg*T.mhit)+')'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
+ const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot||T.burn?''/* v307: no dañan al golpe (su daño va en DPS): sin fila «Daño 0» */:T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg))+/* v307: el golpe espiritual, en su propia fila como daño extra mágico */R(DT.magic.cls,kst('mhit','Daño extra',src),'+'+f(s.dmg*T.mhit)+' <small>('+Math.round(T.mhit*100)+'% del daño)</small>'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
   return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
@@ -6258,7 +6266,7 @@ function resolve(el){
  return null;
 }
 const PR={open:false,pinned:false,key:null,html:null,rect:null,dom:0,cell:null,dead:0};
-const KS=[],KD={el:null,t:0},GRACE=.3;
+const KS=[],KD={el:null,t:0},GRACE=.22;
 function closeKS(from){from=from||0;while(KS.length>from){const k=KS.pop();if(k.el.parentNode)k.el.parentNode.removeChild(k.el);}KD.el=null;KD.t=0;}
 let EID=0;
 function enemyInst(e){const E=ET[e.t],ap=(e.apx!=null?e.apx:(E.ap||0))+(e.cb||0),am=(e.amx!=null?e.amx:(E.am||0))+(e.cbm||0);
@@ -6329,7 +6337,7 @@ function hoverTick(rdt){
  if(kwEl&&(PR.open||inComp||kpEl)){
   const pl=kpEl?+kpEl.dataset.level:0;
   if(KS[pl]&&KS[pl].anchor===kwEl){KD.el=null;KD.t=0;}
-  else{if(KD.el!==kwEl){KD.el=kwEl;KD.t=0;}else KD.t=Math.min(1,KD.t+rdt/(OPT.delay*.58));if(KD.t>=1)openKw(kwEl,pl);}
+  else{if(KD.el!==kwEl){KD.el=kwEl;KD.t=0;}else KD.t=Math.min(1,KD.t+rdt/(/* v307: en el libro (compendio, elegir héroe…) las palabras clave se abren casi al instante, sin rueda */(inComp&&!kpEl&&typeof LB!=='undefined'&&LB.open&&el.closest('#comp'))?.12:OPT.delay*.58));if(KD.t>=1)openKw(kwEl,pl);}
  }else{KD.el=null;KD.t=0;}
  // rueda de carga
  const w=$('wheel'),pw=(tg&&!MFSQ()&&!PR.pinned&&!(PR.open&&PR.key===tg.key)&&HV.t<1)?HV.t:(KD.el&&KD.t<1?KD.t:-1);
@@ -6448,7 +6456,7 @@ function bmBuild(){let m=$('bmenu');if(!m){m=document.createElement('div');m.id=
   m.addEventListener('mouseover',e=>{if(TOUCH)return;const b=e.target.closest('.tmb');BM.hov=b?b.dataset.k:null;bmCard();});
   m.addEventListener('mouseleave',()=>{BM.hov=null;bmCard();});}
  const q=BM.s;m.innerHTML=bmDeck().map(k=>{const T=TW[k],arm=BM.arm===k,wish=(S.wish||[]).some(w=>w.a==='build'&&w.v===k&&w.x===q.x&&w.y===q.y);
-  return `<button class="tmb${arm?' arm':''}${wish?' wish':''}" data-k="${k}" data-tm="build" data-v="${k}" data-sx="${q.x}" data-sy="${q.y}">${arm?'✓':`<span class="ic tw" style="background:${T.col}">${icHtml(twIcO(T))}</span>`}<span class="p">${bmCost(k)} 🪙</span></button>`;}).join('');
+  return `<button class="tmb${arm?' arm':''}${wish?' wish':''}" data-k="${k}" data-tm="build" data-v="${k}" data-sx="${q.x}" data-sy="${q.y}">${arm?'✓':`<span class="ic tw twd" style="background:${T.col}">${icHtml(twIcO(T))}</span>`}<span class="p">${bmCost(k)} 🪙</span></button>`;}).join('');
  m.classList.add('on');bmPos(true);bmCard();}
 function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*r.width;
  const px=((q.x+.5)*CS-CAM.x)*k+(r.left-c.left),py=((q.y+.5)*CS-CAM.y)*k+(r.top-c.top),bs=m.querySelectorAll('.tmb'),n=bs.length;
@@ -7397,7 +7405,7 @@ const DLG={on:false};
 // fallos visuales de ÉTER: letras que se corrompen un instante y sacudidas; más a menudo cuanto más dañado (g 3 → 1)
 setInterval(()=>{try{if(!DLG.on||!OPT.dglitch)return;const L=DLG.lines&&DLG.lines[DLG.i];if(!L||!L.g)return;const el=$('dlg');
  if(DLG.gx&&performance.now()>=DLG.gx.u){DLG.gx=null;dlgRender();}
- if(!DLG.gx&&Math.random()<[0,.12,.22,.35][L.g]){const sh=DLG.full.slice(0,Math.floor(DLG.n)),ix=[];for(let i=0;i<sh.length;i++)if(/[a-záéíóúñ]/i.test(sh[i]))ix.push(i);
+ if(!DLG.gx&&Math.random()<[0,.05,.1,.17][L.g]/* v307: fallos menos frecuentes de serie */){const sh=DLG.full.slice(0,Math.floor(DLG.n)),ix=[];for(let i=0;i<sh.length;i++)if(/[a-záéíóúñ]/i.test(sh[i]))ix.push(i);
   if(ix.length){const i=ix[Math.floor(Math.random()*ix.length)],n=Math.random()<.3?Math.min(3,sh.length-i):1,G='▒░▓█';let c='';for(let k=0;k<n;k++)c+=G[Math.floor(Math.random()*G.length)];DLG.gx={i,c,u:performance.now()+90+Math.random()*120};dlgRender();}}
  if(L.g>=2&&Math.random()<(L.g===3?.018:.009)){const b=el.querySelector('.dbx');if(b){b.classList.remove('gk');void b.offsetWidth;b.classList.add('gk');}}}catch(e){}},110);
 // cola de diálogos: si ya hay uno abierto, este sale cuando acabe
@@ -7414,7 +7422,7 @@ function dlgWho(L,L0){if(L0.sys||!L.sp)return null;if(L.sp==='ÉTER'){const u=et
  return{c:DLGC[id]||'#dfeef5',p};}
 function dlgShow(){const L0=DLG.lines[DLG.i],L=L0.sys?{...L0,sp:'SISTEMA',g:0,gt:null}:L0,el=$('dlg'),nm=STO.name||'Piloto',txt=(OPT.dglitch&&L.gt?L.gt:L.t).replace(/\{N\}/g,nm);DLG.full=txt;DLG.n=OPT.dtype===false?txt.length:0;DLG.t=0;DLG.wait=0;
  const who=dlgWho(L,L0);
- el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L0.sys?' sys':''}${who?' who':''}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}"${who?` style="--dc:${who.c}"`:''}>${who&&who.p?`<span class="dpp">${who.p}</span>`:''}<div class="dcol">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}</div><div class="dnx">▶ continuar</div></div>`;
+ el.innerHTML=`<button class="dsk" data-dlg="skip">Saltar ⏭</button><div class="dbx${L.sp?'':' nar'}${L0.sys?' sys':''}${who?' who':''}${L.g>=1&&OPT.dglitch?' gl g'+L.g:''}"${who?` style="--dc:${who.c}"`:''}>${who&&who.p?`<span class="dpp">${who.p}</span>`:''}<div class="dcol">${L.sp?`<div class="dsp">${L.sp}</div>`:''}<div class="dtx"></div>${L.input?`<div class="din"><input id="dname" maxlength="16" placeholder="Tu nombre" autocomplete="off"><button data-dlg="name">Confirmar</button></div>`:''}</div><div class="dnx"><i class="dtri"></i>continuar</div></div>`;
  dlgRender();if(L.input)setTimeout(()=>{const i=$('dname');if(i)i.focus();},50);}
 function dlgRender(){const el=$('dlg'),t=el.querySelector('.dtx');if(!t)return;const sh=DLG.full.slice(0,Math.floor(DLG.n)),gx=DLG.gx;if(gx&&gx.i<sh.length&&performance.now()<gx.u){t.textContent='';t.append(sh.slice(0,gx.i));const sp=document.createElement('span');sp.className='gch';sp.textContent=gx.c;t.append(sp,sh.slice(gx.i+gx.c.length));}else t.textContent=sh;const fin=DLG.n>=DLG.full.length,L=DLG.lines[DLG.i];el.querySelector('.dnx').classList.toggle('on',fin&&!L.input);}
 function dlgNext(){const L=DLG.lines[DLG.i];if(L&&L.input&&!STO.name)return;DLG.i++;if(DLG.i>=DLG.lines.length){dlgEnd();return;}dlgShow();}
@@ -10023,7 +10031,7 @@ if(typeof window!=='undefined'){
 const MZ={pop:null};
 const mzOn=()=>{if(typeof S==='undefined'||!S||!S.deck||(typeof LB!=='undefined'&&LB.open))return false;if(document.body.classList.contains('pcpick'))return !document.body.classList.contains('pcpeek');
  return !!(RL.open&&!RL.hpick&&!RL.peek&&$('relic').querySelector('.rlbar'));};
-const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}" data-cpt="tw" data-cpv="${k}"><i style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
+const mzDeck=()=>S.deck.map(k=>`<div class="mzrow" data-tip="shop:${k}" data-cpt="tw" data-cpv="${k}"><i class="twd" style="background:${tinfo({type:k}).col}">${twIc(k)}</i><b>${TW[k].n}</b>${S.list.some(t=>t.type===k)?`<em>×${S.list.filter(t=>t.type===k).length}</em>`:''}</div>`).join('');
 const mzRel=()=>S.relics.length?`<div class="mzgrid">${S.relics.map(id=>`<i data-tip="relic:${id}" data-cpt="rl" data-cpv="${id}">${icHtml(RELIC[id].ic)}</i>`).join('')}</div>`:'<div class="mzvac">Aún no tienes reliquias.</div>';
 function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el.id='mzside';el.innerHTML='<div class="mzd"></div><div class="mzr"></div>';document.body.appendChild(el);}
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
