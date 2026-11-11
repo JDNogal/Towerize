@@ -30,7 +30,7 @@ function update(dt){
  for(const p of S.pools){p.tk-=dt;if(p.tk<=0){p.tk+=PTICK;for(const e of S.enemies)if(!isFly(e)&&Math.hypot(e.x-p.x,e.y-p.y)<=p.r){if(p.el==='bleed')addBleed(e,p.src,1);else if(p.el==='fire')addBurn(e,p.src,p.n);else addPois(e,p.n,p.src);}}}
  for(const e of S.enemies){
   for(const k in e.fx){const q=e.fx[k];if((q.t-=dt)<=0){delete e.fx[k];if(k==='freeze'){e.fx.fimm={t:FRZCD};if(q.src&&e.hp>0)shatter(e,q.src);}}}
-  if(e.ps&&e.ps.length){let dp=0,rvw=0;for(const q of e.ps){let w=q.w;const tx=q.src&&q.src.ab&&abRank(q.src,'toxin');if(tx&&(ET[e.t].el||isBoss(e)))w*=1+tx.el;dp+=w;if(q.rv)rvw+=w;q.t-=dt;}DNK='poison';hurt(e,dp*dt,e.ps[e.ps.length-1].src,'elem');DNK=null;if(rvw)RS('venom').dmg+=rvw*dt;e.ps=e.ps.filter(q=>q.t>0);}
+  if(e.ps&&e.ps.length){let dp=0,rvw=0;for(const q of e.ps){let w=q.w;const tx=q.src&&q.src.ab&&abRank(q.src,'toxin');if(tx)w*=1+tx.el*toughK(e);dp+=w;if(q.rv)rvw+=w;q.t-=dt;}DNK='poison';hurt(e,dp*dt,e.ps[e.ps.length-1].src,'elem');DNK=null;if(rvw)RS('venom').dmg+=rvw*dt;e.ps=e.ps.filter(q=>q.t>0);}
   if(e.bl&&e.bl.length){for(const q of e.bl)q.t-=dt;e.bl=e.bl.filter(q=>q.t>0);}
   if(e.cs&&e.cs.length){let w=0;for(const q of e.cs){q.t-=dt;w+=q.w;}const fr=chillF(e);if(e.fx.freeze&&!S.tut){recBest('zero',Math.floor(w));if(w>=30&&!S.pvE)achieve('zero');}if(fr>0){DNK='ice';hurt(e,w*CHILLD*fr*dt,e.cs[e.cs.length-1].src,'elem');DNK=null;}e.cs=e.cs.filter(q=>q.t>0);}
   if(e.bn>0){DNK='fire';hurt(e,BURND*e.bn*dt,e.bsrc,'elem');DNK=null;e.bt+=dt;while(e.bt>=1){e.bt-=1;const fu=e.bsrc&&e.bsrc.ab&&abRank(e.bsrc,'fuel');e.bn*=1-(fu?fu.d:BURNK);}if(e.bn<.3)e.bn=0;}

@@ -1,5 +1,7 @@
 // ===== Augur Voltaico (Era Fantástica): rayos que caen del cielo, nubes de tormenta y juicios =====
-const WETT=3,WETF=1.5,CLR=2.1,HCH=8,HJM=6,FULGD=.25;
+const WETT=3,WETF=1.5,CLR=2.1,HCH=8,HJM=6,FULGD=.2,HCHK=.5;
+// v307 · lo «duro» que es un enemigo, de 0 (pequeño) a 1 (élite o jefe): para habilidades que escalan con la vida del objetivo en vez de con su tipo
+const toughK=e=>isBoss(e)?1:Math.max(0,Math.min(1,((ET[e.t].hp||1)-1)/11));
 const ezM=e=>1+EZAMP*(e.ez?e.ez.n:0);
 const cloudR=t=>{const cu=abRank(t,'cumulo');return CLR*K*(1+(cu?cu.r:0)+(t.cg||0));};
 // v305 · el rayo del Augur: el objetivo recibe el daño completo y los de alrededor solo un 35 % (antes el 60 % general del daño en área)
@@ -21,7 +23,7 @@ function heraldBolt(t,s,be){const wr=abRank(t,'wrath'),fk=abRank(t,'fork'),fg=ab
  if(fk){const nr=S.enemies.filter(o=>o!==be&&o.hp>0&&Math.hypot(o.x-be.x,o.y-be.y)<=2.5*K).sort((a,b)=>Math.hypot(a.x-be.x,a.y-be.y)-Math.hypot(b.x-be.x,b.y-be.y)).slice(0,fk.n);for(const o of nr){hit(o,.5);pts.push([o.x,o.y]);}}
  for(const[x,y]of pts){S.fx.push({bolt:[[x+(Math.random()-.5)*1.5,y-5*K],[x+(Math.random()-.5)*.8,y-2.5*K],[x,y]],t:.3,m:.3,big:1});if(fg)(S.cz=S.cz||[]).push({k:'fulg',x,y,r:.8*K,t:fg.t,tk:0,dm:s.dmg*FULGD,src:t});}
  S.fx.push({x:be.x,y:be.y,t:.45,m:.45,r:ar,col:'#ffe58a'});}
-function heraldDeath(e){for(const t of S.list)if(t.type==='augur'&&t.spec==='herald'&&Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range)t.ch=Math.min(HCH,(t.ch||0)+1);}
+function heraldDeath(e){for(const t of S.list)if(t.type==='augur'&&t.spec==='herald'&&Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range)t.ch=Math.min(HCH,(t.ch||0)+HCHK);}
 // ===== Orbe arcano (Era Fantástica): maleficios y almas =====
 const HEXT=3,POLYS=.6,FEART=1.5,SPECSP=1.2*K,KNHP=900;
 const SPECT={spectre:{n:'Espectro',ic:'👻',col:'#c8d4f0',hp:.5,d:.5,w:1,sp:1.4},knight:{n:'Caballero Espectral',ic:'♞',col:'#9fb4d8',w:2,d:1.2,sp:1}};
