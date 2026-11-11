@@ -29,3 +29,5 @@ html:root[data-skin="holo"] .rbx.rhb.rps{border-color:#a77bff!important;backgrou
 html:root[data-skin="holo"] .rbx.rhb.rult{border-color:#ffd75a!important;background:rgba(255,215,90,.10)!important;box-shadow:0 0 10px rgba(255,215,90,.5)!important}html:root[data-skin="holo"] .rbx.rhb.rult .rbt{color:#ffd75a!important}
 /* fichas: ninguna etiqueta ni valor se parte en dos líneas (las filas largas ya ocupan todo el ancho) */
 #comp .bkp .bkg .row>span{white-space:nowrap}
+/* el trofeo de la consola, al tamaño de los otros iconos */
+.bkrib .trof,.lbribs .trof{font-size:1.45em;margin:-2px 0}
