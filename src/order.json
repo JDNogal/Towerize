@@ -14,7 +14,8 @@
   "12_compendio.css",
   "13_novedades.css",
   "14_mazo_vista.css",
-  "15_guardado.css"
+  "15_guardado.css",
+  "16_tablet.css"
  ],
  "js": [
   "00_config.js",
@@ -102,6 +103,7 @@
   "filtros_era.js",
   "vista_enemigos.js",
   "piezas_compendio.js",
+  "tablet.js",
   "sonidos_e2.js",
   "musica.js",
   "mazo_vista.js",
