@@ -27,8 +27,8 @@ function rollBuff(){const k=BK[Math.floor(Math.random()*BK.length)];
  if(Math.random()<S.sup){S.sup=SUP0;return k+'+';}S.sup=Math.min(1,S.sup+SUPUP);return k;}
 const TW={
 arrow:{n:'Arqueros',ic:'🏹',dt:'phys',cost:75,range:2.8,dmg:8.5,rate:2.5,ps:12,col:'#e8b04a',l:'F',fx:'Ninguno'},
-cannon:{n:'Cañoneros',ic:'💣',dt:'phys',era:2,cost:90,range:2.6,dmg:30,rate:.7,ps:6,splash:1.1,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#e07a3d',l:'N',fx:'Ninguno'},
- cata:{n:'Catapulta',ic:'🪨',dt:'phys',cata:1,ground:1,cost:90,range:2.8,dmg:38,rate:.55,ps:5,splash:1.15,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#a8977c',l:'C',fx:'Ninguno'},
+cannon:{n:'Cañoneros',ic:'💣',dt:'phys',era:2,cost:90,range:2.6,dmg:13,rate:.7,ps:6,splash:1.1,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#e07a3d',l:'N',fx:'Ninguno'},
+ cata:{n:'Catapulta',ic:'🪨',dt:'phys',cata:1,ground:1,cost:90,range:2.8,dmg:16,rate:.55,ps:5,splash:1.15,shape:'Explosión radial',areaTxt:'Al impactar, afecta a los enemigos dentro del radio.',col:'#a8977c',l:'C',fx:'Ninguno'},
 frost:{n:'Cryomago',ic:'🧊',dt:'elem',cost:70,range:2.4,dmg:3,rate:1.5,ps:9,slow:.5,col:'#6cc5ff',l:'H',fx:'Ralentiza 50% (1,5 s)'},
 laser:{n:'Láser de arco',ic:'⚡',dt:'elem',era:2,e2b:1,cost:110,range:2.8,dmg:2.6,rate:8,beam:1,arc:1,col:'#ffe24a',l:'L',fx:'Arco eléctrico continuo'},
 bunker:{n:'Búnker',ic:'🏚️',dt:'phys',era:2,e2b:1,cost:85,range:2.6,dmg:3.6,rate:5,ps:40,mag:30,reload:1.8,ramp:.6,col:'#9aa07a',l:'K',fx:'Cargador: la cadencia sube mientras dispara'},
@@ -37,7 +37,7 @@ nano:{n:'Enjambre de nanitos',ic:'🫧',dt:'magic',era:2,e2b:1,cost:105,range:2.
 altar:{n:'Altar de runas',ic:'🪬',dt:'magic',cost:90,range:2.6,dmg:0,rate:0,support:1,bufo:1,col:'#c89aff',l:'A',fx:'Bufos temporales a las torres cercanas'},
 dron:{n:'Dron de mantenimiento',ic:'🛸',dt:'phys',era:2,cost:95,range:3,dmg:0,rate:0,support:1,bufo:1,col:'#e8b04a',l:'D',fx:'Afina la puntería de las torres cercanas'},
  orb:{n:'Orbe arcano',ic:'🧿',dt:'magic',cost:110,range:2.8,dmg:28,rate:.85,ps:4.5,orb:1,col:'#8a7dff',l:'I',fx:'Orbe mágico'},
-poison:{n:'Envenenadora',ground:1,ic:'🧪',dt:'elem',cost:100,range:3,dmg:3,rate:.5,puddle:1,dot:1,dur:4,pr:1,shape:'Charco',areaTxt:'Todos los enemigos dentro del círculo reciben el efecto.',col:'#7bd34a',l:'V',fx:'Veneno acumulable'},
+poison:{n:'Envenenadora',ground:1,ic:'🧪',dt:'elem',cost:100,range:3,dmg:1.5,rate:.5,puddle:1,dot:1,dur:4,pr:1,shape:'Charco',areaTxt:'Todos los enemigos dentro del círculo reciben el efecto.',col:'#7bd34a',l:'V',fx:'Veneno acumulable'},
 faro:{n:'Faro arcano',ic:'🗼',dt:'magic',cost:0,range:3,dmg:0,rate:0,col:'#ffe27a',l:'F',fx:'Ninguno',uniq:1,support:1,faro:1,ev:'lighthouse'},
 dragon:{n:'Huevo de dragón',ic:'🥚',dt:'elem',cost:0,range:2.5,dmg:8,rate:.83,unit:{n:1,hp:60,ap:5,rez:8,spd:2},col:'#d0603a',l:'D',fx:'Ninguno',uniq:1,dragon:1,ev:'nest'},
 guild:{n:'Sede del Gremio',ic:'🏰',dt:'phys',cost:0,range:2.5,dmg:4,rate:1,unit:{n:3,hp:40,ap:10,rez:8,spd:2},col:'#c9a24a',l:'G',fx:'Ninguno',uniq:1,guild:1,upc:[0,0,80,140,300],ev:'guild'},
@@ -48,11 +48,11 @@ glut:{n:'Mímico glotón',ic:'🧰',dt:'phys',cost:0,range:1.6,dmg:16,rate:.9,co
 bastion:{n:'Baluarte',ic:'🛡️',dt:'phys',cost:80,range:2.5,dmg:4,rate:1,unit:{n:3,hp:40,ap:10,rez:8,spd:2},col:'#5b8def',l:'B',fx:'Ninguno'},
 monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:3.5,rate:1,unit:{n:2,hp:34,ap:0,rez:8,spd:2},col:'#d9a24e',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
 tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:3,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
- augur:{n:'Augur Voltaico',ic:'👁️',icb:'⚡',dt:'elem',augur:1,cost:100,range:2.6,dmg:22,rate:.8,splash:.9,shape:'Rayo del cielo',areaTxt:'El rayo cae sobre el objetivo y alcanza a los enemigos de alrededor.',col:'#8fd0ff',l:'U',fx:'Ninguno'},
-flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:2.2,dmg:.8,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
+ augur:{n:'Augur Voltaico',ic:'👁️',icb:'⚡',dt:'elem',augur:1,cost:100,range:2.6,dmg:12,rate:.8,splash:.9,shape:'Rayo del cielo',areaTxt:'El rayo cae sobre el objetivo y alcanza a los enemigos de alrededor.',col:'#8fd0ff',l:'U',fx:'Ninguno'},
+flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:2.2,dmg:.45,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
 acid:{n:'Chorro de ácido',ic:'☣️',dt:'elem',era:2,cost:105,range:2.4,dmg:2,rate:2,dot:1,acidj:1,custom:1,col:'#9be15d',l:'Q',fx:'Veneno y armadura rota'},
-sonic:{n:'Torre sónica',ic:'🔊',dt:'magic',era:2,cost:115,range:2.2,dmg:10,rate:.5,sonic:1,custom:1,shape:'Onda circular',areaTxt:'La onda se expande desde la torre hasta su alcance y golpea una vez a cada enemigo que atraviesa.',col:'#ff8ad8',l:'W',fx:'Onda que empuja'},
- sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.5,dmg:.8,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
+sonic:{n:'Torre sónica',ic:'🔊',dt:'magic',era:2,cost:115,range:2.2,dmg:3.5,rate:.5,sonic:1,custom:1,shape:'Onda circular',areaTxt:'La onda se expande desde la torre hasta su alcance y golpea una vez a cada enemigo que atraviesa.',col:'#ff8ad8',l:'W',fx:'Onda que empuja'},
+ sala:{n:'Salamandra',ic:'🦎',dt:'elem',cost:100,range:2.5,dmg:.45,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff7a3a',l:'S',fx:'Quemadura'}};
 const ET={vet:{n:'Veterano',gold:6,hp:4.4,hf:80,sp:1,r:.27,col:'#b8443f',dmg:1,ap:15,am:0},champ:{n:'Campeón',gold:14,hp:12,hf:220,sp:.9,r:.31,col:'#8e2a36',dmg:2,ap:30,am:10},runner:{n:'Corredor',gold:6,hp:2.5,hf:45,sp:1.9,r:.22,col:'#e3a33e',dmg:1,ap:0,am:0},armored:{n:'Acorazado',gold:18,hp:15,hf:280,sp:.55,r:.35,col:'#6c7484',dmg:3,ap:40,am:0},bat:{n:'Murciélago',gold:2,hp:.8,hf:14,sp:1.8,r:.18,col:'#6a5480',dmg:1,ap:0,am:0,fly:1},harpy:{n:'Arpía',gold:6,hp:3.3,hf:60,sp:1.2,r:.25,col:'#b07cc0',dmg:1,ap:0,am:10,fly:1},griffin:{n:'Grifo',gold:16,hp:12,hf:220,sp:1,r:.33,col:'#c9a052',dmg:2,ap:20,am:0,fly:1,el:1},norm:{n:'Guerrero',gold:3,hp:1,sp:1,r:.26,col:'#e05a5a',dmg:1,ap:0,am:0},fast:{n:'Asalto',gold:4,hp:.55,sp:1.7,r:.2,col:'#f08fb0',dmg:1,ap:0,am:0},
 tank:{n:'Tanque',gold:10,hp:2.6,sp:.65,r:.34,col:'#a04a7a',dmg:2,ap:10,am:0},
 custodian:{n:'Custodio',gold:5,hp:1.4,sp:.65,r:.3,col:'#4f9fb5',dmg:1,ap:0,am:10,aura:{r:2.5,v:10}},
@@ -275,7 +275,7 @@ tesla:{
  ele:{n:'Electrocutor',ic:'🔌',col:'#e8c21f',lv:{dmg:L4D*2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:null,ez:1},ab:['accum','short','reson'],d:'Sin rebotes: golpea a un solo enemigo y lo electriza (+5% de daño eléctrico por stack, máx. 10). Para élites y jefes.'}},
 sala:{
  volc:{n:'Corazón Volcánico',ic:'❤️‍🔥',col:'#ff6a2e',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['erupt','flare','embr'],d:'Acumula Calor mientras dispara (lleno en 8 s): el cono se abre hasta 110° y aplica hasta un 50% más de stacks. Sin objetivo, se enfría.'},
- forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*3,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo. Para élites, jefes y enemigos con armadura.'}},
+ forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*5.3,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo. Para élites, jefes y enemigos con armadura.'}},
 flame:{
  detn:{n:'Detonador',ic:'🎆',col:'#ff8a3c',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['overp','chainr','tarb'],d:'Cuando un enemigo acumula 30 stacks de quemadura de esta torre, explota: pierde la mitad de sus stacks y hace daño en área (1 casilla).'},
  muro:{n:'Muro de fuego',ic:'🌋',col:'#ff5f3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},o:{cone:0,fwall:1,shape:'Franja',areaTxt:'La franja ocupa toda la anchura del camino.'},ab:['morew','densef','ash'],d:'Ya no lanza llamas: enciende una franja de fuego en el camino, delante de su objetivo, que quema durante 4 s a todo el que la cruza.'}},
