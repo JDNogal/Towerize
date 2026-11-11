@@ -17,7 +17,14 @@ function init(){GT.r=0;GT.c=0;
   for(let i=1;i<L;i++){const nb=shuf(D.map(d=>[x+d[0],y+d[1]]).filter(q=>q[0]>=0&&q[1]>=0&&q[0]<BN&&q[1]<BN&&!seen[q[0]+','+q[1]]&&Math.abs(q[0]-A[0])+Math.abs(q[1]-A[1])>=(i>=2?2:1)));if(!nb.length)break;[x,y]=nb[0];seen[x+','+y]=1;w.push(x+','+y);}
   if(w.length>best.length)best=w;}
  for(let k=0;k<CHESTS;k++){const a=k?3*k:2,z=k?Math.min(3*k+2,best.length-1):2;if(a<best.length)S.chests[best[a+Math.floor(Math.random()*(z-a+1))]]=1;}
- if(S.tut){S.rc=99;const k=best.find((v,i)=>i>=5&&!S.chests[v]);if(k)S.evts[k]='shrine';const k2=best.find((v,i)=>i>=8&&!S.chests[v]&&!S.evts[v]);if(k2)S.evts[k2]='merchant';}else placeEvents(c,A);
+ if(S.tut){S.rc=99;
+  /* v307: en el tutorial las cosas se reparten por dos lados (antes todo iba en un único recorrido y solía quedar hacia el mismo sitio):
+     un segundo recorrido que sale del mismo extremo sin pisar el primero lleva el segundo cofre y el santuario; el mercader se queda al final del primero */
+  let w2=null;for(let t=0;t<600&&!w2;t++){const seen={[c+','+c]:1};for(const v of best)seen[v]=1;const w=[];let x=A[0],y=A[1];
+   for(let i=1;i<7;i++){const nb=shuf(D.map(d=>[x+d[0],y+d[1]]).filter(q=>q[0]>=0&&q[1]>=0&&q[0]<BN&&q[1]<BN&&!seen[q[0]+','+q[1]]));if(!nb.length)break;[x,y]=nb[0];seen[x+','+y]=1;w.push(x+','+y);}
+   if(w.length>=5)w2=w;}
+  if(w2){for(const k in S.chests)delete S.chests[k];S.chests[best[2]]=1;S.chests[w2[2]]=1;S.evts[w2[4]]='shrine';const k2=best.find((v,i)=>i>=6&&!S.chests[v]);if(k2)S.evts[k2]='merchant';}
+  else{const k=best.find((v,i)=>i>=5&&!S.chests[v]);if(k)S.evts[k]='shrine';const k2=best.find((v,i)=>i>=8&&!S.chests[v]&&!S.evts[v]);if(k2)S.evts[k2]='merchant';}}else placeEvents(c,A);
  CAM.z=ZINI;camCenter(S.core.x,S.core.y);
  RL.open=false;$('relic').classList.remove('open');renderRelics();nextRound();openHero();
 }

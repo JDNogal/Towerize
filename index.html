@@ -1855,6 +1855,19 @@ html:root[data-skin="holo"] .rbx.rhb.rult{border-color:#ffd75a!important;backgro
 :root[data-skin="holo"] #comp .bti.on{background:linear-gradient(180deg,rgba(63,232,255,.3),rgba(63,232,255,.1))!important;box-shadow:inset 0 0 0 1.5px #3fe8ff,0 0 10px rgba(63,232,255,.5)!important}
 /* las torres aún sin descubrir, también redondas (sin borde negro) */
 .bic.bctw:not([style*="background"]){border-radius:50%!important}
+/* v307 · repaso del tutorial (vídeo del 11-nov) */
+.lbbig.on{box-shadow:0 0 0 2.5px var(--acc2),0 3px 10px rgba(0,0,0,.18)!important;background:var(--paper)!important}
+.lbbk.lbgo{background:var(--gbtn)!important;color:#2a1c08!important;font-weight:700;margin-left:8px}
+:root[data-skin="holo"] .lbbig.on{box-shadow:0 0 0 2px #3fe8ff,0 0 12px #3fe8ff88!important}
+/* «Entendido» siempre abajo a la derecha, en pistas y en el foco de solares */
+.hmsg .hbtn,#focus .fmsg .hbtn{display:flex;justify-content:flex-end;margin-top:8px}
+.hmsg .hbtn .go,#focus .fmsg .hbtn .go{margin:0!important;display:inline-block!important}
+#focus .fmsg b.ftit{display:block;color:inherit;margin-bottom:3px}
+#focus .fmsg b{color:inherit}
+/* «Elige una pieza»: la ampliación va en el contenido y no en el propio pergamino. Con el zoom en el pergamino, algunos Chrome
+   calculaban su ancho sin ampliar y las piezas se salían por los lados (rodillos por encima de las cartas). Y sin transición de tamaño. */
+body.dsk:not(.mfs).pcpick #panel{zoom:1!important;transition:none!important;padding:calc(16px*var(--wz,1)) calc(34px*var(--wz,1)) calc(14px*var(--wz,1))!important;max-width:calc(100vw - 80px)!important}
+body.dsk:not(.mfs).pcpick #panel>*{zoom:var(--wz,1)}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2541,7 +2554,7 @@ const tunl=k=>BASET().includes(k)||/* las torres de la era 2 están disponibles 
 function achieve(id){if(!ACH[id]||ACHS[id])return;ACHS[id]=Date.now();if(PINS.includes(id)){PINS=PINS.filter(x=>x!==id);savePins();}try{localStorage.setItem('rt-ach',JSON.stringify(ACHS));}catch(e){}
  if(id==='elem'&&HEROES.yrsa){if(HEROES.yrsa.lockTxt&&typeof STO!=='undefined'){STO.qyrsa=1;try{saveSto();}catch(e){}}delete HEROES.yrsa.lockTxt;}const A=ACH[id],T=A.tw&&TW[A.tw],Rl=A.rl&&RELIC[A.rl],Hr=A.hr&&HEROES[A.hr];toast(`🏆 <b>Logro: ${A.n}</b>${T?`<br><small>Desbloqueas ${T.ic} ${T.n}: ya puede salirte en las ofertas de torres.</small>`:''}${Rl?`<br><small>Desbloqueas la reliquia ${Rl.ic} ${Rl.n}: ya puede salirte en los cofres.</small>`:''}${A.ev&&EVENTS[A.ev]?`<br><small>Desbloqueas el evento ${EVENTS[A.ev].ic} ${EVENTS[A.ev].n}: ya puede salirte en el mapa.</small>`:''}${Hr?`<br><small>Desbloqueas a ${Hr.ic} ${Hr.n}: ya puedes elegirla al empezar una partida.</small>`:''}${A.ux?`<br><small>Desbloqueas ${A.ux}.</small>`:''}${cosOf(id).map(([k,c])=>`<br><small>Desbloqueas ${CSKIND[k][1].toLowerCase()}: ${c.n}.</small>`).join('')}`);
  if(T)newU('tw',T.ic,T.n,'Logro: '+A.n,A.tw);if(Rl)newU('rl',Rl.ic,Rl.n,'Logro: '+A.n,A.rl);if(Hr)newU('hr',Hr.ic,Hr.n,'Logro: '+A.n,A.hr);if(A.ev&&EVENTS[A.ev])newU('ev',EVENTS[A.ev].ic,EVENTS[A.ev].n,'Logro: '+A.n,A.ev);if(A.ux)newU('ux','📖',A.ux.replace(/^el /,'').replace(/^./,m=>m.toUpperCase()));for(const[k,c]of cosOf(id))newU(k,CSKIND[k][0],c.n,'Logro: '+A.n);}
-function toast(h){let el=$('toast');if(!el){el=document.createElement('div');el.id='toast';document.body.appendChild(el);}const d=document.createElement('div');d.className='tst';d.innerHTML=h;el.appendChild(d);setTimeout(()=>d.classList.add('out'),3800);setTimeout(()=>d.remove(),4400);}
+function toast(h){let el=$('toast');if(!el){el=document.createElement('div');el.id='toast';document.body.appendChild(el);}/* v307: siempre por debajo de la barra de arriba, mida lo que mida */try{const st=$('stats'),r=st&&st.offsetParent?st.getBoundingClientRect():null;el.style.top=(r?Math.round(r.bottom+10):62)+'px';}catch(e){}const d=document.createElement('div');d.className='tst';d.innerHTML=h;el.appendChild(d);setTimeout(()=>d.classList.add('out'),3800);setTimeout(()=>d.remove(),4400);}
 // ---- ofertas de torres: cada 2 rondas eliges 1 de 3 hasta tener 7 en el mazo ----
 const DECKMAX=7,SKIPG=[50,30,10];
 const eraOk=k=>!TW[k].era||TW[k].era===1||(TW[k].era===2&&eraHas2());
@@ -3708,9 +3721,9 @@ function toggleComp(v){const on=v===undefined?!(LB.open&&!LB.cover&&CP.open):v;C
 const SQUADS={
  patrol:{n:'Patrulla',min:1,m:{norm:6}},
  tsling:{n:'Honderos (tutorial)',min:999,tut:1,m:{norm:3,sling:2}},
- squad:{n:'Pelotón',min:2,m:{norm:3,fast:2}},
+ squad:{n:'Pelotón',min:999,tut:1,m:{norm:3,fast:2}},/* v307: solo del tutorial (las usa TUTW); con tut:1 no se borran al montar las facciones */
  scouts:{n:'Avanzadilla',min:3,m:{fast:4,sling:1}},
- vanguard:{n:'Vanguardia',min:4,m:{tank:1,norm:4}},
+ vanguard:{n:'Vanguardia',min:999,tut:1,m:{tank:1,norm:4}},
  escort:{n:'Escolta',min:5,m:{sling:3,custodian:1}},
  conclave:{n:'Cónclave',min:5,m:{acolyte:2,norm:3}},
  phalanx:{n:'Falange',min:7,m:{tank:2,shaman:1,norm:2}},
@@ -4132,12 +4145,12 @@ if(IOS&&!navigator.webdriver){const iv=setInterval(()=>{if(typeof INTRO!=='undef
 // ==================== TUTORIAL COMPLETO ====================
 // Partida guionizada de 10 rondas: el guion controla lo que se ofrece (piezas, torres, oleadas) y el jugador siempre elige.
 let TUTON=false,TUTR=0,TUTHS={};
-const TUTP={1:['Recta','Esquina','Arco'],2:['Esquina','Esquina','Esquina'],3:['Bifurcación','Serpiente','Esquina'],4:['Cruce','Valle','Recta'],5:['Bifurcación','Anillo','Esquina'],6:['Bifurcación','Cruce','Abanico'],7:['Serpiente','Bifurcación','Arco'],8:['Cruce','Anillo','Esquina'],9:['Valle','Bifurcación','Abanico'],10:['Recta','Esquina','Cruce']};
+const TUTP={1:['Recta','Esquina','Arco'],2:['Esquina','Arco','Recta'],3:['Bifurcación','Serpiente','Esquina'],4:['Cruce','Valle','Recta'],5:['Bifurcación','Anillo','Esquina'],6:['Bifurcación','Cruce','Abanico'],7:['Serpiente','Bifurcación','Arco'],8:['Cruce','Anillo','Esquina'],9:['Valle','Bifurcación','Abanico'],10:['Recta','Esquina','Cruce']};
 const TUTW={1:['patrol'],2:['patrol','patrol'],3:['patrol','squad'],4:['squad','squad'],5:['vanguard','vanguard'],6:['squad','vanguard','squad'],7:['tsling','patrol','tsling'],8:['vanguard','tsling','squad','tsling'],9:['vanguard','tsling','vanguard','tsling'],10:['vanguard','tsling','squad','vanguard','tsling']};
 const adjPath=(p,x,y)=>D.some(([a,b])=>p[y+b]&&p[y+b][x+a]==='.');
 function tutDeal(){const r=S.round,names=TUTP[r]||['Recta','Esquina'];let any=null,best=null;S.offers=[];
  for(let t=0;t<80;t++){const of=names.map((n,i)=>{const P0=PIECES.find(p=>p.n===n),o={n,p:P0.p,b:[]};solarize(o,0,1);decorate(o);
-   if(r===2)o.b.push({x:4,y:2,k:['pow','spd','rng'][i]});   // misma pieza, casilla distinta en la esquina interior (cubre los dos tramos)
+   if(r===2){/* v307: piezas distintas, cada una con una casilla especial distinta en el solar más céntrico */const cs=[];o.p.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));cs.sort((a,b)=>(Math.abs(a[0]-3)+Math.abs(a[1]-3))-(Math.abs(b[0]-3)+Math.abs(b[1]-3)));if(cs[0])o.b.push({x:cs[0][0],y:cs[0][1],k:['pow','spd','rng'][i]});}
    else if(r===4&&i===2){}
    else if(r>=3){/* desde la ronda 3, todas con casilla especial (así la pieza que llega al santuario permite la ofrenda) */const cs=[];o.p.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));const c=cs[Math.floor(Math.random()*cs.length)];o.b.push({x:c[0],y:c[1],k:['pow','spd','rng'][Math.floor(Math.random()*3)]});}
    for(let k=Math.floor(Math.random()*4);k>0;k--)rotO(o);return o;});
@@ -4286,18 +4299,17 @@ function tutPhase(ph){if(!S||!S.tut)return;const r=S.round,T=S.tut;
  if(ph==='place'){
   if(r===1)hint('tut_welcome','Bienvenido a Towerize',[['Defiende tu <span class="kw" data-kw="g_core" data-src="">núcleo</span>: si un enemigo llega a él, pierdes vida.',()=>tgCell(S.core.x,S.core.y,1.2)()],['Cada ronda eliges una <span class="kw" data-kw="g_piece" data-src="">pieza</span> de abajo para alargar el camino. Puedes girarla antes de colocarla.',tgEl('#ui [data-a="pick"]')]]);
   if(r===2)hint('tut_tiles','Casillas especiales',[['Estas piezas traen una <span class="kw" data-kw="g_tile" data-src="">casilla especial</span>. '+HOV()+' cada una para ver su bonus y elige la que prefieras.',tgEl('#ui [data-a="pick"]')],['Las casillas especiales cuestan oro: <span class="gd">25 🪙</span> cada una (<span class="gd">50 🪙</span> las súper). Esta vez te regalamos <span class="gd">25 🪙</span>.',tgEl('#ui .pcst')]]);
-  if(r===3)hint('tut_kw','Palabras en negrita','Las palabras en negrita y de color, como '+kw('slow','ralentiza','')+', tienen su propia explicación. '+HOV()+' cualquiera de ellas para leerla: así puedes consultar cualquier cosa que no entiendas.',null);
   if(S.offers.some(o=>opens(o.p)>=3))hint('tut_fork','Dividir el camino','Dividir el camino te da más sitios para colocar piezas, pero los enemigos podrán salir por más portales.',tgEl('#ui [data-a="pick"]'));}
  if(ph==='build'){
   if(r===1&&S.hero){const H=HEROES[S.hero.id];tutOffer(S.deck.slice(),'Las torres de '+H.n,'Cada héroe empieza todas las partidas con dos torres propias en su mazo. Estas son las de '+H.n+': ya puedes construirlas. Cada pocas rondas podrás añadir más.',1);}
-  if(r===2){T.lock=lockSquares(S.lastBk);if(T.lock.length)hint('tut_tile2','Construye en la casilla especial','Esta ronda, coloca tu torre en la casilla especial de la pieza nueva. Al acabar la oleada verás la diferencia con la torre de la ronda 1.',tgCell(T.lock[0].x,T.lock[0].y,1.3));else T.lock=null;}
+  if(r===2){/* v307: ya no se obliga ni se avisa; solo se apunta la casilla especial por si construye en ella (entonces sale la comparación al acabar la oleada) */T.spc=lockSquares(S.lastBk);}
   if(r===4){const sp=S.list.find(t=>t.id===T.t2id)||S.list[0];T.freeUp=1;hint('tut_gold','Mejorar torres','Pulsa una torre y luego ⬆ para mejorarla. Esta primera te sale gratis: elige la que quieras.',sp?tgCell(sp.x,sp.y,1.3):null);}
-  if(r===3)tutOffer(['orb','frost'],'Nueva torre','Cada pocas rondas puedes añadir una torre a tu mazo. Elige: <span class="kw" data-kw="tw_orb" data-src="">Orbe arcano</span> (rayo mágico concentrado en un enemigo) o <span class="kw" data-kw="tw_frost" data-src="">Cryomago</span> (daño elemental que ralentiza, para que tus torres disparen más veces).');
+  if(r===3)tutOffer(['orb','frost'],'Nueva torre','Cada pocas rondas puedes añadir una torre a tu mazo. Elige: <span class="kw" data-kw="tw_orb" data-src="">Orbe arcano</span> (rayo mágico concentrado en un enemigo) o <span class="kw" data-kw="tw_frost" data-src="">Cryomago</span> (daño elemental que ralentiza, para que tus torres disparen más veces).<br><small>Las palabras en negrita y de color, como estas, tienen su propia explicación: '+HOV().toLowerCase()+' cualquiera para leerla.</small>');
   if(r===7)tutOffer(['bastion','monk','cata'],'Nueva torre','Elige otra torre para tu mazo. <span class="kw" data-kw="tw_bastion" data-src="">Baluarte</span>: soldados con armadura que bloquean el paso. <span class="kw" data-kw="tw_monk" data-src="">Monasterio</span>: monjes que golpean y curan. <span class="kw" data-kw="tw_cata" data-src="">Catapulta</span>: disparos lentos con daño en área.');
   if(r===10)hint('tut_final','Última oleada','Llega tu primer jefe: <span class="kw" data-kw="en_bob" data-src="">Bob</span>. Aguanta mucho más que cualquier enemigo que hayas visto. Usa todo lo que has aprendido. ¡Suerte!',null);}
  if(ph==='wave'&&r===2){T.d0={};for(const t of S.list)T.d0[t.id]=t.dmgT||0;}
  if(ph==='end'&&r===2)tutCompare();}
-function tutCompare(){const T=S.tut,t2=S.list.find(t=>t.id===T.t2id),t1=S.list.find(t=>t!==t2&&!TW[t.type].uniq&&t.rd===1)||S.list.find(t=>t!==t2&&!TW[t.type].uniq);if(!t1||!t2)return;
+function tutCompare(){const T=S.tut,t2=S.list.find(t=>t.id===T.t2id),t1=S.list.find(t=>t!==t2&&!TW[t.type].uniq&&t.rd===1)||S.list.find(t=>t!==t2&&!TW[t.type].uniq);if(!t1||!t2||t1.type!==t2.type)return;
  const col=t=>{const s=stats(t),bk=S.buff[t.y]&&S.buff[t.y][t.x],B=bk?BF[bkey(bk)]||BF[bk]:null;return{n:tinfo(t).n,tile:B?`<span style="color:${tcol(B.col)}">${B.n}</span>`:'Normal',hit:f(s.dmg),rate:f(s.rate),dmg:fi((t.dmgT||0)-((T.d0||{})[t.id]||0))};};
  const a=col(t1),b=col(t2),row=(l,x,y)=>`<tr><td>${l}</td><td>${x}</td><td>${y}</td></tr>`;
  closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
@@ -4338,7 +4350,8 @@ function heroCard(){let el=$('hinfo');const H=S&&S.hero,on=!!(H&&S.aim==='hero'&
  el.classList.add('on');const p=document.querySelector('#mbr .hpan');const r=p?p.getBoundingClientRect():{top:innerHeight-100,right:innerWidth-8};
  const h=el.offsetHeight;el.style.right=Math.max(8,innerWidth-r.right)+'px';el.style.top=Math.max(8,r.top-h-10)+'px';}
 // ==================== AYUDA, ELECCIÓN INICIAL Y TUTORIAL RÁPIDO ====================
-const tutChosen=()=>{try{return !!localStorage.getItem('rt-tutchoice');}catch(e){return true;}};
+// v307: si eligió el tutorial completo pero no lo acabó (p. ej. recargó a medias), se vuelve a ofrecer
+const tutChosen=()=>{try{const c=localStorage.getItem('rt-tutchoice');return !!c&&!(c==='full'&&!localStorage.getItem('rt-tutdone'));}catch(e){return true;}};
 function renderTutPick(){LB.step='learn';lbOpen('prep');}
 function renderTutPickOld(){$('msetup').innerHTML='<h3>¿Cómo quieres aprender?</h3><small style="margin-bottom:12px">Antes de tu primera partida, elige cómo prefieres conocer el juego. Podrás repetir cualquiera de los dos desde Ayuda.</small>'+
  '<div class="tpk"><button data-a="tutfull"><b>🎓 Tutorial completo</b><small>Unas 10 rondas guiadas: aprende jugando, paso a paso. Al completarlo desbloqueas a Radagast.</small></button><button data-a="tutquick"><b>⚡ Tutorial rápido</b><small>Un repaso de unos 2 minutos con imágenes y a jugar. Las pistas te explicarán el resto sobre la marcha.</small></button></div><div class="tpkb"><button data-a="mback">Volver</button><button data-a="tutskip">⏭ Saltar tutorial</button></div>';$('menu').classList.add('setup');}
@@ -4779,7 +4792,14 @@ function init(){GT.r=0;GT.c=0;
   for(let i=1;i<L;i++){const nb=shuf(D.map(d=>[x+d[0],y+d[1]]).filter(q=>q[0]>=0&&q[1]>=0&&q[0]<BN&&q[1]<BN&&!seen[q[0]+','+q[1]]&&Math.abs(q[0]-A[0])+Math.abs(q[1]-A[1])>=(i>=2?2:1)));if(!nb.length)break;[x,y]=nb[0];seen[x+','+y]=1;w.push(x+','+y);}
   if(w.length>best.length)best=w;}
  for(let k=0;k<CHESTS;k++){const a=k?3*k:2,z=k?Math.min(3*k+2,best.length-1):2;if(a<best.length)S.chests[best[a+Math.floor(Math.random()*(z-a+1))]]=1;}
- if(S.tut){S.rc=99;const k=best.find((v,i)=>i>=5&&!S.chests[v]);if(k)S.evts[k]='shrine';const k2=best.find((v,i)=>i>=8&&!S.chests[v]&&!S.evts[v]);if(k2)S.evts[k2]='merchant';}else placeEvents(c,A);
+ if(S.tut){S.rc=99;
+  /* v307: en el tutorial las cosas se reparten por dos lados (antes todo iba en un único recorrido y solía quedar hacia el mismo sitio):
+     un segundo recorrido que sale del mismo extremo sin pisar el primero lleva el segundo cofre y el santuario; el mercader se queda al final del primero */
+  let w2=null;for(let t=0;t<600&&!w2;t++){const seen={[c+','+c]:1};for(const v of best)seen[v]=1;const w=[];let x=A[0],y=A[1];
+   for(let i=1;i<7;i++){const nb=shuf(D.map(d=>[x+d[0],y+d[1]]).filter(q=>q[0]>=0&&q[1]>=0&&q[0]<BN&&q[1]<BN&&!seen[q[0]+','+q[1]]));if(!nb.length)break;[x,y]=nb[0];seen[x+','+y]=1;w.push(x+','+y);}
+   if(w.length>=5)w2=w;}
+  if(w2){for(const k in S.chests)delete S.chests[k];S.chests[best[2]]=1;S.chests[w2[2]]=1;S.evts[w2[4]]='shrine';const k2=best.find((v,i)=>i>=6&&!S.chests[v]);if(k2)S.evts[k2]='merchant';}
+  else{const k=best.find((v,i)=>i>=5&&!S.chests[v]);if(k)S.evts[k]='shrine';const k2=best.find((v,i)=>i>=8&&!S.chests[v]&&!S.evts[v]);if(k2)S.evts[k2]='merchant';}}else placeEvents(c,A);
  CAM.z=ZINI;camCenter(S.core.x,S.core.y);
  RL.open=false;$('relic').classList.remove('open');renderRelics();nextRound();openHero();
 }
@@ -4972,8 +4992,8 @@ function showFocus(pt){
 }
 function showSolarFocus(bx,by){
  const cells=[];for(let gy=0;gy<NC;gy++)for(let gx=0;gx<NC;gx++)if(S.cc[gy][gx]===1&&!S.occ[(gx*K+1)+','+(gy*K+1)])cells.push({x:gx*K,y:gy*K});if(!cells.length)return false;
- FO.open=true;FO.cells=cells;FO.pt={x:bx*P*K+P*K/2-.5,y:by*P*K+P*K/2-.5};closePrim();camCenter(FO.pt.x,FO.pt.y);const el=$('focus');
- el.innerHTML='<svg class="fsvg"></svg><div class="fmsg tipc"><b>Solares</b> Las casillas marcadas son <b>solares</b>: solo ahí puedes construir torres. Cada pieza trae los suyos.<button class="go" data-a="focusok">Entendido</button></div>';
+ FO.open=true;FO.cells=cells;FO.pt={x:bx*P*K+P*K/2-.5,y:by*P*K+P*K/2-.5};closePrim();camGo(CAM.z,FO.pt.x,FO.pt.y,4);const el=$('focus');
+ el.innerHTML='<svg class="fsvg"></svg><div class="fmsg tipc"><b class="ftit">Solares</b><div>Las casillas marcadas son <span class="kw" data-kw="g_solar" data-src="">solares</span>: solo ahí puedes construir torres. Cada pieza trae los suyos.</div><div class="hbtn"><button class="go" data-a="focusok">Entendido</button></div></div>';
  el.classList.add('open');posFocus();return true;
 }
 function closeFocus(){FO.open=false;FO.cells=null;$('focus').classList.remove('open','cells');const a=FO.after;FO.after=null;if(a)a();}
@@ -5039,7 +5059,7 @@ function build(fx,fy){if(placeLock()){plMsg();return;}
  if(tutLockBlock(x,y))return;
  const cost0=S.half?Math.ceil(t.cost/2):t.cost;if(S.gold<cost0){S.msg='Oro insuficiente.';ui();return;}
  const tw={id:++S.tid,type:S.tsel,lvl:1,x,y,cells:[[x,y]],sq:sqCells(q),inv:t.cost,bph:phKey(),undo:cost0,spec:null,ab:{},acd:{},cd:0,tgt:null,mode:S.dtg[S.tsel]||'core'};
- if(S.tut&&S.tut.lock){if(S.tut.lock.some(l=>l.x===x&&l.y===y))S.tut.t2id=tw.id;S.tut.lock=null;S.tut.lockAsk=null;}
+ if(S.tut&&S.tut.spc&&S.round===2){if(S.tut.spc.some(l=>l.x===x&&l.y===y))S.tut.t2id=tw.id;}
  see('tw',tw.type);if(t.dt==='elem')hint('elem','Daño elemental','Esta torre hace <b>daño elemental</b>: ignora tanto la armadura como la resistencia mágica.',tgCell(x,y,1.4));if(t.unit)hint('units','Torres de unidades',[['Esta torre no dispara: manda <b>unidades</b> a pelear y bloquear.',tgCell(x,y,1.4)],['Pulsa la torre y luego 🚩 para mover su <b>bandera</b>.',()=>tw.flag?tgCell(tw.flag.x,tw.flag.y,1.2)():tgCell(x,y,1.4)()]]);if(t.unit)mkSoldiers(tw);S.list.push(tw);for(const[a,b]of tw.sq)S.occ[a+','+b]=tw;
  S.gold-=cost0;S.st.spent+=cost0;if(!(S.built=S.built||[]).includes(tw.type))S.built.push(tw.type);if(!TW[tw.type].uniq)(S.bcnt=S.bcnt||{})[tw.type]=(S.bcnt[tw.type]||0)+1;if(S.half&&t.cost>0){S.half=0;tw.inv=cost0;}tw.rd=S.round;S.st.all.push(tw);S.msg='';S.selT=null;if(TOUCH){M.has=false;HV.key=null;HV.t=0;}ui();
 }
@@ -5114,7 +5134,12 @@ function sell(t){
 const SOFF=[0,1,2].map(i=>{const a=-Math.PI/2+i*2*Math.PI/3;return[Math.cos(a)*TRI,Math.sin(a)*TRI];});
 const SOFF4=[[-TRI*.75,-TRI*.75],[TRI*.75,-TRI*.75],[TRI*.75,TRI*.75],[-TRI*.75,TRI*.75]];
 const PIGOFF={brick:[0,-.9],wood:[.9,.6],straw:[-.9,.6]};
-const slotOf=(t,i)=>{const b=t.flag||{x:t.x,y:t.y};if(t.pigU&&PIGOFF[t.pigU]){const o=PIGOFF[t.pigU];return{x:b.x+o[0],y:b.y+o[1]};}if(t.hero||(t.sd&&t.sd.length===1))return{x:b.x,y:b.y};if(t.sd&&t.sd.length>4){/* enjambre: en corro */const n=t.sd.length,a=-Math.PI/2+i*2*Math.PI/n,R=TRI*(n>6?1.4:1.15);return{x:b.x+Math.cos(a)*R,y:b.y+Math.sin(a)*R};}const o=t.sd&&t.sd.length===4?SOFF4[i]:SOFF[i]||[0,0];return{x:b.x+o[0],y:b.y+o[1]};};
+const slotOf=(t,i)=>{const b=t.flag||{x:t.x,y:t.y};if(t.pigU&&PIGOFF[t.pigU]){const o=PIGOFF[t.pigU];return{x:b.x+o[0],y:b.y+o[1]};}if(t.hero||(t.sd&&t.sd.length===1))return{x:b.x,y:b.y};if(t.sd&&t.sd.length>4){/* enjambre: en corro */const n=t.sd.length,a=-Math.PI/2+i*2*Math.PI/n,R=TRI*(n>6?1.4:1.15);return{x:b.x+Math.cos(a)*R,y:b.y+Math.sin(a)*R};}if(t.sd&&t.sd.length===2){/* v307: dos unidades, una al lado de la otra cubriendo el ancho del camino (en las esquinas, en diagonal) */
+  const cx=Math.round(b.x),cy=Math.round(b.y),C=S.cells,pa=(x,y)=>inb(x,y)&&C[y][x]===2,L=pa(cx-1,cy),R=pa(cx+1,cy),U=pa(cx,cy-1),D=pa(cx,cy+1),h=L||R,v=U||D,d=TRI*.8,s=i?1:-1;
+  if(h&&!v)return{x:b.x,y:b.y+s*d};if(v&&!h)return{x:b.x+s*d,y:b.y};
+  if(h&&v&&!(L&&R)&&!(U&&D)){const sx=R?1:-1,sy=D?1:-1;return{x:b.x+s*sx*d*.7,y:b.y+s*sy*d*.7};}
+  return{x:b.x+s*d,y:b.y};}
+ const o=t.sd&&t.sd.length===4?SOFF4[i]:SOFF[i]||[0,0];return{x:b.x+o[0],y:b.y+o[1]};};
 const sdHp=t=>TW[t.type].unit.hp*lvMods(t.type,t.lvl,t.spec).hp*(typeof tileV==='function'?tileV(t,'uhp',1):1),uapOf=t=>(t.uov?t.uov.ap:t.hero?hsAt(t.hero.id,t.hero.lvl).ap:TW[t.type].unit.ap+(tinfo(t).uap||0)+(t.xap||0))+RELARM();
 function mkSoldiers(t){const U=TW[t.type].unit;t.sd=[];for(let i=0;i<U.n;i++)t.sd.push({i,x:t.x,y:t.y,hp:sdHp(t),max:sdHp(t),en:null,cd:0,rt:0,tw:t,lock:true,fight:false});}
 function autoFlag(t){const R2=stats(t).range,r=Math.ceil(R2);let b=null,bd=1e9;
@@ -6705,7 +6730,7 @@ cv.addEventListener('click',e=>{
  if(S.aim==='harpoon'){if(inb(c.x,c.y))castHarpoon(c);return;}
  if(S.aim==='faroz'){const f=S.list.find(o=>o.id===S.flzSel.id);if(f&&inb(c.x,c.y)){faroZones(f);f.lz[S.flzSel.i]={x:c.x,y:c.y};f.lzcd=f.lzcd||[0,0];f.lzcd[S.flzSel.i]=S.phase==='wave'?FCD[(f.lvl||1)-1]:0;try{sfx('ui');}catch(er){}}S.aim=null;S.msg='';renderRelics();ui();return;}
  if(S.aim==='pigs'){if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2){for(const t of pigHouses())if(t&&t.pigT)setFlag(t,c);S.aim=null;S.msg='';try{sfx('ui');}catch(e){}}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
- if(S.aim==='hero'){const H=S.hero;if(H&&heroAt(c)){S.aim=null;S.msg='';renderRelics();ui();return;}if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);if(S.st)S.st.hmv=1;S.aim=null;S.msg='';heroSay(fr,c);}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
+ if(S.aim==='hero'){const H=S.hero;/* v307: solo cancela si pulsas su propia casilla; antes un radio de 1,35 se comía la casilla de al lado y no dejaba moverlo un paso */if(H&&H.s.hp>0&&c&&c.x===Math.round(H.s.x)&&c.y===Math.round(H.s.y)){S.aim=null;S.msg='';renderRelics();ui();return;}if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);if(S.st)S.st.hmv=1;S.aim=null;S.msg='';heroSay(fr,c);}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(!S.aim&&heroAt(c)&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')){bmClose();S.selT=null;try{tmClose();}catch(er){}clickA('[data-a="hero"]');return;}
  if(S.aim==='barricade'){const bp=barrPick(c.x,c.y);if(bp){S.barr.push({t:5,...bp});const st=S.rs.barricade;setCD('barricade');st.t=5;S.aim=null;S.msg='';}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(S.aim==='uplace'){uPlaceAt(c);return;}
@@ -6873,7 +6898,7 @@ function act(e){
  else if(a==='mecha'){if(!RL.open)startMecha();}
  else if(a==='hult'){if(S.hero&&!RL.open)startHab('u');}
  else if(a==='pigs'){if(RL.open||!pigsOn())return;if(S.aim==='pigs'){S.aim=null;S.msg='';}else{closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino a la que mover a los cerditos (Esc o el mismo botón para cancelar).';}renderRelics();ui();}
- else if(a==='hero'){if(!S.hero||RL.open)return;if(S.aim==='hero'){S.aim=null;S.msg='';}else{closePrim();S.aim='hero';S.aimT=null;S.msg='Elige una casilla del camino donde colocar a '+S.hero.def.n+' (clic; Esc o el mismo icono para cancelar).';}renderRelics();ui();}
+ else if(a==='hero'){if(!S.hero||RL.open)return;if(S.aim==='hero'){S.aim=null;S.msg='';}else{closePrim();S.aim='hero';S.aimT=null;/* v307: en el tutorial, el héroe se explica en cuanto lo tocas */if(S.tut&&!S.tut.heroT){S.tut.heroT=1;hint('hero','Tu héroe',HEROTXT2,null);}S.msg='Elige una casilla del camino donde colocar a '+S.hero.def.n+' (clic; Esc o el mismo icono para cancelar).';}renderRelics();ui();}
  else if(a==='pickhero'){if(b.dataset.id)chooseHero(b.dataset.id);}
  else if(a==='hdet'){RL.hdet=!RL.hdet;RL.dman={};RL.rman={};const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
  else if(a==='hsel'){if(RL.hsel!==b.dataset.id&&!RL.hdet)RL.dman={};RL.rman={};RL.hsel=b.dataset.id;const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
@@ -6909,7 +6934,9 @@ function act(e){
  else if(a==='achm'){APAN.open=false;apanTick();lbOpen('lg');}
  else if(a==='apan'){APAN.open=!APAN.open;apanTick();}
  else if(a==='apin'){const id=b.dataset.id;if(PINS.includes(id))PINS=PINS.filter(x=>x!==id);else if(PINS.length>=3){toast('📌 Ya tienes 3 logros fijados: quita uno para fijar este.');return;}else PINS.push(id);savePins();if(LB.open&&!LB.cover){const sc=$('comp').scrollTop;lbRender();$('comp').scrollTop=sc;}else if(RL.open&&RL.hpick&&typeof renderHeroPick==='function')renderHeroPick();apanTick(1);}
- else if(a==='tutfull'){try{localStorage.setItem('rt-tutchoice','full');}catch(e){}closeQuick();startTut();}
+ else if((a==='tutfull'||a==='tutquick')&&LB.open&&LB.step==='learn'&&LB.tsel!==a){LB.tsel=a;lbRender();}/* v307: primer toque elige; el segundo (o «Empezar») confirma */
+ else if(a==='tutgo'){const t=LB.tsel;LB.tsel=null;if(t){const q=document.createElement('button');q.dataset.a=t;q.style.display='none';document.body.appendChild(q);LB.step=null;q.click();q.remove();}}
+ else if(a==='tutfull'){LB.tsel=null;try{localStorage.setItem('rt-tutchoice','full');}catch(e){}closeQuick();startTut();}
  else if(a==='tutquick'){const first=!tutChosen();try{localStorage.setItem('rt-tutchoice','quick');}catch(e){}openQuick(first?'setup':'help');}
  else if(a==='qprev'){if(QS.i>0){QS.i--;renderQuick();}}
  else if(a==='qnext'){if(QS.i<QSL.length-1){QS.i++;renderQuick();}}
@@ -7046,9 +7073,9 @@ const LBSTEPS=[['era','Era','🌍'],['rounds','Duración','⏳']];
 function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
  const toMenu=`<button class="lbbk" data-a="lbcover">‹ Menú</button>`;
  if(st==='learn')return {marks:null,key:'learn',
-  left:`<h3>¿Cómo quieres aprender?</h3><div class="bksub">Antes de tu primera partida</div><p>Elige cómo prefieres conocer el juego. Podrás repetir cualquiera de los dos desde Ayuda.</p><div class="lbtut"><button class="lbbig" data-a="tutfull"><b>🎓 Tutorial completo</b><small>Unas 10 rondas guiadas: aprende jugando, paso a paso. Al completarlo desbloqueas a Radagast.</small></button><button class="lbbig" data-a="tutquick"><b>⚡ Tutorial rápido</b><small>Un repaso de unos 2 minutos con imágenes animadas. Las pistas te explican el resto sobre la marcha.</small></button></div>`,
+  left:`<h3>¿Cómo quieres aprender?</h3><div class="bksub">Antes de tu primera partida</div><p>Elige cómo prefieres conocer el juego. Podrás repetir cualquiera de los dos desde Ayuda.</p><div class="lbtut"><button class="lbbig${LB.tsel==='tutfull'?' on':''}" data-a="tutfull"><b>🎓 Tutorial completo</b><small>Unas 10 rondas guiadas: aprende jugando, paso a paso. Al completarlo desbloqueas a Radagast.</small></button><button class="lbbig${LB.tsel==='tutquick'?' on':''}" data-a="tutquick"><b>⚡ Tutorial rápido</b><small>Un repaso de unos 2 minutos con imágenes animadas. Las pistas te explican el resto sobre la marcha.</small></button></div>`,
   right:`<div class="lbdet"><span class="lbdic">🎓</span><h4>Aprender jugando</h4><p>Towerize se aprende mejor jugando. Si ya conoces el género puedes saltar el tutorial: las pistas quedarán desactivadas y podrás activarlas cuando quieras desde Ayuda.</p></div>`,
-  footL:toMenu,footR:`<button class="lbbk" data-a="tutskip">⏭ Saltar tutorial</button>`};
+  footL:toMenu,footR:`<button class="lbbk" data-a="tutskip">⏭ Saltar tutorial</button>${LB.tsel?`<button class="lbbk lbgo" data-a="tutgo">${LB.tsel==='tutfull'?'Empezar el tutorial':'Ver el repaso'} ›</button>`:''}`};
  if(st==='skip')return {marks:null,key:'skip',left:`<h3>Tutorial saltado</h3><div class="bksub">Las pistas están desactivadas</div><p>Si quieres aprender el juego, puedes ver cualquiera de los dos tutoriales o activar las pistas cuando quieras desde <b>Ayuda</b>.</p>`,
   right:`<div class="lbdet"><span class="lbdic">⏭</span><h4>Listo</h4><p>Vamos a preparar tu primera partida.</p></div>`,footL:toMenu,footR:`<button class="gbtn" data-a="skipok">Continuar ›</button>`};
  if(st==='era'){const [ln]=ERALINE(),done=STO.p>=3,eras=eraList();if(!eras.includes(ERA))ERA=1;
@@ -7227,10 +7254,11 @@ const realG=()=>S&&S.st&&!S.pvE&&!S.pvH&&S.portals&&(S.phase==='place'||S.phase=
 // lim: pistas del mapa en la fase de construcción, como mucho 2 por ronda para no saturar (las demás saldrán en rondas siguientes)
 const TSKIP={tile:1,fork:1,speed:1,retry:1,bfcost:1};
 // pistas prioritarias: van las primeras de la cola y no cuentan para el límite de pistas seguidas (deben salir con lo primero que las provoca)
-const HPRIO={units:1};
-function hint(id,title,txt,tg,lim){if(S&&S.tut&&(TSKIP[id]||(id==='chest'&&S.round<3)||(id==='hab'&&S.round<2)||(id==='hero'&&S.phase!=='wave')||(id==='portal'&&S.round===1&&S.phase!=='wave')))return;if((!OPT.hints&&!(S&&S.tut))||(S&&S.tut?TUTHS[id]:HSEEN[id])||HQ.q.some(h=>h.id===id)||(HQ.cur&&HQ.cur.id===id)||!realG())return;if(lim){if(HQ.limR!==S.round){HQ.limR=S.round;HQ.limN=0;}if(HQ.limN>=2)return;HQ.limN++;}{const it=Array.isArray(txt)?{id,title,steps:txt,si:0,txt:txt[0][0],tg:txt[0][1],ph:S.phase}:{id,title,txt,tg,ph:S.phase};if(HPRIO[id])HQ.q.unshift(it);else HQ.q.push(it);}}
+const HPRIO={units:1,hero:1};
+function hint(id,title,txt,tg,lim){if(S&&S.tut&&(TSKIP[id]||(id==='chest'&&S.round<3)||(id==='hab'&&S.round<2)||(id==='hero'&&S.phase!=='wave'&&!S.tut.heroT)||(id==='evtile'&&S.round<2)||(id==='portal'&&S.round===1&&S.phase!=='wave')))return;if((!OPT.hints&&!(S&&S.tut))||(S&&S.tut?TUTHS[id]:HSEEN[id])||HQ.q.some(h=>h.id===id)||(HQ.cur&&HQ.cur.id===id)||!realG())return;if(lim){if(HQ.limR!==S.round){HQ.limR=S.round;HQ.limN=0;}if(HQ.limN>=2)return;HQ.limN++;}{const it=Array.isArray(txt)?{id,title,steps:txt,si:0,txt:txt[0][0],tg:txt[0][1],ph:S.phase}:{id,title,txt,tg,ph:S.phase};if(HPRIO[id])HQ.q.unshift(it);else HQ.q.push(it);}}
 const hintL=(id,t,x,g)=>hint(id,t,x,g,1);
 const HOV=()=>TOUCH?'Toca':'Pasa el ratón por',CANC=()=>TOUCH?' Pulsa el mismo botón para cancelar.':' Esc para cancelar.';
+const HEROTXT2='Este es tu héroe. Con él seleccionado, elige una casilla del camino para moverlo; puedes hacerlo también durante la oleada. Su <b>habilidad</b> está al lado de su retrato.';
 const HEROTXT='Pulsa el retrato de tu héroe y elige una casilla del camino para moverlo, también durante la oleada.';
 const hintSeen=id=>{if(S&&S.tut)TUTHS[id]=1;HSEEN[id]=1;try{localStorage.setItem('rt-hints',JSON.stringify(HSEEN));}catch(e){}};
 // objetivos: devuelven {x,y,r} en píxeles de la ventana, o null
@@ -7239,8 +7267,8 @@ const tgCard=sel=>()=>{const e=document.querySelector(sel);return e?tgEl(e.close
 const tgEnemy=e=>()=>e.hp>0?tgCell(e.x,e.y,1.3)():null;
 const tgEl=sel=>()=>{const el=typeof sel==='string'?document.querySelector(sel):sel;if(!el||!el.offsetParent)return null;const b=el.getBoundingClientRect();return{x:b.left+b.width/2,y:b.top+b.height/2,r:Math.max(26,Math.max(b.width,b.height)/2+10)};};
 function hintShow(h){HQ.cur=h;if(S&&S.tut&&S.phase==='place')setTimeout(()=>{try{ui();}catch(e){}},0);try{if(PR.open)closePrim();}catch(e){}/* que la ficha de un portal no tape lo que señala la pista */let el=$('hint');if(!el){el=document.createElement('div');el.id='hint';document.body.appendChild(el);el.addEventListener('click',e=>{if(e.target.closest('[data-a="hintok"]')){const c=HQ.cur;if(c&&c.steps&&c.si<c.steps.length-1){c.si++;c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}else hintClose();}});}
- const ns=h.steps&&h.si<h.steps.length-1;const wt=h.steps&&h.steps[h.si][2];el.innerHTML=`<div class="hring"></div><div class="hmsg tipc"><b>${h.title}</b>${h.steps?`<small class="hstep">${h.si+1}/${h.steps.length}</small>`:''}<div style="margin:4px 0 ${wt?2:8}px">${h.txt}</div>${wt?'':`<button class="go" data-a="hintok">${ns?'Siguiente ›':'Entendido'}</button>`}</div>`;el.className='open'+(S&&S.phase==='wave'?' slow':'')+(wt?'':' block')+(h.menu?' dim':'');
- if(h.cam){if(h.cam.fit){const zf=VH/(BS*1.6*P*K*CS),zw=VIEW/(BS*1.6*P*K*CS);CAM.z=Math.max(ZMIN,Math.min(CAM.z,zf,zw));}camCenter(h.cam.x,h.cam.y);}}
+ const ns=h.steps&&h.si<h.steps.length-1;const wt=h.steps&&h.steps[h.si][2];el.innerHTML=`<div class="hring"></div><div class="hmsg tipc"><b>${h.title}</b>${h.steps?`<small class="hstep">${h.si+1}/${h.steps.length}</small>`:''}<div style="margin:4px 0 ${wt?2:8}px">${h.txt}</div>${wt?'':`<div class="hbtn"><button class="go" data-a="hintok">${ns?'Siguiente ›':'Entendido'}</button></div>`}</div>`;el.className='open'+(S&&S.phase==='wave'?' slow':'')+(wt?'':' block')+(h.menu?' dim':'');
+ /* v307: la cámara nunca salta: viaja a la vista y la pista espera a que llegue */if(h.cam&&!h.camDone){h.camDone=1;let z=CAM.z;if(h.cam.fit){const zf=VH/(BS*1.6*P*K*CS),zw=VIEW/(BS*1.6*P*K*CS);z=Math.max(ZMIN,Math.min(CAM.z,zf,zw));}camGo(z,h.cam.x,h.cam.y,3.2);}}
 // ¿la pista abierta bloquea el resto del juego? Sí, salvo las que piden hacer algo para continuar («Pulsa este botón…»)
 function hintBlocks(){const c=HQ.cur;if(!c)return false;if(c.steps&&c.steps[c.si]&&c.steps[c.si][2])return false;const el=$('hint');return !!(el&&el.classList.contains('open')&&!el.classList.contains('hid'));}
 // teclado con una pista abierta: Intro/Espacio = Entendido; Esc sigue abriendo la pausa; nada más
@@ -7262,7 +7290,7 @@ function hintTick(rdt){
  const busy=RL.open||LB.open||FO.open||!realG()||(S&&S.revAt>0)||(($('comp')||{}).classList||{contains:()=>0}).contains('lbout');
  if(!HQ.cur&&!busy&&HQ.q.length&&hintPace())hintShow(HQ.q.shift());
  if(HQ.cur&&!realG())hintClose();
- const el=$('hint');if(el&&HQ.cur){el.classList.toggle('hid',busy);el.classList.toggle('block',hintBlocks());el.classList.toggle('dim',HQ.f<.35||S.phase!=='wave');}
+ const el=$('hint');if(el&&HQ.cur){el.classList.toggle('hid',busy||!!(HQ.cur.cam&&CAMA.on&&CAMA.cx!=null));el.classList.toggle('block',hintBlocks());el.classList.toggle('dim',HQ.f<.35||S.phase!=='wave');}
  const tgt=HQ.cur&&S.phase==='wave'?0:1;HQ.f+=(tgt-HQ.f)*Math.min(1,rdt/.18);if(Math.abs(HQ.f-tgt)<.01)HQ.f=tgt;
  {const c=HQ.cur,w=c&&c.steps&&c.steps[c.si][2];if(w){const r=w();if(r===2||(r===1&&c.si>=c.steps.length-1))hintClose();else if(r===1||r===-1){c.si=Math.max(0,c.si+r);c.txt=c.steps[c.si][0];c.tg=c.steps[c.si][1];hintShow(c);}}}
  hintPos();if(realG())hintScan();}
@@ -7272,7 +7300,7 @@ function hintScan(){
   const p=S.portals[0];if(p)hintL('portal','Portales','Por aquí saldrán los enemigos. '+HOV()+' el portal para ver qué viene.',tgCell(p.x,p.y,1.4));
   if(S.portals.length>1){const q=S.portals[1];hintL('multi','Varios portales','Cuantos más extremos tenga el camino, más portales pueden abrirse a la vez. Reparte tus defensas o protege el tramo que comparten.',tgCell(q.x,q.y,1.4));}
   {let fs=null;for(let gy=0;gy<NC&&!fs;gy++)for(let gx=0;gx<NC&&!fs;gx++)if(S.cc[gy][gx]===1&&!S.occ[(gx*K+1)+','+(gy*K+1)])fs={x:gx*K+1,y:gy*K+1};
-  hintL('build','Construir torres','Pulsa un <span class="kw" data-kw="g_solar" data-src="">solar</span> libre: alrededor saldrán las torres de tu mazo. Toca una para ver su tarjeta y vuelve a tocarla para construirla. Disparan solas a lo que tengan a su alcance.',fs?tgCell(fs.x,fs.y,1.4):null);}
+  hintL('build','Construir torres','Al pulsar un <span class="kw" data-kw="g_solar" data-src="">solar</span> libre aparecerán todas las torres disponibles en tu mazo. <b>Toca</b> una para ver su <b>tarjeta</b> y vuelve a tocarla para <b>construirla</b>. Las torres hacen su función por sí solas.',fs?tgCell(fs.x,fs.y,1.4):null);}
   for(const k in S.chests)if(S.chests[k]){const[bx,by]=k.split(',').map(Number);hintL('chest','Cofres','Esto es un cofre. Si tu camino llega hasta él, podrás abrirlo y elegir una reliquia para esta partida.',tgCell((bx*P+3)*K+1,(by*P+3)*K+1,1.6));{const h=HQ.q.find(h=>h.id==='chest');if(h)h.cam={x:(bx*P+3)*K+1,y:(by*P+3)*K+1,fit:1};}break;}
   for(const k in S.evts)if(S.evts[k]){const[bx,by]=k.split(',').map(Number);hintL('evtile','Casillas de evento','Esto es una casilla de evento. Si tu camino llega hasta ella, pasará algo… y tendrás que tomar una decisión.',tgCell((bx*P+3)*K+1,(by*P+3)*K+1,1.6));{const h=HQ.q.find(h=>h.id==='evtile');if(h)h.cam={x:(bx*P+3)*K+1,y:(by*P+3)*K+1,fit:1};}break;}
   if(S.ends.filter(e=>!e.bd).length>1){const e0=S.ends.find(e=>!e.bd),p0=S.portals&&S.portals[0];hintL('fork','Bifurcaciones',[['Tu camino tiene varios extremos libres: más sitios donde colocar piezas.',e0?tgCell(e0.x,e0.y,1.4):null],['Pero también más <span class="kw" data-kw="g_portal" data-src="">portales</span> por los que pueden salir enemigos.',p0?tgCell(p0.x,p0.y,1.4):null]]);}
@@ -7280,8 +7308,8 @@ function hintScan(){
    if(bt)hintL('tile','Casillas especiales','La torre que pongas sobre una <span class="kw" data-kw="g_tile" data-src="">casilla de color</span> gana su bonus. '+HOV()+' la casilla para verlo.',tgCell(bt.x,bt.y,1.2));}
  }
  if(S.tut&&S.phase==='place'&&S.round>=3)for(const k in S.chests)if(S.chests[k]){const[bx,by]=k.split(',').map(Number);hint('chest','Cofres','Esto es un cofre. Si tu camino llega hasta él, podrás abrirlo y elegir una reliquia para esta partida.',tgCell((bx*P+3)*K+1,(by*P+3)*K+1,1.6));{const h=HQ.q.find(h=>h.id==='chest');if(h)h.cam={x:(bx*P+3)*K+1,y:(by*P+3)*K+1,fit:1};}break;}
- if(S.tut&&S.phase==='wave'){const p=S.portals[0];if(S.round===1&&p)hint('portal','Portales','Por aquí saldrán los enemigos. '+HOV()+' el portal para ver qué viene.',tgCell(p.x,p.y,1.4));if(S.hero)hint('hero','Tu héroe',HEROTXT,tgEl('#mbr .hpport'));}
- if(S.phase==='wave'&&S.hero&&S.hero.s.hp>0&&!(S.hero.bcd>0))hint('hab','Habilidad del héroe',[['Pulsa este botón para usar la <span class="kw" data-kw="g_hab" data-src="">habilidad</span> de tu héroe.<br><small>Pruébala para continuar.</small>',tgEl('#mbr [data-a="hab"]'),()=>S.aim==='habb'?1:S.hero&&S.hero.bcd>0?2:0],['Ahora elige un punto del camino. Cuando se recargue, podrás volver a usarla.<br><small>Elige el punto para continuar.</small>',()=>S.hero?tgCell(S.hero.s.x,S.hero.s.y,1.6)():null,()=>S.hero&&S.hero.bcd>0?1:S.aim!=='habb'?-1:0]]);
+ if(S.tut&&S.phase==='wave'){const p=S.portals[0];if(S.round===1&&p)hint('portal','Portales','Por aquí saldrán los enemigos. '+HOV()+' el portal para ver qué viene.',tgCell(p.x,p.y,1.4));if(S.hero&&(S.wt||0)>=5)hint('hero','Tu héroe',HEROTXT,tgEl('#mbr .hpport'));}
+ if(S.phase==='wave'&&S.hero&&S.hero.s.hp>0&&!(S.hero.bcd>0))hint('hab','Habilidad del héroe',[['Pulsa este botón para usar la <span class="kw" data-kw="g_hab" data-src="">habilidad</span> de tu héroe.<br><small>Pruébala para continuar.</small>',tgEl('#mbr [data-a="hab"]'),()=>S.aim==='habb'?1:S.hero&&S.hero.bcd>0?2:0],['Ahora elige cualquier punto del camino. Cuando se recargue, podrás volver a usarla.<br><small>Elige el punto para continuar.</small>',null,()=>S.hero&&S.hero.bcd>0?1:S.aim!=='habb'?-1:0]]);
  if(S.phase==='wave'){
   hint('speed','Velocidad',[['En pausa puedes construir, mejorar y mover a tu héroe con calma.',tgEl('#mbl [data-a="spd"][data-v="0"]')],['Con estos cambias la velocidad del juego.',tgEl('#mbl')]]);
   for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];
@@ -7889,9 +7917,9 @@ const CAMA={on:false,tz:1,ax:0,ay:0,wx:0,wy:0,cx:null,cy:null};
 // zoom suave hacia un punto de la pantalla (el punto del mundo bajo el cursor se queda quieto)
 function zoomSmooth(f,px,py){const base=CAMA.on&&CAMA.cx==null?CAMA.tz:CAM.z,a=sc();CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,base*f));CAMA.ax=px;CAMA.ay=py;CAMA.wx=px/a+CAM.x;CAMA.wy=py/a+CAM.y;CAMA.cx=null;CAMA.cy=null;}
 // viaje suave a un zoom y un centro (en casillas del mundo)
-function camGo(z,x,y){CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,z));CAMA.cx=x;CAMA.cy=y;}
+function camGo(z,x,y,sp){CAMA.sp=sp||11;CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,z));CAMA.cx=x;CAMA.cy=y;}
 function camStop(){CAMA.on=false;}
-function camTick(dt){if(!CAMA.on)return;const k=1-Math.exp(-dt*11);CAM.z+=(CAMA.tz-CAM.z)*k;
+function camTick(dt){if(!CAMA.on)return;const k=1-Math.exp(-dt*(CAMA.cx!=null?(CAMA.sp||11):11));/* v307: los encuadres automáticos van más suaves que el zoom de la rueda */CAM.z+=(CAMA.tz-CAM.z)*k;
  if(CAMA.cx!=null){const w=VIEW/sc(),h=VH/sc(),tx=CAMA.cx*CS+CS/2-w/2,ty=CAMA.cy*CS+CS/2-h/2;CAM.x+=(tx-CAM.x)*k;CAM.y+=(ty-CAM.y)*k;clampCam();
   if(Math.abs(CAMA.tz-CAM.z)<CAM.z*.002&&Math.abs(tx-CAM.x)<.5&&Math.abs(ty-CAM.y)<.5){CAM.z=CAMA.tz;camCenter(CAMA.cx,CAMA.cy);CAMA.on=false;}}
  else{const b=sc();CAM.x=CAMA.wx-CAMA.ax/b;CAM.y=CAMA.wy-CAMA.ay/b;clampCam();if(Math.abs(CAMA.tz-CAM.z)<CAM.z*.002){CAM.z=CAMA.tz;const c=sc();CAM.x=CAMA.wx-CAMA.ax/c;CAM.y=CAMA.wy-CAMA.ay/c;clampCam();CAMA.on=false;}}}
@@ -7901,7 +7929,7 @@ function camFitBox(){if(!S||!S.blocks)return null;let x0=1e9,y0=1e9,x1=-1e9,y1=-
 const CAMFITMAX=3.2;
 function camFit(instant){const b=camFitBox();if(!b)return;const PK=P*K,wc=(b.x1-b.x0+1)*PK+K*2,hc=(b.y1-b.y0+1)*PK+K*2;
  const z=Math.max(ZMIN,Math.min(ZMAX,CAMFITMAX,Math.min(VIEW/(wc*CS*BS),VH/(hc*CS*BS))*.92)),cx=(b.x0+b.x1+1)/2*PK-.5,cy=(b.y0+b.y1+1)/2*PK-.5;
- if(instant){CAMA.on=false;CAM.z=z;camCenter(cx,cy);}else camGo(z,cx,cy);}
+ if(instant){CAMA.on=false;CAM.z=z;camCenter(cx,cy);}else camGo(z,cx,cy,5);}
 // el encuadre automático se repite al colocar pieza y al cambiar de fase (colocar ↔ construir); un zoom manual lo respeta hasta el siguiente cambio
 let CAMPH=null,CAMNB=0;
 function camAuto(){if(!S||PREVIEWING||S.pvE||S.pvH||!S.blocks)return;const nb=Object.keys(S.blocks).length,ph=S.phase==='place'?'place':'other';

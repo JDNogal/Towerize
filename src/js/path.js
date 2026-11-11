@@ -172,8 +172,8 @@ function showFocus(pt){
 }
 function showSolarFocus(bx,by){
  const cells=[];for(let gy=0;gy<NC;gy++)for(let gx=0;gx<NC;gx++)if(S.cc[gy][gx]===1&&!S.occ[(gx*K+1)+','+(gy*K+1)])cells.push({x:gx*K,y:gy*K});if(!cells.length)return false;
- FO.open=true;FO.cells=cells;FO.pt={x:bx*P*K+P*K/2-.5,y:by*P*K+P*K/2-.5};closePrim();camCenter(FO.pt.x,FO.pt.y);const el=$('focus');
- el.innerHTML='<svg class="fsvg"></svg><div class="fmsg tipc"><b>Solares</b> Las casillas marcadas son <b>solares</b>: solo ahí puedes construir torres. Cada pieza trae los suyos.<button class="go" data-a="focusok">Entendido</button></div>';
+ FO.open=true;FO.cells=cells;FO.pt={x:bx*P*K+P*K/2-.5,y:by*P*K+P*K/2-.5};closePrim();camGo(CAM.z,FO.pt.x,FO.pt.y,4);const el=$('focus');
+ el.innerHTML='<svg class="fsvg"></svg><div class="fmsg tipc"><b class="ftit">Solares</b><div>Las casillas marcadas son <span class="kw" data-kw="g_solar" data-src="">solares</span>: solo ahí puedes construir torres. Cada pieza trae los suyos.</div><div class="hbtn"><button class="go" data-a="focusok">Entendido</button></div></div>';
  el.classList.add('open');posFocus();return true;
 }
 function closeFocus(){FO.open=false;FO.cells=null;$('focus').classList.remove('open','cells');const a=FO.after;FO.after=null;if(a)a();}

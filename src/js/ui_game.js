@@ -165,7 +165,7 @@ cv.addEventListener('click',e=>{
  if(S.aim==='harpoon'){if(inb(c.x,c.y))castHarpoon(c);return;}
  if(S.aim==='faroz'){const f=S.list.find(o=>o.id===S.flzSel.id);if(f&&inb(c.x,c.y)){faroZones(f);f.lz[S.flzSel.i]={x:c.x,y:c.y};f.lzcd=f.lzcd||[0,0];f.lzcd[S.flzSel.i]=S.phase==='wave'?FCD[(f.lvl||1)-1]:0;try{sfx('ui');}catch(er){}}S.aim=null;S.msg='';renderRelics();ui();return;}
  if(S.aim==='pigs'){if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2){for(const t of pigHouses())if(t&&t.pigT)setFlag(t,c);S.aim=null;S.msg='';try{sfx('ui');}catch(e){}}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
- if(S.aim==='hero'){const H=S.hero;if(H&&heroAt(c)){S.aim=null;S.msg='';renderRelics();ui();return;}if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);if(S.st)S.st.hmv=1;S.aim=null;S.msg='';heroSay(fr,c);}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
+ if(S.aim==='hero'){const H=S.hero;/* v307: solo cancela si pulsas su propia casilla; antes un radio de 1,35 se comía la casilla de al lado y no dejaba moverlo un paso */if(H&&H.s.hp>0&&c&&c.x===Math.round(H.s.x)&&c.y===Math.round(H.s.y)){S.aim=null;S.msg='';renderRelics();ui();return;}if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);if(S.st)S.st.hmv=1;S.aim=null;S.msg='';heroSay(fr,c);}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(!S.aim&&heroAt(c)&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')){bmClose();S.selT=null;try{tmClose();}catch(er){}clickA('[data-a="hero"]');return;}
  if(S.aim==='barricade'){const bp=barrPick(c.x,c.y);if(bp){S.barr.push({t:5,...bp});const st=S.rs.barricade;setCD('barricade');st.t=5;S.aim=null;S.msg='';}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(S.aim==='uplace'){uPlaceAt(c);return;}
@@ -333,7 +333,7 @@ function act(e){
  else if(a==='mecha'){if(!RL.open)startMecha();}
  else if(a==='hult'){if(S.hero&&!RL.open)startHab('u');}
  else if(a==='pigs'){if(RL.open||!pigsOn())return;if(S.aim==='pigs'){S.aim=null;S.msg='';}else{closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino a la que mover a los cerditos (Esc o el mismo botón para cancelar).';}renderRelics();ui();}
- else if(a==='hero'){if(!S.hero||RL.open)return;if(S.aim==='hero'){S.aim=null;S.msg='';}else{closePrim();S.aim='hero';S.aimT=null;S.msg='Elige una casilla del camino donde colocar a '+S.hero.def.n+' (clic; Esc o el mismo icono para cancelar).';}renderRelics();ui();}
+ else if(a==='hero'){if(!S.hero||RL.open)return;if(S.aim==='hero'){S.aim=null;S.msg='';}else{closePrim();S.aim='hero';S.aimT=null;/* v307: en el tutorial, el héroe se explica en cuanto lo tocas */if(S.tut&&!S.tut.heroT){S.tut.heroT=1;hint('hero','Tu héroe',HEROTXT2,null);}S.msg='Elige una casilla del camino donde colocar a '+S.hero.def.n+' (clic; Esc o el mismo icono para cancelar).';}renderRelics();ui();}
  else if(a==='pickhero'){if(b.dataset.id)chooseHero(b.dataset.id);}
  else if(a==='hdet'){RL.hdet=!RL.hdet;RL.dman={};RL.rman={};const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
  else if(a==='hsel'){if(RL.hsel!==b.dataset.id&&!RL.hdet)RL.dman={};RL.rman={};RL.hsel=b.dataset.id;const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
@@ -369,7 +369,9 @@ function act(e){
  else if(a==='achm'){APAN.open=false;apanTick();lbOpen('lg');}
  else if(a==='apan'){APAN.open=!APAN.open;apanTick();}
  else if(a==='apin'){const id=b.dataset.id;if(PINS.includes(id))PINS=PINS.filter(x=>x!==id);else if(PINS.length>=3){toast('📌 Ya tienes 3 logros fijados: quita uno para fijar este.');return;}else PINS.push(id);savePins();if(LB.open&&!LB.cover){const sc=$('comp').scrollTop;lbRender();$('comp').scrollTop=sc;}else if(RL.open&&RL.hpick&&typeof renderHeroPick==='function')renderHeroPick();apanTick(1);}
- else if(a==='tutfull'){try{localStorage.setItem('rt-tutchoice','full');}catch(e){}closeQuick();startTut();}
+ else if((a==='tutfull'||a==='tutquick')&&LB.open&&LB.step==='learn'&&LB.tsel!==a){LB.tsel=a;lbRender();}/* v307: primer toque elige; el segundo (o «Empezar») confirma */
+ else if(a==='tutgo'){const t=LB.tsel;LB.tsel=null;if(t){const q=document.createElement('button');q.dataset.a=t;q.style.display='none';document.body.appendChild(q);LB.step=null;q.click();q.remove();}}
+ else if(a==='tutfull'){LB.tsel=null;try{localStorage.setItem('rt-tutchoice','full');}catch(e){}closeQuick();startTut();}
  else if(a==='tutquick'){const first=!tutChosen();try{localStorage.setItem('rt-tutchoice','quick');}catch(e){}openQuick(first?'setup':'help');}
  else if(a==='qprev'){if(QS.i>0){QS.i--;renderQuick();}}
  else if(a==='qnext'){if(QS.i<QSL.length-1){QS.i++;renderQuick();}}

@@ -1,5 +1,6 @@
 // ==================== AYUDA, ELECCIÓN INICIAL Y TUTORIAL RÁPIDO ====================
-const tutChosen=()=>{try{return !!localStorage.getItem('rt-tutchoice');}catch(e){return true;}};
+// v307: si eligió el tutorial completo pero no lo acabó (p. ej. recargó a medias), se vuelve a ofrecer
+const tutChosen=()=>{try{const c=localStorage.getItem('rt-tutchoice');return !!c&&!(c==='full'&&!localStorage.getItem('rt-tutdone'));}catch(e){return true;}};
 function renderTutPick(){LB.step='learn';lbOpen('prep');}
 function renderTutPickOld(){$('msetup').innerHTML='<h3>¿Cómo quieres aprender?</h3><small style="margin-bottom:12px">Antes de tu primera partida, elige cómo prefieres conocer el juego. Podrás repetir cualquiera de los dos desde Ayuda.</small>'+
  '<div class="tpk"><button data-a="tutfull"><b>🎓 Tutorial completo</b><small>Unas 10 rondas guiadas: aprende jugando, paso a paso. Al completarlo desbloqueas a Radagast.</small></button><button data-a="tutquick"><b>⚡ Tutorial rápido</b><small>Un repaso de unos 2 minutos con imágenes y a jugar. Las pistas te explicarán el resto sobre la marcha.</small></button></div><div class="tpkb"><button data-a="mback">Volver</button><button data-a="tutskip">⏭ Saltar tutorial</button></div>';$('menu').classList.add('setup');}

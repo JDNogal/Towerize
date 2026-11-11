@@ -2,9 +2,9 @@
 const SQUADS={
  patrol:{n:'Patrulla',min:1,m:{norm:6}},
  tsling:{n:'Honderos (tutorial)',min:999,tut:1,m:{norm:3,sling:2}},
- squad:{n:'Pelotón',min:2,m:{norm:3,fast:2}},
+ squad:{n:'Pelotón',min:999,tut:1,m:{norm:3,fast:2}},/* v307: solo del tutorial (las usa TUTW); con tut:1 no se borran al montar las facciones */
  scouts:{n:'Avanzadilla',min:3,m:{fast:4,sling:1}},
- vanguard:{n:'Vanguardia',min:4,m:{tank:1,norm:4}},
+ vanguard:{n:'Vanguardia',min:999,tut:1,m:{tank:1,norm:4}},
  escort:{n:'Escolta',min:5,m:{sling:3,custodian:1}},
  conclave:{n:'Cónclave',min:5,m:{acolyte:2,norm:3}},
  phalanx:{n:'Falange',min:7,m:{tank:2,shaman:1,norm:2}},

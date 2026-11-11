@@ -1,0 +1,13 @@
+/* v307 · repaso del tutorial (vídeo del 11-nov) */
+.lbbig.on{box-shadow:0 0 0 2.5px var(--acc2),0 3px 10px rgba(0,0,0,.18)!important;background:var(--paper)!important}
+.lbbk.lbgo{background:var(--gbtn)!important;color:#2a1c08!important;font-weight:700;margin-left:8px}
+:root[data-skin="holo"] .lbbig.on{box-shadow:0 0 0 2px #3fe8ff,0 0 12px #3fe8ff88!important}
+/* «Entendido» siempre abajo a la derecha, en pistas y en el foco de solares */
+.hmsg .hbtn,#focus .fmsg .hbtn{display:flex;justify-content:flex-end;margin-top:8px}
+.hmsg .hbtn .go,#focus .fmsg .hbtn .go{margin:0!important;display:inline-block!important}
+#focus .fmsg b.ftit{display:block;color:inherit;margin-bottom:3px}
+#focus .fmsg b{color:inherit}
+/* «Elige una pieza»: la ampliación va en el contenido y no en el propio pergamino. Con el zoom en el pergamino, algunos Chrome
+   calculaban su ancho sin ampliar y las piezas se salían por los lados (rodillos por encima de las cartas). Y sin transición de tamaño. */
+body.dsk:not(.mfs).pcpick #panel{zoom:1!important;transition:none!important;padding:calc(16px*var(--wz,1)) calc(34px*var(--wz,1)) calc(14px*var(--wz,1))!important;max-width:calc(100vw - 80px)!important}
+body.dsk:not(.mfs).pcpick #panel>*{zoom:var(--wz,1)}

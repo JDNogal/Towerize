@@ -42,6 +42,7 @@ const T=[
  ['niveles_vistos.js','Niveles de torre sin spoilers: solo los alcanzados, con aviso'],
  ['pista_bloquea.js','Con una pista abierta no se puede hacer nada más (ni empezar la oleada)'],
  ['tutorial_evento.js','El tutorial trae 2 eventos (santuario y mercader) y 2 cofres'],
+ ['tutorial_completo.js','El tutorial completo se juega de principio a fin sin atascarse (10 rondas)'],
  ['eter_habla.js','ÉTER habla en partida: fallos, nombre, enfriamiento, opción',['pc','m']],
  ['guardar_ventanas_tutorial.js','Guardar con cofre, evento u oferta abiertos; fin de ronda; tutorial'],
  ['radagast_primera.js','Radagast se desbloquea al ganar la primera partida (aunque se salte el tutorial)'],

@@ -37,7 +37,7 @@ function build(fx,fy){if(placeLock()){plMsg();return;}
  if(tutLockBlock(x,y))return;
  const cost0=S.half?Math.ceil(t.cost/2):t.cost;if(S.gold<cost0){S.msg='Oro insuficiente.';ui();return;}
  const tw={id:++S.tid,type:S.tsel,lvl:1,x,y,cells:[[x,y]],sq:sqCells(q),inv:t.cost,bph:phKey(),undo:cost0,spec:null,ab:{},acd:{},cd:0,tgt:null,mode:S.dtg[S.tsel]||'core'};
- if(S.tut&&S.tut.lock){if(S.tut.lock.some(l=>l.x===x&&l.y===y))S.tut.t2id=tw.id;S.tut.lock=null;S.tut.lockAsk=null;}
+ if(S.tut&&S.tut.spc&&S.round===2){if(S.tut.spc.some(l=>l.x===x&&l.y===y))S.tut.t2id=tw.id;}
  see('tw',tw.type);if(t.dt==='elem')hint('elem','Daño elemental','Esta torre hace <b>daño elemental</b>: ignora tanto la armadura como la resistencia mágica.',tgCell(x,y,1.4));if(t.unit)hint('units','Torres de unidades',[['Esta torre no dispara: manda <b>unidades</b> a pelear y bloquear.',tgCell(x,y,1.4)],['Pulsa la torre y luego 🚩 para mover su <b>bandera</b>.',()=>tw.flag?tgCell(tw.flag.x,tw.flag.y,1.2)():tgCell(x,y,1.4)()]]);if(t.unit)mkSoldiers(tw);S.list.push(tw);for(const[a,b]of tw.sq)S.occ[a+','+b]=tw;
  S.gold-=cost0;S.st.spent+=cost0;if(!(S.built=S.built||[]).includes(tw.type))S.built.push(tw.type);if(!TW[tw.type].uniq)(S.bcnt=S.bcnt||{})[tw.type]=(S.bcnt[tw.type]||0)+1;if(S.half&&t.cost>0){S.half=0;tw.inv=cost0;}tw.rd=S.round;S.st.all.push(tw);S.msg='';S.selT=null;if(TOUCH){M.has=false;HV.key=null;HV.t=0;}ui();
 }
@@ -112,7 +112,12 @@ function sell(t){
 const SOFF=[0,1,2].map(i=>{const a=-Math.PI/2+i*2*Math.PI/3;return[Math.cos(a)*TRI,Math.sin(a)*TRI];});
 const SOFF4=[[-TRI*.75,-TRI*.75],[TRI*.75,-TRI*.75],[TRI*.75,TRI*.75],[-TRI*.75,TRI*.75]];
 const PIGOFF={brick:[0,-.9],wood:[.9,.6],straw:[-.9,.6]};
-const slotOf=(t,i)=>{const b=t.flag||{x:t.x,y:t.y};if(t.pigU&&PIGOFF[t.pigU]){const o=PIGOFF[t.pigU];return{x:b.x+o[0],y:b.y+o[1]};}if(t.hero||(t.sd&&t.sd.length===1))return{x:b.x,y:b.y};if(t.sd&&t.sd.length>4){/* enjambre: en corro */const n=t.sd.length,a=-Math.PI/2+i*2*Math.PI/n,R=TRI*(n>6?1.4:1.15);return{x:b.x+Math.cos(a)*R,y:b.y+Math.sin(a)*R};}const o=t.sd&&t.sd.length===4?SOFF4[i]:SOFF[i]||[0,0];return{x:b.x+o[0],y:b.y+o[1]};};
+const slotOf=(t,i)=>{const b=t.flag||{x:t.x,y:t.y};if(t.pigU&&PIGOFF[t.pigU]){const o=PIGOFF[t.pigU];return{x:b.x+o[0],y:b.y+o[1]};}if(t.hero||(t.sd&&t.sd.length===1))return{x:b.x,y:b.y};if(t.sd&&t.sd.length>4){/* enjambre: en corro */const n=t.sd.length,a=-Math.PI/2+i*2*Math.PI/n,R=TRI*(n>6?1.4:1.15);return{x:b.x+Math.cos(a)*R,y:b.y+Math.sin(a)*R};}if(t.sd&&t.sd.length===2){/* v307: dos unidades, una al lado de la otra cubriendo el ancho del camino (en las esquinas, en diagonal) */
+  const cx=Math.round(b.x),cy=Math.round(b.y),C=S.cells,pa=(x,y)=>inb(x,y)&&C[y][x]===2,L=pa(cx-1,cy),R=pa(cx+1,cy),U=pa(cx,cy-1),D=pa(cx,cy+1),h=L||R,v=U||D,d=TRI*.8,s=i?1:-1;
+  if(h&&!v)return{x:b.x,y:b.y+s*d};if(v&&!h)return{x:b.x+s*d,y:b.y};
+  if(h&&v&&!(L&&R)&&!(U&&D)){const sx=R?1:-1,sy=D?1:-1;return{x:b.x+s*sx*d*.7,y:b.y+s*sy*d*.7};}
+  return{x:b.x+s*d,y:b.y};}
+ const o=t.sd&&t.sd.length===4?SOFF4[i]:SOFF[i]||[0,0];return{x:b.x+o[0],y:b.y+o[1]};};
 const sdHp=t=>TW[t.type].unit.hp*lvMods(t.type,t.lvl,t.spec).hp*(typeof tileV==='function'?tileV(t,'uhp',1):1),uapOf=t=>(t.uov?t.uov.ap:t.hero?hsAt(t.hero.id,t.hero.lvl).ap:TW[t.type].unit.ap+(tinfo(t).uap||0)+(t.xap||0))+RELARM();
 function mkSoldiers(t){const U=TW[t.type].unit;t.sd=[];for(let i=0;i<U.n;i++)t.sd.push({i,x:t.x,y:t.y,hp:sdHp(t),max:sdHp(t),en:null,cd:0,rt:0,tw:t,lock:true,fight:false});}
 function autoFlag(t){const R2=stats(t).range,r=Math.ceil(R2);let b=null,bd=1e9;
