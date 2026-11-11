@@ -18,8 +18,8 @@ const rtlGen=(k,cls)=>`<i class="rti ${cls} g${k}">${RTLI[k]}</i>`;
 function rtlDot(r){const o=rtlInfo(r);let h='',c='';
  if(o.boss){c='b';h=rtlGen('boss','boss');}
  else if(o.el||o.mi||o.ex.length){c='x';const front=o.el||o.ex.length?'elite':'mini';
-  const sides=o.el||o.ex.length?(o.mi>=2?['mini','mini']:o.mi===1?['mini']:[]):(o.mi>=2?['mini']:[]);
-  if(sides[0])h+=rtlGen('mini','sl');if(sides[1])h+=rtlGen('mini','sr');h+=rtlGen(front,'fr');}
+  /* élite (o enemigo de evento) acompañado de mini-élites = icono propio: élite con escolta */
+  if((o.el||o.ex.length)&&o.mi)h+=rtlGen('group','fr');else h+=rtlGen(front,'fr');}
  return {c,h,o};}
 // progreso de la oleada en curso (0 a 1)
 function rtlProg(){if(!S||S.phase!=='wave')return 0;const N=S.rtlN||0;if(!N)return 0;let left=0;for(const e of S.enemies||[])if(e.hp>0&&!e.leak)left++;for(const p of S.portals||[])left+=(p.q||[]).filter(x=>x!=='|').length;return Math.max(0,Math.min(1,1-left/N));}
