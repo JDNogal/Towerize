@@ -1979,6 +1979,9 @@ function setDsk(){const mf=TOUCH&&innerWidth>innerHeight&&!document.body.classLi
 
 // tiempos: en segundos o, con la opción «Tiempos en minutos», como «1 min 30 s»; c = versión corta para insignias («1:30»)
 const fmtT=(sec,c)=>{sec=Math.max(0,Math.ceil(sec));if(typeof OPT==='undefined'||!OPT.tmin||sec<60)return sec+(c?'':' s');const m=Math.floor(sec/60),r=sec%60;return c?m+':'+String(r).padStart(2,'0'):m+' min'+(r?' '+r+' s':'');};
+
+// v307: bandera de las unidades (cola de golondrina roja clavada, con el círculo de «aquí»); trazo del color del texto
+const FLAGI='<svg class="flagi" viewBox="0 0 64 64" width="1.25em" height="1.25em" style="vertical-align:-.28em"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="30" cy="52" rx="20" ry="6.5" stroke-dasharray="5 5"/><path d="M30 52V7" stroke-width="4.2"/><path d="M30 9h26l-8 10 8 10H30z" fill="#d8453a"/></g></svg>';
 // ======================= EMOJIS QUE EL SISTEMA NO TIENE =======================
 // Algunos equipos (Windows 10, navegadores antiguos) no tienen los emojis más nuevos (🪙, 🪽, 🪵…) y salen como un cuadrado.
 // Al arrancar se comprueba cuáles se dibujan igual que un carácter inexistente; esos se sustituyen por uno parecido más antiguo.
@@ -3680,7 +3683,7 @@ function drawUnits(c,s,cs,ox,oy,lw){
  for(const t of unitTs(s)){
   if(t.flag&&!t.hero&&!t.merc&&!t.summ){const fx=ox+t.flag.x*cs+cs/2,fy=oy+t.flag.y*cs+cs/2;
    if(s.selT===t||s.aimT===t){c.strokeStyle='rgba(91,141,239,.7)';c.setLineDash([lw(4),lw(4)]);c.lineWidth=lw(1.5);c.beginPath();c.moveTo(ox+t.x*cs+cs/2,oy+t.y*cs+cs/2);c.lineTo(fx,fy);c.stroke();c.setLineDash([]);}
-   const hv=s===S&&!MFSQ()&&S.hover&&S.occ[S.hover.x+','+S.hover.y]===t;if(s!==S||s.selT===t||s.aimT===t||hv){c.font=Math.round(cs*1.6)+'px sans-serif';c.textAlign='center';c.textBaseline='bottom';c.fillStyle='#fff';c.fillText('🚩',fx,fy+cs*.5);}}
+   const hv=s===S&&!MFSQ()&&S.hover&&S.occ[S.hover.x+','+S.hover.y]===t;if(s!==S||s.selT===t||s.aimT===t||hv){/* v307: la bandera del mapa, dibujada (antes un emoji) */const im=flagImg(),z=cs*2.1;if(im&&im.complete&&im.naturalWidth)c.drawImage(im,fx-z*.47,fy+cs*.62-z*.82,z,z);else{c.font=Math.round(cs*1.6)+'px sans-serif';c.textAlign='center';c.textBaseline='bottom';c.fillStyle='#fff';c.fillText('🚩',fx,fy+cs*.5);}}}
   const MK=TW[t.type]&&TW[t.type].monk;
   for(const q of t.sd){if(q.hp<=0){if(q.H&&s===S){const px=ox+q.x*cs+cs/2,py=oy+q.y*cs+cs/2,r=cs*1.05,im=heroImg(q.H.id);c.save();c.globalAlpha=.75;c.fillStyle='#3a3d45';c.beginPath();c.arc(px,py,r,0,7);c.fill();
      if(im.complete&&im.naturalWidth){c.beginPath();c.arc(px,py,r,0,7);c.clip();try{c.filter='grayscale(1) brightness(.75)';}catch(e){}c.drawImage(im,px-r,py-r,r*2,r*2);try{c.filter='none';}catch(e){}}c.restore();
@@ -3728,6 +3731,8 @@ c.fillStyle="#2e3441";c.fillRect(0,0,PVN*PVC,PVN*PVC);
  for(const p of s.proj){const px=X(p.x),py=Y(p.y);if(p.orb){drawOrbP(c,px,py,p.orb,PVC*K,p.col);continue;}c.strokeStyle=p.col;c.lineWidth=3;c.beginPath();c.moveTo(px-p.vx*PVC*.6,py-p.vy*PVC*.6);c.lineTo(px,py);c.stroke();c.fillStyle=p.col;c.beginPath();c.arc(px,py,p.area?4:3,0,7);c.fill();}
 }
 function toggleComp(v){const on=v===undefined?!(LB.open&&!LB.cover&&CP.open):v;CP.solo=false;CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;if(on)lbOpen(CP.tab==='lg'?'lg':'cp');else lbClose();}
+
+let FLAGIM=null;function flagImg(){if(FLAGIM)return FLAGIM;try{FLAGIM=new Image();FLAGIM.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="128" height="128"><g fill="none" stroke="#1b1712" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="30" cy="52" rx="20" ry="6.5" stroke="#fff" stroke-dasharray="5 5"/><path d="M30 52V7" stroke-width="4"/><path d="M30 9h26l-8 10 8 10H30z" fill="#d8453a"/></g></svg>');}catch(e){}return FLAGIM;}
 // ---- oleadas por escuadras: grupos temáticos que salen juntos, con una pausa entre escuadras ----
 const SQUADS={
  patrol:{n:'Patrulla',min:1,m:{norm:6}},
@@ -4770,15 +4775,15 @@ function uniqInfo(t,k,lvo){const T=TW[k],src=t?'tw:'+t.id:'shop:'+k,X=t?tinfo(t)
   h+=t&&lv<4?R('gd','Luz',fi(t.light||0)+' / '+fi(FARO[lv].need)):'';h+='<small>'+['No ataca: proyecta una zona de luz que puedes mover a cualquier parte del mapa (🔦 en su menú). Mejora las torres de dentro y acumula luz con el daño que hacen. Con 2.000 de luz sube a Nv 2.','Ahora también da daño a las torres que ilumina. Con 6.000 de luz sube a Nv 3.','Ahora también reduce el enfriamiento de las torres que ilumina. Con 15.000 de luz sube a Nv 4.','Gana una segunda zona de luz que también puedes mover. Si las pones una encima de otra, sus mejoras se suman.'][lv-1]+'</small>';}
  else if(T.dragon){const sg=CL-1;h+=R('','Forma',DRAG[sg].n)+(sg===0?R('cd',kst('dmg','Daño',src),0):sg===1?R('cd',kst('dmg','Daño',src)+' (fuego)',8)+R('ca','Área','0,4 casillas')+R('cg','Rango','2,5 casillas')+R('cd','Daño con garras','70%')+R('chp','Vida',60):sg===2?R('cd',kst('dmg','Daño',src)+' (bola de fuego)',18)+R('ca','Área','1 casilla')+R('cg','Rango','3,5 casillas'):R('cd',kst('dmg','Daño',src)+' (bola de fuego)',22)+R('ca','Área','1,2 casillas')+R('cg','Rango','3,5 casillas')+R('cd','Llamarada',DBRN+' stacks de '+kw('burn','Quemadura',src))+R('ccl','Enfriamiento de la llamarada',DBRCD+' s')+R('cr',kst('dur','Duración',src)+' de los charcos','4 s'))+
   (t&&sg<3&&!lvo?R('cr','Siguiente fase','ronda '+(t.born+DRGAT[sg+1])):'')+'<small>'+['Todavía no hace nada. '+(()=>{const a=['eclosiona a las 3 rondas'];if(revd('drag2')||revd('drag3'))a.push('es adulto a las 6');if(revd('drag3'))a.push('anciano a las 10');return (a.length>1?a.slice(0,-1).join(', ')+' y '+a[a.length-1]:a[0]).replace(/^e/,'E')+'.';})(),'Se coloca en el camino, bloquea y escupe fuego; si le alcanzan, ataca con garras. Si cae, reaparece.','Vuela en círculos alrededor de su bandera y lanza bolas de fuego con más área. No bloquea, y solo pueden atacarle los enemigos a distancia.','Vuela como el adulto, con bolas de fuego más fuertes y más área. Cada 8 s lanza una llamarada en cono (3 casillas) que aplica mucha quemadura y deja charcos de fuego en el camino durante 4 s.'][sg]+'</small>';
-  if(pin&&sg>=1)h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`;}
+  if(pin&&sg>=1)h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover bandera</button></div>`;}
  else if(T.glut){const lv=CL,L=lvMods(k,lv,null),s=t&&!lvo?stats(t):{dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:0,pen:0};h+=rows(s,T,src,'')+(t&&lv<4&&!lvo?R('gd','Comida',(t.food||0)+' / '+GLUT[lv]):'')+'<small>Muerde a los enemigos que pasan a su lado. No se mejora con oro: sube de nivel con las bajas que hace él mismo ('+GLUT.slice(1).join(', ')+' para Nv 2, 3 y 4).</small>';}
  else if(T.guild){const lv=CL,Lm=lvMods(k,lv,null),bd=T.dmg*Lm.dmg,bh=T.unit.hp*Lm.hp;h+='<div class="usub"><b>'+unitHead('shop:guild')+'Estadísticas de unidades</b>'+R('','Aventureros',PARTY[lv].length)+PARTY[lv].map((c,i)=>R('','· '+CLS[c].n,`<span class="cd">${f(bd*CLS[c].d)}</span> daño · <span class="chp">${Math.round(bh*CLS[c].hp)}</span> vida`+(t&&!lvo&&t.sd&&t.sd[i]&&t.sd[i].ren?` · <span class="gd">Renombre +${Math.round(t.sd[i].ren*100)}%</span>`:''))).join('')+'</div>'+(lv>=4?'<small><b>Renombre</b>: cuando un aventurero mata a una Mini-élite, una Élite o un Jefe (que no sea el final), todo el grupo gana un 5%, 10% o 15% de daño y vida, sin límite. Quien cae pierde el suyo.</small>':'')+R('gd','Recompensa por ronda',[10,20,35,50][lv-1]+' 🪙')+R('gd','Botín','+25% de oro por baja');
-  if(pin){if(lv<4){const c=T.upc[lv+1];h+=`<div class="tgt"><button data-a="gup" data-id="${t.id}">⬆ Subir a rango ${RANKS[lv]} (<span class="gd">−${c} 🪙</span>)</button></div>`;}h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`;}}
+  if(pin){if(lv<4){const c=T.upc[lv+1];h+=`<div class="tgt"><button data-a="gup" data-id="${t.id}">⬆ Subir a rango ${RANKS[lv]} (<span class="gd">−${c} 🪙</span>)</button></div>`;}h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover bandera</button></div>`;}}
  else{const lv=T.pig?CL:Math.min(3,CL),L=lvMods(k,lv,null),s=t&&!lvo?stats(t):{dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:(T.splash||0)*L.area,pen:0,ldur:T.log?logDur(lv):0};
   if(CL>=4&&!T.pig)h+='<small>Nv 4: su habilidad está por definir.</small>';else h+=rows(s,T,src,'');
   h+=`<small>${T.log?'Lanza troncos que ruedan por el camino hacia los portales: dañan y empujan a todos los enemigos con los que se cruzan.':T.wall?'Un cerdito albañil levanta un muro delante del enemigo más avanzado dentro de su rango.':'Lanza fardos de paja que dañan y ralentizan mucho a todos los enemigos del área.'}</small>`;
   if(T.pig&&CL>=4){const P=PIGU[k];h+=`<div style="margin-top:8px"><b>${P.ic} ${P.n}</b> <small style="display:inline">· unidad de Nv 4</small></div>`+R('chp','Vida',P.hp)+R('cph',kst('aphys','Armadura',src),P.ap)+R('cd',kst('dmg','Daño',src),f(P.dmg)+(P.rng?' (a distancia)':' (cuerpo a cuerpo)'))+R('ccl','Enfriamiento',f(1/P.rate)+' s')+R('',kst('hblk','Corpulencia',src),'Bloquea hasta 2')+R('cr','Reaparece','10 s')+'<small>'+P.d+' Pelea en la bandera de la casa, dentro de su rango.</small>'+(revd('mech')?'<small>Con las tres casas a Nv 4, los cerditos pueden unirse en el 🤖 <b>¡Mecha Cerdito!</b></small>':'');
-   if(pin)h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`;}
+   if(pin)h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover bandera</button></div>`;}
   if(pin&&t.lvl<(T.pig?4:3)){const c=upCost(T,t.lvl+1);h+=`<div class="tgt"><button data-a="up" data-id="${t.id}">⬆ Mejorar a Nv ${t.lvl+1} (${upLbl(c)})</button></div>`;}}
  if(pin)h+='<small>Las torres únicas no se pueden vender.</small>';return h;}
 function guildUp(t){if(!t||!TW[t.type].guild||t.lvl>=4||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;const c=TW[t.type].upc[t.lvl+1];if(S.gold<c){S.msg='Oro insuficiente.';ui();return;}
@@ -6165,7 +6170,7 @@ function rows(s,T,src,extra){
 // el DPS es siempre la última línea de la tarjeta, anclada abajo, con su hueco de separación
 const dpsRow=(s,T,src)=>`<div class="row cd dps"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`;
 // objetivo: en la ficha fijada se puede cambiar; si no, solo se muestra
-function tgtRow(t,src,pinned){return tgtRow0(t,src,pinned)+(t&&t.type==='augur'&&t.spec==='lord'?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover la nube</button></div>`:'<small>Haz clic en la torre para mover su nube.</small>'):'');}
+function tgtRow(t,src,pinned){return tgtRow0(t,src,pinned)+(t&&t.type==='augur'&&t.spec==='lord'?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover la nube</button></div>`:'<small>Haz clic en la torre para mover su nube.</small>'):'');}
 function tgtRow0(t,src,pinned){
  if(!pinned)return R('',kst('tgt','Objetivo',src),TGT[t.mode].n);
  return `<div class="tgt"><div>${kst('tgt','Objetivo',src)}</div><select class="tsel" data-a="tgt" data-id="${t.id}">`+Object.keys(TGT).map(k=>`<option value="${k}"${t.mode===k?' selected':''}>${TGT[k].n}</option>`).join('')+
@@ -6173,7 +6178,7 @@ function tgtRow0(t,src,pinned){
 }
 function unitRows(T,src,t,pinned,hpm,uap){const U=T.unit,ap=U.ap+(uap||0),mr=t&&abRank(t,'sacred')?abRank(t,'sacred').a:0;
  return {u:1,n:R('',kst('usol','Nº de unidades',src),U.n),life:R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+(mr?R('cmg',kst('umr','Resistencia mágica',src),armTxt(mr)):'')+R('cr',kst('urez','Reaparición',src),U.rez+' s'),rng:U.range?R('cg',kst('rng','Rango',src),cas(U.range)):'',obj:objRow(!U.range,src),tail:
-  (t?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`:'<small>Haz clic en la torre para mover su bandera.</small>'):'')};}
+  (t?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover bandera</button></div>`:'<small>Haz clic en la torre para mover su bandera.</small>'):'')};}
 // ficha de una torre construida: solo información. Mejorar, especializar, comprar habilidades y vender se hacen en el menú de botones de la torre.
 // En Nv 4 se listan sus habilidades con el rango que tiene (el detalle, en el bocadillo de cada una).
 function abRows(t){if(t.lvl!==4||!t.spec||!SPECS[t.type])return '';const src='tw:'+t.id;
@@ -6507,7 +6512,7 @@ function tmOpts(t){const T=TW[t.type],top=[],bot=[];let side=null;
  else if(tmHas(t,'up')||(!T.uniq&&!T.guild&&t.lvl<3))top.push({k:'up',ic:'⬆',c:tCost(t,upCost(T,t.lvl+1))});
  bot.push({k:'lupa',ic:'🔍'});if(!T.uniq)bot.push({k:'sell',ic:'$',sv:sellVal(t)});
  if(T.faro){bot.push({k:'flz',v:'0',ic:'🔦'});if((t.lvl||1)>=4)bot.push({k:'flz',v:'1',ic:'🔦'});}
- if(tmHas(t,'flag'))side={k:'flag',ic:'🚩'};
+ if(tmHas(t,'flag'))side={k:'flag',ic:FLAGI};
  return{top,bot,side};}
 const tmKey=o=>o.k+(o.v?':'+o.v:'');
 function tmVis(){const t=TM.t;return !!(t&&S&&S.list&&S.list.includes(t)&&S.selT===t&&!RL.open&&!PR.pinned&&!S.aim&&!FO.open&&!LB.open&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof PMU!=='undefined'&&PMU.open));}
@@ -6544,7 +6549,7 @@ function tmInfo(k,t){const T=TW[t.type],[a,v]=k.split(':');
  if(a==='spec'){const x=SPECS[t.type][v];return{h:`<b>${x.ic} ${x.n}</b><small>${x.d}</small><small>${specCh(t,v)}</small>`,c:tCost(t,upCost(T,4)),buy:1,w:1};}
  if(a==='abuy'){const D=AB[v],rk=t.ab&&t.ab[v]||0,n=D.ranks.length,rq=abReq(t,v);return{h:`<b>${D.n}</b> · Rango ${rk}/${n}<small>${rk>=n?D.txt(D.ranks[n-1]):(rk?'Siguiente: ':'')+D.txt(D.ranks[Math.min(rk,n-1)])}</small>`+(rq?`<small class="cd">🔒 ${rq}</small>`:''),c:rk<n?tCost(t,D.ranks[rk].c):null,buy:rk<n,w:rk<n};}
  if(a==='sell')return{h:undoOk(t)?`<b>Deshacer construcción</b><small>La has puesto en esta fase: recuperas <b>todo</b> lo que pagaste, <span class="gd">+${sellVal(t)} 🪙</span>.</small>`:`<b>Vender torre</b><small>Recuperas <span class="gd">+${sellVal(t)} 🪙</span> (la mitad de lo invertido).</small>`,sell:1};
- if(a==='flag')return{h:`<b>🚩 ${t.type==='augur'?'Mover la nube':'Mover bandera'}</b><small>Elige una casilla del camino dentro de su rango.</small>`};
+ if(a==='flag')return{h:`<b>${FLAGI} ${t.type==='augur'?'Mover la nube':'Mover bandera'}</b><small>Elige una casilla del camino dentro de su rango.</small>`};
  if(a==='lupa')return{h:'<b>🔍 Ficha completa</b><small>Estadísticas, objetivo y todos los detalles de la torre.</small>'};
  if(a==='flz'){const cd=S.phase==='wave'?((t.lzcd||[0,0])[+v]||0):0;return{h:`<b>🔦 Mover ${+v?'la segunda luz':'la luz'}</b><small>Proyecta la zona de luz en cualquier punto del mapa: las torres de dentro reciben la mejora. Durante la oleada, se puede volver a mover cada ${FCD[(t.lvl||1)-1]} s.</small>`+(cd>0?`<div class="cf no">Disponible en ${Math.ceil(cd)} s</div>`:'')};}
  return{h:''};}

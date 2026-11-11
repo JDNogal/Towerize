@@ -8,7 +8,7 @@ function tmOpts(t){const T=TW[t.type],top=[],bot=[];let side=null;
  else if(tmHas(t,'up')||(!T.uniq&&!T.guild&&t.lvl<3))top.push({k:'up',ic:'⬆',c:tCost(t,upCost(T,t.lvl+1))});
  bot.push({k:'lupa',ic:'🔍'});if(!T.uniq)bot.push({k:'sell',ic:'$',sv:sellVal(t)});
  if(T.faro){bot.push({k:'flz',v:'0',ic:'🔦'});if((t.lvl||1)>=4)bot.push({k:'flz',v:'1',ic:'🔦'});}
- if(tmHas(t,'flag'))side={k:'flag',ic:'🚩'};
+ if(tmHas(t,'flag'))side={k:'flag',ic:FLAGI};
  return{top,bot,side};}
 const tmKey=o=>o.k+(o.v?':'+o.v:'');
 function tmVis(){const t=TM.t;return !!(t&&S&&S.list&&S.list.includes(t)&&S.selT===t&&!RL.open&&!PR.pinned&&!S.aim&&!FO.open&&!LB.open&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof PMU!=='undefined'&&PMU.open));}
@@ -45,7 +45,7 @@ function tmInfo(k,t){const T=TW[t.type],[a,v]=k.split(':');
  if(a==='spec'){const x=SPECS[t.type][v];return{h:`<b>${x.ic} ${x.n}</b><small>${x.d}</small><small>${specCh(t,v)}</small>`,c:tCost(t,upCost(T,4)),buy:1,w:1};}
  if(a==='abuy'){const D=AB[v],rk=t.ab&&t.ab[v]||0,n=D.ranks.length,rq=abReq(t,v);return{h:`<b>${D.n}</b> · Rango ${rk}/${n}<small>${rk>=n?D.txt(D.ranks[n-1]):(rk?'Siguiente: ':'')+D.txt(D.ranks[Math.min(rk,n-1)])}</small>`+(rq?`<small class="cd">🔒 ${rq}</small>`:''),c:rk<n?tCost(t,D.ranks[rk].c):null,buy:rk<n,w:rk<n};}
  if(a==='sell')return{h:undoOk(t)?`<b>Deshacer construcción</b><small>La has puesto en esta fase: recuperas <b>todo</b> lo que pagaste, <span class="gd">+${sellVal(t)} 🪙</span>.</small>`:`<b>Vender torre</b><small>Recuperas <span class="gd">+${sellVal(t)} 🪙</span> (la mitad de lo invertido).</small>`,sell:1};
- if(a==='flag')return{h:`<b>🚩 ${t.type==='augur'?'Mover la nube':'Mover bandera'}</b><small>Elige una casilla del camino dentro de su rango.</small>`};
+ if(a==='flag')return{h:`<b>${FLAGI} ${t.type==='augur'?'Mover la nube':'Mover bandera'}</b><small>Elige una casilla del camino dentro de su rango.</small>`};
  if(a==='lupa')return{h:'<b>🔍 Ficha completa</b><small>Estadísticas, objetivo y todos los detalles de la torre.</small>'};
  if(a==='flz'){const cd=S.phase==='wave'?((t.lzcd||[0,0])[+v]||0):0;return{h:`<b>🔦 Mover ${+v?'la segunda luz':'la luz'}</b><small>Proyecta la zona de luz en cualquier punto del mapa: las torres de dentro reciben la mejora. Durante la oleada, se puede volver a mover cada ${FCD[(t.lvl||1)-1]} s.</small>`+(cd>0?`<div class="cf no">Disponible en ${Math.ceil(cd)} s</div>`:'')};}
  return{h:''};}

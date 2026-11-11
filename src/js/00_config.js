@@ -83,3 +83,6 @@ function setDsk(){const mf=TOUCH&&innerWidth>innerHeight&&!document.body.classLi
 
 // tiempos: en segundos o, con la opción «Tiempos en minutos», como «1 min 30 s»; c = versión corta para insignias («1:30»)
 const fmtT=(sec,c)=>{sec=Math.max(0,Math.ceil(sec));if(typeof OPT==='undefined'||!OPT.tmin||sec<60)return sec+(c?'':' s');const m=Math.floor(sec/60),r=sec%60;return c?m+':'+String(r).padStart(2,'0'):m+' min'+(r?' '+r+' s':'');};
+
+// v307: bandera de las unidades (cola de golondrina roja clavada, con el círculo de «aquí»); trazo del color del texto
+const FLAGI='<svg class="flagi" viewBox="0 0 64 64" width="1.25em" height="1.25em" style="vertical-align:-.28em"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="30" cy="52" rx="20" ry="6.5" stroke-dasharray="5 5"/><path d="M30 52V7" stroke-width="4.2"/><path d="M30 9h26l-8 10 8 10H30z" fill="#d8453a"/></g></svg>';

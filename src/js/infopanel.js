@@ -179,7 +179,7 @@ function rows(s,T,src,extra){
 // el DPS es siempre la última línea de la tarjeta, anclada abajo, con su hueco de separación
 const dpsRow=(s,T,src)=>`<div class="row cd dps"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`;
 // objetivo: en la ficha fijada se puede cambiar; si no, solo se muestra
-function tgtRow(t,src,pinned){return tgtRow0(t,src,pinned)+(t&&t.type==='augur'&&t.spec==='lord'?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover la nube</button></div>`:'<small>Haz clic en la torre para mover su nube.</small>'):'');}
+function tgtRow(t,src,pinned){return tgtRow0(t,src,pinned)+(t&&t.type==='augur'&&t.spec==='lord'?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover la nube</button></div>`:'<small>Haz clic en la torre para mover su nube.</small>'):'');}
 function tgtRow0(t,src,pinned){
  if(!pinned)return R('',kst('tgt','Objetivo',src),TGT[t.mode].n);
  return `<div class="tgt"><div>${kst('tgt','Objetivo',src)}</div><select class="tsel" data-a="tgt" data-id="${t.id}">`+Object.keys(TGT).map(k=>`<option value="${k}"${t.mode===k?' selected':''}>${TGT[k].n}</option>`).join('')+
@@ -187,7 +187,7 @@ function tgtRow0(t,src,pinned){
 }
 function unitRows(T,src,t,pinned,hpm,uap){const U=T.unit,ap=U.ap+(uap||0),mr=t&&abRank(t,'sacred')?abRank(t,'sacred').a:0;
  return {u:1,n:R('',kst('usol','Nº de unidades',src),U.n),life:R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+(mr?R('cmg',kst('umr','Resistencia mágica',src),armTxt(mr)):'')+R('cr',kst('urez','Reaparición',src),U.rez+' s'),rng:U.range?R('cg',kst('rng','Rango',src),cas(U.range)):'',obj:objRow(!U.range,src),tail:
-  (t?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">🚩 Mover bandera</button></div>`:'<small>Haz clic en la torre para mover su bandera.</small>'):'')};}
+  (t?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover bandera</button></div>`:'<small>Haz clic en la torre para mover su bandera.</small>'):'')};}
 // ficha de una torre construida: solo información. Mejorar, especializar, comprar habilidades y vender se hacen en el menú de botones de la torre.
 // En Nv 4 se listan sus habilidades con el rango que tiene (el detalle, en el bocadillo de cada una).
 function abRows(t){if(t.lvl!==4||!t.spec||!SPECS[t.type])return '';const src='tw:'+t.id;
