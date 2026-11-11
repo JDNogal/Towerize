@@ -131,7 +131,7 @@ function laneStep(e,F){if(e.nolane)return null;const fd=laneDir(e,F);if(!fd)retu
  const cur=laneOf(e.tx,e.ty,fd),ok=(x,y)=>inb(x,y)&&S.cells[y][x]===2&&F[y][x]!=null&&isFinite(F[y][x])&&F[y][x]>=0;
  if(cur!==e.fln){const dir=e.fln>cur?1:-1,lx=fd[1]*dir,ly=-fd[0]*dir,nx=e.tx+lx,ny=e.ty+ly;if(ok(nx,ny)&&Math.floor(nx/K)===Math.floor(e.tx/K)&&Math.floor(ny/K)===Math.floor(e.ty/K))return[nx,ny];}
  const nx=e.tx+fd[0],ny=e.ty+fd[1];if(ok(nx,ny)&&F[ny][nx]<F[e.ty][e.tx]+K)return[nx,ny];return null;}
-function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
+function move(e,dt){if(isBoss(e))e.blk=e.stopped?(e.blk||0)+dt:Math.max(0,(e.blk||0)-2*dt);if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
  /* v305: una ralentización ya no saca al enemigo del paso de su escuadra (antes, al pasársele, corría a su velocidad propia, más rápida que la de la formación: ralentizar acababa acelerando la oleada) */if(e.fsp&&(e.fx.stun||e.fx.freeze||e.fx.root||e.fx.poly||e.fx.haste||e.stopped))e.fsp=0;
  const PBK=.25;let mv=(e.fsp?Math.min(e.fsp,sqFollow(e)):ET[e.t].sp)*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
  const go=c=>{(e.trail=e.trail||[]).push([e.tx,e.ty]);if(e.trail.length>3000)e.trail.shift();e.pv=[e.tx,e.ty];e.tx=c[0];e.ty=c[1];};

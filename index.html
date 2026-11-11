@@ -5289,7 +5289,7 @@ function laneStep(e,F){if(e.nolane)return null;const fd=laneDir(e,F);if(!fd)retu
  const cur=laneOf(e.tx,e.ty,fd),ok=(x,y)=>inb(x,y)&&S.cells[y][x]===2&&F[y][x]!=null&&isFinite(F[y][x])&&F[y][x]>=0;
  if(cur!==e.fln){const dir=e.fln>cur?1:-1,lx=fd[1]*dir,ly=-fd[0]*dir,nx=e.tx+lx,ny=e.ty+ly;if(ok(nx,ny)&&Math.floor(nx/K)===Math.floor(e.tx/K)&&Math.floor(ny/K)===Math.floor(e.ty/K))return[nx,ny];}
  const nx=e.tx+fd[0],ny=e.ty+fd[1];if(ok(nx,ny)&&F[ny][nx]<F[e.ty][e.tx]+K)return[nx,ny];return null;}
-function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
+function move(e,dt){if(isBoss(e))e.blk=e.stopped?(e.blk||0)+dt:Math.max(0,(e.blk||0)-2*dt);if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
  /* v305: una ralentización ya no saca al enemigo del paso de su escuadra (antes, al pasársele, corría a su velocidad propia, más rápida que la de la formación: ralentizar acababa acelerando la oleada) */if(e.fsp&&(e.fx.stun||e.fx.freeze||e.fx.root||e.fx.poly||e.fx.haste||e.stopped))e.fsp=0;
  const PBK=.25;let mv=(e.fsp?Math.min(e.fsp,sqFollow(e)):ET[e.t].sp)*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
  const go=c=>{(e.trail=e.trail||[]).push([e.tx,e.ty]);if(e.trail.length>3000)e.trail.shift();e.pv=[e.tx,e.ty];e.tx=c[0];e.ty=c[1];};
@@ -5324,7 +5324,9 @@ function move(e,dt){if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.
  return false;
 }
 // Efectos de control: los jefes reducen un 50% su fuerza (ralentización), duración (congelación) o distancia (empuje).
-const isBoss=e=>e.t==='boss'||e.t==='colossus'||e.t==='bob'||!!(ET[e.t]&&ET[e.t].story),udM=e=>isBoss(e)&&ROUNDS>=26?1+.1*S.round:1;
+const isBoss=e=>e.t==='boss'||e.t==='colossus'||e.t==='bob'||!!(ET[e.t]&&ET[e.t].story),udM=e=>isBoss(e)?(ROUNDS>=26?1+.1*S.round:1)*(1+Math.max(0,(e.blk||0)-BLKT0)*BLKUP):1;
+// v307 · un jefe al que tus unidades tienen parado se enfurece: pasados 8 s seguidos bloqueado, pega un 15 % más a las unidades por cada segundo (se le pasa al volver a andar). Así no se le puede retener para siempre.
+const BLKT0=8,BLKUP=.15;
 function slowE(e,m,t){if(e.fx.freeze)return;if(isBoss(e))m=1-(1-m)*BOSSRES;const q=e.fx.slow;e.fx.slow={m:q&&q.t>0?Math.min(q.m,m):m,t};}
 function freezeE(e,t){if(e.fx.freeze||e.fx.fimm)return false;e.fx.freeze={t:(isBoss(e)?t*BOSSRES:t)*(e.fx.wet?WETF:1)};delete e.fx.slow;return true;}
 function addBleed(e,src,n){e.bl=e.bl||[];const c=stkN(e,n||1);for(let i=0;i<c;i++)e.bl.push({t:BLEEDT,src});}
@@ -9354,7 +9356,7 @@ const ALSVG={
  // larva: las rayas no tocan el borde negro
  larva:`<svg viewBox="0 0 64 64"><path d="M12 44 Q12 32 22 34 Q26 26 34 32 Q42 26 48 34 Q56 34 54 44 Q52 52 32 52 Q14 52 12 44Z" fill="#9ae6d6" stroke="${ALS}" stroke-width="2"/><path d="M23 38 L24.5 47 M34 35.5 L34 48 M44.5 38 L43 47" stroke="#2a9a88" stroke-width="1.6" stroke-linecap="round"/><circle cx="50" cy="40" r="2.6" fill="#ffcf3a" stroke="${ALS}" stroke-width="1.2"/></svg>`,
  pred:`<svg viewBox="0 0 64 64"><path d="M10 40 Q10 22 32 20 Q54 22 54 40 Q54 54 32 56 Q10 54 10 40Z" fill="#2a9a88" stroke="${ALS}" stroke-width="2"/><path d="M14 24 Q8 12 4 10 M50 24 Q56 12 60 10 M20 20 Q18 8 22 4 M44 20 Q46 8 42 4" stroke="${ALS}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M18 30 L26 34 M46 30 L38 34" stroke="${ALS}" stroke-width="2.5"/><ellipse cx="24" cy="38" rx="4" ry="3" fill="#ff5a3a" stroke="${ALS}" stroke-width="1.5"/><ellipse cx="40" cy="38" rx="4" ry="3" fill="#ff5a3a" stroke="${ALS}" stroke-width="1.5"/><path d="M20 46 L24 52 L28 46 L32 52 L36 46 L40 52 L44 46" stroke="#f4ecd6" stroke-width="2" fill="none"/><path d="M14 50 L6 60 M50 50 L58 60" stroke="${ALS}" stroke-width="3.4" stroke-linecap="round"/></svg>`};
-TW.alien={n:'Criaturas alienígenas',ic:'🥚',icsvg:ALSVG.nest,dt:'magic',udt:'magic',era:2,cost:90,range:2.5,dmg:3,rate:1.2,unit:{n:4,hp:18,ap:0,rez:6,spd:2.4},col:'#3fb89c',l:'J',fx:'Simbiosis',alien:1};
+TW.alien={n:'Criaturas alienígenas',ic:'🥚',icsvg:ALSVG.nest,dt:'magic',udt:'magic',era:2,cost:90,range:2.5,dmg:2.6,rate:1.2,unit:{n:4,hp:18,ap:0,rez:6,spd:2.4},col:'#3fb89c',l:'J',fx:'Simbiosis',alien:1};
 TW.alien.range*=K;TW.alien.unit.spd*=K;/* las torres se definen en casillas y el juego trabaja en celdas (×K): las que se añaden tarde lo hacen a mano */
 UNAME.alien=['Criatura'];UIC.alien={img:ALSVG.crit};UIC.pred={img:ALSVG.pred};
 const ALN=[0,4,5,6],ALHIVE=8,ALSYM=.15;
