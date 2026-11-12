@@ -7,8 +7,9 @@ h1{font-size:20px;margin:0 0 4px}.sub{color:#9aa0ad;margin:0 0 14px}
 .map:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(0,0,0,.12) 46px 47px),repeating-linear-gradient(0deg,transparent 0 46px,rgba(0,0,0,.12) 46px 47px)}
 /* pergamino */
 .scroll{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:780px;background:#f3e6cc;color:#3a2412;border-radius:6px;padding:22px 26px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-.scroll:before,.scroll:after{content:'';position:absolute;left:-14px;right:-14px;height:18px;background:linear-gradient(#8a5a2e,#5a3a1e);border-radius:9px}
-.scroll:before{top:-9px}.scroll:after{bottom:-9px}
+.scroll{border-radius:2px}
+.scroll:before,.scroll:after{content:'';position:absolute;top:-16px;bottom:-16px;width:20px;background:linear-gradient(90deg,#4a2a14,#a06a38 45%,#5a3a1e);border-radius:10px;box-shadow:0 0 0 2px #2a1a0c}
+.scroll:before{left:-18px}.scroll:after{right:-18px}
 /* libro */
 .book{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:840px;height:380px;background:#5a3420;border-radius:14px;padding:10px;display:flex;gap:0;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 .pg{flex:1;background:#f3e6cc;color:#3a2412;padding:18px 22px;position:relative}.pg.l{border-radius:8px 0 0 8px;box-shadow:inset -14px 0 18px -12px rgba(0,0,0,.35)}.pg.r{border-radius:0 8px 8px 0;box-shadow:inset 14px 0 18px -12px rgba(0,0,0,.35)}
@@ -27,11 +28,11 @@ h1{font-size:20px;margin:0 0 4px}.sub{color:#9aa0ad;margin:0 0 14px}
 <h1>Eventos · cómo se verían</h1><p class="sub">Bocetos de disposición (el dibujo del evento es un hueco: lo haremos aparte). Cada marco es una propuesta.</p>
 <div class="grid">
 
-<div class="fr"><h2>A · Pergamino (como las ofertas): dibujo a la izquierda, opciones a la derecha</h2><div class="map"><span class="cap">mapa detrás, en pausa</span>
+<div class="fr"><h2>A · Pergamino (como las ofertas, se desenrolla hacia los lados): dibujo a la izquierda, opciones a la derecha</h2><div class="map"><span class="cap">mapa detrás, en pausa</span>
 <div class="scroll" style="display:grid;grid-template-columns:300px 1fr;gap:22px">
  <div><div class="img" style="height:190px">Dibujo del evento</div><div class="ti">Mercader ambulante</div><div class="tx">Un mercader con un carro lleno de objetos raros te corta el paso. «¿Te interesa algo, viajero?»</div></div>
  <div class="ops" style="justify-content:center"><div class="op"><b><span class="k">1</span>Comprar una reliquia</b><small>Pagas 150 🪙</small></div><div class="op hl"><b><span class="k">2</span>Robarle</b><small>La próxima oleada trae una Élite extra</small></div><div class="op"><b><span class="k">3</span>Regatear</b><small>El próximo cofre que abras estará vacío</small></div><div class="op"><b><span class="k">4</span>Seguir tu camino</b><small>Sin efecto</small></div></div>
-</div></div><p class="n">Mismo pergamino que las ofertas de torres y piezas: se reconoce como «algo que eliges». Al elegir, se enrolla y se vuelve a abrir con la resolución.</p></div>
+</div></div><p class="n">Mismo pergamino que las ofertas de torres y piezas: se reconoce como «algo que eliges». Se abre desde el centro hacia los lados, como las ofertas; al elegir, se enrolla y vuelve a abrirse con la resolución.</p></div>
 
 <div class="fr"><h2>B · Libro: dibujo y texto en la página izquierda, opciones en la derecha</h2><div class="map"><span class="cap">mapa detrás, en pausa</span>
 <div class="book"><div class="pg l"><div class="img" style="height:200px">Dibujo del evento</div><div class="ti">Mercader ambulante</div><div class="tx">Un mercader con un carro lleno de objetos raros te corta el paso. «¿Te interesa algo, viajero?»</div></div>
