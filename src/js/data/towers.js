@@ -39,7 +39,7 @@ dron:{n:'Dron de mantenimiento',ic:'🛸',dt:'phys',era:2,cost:95,range:3,dmg:0,
  orb:{n:'Orbe arcano',ic:'🧿',dt:'magic',cost:110,range:2.8,dmg:28,rate:.85,ps:4.5,orb:1,col:'#8a7dff',l:'I',fx:'Orbe mágico'},
 poison:{n:'Envenenadora',ground:1,ic:'🧪',dt:'elem',cost:100,range:3,dmg:1.5,rate:.5,puddle:1,dot:1,dur:4,pr:1,shape:'Charco',areaTxt:'Todos los enemigos dentro del círculo reciben el efecto.',col:'#7bd34a',l:'V',fx:'Veneno acumulable'},
 faro:{n:'Faro arcano',ic:'🗼',dt:'magic',cost:0,range:3,dmg:0,rate:0,col:'#ffe27a',l:'F',fx:'Ninguno',uniq:1,support:1,faro:1,ev:'lighthouse'},
-dragon:{n:'Huevo de dragón',ic:'🥚',dt:'elem',cost:0,range:2.5,dmg:8,rate:.83,unit:{n:1,hp:60,ap:5,rez:8,spd:2},col:'#d0603a',l:'D',fx:'Ninguno',uniq:1,dragon:1,ev:'nest'},
+dragon:{n:'Huevo de dragón',ic:'🥚',dt:'elem',cost:0,range:2.5,dmg:8,rate:.83,unit:{n:1,hp:60,ap:5,rez:8,spd:2.4},col:'#d0603a',l:'D',fx:'Ninguno',uniq:1,dragon:1,ev:'nest'},
 guild:{n:'Sede del Gremio',ic:'🏰',dt:'phys',cost:0,range:2.5,dmg:4,rate:1,unit:{n:3,hp:40,ap:10,rez:8,spd:2},col:'#c9a24a',l:'G',fx:'Ninguno',uniq:1,guild:1,upc:[0,0,80,140,300],ev:'guild'},
 straw:{n:'Casa de paja',ic:'🌾',dt:'phys',cost:0,range:2.6,dmg:10,rate:.8,ps:10,splash:.5,slow:.5,slowt:3,slowA:1,col:'#e8cf6a',l:'P',fx:'Ralentización',uniq:1,pig:1,upc:[0,0,40,70,120],ev:'pigs'},
 wood:{n:'Casa de madera',ic:'🪵',dt:'phys',cost:0,range:3,dmg:5,rate:.5,col:'#a8743a',l:'M',fx:'Empuje',uniq:1,pig:1,log:1,upc:[0,0,40,70,120],ev:'pigs'},
@@ -271,7 +271,7 @@ bunker:{
  nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*10,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['weak','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración. Para élites y jefes.'}},
 robots:{
  mecha:{n:'Mechas',ic:'🦾',col:'#e0884a',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.5,pen:0},o:{mecha:1},ab:['drill','react','shoulder'],d:'Uno de los robots se transforma en un mecha élite: mucha más vida, corpulencia 2 y golpes en área. Los otros dos le apoyan.'},
- kami:{n:'Androides kamikaze',ic:'💥',col:'#ff6a5a',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H*.5,pen:0},o:{kami:1},uspd:1.6,ab:['reens','decoy','scrap'],d:'4 androides rápidos y frágiles. Al caer explotan (3× su daño en 1 casilla) y la torre los reensambla enseguida.'}},
+ kami:{n:'Androides kamikaze',ic:'💥',col:'#ff6a5a',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H*.5,pen:0},o:{kami:1},uspd:1.5,ab:['reens','decoy','scrap'],d:'4 androides rápidos y frágiles. Al caer explotan (3× su daño en 1 casilla) y la torre los reensambla enseguida.'}},
 nano:{
  hack:{n:'Hackeo',ic:'🧬',col:'#9fe0ff',lv:{dmg:L4D*.75,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{nsw:2},ab:['infect','virus','reprog'],d:'El enjambre se divide en 2 nubes que van a enemigos distintos. Infecta a los enemigos para que reciban más daño.'},
  devour:{n:'Enjambre devorador',ic:'🕳️',col:'#b0b8ff',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{nsw:1,grow:1},ab:['hunger','acid','bottom'],d:'Una sola nube que crece con cada enemigo que devora durante la oleada: más daño y más grande. Al acabar la oleada vuelve a su tamaño.'}},
@@ -285,8 +285,8 @@ poison:{
  alch:{n:'Alquimista',ic:'⚗️',col:'#58c9a0',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3*1.3,hp:L4H,pen:0},ab:['plague','corr','flask'],d:'Charcos más grandes y más stacks. El veneno se contagia y corroe la armadura.'},
  pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3*.85,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},
 monk:{
- fist:{n:'Monjes de Batalla',ic:'🥋',col:'#e07a3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2,area:1.3,hp:L4H*1.1,pen:0},ab:['chi','fists','counter'],d:'Monjes élficos que pelean con más daño y más daño mágico. Siguen curando al grupo.'},
- drunk:{n:'Maestros Ebrios',ic:'🍶',col:'#b07ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2,area:1.3,hp:L4H*1.4,pen:0},o:{noheal:1},uspd:.85,ab:['gourd','stagger','fireb'],d:'Beben de su calabaza: se curan solos, esquivan y escupen fuego. Ya no curan al grupo.'}},
+ fist:{n:'Monjes de Batalla',ic:'🥋',col:'#e07a3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2,area:1.3,hp:L4H*1.1,pen:0},uspd:1.125,ab:['chi','fists','counter'],d:'Monjes élficos que pelean con más daño y más daño mágico. Siguen curando al grupo.'},
+ drunk:{n:'Maestros Ebrios',ic:'🍶',col:'#b07ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2,area:1.3,hp:L4H*1.4,pen:0},o:{noheal:1},uspd:.75,ab:['gourd','stagger','fireb'],d:'Beben de su calabaza: se curan solos, esquivan y escupen fuego. Ya no curan al grupo.'}},
 bastion:{
  pal:{n:'Paladines',ic:'⚜️',col:'#f0d36a',lv:{dmg:L4D*.7,cd:.7,range:1.2,area:1.3,hp:L4H*1.6,pen:0},uap:15,uspd:.8,ab:['heal','wall','sacred'],d:'Soldados con más vida y armadura y menos daño. Se curan y bloquean mejor.'},
  ass:{n:'Asesinos',ic:'🗡️',col:'#9a4bd6',lv:{dmg:L4D*1.6,cd:.7*.6,range:1.2,area:1.3,hp:L4H*.6,pen:0},uspd:1.5,ab:['dodge','cut','back'],d:'Soldados rápidos y frágiles que golpean mucho. Esquivan y provocan sangrado.'}},
@@ -319,5 +319,5 @@ const DRGAT=[0,3,6,10],DRGST=r=>r>=10?3:r>=6?2:r>=3?1:0,DBRCD=8,DBRN=8;
 const PIGU={brick:{n:'Cerdito albañil',ic:'🐖',col:'#c0563a',hp:290,ap:40,dmg:6,rate:1,spd:1.5,d:'Pelea cuerpo a cuerpo. Hace poco daño, pero tiene mucha vida y armadura.'},
  wood:{n:'Cerdito leñador',ic:'🐗',col:'#a8743a',hp:200,ap:20,dmg:14,rate:.9,push:.6,spd:1.9,d:'Cuerpo a cuerpo con hacha: más daño que el albañil, y cada 3 golpes empuja al enemigo.'},
  straw:{n:'Cerdito espantapájaros',ic:'🐽',col:'#e8cf6a',hp:120,ap:0,dmg:10,rate:1,rng:1,range:3,spd:2.2,slow:.3,slowt:2,d:'Lanza paja desde lejos: daña en un área pequeña y ralentiza un 30%. Si le alcanzan, bloquea y pega a mitad de daño.'},
- mech:{n:'Mecha Cerdito',ic:'🤖',col:'#d08a5a',hp:700,ap:50,dmg:20,rate:.8,st:30,spd:1.6}};
+ mech:{n:'Mecha Cerdito',ic:'🤖',col:'#d08a5a',hp:700,ap:50,dmg:20,rate:.8,st:30,spd:1.4}};
 const tinfo=t=>t.tinf?t.tinf:t.type==='omega'&&typeof omegaT==='function'?omegaT(t):t.pigU?{...TW.bastion,...PIGU[t.pigU]}:t.beast?{...TW.bastion,...(BEASTS[t.beast]||SPECT[t.beast])}:t.hero?t.hero.def:TW[t.type]&&TW[t.type].dragon?{...TW[t.type],...DRAG[t.stage||0]}:t.spec?SPECS[t.type][t.spec]:TW[t.type];

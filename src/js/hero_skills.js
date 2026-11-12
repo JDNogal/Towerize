@@ -18,7 +18,7 @@ const HAB={
   p4:{n:'Orbe sobrecargado',ic:'🔮',t:()=>'Cada 4.º orbe va sobrecargado: <span class="cd">doble de daño</span> y doble de área.'},
   p8:{n:'Pulso arcano',ic:'🌀',t:()=>'Antes de explotar, la runa atrae a los enemigos (2,4 casillas) hacia su centro (los jefes, la mitad).'},
   u:{n:'Tormenta arcana',ic:'⛈️',t:()=>'Tormenta de <b>6 s</b> (3 casillas) que lanza rayos de <span class="cmg">daño mágico</span> con un poco de área sobre los enemigos de dentro.'}}};
-const BEASTS={bear:{n:'Oso pardo',ic:'🐻',col:'#8a5a3a',hp:2.6,d:1.2,r:1,w:3,ap:25,sp:1},wolf:{n:'Huargo plateado',ic:'🐺',col:'#b8c0cc',hp:1.4,d:1,r:1.7,w:1,ap:10,sp:2.2,al:3.2},panther:{n:'Pantera de sombra',ic:'🐆',col:'#3a3448',hp:1.1,d:2.4,r:1,w:1,ap:5,sp:2.2,al:4.2,pref:1}};
+const BEASTS={bear:{n:'Oso pardo',ic:'🐻',col:'#8a5a3a',hp:2.6,d:1.2,r:1,w:3,ap:25,sp:.9},wolf:{n:'Huargo plateado',ic:'🐺',col:'#b8c0cc',hp:1.4,d:1,r:1.7,w:1,ap:10,sp:1.6,al:3.2},panther:{n:'Pantera de sombra',ic:'🐆',col:'#3a3448',hp:1.1,d:2.4,r:1,w:1,ap:5,sp:1.7,al:4.2,pref:1}};
 const hdm=()=>stats(S.hero.pt).dmg;
 const habOk=k=>{const H=S.hero;if(!H)return 'Sin héroe';if(k==='u'&&H.lvl<10)return 'Se desbloquea a Nv 10';if(S.phase!=='wave')return 'Solo durante la oleada';if(H.s.hp<=0)return 'Tu héroe está caído';const cd=k==='u'?H.ucd:H.bcd;if(cd>0)return 'Enfriamiento: '+fmtT(cd);return '';};
 function startHab(k){const why=habOk(k);errAt('#mbr [data-a="'+(k==='u'?'hult':'hab')+'"]');if(S.aim==='hab'+k){S.aim=null;S.msg='';ui();renderRelics();return;}if(why){S.msg=HAB[S.hero.id][k].n+': '+why.toLowerCase()+'.';ui();return;}

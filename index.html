@@ -2231,7 +2231,7 @@ dron:{n:'Dron de mantenimiento',ic:'🛸',dt:'phys',era:2,cost:95,range:3,dmg:0,
  orb:{n:'Orbe arcano',ic:'🧿',dt:'magic',cost:110,range:2.8,dmg:28,rate:.85,ps:4.5,orb:1,col:'#8a7dff',l:'I',fx:'Orbe mágico'},
 poison:{n:'Envenenadora',ground:1,ic:'🧪',dt:'elem',cost:100,range:3,dmg:1.5,rate:.5,puddle:1,dot:1,dur:4,pr:1,shape:'Charco',areaTxt:'Todos los enemigos dentro del círculo reciben el efecto.',col:'#7bd34a',l:'V',fx:'Veneno acumulable'},
 faro:{n:'Faro arcano',ic:'🗼',dt:'magic',cost:0,range:3,dmg:0,rate:0,col:'#ffe27a',l:'F',fx:'Ninguno',uniq:1,support:1,faro:1,ev:'lighthouse'},
-dragon:{n:'Huevo de dragón',ic:'🥚',dt:'elem',cost:0,range:2.5,dmg:8,rate:.83,unit:{n:1,hp:60,ap:5,rez:8,spd:2},col:'#d0603a',l:'D',fx:'Ninguno',uniq:1,dragon:1,ev:'nest'},
+dragon:{n:'Huevo de dragón',ic:'🥚',dt:'elem',cost:0,range:2.5,dmg:8,rate:.83,unit:{n:1,hp:60,ap:5,rez:8,spd:2.4},col:'#d0603a',l:'D',fx:'Ninguno',uniq:1,dragon:1,ev:'nest'},
 guild:{n:'Sede del Gremio',ic:'🏰',dt:'phys',cost:0,range:2.5,dmg:4,rate:1,unit:{n:3,hp:40,ap:10,rez:8,spd:2},col:'#c9a24a',l:'G',fx:'Ninguno',uniq:1,guild:1,upc:[0,0,80,140,300],ev:'guild'},
 straw:{n:'Casa de paja',ic:'🌾',dt:'phys',cost:0,range:2.6,dmg:10,rate:.8,ps:10,splash:.5,slow:.5,slowt:3,slowA:1,col:'#e8cf6a',l:'P',fx:'Ralentización',uniq:1,pig:1,upc:[0,0,40,70,120],ev:'pigs'},
 wood:{n:'Casa de madera',ic:'🪵',dt:'phys',cost:0,range:3,dmg:5,rate:.5,col:'#a8743a',l:'M',fx:'Empuje',uniq:1,pig:1,log:1,upc:[0,0,40,70,120],ev:'pigs'},
@@ -2463,7 +2463,7 @@ bunker:{
  nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*10,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['weak','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración. Para élites y jefes.'}},
 robots:{
  mecha:{n:'Mechas',ic:'🦾',col:'#e0884a',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.5,pen:0},o:{mecha:1},ab:['drill','react','shoulder'],d:'Uno de los robots se transforma en un mecha élite: mucha más vida, corpulencia 2 y golpes en área. Los otros dos le apoyan.'},
- kami:{n:'Androides kamikaze',ic:'💥',col:'#ff6a5a',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H*.5,pen:0},o:{kami:1},uspd:1.6,ab:['reens','decoy','scrap'],d:'4 androides rápidos y frágiles. Al caer explotan (3× su daño en 1 casilla) y la torre los reensambla enseguida.'}},
+ kami:{n:'Androides kamikaze',ic:'💥',col:'#ff6a5a',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H*.5,pen:0},o:{kami:1},uspd:1.5,ab:['reens','decoy','scrap'],d:'4 androides rápidos y frágiles. Al caer explotan (3× su daño en 1 casilla) y la torre los reensambla enseguida.'}},
 nano:{
  hack:{n:'Hackeo',ic:'🧬',col:'#9fe0ff',lv:{dmg:L4D*.75,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{nsw:2},ab:['infect','virus','reprog'],d:'El enjambre se divide en 2 nubes que van a enemigos distintos. Infecta a los enemigos para que reciban más daño.'},
  devour:{n:'Enjambre devorador',ic:'🕳️',col:'#b0b8ff',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{nsw:1,grow:1},ab:['hunger','acid','bottom'],d:'Una sola nube que crece con cada enemigo que devora durante la oleada: más daño y más grande. Al acabar la oleada vuelve a su tamaño.'}},
@@ -2477,8 +2477,8 @@ poison:{
  alch:{n:'Alquimista',ic:'⚗️',col:'#58c9a0',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3*1.3,hp:L4H,pen:0},ab:['plague','corr','flask'],d:'Charcos más grandes y más stacks. El veneno se contagia y corroe la armadura.'},
  pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3*.85,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},
 monk:{
- fist:{n:'Monjes de Batalla',ic:'🥋',col:'#e07a3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2,area:1.3,hp:L4H*1.1,pen:0},ab:['chi','fists','counter'],d:'Monjes élficos que pelean con más daño y más daño mágico. Siguen curando al grupo.'},
- drunk:{n:'Maestros Ebrios',ic:'🍶',col:'#b07ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2,area:1.3,hp:L4H*1.4,pen:0},o:{noheal:1},uspd:.85,ab:['gourd','stagger','fireb'],d:'Beben de su calabaza: se curan solos, esquivan y escupen fuego. Ya no curan al grupo.'}},
+ fist:{n:'Monjes de Batalla',ic:'🥋',col:'#e07a3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2,area:1.3,hp:L4H*1.1,pen:0},uspd:1.125,ab:['chi','fists','counter'],d:'Monjes élficos que pelean con más daño y más daño mágico. Siguen curando al grupo.'},
+ drunk:{n:'Maestros Ebrios',ic:'🍶',col:'#b07ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2,area:1.3,hp:L4H*1.4,pen:0},o:{noheal:1},uspd:.75,ab:['gourd','stagger','fireb'],d:'Beben de su calabaza: se curan solos, esquivan y escupen fuego. Ya no curan al grupo.'}},
 bastion:{
  pal:{n:'Paladines',ic:'⚜️',col:'#f0d36a',lv:{dmg:L4D*.7,cd:.7,range:1.2,area:1.3,hp:L4H*1.6,pen:0},uap:15,uspd:.8,ab:['heal','wall','sacred'],d:'Soldados con más vida y armadura y menos daño. Se curan y bloquean mejor.'},
  ass:{n:'Asesinos',ic:'🗡️',col:'#9a4bd6',lv:{dmg:L4D*1.6,cd:.7*.6,range:1.2,area:1.3,hp:L4H*.6,pen:0},uspd:1.5,ab:['dodge','cut','back'],d:'Soldados rápidos y frágiles que golpean mucho. Esquivan y provocan sangrado.'}},
@@ -2511,7 +2511,7 @@ const DRGAT=[0,3,6,10],DRGST=r=>r>=10?3:r>=6?2:r>=3?1:0,DBRCD=8,DBRN=8;
 const PIGU={brick:{n:'Cerdito albañil',ic:'🐖',col:'#c0563a',hp:290,ap:40,dmg:6,rate:1,spd:1.5,d:'Pelea cuerpo a cuerpo. Hace poco daño, pero tiene mucha vida y armadura.'},
  wood:{n:'Cerdito leñador',ic:'🐗',col:'#a8743a',hp:200,ap:20,dmg:14,rate:.9,push:.6,spd:1.9,d:'Cuerpo a cuerpo con hacha: más daño que el albañil, y cada 3 golpes empuja al enemigo.'},
  straw:{n:'Cerdito espantapájaros',ic:'🐽',col:'#e8cf6a',hp:120,ap:0,dmg:10,rate:1,rng:1,range:3,spd:2.2,slow:.3,slowt:2,d:'Lanza paja desde lejos: daña en un área pequeña y ralentiza un 30%. Si le alcanzan, bloquea y pega a mitad de daño.'},
- mech:{n:'Mecha Cerdito',ic:'🤖',col:'#d08a5a',hp:700,ap:50,dmg:20,rate:.8,st:30,spd:1.6}};
+ mech:{n:'Mecha Cerdito',ic:'🤖',col:'#d08a5a',hp:700,ap:50,dmg:20,rate:.8,st:30,spd:1.4}};
 const tinfo=t=>t.tinf?t.tinf:t.type==='omega'&&typeof omegaT==='function'?omegaT(t):t.pigU?{...TW.bastion,...PIGU[t.pigU]}:t.beast?{...TW.bastion,...(BEASTS[t.beast]||SPECT[t.beast])}:t.hero?t.hero.def:TW[t.type]&&TW[t.type].dragon?{...TW[t.type],...DRAG[t.stage||0]}:t.spec?SPECS[t.type][t.spec]:TW[t.type];
 // ---- héroes ----
 // base: estadísticas de Nv 1 (rango en casillas). Por nivel: +12% vida, +10% daño y +apLv de armadura. w = unidades que cuenta al bloquear (cuerpo a cuerpo 2, a distancia 1).
@@ -4364,7 +4364,7 @@ const HAB={
   p4:{n:'Orbe sobrecargado',ic:'🔮',t:()=>'Cada 4.º orbe va sobrecargado: <span class="cd">doble de daño</span> y doble de área.'},
   p8:{n:'Pulso arcano',ic:'🌀',t:()=>'Antes de explotar, la runa atrae a los enemigos (2,4 casillas) hacia su centro (los jefes, la mitad).'},
   u:{n:'Tormenta arcana',ic:'⛈️',t:()=>'Tormenta de <b>6 s</b> (3 casillas) que lanza rayos de <span class="cmg">daño mágico</span> con un poco de área sobre los enemigos de dentro.'}}};
-const BEASTS={bear:{n:'Oso pardo',ic:'🐻',col:'#8a5a3a',hp:2.6,d:1.2,r:1,w:3,ap:25,sp:1},wolf:{n:'Huargo plateado',ic:'🐺',col:'#b8c0cc',hp:1.4,d:1,r:1.7,w:1,ap:10,sp:2.2,al:3.2},panther:{n:'Pantera de sombra',ic:'🐆',col:'#3a3448',hp:1.1,d:2.4,r:1,w:1,ap:5,sp:2.2,al:4.2,pref:1}};
+const BEASTS={bear:{n:'Oso pardo',ic:'🐻',col:'#8a5a3a',hp:2.6,d:1.2,r:1,w:3,ap:25,sp:.9},wolf:{n:'Huargo plateado',ic:'🐺',col:'#b8c0cc',hp:1.4,d:1,r:1.7,w:1,ap:10,sp:1.6,al:3.2},panther:{n:'Pantera de sombra',ic:'🐆',col:'#3a3448',hp:1.1,d:2.4,r:1,w:1,ap:5,sp:1.7,al:4.2,pref:1}};
 const hdm=()=>stats(S.hero.pt).dmg;
 const habOk=k=>{const H=S.hero;if(!H)return 'Sin héroe';if(k==='u'&&H.lvl<10)return 'Se desbloquea a Nv 10';if(S.phase!=='wave')return 'Solo durante la oleada';if(H.s.hp<=0)return 'Tu héroe está caído';const cd=k==='u'?H.ucd:H.bcd;if(cd>0)return 'Enfriamiento: '+fmtT(cd);return '';};
 function startHab(k){const why=habOk(k);errAt('#mbr [data-a="'+(k==='u'?'hult':'hab')+'"]');if(S.aim==='hab'+k){S.aim=null;S.msg='';ui();renderRelics();return;}if(why){S.msg=HAB[S.hero.id][k].n+': '+why.toLowerCase()+'.';ui();return;}
@@ -4914,7 +4914,7 @@ function wolfTick(dt){for(const t of S.list)if(t.curse>0)t.curse-=dt;
   for(const t of unitTowers())for(const s of t.sd)if(s.en===e&&s.hp>0){const dx=s.x-e.x,dy=s.y-e.y,d=Math.hypot(dx,dy)||1;s.x+=dx/d*K;s.y+=dy/d*K;s.en=null;s.fight=false;s.lock=true;}
   S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:2*K,col:'#d8e4f0'});}}}}
 // ---- Sede del Gremio: grupo de aventureros por rango ----
-const CLS0={d:1,rt:1,cr:0,hp:1,ap:0},CLS={war:{n:'Espadachín',d:1,rt:1,cr:0,hp:1,ap:0},tank:{n:'Protector',d:.5,rt:1,cr:0,hp:2,ap:15,sp:.8},mage:{n:'Mago',d:1.2,rt:1,cr:0,hp:.7,ap:0,rng:1,sp:.9},rogue:{n:'Pícaro',d:1,rt:1.6,cr:.2,hp:.7,ap:0,sp:1.3},heal:{n:'Sanador',d:.4,rt:1,cr:0,hp:.8,ap:0,rng:1}};
+const CLS0={d:1,rt:1,cr:0,hp:1,ap:0},CLS={war:{n:'Espadachín',d:1,rt:1,cr:0,hp:1,ap:0,sp:1.1},tank:{n:'Protector',d:.5,rt:1,cr:0,hp:2,ap:15,sp:.8},mage:{n:'Mago',d:1.2,rt:1,cr:0,hp:.7,ap:0,rng:1,sp:.9},rogue:{n:'Pícaro',d:1,rt:1.6,cr:.2,hp:.7,ap:0,sp:1.3},heal:{n:'Sanador',d:.4,rt:1,cr:0,hp:.8,ap:0,rng:1,sp:.95}};
 const PARTY={1:['war','war','war'],2:['war','war','mage'],3:['tank','war','mage'],4:['tank','rogue','mage','heal']},RANKS=['C','B','A','S'];
 function mkGuild(t){const U=TW[t.type].unit,base=U.hp*lvMods(t.type,t.lvl,null).hp;t.sd=guildParty(t).map((c,i)=>{const m=base*CLS[c].hp;return{i,x:t.x,y:t.y,hp:m,max:m,en:null,cd:0,rt:0,tw:t,lock:true,fight:false,cls:c,rng:!!CLS[c].rng};});if(t.flag)setFlag(t,t.flag);}
 function guildHeal(dt){for(const t of unitTowers()){if(!(TW[t.type]||{}).guild||!t.sd)continue;const pool=t.merc&&S.hero?t.sd.concat([S.hero.s]):t.sd;for(const s of t.sd){if(s.cls!=='heal'||s.hp<=0)continue;s.hc=(s.hc||4)-dt;if(s.hc>0)continue;s.hc=4;let lo=null;for(const q of pool)if(q.hp>0&&q.hp<q.max&&(!lo||q.hp/q.max<lo.hp/lo.max))lo=q;if(lo){lo.hp=Math.min(lo.max,lo.hp+lo.max*.15);S.fx.push({x:lo.x,y:lo.y,t:.5,m:.5,r:.8*K,col:'#8ff0a0'});}}}}
@@ -5761,7 +5761,7 @@ function heraldBolt(t,s,be){const wr=abRank(t,'wrath'),fk=abRank(t,'fork'),fg=ab
 function heraldDeath(e){for(const t of S.list)if(t.type==='augur'&&t.spec==='herald'&&Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range)t.ch=Math.min(HCH,(t.ch||0)+HCHK);}
 // ===== Orbe arcano (Era Fantástica): maleficios y almas =====
 const HEXT=3,POLYS=.6,FEART=1.5,SPECSP=1.2*K,KNHP=900;
-const SPECT={spectre:{n:'Espectro',ic:'👻',col:'#c8d4f0',hp:.5,d:.5,w:1,sp:1.4},knight:{n:'Caballero Espectral',ic:'♞',col:'#9fb4d8',w:2,d:1.2,sp:1}};
+const SPECT={spectre:{n:'Espectro',ic:'👻',col:'#c8d4f0',hp:.5,d:.5,w:1,sp:1.4},knight:{n:'Caballero Espectral',ic:'♞',col:'#9fb4d8',w:2,d:1.2,sp:.85}};
 const soulB=o=>{const h=abRank(o,'harvest');return h?Math.min(h.max,(o.souls||0)*.01):0;};
 // efectos de cada orbe que impacta (Foco Arcano): maldición, nova cada N impactos y polimorfia
 function orbHit(t,tg,s,dmg){const hx=abRank(t,'hex'),nv=abRank(t,'nova'),pl=abRank(t,'poly');
@@ -6366,7 +6366,7 @@ function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
  const X=tinfo(t);
- return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap,X.uspd):tgtRow(t,src,PR.pinned&&PR.key===src))+
+ return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap,X.uspd||(!t.tinf&&t.uspdx)||0):tgtRow(t,src,PR.pinned&&PR.key===src))+
   (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
@@ -9454,7 +9454,7 @@ PORT.ally='<defs><radialGradient id="pbg@U" cx="50%" cy="35%" r="75%"><stop offs
 PCROP.ally='22 12 76 76';
 function mkAlly(){const c=S.core;let b=null,bd=1e9;for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(S.cells[y][x]!==2||(x===c.x&&y===c.y))continue;const d=Math.hypot(x-c.x,y-c.y);if(d<bd){bd=d;b={x,y};}}if(!b)return null;
  const k=1+.06*Math.max(0,S.round-1),hp=150*k,old=S.ally,fl=old&&old.flag?old.flag:b;
- const t={type:'bastion',lvl:3,ally:1,tinf:{n:'Criatura alienígena',ic:'👽',col:'#8a4fd0',dt:'phys',range:2.5,dmg:11,rate:1.1,unit:{n:1,hp:150,ap:10,rez:12,spd:2.2}},x:fl.x,y:fl.y,cells:[],flag:{x:fl.x,y:fl.y},ab:{},acd:{},sd:[],uov:{n:1,hp,ap:10,rez:12,spd:2.2},ovr:{dmg:11*k,rate:1.1,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
+ const t={type:'bastion',lvl:3,ally:1,tinf:{n:'Criatura alienígena',ic:'👽',col:'#8a4fd0',dt:'phys',range:2.5,dmg:11,rate:1.1,unit:{n:1,hp:150,ap:10,rez:12,spd:2.2*K}},x:fl.x,y:fl.y,cells:[],flag:{x:fl.x,y:fl.y},ab:{},acd:{},sd:[],uov:{n:1,hp,ap:10,rez:12,spd:2.2*K},ovr:{dmg:11*k,rate:1.1,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
  t.sd=[{i:0,x:fl.x,y:fl.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,wt:2,ally:1}];S.ally=t;try{hpanTick.sg='';}catch(e){}S.fx.push({x:fl.x,y:fl.y,t:.6,m:.6,r:1.2*K,col:'#ff4fd8'});return t;}
 {const _hp=heroPanel;heroPanel=function(){let h=_hp.apply(this,arguments);try{if(h&&S.ally){const s=S.ally.sd[0];h=h.replace('<div class="hpan">',`<div class="hpan"><button class="hpb hpally${S.aim==='ally'?' aim':''}${s.hp<=0?' off':''}" data-a="ally" data-tip="ally:x" style="background:#8a4fd0">${portrait('ally',1)}${s.hp<=0?`<span class="bdg">${Math.ceil(s.rt)}s</span>`:''}${typeof kcap==='function'?kcap(kbN('ally')):''}</button>`);}}catch(e){}return h;};}
 if(typeof document!=='undefined'){document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="ally"]');if(!b||typeof S==='undefined'||!S||!S.ally||RL.open)return;e.stopPropagation();
@@ -9553,7 +9553,7 @@ function omegaTick(dt){if(S.phase!=='wave')return;for(const t of S.list){if(t.ty
   if(fam.includes('con')&&cd('con',2)){oc.conN=(oc.conN||0)+1;for(const e of T){slowE(e,.7,1.5);if(L>=2)addChill(e,t,1);if(L>=3&&!isBoss(e))knock(e,.4*K);if(L>=4&&oc.conN%3===0)freezeE(e,1);}S.fx.push({x:t.x,y:t.y,t:.5,m:.5,r:R,col:'#7ad8ff'});}}}
 function omDrones(t,L,dt){let u=OMD.get(t);if(!u){/* tras cargar o reintentar: recupera su escuadrón */u=(S.summ||[]).find(x=>x.odr&&x.otid===t.id);if(u)OMD.set(t,u);}if(u&&(!S.summ||!S.summ.includes(u)||u.olv!==L)){if(u.olv!==L&&S.summ)S.summ=S.summ.filter(x=>x!==u);u=null;OMD.delete(t);}
  if(u)return;t.oc.dr=(t.oc.dr==null?0:t.oc.dr)-dt;if(t.oc.dr>0)return;t.oc.dr=10;let b=null,bd=1e9;for(let y=t.y-9;y<=t.y+9;y++)for(let x=t.x-9;x<=t.x+9;x++){if(!inb(x,y)||S.cells[y][x]!==2)continue;const d=Math.hypot(x-t.x,y-t.y);if(d<bd){bd=d;b={x,y};}}if(!b||bd>stats(t).range)return;
- const n=Math.min(3,L),k=(L>=4?2:1)*(1+.05*Math.max(0,S.round-1));u={type:'bastion',lvl:2,summ:1,odr:1,otid:t.id,olv:L,ttl:9999,x:t.x,y:t.y,cells:[],flag:{x:b.x,y:b.y},ab:{},acd:{},sd:[],xap:5,tinf:{n:'Dron de combate',ic:'🛸',col:'#9aa4b4',dt:'phys',range:2.5,dmg:6,rate:1.2,unit:{n:3,hp:45,ap:10,rez:9,spd:2.4}},ovr:{dmg:6*k,rate:1.2,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
+ const n=Math.min(3,L),k=(L>=4?2:1)*(1+.05*Math.max(0,S.round-1));u={type:'bastion',lvl:2,summ:1,odr:1,otid:t.id,olv:L,ttl:9999,x:t.x,y:t.y,cells:[],flag:{x:b.x,y:b.y},ab:{},acd:{},sd:[],xap:5,uspdx:1.5,tinf:{n:'Dron de combate',ic:'🛸',col:'#9aa4b4',dt:'phys',range:2.5,dmg:6,rate:1.2,unit:{n:3,hp:45,ap:10,rez:9,spd:3*K}},ovr:{dmg:6*k,rate:1.2,range:2.5*K,crit:.05,critm:2,area:0,gold:0,pen:0}};
  const hp=45*k;u.sd=Array.from({length:n},(_,i)=>({i,x:t.x,y:t.y,hp,max:hp,en:null,cd:0,rt:0,tw:u,lock:true,fight:false}));(S.summ=S.summ||[]).push(u);OMD.set(t,u);}
 H2T.push(dt=>omegaTick(dt));
 
@@ -9646,7 +9646,7 @@ nrAdd({id:'clone',n:'Cápsula de clonación',ic:'🧬',col:'#2a5a6a',era:2,cd:3,
  pas:()=>'Cuando cae una de tus unidades o tu héroe, hay un <span class="cf">25%</span> de que reaparezca al instante.',
  act:()=>'Durante <b>10 s</b>, un clon de tu héroe, con la mitad de vida y de daño, pelea a su lado.'},
  {dur:10,use:()=>{const H=S.hero;if(!H||H.s.hp<=0){S.msg='Cápsula de clonación: tu héroe tiene que estar vivo.';return false;}const s=H.s,st=stats(H.pt),hp=s.max*.5;
-  const t={type:'bastion',lvl:2,summ:1,ttl:10,x:s.x,y:s.y,cells:[],flag:{x:Math.round(s.x),y:Math.round(s.y)},ab:{},acd:{},sd:[],tinf:{n:'Clon de '+H.def.n,ic:H.def.ic,col:'#3fe8ff',dt:H.def.dt||'phys',range:st.range/K,dmg:st.dmg*.5,rate:st.rate,unit:{n:1,hp,ap:5,rez:99,spd:2.2}},ovr:{dmg:st.dmg*.5,rate:st.rate,range:Math.max(2.5*K,st.range),crit:.05,critm:2,area:0,gold:0,pen:0}};
+  const t={type:'bastion',lvl:2,summ:1,ttl:10,x:s.x,y:s.y,cells:[],flag:{x:Math.round(s.x),y:Math.round(s.y)},ab:{},acd:{},sd:[],uspdx:(H.def.spd||2)/2,tinf:{n:'Clon de '+H.def.n,ic:H.def.ic,col:'#3fe8ff',dt:H.def.dt||'phys',range:st.range/K,dmg:st.dmg*.5,rate:st.rate,unit:{n:1,hp,ap:5,rez:99,spd:(H.def.spd||2)*K}},ovr:{dmg:st.dmg*.5,rate:st.rate,range:Math.max(2.5*K,st.range),crit:.05,critm:2,area:0,gold:0,pen:0}};
   t.sd=[{i:0,x:s.x,y:s.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,clone:H.id,rng:H.def.ranged?1:0}];(S.summ=S.summ||[]).push(t);RS('clone').n2++;S.fx.push({x:s.x,y:s.y,t:.6,m:.6,r:K,col:'#3fe8ff'});return true;}});
 {const _u=unitDeath;unitDeath=function(t,s){const r=_u.apply(this,arguments);try{if(!t.summ&&!t.merc&&!S.pvE&&r3On('clone')&&Math.random()<.25){s.hp=s.max;s.rt=0;s.dd=0;s.en=null;s.fight=false;RS('clone').n++;S.fx.push({x:s.x,y:s.y,t:.5,m:.5,r:.8*K,col:'#3fe8ff'});}}catch(e){}return r;};}
 // ---- Chip de IA táctica ----
@@ -9704,14 +9704,14 @@ const ALSVG={
  // larva: las rayas no tocan el borde negro
  larva:`<svg viewBox="0 0 64 64"><path d="M12 44 Q12 32 22 34 Q26 26 34 32 Q42 26 48 34 Q56 34 54 44 Q52 52 32 52 Q14 52 12 44Z" fill="#9ae6d6" stroke="${ALS}" stroke-width="2"/><path d="M23 38 L24.5 47 M34 35.5 L34 48 M44.5 38 L43 47" stroke="#2a9a88" stroke-width="1.6" stroke-linecap="round"/><circle cx="50" cy="40" r="2.6" fill="#ffcf3a" stroke="${ALS}" stroke-width="1.2"/></svg>`,
  pred:`<svg viewBox="0 0 64 64"><path d="M10 40 Q10 22 32 20 Q54 22 54 40 Q54 54 32 56 Q10 54 10 40Z" fill="#2a9a88" stroke="${ALS}" stroke-width="2"/><path d="M14 24 Q8 12 4 10 M50 24 Q56 12 60 10 M20 20 Q18 8 22 4 M44 20 Q46 8 42 4" stroke="${ALS}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M18 30 L26 34 M46 30 L38 34" stroke="${ALS}" stroke-width="2.5"/><ellipse cx="24" cy="38" rx="4" ry="3" fill="#ff5a3a" stroke="${ALS}" stroke-width="1.5"/><ellipse cx="40" cy="38" rx="4" ry="3" fill="#ff5a3a" stroke="${ALS}" stroke-width="1.5"/><path d="M20 46 L24 52 L28 46 L32 52 L36 46 L40 52 L44 46" stroke="#f4ecd6" stroke-width="2" fill="none"/><path d="M14 50 L6 60 M50 50 L58 60" stroke="${ALS}" stroke-width="3.4" stroke-linecap="round"/></svg>`};
-TW.alien={n:'Criaturas alienígenas',ic:'🥚',icsvg:ALSVG.nest,dt:'magic',udt:'magic',era:2,cost:90,range:2.5,dmg:2.6,rate:1.2,unit:{n:4,hp:18,ap:0,rez:6,spd:2.4},col:'#3fb89c',l:'J',fx:'Simbiosis',alien:1};
+TW.alien={n:'Criaturas alienígenas',ic:'🥚',icsvg:ALSVG.nest,dt:'magic',udt:'magic',era:2,cost:90,range:2.5,dmg:2.6,rate:1.2,unit:{n:4,hp:18,ap:0,rez:6,spd:2.8},col:'#3fb89c',l:'J',fx:'Simbiosis',alien:1};
 TW.alien.range*=K;TW.alien.unit.spd*=K;/* las torres se definen en casillas y el juego trabaja en celdas (×K): las que se añaden tarde lo hacen a mano */
 UNAME.alien=['Criatura'];UIC.alien={img:ALSVG.crit};UIC.pred={img:ALSVG.pred};
 const ALN=[0,4,5,6],ALHIVE=8,ALSYM=.15;
-CLS.pred={n:'Depredador',d:2.6,rt:.9,cr:.05,hp:3.2,ap:5};CLS.larva={n:'Larva',d:.5,rt:1,cr:0,hp:.4,ap:0};
+CLS.pred={n:'Depredador',d:2.6,rt:.9,cr:.05,hp:3.2,ap:5};CLS.larva={n:'Larva',d:.5,rt:1,cr:0,hp:.4,ap:0,sp:.5};
 SPECS.alien={
  hive:{n:'Colmena',ic:'🥚',col:'#3fc9b0',lv:{dmg:L4D*.85,cd:.7,range:1.2,area:1.3,hp:L4H*.9,pen:0},ab:['larva','brood','swcor'],d:'El enjambre crece: 8 criaturas. Se multiplican y desgastan entre todas la resistencia mágica de los enemigos grandes.'},
- pred:{n:'Depredadores',ic:'🦖',col:'#2a9a88',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.2,pen:0},ab:['devour','ambush','frenzy'],d:'Solo sobreviven las 3 más fuertes: mucho más grandes, con más vida y daño, y corpulencia 2.'}};
+ pred:{n:'Depredadores',ic:'🦖',col:'#2a9a88',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.2,pen:0},uspd:.75,ab:['devour','ambush','frenzy'],d:'Solo sobreviven las 3 más fuertes: mucho más grandes, con más vida y daño, y corpulencia 2.'}};
 Object.assign(AB,{
  larva:{n:'Larvas',ranks:[{c:30,n:2,t:6},{c:40,n:2,t:10},{c:50,n:3,t:10}],txt:r=>`Al morir, cada criatura suelta <b>${r.n} larvas</b> que pelean <span class="cr">${r.t} s</span> (con menos vida y daño).`},
  brood:{n:'Puesta',ranks:[{c:35,n:2,cd:10},{c:45,n:4,cd:10},{c:55,n:4,cd:7}],txt:r=>`Cada <span class="cr">${r.cd} s</span> nace una criatura extra, hasta <b>${r.n} más</b> que el grupo. Las extra no reaparecen al morir.`},
@@ -9978,8 +9978,8 @@ const KAIL={
   {sp:'Vega',t:'Mejor así. Ya volverá a cruzarse en nuestro camino, {N}.'}]};
 function kaiRound(){try{if(!S||S.tut||S.pvE||PREVIEWING||S.era!==2||!S.hero||S.hero.id!=='vega'||h2Has('kai'))return false;return ROUNDS>=15?S.round===15:bossRound(S.round);}catch(e){return false;}}
 function mkKai(){const H=S.hero,f0=(H&&H.pt&&H.pt.flag)||S.core;const k=1+.06*Math.max(0,S.round-1),hp=170*k;
- const t={type:'bastion',lvl:3,summ:1,kai:1,ttl:9999,tinf:{n:'Kai',ic:(HEROES.kai||{}).ic||'🗡️',col:(HEROES.kai||{}).col||'#8a5a3a',dt:'phys',range:2.5,dmg:18,rate:1.4,unit:{n:1,hp:170,ap:10,rez:12,spd:2.6}},
-  x:f0.x,y:f0.y,cells:[],flag:{x:f0.x,y:f0.y},ab:{},acd:{},sd:[],uov:{n:1,hp,ap:10,rez:12,spd:2.6},ovr:{dmg:18*k,rate:1.4,range:2.5*K,crit:.15,critm:2,area:0,gold:0,pen:10},alert:2.6*K};
+ const t={type:'bastion',lvl:3,summ:1,kai:1,ttl:9999,tinf:{n:'Kai',ic:(HEROES.kai||{}).ic||'🗡️',col:(HEROES.kai||{}).col||'#8a5a3a',dt:'phys',range:2.5,dmg:18,rate:1.4,unit:{n:1,hp:170,ap:10,rez:12,spd:2.6*K}},
+  x:f0.x,y:f0.y,cells:[],flag:{x:f0.x,y:f0.y},ab:{},acd:{},sd:[],uov:{n:1,hp,ap:10,rez:12,spd:2.6*K},ovr:{dmg:18*k,rate:1.4,range:2.5*K,crit:.15,critm:2,area:0,gold:0,pen:10},alert:2.6*K};
  t.sd=[{i:0,x:f0.x,y:f0.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,wt:1,ally:1,port:'kai'}];(S.summ=S.summ||[]).push(t);S.kaiT=t;
  S.fx.push({x:f0.x,y:f0.y,t:.6,m:.6,r:1.2*K,col:'#e0b070'});return t;}
 // la máquina la lleva: a por el jefe si está en el camino; si no, junto a tu héroe

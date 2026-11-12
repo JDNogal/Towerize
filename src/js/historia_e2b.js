@@ -22,8 +22,8 @@ const KAIL={
   {sp:'Vega',t:'Mejor así. Ya volverá a cruzarse en nuestro camino, {N}.'}]};
 function kaiRound(){try{if(!S||S.tut||S.pvE||PREVIEWING||S.era!==2||!S.hero||S.hero.id!=='vega'||h2Has('kai'))return false;return ROUNDS>=15?S.round===15:bossRound(S.round);}catch(e){return false;}}
 function mkKai(){const H=S.hero,f0=(H&&H.pt&&H.pt.flag)||S.core;const k=1+.06*Math.max(0,S.round-1),hp=170*k;
- const t={type:'bastion',lvl:3,summ:1,kai:1,ttl:9999,tinf:{n:'Kai',ic:(HEROES.kai||{}).ic||'🗡️',col:(HEROES.kai||{}).col||'#8a5a3a',dt:'phys',range:2.5,dmg:18,rate:1.4,unit:{n:1,hp:170,ap:10,rez:12,spd:2.6}},
-  x:f0.x,y:f0.y,cells:[],flag:{x:f0.x,y:f0.y},ab:{},acd:{},sd:[],uov:{n:1,hp,ap:10,rez:12,spd:2.6},ovr:{dmg:18*k,rate:1.4,range:2.5*K,crit:.15,critm:2,area:0,gold:0,pen:10},alert:2.6*K};
+ const t={type:'bastion',lvl:3,summ:1,kai:1,ttl:9999,tinf:{n:'Kai',ic:(HEROES.kai||{}).ic||'🗡️',col:(HEROES.kai||{}).col||'#8a5a3a',dt:'phys',range:2.5,dmg:18,rate:1.4,unit:{n:1,hp:170,ap:10,rez:12,spd:2.6*K}},
+  x:f0.x,y:f0.y,cells:[],flag:{x:f0.x,y:f0.y},ab:{},acd:{},sd:[],uov:{n:1,hp,ap:10,rez:12,spd:2.6*K},ovr:{dmg:18*k,rate:1.4,range:2.5*K,crit:.15,critm:2,area:0,gold:0,pen:10},alert:2.6*K};
  t.sd=[{i:0,x:f0.x,y:f0.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,wt:1,ally:1,port:'kai'}];(S.summ=S.summ||[]).push(t);S.kaiT=t;
  S.fx.push({x:f0.x,y:f0.y,t:.6,m:.6,r:1.2*K,col:'#e0b070'});return t;}
 // la máquina la lleva: a por el jefe si está en el camino; si no, junto a tu héroe

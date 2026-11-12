@@ -198,7 +198,7 @@ function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
  const X=tinfo(t);
- return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap,X.uspd):tgtRow(t,src,PR.pinned&&PR.key===src))+
+ return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap,X.uspd||(!t.tinf&&t.uspdx)||0):tgtRow(t,src,PR.pinned&&PR.key===src))+
   (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas

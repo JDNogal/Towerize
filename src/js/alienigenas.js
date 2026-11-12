@@ -11,14 +11,14 @@ const ALSVG={
  // larva: las rayas no tocan el borde negro
  larva:`<svg viewBox="0 0 64 64"><path d="M12 44 Q12 32 22 34 Q26 26 34 32 Q42 26 48 34 Q56 34 54 44 Q52 52 32 52 Q14 52 12 44Z" fill="#9ae6d6" stroke="${ALS}" stroke-width="2"/><path d="M23 38 L24.5 47 M34 35.5 L34 48 M44.5 38 L43 47" stroke="#2a9a88" stroke-width="1.6" stroke-linecap="round"/><circle cx="50" cy="40" r="2.6" fill="#ffcf3a" stroke="${ALS}" stroke-width="1.2"/></svg>`,
  pred:`<svg viewBox="0 0 64 64"><path d="M10 40 Q10 22 32 20 Q54 22 54 40 Q54 54 32 56 Q10 54 10 40Z" fill="#2a9a88" stroke="${ALS}" stroke-width="2"/><path d="M14 24 Q8 12 4 10 M50 24 Q56 12 60 10 M20 20 Q18 8 22 4 M44 20 Q46 8 42 4" stroke="${ALS}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M18 30 L26 34 M46 30 L38 34" stroke="${ALS}" stroke-width="2.5"/><ellipse cx="24" cy="38" rx="4" ry="3" fill="#ff5a3a" stroke="${ALS}" stroke-width="1.5"/><ellipse cx="40" cy="38" rx="4" ry="3" fill="#ff5a3a" stroke="${ALS}" stroke-width="1.5"/><path d="M20 46 L24 52 L28 46 L32 52 L36 46 L40 52 L44 46" stroke="#f4ecd6" stroke-width="2" fill="none"/><path d="M14 50 L6 60 M50 50 L58 60" stroke="${ALS}" stroke-width="3.4" stroke-linecap="round"/></svg>`};
-TW.alien={n:'Criaturas alienígenas',ic:'🥚',icsvg:ALSVG.nest,dt:'magic',udt:'magic',era:2,cost:90,range:2.5,dmg:2.6,rate:1.2,unit:{n:4,hp:18,ap:0,rez:6,spd:2.4},col:'#3fb89c',l:'J',fx:'Simbiosis',alien:1};
+TW.alien={n:'Criaturas alienígenas',ic:'🥚',icsvg:ALSVG.nest,dt:'magic',udt:'magic',era:2,cost:90,range:2.5,dmg:2.6,rate:1.2,unit:{n:4,hp:18,ap:0,rez:6,spd:2.8},col:'#3fb89c',l:'J',fx:'Simbiosis',alien:1};
 TW.alien.range*=K;TW.alien.unit.spd*=K;/* las torres se definen en casillas y el juego trabaja en celdas (×K): las que se añaden tarde lo hacen a mano */
 UNAME.alien=['Criatura'];UIC.alien={img:ALSVG.crit};UIC.pred={img:ALSVG.pred};
 const ALN=[0,4,5,6],ALHIVE=8,ALSYM=.15;
-CLS.pred={n:'Depredador',d:2.6,rt:.9,cr:.05,hp:3.2,ap:5};CLS.larva={n:'Larva',d:.5,rt:1,cr:0,hp:.4,ap:0};
+CLS.pred={n:'Depredador',d:2.6,rt:.9,cr:.05,hp:3.2,ap:5};CLS.larva={n:'Larva',d:.5,rt:1,cr:0,hp:.4,ap:0,sp:.5};
 SPECS.alien={
  hive:{n:'Colmena',ic:'🥚',col:'#3fc9b0',lv:{dmg:L4D*.85,cd:.7,range:1.2,area:1.3,hp:L4H*.9,pen:0},ab:['larva','brood','swcor'],d:'El enjambre crece: 8 criaturas. Se multiplican y desgastan entre todas la resistencia mágica de los enemigos grandes.'},
- pred:{n:'Depredadores',ic:'🦖',col:'#2a9a88',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.2,pen:0},ab:['devour','ambush','frenzy'],d:'Solo sobreviven las 3 más fuertes: mucho más grandes, con más vida y daño, y corpulencia 2.'}};
+ pred:{n:'Depredadores',ic:'🦖',col:'#2a9a88',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.2,pen:0},uspd:.75,ab:['devour','ambush','frenzy'],d:'Solo sobreviven las 3 más fuertes: mucho más grandes, con más vida y daño, y corpulencia 2.'}};
 Object.assign(AB,{
  larva:{n:'Larvas',ranks:[{c:30,n:2,t:6},{c:40,n:2,t:10},{c:50,n:3,t:10}],txt:r=>`Al morir, cada criatura suelta <b>${r.n} larvas</b> que pelean <span class="cr">${r.t} s</span> (con menos vida y daño).`},
  brood:{n:'Puesta',ranks:[{c:35,n:2,cd:10},{c:45,n:4,cd:10},{c:55,n:4,cd:7}],txt:r=>`Cada <span class="cr">${r.cd} s</span> nace una criatura extra, hasta <b>${r.n} más</b> que el grupo. Las extra no reaparecen al morir.`},

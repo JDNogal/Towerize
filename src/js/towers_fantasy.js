@@ -26,7 +26,7 @@ function heraldBolt(t,s,be){const wr=abRank(t,'wrath'),fk=abRank(t,'fork'),fg=ab
 function heraldDeath(e){for(const t of S.list)if(t.type==='augur'&&t.spec==='herald'&&Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range)t.ch=Math.min(HCH,(t.ch||0)+HCHK);}
 // ===== Orbe arcano (Era Fantástica): maleficios y almas =====
 const HEXT=3,POLYS=.6,FEART=1.5,SPECSP=1.2*K,KNHP=900;
-const SPECT={spectre:{n:'Espectro',ic:'👻',col:'#c8d4f0',hp:.5,d:.5,w:1,sp:1.4},knight:{n:'Caballero Espectral',ic:'♞',col:'#9fb4d8',w:2,d:1.2,sp:1}};
+const SPECT={spectre:{n:'Espectro',ic:'👻',col:'#c8d4f0',hp:.5,d:.5,w:1,sp:1.4},knight:{n:'Caballero Espectral',ic:'♞',col:'#9fb4d8',w:2,d:1.2,sp:.85}};
 const soulB=o=>{const h=abRank(o,'harvest');return h?Math.min(h.max,(o.souls||0)*.01):0;};
 // efectos de cada orbe que impacta (Foco Arcano): maldición, nova cada N impactos y polimorfia
 function orbHit(t,tg,s,dmg){const hx=abRank(t,'hex'),nv=abRank(t,'nova'),pl=abRank(t,'poly');
