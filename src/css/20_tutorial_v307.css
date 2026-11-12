@@ -57,3 +57,7 @@ body.era2g .cnf{background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%
 .bksp.off{cursor:default;opacity:.85}
 .bkspi .icsvg svg{background:none!important;width:40px!important;height:40px!important}
 .icsvg svg{background:none}
+/* v308 · botón Atrás del libro, junto a la ✕ */
+.bkx.bkhist{right:56px;display:grid;place-items:center}
+.bkx.bkhist.off{opacity:.35;cursor:default}
+.bkx.bkhist svg{display:block}

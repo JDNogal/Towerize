@@ -34,7 +34,7 @@ addEventListener('keydown',e=>{if(KBC.on)return;if(e.target&&/INPUT|TEXTAREA/.te
 addEventListener('mousemove',e=>{if(MN.on&&(Math.abs(e.movementX)+Math.abs(e.movementY)>2))mnClear();},{passive:true});
 addEventListener('pointerdown',()=>{if(MN.on)mnClear();},{passive:true,capture:true});
 // tecla Esc dibujada en los botones de cerrar (solo PC, con «Teclas sobre los botones»)
-setInterval(()=>{try{const on=kcOn();for(const b of document.querySelectorAll('.oxb,.bkx')){const s=b.querySelector('.kesc');if(on&&!s)b.insertAdjacentHTML('beforeend','<span class="kcap kesc">Esc</span>');else if(!on&&s)s.remove();}}catch(e){}},250);
+setInterval(()=>{try{const on=kcOn();for(const b of document.querySelectorAll('.oxb,.bkx:not(.bkhist)')){const s=b.querySelector('.kesc');if(on&&!s)b.insertAdjacentHTML('beforeend','<span class="kcap kesc">Esc</span>');else if(!on&&s)s.remove();}}catch(e){}},250);
 // tras repintar un menú, el marco vuelve al mismo botón
 setInterval(()=>{if(!MN.on)return;const r=mnRoot();if(!r){mnClear();return;}if(!(MN.el&&MN.el.isConnected))mnRefind(r);},150);
 
