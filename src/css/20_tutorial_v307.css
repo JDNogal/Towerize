@@ -61,3 +61,5 @@ body.era2g .cnf{background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%
 .bkx.bkhist{right:56px;display:grid;place-items:center}
 .bkx.bkhist.off{opacity:.35;cursor:default}
 .bkx.bkhist svg{display:block}
+.bkx.bkhist .kcap.kbk{display:inline-flex!important;align-items:center;justify-content:center;line-height:1!important;padding:0 4px!important;width:auto!important;min-width:0!important;left:auto!important;right:-8px!important}
+.bkx.bkhist .kcap.kbk svg{display:block}
