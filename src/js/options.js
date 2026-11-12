@@ -37,6 +37,7 @@ const OPTS=[
  {tab:'un',type:'toggle',key:'u_rl',def:false,label:'Desbloquear todas las reliquias',desc:'Las reliquias que dependen de un logro también pueden salir en los cofres.'},
  {tab:'un',type:'toggle',key:'u_ev',def:false,label:'Desbloquear todos los eventos',desc:'Los eventos que dependen de un logro también pueden salir en el mapa.'},
  {tab:'un',type:'toggle',key:'u_era',def:false,label:'Desbloquear todas las eras',desc:'La Era Distópica (Ruinas de Neón) disponible sin haber reparado a ÉTER.'},
+ {tab:'un',type:'toggle',key:'u_tab',def:false,label:'Desbloquear la tablet',desc:'Solo el aspecto de tablet de la era 2 (menú, compendio y opciones), para probarlo sin haber llegado a la era 2. Se elige en Personalización › Libro.'},
  {tab:'un',type:'toggle',key:'u_cs',def:false,label:'Desbloquear toda la personalización',desc:'Encuadernaciones, núcleos y decoraciones disponibles sin conseguir sus logros.'},
  {tab:'ps',type:'cosm'},
  {tab:'un',type:'toggle',key:'u_rd',def:false,label:'Desbloquear todas las duraciones de partida',desc:'Puedes elegir partidas de 15 a 30 rondas desde el principio.'},

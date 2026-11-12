@@ -302,9 +302,9 @@ function act(e){
  else if(a==='kbreset'){KB=Object.assign({},KBDEF);KB2=Object.assign({},KB2DEF);kbSave();KBC.on=null;KBC.note='Atajos restablecidos.';renderOpts();}
  else if(a==='otab'){KBC.on=null;KBC.note='';OP.tab=b.dataset.v;OP.keepS=0;renderOpts();}
  else if(a==='sname'){const v=($('cname').value||'').trim().slice(0,16);if(v){STO.name=v;saveSto();toast('ÉTER te llamará <b>'+escH(v)+'</b>.');}renderOpts();}
- else if(a==='preset'){if(!OP.rst){OP.rst=1;renderOpts();return;}for(const k of['rt-alks','rt-story','rt-ach','rt-seen','rt-hlv','rt-evmem','rt-rev','rt-runl','rt-rounds','rt-tutdone','rt-win1','rt-tutchoice','rt-qdone','rt-hints','rt-lasthero','rt-achpin','rt-achbest','rt-cur','rt-hwin','rt-newu','rt-ruse','rt-tlv'])try{localStorage.removeItem(k);}catch(e){}
+ else if(a==='preset'){if(!OP.rst){OP.rst=1;renderOpts();return;}for(const k of['rt-alks','rt-story','rt-ach','rt-seen','rt-hlv','rt-evmem','rt-rev','rt-runl','rt-rounds','rt-tutdone','rt-win1','rt-tutchoice','rt-qdone','rt-hints','rt-lasthero','rt-achpin','rt-achbest','rt-cur','rt-hwin','rt-newu','rt-ruse','rt-tlv','rt-era'])try{localStorage.removeItem(k);}catch(e){}
   // también lo que es progreso dentro de las opciones: desbloqueos y personalización
-  for(const k of Object.keys(OPT))if(k.startsWith('u_'))OPT[k]=false;OPT.pal='perg';OPT.core='base';OPT.decoff={};saveOpt();location.reload();}
+  for(const k of Object.keys(OPT))if(k.startsWith('u_'))OPT[k]=false;OPT.pal='perg';OPT.skin='auto';OPT.core='base';OPT.decoff={};saveOpt();location.reload();}
  else if(a==='opt'){const o=OPTS[+b.dataset.i];OPT[o.key]=!OPT[o.key];saveOpt();if(o.key.startsWith('u_'))applyUnl();renderOpts();}
  else if(a==='cspal'){OPT.pal=b.dataset.v;saveOpt();applyPal();renderOpts();}
  else if(a==='cscore'){OPT.core=b.dataset.v;saveOpt();renderOpts();}
