@@ -109,7 +109,7 @@ c.fillStyle="#2e3441";c.fillRect(0,0,PVN*PVC,PVN*PVC);
  for(const p of s.pools){c.fillStyle=p.el==='bleed'?'rgba(224,72,90,.28)':p.el==='fire'?'rgba(255,120,40,.3)':'rgba(123,211,74,.28)';c.strokeStyle=p.el==='bleed'?'rgba(240,100,110,.8)':p.el==='fire'?'rgba(255,160,70,.85)':'rgba(150,230,90,.8)';c.beginPath();c.arc(X(p.x),Y(p.y),p.r*PVC,0,7);c.fill();c.stroke();}
  drawFlame(c,tw,X,Y,PVC);
  c.fillStyle=tinfo(tw).col;c.beginPath();c.arc(X(tw.x),Y(tw.y),PVC*1.35,0,7);c.fill();
- c.fillStyle='#14161c';icDraw(c,twIcO(tinfo(tw)),X(tw.x),Y(tw.y)+1,PVC*2);
+ c.fillStyle='#14161c';icDraw(c,twIcO(evIcX(tw,tinfo(tw))),X(tw.x),Y(tw.y)+1,PVC*2);
  if(tw.rays){c.lineWidth=2;for(const r of tw.rays)if(r.e.hp>0){c.strokeStyle=r.el.col;c.beginPath();c.moveTo(X(tw.x),Y(tw.y));c.lineTo(X(r.e.x),Y(r.e.y));c.stroke();}}
  else if(tw.tgt&&tw.tgt.hp>0){c.strokeStyle=T.col;c.lineWidth=3;c.beginPath();c.moveTo(X(tw.x),Y(tw.y));c.lineTo(X(tw.tgt.x),Y(tw.tgt.y));c.stroke();}
  for(const q of s.fx)if(q.bolt)drawBolt(c,q,X,Y,2,3);

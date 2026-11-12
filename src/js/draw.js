@@ -108,7 +108,7 @@ function draw(){
  for(const t of S.list){const T=TW[t.type];
   const fr=t.hero||t.summ?'none':tfrSkin(),mt=t===mst;if(mt)drawHalo(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);if(fr!=='none')drawTFr(g,t,t.x*CS+CS/2,t.y*CS+CS/2,BCS,fr);
   const X=tinfo(t);g.fillStyle=X.col;g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,BCS*(fr!=='none'?.4:.44),0,7);g.fill();
-  g.fillStyle='#14161c';icDraw(g,twIcO(X),t.x*CS+CS/2,t.y*CS+CS/2+1,BCS*.7);
+  g.fillStyle='#14161c';icDraw(g,twIcO(evIcX(t,X)),t.x*CS+CS/2,t.y*CS+CS/2+1,BCS*.7);
   if(t.flash){g.strokeStyle='#fff';g.lineWidth=lw(3);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.flash.x*CS+CS/2,t.flash.y*CS+CS/2);g.stroke();}
   /* galones de nivel en la esquina superior derecha: uno por nivel (Nv 1-3); Nv 4, tres dorados y estrella; con todo al máximo, estrella dorada */
   if(mt)drawCrown(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);
