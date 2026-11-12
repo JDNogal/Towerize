@@ -72,7 +72,7 @@ function heroInfo(id,quiet){
  return `<div class="ttl"><b>${D.ic} ${D.n}</b> · ${kst('hlv','Nv '+l,src)}</div>`+
   R('chp',kst('hhp','Vida',src),H&&q?Math.round(Math.max(0,q.hp))+' / '+Math.round(q.max):Math.round(x.hp))+
   (arm>0?R('cph',kst('aphys','Armadura',src),armTxt(Math.round(arm*10)/10)):'')+(amr>0?R('cmg',kst('umr','Resistencia mágica',src),armTxt(amr)):'')+
-  R('cd',kst('hdmg','Daño',src),f(x.dmg)+(D.ranged?` <small style="display:inline">(${kst('hmel','melee',src)}: ${f(x.dmg*HMELEE)})</small>`:''))+R(DT[D.dt||'phys'].cls,kst('dtype','Tipo de daño',src),DT[D.dt||'phys'].n)+(D.area?R('ca',kst('harea','Área',src),cas(D.area)+' de radio'):'')+R('ccl',kst('hcd','Enfriamiento',src),f(x.cd)+' s')+objRow(!D.ranged,src)+
+  R('cd',kst('hdmg','Daño',src)+(D.ranged?' ('+kst('hmel','Melee',src)+')':''),f(x.dmg)+(D.ranged?` (${f(x.dmg*HMELEE)})`:''))+R(DT[D.dt||'phys'].cls,kst('dtype','Tipo de daño',src),DT[D.dt||'phys'].n)+(D.area?R('ca',kst('harea','Área',src),cas(D.area)+' de radio'):'')+R('ccl',kst('hcd','Enfriamiento',src),f(x.cd)+' s')+objRow(!D.ranged,src)+
   (D.ranged?R('cg',kst('hrng','Rango',src),cas(D.base.range)):'')+
   (HFX[id]?R('cf','Efectos',HFX[id](src)):'')+R('',kst('hblk','Corpulencia',src),D.w>1?'Bloquea hasta '+D.w:'1')+
   R('cg','Velocidad',cas(D.spd)+'/s')+`<small style="margin:0 0 2px">Fuera de combate se mueve ${HOOC} veces más rápido.</small>`+
