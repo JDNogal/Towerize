@@ -1,6 +1,6 @@
-# Genera src/js/iconos_svg.js a partir de los iconos aprobados en maquetas/*_final.json
+# Genera src/js/iconos_svg.js a partir de los iconos aprobados en src/iconos/*_final.json (las maquetas y propuestas viven en maquetas/ y no entran en el juego)
 import json,re,os
-M='maquetas/'
+M='src/iconos/'
 def J(f):return json.load(open(M+f))
 def inner(s):
     s=re.sub(r'^<svg[^>]*>','',s);s=re.sub(r'</svg>$','',s);return re.sub(r'\s+',' ',s)
@@ -46,7 +46,7 @@ for f in ['estados_final.json','tipos_dano_final.json','estadisticas_final.json'
 for a,b in {'uhp':'ehp','umr':'amagic','eud':'dmg','eac':'cool','erg':'rng','hlv':'lvl','hrez':'urez','rgn':'regen'}.items():KW[a]=KW[b]
 extra={'emb':inner(J('habilidades_heroes_e2_final.json')['korr_emb'])}
 out="// ==================== v308 · ICONOS DIBUJADOS (estilo B) ====================\n"
-out+="// Generado con tools/gen_iconos.py a partir de maquetas/*_final.json. No editar a mano.\n"
+out+="// Generado con tools/gen_iconos.py a partir de src/iconos/*_final.json. No editar a mano.\n"
 out+="// Cada icono recibe un carácter de uso privado (U+E000…) como «ic»: en la interfaz se cambia por su dibujo SVG;\n// en el lienzo (que no admite SVG) se dibuja el emoji de antes.\n"
 out+="const ICSV={},ICFB={};let ICN=0xE000;\n"
 out+="const icReg=(o,svg)=>{if(!o)return;const ch=String.fromCodePoint(ICN++);ICFB[ch]=o.ic||'';ICSV[ch]=svg;o.ic=ch;return ch;};\n"
@@ -65,7 +65,10 @@ const icSvg=ch=>'<svg class="icsv" viewBox="-4 -4 56 56" aria-hidden="true">'+IC
 // lienzo: el carácter privado vuelve a su emoji
 if(typeof CanvasRenderingContext2D!=='undefined'){const ft2=CanvasRenderingContext2D.prototype.fillText,mt2=CanvasRenderingContext2D.prototype.measureText;
  const back=t=>typeof t==='string'&&ICRX.test(t)?t.replace(/[\\uE000-\\uF8FF]/g,c=>ICFB[c]||''):t;
- CanvasRenderingContext2D.prototype.fillText=function(t,...a){return ft2.call(this,back(t),...a);};
+ const ICIM={},icImg=ch=>{let im=ICIM[ch];if(!im){im=new Image();im.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 56 56">'+ICSV[ch]+'</svg>');ICIM[ch]=im;}return im;};
+ // un icono dibujado, él solo: se pinta su dibujo, al tamaño de la letra y respetando la alineación (si aún no ha cargado, el emoji de antes)
+ CanvasRenderingContext2D.prototype.fillText=function(t,x,y,...a){if(typeof t==='string'&&t.length===1&&ICSV[t]){const im=icImg(t);if(im.complete&&im.naturalWidth){const m=/(\\d+(?:\\.\\d+)?)px/.exec(this.font),sz=(m?+m[1]:16)*1.2,al=this.textAlign,bl=this.textBaseline,dx=al==='center'?-sz/2:(al==='right'||al==='end')?-sz:0,dy=bl==='middle'?-sz/2:(bl==='top'||bl==='hanging')?0:bl==='bottom'?-sz:-sz*.85;this.drawImage(im,x+dx,y+dy,sz,sz);return;}}
+  return ft2.call(this,back(t),x,y,...a);};
  CanvasRenderingContext2D.prototype.measureText=function(t){return mt2.call(this,back(t));};}
 // interfaz: cada carácter privado se cambia por su dibujo
 {const fixI=n=>{if(n.nodeType===3){if(!ICRX.test(n.data)||!n.parentNode)return;const p=n.parentNode;if(p.tagName==='TITLE'||p.tagName==='OPTION'||p.tagName==='TEXTAREA'){n.data=n.data.replace(/[\\uE000-\\uF8FF]/g,c=>ICFB[c]||'');return;}
@@ -80,6 +83,8 @@ if(typeof CanvasRenderingContext2D!=='undefined'){const ft2=CanvasRenderingConte
 var ICTG=icReg({ic:'🥾'},ICKW.ground);var ICTA=icReg({ic:'🪽'},ICKW.fly);
 // dibujo de las torres (mapa, cartas y fichas): base y especializaciones de Nv 4
 for(const[kind,t,sp,svg]of ICART){const full='<svg viewBox=\"-4 -4 56 56\">'+svg+'</svg>';try{if(kind==='tw'&&TW[t]){TW[t].icsvg=full;delete TW[t].icimg;}else if(kind==='spec'&&SPECS[t]&&SPECS[t][sp]){const X=SPECS[t][sp];const ob=ICBG[t+'.'+sp]?{icsvg:full,icbg:ICBG[t+'.'+sp]}:{icsvg:full};X.o=Object.assign({},X.o||{},ob);X.icsvg=full;}}catch(e){}}
+// unidades en el mapa: las de una especialización llevan el dibujo de su especialización; el dragón bebé, el suyo
+if(typeof UIC!=='undefined'){for(const[u,t,s]of[['pal','bastion','pal'],['ass','bastion','ass'],['fist','monk','fist'],['drunk','monk','drunk'],['kami','robots','kami'],['mecha','robots','mecha']])if(SPECS[t]&&SPECS[t][s]&&ICSV[SPECS[t][s].ic])UIC[u]=SPECS[t][s].ic;if(typeof DRAG!=='undefined'&&ICSV[DRAG[1].ic])UIC.dragon=DRAG[1].ic;}
 // Korr: nombres nuevos
 if(typeof HAB!=='undefined'&&HAB.korr){HAB.korr.b.n='Señuelo psiónico';HAB.korr.p8.n='Represalia';}
 """

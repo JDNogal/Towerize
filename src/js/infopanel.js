@@ -34,13 +34,13 @@ function kwHtml0(id,src){
  const c=kctx(src);
  if(c&&c.E){const E=c.E;
   if(id==='ehp')return '<b>Vida</b><small>Daño que aguanta el enemigo antes de morir. Es siempre la misma: los enemigos no se hacen más fuertes con las rondas, pero aparecen versiones más duras de cada familia (solo en partidas de más de 15 rondas crece un poco a partir de la ronda 16). El daño que recibe se reduce antes por su armadura o su resistencia mágica, según el tipo de daño; el elemental no lo reduce nada.</small>';
-  if(id==='espd')return `<b>Velocidad</b><small>Casillas que avanza por segundo por el camino. Como referencia, un Orco avanza 1. Las ralentizaciones la reducen mientras duran.</small>`;
+  if(id==='espd')return `<b>Velocidad</b><small>Casillas que avanza por segundo por el camino. Como referencia, un Orco avanza 1. Las ralentizaciones la reducen mientras duran.</small><small>Tus unidades y tu héroe se mueven a esa velocidad fuera de combate; mientras pelean o acaban de recibir un golpe, un ${Math.round((1-COMBM)*100)}% más lento.</small>`;
   if(id==='edmg')return `<b>Daño al núcleo</b><small>Vida que pierdes cada vez que uno de estos enemigos llega al núcleo. Los jefes te quitan toda la vida: si un jefe llega al núcleo, pierdes la expedición.</small>`;
   if(id==='egold')return `<b>Oro por baja</b><small>Oro que ganas al derrotarlo en las primeras rondas. Como las oleadas traen cada vez más enemigos, en rondas altas cada baja da algo menos, para que el oro de cada ronda no se dispare. Las casillas de Codicia y algunas reliquias suman un porcentaje de este oro.</small>`;
  }
  {const aE=c&&c.E,av=k=>aE?R('',aE.n,armTxt(aE[k]||0)):'';
   const tbl=R('','10 de armadura','−17% de daño')+R('','25 de armadura','−33% de daño')+R('','50 de armadura','−50% de daño');
-  if(id.startsWith('ab_')){const D=AB[id.slice(3)];return '<b>'+D.n+'</b>'+D.ranks.map((r,i)=>'<small><b>Rango '+(i+1)+' · <span class="gd">'+r.c+' 🪙</span></b><br>'+D.txt(r)+'</small>').join('');}
+  if(id.startsWith('ab_')){const D=AB[id.slice(3)];return '<b>'+D.n+'</b>'+D.ranks.map((r,i)=>'<small><b>Rango '+(i+1)+' · <span class="gd">'+r.c+' 🪙</span></b><br>'+D.txt(r)+'</small>').join('')+(D.more?'<small>'+D.more+'</small>':'');}
   if(id.startsWith('rl_')&&RELIC[id.slice(3)])return relicInfo(id.slice(3),CP.open);
   if(id==='hrez')return '<b>Reaparición</b>'+R('cr','Tiempo',HREZ+' s')+'<small>Tiempo que tarda un héroe caído en volver a aparecer en el núcleo, el mismo para todos los héroes. Después camina hasta la posición en la que lo habías colocado. Al terminar la ronda se restaura por completo.</small>';
   if(id==='hrel')return '<b>Reliquia inicial</b><small>Todos los héroes van acompañados de una reliquia inicial única, que recibes al elegirlos y que no se puede obtener por ningún otro medio. Como el resto de reliquias, tiene un pasivo y un activo; pasa el ratón por su nombre para verlos.</small>';
@@ -160,7 +160,7 @@ function effHtml(T,src){
  return null;
 }
 // duración del efecto temporal de la torre (los detalles de cada estado están en el tooltip de su palabra clave)
-function durOf(T,s){if(T.log)return f(s.ldur||logDur(1))+' s (rodando)';if(T.wall)return '4 s';if(T.puddle)return f(T.dur)+' s';return '';}
+function durOf(T,s){if(T.log)return f(s.ldur||logDur(1))+' s (rodando)';if(T.wall)return f(4+(s.wallx||0))+' s';if(T.puddle)return f(T.dur)+' s';return '';}
 // icono propio de la unidad (el mismo que en el mapa) delante de «Estadísticas de unidades»
 const USPN={pal:'Paladín',ass:'Asesino',fist:'Monje de batalla',drunk:'Maestro ebrio'};
 function unitHead(src){src=String(src||'');let k=null,sp=null;if(src.startsWith('shop:'))k=src.slice(5);else if(src.startsWith('tw:')&&S&&S.list){const t=S.list.find(o=>'tw:'+o.id===src);if(t){k=t.type;sp=t.spec;}}
@@ -171,7 +171,7 @@ function rows(s,T,src,extra){
  const dtc=dtCls(dtOf(T)),dtl=l=>dtLab(dtOf(T),l),dm=T.dot||T.burn?''/* v307: no dañan al golpe (su daño va en DPS): sin fila «Daño 0» */:T.monk&&T.mhit?R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg))+/* v307: el golpe espiritual, en su propia fila como daño extra mágico */R(DT.magic.cls,kst('mhit','Daño extra',src),'+'+f(s.dmg*T.mhit)+' <small>('+Math.round(T.mhit*100)+'% del daño)</small>'):T.splash?R(dtc,dtl(kst('dmg','Daño',src))+' ('+kst('aoedmg','Daño AdE',src)+')',f(s.dmg)+' ('+f(s.dmg*(T.augur?AUGSPL:SPLASH))+')'):R(dtc,dtl(kst('dmg','Daño',src)),f(s.dmg)),ef=effHtml(T,src),du=durOf(T,s);
  const un=extra&&typeof extra==='object'&&extra.u;
  if(un){const cr=s.dmg>0?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'';
-  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+'Estadísticas de unidades</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
+  return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+(extra.title||'Estadísticas de unidades')+'</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
    (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+cr+(ef?R('cf',kst('eff','Efectos',src),ef):'')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`+'</div>'+extra.tail;}
  return dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+(T.puddle?R('ccl',kst('cool','Enfriamiento',src)+' ('+kst('pstk','Acumulación',src)+')',f(1/s.rate)+' s ('+f(PTICK)+' s)'):R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s'))+(du?R('cr',kst('dur','Duración',src),du):'')+R('cg',kst('rng','Rango',src),cas(s.range/K))+objRow(!!T.ground,src)+
   (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(T.burn&&T.cone?R('ca',kst('area','Área',src),'Cono de '+T.cone+'°'):'')+
@@ -194,11 +194,20 @@ function unitRows(T,src,t,pinned,hpm,uap,uspd){const U=T.unit,ap=U.ap+(uap||0),m
 // En Nv 4 se listan sus habilidades con el rango que tiene (el detalle, en el bocadillo de cada una).
 function abRows(t){const ids=abIds(t);if(!ids.length)return '';const src='tw:'+t.id;t.ab=t.ab||{};
  return '<div class="esec" style="margin-top:8px">Habilidades</div>'+ids.map(id=>{const D=AB[id],rk=t.ab[id]||0,n=D.ranks.length;return R(rk?'':'cno',kst('ab_'+id,D.n,src),rk?(rk>=n?'Máx.':'Rango '+rk+'/'+n):'—');}).join('');}
+// ---- torres con varios tipos de unidad: un bloque por tipo (las de una sola clase especial, con las cifras de esa clase) ----
+const uxT=(k,sp)=>k==='robots'&&sp==='mecha'?{...twm(k,sp),unit:{...TW[k].unit,n:2}}:twm(k,sp);
+function uxAdj(k,sp,s,hpm,uap){const X=sp&&SPECS[k]&&SPECS[k][sp],C=X&&X.ucls&&CLS[X.ucls];return C?{s:{...s,dmg:s.dmg*(C.d||1),rate:s.rate*(C.rt||1),crit:s.crit+(C.cr||0)},hpm:hpm*(C.hp||1),uap:(uap||0)+(C.ap||0)}:{s,hpm,uap};}
+function clsBlock(title,nTxt,C,k,s,hpm,uap,uspd,src,extra){const T=TW[k],U=T.unit,ap=U.ap+(uap||0)+(C.ap||0);
+ return '<div class="usub"><b>'+title+'</b>'+(nTxt!==''?R('',kst('usol','Nº de unidades',src),nTxt):'')+R(dtCls(dtOf(T)),kst('dmg','Daño',src),f(s.dmg*(C.d||1)))+R('ccl',kst('cool','Enfriamiento',src),f(1/(s.rate*(C.rt||1)))+' s')+R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm*(C.hp||1)))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+R('cg',kst('espd','Velocidad',src),cas(Math.round(U.spd/K*(uspd||1)*(C.sp||1)*100)/100)+'/s')+(extra||'')+R('cc',kst('crit','Crítico',src),Math.round((s.crit+(C.cr||0))*100)+'% (×'+s.critm+')')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(s.dmg*(C.d||1)*s.rate*(C.rt||1)*(1+(s.crit+(C.cr||0))*(s.critm-1))*(+nTxt>0?+nTxt:1))}</span></div>`+'</div>';}
+function unitExtra(r,k,sp,t,s,hpm,uap,uspd,src){try{
+  if(k==='robots'&&sp==='mecha'){r.title='Robots';r.n=R('',kst('usol','Nº de unidades',src),2);r.tail=clsBlock('🦾 Mecha',1,CLS.mecha,k,s,hpm,uap,uspd,src,R('',kst('hblk','Corpulencia',src),'Bloquea hasta 2')+R('ca',kst('area','Área',src),'0,7 de radio')+'<small>Uno de los tres robots. Sus golpes alcanzan también a los enemigos pegados al que ataca (la mitad del daño).</small>')+r.tail;}
+  if(k==='alien'&&sp==='hive'&&t&&abRank(t,'larva')){const lv=abRank(t,'larva');r.title='Criaturas';r.tail=clsBlock('Larvas',lv.n+' por criatura caída',CLS.larva,k,s,hpm,uap,uspd,src,R('cr',kst('dur','Duración',src),lv.t+' s'))+r.tail;}
+ }catch(e){}return r;}
 function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
- const X=tinfo(t);
- return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap,X.uspd||(!t.tinf&&t.uspdx)||0):tgtRow(t,src,PR.pinned&&PR.key===src))+
+ const X=tinfo(t),usp=X.uspd||(!t.tinf&&t.uspdx)||0,UA=T.unit?uxAdj(t.type,t.spec,s,lvMods(t.type,t.lvl,t.spec).hp,X.uap):null;
+ return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(UA?UA.s:s,uxT(t.type,t.spec),src,T.unit?unitExtra(unitRows(T,src,t,PR.pinned&&PR.key===src,UA.hpm,UA.uap,usp),t.type,t.spec,t,UA.s,UA.hpm,UA.uap,usp,src):tgtRow(t,src,PR.pinned&&PR.key===src))+
   (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
@@ -209,7 +218,7 @@ function shopInfo(id,quiet){
  const T=TW[id],src='shop:'+id,st=quiet?cpState(id):{lv:1,spec:null},lv=st.lv,L=lvMods(id,lv,st.spec),X=st.spec?SPECS[id][st.spec]:T,
   s={dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:(T.splash||T.pr||0)*L.area,pen:L.pen||0},sn=CP.lv[id]||1;
  const lb=quiet?lvTabs(id,sn):'';
- return `<div class="ttl">${lb}<b>${X.n}</b> · ${icOf(X)}<br><span class="gd">${(quiet&&lv>1?kst('upc','Mejora '+upCost(T,lv)+' 🪙',src):kst('cost','Coste '+T.cost+' 🪙',src))}</span></div>`+rows(s,twm(id,st.spec),src,T.unit?unitRows(T,src,null,false,L.hp,X.uap,X.uspd):(quiet?'':R('',kst('tgt','Objetivo',src),TGT[S.dtg[id]||'core'].n)))+(st.spec?'<div style="margin-top:6px"><b>Habilidades</b></div>'+abList(id,st.spec,null):'')+(quiet?'':'<small>Valores base, sin bufos de casilla.</small>')+(T.unit?'':dpsRow(s,T,src));
+ return `<div class="ttl">${lb}<b>${X.n}</b> · ${icOf(X)}<br><span class="gd">${(quiet&&lv>1?kst('upc','Mejora '+upCost(T,lv)+' 🪙',src):kst('cost','Coste '+T.cost+' 🪙',src))}</span></div>`+(UA=>rows(UA?UA.s:s,uxT(id,st.spec),src,T.unit?unitExtra(unitRows(T,src,null,false,UA.hpm,UA.uap,X.uspd),id,st.spec,null,UA.s,UA.hpm,UA.uap,X.uspd,src):(quiet?'':R('',kst('tgt','Objetivo',src),TGT[S.dtg[id]||'core'].n))))(T.unit?uxAdj(id,st.spec,s,L.hp,X.uap):null)+(st.spec?'<div style="margin-top:6px"><b>Habilidades</b></div>'+abList(id,st.spec,null):'')+(quiet?'':'<small>Valores base, sin bufos de casilla.</small>')+(T.unit?'':dpsRow(s,T,src));
 }
 
 // texto del bonus de una casilla con los multiplicadores que están activos ahora (valores reales: el jugador no tiene que calcular)
@@ -276,7 +285,7 @@ function resolve(el){
  if(kind==='hab')return S.hero?{key:'hab:'+id,html:()=>habInfo(id),rect:rr(r),dom:1}:null;
  if(kind==='vch')return{key:'vch:'+id,html:()=>vchInfo(id),rect:rr(r),dom:1};
  if(kind==='ally')return{key:'ally',html:()=>'<div class="ttl"><b>👽 Criatura alienígena</b></div><small style="margin:0">Salió de la cápsula caída y pelea de tu lado toda la partida: bloquea a 2 enemigos y, si cae, reaparece a los 12 s. Pulsa su retrato y elige una casilla del camino para moverla.</small>',rect:rr(r),dom:1};
- if(kind==='pigs')return{key:'pigs',html:()=>'<div class="ttl"><b>🐷 Los tres cerditos</b></div><small style="margin:0">Pulsa y elige una casilla del camino: los cerditos van juntos, como un héroe más de la partida.</small>',rect:rr(r),dom:1};
+ if(kind==='pigs')return{key:'pigs',html:()=>'<div class="ttl"><b>'+PIGU.straw.ic+PIGU.wood.ic+PIGU.brick.ic+' Los tres cerditos</b></div><small style="margin:0">Pulsa y elige una casilla del camino: los cerditos van juntos, como un héroe más de la partida.</small>',rect:rr(r),dom:1};
  if(kind==='hero')return S.hero?{key:'hero',html:()=>heroInfo(S.hero.id),rect:rr(r),dom:1}:null;
  if(kind==='piece'){const o=S.offers[+id];if(!o)return null;
   const cr=d.querySelector('canvas').getBoundingClientRect();

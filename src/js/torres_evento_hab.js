@@ -3,7 +3,7 @@
 // Las torres de evento no tienen dos especializaciones: sus habilidades cuelgan directamente de la torre (UAB) y abIds(t) las devuelve a todo el juego.
 const UAB={faro:['fflash','freveal','fconv'],straw:['sdry','sheavy','scrows'],wood:['wlogs','wsplint','wspin'],brick:['bwall','bspikes','bthrow'],
  guild:['gcontr','glegend','gbanner'],glut:['mengulf','mbite','mbelly'],dragon:['dscales','dbreath','droar']};
-const BNRR=1,BNRA=15,HAYT=8,ENGCD=8,ROARR=2.5,DRHP=[0,0,150,220],DRREZ=15,DBRL=3,DBRT=4,DBRS=2,CROWCD=6,THROWCD=3,SPKTK=.5;
+const BNRR=1,BNRA=15,HAYT=8,ENGCD=8,ENGCH=2,ENGHEAL=.3,ROARR=2.5,DRHP=[0,0,300,400],DRREZ=15,DRORB=.5,DRGO=6,DRPASS=4,DRRET=5,DBRL=3,DBRT=4,DBRS=2,CROWCD=6,THROWCD=3,SPKTK=.5;
 Object.assign(AB,{
  // Faro arcano
  fflash:{n:'Destello',ranks:[{c:220,cd:10},{c:150,cd:7}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, las zonas de luz dan un fogonazo: los enemigos de dentro quedan ${kw('daze','desorientados','')} 0,5 s.`},
@@ -26,12 +26,12 @@ Object.assign(AB,{
  glegend:{n:'Leyenda viva',ranks:[{c:320,m:1.5}],txt:r=>`El Renombre que gana el grupo sube a un <span class="cd">7,5% / 15% / 22,5%</span>, y un aventurero que cae solo pierde la mitad del suyo.`},
  gbanner:{n:'Abanderado',ranks:[{c:320,a:BNRA}],txt:r=>`Se une al grupo un <b>Abanderado</b>: su estandarte da <span class="cph">+${r.a} de armadura</span> y <span class="cmg">+${r.a} de resistencia mágica</span> a tus unidades y a tu héroe a ${cas(BNRR)} de él.`},
  // Mímico glotón
- mengulf:{n:'Engullir',ranks:[{c:220,t:2},{c:150,t:3},{c:150,t:4}],txt:r=>`Cada ${ENGCD} s se traga a un enemigo cercano y lo mastica dentro hasta <span class="cr">${r.t} s</span>. Si muere dentro, recarga en la mitad de tiempo; si no, lo escupe. A élites y jefes no se los traga: les da un bocado de <span class="cd">3×</span> y los empuja hacia atrás.`},
+ mengulf:{n:'Engullir',ranks:[{c:220,t:2},{c:150,t:3},{c:150,t:4}],more:'Lanza la lengua a un enemigo dentro de su alcance, aunque todavía no haya llegado hasta él. Mientras lo tiene dentro lo mastica el doble de rápido que sus mordiscos normales y no ataca a nadie más (pero sigue bloqueando). Si el enemigo muere dentro, el Mímico recupera un '+Math.round(ENGHEAL*100)+'% de su vida. A élites y jefes no se los traga: les da un bocado de 3× y los empuja hacia atrás.',txt:r=>`Cada ${ENGCD} s se traga a un enemigo a su alcance y lo mastica deprisa hasta <span class="cr">${r.t} s</span>. Si muere dentro, el Mímico se cura; si no, lo escupe.`},
  mbite:{n:'Mordisco voraz',ranks:[{c:220,p:.01},{c:150,p:.02}],txt:r=>`Cada mordisco hace además un <span class="cd">${f(r.p*100)}%</span> de la vida máxima del objetivo como daño (hasta 4× su mordisco): casi nada contra los pequeños, mucho contra élites y jefes.`},
  mbelly:{n:'Estómago sin fondo',req:'mengulf',ranks:[{c:400,n:20},{c:300,n:15}],txt:r=>`Cada <b>${r.n}</b> enemigos que mueren dentro del Mímico, escupe un cofre: eliges una reliquia.`},
  // Dragón anciano
- dscales:{n:'Escamas de obsidiana',ranks:[{c:220,a:15},{c:150,a:30}],txt:r=>`El dragón gana <span class="cph">+${r.a} de armadura</span> y <span class="cmg">+${r.a} de resistencia mágica</span>.`},
- dbreath:{n:'Aliento abrasador',ranks:[{c:220,L:1.5,t:1,b:.25},{c:150,L:3,t:2,b:.5}],txt:r=>`La franja de fuego de su llamarada es <span class="ca">${f(r.L)} casillas</span> más larga, dura <span class="cr">${r.t} s</span> más y aplica un <span class="cd">+${Math.round(r.b*100)}%</span> de ${kw('burn','quemadura','')}.`},
+ dscales:{n:'Escamas de obsidiana',ranks:[{c:220,a:15,red:.25},{c:150,a:30,red:.5}],txt:r=>`El dragón gana <span class="cph">+${r.a} de armadura</span> y <span class="cmg">+${r.a} de resistencia mágica</span>, y además recibe un <span class="chp">${Math.round(r.red*100)}%</span> menos de daño.`},
+ dbreath:{n:'Aliento abrasador',ranks:[{c:220,L:2,t:1,b:.25},{c:150,L:3,t:2,b:.5}],txt:r=>`La franja de fuego de su llamarada es <span class="ca">${f(r.L)} casillas</span> más larga, dura <span class="cr">${r.t} s</span> más y aplica un <span class="cd">+${Math.round(r.b*100)}%</span> de ${kw('burn','quemadura','')}.`},
  droar:{n:'Rugido',ranks:[{c:320,cd:15,t:1.5}],txt:r=>`Cada <span class="cr">${r.cd} s</span> ruge: los enemigos a ${f(ROARR)} casillas de su bandera quedan ${kw('fear','aterrados','')} ${f(r.t)} s (los jefes, la mitad).`}});
 // al comprar una habilidad de torre de evento
 function uabBought(t,id){if(!t)return;if(id==='gbanner')guildBanner(t);if(id==='mengulf'){t.eng=1;}if(id==='dscales'&&t.sd&&t.sd[0]&&t.sd[0].air){/* nada: las escamas se leen al vuelo */}}
@@ -48,12 +48,13 @@ function faroAbTick(dt){for(const f of S.faros||[]){if(!uabOk(f))continue;const 
 // proyectiles: los fardos de paja y los mordiscos del Mímico llevan sus extras; se aplican al impactar (uabProjHit)
 function uabProj(p,t){try{if(!t||!TW[t.type]||!uabOk(t))return p;const T=TW[t.type];
   if(T.pig&&t.type==='straw'){const hv=abRank(t,'sheavy'),dr=abRank(t,'sdry');if(hv)p.slowt=(p.slowt||SLOWT)+hv.t;if(dr){p.uab=1;p.hay=dr.t;}}
-  else if(T.glut){const b=abRank(t,'mbite');if(b&&p.e)p.dm+=Math.min(p.dm*4,p.e.max*b.p);}}catch(e){}return p;}
+  }catch(e){}return p;}
 function uabProjHit(p){try{if(p.hay){const c=pathNear(p.x,p.y);if(c&&!(S.cz||[]).some(z=>z.k==='hay'&&Math.hypot(z.x-p.x,z.y-p.y)<.6*K))(S.cz=S.cz||[]).push({k:'hay',x:p.x,y:p.y,r:Math.max(p.area||0,.7*K),t:p.hay,m:0,src:p.src});}
   if(p.brk&&p.e&&p.e.hp>0)brkAdd(p.e,p.brk.a,p.brk.mx);
   if(p.crow&&p.e&&p.e.hp>0)addBleed(p.e,p.src,1);}catch(e){}}
 // Fardos pesados: más área
 {const _s=stats;stats=function(t){const s=_s.apply(this,arguments);try{if(t&&t.type==='straw'&&!t.pigU){const hv=abRank(t,'sheavy');if(hv)return Object.assign({},s,{area:s.area*(1+hv.ar)});}
+  if(t&&t.type==='brick'&&!t.pigU){const rf=abRank(t,'bwall');if(rf)return Object.assign({},s,{wallx:rf.t});}
   if(t&&t.type==='wood'&&!t.pigU){const g=abRank(t,'wlogs');if(g)return Object.assign({},s,{dmg:s.dmg*(1+g.m),ldur:(s.ldur||logDur(t.lvl))+g.t});}}catch(e){}return s;};}
 // Casa de madera: troncos gordos y astillas
 {const _l=logShot;logShot=function(t,tg,s,dm){const n0=(S.logs||[]).length,g=abRank(t,'wlogs'),sp=abRank(t,'wsplint');_l.apply(this,arguments);const L=S.logs&&S.logs.length>n0?S.logs[S.logs.length-1]:null;if(L){if(g)L.big=1;if(sp)L.bl=sp.n;}};}
@@ -80,58 +81,80 @@ function guildBanner(t){if(!t.sd||t.sd.some(s=>s.cls==='flagb'))return;const U=T
 // Abanderado y Escamas: armadura y resistencia mágica extra (auraAP suma a la armadura y es toda la resistencia mágica de una unidad)
 {const _a=auraAP;auraAP=function(s){let b=_a.apply(this,arguments);try{let x=0;for(const t of S.list){if(!TW[t.type].guild||!t.sd)continue;const r=abRank(t,'gbanner');if(!r)continue;const q=t.sd.find(o=>o.cls==='flagb'&&o.hp>0);if(q&&Math.hypot(s.x-q.x,s.y-q.y)<=BNRR*K)x=Math.max(x,r.a);}
    if(s.air&&s.tw){const sc=abRank(s.tw,'dscales');if(sc)x+=sc.a;}b+=x;}catch(e){}return b;};}
+UHM.push((s,d,e)=>{if(s&&s.air&&s.tw){const sc=abRank(s.tw,'dscales');if(sc)d*=1-sc.red;}return d;});
 // Contratos lucrativos: recompensa por ronda (el botín por baja se ajusta en update.js con guildLoot)
 const guildLoot=src=>{if(!(src&&src.type&&TW[src.type]&&TW[src.type].guild))return 1;const r=abRank(src,'gcontr');return 1.25+(r?r.m:0);};
 {const _rr=roundRewards;roundRewards=function(){try{for(const t of S.list)if(TW[t.type].guild){const r=abRank(t,'gcontr');if(r)goldEv(Math.round(([10,20,35,50][t.lvl-1]||10)*r.m));}}catch(e){}return _rr.apply(this,arguments);};}
 
 // ================= Mímico glotón =================
+// Es una unidad: un cofre plantado en el camino (con bandera), que bloquea y muerde. Sube de nivel con sus bajas.
+function mkGlut(t){const m=sdHp(t);t.sd=[{i:0,x:t.x,y:t.y,hp:m,max:m,en:null,cd:0,rt:0,tw:t,lock:true,fight:false,wt:2,mim:1}];t.alert=1.5*K;if(!t.flag)autoFlag(t);}
+const glutU=t=>t.sd&&t.sd[0]&&t.sd[0].mim?t.sd[0]:null;
+{const _l=loadRun;loadRun=function(rec){const r=_l.apply(this,arguments);try{if(r&&S&&S.list)for(const t of S.list)if(TW[t.type]&&TW[t.type].glut&&!glutU(t))mkGlut(t);}catch(e){}return r;};}
 const bigE=e=>!!(ET[e.t].el||isBoss(e));
-function glutRelease(t,dead){const B=t.belly;if(!B)return;t.belly=null;const e=B.e;e.sw=0;e.hk=0;if(B.x!==undefined){e.x=B.x;e.y=B.y;}if(e.fx)delete e.fx.root;t.engT=dead?ENGCD/2:ENGCD;
- if(!dead&&e.hp>0){S.fx.push({x:e.x,y:e.y,t:.35,m:.35,r:.6*K,col:'#e05a6a'});S.fx.push({line:[t.x,t.y,e.x,e.y],col:'#e05a6a',t:.2,m:.2});}}
-function glutAbTick(dt){for(const t of S.list){if(!TW[t.type].glut||!uabOk(t))continue;const en=abRank(t,'mengulf');if(!en){if(t.belly)glutRelease(t,false);continue;}const s=stats(t);
-  const dig=()=>{t.dig=(t.dig||0)+1;glutRelease(t,true);const bl=abRank(t,'mbelly');if(bl&&t.dig>=bl.n){t.dig-=bl.n;S.fx.push({x:t.x,y:t.y,t:.8,m:.8,r:1.6*K,col:'#ffd84a'});S.msg='¡El Mímico glotón escupe un cofre!';try{sfx('coin');}catch(x){}setTimeout(()=>{try{openRelic();}catch(x){}},0);}};
+const mbiteX=(t,e,dm)=>{const b=abRank(t,'mbite');return b?Math.min(dm*4,e.max*b.p):0;};
+function glutRelease(t,dead){const B=t.belly;if(!B)return;t.belly=null;const e=B.e,m=glutU(t);e.sw=0;e.hk=0;if(B.x!==undefined){e.x=B.x;e.y=B.y;}if(e.fx)delete e.fx.root;t.engT=ENGCD;
+ if(dead){if(m&&m.hp>0){m.hp=Math.min(m.max,m.hp+m.max*ENGHEAL);S.fx.push({x:m.x,y:m.y,t:.5,m:.5,r:.8*K,col:'#8ff0a0'});}}
+ else if(e.hp>0){S.fx.push({x:e.x,y:e.y,t:.35,m:.35,r:.6*K,col:'#e05a6a'});if(m)S.fx.push({line:[m.x,m.y,e.x,e.y],col:'#e05a6a',t:.2,m:.2});}}
+function glutAbTick(dt){for(const t of S.list){if(!TW[t.type].glut)continue;if(!glutU(t))mkGlut(t);const m=glutU(t);
+  if(m.hp<=0||!uabOk(t)){if(t.belly)glutRelease(t,false);continue;}
+  const en=abRank(t,'mengulf');if(!en){if(t.belly)glutRelease(t,false);continue;}const s=stats(t);
+  const dig=()=>{t.dig=(t.dig||0)+1;glutRelease(t,true);const bl=abRank(t,'mbelly');if(bl&&t.dig>=bl.n){t.dig-=bl.n;S.fx.push({x:m.x,y:m.y,t:.8,m:.8,r:1.6*K,col:'#ffd84a'});S.msg='¡El Mímico glotón escupe un cofre!';try{sfx('coin');}catch(x){}setTimeout(()=>{try{openRelic();}catch(x){}},0);}};
   if(t.belly){const B=t.belly,e=B.e;if(e.hp<=0){dig();continue;}if(!S.enemies.includes(e)){t.belly=null;t.engT=ENGCD;continue;}
-   B.t-=dt;e.fx.root={t:.3};e.hk=1;e.x=t.x;e.y=t.y;t.cd=Math.max(t.cd,.25);B.cd-=dt;
-   while(B.cd<=0&&e.hp>0){B.cd+=1/s.rate;const b=abRank(t,'mbite'),dm=s.dmg+(b?Math.min(s.dmg*4,e.max*b.p):0);HKD=1;try{hurt(e,dm,t,'phys',s.pen);}finally{HKD=0;}}
+   // con la boca llena no muerde a nadie más; a lo de dentro lo mastica el doble de rápido
+   B.t-=dt;e.fx.root={t:.3};e.hk=1;e.x=m.x;e.y=m.y;m.cd=Math.max(m.cd,.25);B.cd-=dt;
+   while(B.cd<=0&&e.hp>0){B.cd+=1/(s.rate*ENGCH);HKD=1;try{hurt(e,s.dmg+mbiteX(t,e,s.dmg),t,'phys',s.pen);}finally{HKD=0;}}
    if(e.hp<=0)dig();else if(B.t<=0)glutRelease(t,false);continue;}
   t.engT=(t.engT===undefined?2:t.engT)-dt;if(t.engT>0)continue;
-  let best=null,bs=-1;const exp=s.dmg*s.rate*en.t;for(const e of S.enemies){if(e.hp<=0||e.hk>0||e.sw||e.leak||Math.hypot(e.x-t.x,e.y-t.y)>s.range||(typeof camoHid==='function'&&camoHid(e,t)))continue;const sc=bigE(e)?1:(e.hp<=exp?1e6:1e3)+e.hp;if(sc>bs){bs=sc;best=e;}}
+  // la lengua llega a cualquiera dentro de su alcance, aunque aún no haya llegado hasta él: primero al que pueda acabarse dentro
+  let best=null,bs=-1;const exp=s.dmg*s.rate*ENGCH*en.t;for(const e of S.enemies){if(e.hp<=0||e.hk>0||e.sw||e.leak||Math.hypot(e.x-m.x,e.y-m.y)>s.range||(typeof camoHid==='function'&&camoHid(e,t)))continue;const sc=bigE(e)?1:(e.hp<=exp?1e6:1e3)+e.hp;if(sc>bs){bs=sc;best=e;}}
   if(!best){t.engT=.3;continue;}
-  S.fx.push({line:[t.x,t.y,best.x,best.y],col:'#e8607a',t:.25,m:.25});
-  if(bigE(best)){const b=abRank(t,'mbite');hurt(best,s.dmg*3+(b?Math.min(s.dmg*4,best.max*b.p):0),t,'phys',s.pen);if(best.hp>0)knock(best,.5*K);S.fx.push({x:best.x,y:best.y,t:.3,m:.3,r:.7*K,col:'#e05a6a'});t.engT=ENGCD;continue;}
-  best.sw=1;best.hk=1;best.fx.root={t:.3};best.tgt=null;t.belly={e:best,t:en.t,cd:0,x:best.x,y:best.y};best.x=t.x;best.y=t.y;for(const o of S.list)if(o.tgt===best)o.tgt=null;for(const u of unitTowers())for(const q of u.sd||[]){if(q.en===best){q.en=null;q.fight=false;}if(q.en2===best)q.en2=null;}}}
+  S.fx.push({line:[m.x,m.y,best.x,best.y],col:'#e8607a',t:.25,m:.25});
+  if(bigE(best)){hurt(best,s.dmg*3+mbiteX(t,best,s.dmg),t,'phys',s.pen);if(best.hp>0)knock(best,.5*K);S.fx.push({x:best.x,y:best.y,t:.3,m:.3,r:.7*K,col:'#e05a6a'});t.engT=ENGCD;continue;}
+  best.sw=1;best.hk=1;best.fx.root={t:.3};best.tgt=null;t.belly={e:best,t:en.t,cd:0,x:best.x,y:best.y};best.x=m.x;best.y=m.y;for(const o of S.list)if(o.tgt===best)o.tgt=null;for(const u of unitTowers())for(const q of u.sd||[]){if(q.en===best){q.en=null;q.fight=false;}if(q.en2===best)q.en2=null;}}}
+// Mordisco voraz: cada mordisco normal hace además daño según la vida máxima del objetivo
+{const _oh=onHit;onHit=function(e,src){const r=_oh.apply(this,arguments);try{if(e&&e.hp>0&&src&&src.type&&TW[src.type]&&TW[src.type].glut&&uabOk(src)){const x=mbiteX(src,e,stats(src).dmg);if(x>0)hurt(e,x,src,'phys',0);}}catch(x){}return r;};}
 
 // ================= Dragón =================
 // Adulto y anciano vuelan: ahora tienen vida y solo pueden dañarlos los enemigos a distancia (como decía su ficha). Si cae, vuelve al nido y reaparece.
 function dragonAir(t){if(!t.fly)return null;let s=t.sd&&t.sd[0];if(!s||!s.air){const m=DRHP[Math.min(3,t.stage||2)]||150;s={i:0,x:t.x,y:t.y,hp:m,max:m,en:null,cd:0,rt:0,tw:t,lock:true,fight:false,air:1};t.sd=[s];}
  const m=DRHP[Math.min(3,t.stage||2)]||150;if(s.max!==m){s.hp=s.hp>0?s.hp+(m-s.max):s.hp;s.max=m;}return s;}
 const dragonUp=t=>{const s=t.sd&&t.sd[0];return !(s&&s.air)||s.hp>0;};
-// centro del camino a lo largo de una franja (para que el anciano la recorra en línea)
-function stripLine(cells){const by=new Map();for(const c of cells){const f=S.field[c.y][c.x];if(!by.has(f))by.set(f,[0,0,0]);const a=by.get(f);a[0]+=c.x;a[1]+=c.y;a[2]++;}return [...by.keys()].sort((a,b)=>a-b).map(f=>{const a=by.get(f);return[a[0]/a[2],a[1]/a[2]];});}
-// Llamarada del anciano: pasa en línea recta sobre el camino y deja una franja de fuego a todo lo ancho (el mismo sistema que los charcos en franja)
-function dragonBreath(t,fx,fy,tg){const br=abRank(t,'dbreath'),L=(DBRL+(br?br.L:0))*K,cells=stripCells(tg.x,tg.y,L);if(!cells.length)return;
- const bm=1+(br?br.b:0),all=cells.slice().sort((a,b)=>S.field[a.y][a.x]-S.field[b.y][b.x]),pts=stripLine(cells);
- const z=addStrip({cells:[],t:DBRT+(br?br.t:0),src:t,burn:DBRS*bm,fire:1});
- t.fly.pass={pts:pts.length>1?pts:[[fx,fy],pts[0]||[tg.x,tg.y]],k:0,T:Math.max(.6,pts.length*.07),z,all,i:0,n0:DBRN*bm};dragonLay(t,0);}
+// Llamarada del anciano: vuela hasta el objetivo y pasa por el camino dejando una franja de fuego a todo lo ancho (el mismo sistema que los charcos en franja).
+// En un cruce toma una de las ramas al azar y sigue por ella.
+function dragonRoute(tg,n){const fv=(kx,ky)=>{const v=S.field&&S.field[ky*K+1]?S.field[ky*K+1][kx*K+1]:null;return v==null||!isFinite(v)||v>=1e9?-1:v;};const q0=sqOf(Math.round(tg.tx??tg.x),Math.round(tg.ty??tg.y));let kx=q0.kx,ky=q0.ky;
+ if(!inbc(kx,ky)||S.cc[ky][kx]!==2){const p=pathNear(tg.x,tg.y);if(!p)return[];const q=sqOf(p.x,p.y);kx=q.kx;ky=q.ky;}
+ const out=[[kx,ky]];while(out.length<n){const f0=fv(kx,ky),op=[];for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||out.some(o=>o[0]===nx&&o[1]===ny))continue;if(fv(nx,ny)>f0)op.push([nx,ny]);}if(!op.length)break;const nx=op[Math.floor(Math.random()*op.length)];kx=nx[0];ky=nx[1];out.push(nx);}
+ return out;}
+function dragonBreath(t,fx,fy,tg){const br=abRank(t,'dbreath'),n=Math.round(DBRL+(br?br.L:0)),rt=dragonRoute(tg,n);if(!rt.length)return;
+ const bm=1+(br?br.b:0),all=[];rt.forEach(([kx,ky],i)=>{const cs=[];for(let j=0;j<K;j++)for(let q=0;q<K;q++){const x=kx*K+q,y=ky*K+j;if(S.cells[y]&&S.cells[y][x]===2)cs.push({x,y});}
+  const pv=rt[i-1]||rt[i+1],dx=pv?(i?kx-pv[0]:pv[0]-kx):0,dy=pv?(i?ky-pv[1]:pv[1]-ky):0;cs.sort((a,b)=>(a.x*dx+a.y*dy)-(b.x*dx+b.y*dy));all.push(...cs);});
+ const z=addStrip({cells:[],t:DBRT+(br?br.t:0),src:t,burn:DBRS*bm,fire:1}),pts=rt.map(([kx,ky])=>[kx*K+1,ky*K+1]);if(pts.length<2)pts.push([pts[0][0],pts[0][1]]);
+ t.fly.pass={pts,k:0,T:Math.max(.4,(pts.length-1)/DRPASS),z,all,i:0,n0:DBRN*bm,on:0};}
 // extiende la franja hasta donde ha llegado el dragón (k de 0 a 1) y prende a los enemigos de las celdas nuevas
-function dragonLay(t,k){const P=t.fly&&t.fly.pass;if(!P||!P.z)return;const n=Math.min(P.all.length,Math.ceil(k*P.all.length)+1),nw=new Set();while(P.i<n){const c=P.all[P.i++],q=c.x+','+c.y;P.z.cells.push(c);P.z.set.add(q);nw.add(q);}
+function dragonLay(t,k){const P=t.fly&&t.fly.pass;if(!P||!P.z)return;const n=Math.min(P.all.length,Math.ceil(k*P.all.length)),nw=new Set();while(P.i<n){const c=P.all[P.i++],q=c.x+','+c.y;P.z.cells.push(c);P.z.set.add(q);nw.add(q);}
  if(nw.size)for(const e of S.enemies)if(e.hp>0&&!isFly(e)&&nw.has(Math.round(e.x)+','+Math.round(e.y)))addBurn(e,t,P.n0);}
-function dragonAdults(dt){for(const t of S.list){if(!t.fly||!t.flag)continue;const sa=dragonAir(t);
-  if(sa.hp<=0){if(t.fly.pass)dragonLay(t,1);if(!sa.dz){sa.dz=1;sa.rt=DRREZ;sa.en=null;S.fx.push({x:t.fly.x,y:t.fly.y,t:.6,m:.6,r:1.4*K,col:'#ff7a2e'});S.msg='Tu dragón ha caído: vuelve al nido a recuperarse.';}t.fly.pass=null;t.fly.x=t.x;t.fly.y=t.y;sa.x=t.x;sa.y=t.y;continue;}
-  sa.dz=0;t.fly.a+=dt*1.2;const cx=t.flag.x+Math.cos(t.fly.a)*1.5*K,cy=t.flag.y+Math.sin(t.fly.a)*1.5*K;let fx=cx,fy=cy;
-  const P=t.fly.pass;if(P){P.k+=dt/P.T;dragonLay(t,Math.min(1,P.k));if(P.k>=1){t.fly.pass=null;t.fly.back=.35;t.fly.bx=P.pts[P.pts.length-1][0];t.fly.by=P.pts[P.pts.length-1][1];}else{const u=P.k*(P.pts.length-1),i=Math.min(P.pts.length-2,Math.floor(u)),w=u-i;fx=P.pts[i][0]+(P.pts[i+1][0]-P.pts[i][0])*w;fy=P.pts[i][1]+(P.pts[i+1][1]-P.pts[i][1])*w;}}
-  if(!t.fly.pass&&t.fly.back>0){t.fly.back-=dt;const w=Math.max(0,t.fly.back/.35);fx=cx+(t.fly.bx-cx)*w;fy=cy+(t.fly.by-cy)*w;}
-  t.fly.x=fx;t.fly.y=fy;sa.x=fx;sa.y=fy;sa.lock=true;sa.en=null;sa.fight=false;
+function dragonAdults(dt){for(const t of S.list){if(!t.fly||!t.flag)continue;const F=t.fly,sa=dragonAir(t);
+  if(sa.hp<=0){if(F.pass&&F.pass.on)dragonLay(t,1);if(!sa.dz){sa.dz=1;sa.rt=DRREZ;sa.en=null;S.fx.push({x:F.x,y:F.y,t:.6,m:.6,r:1.4*K,col:'#ff7a2e'});S.msg='Tu dragón ha caído: vuelve al nido a recuperarse.';}F.pass=null;F.ret=0;F.x=t.x;F.y=t.y;sa.x=t.x;sa.y=t.y;continue;}
+  // sobrevuela su bandera despacio; si la bandera está lejos (o vuelve de una llamarada), va hacia ella a buen ritmo
+  sa.dz=0;F.a+=dt*DRORB;const cx=t.flag.x+Math.cos(F.a)*1.5*K,cy=t.flag.y+Math.sin(F.a)*1.5*K;if(F.x===undefined){F.x=cx;F.y=cy;}
+  const fly=(tx,ty,sp)=>{const dx=tx-F.x,dy=ty-F.y,d=Math.hypot(dx,dy),st=sp*K*dt;if(d<=st){F.x=tx;F.y=ty;return true;}F.x+=dx/d*st;F.y+=dy/d*st;return false;};
+  const P=F.pass;
+  if(P){if(!P.on){if(fly(P.pts[0][0],P.pts[0][1],DRGO))P.on=1;}
+   else{P.k+=dt/P.T;const k=Math.min(1,P.k),u=k*(P.pts.length-1),i=Math.min(P.pts.length-2,Math.floor(u)),w=u-i;F.x=P.pts[i][0]+(P.pts[i+1][0]-P.pts[i][0])*w;F.y=P.pts[i][1]+(P.pts[i+1][1]-P.pts[i][1])*w;dragonLay(t,k);if(P.k>=1){F.pass=null;F.ret=1;}}}
+  else if(F.ret||Math.hypot(cx-F.x,cy-F.y)>.4*K){if(fly(cx,cy,DRRET))F.ret=0;}
+  else{F.x=cx;F.y=cy;}
+  const fx=F.x,fy=F.y;sa.x=fx;sa.y=fy;sa.lock=true;sa.en=null;sa.fight=false;
   // Rugido
   const ro=uabOk(t)&&abRank(t,'droar');if(ro){t.roT=(t.roT===undefined?ro.cd/2:t.roT)-dt;if(t.roT<=0){const c=S.enemies.filter(e=>e.hp>0&&!(e.hk>0)&&Math.hypot(e.x-t.flag.x,e.y-t.flag.y)<=ROARR*K);if(c.length){t.roT=ro.cd;for(const e of c){const d=isBoss(e)?ro.t*BOSSRES:ro.t;e.fx.fear={t:Math.max(d,e.fx.fear?e.fx.fear.t:0)};}(S.ufx=S.ufx||[]).push({k:'roar',x:t.flag.x,y:t.flag.y,t:.8,m:.8,r:ROARR*K});try{sfx('roar');}catch(e){}}else t.roT=.5;}}
-  if(t.fly.pass)continue;
-  t.fly.cd-=dt;if(t.fly.cd>0)continue;let tg=null,bd=3.5*K;for(const e of S.enemies)if(e.hp>0&&!(e.hk>0)){const d=Math.hypot(e.x-fx,e.y-fy);if(d<=bd){bd=d;tg=e;}}if(!tg){t.fly.cd=0;continue;}
-  t.fly.cd=1.5;const st=stats(t),crit=Math.random()<st.crit+mkB(tg),old=t.stage>=3;S.proj.push({x:fx,y:fy,e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm:(old?22:18)*(crit?st.critm:1),dt:'elem',src:t,sp:10,area:old?1.2*K:K,slow:0,pen:0,col:'#ff6a2e',crit});
-  if(old){t.fly.br=(t.fly.br===undefined?2:t.fly.br)-1.5;if(t.fly.br<=0){t.fly.br=DBRCD;dragonBreath(t,fx,fy,tg);}}}}
+  if(F.pass)continue;
+  F.cd-=dt;if(F.cd>0)continue;let tg=null,bd=3.5*K;for(const e of S.enemies)if(e.hp>0&&!(e.hk>0)){const d=Math.hypot(e.x-fx,e.y-fy);if(d<=bd){bd=d;tg=e;}}if(!tg){F.cd=0;continue;}
+  F.cd=1.5;const st=stats(t),crit=Math.random()<st.crit+mkB(tg),old=t.stage>=3;S.proj.push({x:fx,y:fy,e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm:(old?22:18)*(crit?st.critm:1),dt:'elem',src:t,sp:10,area:old?1.2*K:K,slow:0,pen:0,col:'#ff6a2e',crit});
+  if(old){F.br=(F.br===undefined?2:F.br)-1.5;if(F.br<=0){F.br=DBRCD;dragonBreath(t,fx,fy,tg);}}}}
 
 // filas de la ficha del dragón volador (vida, armadura, reaparición)
 function dragRows(t,sg,src){const sc=t&&abRank(t,'dscales'),a=sc?sc.a:0,s=t&&t.sd&&t.sd[0]&&t.sd[0].air?t.sd[0]:null;
- return R('chp',kst('uhp','Vida',src),s&&s.hp>0&&s.hp<s.max?Math.ceil(s.hp)+' / '+DRHP[sg]:DRHP[sg])+R('cph',kst('aphys','Armadura',src),TW.dragon.unit.ap+a)+(a?R('cmg',kst('umr','Resistencia mágica',src),a):'')+R('cr','Reaparece',DRREZ+' s');}
+ return R('chp',kst('uhp','Vida',src),s&&s.hp>0&&s.hp<s.max?Math.ceil(s.hp)+' / '+DRHP[sg]:DRHP[sg])+R('cph',kst('aphys','Armadura',src),TW.dragon.unit.ap+a)+(a?R('cmg',kst('umr','Resistencia mágica',src),a)+R('chp','Daño recibido','−'+Math.round(sc.red*100)+'%'):'')+R('cr','Reaparece',DRREZ+' s');}
 // habilidades en la ficha de una torre de evento: en partida, con sus botones; en el compendio (Nv Máx), la lista con precios
 function uabSheet(t,k,CL,lvo,pin){if(!UAB[k])return '';
  if(t&&!lvo){if(!uabOk(t))return '';t.ab=t.ab||{};t.acd=t.acd||{};return '<div style="margin-top:8px"><b>Habilidades</b></div>'+abListIds(UAB[k],t,pin);}
@@ -141,7 +164,7 @@ function uabSheet(t,k,CL,lvo,pin){if(!UAB[k])return '';
 let UABERR=null;
 function uabTick(dt){if(S&&S.ufx&&S.ufx.length)S.ufx=S.ufx.filter(o=>(o.t-=dt)>0);if(!S||S.phase!=='wave'){if(S&&S.list)for(const t of S.list)if(t.belly)glutRelease(t,false);return;}faroAbTick(dt);pigsAbTick(dt);glutAbTick(dt);}
 {const _t=e2TowersTick;e2TowersTick=function(dt){const r=_t.apply(this,arguments);try{uabTick(dt);}catch(e){if(!UABERR){UABERR=e;console.error(e);}}return r;};}
-{const _nr=nextRound;nextRound=function(){try{S.spins=[];S.ufx=[];for(const t of S.list){if(t.belly)glutRelease(t,false);if(t.fly){t.fly.pass=null;t.fly.back=0;const s=t.sd&&t.sd[0];if(s&&s.air){s.hp=s.max;s.rt=0;}}}for(const e of S.enemies)e.sw=0;}catch(e){}return _nr.apply(this,arguments);};}
+{const _nr=nextRound;nextRound=function(){try{S.spins=[];S.ufx=[];for(const t of S.list){if(t.belly)glutRelease(t,false);if(t.fly){t.fly.pass=null;t.fly.ret=0;t.fly.x=undefined;const s=t.sd&&t.sd[0];if(s&&s.air){s.hp=s.max;s.rt=0;}}}for(const e of S.enemies)e.sw=0;}catch(e){}return _nr.apply(this,arguments);};}
 function uabDraw(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000,BCS=K*CS;
  for(const o of S.ufx||[]){const k=1-o.t/o.m,px=X(o.x),py=X(o.y),R=o.r*CS;
   if(o.k==='flash'){const gr=g.createRadialGradient(px,py,0,px,py,R);gr.addColorStop(0,'rgba(255,250,215,'+.5*(1-k)+')');gr.addColorStop(1,'rgba(255,236,150,'+.12*(1-k)+')');g.fillStyle=gr;g.beginPath();g.arc(px,py,R,0,7);g.fill();g.strokeStyle='rgba(255,246,200,'+(1-k)+')';g.lineWidth=lw(3);g.beginPath();g.arc(px,py,R*(.25+.75*k),0,7);g.stroke();}
@@ -158,7 +181,7 @@ function uabDraw(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000,BCS=K*CS;
   else if(p.brickP){const px=X(p.x),py=X(p.y);g.save();g.translate(px,py);g.rotate(now*9);g.fillStyle='#c05a3a';g.strokeStyle='#1b1712';g.lineWidth=lw(1.2);g.fillRect(-CS*.3,-CS*.16,CS*.6,CS*.32);g.strokeRect(-CS*.3,-CS*.16,CS*.6,CS*.32);g.restore();}}
  for(const t of S.list){const T=TW[t.type];
   // Mímico con la boca llena
-  if(T.glut&&t.belly){const B=t.belly,px=X(t.x),py=X(t.y),k=.5+.5*Math.sin(now*12);g.strokeStyle='rgba(224,90,106,.9)';g.lineWidth=lw(2.5);g.beginPath();g.arc(px,py,BCS*(.5+.05*k),0,7);g.stroke();const E=ET[B.e.t];g.fillStyle=E.col;g.strokeStyle='#1b1712';g.lineWidth=lw(1.2);g.beginPath();g.arc(px,py-BCS*.62,CS*.42,0,7);g.fill();g.stroke();try{if(enIc(B.e.t))enIcDraw(g,B.e.t,px,py-BCS*.62,CS*.3);}catch(e){}
+  if(T.glut&&t.belly&&glutU(t)){const B=t.belly,px=X(glutU(t).x),py=X(glutU(t).y),k=.5+.5*Math.sin(now*12);g.strokeStyle='rgba(224,90,106,.9)';g.lineWidth=lw(2.5);g.beginPath();g.arc(px,py,BCS*(.5+.05*k),0,7);g.stroke();const E=ET[B.e.t];g.fillStyle=E.col;g.strokeStyle='#1b1712';g.lineWidth=lw(1.2);g.beginPath();g.arc(px,py-BCS*.62,CS*.42,0,7);g.fill();g.stroke();try{if(enIc(B.e.t))enIcDraw(g,B.e.t,px,py-BCS*.62,CS*.3);}catch(e){}
    const hp=Math.max(0,B.e.hp/B.e.max);g.fillStyle='rgba(0,0,0,.5)';g.fillRect(px-CS*.6,py-BCS*.62-CS*.7,CS*1.2,lw(3));g.fillStyle='#e0453a';g.fillRect(px-CS*.6,py-BCS*.62-CS*.7,CS*1.2*hp,lw(3));}
   // Abanderado: estandarte y aura
   if(T.guild&&t.sd){const q=t.sd.find(o=>o.cls==='flagb'&&o.hp>0);if(q){const px=X(q.x),py=X(q.y);g.strokeStyle='rgba(91,141,239,.55)';g.fillStyle='rgba(91,141,239,.08)';g.lineWidth=lw(1.2);g.setLineDash([lw(4),lw(4)]);g.beginPath();g.arc(px,py,BNRR*K*CS,0,7);g.fill();g.stroke();g.setLineDash([]);

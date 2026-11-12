@@ -127,7 +127,7 @@ function autoFlag(t){const R2=stats(t).range,r=Math.ceil(R2);let b=null,bd=1e9;
 function setFlag(t,c){t.flag={x:c.x,y:c.y};for(const s of t.sd||[]){s.lock=true;s.en=null;s.fight=false;}if(t.pigT)setFlag(t.pigT,c);}
 function mkPig(t){const P=PIGU[t.type];if(!t.flag)autoFlag(t);const pt={type:'bastion',lvl:3,pigU:t.type,home:t,x:t.x,y:t.y,cells:[],ab:{},acd:{},flag:t.flag,uov:{n:1,hp:P.hp,ap:P.ap,rez:10,spd:(P.spd||2)*K},ovr:{dmg:P.dmg,rate:P.rate,range:(P.range||2.5)*K,crit:CRIT,critm:2,area:0,gold:0,pen:0}};
  pt.sd=[{i:0,x:t.x,y:t.y,hp:P.hp,max:P.hp,en:null,cd:0,rt:0,tw:pt,lock:true,fight:false,wt:2,rng:!!P.rng,pig:t.type}];t.pigT=pt;}
-const HOOC=1.5; // héroe fuera de combate: se mueve un 50 % más rápido
+const HOOC=1.5,COMBM=.65; // la velocidad de las fichas es fuera de combate; peleando o recién golpeados, héroes y unidades se mueven un 35 % más lento
 function unitWalk(dt){
  for(const t of unitTowers()){if(t.merc&&S.hero)t.flag=S.hero.pt.flag;if(t.home)t.flag=t.home.flag;if(!t.flag)autoFlag(t);const U=unitOf(t);
   for(const s of t.sd){
@@ -137,7 +137,7 @@ function unitWalk(dt){
     if(dd>r){tx=e.x-dx/dd*r;ty=e.y-dy/dd*r;}else{tx=s.x;ty=s.y;}}
    else{const q=slotOf(t,s.i);tx=q.x;ty=q.y;}
    const dx=tx-s.x,dy=ty-s.y,dd=Math.hypot(dx,dy);
-   if(dd>.02){/* fuera de combate = no está atacando ni le están atacando (no basta con que haya oleada o un objetivo lejos) */const ooc=s.H&&(S.phase!=='wave'||(!s.fight&&S.wt-(s.lh??-99)>=2&&S.wt-(s.la??-99)>=1.5));const st=Math.min(dd,U.spd*(t.uspdx||tinfo(t).uspd||1)*(s.cls&&CLS[s.cls]&&CLS[s.cls].sp||1)*(typeof uSpdM==='function'?uSpdM(t):1)*(ooc?HOOC:1)*dt);s.x+=dx/dd*st;s.y+=dy/dd*st;}
+   if(dd>.02){/* fuera de combate = no está atacando ni le están atacando (no basta con que haya oleada o un objetivo lejos) */const ooc=S.phase!=='wave'||(!s.fight&&S.wt-(s.lh??-99)>=2&&S.wt-(s.la??-99)>=1.5);const st=Math.min(dd,U.spd*(t.uspdx||tinfo(t).uspd||1)*(s.cls&&CLS[s.cls]&&CLS[s.cls].sp||1)*(typeof uSpdM==='function'?uSpdM(t):1)*(ooc?1:COMBM)*dt);s.x+=dx/dd*st;s.y+=dy/dd*st;}
    if(s.lock&&Math.hypot(tx-s.x,ty-s.y)<=.15)s.lock=false;}}
 }
 // ---- Monasterio: curación al grupo, trago de calabaza y embriaguez ----

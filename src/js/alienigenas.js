@@ -18,7 +18,7 @@ const ALN=[0,4,5,6],ALHIVE=8,ALSYM=.15;
 CLS.pred={n:'Depredador',d:2.6,rt:.9,cr:.05,hp:3.2,ap:5};CLS.larva={n:'Larva',d:.5,rt:1,cr:0,hp:.4,ap:0,sp:.5};
 SPECS.alien={
  hive:{n:'Colmena',ic:'🥚',col:'#3fc9b0',lv:{dmg:L4D*.85,cd:.7,range:1.2,area:1.3,hp:L4H*.9,pen:0},ab:['larva','brood','swcor'],d:'El enjambre crece: 8 criaturas. Se multiplican y desgastan entre todas la resistencia mágica de los enemigos grandes.'},
- pred:{n:'Depredadores',ic:'🦖',col:'#2a9a88',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.2,pen:0},uspd:.75,ab:['devour','ambush','frenzy'],d:'Solo sobreviven las 3 más fuertes: mucho más grandes, con más vida y daño, y corpulencia 2.'}};
+ pred:{n:'Depredadores',ic:'🦖',col:'#2a9a88',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.2,pen:0},uspd:.75,ucls:'pred',ab:['devour','ambush','frenzy'],d:'Solo sobreviven las 3 más fuertes: mucho más grandes, con más vida y daño, y corpulencia 2.'}};
 Object.assign(AB,{
  larva:{n:'Larvas',ranks:[{c:30,n:2,t:6},{c:40,n:2,t:10},{c:50,n:3,t:10}],txt:r=>`Al morir, cada criatura suelta <b>${r.n} larvas</b> que pelean <span class="cr">${r.t} s</span> (con menos vida y daño).`},
  brood:{n:'Puesta',ranks:[{c:35,n:2,cd:10},{c:45,n:4,cd:10},{c:55,n:4,cd:7}],txt:r=>`Cada <span class="cr">${r.cd} s</span> nace una criatura extra, hasta <b>${r.n} más</b> que el grupo. Las extra no reaparecen al morir.`},
