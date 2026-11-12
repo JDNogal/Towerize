@@ -1292,6 +1292,26 @@ body.mfs #relic .evrsl .evchip{padding:8px 12px;font-size:13.5px}
 #relic .evp .evl>p{margin-top:10px}
 body.mfs #relic .evp .evl .evopt{font-size:14.5px;margin-top:6px}body.mfs #relic .evp .evtt{padding-bottom:3px}
 body.mfs #relic .ppap.evp{padding:8px 24px 8px;gap:6px 14px}body.mfs #relic .evp .evtt .evhead b{font-size:15px}body.mfs #relic .evp .evopts button.evo{padding:5px 10px}body.mfs #relic .evp .evopts button.evo>b{font-size:13px}body.mfs #relic .evp .evo .evod small{font-size:11.5px}
+/* la parte de arriba de la imagen siempre a la altura de lo primero de la derecha */
+#relic .ppap.evp,#relic .ppap.evp.evrsl{align-items:start}
+#relic .evp .esec{margin:0 0 2px;font:700 13px Georgia,"Times New Roman",serif;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);border-bottom:1.5px solid var(--pline2);padding-bottom:4px}
+/* B: solo la imagen a la izquierda, del mismo tamaño siempre; a la derecha Evento y Opciones */
+#relic .evp.evb{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+#relic .evp.evb .evrc{justify-content:flex-start;gap:8px}
+#relic .evp.evb .evtx{margin:0 0 6px}
+#relic .evp.evb.evrsl .evtale{font-style:italic;padding:0;border:0;background:none}
+#relic .evp.evb.evrsl{min-height:0}
+#relic .evp.evb.evrsl .evrc{align-self:stretch;justify-content:flex-start}#relic .evp.evb.evrsl button.go{margin-top:auto}
+body.mfs #relic .evp.evb .evimg svg{max-height:none;width:100%}
+body.mfs #relic .evp .esec{font-size:11.5px;padding-bottom:2px}body.mfs #relic .evp.evb .evtx{font-size:12px;line-height:1.3}
+/* B: pergamino de tamaño fijo para todos los eventos; la columna derecha no estira el pergamino y tiene scroll propio */
+#relic .evscr:has(.evb){width:min(900px,100%)}
+#relic .ppap.evp.evb{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto;align-items:stretch}
+#relic .evp.evb .evl{align-self:start}
+#relic .evp.evb .evrc{contain:size;overflow-y:auto;overflow-x:hidden;padding-right:8px;margin-right:-8px;scrollbar-width:thin;scrollbar-color:var(--pline3) transparent}
+#relic .evp.evb .evrc::-webkit-scrollbar{width:6px}#relic .evp.evb .evrc::-webkit-scrollbar-thumb{background:var(--pline3);border-radius:3px}
+#relic .evp.evb .evopts{margin-bottom:0}
+#relic .evp.evb .evopts button.evo{flex:0 0 auto}
 /* ---- era 2: iconos vectoriales, tickets (cartuchos de datos) y paquete de suministros ---- */
 .icsvg svg{width:1.15em;height:1.15em;vertical-align:-.2em;background:#0c1622;border-radius:50%;padding:.05em;box-sizing:border-box}
 #tickets{display:none;gap:8px;align-items:flex-end;padding:4px 6px}#tickets.on{display:flex}
@@ -1981,7 +2001,7 @@ body.era2g .cnf{background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v309</div>
+<div id="ver">Towerize v310</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3325,8 +3345,8 @@ function heroInfo(id,quiet){
  return `<div class="ttl"><b>${D.ic} ${D.n}</b> · ${kst('hlv','Nv '+l,src)}</div>`+
   R('chp',kst('hhp','Vida',src),H&&q?Math.round(Math.max(0,q.hp))+' / '+Math.round(q.max):Math.round(x.hp))+
   (arm>0?R('cph',kst('aphys','Armadura',src),armTxt(Math.round(arm*10)/10)):'')+(amr>0?R('cmg',kst('umr','Resistencia mágica',src),armTxt(amr)):'')+
-  R('cd',kst('hdmg','Daño',src),f(x.dmg))+R(DT[D.dt||'phys'].cls,kst('dtype','Tipo de daño',src),DT[D.dt||'phys'].n)+(D.area?R('ca',kst('harea','Área',src),cas(D.area)+' de radio'):'')+R('ccl',kst('hcd','Enfriamiento',src),f(x.cd)+' s')+objRow(!D.ranged,src)+
-  (D.ranged?R('cg',kst('hrng','Rango',src),cas(D.base.range))+R('cd',kst('hmel','Daño en melee',src),'−'+Math.round((1-HMELEE)*100)+'%'):'')+
+  R('cd',kst('hdmg','Daño',src),f(x.dmg)+(D.ranged?` <small style="display:inline">(${kst('hmel','melee',src)}: ${f(x.dmg*HMELEE)})</small>`:''))+R(DT[D.dt||'phys'].cls,kst('dtype','Tipo de daño',src),DT[D.dt||'phys'].n)+(D.area?R('ca',kst('harea','Área',src),cas(D.area)+' de radio'):'')+R('ccl',kst('hcd','Enfriamiento',src),f(x.cd)+' s')+objRow(!D.ranged,src)+
+  (D.ranged?R('cg',kst('hrng','Rango',src),cas(D.base.range)):'')+
   (HFX[id]?R('cf','Efectos',HFX[id](src)):'')+R('',kst('hblk','Corpulencia',src),D.w>1?'Bloquea hasta '+D.w:'1')+
   R('cg','Velocidad',cas(D.spd)+'/s')+`<small style="margin:0 0 2px">Fuera de combate se mueve ${HOOC} veces más rápido.</small>`+
   R('cr',kst('hrez','Reaparición',src),x.rez+' s')+
@@ -4712,15 +4732,19 @@ function eventCard(id){const E=EVENTS[id];return `<div class="evhead"><span clas
 // imagen del evento o de la opción elegida (EVIMG en eventos_img.js); algunas opciones tienen dos finales
 const EVALT={chest:{0:k=>k[0]!=='relicx'},lab:{2:k=>!(k[0]||'').startsWith('gold')}};
 function evImg(id,i,keys){const M=typeof EVIMG!=='undefined'&&EVIMG[id];if(!M)return '';if(i==null)return M.ev;const f=EVALT[id]&&EVALT[id][i];return f&&keys&&f(keys)&&M.alt&&M.alt[i]?M.alt[i]:(M.o[i]||M.ev);}
-function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap evp${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
+// disposición del pergamino de eventos: 'b' = solo la imagen a la izquierda; 'a' = imagen con el texto debajo
+let EVLAY='b';
+function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap evp ev${EVLAY}${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
- const img=evImg(id);
- el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}<p>${E.txt}</p>`,
-  `${evBanner()}<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div><small class="evps">Evento · el juego está en pausa.</small>',0,`<div class="evhead big">${img?'':`<span class="evic">${E.ic}</span>`}<b>${E.n}</b></div>`)+wcompBtn('ev');}
+ const img=evImg(id),B=EVLAY==='b',opts=`<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div>';
+ el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?'':`<p>${E.txt}</p>`}`,
+  B?`${evBanner()}<div class="esec">Evento</div><p class="evtx">${E.txt}</p><div class="esec">Opciones</div>${opts}`:`${evBanner()}${opts}<small class="evps">Evento · el juego está en pausa.</small>`,
+  0,`<div class="evhead big">${img?'':`<span class="evic">${E.ic}</span>`}<b>${E.n}</b></div>`)+wcompBtn('ev');}
 function chooseEvent(i){const id=RL.ev,E=EVENTS[id],o=E&&E.opts[i];if(!o||(o.req&&o.req()))return;const keys=o.run()||[];remember(id,i,keys);
- const img=evImg(id,i,keys),tale=evRes(id,i,keys);
- const el=$('relic');el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}<b class="evopt">${o.l}</b>${tale?`<p class="evtale">${tale}</p>`:''}`,
-  `<div class="evget"><div class="esec">Obtienes</div>${keys.map(chip).filter(Boolean).map(c=>`<div class="evchip">${c}</div>`).join('')||'<div class="evchip">Nada</div>'}</div><button class="go" data-a="evok">Continuar</button>`,1,`<div class="evhead big"><b>${E.n}</b></div>`)+wcompBtn('ev');
+ const img=evImg(id,i,keys),tale=evRes(id,i,keys),B=EVLAY==='b';
+ const get=`<div class="evget"><div class="esec">Obtienes</div>${keys.map(chip).filter(Boolean).map(c=>`<div class="evchip">${c}</div>`).join('')||'<div class="evchip">Nada</div>'}</div>`;
+ const el=$('relic');el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?'':`<b class="evopt">${o.l}</b>${tale?`<p class="evtale">${tale}</p>`:''}`}`,
+  B?`<div class="esec">${o.l}</div>${tale?`<p class="evtx evtale">${tale}</p>`:''}${get}<button class="go" data-a="evok">Continuar</button>`:`${get}<button class="go" data-a="evok">Continuar</button>`,1,`<div class="evhead big"><b>${E.n}</b></div>`)+wcompBtn('ev');
  renderRelics();ui();}
 function closeEvent(){RL.open=false;RL.ev=null;$('relic').classList.remove('open');ui();if(S.sharp)startSharp();else if(S.dneed>0)startDism();else if(S.uq.length&&!RL.open)startUPlace();}
 const sharpOk=t=>!TW[t.type].support&&!TW[t.type].faro;
@@ -8579,10 +8603,14 @@ const MECG=[
  ['Estados',[['burn','Quemadura','🔥'],['poison','Veneno','☠️'],['bleed','Sangrado','🩸'],['chill','Hipotermia','🥶'],['ez','Electrizado','⚡'],['brk','Armadura rota','🔨'],['slow','Ralentización','🐌'],['freeze','Congelar','🧊'],['stun','Aturdir','💫'],['daze','Desorientado','🌀'],['root','Enredo','🌿'],['sticky','Pegajoso','🍯'],['flam','Inflamable','🛢️'],['wet','Mojado','💧'],['cursed','Maldito','🌑'],['poly','Transformado','🐸'],['fear','Aterrado','😱'],['mark','Marcado','🎯'],['prey','Presa','🦅'],['inf','Infectado','🦠'],['lmk','Marcado con láser','🔴'],['vc','Carga','🔋'],['stk','Acumulable','➕']]],
  ['Tipos de daño',[['tphys','Daño físico','⚔️'],['tmagic','Daño mágico','✨'],['telem','Daño elemental','🌈'],['crit','Crítico','❗'],['penp','Penetración','🗡️'],['aoedmg','Daño en área','💥'],['area','Área','⭕'],['chain','Rebote','🔗'],['beam','Rayo continuo','📏'],['push','Empuje','👋']]],
  ['Estadísticas de torres',[['dmg','Daño','🎯'],['cool','Enfriamiento','⏱️'],['rng','Rango','📡'],['dps','DPS','📈'],['dur','Duración','⌛'],['tgt','Objetivo','🧭'],['tgts','Objetivos','🥾'],['eff','Efectos','🧪'],['mag','Cargador','🔫'],['lvl','Nivel','⭐'],['cost','Coste','🪙'],['upc','Mejora','⬆️']]],
- ['Unidades y enemigos',[['ehp','Vida','❤️'],['espd','Velocidad','👟'],['edmg','Daño al núcleo','💔'],['egold','Oro por baja','💰'],['eud','Daño a unidades','🗡️'],['eac','Enfriamiento enemigo','⏱️'],['erg','Rango enemigo','🏹'],['eblk','Corpulencia','🧱'],['aphys','Armadura','🛡️'],['amagic','Resistencia mágica','🔮'],['umr','Resistencia mágica de unidades','🔮'],['bres','Resistencia a control','👑'],['fly','Volador','🪽'],['aura','Aura','🌟'],['dodge','Escurridizo','💨'],['steal','Saqueo','💸'],['pierce','Perforante','📌'],['curse','Maldición','🕯️'],['eheal','Curación tribal','🌿'],['usol','Soldados','💂'],['uhp','Vida del soldado','❤️'],['urez','Reaparición','🔄']]],
+ ['Unidades y enemigos',[['ehp','Vida','❤️'],['espd','Velocidad','👟'],['edmg','Daño al núcleo','💔'],['egold','Oro por baja','💰'],['eud','Daño a unidades','🗡️'],['eac','Enfriamiento enemigo','⏱️'],['erg','Rango enemigo','🏹'],['eblk','Corpulencia','🧱'],['aphys','Armadura','🛡️'],['amagic','Resistencia mágica','🔮'],['umr','Resistencia mágica de unidades','🔮'],['bres','Resistencia a control','👑'],['fly','Volador','🪽'],['tgnd','Terrestre','🥾'],['aura','Aura','🌟'],['dodge','Escurridizo','💨'],['steal','Saqueo','💸'],['pierce','Perforante','📌'],['curse','Maldición','🕯️'],['eheal','Curación tribal','🌿'],['usol','Soldados','💂'],['uhp','Vida del soldado','❤️'],['urez','Reaparición','🔄']]],
  ['Héroes',[['hlv','Nivel de héroe','⭐'],['hxp','Experiencia','✨'],['hrez','Reaparición del héroe','🔄'],['hrel','Reliquia inicial','💎'],['hmel','Daño en melee','✊'],['g_hab','Habilidad del héroe','🌀']]],
  ['Partida',[['g_core','Núcleo','💠'],['g_piece','Pieza','🧩'],['g_portal','Portal','🌀'],['g_solar','Solar','⬜'],['g_tile','Casilla especial','✨'],['vch','Vale de mejora','🎟️'],['rcd','Recarga de reliquia','⏳']]]];
+// una sola estadística para torres, unidades, enemigos y héroes: los duplicados se quedan como alias del principal
+const MALIAS={uhp:'ehp',umr:'amagic',eud:'dmg',eac:'cool',erg:'rng',hlv:'lvl',hrez:'urez'};
+for(const g of MECG)g[1]=g[1].filter(([id])=>!MALIAS[id]);
 const MECI={};for(const[g,l]of MECG)for(const[id,n,ic]of l)MECI[id]={id,n,ic,g};
+for(const a in MALIAS)MECI[a]=MECI[MALIAS[a]];
 // contexto para las palabras que dependen de una torre o un enemigo concretos
 const MECCTX={ehp:'en:norm',espd:'en:norm',edmg:'en:norm',egold:'en:norm',dmg:'shop:arrow',cool:'shop:arrow',rng:'shop:arrow',dps:'shop:arrow',eff:'shop:arrow',tgt:'shop:arrow',lvl:'shop:arrow',cost:'shop:arrow',upc:'shop:arrow'};
 // quién usa cada mecánica (torres, enemigos y héroes); también decide si ya la has descubierto
@@ -8595,7 +8623,8 @@ const mecRefOk=r=>{const[t,k,sp]=r.split(':');if(t==='tw'&&sp){const i=Object.ke
 // v308: lo que no tiene dueño concreto se descubre al ver lo primero de su grupo (nada visto = nada en el compendio)
 const MECGRP={'Estados':['tw:*','hr:*'],'Tipos de daño':['tw:*','hr:*'],'Estadísticas de torres':['tw:*'],'Unidades y enemigos':['en:*'],'Héroes':['hr:*'],'Partida':['pc:*']};
 const MECFIX={tphys:['tw:arrow','tw:cata','tw:cannon','tw:bastion','tw:monk','hr:reinhart'],tmagic:['tw:orb','tw:augur','tw:altar','hr:radagast'],telem:['tw:frost','tw:poison','tw:sala','tw:flame','tw:tesla','hr:yrsa'],stk:['tw:*','hr:*']};
-const mecOk=id=>{if(typeof UNLOCK_ALL!=='undefined'&&UNLOCK_ALL||OPT.u_cp)return true;const u=MECUSE[id]||MECFIX[id]||(MECI[id]&&MECGRP[MECI[id].g])||['pc:*'];return u.some(mecRefOk);};
+const mecOk0=id=>{if(typeof UNLOCK_ALL!=='undefined'&&UNLOCK_ALL||OPT.u_cp)return true;const u=MECUSE[id]||MECFIX[id]||(MECI[id]&&MECGRP[MECI[id].g])||['pc:*'];return u.some(mecRefOk);};
+const mecOk=id=>{id=MALIAS[id]||id;return mecOk0(id)||Object.keys(MALIAS).some(a=>MALIAS[a]===id&&mecOk0(a));};
 // «Cómo enfrentarlo»: una o dos frases por enemigo
 const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barren en grupo.',vet:'Más vida y algo de armadura: el daño mágico o elemental rinde más.',champ:'Mucha armadura y cada 25 s un hachazo giratorio: no amontones tus unidades a su alrededor.',
  fast:'Corre mucho y aguanta poco: daño en área o ralentizarlo.',runner:'Muy rápido: ralentízalo o bloquéalo con tus unidades.',raider:'Esquiva a tus soldados y te roba oro si llega: mátalo con torres.',
@@ -8632,12 +8661,12 @@ const EVOSVG='<svg viewBox="0 0 26 16" width="26" height="16"><path d="M2 10.5 Q
  let h=_bd.apply(this,arguments);
  if(t==='en'&&ET[id]&&seen('en',id)&&ETIP[id])h+=`<div class="esec" style="margin-top:12px">Cómo enfrentarlo</div><div class="ddesc">${ETIP[id]}</div>`;
  return h;};}
-function mecDetail(id){const M=MECI[id];if(!M)return'';
+function mecDetail(id){id=MALIAS[id]||id;const M=MECI[id];if(!M)return'';
  if(!mecOk(id))return `<div class="bkun"><span class="sil bkbig">${M.ic}</span><h4>???</h4><p>Aún no descubierta. Aparecerá al encontrar algo que la use.</p></div>`;
  let h='';try{h=kwHtml(id,MECCTX[id]||'')||'';}catch(e){h='';}
  h=h.replace(/^\s*<b[^>]*>[\s\S]*?<\/b>/,'').replace(/<div class="row[^"]*"><span>Cálculo<\/span>[\s\S]*?<\/div>/,'');
  let sub=M.g;{const m=h.match(/^\s*·\s*([^<]+)/);if(m){const x=m[1].trim();sub+=' · '+x.charAt(0).toUpperCase()+x.slice(1);h=h.slice(m[0].length);}}
- const uses=(MECUSE[id]||[]).filter(mecRefOk).map(r=>{const[t,k]=r.split(':');const n=t==='tw'?TW[k].n:t==='en'?ET[k].n:HEROES[k].n,ic=t==='tw'?`<i style="background:${TW[k].col}">${twIc(k)}</i>`:t==='en'?`<i style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</i>`:`<i style="background:${HEROES[k].col}">${HEROES[k].ic||'🦸'}</i>`;
+ const uses=[...new Set((MECUSE[id]||[]).concat(...Object.keys(MALIAS).filter(a=>MALIAS[a]===id).map(a=>MECUSE[a]||[])))].filter(mecRefOk).map(r=>{const[t,k]=r.split(':');const n=t==='tw'?TW[k].n:t==='en'?ET[k].n:HEROES[k].n,ic=t==='tw'?`<i style="background:${TW[k].col}">${twIc(k)}</i>`:t==='en'?`<i style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</i>`:`<i style="background:${HEROES[k].col}">${HEROES[k].ic||'🦸'}</i>`;
   return `<button class="mecuse" data-a="cpgo" data-t="${t}" data-v="${k}">${ic}${n}</button>`;}).join('');
  return bkSheet(`<span class="bkbic mecbic">${M.ic}</span>`,`<div class="ttl"><b>${M.n}</b></div><small class="mecg">${sub}</small>`+h)+(uses?`<div class="esec" style="margin-top:12px">Lo usan</div><div class="mecuses">${uses}</div>`:'');}
 // subtítulo: «descubiertas» y flechas que empiezan fila (al hacer salto de línea) se ocultan
@@ -8663,7 +8692,7 @@ function cpPrimDecor(){try{const box=PMN()?$('tip'):$('side');box.classList.remo
 {const _o=openPrim;openPrim=function(){const r=_o.apply(this,arguments);cpPrimDecor();return r;};}
 {const _r=refreshPrim;refreshPrim=function(){const r=_r.apply(this,arguments);cpPrimDecor();return r;};}
 {const _k=openKw;openKw=function(a,pl){const r=_k.apply(this,arguments);try{const d=KS[KS.length-1]&&KS[KS.length-1].el,id=a.dataset.kw||'';
-  const tg=MECI[id]&&mecOk(id)?['mc',id]:id.startsWith('tw_')?['tw',id.slice(3)]:id.startsWith('en_')?['en',id.slice(3)]:id.startsWith('hr_')?['hr',id.slice(3)]:id.startsWith('rl_')?['rl',id.slice(3)]:null;
+  const tg=MECI[id]&&mecOk(id)?['mc',MALIAS[id]||id]:id.startsWith('tw_')?['tw',id.slice(3)]:id.startsWith('en_')?['en',id.slice(3)]:id.startsWith('hr_')?['hr',id.slice(3)]:id.startsWith('rl_')?['rl',id.slice(3)]:null;
   if(d&&tg)cpDecorate(d,tg);}catch(e){}return r;};}
 // los logros viven en su propia sección del libro (🏆 Logros): hay que saltar de sección, no solo cambiar la pestaña
 function cpGo(t,v){if(t!=='lg'&&!compOk())return;if(NEC.open)necClose();try{closeKS();}catch(e){}
@@ -9864,7 +9893,7 @@ function novMark(act,v){if(act==='ctab')return novHas(v);if(act==='achf')return 
 // mecánicas: se descubren solas al ver lo que las usa; se apuntan las que pasan a verse
 let MECK=null;try{MECK=JSON.parse(localStorage.getItem('rt-meck'));}catch(e){}
 function mecScan(mark){if(typeof MECI==='undefined'||typeof mecOk!=='function')return;const first=!MECK;MECK=MECK||{};let ch=false;
- for(const id in MECI){if(!MECK[id]&&mecOk(id)){MECK[id]=1;ch=true;if(!first&&mark)novAdd('mc',id);}}if(ch){try{localStorage.setItem('rt-meck',JSON.stringify(MECK));}catch(e){}}}
+ for(const id in MECI){if(typeof MALIAS!=='undefined'&&MALIAS[id])continue;if(!MECK[id]&&mecOk(id)){MECK[id]=1;ch=true;if(!first&&mark)novAdd('mc',id);}}if(ch){try{localStorage.setItem('rt-meck',JSON.stringify(MECK));}catch(e){}}}
 try{mecScan(false);}catch(e){}
 {const _s=see;see=function(t,k){const nw=typeof SEEOK!=='undefined'&&SEEOK&&SEEN[t]&&!SEEN[t][k];const r=_s.apply(this,arguments);try{if(nw&&SEEN[t][k]){novAdd(t,k);mecScan(true);}}catch(e){}return r;};}
 {const _a=achieve;achieve=function(id){const nw=ACH[id]&&!ACHS[id];const r=_a.apply(this,arguments);try{if(nw&&ACHS[id])novAdd('lg',id);}catch(e){}return r;};}

@@ -11,7 +11,7 @@ function novMark(act,v){if(act==='ctab')return novHas(v);if(act==='achf')return 
 // mecánicas: se descubren solas al ver lo que las usa; se apuntan las que pasan a verse
 let MECK=null;try{MECK=JSON.parse(localStorage.getItem('rt-meck'));}catch(e){}
 function mecScan(mark){if(typeof MECI==='undefined'||typeof mecOk!=='function')return;const first=!MECK;MECK=MECK||{};let ch=false;
- for(const id in MECI){if(!MECK[id]&&mecOk(id)){MECK[id]=1;ch=true;if(!first&&mark)novAdd('mc',id);}}if(ch){try{localStorage.setItem('rt-meck',JSON.stringify(MECK));}catch(e){}}}
+ for(const id in MECI){if(typeof MALIAS!=='undefined'&&MALIAS[id])continue;if(!MECK[id]&&mecOk(id)){MECK[id]=1;ch=true;if(!first&&mark)novAdd('mc',id);}}if(ch){try{localStorage.setItem('rt-meck',JSON.stringify(MECK));}catch(e){}}}
 try{mecScan(false);}catch(e){}
 {const _s=see;see=function(t,k){const nw=typeof SEEOK!=='undefined'&&SEEOK&&SEEN[t]&&!SEEN[t][k];const r=_s.apply(this,arguments);try{if(nw&&SEEN[t][k]){novAdd(t,k);mecScan(true);}}catch(e){}return r;};}
 {const _a=achieve;achieve=function(id){const nw=ACH[id]&&!ACHS[id];const r=_a.apply(this,arguments);try{if(nw&&ACHS[id])novAdd('lg',id);}catch(e){}return r;};}

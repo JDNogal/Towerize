@@ -118,15 +118,19 @@ function eventCard(id){const E=EVENTS[id];return `<div class="evhead"><span clas
 // imagen del evento o de la opción elegida (EVIMG en eventos_img.js); algunas opciones tienen dos finales
 const EVALT={chest:{0:k=>k[0]!=='relicx'},lab:{2:k=>!(k[0]||'').startsWith('gold')}};
 function evImg(id,i,keys){const M=typeof EVIMG!=='undefined'&&EVIMG[id];if(!M)return '';if(i==null)return M.ev;const f=EVALT[id]&&EVALT[id][i];return f&&keys&&f(keys)&&M.alt&&M.alt[i]?M.alt[i]:(M.o[i]||M.ev);}
-function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap evp${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
+// disposición del pergamino de eventos: 'b' = solo la imagen a la izquierda; 'a' = imagen con el texto debajo
+let EVLAY='b';
+function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap evp ev${EVLAY}${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
- const img=evImg(id);
- el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}<p>${E.txt}</p>`,
-  `${evBanner()}<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div><small class="evps">Evento · el juego está en pausa.</small>',0,`<div class="evhead big">${img?'':`<span class="evic">${E.ic}</span>`}<b>${E.n}</b></div>`)+wcompBtn('ev');}
+ const img=evImg(id),B=EVLAY==='b',opts=`<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div>';
+ el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?'':`<p>${E.txt}</p>`}`,
+  B?`${evBanner()}<div class="esec">Evento</div><p class="evtx">${E.txt}</p><div class="esec">Opciones</div>${opts}`:`${evBanner()}${opts}<small class="evps">Evento · el juego está en pausa.</small>`,
+  0,`<div class="evhead big">${img?'':`<span class="evic">${E.ic}</span>`}<b>${E.n}</b></div>`)+wcompBtn('ev');}
 function chooseEvent(i){const id=RL.ev,E=EVENTS[id],o=E&&E.opts[i];if(!o||(o.req&&o.req()))return;const keys=o.run()||[];remember(id,i,keys);
- const img=evImg(id,i,keys),tale=evRes(id,i,keys);
- const el=$('relic');el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}<b class="evopt">${o.l}</b>${tale?`<p class="evtale">${tale}</p>`:''}`,
-  `<div class="evget"><div class="esec">Obtienes</div>${keys.map(chip).filter(Boolean).map(c=>`<div class="evchip">${c}</div>`).join('')||'<div class="evchip">Nada</div>'}</div><button class="go" data-a="evok">Continuar</button>`,1,`<div class="evhead big"><b>${E.n}</b></div>`)+wcompBtn('ev');
+ const img=evImg(id,i,keys),tale=evRes(id,i,keys),B=EVLAY==='b';
+ const get=`<div class="evget"><div class="esec">Obtienes</div>${keys.map(chip).filter(Boolean).map(c=>`<div class="evchip">${c}</div>`).join('')||'<div class="evchip">Nada</div>'}</div>`;
+ const el=$('relic');el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?'':`<b class="evopt">${o.l}</b>${tale?`<p class="evtale">${tale}</p>`:''}`}`,
+  B?`<div class="esec">${o.l}</div>${tale?`<p class="evtx evtale">${tale}</p>`:''}${get}<button class="go" data-a="evok">Continuar</button>`:`${get}<button class="go" data-a="evok">Continuar</button>`,1,`<div class="evhead big"><b>${E.n}</b></div>`)+wcompBtn('ev');
  renderRelics();ui();}
 function closeEvent(){RL.open=false;RL.ev=null;$('relic').classList.remove('open');ui();if(S.sharp)startSharp();else if(S.dneed>0)startDism();else if(S.uq.length&&!RL.open)startUPlace();}
 const sharpOk=t=>!TW[t.type].support&&!TW[t.type].faro;

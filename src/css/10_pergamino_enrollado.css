@@ -188,3 +188,23 @@ body.mfs #relic .evrsl .evchip{padding:8px 12px;font-size:13.5px}
 #relic .evp .evl>p{margin-top:10px}
 body.mfs #relic .evp .evl .evopt{font-size:14.5px;margin-top:6px}body.mfs #relic .evp .evtt{padding-bottom:3px}
 body.mfs #relic .ppap.evp{padding:8px 24px 8px;gap:6px 14px}body.mfs #relic .evp .evtt .evhead b{font-size:15px}body.mfs #relic .evp .evopts button.evo{padding:5px 10px}body.mfs #relic .evp .evopts button.evo>b{font-size:13px}body.mfs #relic .evp .evo .evod small{font-size:11.5px}
+/* la parte de arriba de la imagen siempre a la altura de lo primero de la derecha */
+#relic .ppap.evp,#relic .ppap.evp.evrsl{align-items:start}
+#relic .evp .esec{margin:0 0 2px;font:700 13px Georgia,"Times New Roman",serif;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);border-bottom:1.5px solid var(--pline2);padding-bottom:4px}
+/* B: solo la imagen a la izquierda, del mismo tamaño siempre; a la derecha Evento y Opciones */
+#relic .evp.evb{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+#relic .evp.evb .evrc{justify-content:flex-start;gap:8px}
+#relic .evp.evb .evtx{margin:0 0 6px}
+#relic .evp.evb.evrsl .evtale{font-style:italic;padding:0;border:0;background:none}
+#relic .evp.evb.evrsl{min-height:0}
+#relic .evp.evb.evrsl .evrc{align-self:stretch;justify-content:flex-start}#relic .evp.evb.evrsl button.go{margin-top:auto}
+body.mfs #relic .evp.evb .evimg svg{max-height:none;width:100%}
+body.mfs #relic .evp .esec{font-size:11.5px;padding-bottom:2px}body.mfs #relic .evp.evb .evtx{font-size:12px;line-height:1.3}
+/* B: pergamino de tamaño fijo para todos los eventos; la columna derecha no estira el pergamino y tiene scroll propio */
+#relic .evscr:has(.evb){width:min(900px,100%)}
+#relic .ppap.evp.evb{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto;align-items:stretch}
+#relic .evp.evb .evl{align-self:start}
+#relic .evp.evb .evrc{contain:size;overflow-y:auto;overflow-x:hidden;padding-right:8px;margin-right:-8px;scrollbar-width:thin;scrollbar-color:var(--pline3) transparent}
+#relic .evp.evb .evrc::-webkit-scrollbar{width:6px}#relic .evp.evb .evrc::-webkit-scrollbar-thumb{background:var(--pline3);border-radius:3px}
+#relic .evp.evb .evopts{margin-bottom:0}
+#relic .evp.evb .evopts button.evo{flex:0 0 auto}

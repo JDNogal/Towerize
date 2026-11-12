@@ -9,10 +9,14 @@ const MECG=[
  ['Estados',[['burn','Quemadura','🔥'],['poison','Veneno','☠️'],['bleed','Sangrado','🩸'],['chill','Hipotermia','🥶'],['ez','Electrizado','⚡'],['brk','Armadura rota','🔨'],['slow','Ralentización','🐌'],['freeze','Congelar','🧊'],['stun','Aturdir','💫'],['daze','Desorientado','🌀'],['root','Enredo','🌿'],['sticky','Pegajoso','🍯'],['flam','Inflamable','🛢️'],['wet','Mojado','💧'],['cursed','Maldito','🌑'],['poly','Transformado','🐸'],['fear','Aterrado','😱'],['mark','Marcado','🎯'],['prey','Presa','🦅'],['inf','Infectado','🦠'],['lmk','Marcado con láser','🔴'],['vc','Carga','🔋'],['stk','Acumulable','➕']]],
  ['Tipos de daño',[['tphys','Daño físico','⚔️'],['tmagic','Daño mágico','✨'],['telem','Daño elemental','🌈'],['crit','Crítico','❗'],['penp','Penetración','🗡️'],['aoedmg','Daño en área','💥'],['area','Área','⭕'],['chain','Rebote','🔗'],['beam','Rayo continuo','📏'],['push','Empuje','👋']]],
  ['Estadísticas de torres',[['dmg','Daño','🎯'],['cool','Enfriamiento','⏱️'],['rng','Rango','📡'],['dps','DPS','📈'],['dur','Duración','⌛'],['tgt','Objetivo','🧭'],['tgts','Objetivos','🥾'],['eff','Efectos','🧪'],['mag','Cargador','🔫'],['lvl','Nivel','⭐'],['cost','Coste','🪙'],['upc','Mejora','⬆️']]],
- ['Unidades y enemigos',[['ehp','Vida','❤️'],['espd','Velocidad','👟'],['edmg','Daño al núcleo','💔'],['egold','Oro por baja','💰'],['eud','Daño a unidades','🗡️'],['eac','Enfriamiento enemigo','⏱️'],['erg','Rango enemigo','🏹'],['eblk','Corpulencia','🧱'],['aphys','Armadura','🛡️'],['amagic','Resistencia mágica','🔮'],['umr','Resistencia mágica de unidades','🔮'],['bres','Resistencia a control','👑'],['fly','Volador','🪽'],['aura','Aura','🌟'],['dodge','Escurridizo','💨'],['steal','Saqueo','💸'],['pierce','Perforante','📌'],['curse','Maldición','🕯️'],['eheal','Curación tribal','🌿'],['usol','Soldados','💂'],['uhp','Vida del soldado','❤️'],['urez','Reaparición','🔄']]],
+ ['Unidades y enemigos',[['ehp','Vida','❤️'],['espd','Velocidad','👟'],['edmg','Daño al núcleo','💔'],['egold','Oro por baja','💰'],['eud','Daño a unidades','🗡️'],['eac','Enfriamiento enemigo','⏱️'],['erg','Rango enemigo','🏹'],['eblk','Corpulencia','🧱'],['aphys','Armadura','🛡️'],['amagic','Resistencia mágica','🔮'],['umr','Resistencia mágica de unidades','🔮'],['bres','Resistencia a control','👑'],['fly','Volador','🪽'],['tgnd','Terrestre','🥾'],['aura','Aura','🌟'],['dodge','Escurridizo','💨'],['steal','Saqueo','💸'],['pierce','Perforante','📌'],['curse','Maldición','🕯️'],['eheal','Curación tribal','🌿'],['usol','Soldados','💂'],['uhp','Vida del soldado','❤️'],['urez','Reaparición','🔄']]],
  ['Héroes',[['hlv','Nivel de héroe','⭐'],['hxp','Experiencia','✨'],['hrez','Reaparición del héroe','🔄'],['hrel','Reliquia inicial','💎'],['hmel','Daño en melee','✊'],['g_hab','Habilidad del héroe','🌀']]],
  ['Partida',[['g_core','Núcleo','💠'],['g_piece','Pieza','🧩'],['g_portal','Portal','🌀'],['g_solar','Solar','⬜'],['g_tile','Casilla especial','✨'],['vch','Vale de mejora','🎟️'],['rcd','Recarga de reliquia','⏳']]]];
+// una sola estadística para torres, unidades, enemigos y héroes: los duplicados se quedan como alias del principal
+const MALIAS={uhp:'ehp',umr:'amagic',eud:'dmg',eac:'cool',erg:'rng',hlv:'lvl',hrez:'urez'};
+for(const g of MECG)g[1]=g[1].filter(([id])=>!MALIAS[id]);
 const MECI={};for(const[g,l]of MECG)for(const[id,n,ic]of l)MECI[id]={id,n,ic,g};
+for(const a in MALIAS)MECI[a]=MECI[MALIAS[a]];
 // contexto para las palabras que dependen de una torre o un enemigo concretos
 const MECCTX={ehp:'en:norm',espd:'en:norm',edmg:'en:norm',egold:'en:norm',dmg:'shop:arrow',cool:'shop:arrow',rng:'shop:arrow',dps:'shop:arrow',eff:'shop:arrow',tgt:'shop:arrow',lvl:'shop:arrow',cost:'shop:arrow',upc:'shop:arrow'};
 // quién usa cada mecánica (torres, enemigos y héroes); también decide si ya la has descubierto
@@ -25,7 +29,8 @@ const mecRefOk=r=>{const[t,k,sp]=r.split(':');if(t==='tw'&&sp){const i=Object.ke
 // v308: lo que no tiene dueño concreto se descubre al ver lo primero de su grupo (nada visto = nada en el compendio)
 const MECGRP={'Estados':['tw:*','hr:*'],'Tipos de daño':['tw:*','hr:*'],'Estadísticas de torres':['tw:*'],'Unidades y enemigos':['en:*'],'Héroes':['hr:*'],'Partida':['pc:*']};
 const MECFIX={tphys:['tw:arrow','tw:cata','tw:cannon','tw:bastion','tw:monk','hr:reinhart'],tmagic:['tw:orb','tw:augur','tw:altar','hr:radagast'],telem:['tw:frost','tw:poison','tw:sala','tw:flame','tw:tesla','hr:yrsa'],stk:['tw:*','hr:*']};
-const mecOk=id=>{if(typeof UNLOCK_ALL!=='undefined'&&UNLOCK_ALL||OPT.u_cp)return true;const u=MECUSE[id]||MECFIX[id]||(MECI[id]&&MECGRP[MECI[id].g])||['pc:*'];return u.some(mecRefOk);};
+const mecOk0=id=>{if(typeof UNLOCK_ALL!=='undefined'&&UNLOCK_ALL||OPT.u_cp)return true;const u=MECUSE[id]||MECFIX[id]||(MECI[id]&&MECGRP[MECI[id].g])||['pc:*'];return u.some(mecRefOk);};
+const mecOk=id=>{id=MALIAS[id]||id;return mecOk0(id)||Object.keys(MALIAS).some(a=>MALIAS[a]===id&&mecOk0(a));};
 // «Cómo enfrentarlo»: una o dos frases por enemigo
 const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barren en grupo.',vet:'Más vida y algo de armadura: el daño mágico o elemental rinde más.',champ:'Mucha armadura y cada 25 s un hachazo giratorio: no amontones tus unidades a su alrededor.',
  fast:'Corre mucho y aguanta poco: daño en área o ralentizarlo.',runner:'Muy rápido: ralentízalo o bloquéalo con tus unidades.',raider:'Esquiva a tus soldados y te roba oro si llega: mátalo con torres.',
@@ -62,12 +67,12 @@ const EVOSVG='<svg viewBox="0 0 26 16" width="26" height="16"><path d="M2 10.5 Q
  let h=_bd.apply(this,arguments);
  if(t==='en'&&ET[id]&&seen('en',id)&&ETIP[id])h+=`<div class="esec" style="margin-top:12px">Cómo enfrentarlo</div><div class="ddesc">${ETIP[id]}</div>`;
  return h;};}
-function mecDetail(id){const M=MECI[id];if(!M)return'';
+function mecDetail(id){id=MALIAS[id]||id;const M=MECI[id];if(!M)return'';
  if(!mecOk(id))return `<div class="bkun"><span class="sil bkbig">${M.ic}</span><h4>???</h4><p>Aún no descubierta. Aparecerá al encontrar algo que la use.</p></div>`;
  let h='';try{h=kwHtml(id,MECCTX[id]||'')||'';}catch(e){h='';}
  h=h.replace(/^\s*<b[^>]*>[\s\S]*?<\/b>/,'').replace(/<div class="row[^"]*"><span>Cálculo<\/span>[\s\S]*?<\/div>/,'');
  let sub=M.g;{const m=h.match(/^\s*·\s*([^<]+)/);if(m){const x=m[1].trim();sub+=' · '+x.charAt(0).toUpperCase()+x.slice(1);h=h.slice(m[0].length);}}
- const uses=(MECUSE[id]||[]).filter(mecRefOk).map(r=>{const[t,k]=r.split(':');const n=t==='tw'?TW[k].n:t==='en'?ET[k].n:HEROES[k].n,ic=t==='tw'?`<i style="background:${TW[k].col}">${twIc(k)}</i>`:t==='en'?`<i style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</i>`:`<i style="background:${HEROES[k].col}">${HEROES[k].ic||'🦸'}</i>`;
+ const uses=[...new Set((MECUSE[id]||[]).concat(...Object.keys(MALIAS).filter(a=>MALIAS[a]===id).map(a=>MECUSE[a]||[])))].filter(mecRefOk).map(r=>{const[t,k]=r.split(':');const n=t==='tw'?TW[k].n:t==='en'?ET[k].n:HEROES[k].n,ic=t==='tw'?`<i style="background:${TW[k].col}">${twIc(k)}</i>`:t==='en'?`<i style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</i>`:`<i style="background:${HEROES[k].col}">${HEROES[k].ic||'🦸'}</i>`;
   return `<button class="mecuse" data-a="cpgo" data-t="${t}" data-v="${k}">${ic}${n}</button>`;}).join('');
  return bkSheet(`<span class="bkbic mecbic">${M.ic}</span>`,`<div class="ttl"><b>${M.n}</b></div><small class="mecg">${sub}</small>`+h)+(uses?`<div class="esec" style="margin-top:12px">Lo usan</div><div class="mecuses">${uses}</div>`:'');}
 // subtítulo: «descubiertas» y flechas que empiezan fila (al hacer salto de línea) se ocultan
@@ -93,7 +98,7 @@ function cpPrimDecor(){try{const box=PMN()?$('tip'):$('side');box.classList.remo
 {const _o=openPrim;openPrim=function(){const r=_o.apply(this,arguments);cpPrimDecor();return r;};}
 {const _r=refreshPrim;refreshPrim=function(){const r=_r.apply(this,arguments);cpPrimDecor();return r;};}
 {const _k=openKw;openKw=function(a,pl){const r=_k.apply(this,arguments);try{const d=KS[KS.length-1]&&KS[KS.length-1].el,id=a.dataset.kw||'';
-  const tg=MECI[id]&&mecOk(id)?['mc',id]:id.startsWith('tw_')?['tw',id.slice(3)]:id.startsWith('en_')?['en',id.slice(3)]:id.startsWith('hr_')?['hr',id.slice(3)]:id.startsWith('rl_')?['rl',id.slice(3)]:null;
+  const tg=MECI[id]&&mecOk(id)?['mc',MALIAS[id]||id]:id.startsWith('tw_')?['tw',id.slice(3)]:id.startsWith('en_')?['en',id.slice(3)]:id.startsWith('hr_')?['hr',id.slice(3)]:id.startsWith('rl_')?['rl',id.slice(3)]:null;
   if(d&&tg)cpDecorate(d,tg);}catch(e){}return r;};}
 // los logros viven en su propia sección del libro (🏆 Logros): hay que saltar de sección, no solo cambiar la pestaña
 function cpGo(t,v){if(t!=='lg'&&!compOk())return;if(NEC.open)necClose();try{closeKS();}catch(e){}
