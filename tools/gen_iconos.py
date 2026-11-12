@@ -5,6 +5,7 @@ def J(f):return json.load(open(M+f))
 def inner(s):
     s=re.sub(r'^<svg[^>]*>','',s);s=re.sub(r'</svg>$','',s);return re.sub(r'\s+',' ',s)
 maps=[]  # (target expr, svg)
+art=[]  # dibujo de la torre en el mapa y en las cartas (icsvg)
 def add(expr,svg):maps.append((expr,inner(svg)))
 # habilidades de torres
 for f in ['habilidades_e1_final.json','habilidades_e2_final.json']:
@@ -16,8 +17,8 @@ SP={'treb':'cata.treb','ogre':'cata.ogre','hel':'frost.hel','vent':'frost.vent',
 BASE={'base_acid':'acid','base_sonic':'sonic','base_bunker':'bunker','base_dron':'dron'}
 for f in ['especializaciones_e1_final.json','especializaciones_e2_final.json']:
     for k,v in J(f).items():
-        if k in SP:t,s=SP[k].split('.');add(f"SPECS[{json.dumps(t)}][{json.dumps(s)}]",v)
-        elif k in BASE:add(f"TW[{json.dumps(BASE[k])}]",v)
+        if k in SP:t,s=SP[k].split('.');add(f"SPECS[{json.dumps(t)}][{json.dumps(s)}]",v);art.append(('spec',t,s,inner(v)))
+        elif k in BASE:add(f"TW[{json.dumps(BASE[k])}]",v);art.append(('tw',BASE[k],None,inner(v)))
 # reliquias
 for f in ['reliquias_e1_final.json','reliquias_e2_final.json']:
     for k,v in J(f).items():
@@ -30,6 +31,7 @@ for k,v in J('unidades_final.json').items():
 te=J('torres_evento_final.json')
 for k,e in [('faro','TW.faro'),('guild','TW.guild'),('glut','TW.glut'),('dr_1','TW.dragon'),('pig_straw','PIGU.straw'),('pig_wood','PIGU.wood'),('pig_brick','PIGU.brick'),('pig_mecha','PIGU.mech')]:
     a,b=e.split('.');add(f"{a}[{json.dumps(b)}]",te[k])
+    if a=='TW':art.append(('tw',b,None,inner(te[k])))
 for i,k in enumerate(['dr_1','dk1','dk2','dk3']):add(f"DRAG[{i}]",te[k])
 # habilidades de los héroes
 for f in ['habilidades_heroes_e1_final.json','habilidades_heroes_e2_final.json']:
@@ -50,6 +52,7 @@ out+="const ICSV={},ICFB={};let ICN=0xE000;\n"
 out+="const icReg=(o,svg)=>{if(!o)return;const ch=String.fromCodePoint(ICN++);ICFB[ch]=o.ic||'';ICSV[ch]=svg;o.ic=ch;return ch;};\n"
 out+="const ICKW="+json.dumps(KW,ensure_ascii=False)+";\n"
 out+="const ICX="+json.dumps(extra,ensure_ascii=False)+";\n"
+out+="const ICART="+json.dumps(art,ensure_ascii=False)+";\n"
 out+="try{\n"
 for e,s in maps: out+=f"icReg(typeof {e.split('[')[0]}!=='undefined'?{e}:null,{json.dumps(s,ensure_ascii=False)});\n"
 out+="""}catch(e){console.warn('iconos',e);}
@@ -72,6 +75,10 @@ if(typeof CanvasRenderingContext2D!=='undefined'){const ft2=CanvasRenderingConte
  const mo2=new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData')fixI(m.target);else m.addedNodes.forEach(fixI);}});
  const go2=()=>{fixI(document.body);mo2.observe(document.body,{childList:true,subtree:true,characterData:true});};
  if(document.body)go2();else addEventListener('DOMContentLoaded',go2);}
+// terrestre y volador (esquina de las cartas de torre y fichas)
+var ICTG=icReg({ic:'🥾'},ICKW.ground);var ICTA=icReg({ic:'🪽'},ICKW.fly);
+// dibujo de las torres (mapa, cartas y fichas): base y especializaciones de Nv 4
+for(const[kind,t,sp,svg]of ICART){const full='<svg viewBox=\"-4 -4 56 56\">'+svg+'</svg>';try{if(kind==='tw'&&TW[t])TW[t].icsvg=full;else if(kind==='spec'&&SPECS[t]&&SPECS[t][sp]){const X=SPECS[t][sp];X.o=Object.assign({},X.o||{},{icsvg:full});X.icsvg=full;}}catch(e){}}
 // Korr: nombres nuevos
 if(typeof HAB!=='undefined'&&HAB.korr){HAB.korr.b.n='Señuelo psiónico';HAB.korr.p8.n='Represalia';}
 """

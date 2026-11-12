@@ -1,8 +1,10 @@
+// v308: iconos de terrestre y volador (dibujados si están cargados; si no, el emoji)
+const icTG=()=>typeof ICTG!=='undefined'?ICTG:'🥾',icTA=()=>typeof ICTA!=='undefined'?ICTA:'🪽';
 // ---- paneles de información ----
 const R=(c,a,b)=>`<div class="row ${c}"><span>${a}</span><span>${b}</span></div>`;
 const kw=(id,l,src,c)=>`<span class="kw${c?' '+c:''}" data-kw="${id}" data-src="${src||''}">${l}</span>`;
 const kst=(id,l,src)=>kw(id,l,src,'st');
-const objIc=(gOnly,src)=>kw('tgnd','🥾',src,'st')+(gOnly?'':' '+kw('tair','🪽',src,'st'));
+const objIc=(gOnly,src)=>kw('tgnd',icTG(),src,'st')+(gOnly?'':' '+kw('tair',icTA(),src,'st'));
 const objRow=(gOnly,src)=>R('cg',kst('tgts','Objetivos',src),objIc(gOnly,src));
 
 const dpsOf=(s,T)=>T.dot?s.dmg*POISD:T.burn?BURND*s.dmg*s.rate*(1-BURNK/2)/BURNK:T.unit?s.dmg*s.rate*T.unit.n*(1+(T.mhit||0)):s.dmg*s.rate;
@@ -128,9 +130,9 @@ function kwHtml0(id,src){
   return `<b>Rebote</b>`+R('','Rebotes',ch.n)+R('cd','Daño por rebote','−'+Math.round((1-ch.f)*100)+'%')+R('cg','Distancia máxima',cas(ZAPR/K))+'<small>El rayo golpea al objetivo y salta al enemigo más cercano que aún no haya golpeado, y así hasta agotar los rebotes o quedarse sin enemigos cerca. Cada rebote hace menos daño que el anterior. El crítico se calcula una vez y afecta a todo el rayo.</small>';}
  if(id==='ez')return `<b>Electrizado</b>`+R('cd','Daño eléctrico recibido','+'+Math.round(EZAMP*100)+'% por stack')+R('cr','Duración',f(4)+' s')+R('','Máximo',EZMAX+' stacks')+'<small>Cada stack hace que el enemigo reciba más daño eléctrico, venga de la torre que venga. Los stacks se refrescan al volver a electrizarlo y caducan todos a la vez.</small>';
  if(id==='stk')return '<b>Acumulable</b><small>Si un estado es acumulable, cada aplicación suma un stack más y su efecto crece con los stacks. Si no lo es, no se suma: se refresca y vale el más fuerte.</small>';
- if(id==='tgts')return '<b>Objetivos</b><small>A qué enemigos puede golpear: 🥾 terrestres, 🪽 voladores.</small>';
- if(id==='tgnd')return '<b>🥾 Terrestres</b><small>Enemigos que van por el camino.</small>';
- if(id==='tair')return '<b>🪽 Voladores</b><small>Enemigos que vuelan por encima del camino.</small>';
+ if(id==='tgts')return '<b>Objetivos</b><small>A qué enemigos puede golpear: '+icTG()+' terrestres, '+icTA()+' voladores.</small>';
+ if(id==='tgnd')return '<b>'+icTG()+' Terrestres</b><small>Enemigos que van por el camino.</small>';
+ if(id==='tair')return '<b>'+icTA()+' Voladores</b><small>Enemigos que vuelan por encima del camino.</small>';
  if(id==='fly')return '<b>Volador</b><small>Vuela por encima del camino: no lo bloquean tus unidades y no le afecta nada que golpee el suelo. El resto de ataques sí le dan. Mira los <b>Objetivos</b> de cada torre.</small>';
  if(id==='wet')return `<b>Mojado</b>`+R('cr','Dura',WETT+' s tras salir de la lluvia')+'<small>El enemigo recibe más daño eléctrico (de cualquier torre eléctrica), queda congelado un 50% más de tiempo y no puede arder: se le apaga la quemadura.</small>';
  if(id==='cursed')return `<b>Maldito</b>`+R('cr','Dura',HEXT+' s tras el último golpe')+'<small>El enemigo recibe más daño mágico de todas las fuentes, venga de la torre que venga. No se acumula: vale el maleficio más fuerte.</small>';
