@@ -82,6 +82,7 @@ const T=[
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['eventos_imagenes.js','Eventos en pergamino: dibujo de cada evento y de cada opción'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
+ ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página
 const okLast=l=>/^(\[\]|ok|ERRS \[\]|\{.*\}|.* ok)$/.test(l)||/ OK$|sin cintas\)$/.test(l);

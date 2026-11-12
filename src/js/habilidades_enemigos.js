@@ -26,7 +26,7 @@ EFAM.find(x=>x[0]==='Voladores')[1].push('gyro');
 // ---- daño a una unidad (soldado o héroe), con su muerte si cae ----
 function hitUnit(s,d,e){if(!s||s.hp<=0||d<=0)return;if(s.H&&s.H.inv>0)return;if(typeof uHitMod==='function'){d=uHitMod(s,d,e);if(!(d>0))return;}s.hp-=d;s.lh=S.wt;if(S.pvE&&S.dn)dnAdd(s,d,'taken');
  if(s.hp<=0){if(!s.H&&typeof ra==='function'&&ra('banner')){s.hp=1;return;}const U=unitOf(s.tw);if(s.H&&S.st)S.st.hDie=(S.st.hDie||0)+1;s.rt=U.rez*(!s.H&&typeof rp==='function'&&rp('banner')?.7:1);s.en=null;s.fight=false;s.charm=null;}}
-const liveUnits=()=>{const L=[];for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)L.push(s);return L;};
+const liveUnits=()=>{const L=[];for(const t of unitTowers())for(const s of t.sd)if(s.hp>0&&!s.air)L.push(s);return L;};
 // ---- habilidades de campeón ----
 function skTick(e,E,dt,SL){e.skc=(e.skc===undefined?8:e.skc)-dt;if(e.skc>0)return;const K0=ESK[E.sk],R=K0.r*K;
  let tg=null,bd=R;for(const s of SL){const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;tg=s;}}if(!tg)return;e.skc=SKCD;

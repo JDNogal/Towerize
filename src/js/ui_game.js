@@ -70,7 +70,7 @@ function wishOk(w){if(w.a==='build'){const q=sqOf(w.x,w.y);return bmFree(q)&&bmD
  const t=S.list.find(o=>o.id===w.id);if(!t)return null;const T=TW[t.type];
  if(w.a==='up')return t.lvl===w.lv&&t.lvl<(T.pig?4:3)?{t,c:tCost(t,upCost(T,t.lvl+1))}:null;
  if(w.a==='spec')return t.lvl===3&&SPECS[t.type]&&SPECS[t.type][w.v]?{t,c:tCost(t,upCost(T,4))}:null;
- if(w.a==='abuy'){const D=AB[w.v],rk=t.ab&&t.ab[w.v]||0;return t.lvl===4&&D&&rk===w.rk&&rk<D.ranks.length&&!abReq(t,w.v)?{t,c:tCost(t,D.ranks[rk].c)}:null;}
+ if(w.a==='abuy'){const D=AB[w.v],rk=t.ab&&t.ab[w.v]||0;return abIds(t).includes(w.v)&&D&&rk===w.rk&&rk<D.ranks.length&&!abReq(t,w.v)?{t,c:tCost(t,D.ranks[rk].c)}:null;}
  return null;}
 function wishToggle(b){if(!S||!S.list||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  if((b.dataset.tm||b.dataset.a)==='build'){const v=b.dataset.v,x=+b.dataset.sx,y=+b.dataset.sy;S.wish=S.wish||[];const i=S.wish.findIndex(w=>w.a==='build'&&w.x===x&&w.y===y);

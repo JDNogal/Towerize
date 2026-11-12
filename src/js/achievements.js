@@ -112,10 +112,10 @@ const revd=k=>UNLOCK_ALL||OPT.u_cp||!!REV[k];
 const lvSec=(k,l)=>!UNLOCK_ALL&&!OPT.u_cp&&(l===4&&!!(TW[k].faro&&!REV.faro4||TW[k].dragon&&!REV.drag3||TW[k].pig&&!REV.pig4)||l===3&&!!(TW[k].dragon&&!REV.drag2&&!REV.drag3));
 const achSec=id=>!ACHS[id]&&ACH[id].sec&&!UNLOCK_ALL&&!OPT.u_sec&&!REV[ACH[id].sec];
 const fieldAt=e=>(S.field&&S.field[Math.round(e.y)]&&S.field[Math.round(e.y)][Math.round(e.x)])||0;
-function unitDeath(t,s){if(t.summ||t.merc||S.pvE)return;S.unitDied=1;if(TW[t.type]&&TW[t.type].guild&&t.lvl>=4)S.guildFail=1;if(s.ren){s.max/=1+s.ren;s.ren=0;}}
+function unitDeath(t,s){if(t.summ||t.merc||S.pvE)return;S.unitDied=1;if(TW[t.type]&&TW[t.type].guild&&t.lvl>=4)S.guildFail=1;if(s.ren){const o=1+s.ren;s.ren=abRank(t,'glegend')?s.ren/2:0;s.max*=(1+s.ren)/o;}}
 function achDeath(e){if(S.pvE)return;const k=e.src;
  // Renombre (Sede del Gremio en rango S): todo el grupo gana daño y vida
- if(k&&TW[k.type]&&TW[k.type].guild&&k.lvl>=4&&k.sd){const g=e.t==='mini'?.05:(e.t==='elite'||e.t==='wanted')?.1:isBoss(e)&&S.round<ROUNDS?.15:0;
+ if(k&&TW[k.type]&&TW[k.type].guild&&k.lvl>=4&&k.sd){const g=(e.t==='mini'?.05:(e.t==='elite'||e.t==='wanted')?.1:isBoss(e)&&S.round<ROUNDS?.15:0)*(abRank(k,'glegend')?abRank(k,'glegend').m:1);
   if(g)for(const s of k.sd)if(s.hp>0){const o=1+(s.ren||0);s.ren=(s.ren||0)+g;const m=(1+s.ren)/o;s.max*=m;s.hp*=m;}}
  if(S.tut)return;
  if(isBoss(e)&&S.round===ROUNDS)S.lastBossD=fieldAt(e);

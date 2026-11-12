@@ -53,7 +53,7 @@ function teleFwd(e){const x0=e.x,y0=e.y;e.fsp=0;let d=0;for(let i=0;i<300&&d<TEL
 {const _m=move;move=function(e,dt){if(ET[e.t]&&ET[e.t].flag)return false;return _m(e,dt);};}
 {const _a=achDeath;achDeath=function(e){if(e&&e.t==='banner')return;return _a.apply(this,arguments);};}
 // ---- dibujo ----
-const eAlpha=e=>camoHid(e)?.32:1;
+const eAlpha=e=>e.sw?0:camoHid(e)?.32:1;
 function eEliteDraw(g,lw){if(!S)return;
  for(const b of S.enemies)if(b.t==='banner'&&b.hp>0){const x=b.x*CS+CS/2,y=b.y*CS+CS/2;g.fillStyle='rgba(192,57,43,.10)';g.strokeStyle='rgba(192,57,43,.5)';g.lineWidth=lw(1.2);g.beginPath();g.arc(x,y,BANR*CS,0,7);g.fill();g.stroke();}
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t],px=e.x*CS+CS/2,py=e.y*CS+CS/2,r=E.r*CS*EVS;

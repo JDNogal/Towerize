@@ -192,8 +192,8 @@ function unitRows(T,src,t,pinned,hpm,uap,uspd){const U=T.unit,ap=U.ap+(uap||0),m
   (t?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover bandera</button></div>`:'<small>Haz clic en la torre para mover su bandera.</small>'):'')};}
 // ficha de una torre construida: solo información. Mejorar, especializar, comprar habilidades y vender se hacen en el menú de botones de la torre.
 // En Nv 4 se listan sus habilidades con el rango que tiene (el detalle, en el bocadillo de cada una).
-function abRows(t){if(t.lvl!==4||!t.spec||!SPECS[t.type])return '';const src='tw:'+t.id;
- return '<div class="esec" style="margin-top:8px">Habilidades</div>'+SPECS[t.type][t.spec].ab.map(id=>{const D=AB[id],rk=t.ab[id]||0,n=D.ranks.length;return R(rk?'':'cno',kst('ab_'+id,D.n,src),rk?(rk>=n?'Máx.':'Rango '+rk+'/'+n):'—');}).join('');}
+function abRows(t){const ids=abIds(t);if(!ids.length)return '';const src='tw:'+t.id;t.ab=t.ab||{};
+ return '<div class="esec" style="margin-top:8px">Habilidades</div>'+ids.map(id=>{const D=AB[id],rk=t.ab[id]||0,n=D.ranks.length;return R(rk?'':'cno',kst('ab_'+id,D.n,src),rk?(rk>=n?'Máx.':'Rango '+rk+'/'+n):'—');}).join('');}
 function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];

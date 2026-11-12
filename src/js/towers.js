@@ -65,8 +65,9 @@ function specCh(t,sp){const L=SPECS[t.type][sp].lv,L3=LV[3],p=(a,b)=>Math.round(
  a.push(`<span class="cd">${d>=0?'+':'−'}${Math.abs(d)}% daño</span>`);a.push(`<span class="cr">${c>=0?'+':'−'}${Math.abs(c)}% enfriamiento</span>`);
  if(L.pen)a.push(`<span class="cph">${L.pen} de penetración ${TW[t.type].dt==='magic'?'mágica':'física'}</span>`);
  return a.join(', ');}
-function abList(type,sp,t,pinned){
- return SPECS[type][sp].ab.map(id=>{const D=AB[id],rk=t?(t.ab[id]||0):0,n=D.ranks.length;
+function abList(type,sp,t,pinned){return abListIds(SPECS[type][sp].ab,t,pinned);}
+function abListIds(ids,t,pinned){
+ return ids.map(id=>{const D=AB[id],rk=t?(t.ab[id]||0):0,n=D.ranks.length;
   const head=`<div class="row"><span>${kst('ab_'+id,D.n,t?'tw:'+t.id:'')}</span><span>${t?`Rango ${rk}/${n}`:'<span class="gd">'+D.ranks.map(r=>r.c).join(' / ')+' 🪙</span>'}</span></div>`;
   if(!t)return head;
   const show=D.ranks[Math.max(0,Math.min(rk,n-1))];
@@ -96,10 +97,10 @@ function chooseSpec(t,sp){if(placeLock()){plMsg();return;}
 // habilidades que necesitan otra antes (p. ej. el Caballero Espectral sale de los espectros de «Alzar a los caídos»)
 const abReq=(t,id)=>{const r=AB[id]&&AB[id].req;return r&&!(t&&t.ab&&t.ab[r])?'Primero compra «'+AB[r].n+'».':'';};
 function buyAb(t,id){if(placeLock()){plMsg();return;}{const w=abReq(t,id);if(w){S.msg=w;try{errBubble(w);}catch(e){}ui();return;}}
- if(!t||!S.list.includes(t)||t.lvl!==4||!SPECS[t.type][t.spec].ab.includes(id)||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
+ if(!t||!S.list.includes(t)||!abIds(t).includes(id)||!(S.phase==='build'||S.phase==='wave'||S.phase==='place'))return;
  const D=AB[id],rk=t.ab[id]||0;if(rk>=D.ranks.length)return;const c=tCost(t,D.ranks[rk].c);
  if(S.gold<c){S.msg='Oro insuficiente para la habilidad.'+WISHTXT();ui();return;}
- S.gold-=c;S.st.spent+=c;t.ab[id]=rk+1;t.inv=(t.inv||TW[t.type].cost)+c;if(undoOk(t))t.undo+=c;if(rk===0)t.acd[id]=0;S.msg='';refreshPrim();ui();
+ t.ab=t.ab||{};t.acd=t.acd||{};S.gold-=c;S.st.spent+=c;t.ab[id]=rk+1;t.inv=(t.inv||TW[t.type].cost)+c;if(undoOk(t))t.undo+=c;if(rk===0)t.acd[id]=0;try{if(typeof uabBought==='function')uabBought(t,id);}catch(e){}S.msg='';refreshPrim();ui();
 }
 function pinTower(t){S.selT=t;openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:{x:t.x,y:t.y}});PR.pinned=true;refreshPrim();ui();}
 function sell(t){
@@ -131,7 +132,7 @@ function unitWalk(dt){
  for(const t of unitTowers()){if(t.merc&&S.hero)t.flag=S.hero.pt.flag;if(t.home)t.flag=t.home.flag;if(!t.flag)autoFlag(t);const U=unitOf(t);
   for(const s of t.sd){
    if(s.hp<=0){if(!s.dd){s.dd=1;unitDeath(t,s);}if(t.summ)continue;if(s.rt>0){s.rt-=dt;if(s.rt<=0){s.hp=s.max;s.x=t.x;s.y=t.y;s.en=null;s.lock=true;}}continue;}
-   s.dd=0;let tx,ty;
+   s.dd=0;if(s.air){s.lock=true;continue;}let tx,ty;
    if(s.en&&!s.lock&&!(s.H&&s.H.def.ranged)&&!s.rng){const e=s.en,dx=e.x-s.x,dy=e.y-s.y,dd=Math.hypot(dx,dy),r=SCONTACT*.85;
     if(dd>r){tx=e.x-dx/dd*r;ty=e.y-dy/dd*r;}else{tx=s.x;ty=s.y;}}
    else{const q=slotOf(t,s.i);tx=q.x;ty=q.y;}
@@ -174,7 +175,7 @@ function unitCombat(dt){
   const CM=CLS[s.cls]||CLS0;while(s.cd<=0&&n++<4&&s.en&&s.en.hp>0){s.cd+=1/(st.rate*CM.rt*(s.rtm||1));const crit=Math.random()<st.crit+CM.cr+mkB(s.en),bk=abRank(t,'back'),bm=bk&&s.bk!==s.en?bk.m:1;if(bk)s.bk=s.en;{const dh=st.dmg*CM.d*(crit?st.critm:1)*bm*(1+(s.ren||0));sfxHit(s.H?null:t,'phys',s);const _he=s.en;hurt(s.en,dh,t,s.H&&s.H.def.dt||TW[t.type]&&TW[t.type].udt||'phys');if(TW[t.type]&&TW[t.type].alien&&typeof alienHit==='function')alienHit(t,s,_he,dh);if(s.H&&s.H.id==='yrsa'&&s.en.hp>0){s.alt=!s.alt;if(s.alt)addBurn(s.en,t,2);else addChill(s.en,t,2);S.fx.push({x:s.en.x,y:s.en.y,t:.15,m:.15,r:.35*K,col:s.alt?'#ff7a3c':'#9fe4ff'});}const MT=TW[t.type];if(MT&&MT.monk&&s.en.hp>0){const ch=abRank(t,'chi');DNK='magic';hurt(s.en,dh*(ch?ch.m:MT.mhit),t,'magic');DNK=null;}}if(crit)critMark(s.en);onHit(s.en,t);if(s.pig==='wood'&&s.en.hp>0){s.pk=(s.pk||0)+1;if(s.pk>=3){s.pk=0;knock(s.en,PIGU.wood.push*K);}}
    const ck=abRank(t,'cut');if(ck&&s.en.hp>0){const q=s.en;if(q.bl&&q.bl.length){DNK='bleed';hurt(q,q.bl.length*BLEEDD,t,'elem');DNK=null;}if(Math.random()<ck.p)addBleed(q,t,1);}}}
  for(const e of S.enemies){const E=ET[e.t];let tg=null;
-  if(e.hp<=0||e.fx.freeze||e.fx.poly||e.fx.fear){e.acd=E.ac;continue;}
+  if(e.hp<=0||e.sw||e.fx.freeze||e.fx.poly||e.fx.fear){e.acd=E.ac;continue;}
   if(E.rg==='ranged'){if(e.rw>0)e.rw-=dt;else{let bd=RANGED_R;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;tg=s;}}
    if(tg){if(e.rsH===undefined||e.hp<e.rsH-.01){e.rsH=e.hp;e.rsT=0;}else e.rsT=(e.rsT||0)+dt;if(e.rsT>20){e.rsT=0;e.rw=3;tg=null;}else{e.stopped=true;if(!tg.en&&!tg.lock&&!(tg.H&&tg.H.def.ranged)&&!tg.rng&&!isFly(e)){tg.en=e;tg.enR=e;e.nb=(e.nb||0)+tg.w;}}}else e.rsT=0;}}
   else if(e.ct>0){/* cuerpo a cuerpo: le pega a la unidad que lo retiene (también los que retiene de más) */tg=SL.find(s=>s.fight&&s.en===e)||SL.find(s=>s.en2===e&&s.hp>0)||null;if(tg&&Math.hypot(tg.x-e.x,tg.y-e.y)>MELR)tg=null;e.stopped=e.ct>=(E.need||1);}

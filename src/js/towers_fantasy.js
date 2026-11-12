@@ -86,7 +86,7 @@ function rollTick(dt){if(!S.rolls||!S.rolls.length)return;
 function czTick(dt){for(const e of S.enemies)e.stkIn=0;
  if(S.cz&&S.cz.length){const add=[];
   S.cz=S.cz.filter(z=>{if(z.src&&!S.list.includes(z.src))return false;
-   if(z.k==='tar'){let lit=false;for(const e of S.enemies){if(e.hp<=0||isFly(e)||Math.hypot(e.x-z.x,e.y-z.y)>z.r)continue;e.stkIn=Math.max(e.stkIn,z.m);if(e.bn>0)lit=true;}
+   if(z.k==='tar'||z.k==='hay'){let lit=false;for(const e of S.enemies){if(e.hp<=0||isFly(e)||Math.hypot(e.x-z.x,e.y-z.y)>z.r)continue;if(z.m)e.stkIn=Math.max(e.stkIn,z.m);if(e.bn>0)lit=true;}
     if(!lit&&S.pools.some(p=>p.el==='fire'&&Math.hypot(p.x-z.x,p.y-z.y)<=p.r+z.r))lit=true;
     if(lit){S.pools.push({x:z.x,y:z.y,t:TARF,n:TARB,tk:0,src:z.src,r:z.r,el:'fire',tar:1});S.fx.push({x:z.x,y:z.y,t:.5,m:.5,r:z.r,col:'#ff7a2e'});return false;}}
    else if(z.k==='bee'){z.tk-=dt;if(z.tk<=0){z.tk+=.5;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-z.x,e.y-z.y)<=z.r)hurt(e,z.dps*.5*(e.fx.slow||e.stk>0?BEESL:1),z.src,'phys',z.pen);}}

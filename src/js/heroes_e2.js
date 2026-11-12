@@ -51,9 +51,9 @@ function stripCells(x,y,L){const p=pathNear(x,y);if(!p||!S.field||!S.field[p.y])
 function addStrip(o){const z=Object.assign({tk:0,m:o.t},o);z.set=new Set(z.cells.map(c=>c.x+','+c.y));(S.strips=S.strips||[]).push(z);return z;}
 function stripTick(dt){if(!S.strips||!S.strips.length)return;for(const z of S.strips){z.t-=dt;z.tk-=dt;if(z.tk<=0){z.tk+=1;for(const e of S.enemies){if(e.hp<=0||isFly(e)||!z.set.has(Math.round(e.x)+','+Math.round(e.y)))continue;if(z.pois)addPois(e,z.pois,z.src);if(z.brk)brkAdd(e,z.brk,z.brkMax||15);if(z.burn)addBurn(e,z.src,z.burn);if(z.chill)addChill(e,z.src,z.chill);}}}
  S.strips=S.strips.filter(z=>z.t>0);}
-function stripDraw(g,lw){if(!S||!S.strips)return;const now=performance.now()/1000;for(const z of S.strips){const a=Math.min(1,z.t/1.2)*.42;g.fillStyle=z.col||'rgba(110,235,120,'+a+')';for(const c of z.cells)g.fillRect(c.x*CS,c.y*CS,CS,CS);
+function stripDraw(g,lw){if(!S||!S.strips)return;const now=performance.now()/1000;for(const z of S.strips){const a=Math.min(1,z.t/1.2)*.42;g.fillStyle=z.col||(z.fire?'rgba(255,96,32,'+a+')':'rgba(110,235,120,'+a+')');for(const c of z.cells)g.fillRect(c.x*CS,c.y*CS,CS,CS);
   if(z.burn){g.fillStyle='rgba(255,140,50,'+(a*.6*(.6+.4*Math.sin(now*9)))+')';for(const c of z.cells)if((c.x+c.y)%2===0)g.fillRect(c.x*CS,c.y*CS,CS,CS);}
-  g.fillStyle='rgba(200,255,190,'+(a*1.2)+')';for(const c of z.cells){const k=Math.sin(c.x*12.9+c.y*78.2+Math.floor(now*2)*3.1);if(k>.82){g.beginPath();g.arc(c.x*CS+CS/2,c.y*CS+CS/2,lw(1.6),0,7);g.fill();}}}}
+  g.fillStyle=z.fire?'rgba(255,226,140,'+(a*1.4)+')':'rgba(200,255,190,'+(a*1.2)+')';for(const c of z.cells){const k=Math.sin(c.x*12.9+c.y*78.2+Math.floor(now*2)*3.1);if(k>.82){g.beginPath();g.arc(c.x*CS+CS/2,c.y*CS+CS/2,lw(1.6),0,7);g.fill();}}}}
 function h2Ez(e,n){const q=e.ez||(e.ez={n:0,t:0});q.n=Math.min(EZMAX,q.n+n*stkM(e));q.t=Math.max(q.t,4);}
 // ruta hacia los portales desde una casilla del camino, evitando meterse en un carril sin salida
 function h2Route(x,y,n){const r=[{x,y}];let cx=x,cy=y;for(let i=0;i<n;i++){let nx=awayNext(cx,cy);if(!nx.length)break;const go=nx.filter(q=>awayNext(q.x,q.y).length);if(go.length)nx=go;const q=nx[Math.floor(Math.random()*nx.length)];r.push(q);cx=q.x;cy=q.y;}return r;}

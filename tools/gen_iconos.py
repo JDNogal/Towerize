@@ -8,7 +8,7 @@ maps=[]  # (target expr, svg)
 art=[]  # dibujo de la torre en el mapa y en las cartas (icsvg)
 def add(expr,svg):maps.append((expr,inner(svg)))
 # habilidades de torres
-for f in ['habilidades_e1_final.json','habilidades_e2_final.json']:
+for f in ['habilidades_e1_final.json','habilidades_e2_final.json','habilidades_torres_evento_final.json']:
     for k,v in J(f).items():
         if not k.startswith('_'):add(f"AB[{json.dumps(k)}]",v)
 # especializaciones

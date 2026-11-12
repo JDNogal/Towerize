@@ -4,7 +4,7 @@ function tmHas(t,a){const pp=PR.pinned,pk=PR.key;PR.pinned=true;PR.key='tw:'+t.i
 function tmOpts(t){const T=TW[t.type],top=[],bot=[];let side=null;
  if(T.guild&&tmHas(t,'gup'))top.push({k:'gup',ic:'⬆',c:T.upc[t.lvl+1]});
  else if(t.lvl===3&&SPECS[t.type]&&!T.uniq)for(const sp in SPECS[t.type])top.push({k:'spec',v:sp,ic:SPECS[t.type][sp].ic,c:tCost(t,upCost(T,4))});
- else if(t.lvl===4&&t.spec&&SPECS[t.type])for(const id of SPECS[t.type][t.spec].ab){const D=AB[id],rk=t.ab&&t.ab[id]||0,n=D.ranks.length;top.push({k:'abuy',v:id,ab:1,rk,n,c:rk<n?tCost(t,D.ranks[rk].c):null,lk:!!abReq(t,id)});}
+ else if(abIds(t).length)for(const id of abIds(t)){const D=AB[id],rk=t.ab&&t.ab[id]||0,n=D.ranks.length;top.push({k:'abuy',v:id,ab:1,rk,n,c:rk<n?tCost(t,D.ranks[rk].c):null,lk:!!abReq(t,id)});}
  else if(tmHas(t,'up')||(!T.uniq&&!T.guild&&t.lvl<3))top.push({k:'up',ic:'⬆',c:tCost(t,upCost(T,t.lvl+1))});
  bot.push({k:'lupa',ic:'🔍'});if(!T.uniq)bot.push({k:'sell',ic:'$',sv:sellVal(t)});
  if(T.faro){bot.push({k:'flz',v:'0',ic:'🔦'});if((t.lvl||1)>=4)bot.push({k:'flz',v:'1',ic:'🔦'});}

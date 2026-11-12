@@ -95,7 +95,7 @@ function update(dt){
    if(T.cata){cataShot(t,tg,s,dm,crit,S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1);continue;}
    // el daño, el crítico y el área se fijan al disparar; los efectos se aplican al impactar
    let nb=1;{const bu=abRank(t,'burst');if(bu){t.shc=(t.shc||0)+1;if(t.shc>=bu.n){t.shc=0;nb=bu.a;}}}
-   for(let q=0,nq=(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1)*nb;q<nq;q++)S.proj.push({inc:RSVOK(T)?rsvAdd(tg,T.orb?dm*(1+soulB(t)):dm,T.dt,s.pen):0,x:t.x+(nb>1?(q%3-1)*.35:0),y:t.y+(nb>1?(q%3-1)*.35:0),e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm:T.orb?dm*(1+soulB(t)):dm,orb:T.orb?Math.min(4,t.lvl||1):0,dt:T.dt,src:t,sp:T.ps,area:T.splash?s.area:0,slow:T.slow||0,slowt:T.slowt||SLOWT,slowA:T.slowA,pen:s.pen,col,crit,pz});
+   for(let q=0,nq=(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1)*nb;q<nq;q++)S.proj.push(uabProj({inc:RSVOK(T)?rsvAdd(tg,T.orb?dm*(1+soulB(t)):dm,T.dt,s.pen):0,x:t.x+(nb>1?(q%3-1)*.35:0),y:t.y+(nb>1?(q%3-1)*.35:0),e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm:T.orb?dm*(1+soulB(t)):dm,orb:T.orb?Math.min(4,t.lvl||1):0,dt:T.dt,src:t,sp:T.ps,area:T.splash?s.area:0,slow:T.slow||0,slowt:T.slowt||SLOWT,slowA:T.slowA,pen:s.pen,col,crit,pz},t));
   }
  }
  S.proj=S.proj.filter(p=>{
@@ -108,7 +108,7 @@ function update(dt){
    {const cr=p.src&&p.src.ab&&abRank(p.src,'cluster');if(cr)cluster(p,cr);}
    S.fx.push({x:p.x,y:p.y,t:.25,m:.25,r:p.area,col:p.col});}
   else if(hit)S.fx.push({x:p.x,y:p.y,t:.12,m:.12,r:.3*K,col:p.col});
-  if(p.cata)cataHit(p);
+  if(p.cata)cataHit(p);if(p.uab)uabProjHit(p);
   return false;});
  rollTick(dt);czTick(dt);augTick(dt);
  // Coloso · Vástagos: al perder cada 25% de su vida, un trozo se desprende y se convierte en 2 Mini-élites (los trozos salen volando hasta su sitio)
@@ -120,7 +120,7 @@ function update(dt){
  wolfTick(dt);dragonAdults(dt);guildHeal(dt);furyTick();orbTick(dt);heroAbTick(dt);mechaTick(dt);achTick(dt);logTick(dt);if(typeof e2TowersTick==='function')e2TowersTick(dt);if(typeof bufoTick==='function')bufoTick(dt);
  let bossDead=false;
  S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(!e.leak)S.wk=(S.wk||0)+1;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=250)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
-  {const gb=killGoldF(e.t),g1=rndG(gb*(e.src&&e.src.type&&TW[e.src.type]&&TW[e.src.type].guild?1.25:1)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=rp('coin')?rndG(gb*.5):0;S.gold+=g1+g2+g3;mimFeed(e);if(e.src&&TW[e.src.type]&&TW[e.src.type].glut)glutEat(e.src);if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;{const q=EKS(e.t);q.k++;q.g+=g1+g2+g3;}if(e.src)e.src.kills=(e.src.kills||0)+1;}}
+  {const gb=killGoldF(e.t),g1=rndG(gb*guildLoot(e.src)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=rp('coin')?rndG(gb*.5):0;S.gold+=g1+g2+g3;mimFeed(e);if(e.src&&TW[e.src.type]&&TW[e.src.type].glut)glutEat(e.src);if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;{const q=EKS(e.t);q.k++;q.g+=g1+g2+g3;}if(e.src)e.src.kills=(e.src.kills||0)+1;}}
   // experiencia del héroe: si el golpe final es suyo, la experiencia entera le llega directa; si es de otro, recibe directa la parte del daño que hizo y cae una bola del 40 % del resto que recoge al acercarse
   {const X=ET[e.t].xp||1,nb=(S.nbR===S.round&&!S.pvH?1:0);if(e.src&&e.src.hero)orbAdd(e.x,e.y,X+nb);else{/* contribución: la parte del daño que hizo el héroe le llega directa; del resto, bola del 40 % en el suelo */const hx=Math.min(X,e.hx||0);if(hx>0)orbAdd(e.x,e.y,hx);orbGround(e.x,e.y,hx>0?(X-hx)*.4:Math.max(1,X*.4));if(nb)orbAdd(e.x,e.y,nb);}}
   if(isBoss(e)&&S.round===ROUNDS&&!S.tut)bossDead=true;
