@@ -181,7 +181,7 @@ function rows(s,T,src,extra){
 // el DPS es siempre la última línea de la tarjeta, anclada abajo, con su hueco de separación
 const dpsRow=(s,T,src)=>`<div class="row cd dps"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`;
 // objetivo: en la ficha fijada se puede cambiar; si no, solo se muestra
-function tgtRow(t,src,pinned){return tgtRow0(t,src,pinned)+(t&&t.type==='augur'&&t.spec==='lord'?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover la nube</button></div>`:'<small>Haz clic en la torre para mover su nube.</small>'):'');}
+function tgtRow(t,src,pinned){if(t&&t.spec&&SPECS[t.type][t.spec]&&SPECS[t.type][t.spec].notgt)return '';return tgtRow0(t,src,pinned)+(t&&t.type==='augur'&&t.spec==='lord'?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover la nube</button></div>`:'<small>Haz clic en la torre para mover su nube.</small>'):'');}
 function tgtRow0(t,src,pinned){
  if(!pinned)return R('',kst('tgt','Objetivo',src),TGT[t.mode].n);
  return `<div class="tgt"><div>${kst('tgt','Objetivo',src)}</div><select class="tsel" data-a="tgt" data-id="${t.id}">`+Object.keys(TGT).map(k=>`<option value="${k}"${t.mode===k?' selected':''}>${TGT[k].n}</option>`).join('')+

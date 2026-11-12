@@ -13,7 +13,7 @@ for f in ['habilidades_e1_final.json','habilidades_e2_final.json','habilidades_t
         if not k.startswith('_'):add(f"AB[{json.dumps(k)}]",v)
 # especializaciones
 SP={'treb':'cata.treb','ogre':'cata.ogre','hel':'frost.hel','vent':'frost.vent','lord':'augur.lord','herald':'augur.herald','foco':'orb.foco','reap':'orb.reap','altarm':'altar.altar','fist':'monk.fist','drunk':'monk.drunk','pal':'bastion.pal','ass':'bastion.ass','volc':'sala.volc','forge':'sala.forge','rapid':'arrow.rapid','xbow':'arrow.xbow','pest':'poison.pest','alch':'poison.alch',
- 'red':'laser.red','arcov':'laser.volt','hack':'nano.hack','devora':'nano.devour','muro':'flame.muro','deton':'flame.detn','nido':'bunker.nido','supr':'bunker.sup','kami':'robots.kami','mecha':'robots.mecha','heli':'dron.dron','corro':'acid.corr','nube':'acid.cloud','colmena':'alien.hive','depre':'alien.pred','rave':'sonic.spk','gigante':'sonic.giant'}
+ 'red':'laser.red','arcov':'laser.volt','hack':'nano.hack','devora':'nano.devour','muro':'flame.muro','deton':'flame.detn','nido':'bunker.nido','supr':'bunker.sup','kami':'robots.kami','mecha':'robots.mecha','heli':'dron.dron','petro':'dron.petro','riel':'cannon.rail','bomb2':'cannon.bomb','senda':'altar.senda','corro':'acid.corr','nube':'acid.cloud','colmena':'alien.hive','depre':'alien.pred','rave':'sonic.spk','gigante':'sonic.giant'}
 BASE={'base_acid':'acid','base_sonic':'sonic','base_bunker':'bunker','base_dron':'dron'}
 for f in ['especializaciones_e1_final.json','especializaciones_e2_final.json']:
     for k,v in J(f).items():

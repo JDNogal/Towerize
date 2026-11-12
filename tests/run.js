@@ -54,7 +54,7 @@ const T=[
  ['compendio_enlace.js','Compendio enlazado: botón 📖, pestaña Mecánicas, flechas de evolución y aviso de enemigo nuevo'],
  ['casillas_nuevas.js','Casillas especiales nuevas: Precisión, Perforación, Eco, Persistencia, Taller y Cuartel'],
  ['enemigos.js','Enemigos por facciones: tipos nuevos, iconos, escuadras con líder y cadena de mando'],
- ['habilidades_enemigos.js','Habilidades de los enemigos: embeleso, interferencia, golpes de campeón, disparos en arco y voladores que atacan'],
+ ['habilidades_enemigos.js','Habilidades de los enemigos: embeleso, interferencia, golpes de campeón, disparos en arco y voladores que atacan',null,2],
  ['elites.js','Mini-élites y élites de cada era con sus habilidades'],
  ['jefes.js','Jefes de historia: los tres de cada era y su orden'],
  ['vales_boton.js','Vales y tickets: el botón de mejorar los ofrece cuando no llega el oro'],
@@ -82,6 +82,7 @@ const T=[
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
  ['eventos_imagenes.js','Eventos en pergamino: dibujo de cada evento y de cada opción'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
+ ['especializaciones_nuevas.js','Especializaciones nuevas: Senda rúnica, Dron petrolero, Cañón de riel y Drones bombarderos',null,2],
  ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página

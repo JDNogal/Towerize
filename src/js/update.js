@@ -43,7 +43,7 @@ function update(dt){
  S.enemies=S.enemies.filter(e=>!e.leak);
  const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty-e.y);
  for(const t of S.list){
-  const T=TW[t.type],s=stats(t);if(T.unit||T.support||T.swarm||T.custom||t.jam>0)continue;t.cd=Math.max(-.1,t.cd-dt);if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);if(t.flash&&(t.flash.t-=dt)<=0)t.flash=null;if(t.fl&&(t.fl.ttl-=dt)<=0)t.fl=null;
+  const T=TW[t.type],s=stats(t);if(T.unit||T.support||T.swarm||T.custom||t.jam>0||(t.spec&&SPECS[t.type][t.spec].custom))continue;t.cd=Math.max(-.1,t.cd-dt);if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,t.acd[k]-dt);if(t.flash&&(t.flash.t-=dt)<=0)t.flash=null;if(t.fl&&(t.fl.ttl-=dt)<=0)t.fl=null;
   let tg=alive(t.tgt||{})&&!(t.tgt.hk>0)&&Math.hypot(t.tgt.x-t.x,t.tgt.y-t.y)<=s.range&&!(typeof camoHid==='function'&&camoHid(t.tgt,t))?t.tgt:null;
   if(!tg){const md=(typeof tgtAI==='function'&&tgtAI(t,s))||TGT[t.mode]||TGT.core;let bs=0,tg2=null,bs2=0;const rsv=RSVOK(T);
    for(const e of S.enemies){if(e.hk>0||Math.hypot(e.x-t.x,e.y-t.y)>s.range||(T.ground&&isFly(e))||(typeof camoHid==='function'&&camoHid(e,t)))continue;const sc=md.score(e,prog);
@@ -82,6 +82,7 @@ function update(dt){
      if(rf&&Math.random()<rf.p){const o=S.enemies.find(o=>o!==r.e&&o.hp>0&&Math.hypot(o.x-r.e.x,o.y-r.e.y)<=2*K);
       if(o){hurt(o,dm,t,'elem');if(stk){if(r.el.k==='bleed')addBleed(o,t,1);else addPois(o,1,t);}S.fx.push({bolt:[[r.e.x,r.e.y],[o.x,o.y]],t:.15,m:.15});}}}
     continue;}
+   if(X.rail){railShot(t,tg,s,dm,crit);continue;}
    if(T.log){logShot(t,tg,s,dm);continue;}
    if(T.wall){wallShot(t,s,prog);continue;}
    if(T.zap){zap(t,tg,s,dm*(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1),TT);if(crit)critMark(tg);continue;}

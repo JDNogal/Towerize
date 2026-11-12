@@ -12,9 +12,9 @@ function achLink(id,fallback,compact){const A=ACH[id];if(!A)return fallback||'';
 {const _b=lbBack;lbBack=function(){try{if(LB.open&&!LB.cover&&!LB.ret&&!LB.fromWin&&LB.orig==='game'&&!['prep','msg','end'].includes(LB.area)&&!(LB.end&&S&&(S.phase==='won'||S.phase==='lost'))){LB.orig=0;lbClose(true);return;}}catch(e){}return _b.apply(this,arguments);};}
 // ---- mecánicas sin spoilers: las que solo trae una especialización no se descubren por ver la torre, sino al alcanzar esa especialización ----
 {const BASE={burn:['sala','flame'],poison:['poison','acid'],brk:['acid'],slow:['frost','straw'],push:['sonic','wood'],chain:['tesla'],beam:['orb','laser'],vc:['laser'],mag:['bunker']};
- const SPM={burn:{monk:['drunk']},poison:{arrow:['rapid']},bleed:{cannon:['mnr'],bastion:['ass'],bunker:['sup']},ez:{tesla:['ele']},brk:{cata:['treb'],poison:['alch'],nano:['devour'],sala:['forge']},
+ const SPM={burn:{monk:['drunk']},poison:{arrow:['rapid']},bleed:{cannon:['bomb'],bastion:['ass'],bunker:['sup']},ez:{tesla:['ele']},brk:{cata:['treb'],poison:['alch'],nano:['devour'],sala:['forge']},
   slow:{sonic:['spk']},freeze:{frost:['hel','vent']},stun:{tesla:['cad'],cata:['treb','ogre'],laser:['red','volt'],sonic:['spk']},daze:{sonic:['giant']},sticky:{cata:['treb']},flam:{cata:['treb']},
-  wet:{augur:['lord']},cursed:{orb:['foco']},poly:{orb:['foco']},fear:{orb:['reap']},mark:{arrow:['xbow']},inf:{nano:['hack']},lmk:{bunker:['nido']},push:{cannon:['art']}};
+  wet:{augur:['lord']},cursed:{orb:['foco']},poly:{orb:['foco']},fear:{orb:['reap']},mark:{arrow:['xbow']},inf:{nano:['hack']},lmk:{bunker:['nido']}};
  for(const id in MECUSE){MECUSE[id]=MECUSE[id].flatMap(r=>{const[t,k]=r.split(':');if(t!=='tw'||(BASE[id]||[]).includes(k))return[r];const sp=SPM[id]&&SPM[id][k];return sp&&sp.length?sp.filter(x=>SPECS[k]&&SPECS[k][x]).map(x=>'tw:'+k+':'+x):[r];});}}
 // ---- logros fijados a la vista en partida, solo con el mapa a la vista (no encima del libro ni de las ventanas): arriba a la izquierda, junto al menú y «Reintentar» (antes solo se veían en el compendio) ----
 function pinbarTick(){let el=$('pinbar');if(!el){el=document.createElement('div');el.id='pinbar';document.body.appendChild(el);

@@ -16,9 +16,9 @@ const RUNEK=['d','r','rg'],RUNEN={d:'daño',r:'cadencia',rg:'alcance'},RUNEC={d:
 function bufoTargets(t){const r=stats(t).range;return S.list.filter(o=>o!==t&&!TW[o.type].support&&!TW[o.type].uniq&&Math.hypot(o.x-t.x,o.y-t.y)<=r);}
 function bufoTick(dt){if(S.phase!=='wave')return;
  for(const t of S.list){const T=TW[t.type];if(!T||!T.bufo)continue;if(t.acd)for(const k in t.acd)t.acd[k]=Math.max(0,(t.acd[k]||0)-dt);
-  if(t.type==='altar'){t.rt=(t.rt==null?1:t.rt)-dt;if(t.rt<=0){t.rt=3;const tg=bufoTargets(t);if(tg.length){const tw=abRank(t,'twin'),n=1+(tw?tw.n:0),af=abRank(t,'affin'),fav=af&&t.fav?S.list.find(o=>o.id===t.fav):null;
+  if(t.type==='altar'&&t.spec!=='senda'){t.rt=(t.rt==null?1:t.rt)-dt;if(t.rt<=0){t.rt=3;const tg=bufoTargets(t);if(tg.length){const tw=abRank(t,'twin'),n=1+(tw?tw.n:0),af=abRank(t,'affin'),fav=af&&t.fav?S.list.find(o=>o.id===t.fav):null;
      for(let i=0;i<n;i++){const o=(fav&&tg.includes(fav)&&(i===0||Math.random()<.5))?fav:tg[Math.floor(Math.random()*tg.length)];const k=RUNEK[(t.rk=((t.rk||0)+1))%3];(S.runesB=S.runesB||[]).push({x:t.x,y:t.y,o,k,t:0,m:.5,src:t});}}}}
-  if(t.type==='dron'){const fl=abRank(t,'fleet'),n=1+(fl?fl.n:0);t.dr=t.dr||[];while(t.dr.length<n)t.dr.push({x:t.x,y:t.y,o:null,wait:0});t.dr.length=n;
+  if(t.type==='dron'&&t.spec!=='petro'){const fl=abRank(t,'fleet'),n=1+(fl?fl.n:0);t.dr=t.dr||[];while(t.dr.length<n)t.dr.push({x:t.x,y:t.y,o:null,wait:0});t.dr.length=n;
    const wd=abRank(t,'weld'),oc=abRank(t,'overclock');
    for(const d of t.dr){if(d.o&&!S.list.includes(d.o))d.o=null;
     if(!d.o){const free=bufoTargets(t).filter(o=>!t.dr.some(q=>q!==d&&q.o===o)),tg=free.filter(o=>(o.drc||0)<4);
@@ -44,11 +44,11 @@ function bufoDraw(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000;
   if(t.drc>0){g.fillStyle='#ffd75a';for(let i=0;i<t.drc;i++){g.beginPath();g.arc(X(t.x)-K*CS*.42+i*lw(5),X(t.y)+K*CS*.42,lw(2),0,7);g.fill();}}
   if(t.oc>0){g.strokeStyle='rgba(255,215,90,.9)';g.lineWidth=lw(2.5);g.beginPath();g.arc(X(t.x),X(t.y),K*CS*.56,0,7);g.stroke();}
   if(t.type==='altar'&&t.fav){const o=S.list.find(q=>q.id===t.fav);if(o){g.font=Math.round(CS*1.1)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('💜',X(o.x)+K*CS*.3,X(o.y)-K*CS*.36);}}
-  if(t.dr){const im=svgImg(E2DRONE),r=CS*1.1;for(const d of t.dr){const bob=Math.sin(now*4+d.x)*CS*.15;if(im.complete&&im.naturalWidth)try{g.drawImage(im,X(d.x)-r,X(d.y)-r*1.5+bob,r*2,r*2);}catch(e){}g.fillStyle='rgba(0,0,0,.25)';g.beginPath();g.ellipse(X(d.x),X(d.y)+CS*.3,r*.5,r*.2,0,0,7);g.fill();}}}}
+  if(t.dr&&t.spec!=='petro'){const im=svgImg(E2DRONE),r=CS*1.1;for(const d of t.dr){const bob=Math.sin(now*4+d.x)*CS*.15;if(im.complete&&im.naturalWidth)try{g.drawImage(im,X(d.x)-r,X(d.y)-r*1.5+bob,r*2,r*2);}catch(e){}g.fillStyle='rgba(0,0,0,.25)';g.beginPath();g.ellipse(X(d.x),X(d.y)+CS*.3,r*.5,r*.2,0,0,7);g.fill();}}}}
 // Afinidad: marcar la torre favorita del altar con el botón de bandera
-{const _to=tmOpts;tmOpts=function(t){const o=_to.apply(this,arguments);if(t&&t.type==='altar'&&abRank(t,'affin'))o.side={k:'flag',ic:'💜'};return o;};}
+{const _to=tmOpts;tmOpts=function(t){const o=_to.apply(this,arguments);if(t&&t.type==='altar'&&t.spec!=='senda'&&abRank(t,'affin'))o.side={k:'flag',ic:'💜'};return o;};}
 {const _sf=startFlag;startFlag=function(t){if(t&&t.type==='altar'){closePrim();S.aim='fav';S.aimT=t;S.msg='Elige la torre favorita del altar: recibirá la mitad de las runas (Esc para cancelar).';renderRelics();ui();return;}return _sf.apply(this,arguments);};}
 function favAt(c){const a=S.aimT,t=S.occ[c.x+','+c.y];if(!a||!t||t===a||TW[t.type].support||TW[t.type].uniq){S.msg='Elige una torre que dispare dentro del alcance del altar.';ui();return;}if(Math.hypot(t.x-a.x,t.y-a.y)>stats(a).range){S.msg='Esa torre está fuera del alcance del altar.';ui();return;}a.fav=t.id;S.aim=null;S.aimT=null;S.msg=tinfo(t).n+' es ahora la favorita del altar.';S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.2*K,col:'#c89aff'});renderRelics();ui();}
 // fichas: texto de lo que hacen y una fila de estado
-{const _ti=towerInfo;towerInfo=function(t){let h=_ti.apply(this,arguments);try{if(t&&TW[t.type]&&TW[t.type].bufo){const extra=`<small>${BUFOTXT[t.type]}</small>`+(t.type==='dron'&&t.dr?`<small>Drones: <b>${t.dr.length}</b>.</small>`:'')+(t.type==='altar'&&t.fav?`<small>Favorita: <b>${(tinfo(S.list.find(o=>o.id===t.fav)||{})||{}).n||'—'}</b>.</small>`:'');const i=h.indexOf('<div class="row');h=i>=0?h.slice(0,i)+extra+h.slice(i):h+extra;}}catch(e){}return h;};}
+{const _ti=towerInfo;towerInfo=function(t){let h=_ti.apply(this,arguments);try{if(t&&TW[t.type]&&TW[t.type].bufo){const extra=`<small>${typeof specTxt==='function'&&specTxt(t)||BUFOTXT[t.type]}</small>`+(t.type==='dron'&&t.dr&&t.spec!=='petro'?`<small>Drones: <b>${t.dr.length}</b>.</small>`:'')+(t.type==='altar'&&t.fav?`<small>Favorita: <b>${(tinfo(S.list.find(o=>o.id===t.fav)||{})||{}).n||'—'}</b>.</small>`:'');const i=h.indexOf('<div class="row');h=i>=0?h.slice(0,i)+extra+h.slice(i):h+extra;}}catch(e){}return h;};}
 {const _si=shopInfo;shopInfo=function(k){let h=_si.apply(this,arguments);try{if(TW[k]&&TW[k].bufo){const i=h.indexOf('<div class="row');const extra=`<small>${BUFOTXT[k]}</small>`;h=i>=0?h.slice(0,i)+extra+h.slice(i):h+extra;}}catch(e){}return h;};}

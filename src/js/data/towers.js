@@ -228,7 +228,23 @@ const AB={
  affin:{n:'Afinidad',ranks:[{c:35,p:.5}],txt:r=>`Puedes marcar una torre favorita (botón de bandera): recibe la <span class="cd">mitad</span> de todas las runas.`},
  fleet:{n:'Flota',ranks:[{c:40,n:1},{c:50,n:2}],txt:r=>`<b>${1+r.n} drones</b> en vez de 1.`},
  overclock:{n:'Overclock',ranks:[{c:45,t:5,m:2},{c:55,t:5,m:2.5}],txt:r=>`La torre que ajusta un dron dispara <span class="cr">×${f(r.m)}</span> más rápido durante <span class="cr">${r.t} s</span>. Con Overclock, el dron no se para: cuando ya ha dado todos los ajustes de crítico, sigue repartiendo Overclock (primero a las torres que están disparando).`},
- weld:{n:'Soldadura',ranks:[{c:35,h:.05,sh:.1},{c:45,h:.1,sh:.2}],txt:r=>`Mientras vuela, el dron cura cada segundo un <span class="chp">${Math.round(r.h*100)}%</span> a las unidades a 1,5 casillas y les da un escudo del <span class="chp">${Math.round(r.sh*100)}%</span> de su vida.`}};
+ weld:{n:'Asistencia de campo',ranks:[{c:35,h:.05,sh:.1},{c:45,h:.1,sh:.2}],txt:r=>`Mientras vuela, el dron cura cada segundo un <span class="chp">${Math.round(r.h*100)}%</span> a las unidades a 1,5 casillas y les da un escudo del <span class="chp">${Math.round(r.sh*100)}%</span> de su vida.`},
+ // ---- Senda rúnica (Altar de runas) ----
+ cadena:{n:'Cadena rúnica',ranks:[{c:0,r:2}],txt:r=>`Cuando una runa se activa, se activan también las que estén a <span class="ca">${r.r} casillas</span> de ella.`},
+ persist:{n:'Runa persistente',ranks:[{c:0,n:2}],txt:r=>`Cada runa aguanta <b>${r.n} activaciones</b> antes de gastarse.`},
+ sello:{n:'Sello mayor',ranks:[{c:0,n:6,m:1.5}],txt:r=>`Cada <b>${r.n}</b> runas lanza un sello: ocupa todo el ancho del camino y 3 casillas de largo, con el efecto de la runa que toque un <span class="cd">${Math.round((r.m-1)*100)}%</span> más fuerte. No caduca: se activa cuando tiene 4 enemigos encima o cuando el primero va a salir de él.`},
+ // ---- Dron petrolero (Dron de mantenimiento) ----
+ mancha:{n:'Mancha de aceite',ranks:[{c:0,ar:.25,m:.15},{c:0,ar:.5,m:.3}],txt:r=>`Charcos de brea un <span class="ca">${Math.round(r.ar*100)}%</span> más grandes y que ralentizan un <span class="cc">${Math.round(r.m*100)}%</span> más.`},
+ chispazo:{n:'Chispazo',ranks:[{c:0,cd:6,n:2},{c:0,cd:4,n:3}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, el dron dispara a un enemigo que esté sobre uno de sus charcos: poco daño, pero las chispas saltan a todos los del charco, les ponen <b>${r.n}</b> stacks de ${kw('burn','quemadura','')} y prenden la brea.`},
+ municion:{n:'Munición incendiaria',ranks:[{c:0,n:1}],txt:r=>`Las torres de la misma pieza que el dron, o pegadas a él, ponen <b>${r.n}</b> stack de ${kw('burn','quemadura','')} con cada disparo (como mucho, 2 por segundo cada torre).`},
+ // ---- Cañón de riel (Cañoneros) ----
+ perfor:{n:'Perforación total',ranks:[{c:0}],txt:r=>`El disparo ya no pierde daño al atravesar enemigos.`},
+ recarga:{n:'Recarga en caliente',ranks:[{c:0,p:.05,max:.4}],txt:r=>`Por cada enemigo que mata un disparo, la siguiente carga es un <span class="cr">${Math.round(r.p*100)}%</span> más rápida (hasta un <span class="cr">${Math.round(r.max*100)}%</span>).`},
+ estela:{n:'Estela iónica',ranks:[{c:0,t:3,p:.1}],txt:r=>`La línea del disparo queda electrificada <span class="cr">${r.t} s</span>: cada segundo hace un <span class="cd">${Math.round(r.p*100)}%</span> del daño del disparo como daño eléctrico y deja ${kw('ez','electrizados','')} a los enemigos que la pisan.`},
+ // ---- Drones bombarderos (Cañoneros) ----
+ escuad:{n:'Escuadrilla',ranks:[{c:0,n:1},{c:0,n:2}],txt:r=>`<b>${2+r.n} drones</b> en vez de 2.`},
+ picado:{n:'Bombardeo en picado',ranks:[{c:0,cd:14,m:8},{c:0,cd:10,m:10}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, un dron se lanza en picado contra el grupo de enemigos más grande y estalla: <span class="cd">${r.m}×</span> el daño de una bomba, con el doble de área. Alcanza también a los voladores. La torre reconstruye el dron en 5 s.`},
+ metafil:{n:'Metralla afilada',ranks:[{c:0,n:1},{c:0,n:2},{c:0,n:3}],txt:r=>`Las bombas sueltan metralla: cada una aplica <b>${r.n}</b> ${r.n>1?'stacks':'stack'} de ${kw('bleed','sangrado','')} a los enemigos que alcanza.`}};
 const SPECS={arrow:{
  rapid:{n:'Arqueros Raudos',ic:'🪶',col:'#f0c46a',lv:{dmg:L4D*1.15,cd:.7*.65,range:1.2,area:1.3,hp:L4H,pen:0},ab:['rain','poison','burst'],d:'Disparan mucho más rápido, a costa de algo de daño.'},
  xbow:{n:'Ballesteros',ic:'🎯',col:'#c9783a',lv:{dmg:L4D*2.8,cd:.7*1.4,range:1.2,area:1.3,hp:L4H,pen:15},ab:['charged','pierce','mark'],d:'Disparan más lento, pero con mucho más daño y penetración de armadura.'}},
@@ -236,8 +252,8 @@ cata:{
  treb:{n:'Trebuchet',ic:'🏯',col:'#b59a6a',lv:{dmg:L4D*1.9,cd:.7*1.45,range:1.2*1.3,area:1.3*1.2,hp:L4H,pen:0},ab:['arsenal','debris','breach'],d:'Alcance enorme y disparos muy lentos y potentes. Arma de asedio: lanza lo que tenga a mano.'},
  ogre:{n:'Ogros Lanzarrocas',ic:'👹',col:'#7e9a5a',lv:{dmg:L4D*.9,cd:.7*.75,range:1.2,area:1.3*.8,hp:L4H,pen:0},ab:['roll','crush','aval'],d:'Lanzan más a menudo. La roca rueda hacia los portales y golpea a cada enemigo (45% del daño). Si pasa por brea ardiendo, quema; si pasa por veneno, envenena.'}},
 cannon:{
- art:{n:'Artilleros',ic:'💥',col:'#e8883a',lv:{dmg:L4D*1.4,cd:.7*1.3,range:1.2,area:1.3*1.3,hp:L4H,pen:0},ab:['bombard','shock','cluster'],d:'Bombas más grandes y con más daño, pero disparan más lento.'},
- mnr:{n:'Mineros',ic:'🧨',col:'#b5563a',lv:{dmg:L4D*.9,cd:.7*.7,range:1.2,area:1.3*.75,hp:L4H,pen:0},ab:['mine','shrap','hollow'],d:'Disparan más rápido y con menos área. Dejan minas y provocan sangrado.'}},
+ rail:{n:'Cañón de riel',ic:'🔩',col:'#7ad8ff',lv:{dmg:L4D*3,cd:.7*2.2,range:1.2*1.35,area:1.3,hp:L4H,pen:20},rail:1,o:{splash:0,shape:'Línea',areaTxt:'Atraviesa a todos los enemigos de la línea de tiro.',fx:'Atraviesa'},ab:['perfor','recarga','estela'],d:'Carga lenta y mucho alcance. Dispara en línea recta por todo su alcance, en el ángulo que más enemigos atraviesa; pierde un 15% de daño por cada enemigo atravesado.'},
+ bomb:{n:'Drones bombarderos',ic:'🛩️',col:'#e8a05a',lv:{dmg:L4D*.34,cd:.7*.75,range:1.2*1.25,area:1.3*.75,hp:L4H,pen:0},custom:1,notgt:1,o:{ground:1,fx:'Drones autónomos'},ab:['escuad','picado','metafil'],d:'La torre ya no dispara: 2 drones vuelan solos por su alcance y sueltan bombas pequeñas y rápidas. Cada dron va a una escuadra distinta, empezando por la más adelantada.'}},
 frost:{
  hel:{n:'Hechicero Helado',ic:'🔮',col:'#8fb0ff',lv:{dmg:L4D*1.8,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['frzh','icicle','shatter'],d:'Proyectiles de hielo que pueden congelar, y témpanos que caen del cielo.'},
  vent:{n:'Guardián de la Ventisca',ic:'🌨️',col:'#9fe0ff',lv:{dmg:L4D*.42,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},aura:true,ab:['deep','blizz','bite'],d:'No dispara: emite un aura que ralentiza y daña poco a todos los enemigos dentro.'}},
@@ -260,9 +276,11 @@ nano:{
  hack:{n:'Hackeo',ic:'🧬',col:'#9fe0ff',lv:{dmg:L4D*.75,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{nsw:2},ab:['infect','virus','reprog'],d:'El enjambre se divide en 2 nubes que van a enemigos distintos. Infecta a los enemigos para que reciban más daño.'},
  devour:{n:'Enjambre devorador',ic:'🕳️',col:'#b0b8ff',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{nsw:1,grow:1},ab:['hunger','acid','bottom'],d:'Una sola nube que crece con cada enemigo que devora durante la oleada: más daño y más grande. Al acabar la oleada vuelve a su tamaño.'}},
 altar:{
- altar:{n:'Altar mayor',ic:'🪬',col:'#c89aff',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},ab:['twin','major','affin'],d:'Más alcance. Sus runas llegan más lejos y se pueden mejorar.'}},
+ altar:{n:'Altar mayor',ic:'🪬',col:'#c89aff',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},ab:['twin','major','affin'],d:'Más alcance. Sus runas llegan más lejos y se pueden mejorar.'},
+ senda:{n:'Senda rúnica',ic:'🔮',col:'#b07aff',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},senda:1,notgt:1,o:{dmg:60,rate:1/3,ground:1,fx:'Runas trampa en el camino'},ab:['cadena','persist','sello'],d:'Deja de bufar a las torres: lanza runas al camino, que se quedan en el suelo hasta que un enemigo las pisa. Rotan tres tipos: explosiva, atadura y quebranto.'}},
 dron:{
- dron:{n:'Helipuerto',ic:'🛸',col:'#e8b04a',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},ab:['fleet','overclock','weld'],d:'Más alcance. Los drones se pueden mejorar.'}},
+ dron:{n:'Helipuerto',ic:'🛸',col:'#e8b04a',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},ab:['fleet','overclock','weld'],d:'Más alcance. Los drones se pueden mejorar.'},
+ petro:{n:'Dron petrolero',ic:'🛢️',col:'#8a6a3a',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},petro:1,notgt:1,o:{dmg:3,rate:1,ground:1,dt:'phys',fx:'Charcos de brea'},ab:['mancha','chispazo','municion'],d:'Deja de ajustar torres: el dron recorre el camino dentro de su alcance soltando charcos de brea, que hacen poco daño, dejan pegajosos a los enemigos y arden si les llega fuego.'}},
 poison:{
  alch:{n:'Alquimista',ic:'⚗️',col:'#58c9a0',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3*1.3,hp:L4H,pen:0},ab:['plague','corr','flask'],d:'Charcos más grandes y más stacks. El veneno se contagia y corroe la armadura.'},
  pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3*.85,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},
