@@ -13,5 +13,7 @@ const r=await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.st
  return {miss,pap:!!pap,img:!!img,nOpt,fit,alt,res};});
 ck(!r.miss.length,'faltan dibujos: '+r.miss.join(', '));ck(r.pap&&r.img,'el evento no sale en el pergamino con su dibujo');ck(r.nOpt===3,'no salen las 3 opciones del mercader');
 ck(r.fit,'el pergamino del evento se sale de la pantalla'+(mob?' (móvil)':''));ck(r.alt.every(Boolean),'el cofre o el reactor no cambian de dibujo según el final');ck(r.res,'el resultado no sale con su dibujo y «Continuar»');
+await p.evaluate(()=>{closeEvent();openEvent('pigs','0,0');});await p.waitForTimeout(1500);
+const f2=await p.evaluate(()=>{const pp=document.querySelector('#relic .ppap.evp');return pp?pp.getBoundingClientRect().bottom<=innerHeight+2:false;});ck(f2,'el evento de 4 opciones se sale de la pantalla'+(mob?' (móvil)':''));
 await ctx.close();}
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'eventos ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();
