@@ -80,6 +80,7 @@ const T=[
  ['equilibrio_v305.js','Retoques de equilibrio tras el estudio de torres'],
  ['evento_logro.js','Salamandra desde el principio; «Todo arde» desbloquea el Nido abandonado'],
  ['eventos_e2.js','Eventos de la era 2, evento por fases y torre Prototipo Omega'],
+ ['eventos_imagenes.js','Eventos en pergamino: dibujo de cada evento y de cada opción'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
 ];
 // una prueba pasa si termina sin error y su última línea dice que no hubo errores de página

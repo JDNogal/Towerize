@@ -8,8 +8,9 @@ await p.evaluate(()=>document.querySelector('[data-a="newgame"]').click());await
 ck(!(await p.evaluate(()=>DLG.on)),'la intro sale al pulsar Nueva partida (debe salir al empezar)');
 await p.evaluate(()=>document.querySelector('[data-a="tutskip"]').click());await p.waitForTimeout(600);
 await p.evaluate(()=>document.querySelector('[data-a="skipok"]').click());await p.waitForTimeout(1300);
+const comic=await p.evaluate(()=>typeof CMC!=='undefined'&&CMC.on);if(comic){for(let k=0;k<10&&await p.evaluate(()=>CMC.on);k++){await p.evaluate(()=>{CMC.lock=0;comicNext();});await p.waitForTimeout(80);}await p.waitForTimeout(900);}
 const a=await p.evaluate(()=>({R:ROUNDS,era:S&&S.era,dlg:DLG.on,step:LB.open?LB.step:null,who:!!document.querySelector('#dlg .dpp')}));
-ck(a.R===15,'la primera partida no es de 15 rondas');ck(a.era===1,'la primera partida no es de la Fantástica');ck(a.dlg,'no sale la intro al empezar');ck(a.step!=='era'&&a.step!=='rounds','salen los pasos de era o duración en la primera partida');
+ck(a.R===15,'la primera partida no es de 15 rondas');ck(a.era===1,'la primera partida no es de la Fantástica');ck(comic&&a.dlg,'no sale la intro (cómic y diálogo) al empezar');ck(a.step!=='era'&&a.step!=='rounds','salen los pasos de era o duración en la primera partida');
 let n=0,port=0;while(await p.evaluate(()=>DLG.on)&&n<30){port+=await p.evaluate(()=>/REINHART|SYLVANA/.test((document.querySelector('#dlg .dsp')||{}).textContent||'')&&!!document.querySelector('#dlg .dpp svg')?1:0);await p.evaluate(()=>{DLG.n=DLG.full.length;dlgTap();});await p.waitForTimeout(60);n++;}
 ck(port>=2,'Reinhart y Sylvana no salen con su retrato');
 await p.waitForTimeout(800);ck(await p.evaluate(()=>LB.open&&RL.hpick),'tras la intro no se abre la elección de héroe');

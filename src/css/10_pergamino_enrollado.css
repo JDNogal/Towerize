@@ -155,3 +155,23 @@ button.drr{display:inline-block;margin:6px auto;padding:6px 14px;border-radius:9
 #panel .pctt~button.drr{position:absolute;top:10px;left:12px;margin:0}
 #relic>button.drr{display:block}
 body.revl #panel{visibility:hidden}
+/* ---- eventos: pergamino con el dibujo a la izquierda y las opciones (o lo que obtienes) a la derecha ---- */
+#relic .evscr{max-width:min(980px,100%)}
+#relic .ppap.evp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:18px 26px;align-items:center;text-align:left;padding:20px 34px 16px}
+#relic .evp .evimg{line-height:0}#relic .evp .evimg svg{width:100%;height:auto;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+#relic .evp .evhead{margin:10px 0 2px}#relic .evp .evhead b{font:700 20px Georgia,"Times New Roman",serif;color:var(--inkh)}
+#relic .evp p{margin:4px 0 0;line-height:1.45;color:var(--ink)!important;text-shadow:none!important}
+#relic .evp .evsub{display:block;color:var(--ink2)!important;opacity:.85}
+#relic .evp .evtale{font-style:italic}
+#relic .evp .evopts{margin-bottom:6px}
+#relic .evp .evps{display:block;text-align:center;color:var(--ink2)!important;opacity:.8}
+#relic .evp .evrc{display:flex;flex-direction:column;gap:10px;justify-content:center}
+#relic .evp .evres{display:flex;flex-direction:column;gap:8px}
+#relic .evp .evrt{font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--acc)!important}
+#relic .evp .evchip{display:block;padding:10px 12px;border:1.5px solid var(--pline3);border-radius:10px;background:var(--paper1);color:var(--ink)}
+#relic .evp button.go{align-self:flex-end}
+body.mfs #relic .ppap.evp{gap:10px 16px;padding:12px 26px 10px}body.mfs #relic .evp .evhead b{font-size:16px}body.mfs #relic .evp p{font-size:12.5px;line-height:1.35}
+@media (max-width:700px){#relic .ppap.evp{grid-template-columns:1fr}}
+#relic .evp .evopts button.evo{grid-template-columns:1fr;gap:2px}
+body.mfs #relic .evp .evimg svg{max-height:40vh;width:auto;max-width:100%;margin:0 auto}body.mfs #relic .evp .evhead{margin-top:6px}body.mfs #relic .evp .evtale{padding:6px 10px}
+body.mfs #relic .evp .evps{display:none}body.mfs #relic .evp .evopts button.evo{padding:7px 12px}body.mfs #relic .evp .evopts{gap:6px;margin-bottom:0}
