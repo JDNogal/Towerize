@@ -21,7 +21,7 @@ function tmBuild(){let m=$('tmenu');if(!m){m=document.createElement('div');m.id=
  const t=TM.t,o=tmOpts(t),B=(x,cls,inner)=>`<button class="tmb ${cls}" data-k="${tmKey(x)}" data-tm="${x.k}" data-id="${t.id}"${x.v?` data-v="${x.v}"`:''}>${inner}</button>`;
  let h='';
  o.top.forEach(x=>{const arm=TM.arm===tmKey(x);let inner;
-  if(x.ab){const D=AB[x.v];inner=arm?'✓':`<span class="ic ab">${D.n[0]}</span><span class="pip">${Array.from({length:x.n},(_,i)=>`<i${i<x.rk?'':' class="e"'}></i>`).join('')}</span>`;}
+  if(x.ab){const D=AB[x.v];inner=arm?'✓':`<span class="ic ab">${D.ic||D.n[0]}</span><span class="pip">${Array.from({length:x.n},(_,i)=>`<i${i<x.rk?'':' class="e"'}></i>`).join('')}</span>`;}
   else inner=arm?'✓':`<span class="ic">${x.ic}</span>`;
   h+=B(x,(arm?'arm ':'')+(x.c==null?'mx':'')+(x.lk?' lk':''),(x.lk?'<span class="tlk">🔒</span>':'')+inner+`<span class="p">${x.c==null?'Máx.':(x.c?x.c+' 🪙':'gratis')}</span>`);});
  o.bot.forEach(x=>{const arm=TM.arm===tmKey(x),un=x.k==='sell'&&undoOk(t);let cd=0;if(x.k==='flz')cd=S.phase==='wave'?Math.ceil((t.lzcd||[0,0])[+x.v]||0):0;h+=B(x,(x.k==='sell'?'sell ':'')+(arm?'arm':'')+(cd>0?' mx':''),(arm?'✓':`<span class="ic">${un?'↶':x.ic}</span>`)+(x.k==='sell'?`<span class="p">+${x.sv}</span>`:x.k==='flz'?`<span class="p">${cd>0?cd+' s':(+x.v?'2.ª':'Luz')}</span>`:''));});
