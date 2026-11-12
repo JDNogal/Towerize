@@ -5,9 +5,9 @@ HEROES.vega={n:'Vega',ic:'🎯',col:'#ff4fd8',ranged:true,w:1,spd:2,apLv:.5,era:
 HVIS.vega=()=>{if(typeof era2Ok!=='function'||!era2Ok())return false;if(typeof S!=='undefined'&&S&&S.hero)return true;const picking=(typeof RL!=='undefined'&&RL.hpick)||(typeof LB!=='undefined'&&LB.open&&LB.area==='prep');return !picking||ERA===2;};
 HAB.vega={b:{n:'Bengala',ic:'🧨',t:()=>`Lanza una bengala donde quieras (área de 1 casilla, <b>8 s</b>): los enemigos dentro reciben un <span class="cd">+25% de daño</span> de tus torres y unidades.`},
  p4:{n:'Machete',ic:'🔪',t:()=>`Si un enemigo la alcanza, Vega lo acuchilla: sus golpes cuerpo a cuerpo hacen el daño completo y aplican 1 stack de ${kw('bleed','sangrado','')} la mitad de las veces.`},
- p8:{n:'Bengala de fósforo',ic:'🎇',t:()=>`La bengala es más grande (1,5 casillas), dura <b>12 s</b> y el bonus sube al <span class="cd">+40%</span>.`},
+ p8:{n:'Fósforo blanco',ic:'🎇',t:()=>`La bengala es más grande (1,5 casillas), dura <b>12 s</b> y el bonus sube al <span class="cd">+40%</span>.`},
  u:{n:'Ataque aéreo',ic:'✈️',t:()=>`Eliges un punto del camino: <b>3 aviones</b> lo recorren hacia los portales siguiendo los giros (en los cruces se reparten) y bombardean todo lo que pasan: <span class="cd">250% de su daño</span> por avión.`}};
-HDUR.vega={b:'8 s (12 s con Bengala de fósforo)',u:'hasta llegar a los portales'};
+HDUR.vega={b:'8 s (12 s con Fósforo blanco)',u:'hasta llegar a los portales'};
 const flareM=e=>{let m=1;for(const z of S.flares||[])if(Math.hypot(e.x-z.x,e.y-z.y)<=z.r)m=Math.max(m,1+z.m);return m;};
 // la bengala se coloca en cualquier punto (no hace falta camino); el ataque aéreo sí parte del camino
 {const _ch=castHab;castHab=function(c,k){const H=S.hero;if(!H||H.id!=='vega')return _ch.apply(this,arguments);
