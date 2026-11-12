@@ -117,6 +117,7 @@
   "torres_dibujos.js",
   "bufadores_tope.js",
   "escuadras_linea.js",
-  "eter_menu.js"
+  "eter_menu.js",
+  "iconos_svg.js"
  ]
 }
