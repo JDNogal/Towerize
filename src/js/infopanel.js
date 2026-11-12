@@ -17,7 +17,7 @@ function kctx(src){
 }
 // estados: ¿se acumulan (stacks) o vale el más fuerte?
 const STACKS={burn:1,poison:1,bleed:1,chill:1,ez:1,brk:1,slow:0,freeze:0,stun:0,root:0,sticky:0,cursed:0,poly:0,fear:0,wet:0};
-function kwHtml(id,src){const h=kwHtml0(id,src);if(h&&id in STACKS){const i=h.indexOf('</b>');if(i>=0){const j=h.indexOf('<small>');const row=R('',kst('stk','Acumulable',''),STACKS[id]?'Sí':'No');return j>=0?h.slice(0,j)+row+h.slice(j):h+row;}}return h;}
+function kwHtml(id,src){const h=kwHtml0(id,src);if(h&&id in STACKS){const i=h.indexOf('</b>');if(i>=0){const j=h.indexOf('<small>');const row=R('',kst('stk','Acumulable',''),STACKS[id]?(typeof ICSI!=='undefined'?ICSI+' Sí':'Sí'):(typeof ICNO!=='undefined'?ICNO+' No':'No'));return j>=0?h.slice(0,j)+row+h.slice(j):h+row;}}return h;}
 function kwHtml0(id,src){
  if(id.startsWith('bf_')&&BF[id.slice(3)])return buffInfo(id.slice(3));
  // conceptos básicos del juego (los usa el tutorial) y fichas por nombre: torre, enemigo, héroe

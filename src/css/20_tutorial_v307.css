@@ -63,3 +63,8 @@ body.era2g .cnf{background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%
 .bkx.bkhist svg{display:block}
 .bkx.bkhist .kcap.kbk{display:inline-flex!important;align-items:center;justify-content:center;line-height:1!important;padding:0 4px!important;width:auto!important;min-width:0!important;left:auto!important;right:-8px!important}
 .bkx.bkhist .kcap.kbk svg{display:block}
+/* v308 · retrato pequeño del héroe en la portada (partida guardada y pausa) */
+.lbsvpor{display:inline-block!important;padding:0!important;font-style:normal;clip-path:circle(50%);width:1.45em;height:1.45em;border-radius:50%;overflow:hidden;vertical-align:-.4em;border:1.5px solid #1b1712;box-sizing:border-box}
+.lbsvpor>*{width:100%!important;height:100%!important;display:block}
+.lbsvpor img,.lbsvpor svg{width:100%;height:100%;display:block}
+.lbsv .icsv,.lbbot .icsv,.lbchips .icsv{width:1.35em;height:1.35em;vertical-align:-.3em}

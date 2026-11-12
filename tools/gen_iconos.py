@@ -83,5 +83,25 @@ for(const[kind,t,sp,svg]of ICART){const full='<svg viewBox=\"-4 -4 56 56\">'+svg
 // Korr: nombres nuevos
 if(typeof HAB!=='undefined'&&HAB.korr){HAB.korr.b.n='Señuelo psiónico';HAB.korr.p8.n='Represalia';}
 """
+# ---- interfaz del libro (portada y cintas) ----
+ST=J('estadisticas_final.json')
+UI={'dur':inner(ST['dur']),'ehp':inner(ST['ehp']),'cool':inner(ST['cool']),
+ 'play':'<path d="M13 6L41 24L13 42Z" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>',
+ 'door':'<g stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round"><path d="M10 2h28v44H10z" fill="#6a4020"/><path d="M14 6h20v40H14z" fill="#a8743a"/><path d="M18 10h12v14H18zM18 28h12v14H18z" fill="none" stroke-width="1.6"/><circle cx="30" cy="27" r="2.2" fill="#f2c94c" stroke-width="1.4"/></g>',
+ 'save':'<g stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round"><path d="M6 4h30l8 8v32H6z" fill="#4a6a9a"/><path d="M13 4h20v13H13z" fill="#e8eef4"/><path d="M27 7v7" stroke-width="3"/><path d="M12 27h24v17H12z" fill="#f4ead8"/><path d="M16 33h16M16 38h12" stroke="#a08060" stroke-width="1.6"/></g>',
+ 'flag':'<g stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M10 4v42" stroke-width="3.2"/><path d="M10 6q8-5 16 0t16 0v20q-8 5-16 0t-16 0z" fill="#f4f4f0"/></g>',
+ 'cap':'<g stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round"><path d="M12 22v10q12 8 24 0V22" fill="#3a3e48"/><path d="M2 18L24 8l22 10-22 10z" fill="#2a2e38"/><path d="M40 21v12" fill="none" stroke="#f2c94c" stroke-width="2.4"/><circle cx="40" cy="35" r="2.6" fill="#f2c94c" stroke-width="1.4"/></g>'}
+LAT={'perg':{
+ 'cr':'<g stroke="#1b1410" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M16 14h32v34H16z" fill="#f4ead8"/><path d="M12 8h38a4 4 0 0 1 0 8H12a4 4 0 0 1 0-8z" fill="#d8c090"/><path d="M12 44h38a4 4 0 0 1 0 8H12a4 4 0 0 1 0-8z" fill="#d8c090"/><path d="M22 24h20M22 31h20M22 38h12" stroke="#a08060" stroke-width="1.8"/><path d="M42 36l2 4 4 .6-3 2.8.8 4.2-3.8-2-3.8 2 .8-4.2-3-2.8 4-.6z" fill="#c0392b" stroke-width="1.2"/></g>',
+ 'st':'<g stroke="#1b1410" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M8 8h48v48H8z" fill="#f4ead8"/><path d="M16 46V34h8v12zM28 46V22h8v24zM40 46V28h8v18z" fill="#c0392b"/><path d="M12 48h40" fill="none"/></g>'},
+ 'holo':{'st':'<path d="M8 8h48v48h-48z" fill="none" stroke="#3fe8ff" stroke-width="3.2" stroke-linejoin="round"/><path d="M18 46V34M30 46V22M42 46V28" fill="none" stroke="#ff4fd8" stroke-width="6" stroke-linecap="round"/>'}}
+out+="const ICUIS="+json.dumps(UI,ensure_ascii=False)+",ICLAT="+json.dumps(LAT,ensure_ascii=False)+";\n"
+out+="""
+// interfaz: portada del libro, cintas y Sí/No de acumulable
+var ICU={};for(const k in ICUIS)ICU[k]=icReg({ic:''},ICUIS[k]);
+var ICSI=icReg({ic:'Sí'},ICKW.stk_si),ICNO=icReg({ic:'No'},ICKW.stk_no);
+if(typeof LATSVG!=='undefined')for(const sk in ICLAT)for(const k in ICLAT[sk])if(!LATSVG[sk][k])LATSVG[sk][k]=ICLAT[sk][k];
+if(typeof LB!=='undefined'&&LB.open)try{lbRender();}catch(e){}
+"""
 open('src/js/iconos_svg.js','w').write(out)
 print(len(maps),'iconos +',len(KW),'palabras clave', os.path.getsize('src/js/iconos_svg.js'))

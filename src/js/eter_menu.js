@@ -28,10 +28,15 @@ function etmSay(auto){const cv=document.querySelector('.lbcv.a');if(!cv)return;c
  let b=cv.querySelector('.etmbub');if(!b){b=document.createElement('div');b.className='etmbub';b.setAttribute('role','status');b.setAttribute('aria-live','polite');cv.appendChild(b);}
  b.innerHTML='<b>ÉTER</b><span class="etmt"></span>';const sp=b.querySelector('.etmt');
  cv.classList.add('etmon');b.classList.remove('on');void b.offsetWidth;b.classList.add('on');
- clearInterval(ETM.type);clearTimeout(ETM.hide);let i=0;const ch=[...txt];
- ETM.type=setInterval(()=>{i++;sp.textContent=ch.slice(0,i).join('');if(i>=ch.length){clearInterval(ETM.type);cv.classList.remove('etmtalk');}},28);
- cv.classList.add('etmtalk');
- ETM.hide=setTimeout(()=>{b.classList.remove('on');cv.classList.remove('etmon','etmtalk');},2600+ch.length*28+1800);
+ clearTimeout(ETM.type);clearTimeout(ETM.hide);let i=0;const ch=[...txt],gr=cv.querySelector('.etmgr');
+ /* v308: el altavoz parpadea al ritmo de lo que escribe: rápido e irregular dentro de cada palabra, apagado en los espacios y más rato en los signos */
+ const lit=v=>{if(gr){gr.style.animation='none';gr.style.opacity=v;}};
+ const step=()=>{i++;sp.textContent=ch.slice(0,i).join('');const c=ch[i-1]||'';
+  if(i>=ch.length){lit('');if(gr)gr.style.animation='';cv.classList.remove('etmtalk');return;}
+  let d;if(c===' '){lit(.08);d=70+Math.random()*60;}else if(/[.,;:!?…»«]/.test(c)){lit(.12);d=180+Math.random()*160;}else{lit((.35+Math.random()*.65).toFixed(2));d=18+Math.random()*26;}
+  ETM.type=setTimeout(step,d);};
+ cv.classList.add('etmtalk');ETM.type=setTimeout(step,28);
+ ETM.hide=setTimeout(()=>{b.classList.remove('on');cv.classList.remove('etmon','etmtalk');lit('');if(gr)gr.style.animation='';},2600+ch.length*45+1800);
  try{sfx('eter');}catch(e){}}
 {const _lr=lbRender;lbRender=function(){const r=_lr.apply(this,arguments);try{
  const cv=document.querySelector('.lbcv.a');if(cv&&!cv.querySelector('.etmbt')){
