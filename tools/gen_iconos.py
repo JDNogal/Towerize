@@ -29,7 +29,7 @@ for k,v in J('unidades_final.json').items():
     if k in U:a,b=U[k].split('.');add(f"{a}[{json.dumps(b)}]",v)
 # torres de evento
 te=J('torres_evento_final.json')
-for k,e in [('faro','TW.faro'),('guild','TW.guild'),('glut','TW.glut'),('dr_1','TW.dragon'),('pig_straw','PIGU.straw'),('pig_wood','PIGU.wood'),('pig_brick','PIGU.brick'),('pig_mecha','PIGU.mech')]:
+for k,e in [('faro','TW.faro'),('guild','TW.guild'),('glut_t','TW.glut'),('dr_1','TW.dragon'),('pig_straw','PIGU.straw'),('pig_wood','PIGU.wood'),('pig_brick','PIGU.brick'),('pig_mecha','PIGU.mech')]:
     a,b=e.split('.');add(f"{a}[{json.dumps(b)}]",te[k])
     if a=='TW':art.append(('tw',b,None,inner(te[k])))
 for i,k in enumerate(['dr_1','dk1','dk2','dk3']):add(f"DRAG[{i}]",te[k])
@@ -44,7 +44,7 @@ for f in ['estados_final.json','tipos_dano_final.json','estadisticas_final.json'
     for k,v in J(f).items():
         if not k.startswith('_'):KW[k]=inner(v)
 for a,b in {'uhp':'ehp','umr':'amagic','eud':'dmg','eac':'cool','erg':'rng','hlv':'lvl','hrez':'urez','rgn':'regen'}.items():KW[a]=KW[b]
-extra={'emb':inner(J('habilidades_heroes_e2_final.json')['korr_emb'])}
+extra={'emb':inner(J('habilidades_heroes_e2_final.json')['korr_emb']),'mimU':inner(te['glut']),'mimU4':inner(te['glut4'])}
 out="// ==================== v308 · ICONOS DIBUJADOS (estilo B) ====================\n"
 out+="// Generado con tools/gen_iconos.py a partir de src/iconos/*_final.json. No editar a mano.\n"
 out+="// Cada icono recibe un carácter de uso privado (U+E000…) como «ic»: en la interfaz se cambia por su dibujo SVG;\n// en el lienzo (que no admite SVG) se dibuja el emoji de antes.\n"

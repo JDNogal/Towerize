@@ -22,7 +22,7 @@ Object.assign(AB,{
  bspikes:{n:'Muro con pinchos',ranks:[{c:220,d:8},{c:150,d:16}],txt:r=>`Los enemigos frenados por un muro reciben <span class="cd">${r.d}</span> de daño físico por segundo.`},
  bthrow:{n:'Ladrillazo',ranks:[{c:220,a:5,mx:20},{c:150,a:8,mx:35}],txt:r=>`Cada ${THROWCD} s, el cerdito albañil lanza un ladrillo al enemigo más adelantado dentro del alcance de la casa (primero, a los frenados por un muro): poco daño y <span class="cph">−${r.a}</span> de ${kw('brk','armadura rota','')} (hasta −${r.mx}).`},
  // Sede del Gremio
- gcontr:{n:'Contratos lucrativos',ranks:[{c:200,m:.25},{c:140,m:.5},{c:140,m:.75}],txt:r=>`La recompensa por ronda del gremio sube un <span class="gd">+${Math.round(r.m*100)}%</span> y su botín pasa a <span class="gd">+${Math.round((.25+r.m)*100)}%</span> de oro por baja.`},
+ gcontr:{n:'Contratos lucrativos',ranks:[{c:220,m:.25},{c:150,m:.5}],txt:r=>`La recompensa por ronda del gremio sube un <span class="gd">+${Math.round(r.m*100)}%</span> y su botín pasa a <span class="gd">+${Math.round((.25+r.m)*100)}%</span> de oro por baja.`},
  glegend:{n:'Leyenda viva',ranks:[{c:320,m:1.5}],txt:r=>`El Renombre que gana el grupo sube a un <span class="cd">7,5% / 15% / 22,5%</span>, y un aventurero que cae solo pierde la mitad del suyo.`},
  gbanner:{n:'Abanderado',ranks:[{c:320,a:BNRA}],txt:r=>`Se une al grupo un <b>Abanderado</b>: su estandarte da <span class="cph">+${r.a} de armadura</span> y <span class="cmg">+${r.a} de resistencia mágica</span> a tus unidades y a tu héroe a ${cas(BNRR)} de él.`},
  // Mímico glotón
@@ -30,7 +30,7 @@ Object.assign(AB,{
  mbite:{n:'Mordisco voraz',ranks:[{c:220,p:.01},{c:150,p:.02}],txt:r=>`Cada mordisco hace además un <span class="cd">${f(r.p*100)}%</span> de la vida máxima del objetivo como daño (hasta 4× su mordisco): casi nada contra los pequeños, mucho contra élites y jefes.`},
  mbelly:{n:'Estómago sin fondo',req:'mengulf',ranks:[{c:400,n:20},{c:300,n:15}],txt:r=>`Cada <b>${r.n}</b> enemigos que mueren dentro del Mímico, escupe un cofre: eliges una reliquia.`},
  // Dragón anciano
- dscales:{n:'Escamas de obsidiana',ranks:[{c:220,a:15,red:.25},{c:150,a:30,red:.5}],txt:r=>`El dragón gana <span class="cph">+${r.a} de armadura</span> y <span class="cmg">+${r.a} de resistencia mágica</span>, y además recibe un <span class="chp">${Math.round(r.red*100)}%</span> menos de daño.`},
+ dscales:{n:'Escamas de obsidiana',ranks:[{c:220,a:20},{c:150,a:40}],txt:r=>`El dragón gana <span class="cph">+${r.a} de armadura</span> y <span class="cmg">+${r.a} de resistencia mágica</span>.`},
  dbreath:{n:'Aliento abrasador',ranks:[{c:220,L:2,t:1,b:.25},{c:150,L:3,t:2,b:.5}],txt:r=>`La franja de fuego de su llamarada es <span class="ca">${f(r.L)} casillas</span> más larga, dura <span class="cr">${r.t} s</span> más y aplica un <span class="cd">+${Math.round(r.b*100)}%</span> de ${kw('burn','quemadura','')}.`},
  droar:{n:'Rugido',ranks:[{c:320,cd:15,t:1.5}],txt:r=>`Cada <span class="cr">${r.cd} s</span> ruge: los enemigos a ${f(ROARR)} casillas de su bandera quedan ${kw('fear','aterrados','')} ${f(r.t)} s (los jefes, la mitad).`}});
 // al comprar una habilidad de torre de evento
@@ -81,7 +81,6 @@ function guildBanner(t){if(!t.sd||t.sd.some(s=>s.cls==='flagb'))return;const U=T
 // Abanderado y Escamas: armadura y resistencia mágica extra (auraAP suma a la armadura y es toda la resistencia mágica de una unidad)
 {const _a=auraAP;auraAP=function(s){let b=_a.apply(this,arguments);try{let x=0;for(const t of S.list){if(!TW[t.type].guild||!t.sd)continue;const r=abRank(t,'gbanner');if(!r)continue;const q=t.sd.find(o=>o.cls==='flagb'&&o.hp>0);if(q&&Math.hypot(s.x-q.x,s.y-q.y)<=BNRR*K)x=Math.max(x,r.a);}
    if(s.air&&s.tw){const sc=abRank(s.tw,'dscales');if(sc)x+=sc.a;}b+=x;}catch(e){}return b;};}
-UHM.push((s,d,e)=>{if(s&&s.air&&s.tw){const sc=abRank(s.tw,'dscales');if(sc)d*=1-sc.red;}return d;});
 // Contratos lucrativos: recompensa por ronda (el botín por baja se ajusta en update.js con guildLoot)
 const guildLoot=src=>{if(!(src&&src.type&&TW[src.type]&&TW[src.type].guild))return 1;const r=abRank(src,'gcontr');return 1.25+(r?r.m:0);};
 {const _rr=roundRewards;roundRewards=function(){try{for(const t of S.list)if(TW[t.type].guild){const r=abRank(t,'gcontr');if(r)goldEv(Math.round(([10,20,35,50][t.lvl-1]||10)*r.m));}}catch(e){}return _rr.apply(this,arguments);};}
@@ -154,7 +153,7 @@ function dragonAdults(dt){for(const t of S.list){if(!t.fly||!t.flag)continue;con
 
 // filas de la ficha del dragón volador (vida, armadura, reaparición)
 function dragRows(t,sg,src){const sc=t&&abRank(t,'dscales'),a=sc?sc.a:0,s=t&&t.sd&&t.sd[0]&&t.sd[0].air?t.sd[0]:null;
- return R('chp',kst('uhp','Vida',src),s&&s.hp>0&&s.hp<s.max?Math.ceil(s.hp)+' / '+DRHP[sg]:DRHP[sg])+R('cph',kst('aphys','Armadura',src),TW.dragon.unit.ap+a)+(a?R('cmg',kst('umr','Resistencia mágica',src),a)+R('chp','Daño recibido','−'+Math.round(sc.red*100)+'%'):'')+R('cr','Reaparece',DRREZ+' s');}
+ return R('chp',kst('uhp','Vida',src),s&&s.hp>0&&s.hp<s.max?Math.ceil(s.hp)+' / '+DRHP[sg]:DRHP[sg])+R('cph',kst('aphys','Armadura',src),TW.dragon.unit.ap+a)+(a?R('cmg',kst('umr','Resistencia mágica',src),a):'')+R('cr','Reaparece',DRREZ+' s');}
 // habilidades en la ficha de una torre de evento: en partida, con sus botones; en el compendio (Nv Máx), la lista con precios
 function uabSheet(t,k,CL,lvo,pin){if(!UAB[k])return '';
  if(t&&!lvo){if(!uabOk(t))return '';t.ab=t.ab||{};t.acd=t.acd||{};return '<div style="margin-top:8px"><b>Habilidades</b></div>'+abListIds(UAB[k],t,pin);}

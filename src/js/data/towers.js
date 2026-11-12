@@ -244,7 +244,7 @@ const AB={
  // ---- Drones bombarderos (Cañoneros) ----
  escuad:{n:'Escuadrilla',ranks:[{c:0,n:1},{c:0,n:2}],txt:r=>`<b>${2+r.n} drones</b> en vez de 2.`},
  picado:{n:'Bombardeo en picado',ranks:[{c:0,cd:14,m:8},{c:0,cd:10,m:10}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, un dron se lanza en picado contra el grupo de enemigos más grande y estalla: <span class="cd">${r.m}×</span> el daño de una bomba, con el doble de área. Alcanza también a los voladores. La torre reconstruye el dron en 5 s.`},
- metafil:{n:'Metralla afilada',ranks:[{c:0,n:1},{c:0,n:2},{c:0,n:3}],txt:r=>`Las bombas sueltan metralla: cada una aplica <b>${r.n}</b> ${r.n>1?'stacks':'stack'} de ${kw('bleed','sangrado','')} a los enemigos que alcanza.`}};
+ metafil:{n:'Metralla afilada',ranks:[{c:0,n:1},{c:0,n:2}],txt:r=>`Las bombas sueltan metralla: cada una aplica <b>${r.n}</b> ${r.n>1?'stacks':'stack'} de ${kw('bleed','sangrado','')} a los enemigos que alcanza.`}};
 const SPECS={arrow:{
  rapid:{n:'Arqueros Raudos',ic:'🪶',col:'#f0c46a',lv:{dmg:L4D*1.15,cd:.7*.65,range:1.2,area:1.3,hp:L4H,pen:0},ab:['rain','poison','burst'],d:'Disparan mucho más rápido, a costa de algo de daño.'},
  xbow:{n:'Ballesteros',ic:'🎯',col:'#c9783a',lv:{dmg:L4D*2.8,cd:.7*1.4,range:1.2,area:1.3,hp:L4H,pen:15},ab:['charged','pierce','mark'],d:'Disparan más lento, pero con mucho más daño y penetración de armadura.'}},
@@ -253,7 +253,7 @@ cata:{
  ogre:{n:'Ogros Lanzarrocas',ic:'👹',col:'#7e9a5a',lv:{dmg:L4D*.9,cd:.7*.75,range:1.2,area:1.3*.8,hp:L4H,pen:0},ab:['roll','crush','aval'],d:'Lanzan más a menudo. La roca rueda hacia los portales y golpea a cada enemigo (45% del daño). Si pasa por brea ardiendo, quema; si pasa por veneno, envenena.'}},
 cannon:{
  rail:{n:'Cañón de riel',ic:'🔩',col:'#7ad8ff',lv:{dmg:L4D*3,cd:.7*2.2,range:1.2*1.35,area:1.3,hp:L4H,pen:20},rail:1,o:{splash:0,shape:'Línea',areaTxt:'Atraviesa a todos los enemigos de la línea de tiro.',fx:'Atraviesa'},ab:['perfor','recarga','estela'],d:'Carga lenta y mucho alcance. Dispara en línea recta por todo su alcance, en el ángulo que más enemigos atraviesa; pierde un 15% de daño por cada enemigo atravesado.'},
- bomb:{n:'Drones bombarderos',ic:'🛩️',col:'#e8a05a',lv:{dmg:L4D*.34,cd:.7*.75,range:1.2*1.25,area:1.3*.75,hp:L4H,pen:0},custom:1,notgt:1,o:{ground:1,fx:'Drones autónomos'},ab:['escuad','picado','metafil'],d:'La torre ya no dispara: 2 drones vuelan solos por su alcance y sueltan bombas pequeñas y rápidas. Cada dron va a una escuadra distinta, empezando por la más adelantada.'}},
+ bomb:{n:'Drones bombarderos',ic:'🛩️',col:'#e8a05a',lv:{dmg:L4D*.34,cd:.7*2/3,range:1.2*1.25,area:1.3*.75,hp:L4H,pen:0},custom:1,notgt:1,o:{ground:1,fx:'Drones autónomos'},ab:['escuad','picado','metafil'],d:'La torre ya no dispara: 2 drones vuelan solos por su alcance y sueltan bombas pequeñas y rápidas. Cada dron va a una escuadra distinta, empezando por la más adelantada.'}},
 frost:{
  hel:{n:'Hechicero Helado',ic:'🔮',col:'#8fb0ff',lv:{dmg:L4D*1.8,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['frzh','icicle','shatter'],d:'Proyectiles de hielo que pueden congelar, y témpanos que caen del cielo.'},
  vent:{n:'Guardián de la Ventisca',ic:'🌨️',col:'#9fe0ff',lv:{dmg:L4D*.42,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},aura:true,ab:['deep','blizz','bite'],d:'No dispara: emite un aura que ralentiza y daña poco a todos los enemigos dentro.'}},
