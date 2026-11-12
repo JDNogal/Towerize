@@ -1,0 +1,52 @@
+<!doctype html><meta charset="utf-8"><style>
+body{margin:0;background:#14161b;color:#e8e4dc;font:14px system-ui,sans-serif;padding:18px;width:1900px}
+h1{font-size:20px;margin:0 0 4px}.sub{color:#9aa0ad;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.fr{border:3px solid #ff2a2a;border-radius:10px;padding:10px;background:#1d2027}
+.fr h2{font-size:15px;margin:0 0 8px}.fr p.n{color:#c8c2b8;font-size:13px;margin:8px 0 0}
+.map{position:relative;height:430px;border-radius:8px;overflow:hidden;background:radial-gradient(circle at 30% 40%,#3c5a34,#22301e)}
+.map:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(0,0,0,.12) 46px 47px),repeating-linear-gradient(0deg,transparent 0 46px,rgba(0,0,0,.12) 46px 47px)}
+/* pergamino */
+.scroll{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:780px;background:#f3e6cc;color:#3a2412;border-radius:6px;padding:22px 26px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.scroll:before,.scroll:after{content:'';position:absolute;left:-14px;right:-14px;height:18px;background:linear-gradient(#8a5a2e,#5a3a1e);border-radius:9px}
+.scroll:before{top:-9px}.scroll:after{bottom:-9px}
+/* libro */
+.book{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:840px;height:380px;background:#5a3420;border-radius:14px;padding:10px;display:flex;gap:0;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.pg{flex:1;background:#f3e6cc;color:#3a2412;padding:18px 22px;position:relative}.pg.l{border-radius:8px 0 0 8px;box-shadow:inset -14px 0 18px -12px rgba(0,0,0,.35)}.pg.r{border-radius:0 8px 8px 0;box-shadow:inset 14px 0 18px -12px rgba(0,0,0,.35)}
+.img{border:2px solid #b98b5a;border-radius:10px;background:#e8d6b0;display:grid;place-items:center;color:#8a6a40;font-size:12px;overflow:hidden}
+.ti{font:700 19px Georgia,serif;margin:10px 0 4px}.tx{font-size:13px;line-height:1.4;color:#5a3a1e}
+.ops{display:flex;flex-direction:column;gap:9px}
+.op{border:1.5px solid #b98b5a;background:#fbf3e2;border-radius:10px;padding:8px 12px;min-height:44px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center}
+.op b{font-size:14px}.op small{font-size:12px;color:#8a5a2e;margin-top:2px}
+.op.hl{border-color:#c0602a;box-shadow:0 0 0 2px rgba(192,96,42,.3)}
+.k{display:inline-block;font:700 10px system-ui;background:#fff;border:1px solid #6a5a40;border-radius:4px;padding:0 4px;margin-right:6px;color:#333}
+.rw{display:flex;align-items:center;gap:10px;border:1.5px solid #b98b5a;background:#fbf3e2;border-radius:10px;padding:8px 12px}
+.ri{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:2px solid #1b1712}
+.cont{margin-top:10px;align-self:flex-end;background:#c0602a;color:#fff;border-radius:9px;padding:7px 16px;font-weight:700}
+.cap{position:absolute;top:8px;left:10px;font-size:11px;color:#cfe;opacity:.8}
+</style>
+<h1>Eventos · cómo se verían</h1><p class="sub">Bocetos de disposición (el dibujo del evento es un hueco: lo haremos aparte). Cada marco es una propuesta.</p>
+<div class="grid">
+
+<div class="fr"><h2>A · Pergamino (como las ofertas): dibujo a la izquierda, opciones a la derecha</h2><div class="map"><span class="cap">mapa detrás, en pausa</span>
+<div class="scroll" style="display:grid;grid-template-columns:300px 1fr;gap:22px">
+ <div><div class="img" style="height:190px">Dibujo del evento</div><div class="ti">Mercader ambulante</div><div class="tx">Un mercader con un carro lleno de objetos raros te corta el paso. «¿Te interesa algo, viajero?»</div></div>
+ <div class="ops" style="justify-content:center"><div class="op"><b><span class="k">1</span>Comprar una reliquia</b><small>Pagas 150 🪙</small></div><div class="op hl"><b><span class="k">2</span>Robarle</b><small>La próxima oleada trae una Élite extra</small></div><div class="op"><b><span class="k">3</span>Regatear</b><small>El próximo cofre que abras estará vacío</small></div><div class="op"><b><span class="k">4</span>Seguir tu camino</b><small>Sin efecto</small></div></div>
+</div></div><p class="n">Mismo pergamino que las ofertas de torres y piezas: se reconoce como «algo que eliges». Al elegir, se enrolla y se vuelve a abrir con la resolución.</p></div>
+
+<div class="fr"><h2>B · Libro: dibujo y texto en la página izquierda, opciones en la derecha</h2><div class="map"><span class="cap">mapa detrás, en pausa</span>
+<div class="book"><div class="pg l"><div class="img" style="height:200px">Dibujo del evento</div><div class="ti">Mercader ambulante</div><div class="tx">Un mercader con un carro lleno de objetos raros te corta el paso. «¿Te interesa algo, viajero?»</div></div>
+<div class="pg r" style="display:flex;flex-direction:column;justify-content:center"><div class="ops"><div class="op"><b><span class="k">1</span>Comprar una reliquia</b><small>Pagas 150 🪙</small></div><div class="op hl"><b><span class="k">2</span>Robarle</b><small>La próxima oleada trae una Élite extra</small></div><div class="op"><b><span class="k">3</span>Regatear</b><small>El próximo cofre que abras estará vacío</small></div></div></div></div>
+</div><p class="n">Más espacio y más «de cuento». Al elegir, se pasa la página. Pega con el menú, pero el libro ahora es el menú y el compendio: el evento podría parecer otra pantalla del menú.</p></div>
+
+<div class="fr"><h2>C · Resolución en pergamino: dibujo nuevo y texto, recompensas a la derecha</h2><div class="map"><span class="cap">tras elegir «Robarle»</span>
+<div class="scroll" style="display:grid;grid-template-columns:300px 1fr;gap:22px">
+ <div><div class="img" style="height:190px">Dibujo de la resolución</div><div class="ti">Robarle</div><div class="tx">Mientras discute con tus soldados, le quitas una caja del carro. A lo lejos, alguien ha visto la escena…</div></div>
+ <div class="ops" style="justify-content:center"><div style="font-weight:700;color:#8a5a2e;font-size:12px;letter-spacing:.06em">CONSIGUES</div><div class="rw"><span class="ri" style="background:#c89aff">💎</span><div><b>Anillo de vida</b><br><small>Reliquia</small></div></div><div style="font-weight:700;color:#a03020;font-size:12px;letter-spacing:.06em;margin-top:6px">A CAMBIO</div><div class="rw"><span class="ri" style="background:#e0453a">👹</span><div><b>+1 Élite</b><br><small>en la próxima oleada</small></div></div><div class="cont">Continuar</div></div>
+</div></div><p class="n">Lo bueno a un lado, el coste debajo, y un solo botón para seguir. Así cada opción tiene su «final» (estilo Slay the Spire).</p></div>
+
+<div class="fr"><h2>D · Pergamino vertical: dibujo arriba, opciones debajo</h2><div class="map"><span class="cap">mapa detrás, en pausa</span>
+<div class="scroll" style="width:480px;padding:18px 22px">
+ <div class="img" style="height:130px">Dibujo del evento (apaisado)</div><div class="ti" style="margin-top:8px">Mercader ambulante</div><div class="tx" style="margin-bottom:10px">Un mercader con un carro lleno de objetos raros te corta el paso.</div>
+ <div class="ops"><div class="op" style="min-height:38px"><b><span class="k">1</span>Comprar una reliquia</b><small>Pagas 150 🪙</small></div><div class="op" style="min-height:38px"><b><span class="k">2</span>Robarle</b><small>La próxima oleada trae una Élite extra</small></div></div>
+</div></div><p class="n">Cabe mejor en móvil vertical, pero con 3-4 opciones se hace muy alto y el dibujo queda pequeño. Lo veo peor para PC.</p></div>
+</div>
