@@ -26,7 +26,7 @@ if(shots)await p.screenshot({path:shots+'/v287_ficha_corta.png'});
 await p.click('#necard .cpgo');await p.waitForTimeout(700);
 const r4=await p.evaluate(()=>({book:LB.open,tab:CP.tab,sel:CP.sel.en,cardClosed:!NEC.open,evo:document.querySelectorAll('#comp .bkevo').length,how:/Cómo enfrentarlo/.test(document.getElementById('comp').textContent)}));
 if(shots){await p.evaluate(()=>{for(const k of Object.keys(ET))see('en',k);CP.sel.en='vet';renderComp();});await p.waitForTimeout(500);await p.screenshot({path:shots+'/v287_evolucion.png'});}
-const r5=await p.evaluate(()=>{for(const k of Object.keys(ET))see('en',k);CP.tab='mc';CP.sel.mc='burn';renderComp();const c=document.getElementById('comp');return{mc:/Mecánicas/.test(c.textContent),burn:/Quemadura/.test(c.textContent),red:/Reducción/.test(c.textContent),q:c.querySelectorAll('.bti.un').length,uses:c.querySelectorAll('.mecuse').length};});
+const r5=await p.evaluate(()=>{for(const k of Object.keys(ET))see('en',k);see('tw','sala');CP.tab='mc';CP.sel.mc='burn';renderComp();const c=document.getElementById('comp');return{mc:/Mecánicas/.test(c.textContent),burn:/Quemadura/.test(c.textContent),red:/Reducción/.test(c.textContent),q:c.querySelectorAll('.bti.un').length,uses:c.querySelectorAll('.mecuse').length};});
 if(shots){await p.waitForTimeout(400);await p.screenshot({path:shots+'/v287_mecanicas.png'});}
 // desde una ficha de «Lo usan» se salta a la torre
 const want=await p.evaluate(()=>{const u=document.querySelector('#comp .mecuse');if(u){const t=u.dataset.t;u.click();return t;}return null;});await p.waitForTimeout(300);

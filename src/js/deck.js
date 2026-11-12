@@ -31,7 +31,7 @@ function towerPick(k){if(!RL.towo||!RL.towo.includes(k))return;if(S.deck.include
 function towerSkip(){const g=SKIPG[S.skips||0]||0;S.skips=(S.skips||0)+1;if(g)goldEv(g);RL.towo=null;RL.open=false;$('relic').classList.remove('open');S.msg=g?'Has saltado la oferta: +'+g+' 🪙.':'Has saltado la oferta.';ui();}
 const HMX=(()=>{const v=Object.values(HEROES);return{hp:Math.max(...v.map(d=>d.base.hp)),dp:Math.max(...v.map(d=>d.base.dmg/d.base.cd*(d.area?1.3:1))),rg:Math.max(...v.map(d=>d.base.range||.5))};})();
 let PREVIEWING=false;
-function openHero(){if(PREVIEWING)return;closePrim();RL.open=false;RL.hpick=true;RL.hconf=null;let lh=null;try{lh=localStorage.getItem('rt-lasthero');}catch(e){}RL.hsel=RL.hsel&&HEROES[RL.hsel]?RL.hsel:HEROES[lh]?lh:'reinhart';RL.dman={};RL.rman={};const ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];ids.forEach(h=>see('hr',h));LB.step='hero';lbOpen('prep');}
+function openHero(){if(PREVIEWING)return;closePrim();RL.open=false;RL.hpick=true;RL.hconf=null;let lh=null;try{lh=localStorage.getItem('rt-lasthero');}catch(e){}RL.hsel=RL.hsel&&HEROES[RL.hsel]?RL.hsel:HEROES[lh]?lh:'reinhart';RL.dman={};RL.rman={};const ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];if(!HEROES[RL.hsel].lockTxt)see('hr',RL.hsel);LB.step='hero';lbOpen('prep');}
 {let tx=null;addEventListener('touchstart',e=>{if(RL.open&&RL.hpick&&e.target.closest&&e.target.closest('.hcar'))tx=e.touches[0].clientX;else tx=null;},{passive:true});addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>45)heroNav(dx<0?1:-1);},{passive:true});}
 function fitHero(){const el=$('relic'),pk=el&&el.querySelector('.hpk');if(!pk||!RL.hpick||el.clientHeight<200)return;const H=el.clientHeight;pk.style.minHeight=H+'px';
  // la vista previa intenta ocupar ~1/3 de la altura; si no cabe, se reduce y, como último recurso, se oculta
@@ -58,7 +58,7 @@ function heroSheet(id){const D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt
   `<div class="hsec">Reliquia inicial</div><div class="hrl"><span class="ri" style="background:${R.col}">${R.ic}</span><div style="flex:1;min-width:0"><b>${R.n}</b>${rdesc(R.id)}</div></div>`+
   (`<div class="hsec">Mazo inicial</div><div class="hdk2">${(D.deck||[]).map(k=>{const T=TW[k];return `<span data-tip="shop:${k}"><i class="twd" style="background:${T.col}">${twIc(k)}</i>${T.n}</span>`;}).join('')}</div>`)+
   `<details><summary>Ver estadísticas</summary><div class="hst">${heroInfo(id,2)}</div></details>`;}
-function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];const id=RL.hsel,D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;ids.forEach(h=>see('hr',h));
+function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];const id=RL.hsel,D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;if(!HEROES[RL.hsel].lockTxt)see('hr',RL.hsel);
  const bar=(l,v,c)=>`<div class="hbar"><span>${l}</span><span class="bt"><span class="bf" style="width:${Math.round(Math.min(1,v)*100)}%;background:${c}"></span></span></div>`;
  const roster=ids.map(h=>{const L=!!HEROES[h].lockTxt;return `<button class="rt${h===id?' on':''}${L?' lk':''}" data-a="hgo" data-id="${h}" title="${L?'???':HEROES[h].n}">${portrait(h,1,L)}${L?'<span class="lc">🔒</span>':''}</button>`;}).join('');
  const info=lk?`<div class="hnm">???</div><div class="hcl">???</div><div class="hsec">🔒 Héroe bloqueado</div><small class="hds">${HUNL[id]?achLink(HUNL[id]):D.lockTxt}</small>`:
@@ -71,7 +71,7 @@ function renderHeroPickC(){const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hs
  el.innerHTML=`<div class="hpc" style="--hc:${D.col}"><div class="hart${lk?' lk':''} fr${hTier(id)}">${portrait(id,0,1)}</div><div class="hinfo">${info}</div>`+
   `<div class="hbot"><button class="hbk" data-a="menu" data-bk="1">← Menú</button><div class="rost">${roster}</div><button class="hok2" data-a="pickhero" data-id="${lk?'':id}"${lk?' disabled':''}>${lk?'Bloqueado':'Elegir a '+D.n+' ✓'}</button></div></div>`;}
 function renderHeroPickOld(){
- const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];const id=RL.hsel,D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;ids.forEach(h=>see('hr',h));
+ const el=$('relic'),ids=HIDS();if(!ids.includes(RL.hsel))RL.hsel=ids[0];const id=RL.hsel,D=HEROES[id],b=D.base,R=RELIC[D.relic],lk=D.lockTxt;if(!HEROES[RL.hsel].lockTxt)see('hr',RL.hsel);
  const bar=(l,v,c)=>`<div class="hbar"><span>${l}</span><span class="bt"><span class="bf" style="width:${Math.round(Math.min(1,v)*100)}%;background:${c}"></span></span></div>`;
  const anim=RL.hdir?(RL.hdir>0?' slr':' sll'):'';RL.hdir=0;
  el.innerHTML=`<div class="hpk" style="--hc:${D.col}"><div class="hpt"><button class="hback" data-a="menu">← Menú principal</button><b>Elige a tu héroe</b> <small>· te acompaña toda la partida; recibes su reliquia inicial y empiezas con su mazo.</small></div>`+

@@ -21,8 +21,11 @@ const MECUSE={burn:['tw:sala','tw:flame','tw:monk','hr:yrsa'],poison:['tw:poison
  sticky:['tw:cata'],flam:['tw:cata'],wet:['tw:augur'],cursed:['tw:orb'],poly:['tw:orb'],fear:['tw:orb'],mark:['tw:arrow'],prey:['hr:sylvana'],inf:['tw:nano'],lmk:['tw:bunker'],vc:['tw:laser'],
  chain:['tw:tesla'],beam:['tw:orb','tw:laser'],push:['tw:sonic','tw:cannon','tw:wood'],mag:['tw:bunker'],
  dodge:['en:raider'],steal:['en:raider'],pierce:['en:javelin'],curse:['en:warlock'],eheal:['en:shaman'],aura:['en:custodian'],fly:['en:bat','en:harpy','en:griffin'],bres:['en:boss','en:colossus']};
-const mecRefOk=r=>{const[t,k,sp]=r.split(':');if(t==='tw'&&sp){const i=Object.keys(SPECS[k]||{}).indexOf(sp);return seen('tw',k)&&i>=0&&tlvOk(k,4+i);}return t==='hr'?(HEROES[k]&&(seen('hr',k)||!HEROES[k].lockTxt)):seen(t,k);};
-const mecOk=id=>{const u=MECUSE[id];return !u||u.some(mecRefOk);};
+const mecRefOk=r=>{const[t,k,sp]=r.split(':');if(t==='tw'&&sp){const i=Object.keys(SPECS[k]||{}).indexOf(sp);return seen('tw',k)&&i>=0&&tlvOk(k,4+i);}if(k==='*')return (typeof OPT!=='undefined'&&OPT.u_cp)||Object.keys((typeof SEEN!=='undefined'&&SEEN[t])||{}).length>0;return t==='hr'?(HEROES[k]&&seen('hr',k)):seen(t,k);};
+// v308: lo que no tiene dueño concreto se descubre al ver lo primero de su grupo (nada visto = nada en el compendio)
+const MECGRP={'Estados':['tw:*','hr:*'],'Tipos de daño':['tw:*','hr:*'],'Estadísticas de torres':['tw:*'],'Unidades y enemigos':['en:*'],'Héroes':['hr:*'],'Partida':['pc:*']};
+const MECFIX={tphys:['tw:arrow','tw:cata','tw:cannon','tw:bastion','tw:monk','hr:reinhart'],tmagic:['tw:orb','tw:augur','tw:altar','hr:radagast'],telem:['tw:frost','tw:poison','tw:sala','tw:flame','tw:tesla','hr:yrsa'],stk:['tw:*','hr:*']};
+const mecOk=id=>{if(typeof UNLOCK_ALL!=='undefined'&&UNLOCK_ALL||OPT.u_cp)return true;const u=MECUSE[id]||MECFIX[id]||(MECI[id]&&MECGRP[MECI[id].g])||['pc:*'];return u.some(mecRefOk);};
 // «Cómo enfrentarlo»: una o dos frases por enemigo
 const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barren en grupo.',vet:'Más vida y algo de armadura: el daño mágico o elemental rinde más.',champ:'Mucha armadura y cada 25 s un hachazo giratorio: no amontones tus unidades a su alrededor.',
  fast:'Corre mucho y aguanta poco: daño en área o ralentizarlo.',runner:'Muy rápido: ralentízalo o bloquéalo con tus unidades.',raider:'Esquiva a tus soldados y te roba oro si llega: mátalo con torres.',
