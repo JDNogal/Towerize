@@ -44,3 +44,16 @@ body.era2g .cnf{background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%
 #stats .neon,#rtl .neon{filter:drop-shadow(0 0 3px rgba(63,232,255,.7))}
 /* v308 · iconos dibujados (estilo B) */
 .icsv{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.22em;overflow:visible;flex:none}
+/* v308 · especializaciones en la ficha de torre del compendio */
+.bkspx{margin-top:14px;border-top:1px solid var(--pline,#c9b48a);padding-top:10px}
+.bkspl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.bksp{display:flex;align-items:center;gap:10px;padding:6px 10px;border:1.5px solid var(--pline,#c9b48a);border-radius:12px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.bksp:hover{border-color:var(--acc,#c0602a)}
+.bksp.on{border-color:var(--acc,#c0602a);box-shadow:0 0 0 2px rgba(192,96,42,.3)}
+.bksp b{display:block;font-size:.95em}.bksp small{display:block;opacity:.7;font-size:.78em}
+.bkspi{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:2px solid #1b1712;flex:none;overflow:hidden}
+.bkspi .icst,.bkspi .icst svg{width:40px;height:40px;display:block}
+.bkspi.lk{background:var(--paper3,#e2d4b8);color:var(--ink2,#8a7a60);font-weight:700;border-color:var(--pline3,#b9a57e)}
+.bksp.off{cursor:default;opacity:.85}
+.bkspi .icsvg svg{background:none!important;width:40px!important;height:40px!important}
+.icsvg svg{background:none}

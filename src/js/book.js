@@ -47,13 +47,19 @@ function bkSheet(ic,inner,cls){let ttl='',rest=inner;const a='<div class="ttl">'
  rest=rest.replace(/<div class="row([^"]*)"><span>([\s\S]*?)<\/span><span>([\s\S]*?)<\/span><\/div>/g,(m,c,a,b)=>(a+b).replace(/<[^>]+>/g,'').length>22?`<div class="row${c} rw"><span>${a}</span><span>${b}</span></div>`:m);
  return `<div class="bksh">${ic||''}<div class="ttl bksht">${ttl}</div></div><div class="ce bkce bkg${cls?' '+cls:''}">${rest}</div>`;}
 const bkPrevBtn=(a,v,l)=>`<button class="bkgo" data-a="${a}" data-v="${v}">▶ ${l||'Ver en acción'}</button>`;
+// v308: especializaciones de la torre, clicables, debajo de «Ver en acción» (sin spoilers: las no alcanzadas en silueta)
+function bkSpecs(id){const T=TW[id],ks=Object.keys(SPECS[id]||{});if(!ks.length||T.uniq)return'';const sn=CP.lv[id]||1;
+ return `<div class="bkspx"><div class="esec">Especializaciones</div><div class="bkspl">`+ks.map((k,i)=>{const n=4+i,ok=tlvOk(id,n),X=SPECS[id][k];
+  return `<button class="bksp${n===sn?' on':''}${ok?'':' off'}"${ok?` data-a="clvs" data-v="${id}" data-n="${n}"`:''}>`+(ok?`<span class="bkspi" style="background:${X.icbg||(X.o&&X.o.icbg)||T.col}">${icHtml(X.icsvg?{svg:X.icsvg}:X.ic)}</span><span><b>${X.n}</b><small>Nv 4</small></span>`:`<span class="bkspi lk">?</span><span><b>???</b><small>No has alcanzado aún ese nivel</small></span>`)+`</button>`;}).join('')+`</div></div>`;}
 function bkDetail(t,id){
  const sh=(ic,txt)=>`<div class="bkun"><span class="sil bkbig">${ic}</span><h4>???</h4><p>${txt}</p></div>`;
  if(t==='tw'){const T=TW[id];if(!T)return'';
   if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(icOf(T),`Aún no disponible.`)+achLink(a,'',1);}return sh(icOf(T),'Aún no descubierto.');}
-  const bi=`<span class="bkbic bctw" style="background:${T.col}">${icHtml(twIcO(T))}</span>`;
+  const cst=T.uniq?null:cpState(id),SX=cst&&cst.spec?SPECS[id][cst.spec]:null,TT=SX&&SX.icsvg?{...T,icsvg:SX.icsvg,col:SX.icbg||(SX.o&&SX.o.icbg)||T.col,icimg:null}:T;/* v308: con una especialización elegida, su dibujo */
+  const bi=`<span class="bkbic bctw" style="background:${TT.col}">${icHtml(twIcO(TT))}</span>`;
   if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
-  return bkSheet(bi,shopInfo(id,1).replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id);}
+  LVT_NOSPEC=1;let si;try{si=shopInfo(id,1);}finally{LVT_NOSPEC=0;}
+  return bkSheet(bi,si.replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id)+bkSpecs(id);}
  if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;
   return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`,heroInfo(id,1).replace(/<b>[^<]*? /,'<b>'))+bkPrevBtn('chprev',id)+(D.d?'<div class="ddesc">'+D.d+'</div>':'')+`<div class="esec" style="margin-top:12px">Reliquia inicial</div><div class="ce bkce bkg">${relicInfo(D.relic,1)}</div><div class="ce bkce">${heroAbHtml(id)}</div>`;}
  if(t==='pc'){const i=+id,o=PIECES[i];if(!o)return'';if(!seen('pc',o.n))return sh('🧩','Aún no descubierta.');

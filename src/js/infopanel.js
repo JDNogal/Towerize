@@ -202,7 +202,8 @@ function towerInfo(t){
   (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
-function lvTabs(id,sn){let h='';for(let n=1;n<=nStates(id);n++){const ok=tlvOk(id,n);if(!ok)continue;/* sin spoilers: solo los niveles alcanzados */const X=n>=4?SPECS[id][Object.keys(SPECS[id])[n-4]]:null;
+let LVT_NOSPEC=0;/* v308: en el compendio las especializaciones van en su propia sección, debajo */
+function lvTabs(id,sn){let h='';for(let n=1;n<=nStates(id);n++){const ok=tlvOk(id,n);if(!ok||(LVT_NOSPEC&&n>=4))continue;/* sin spoilers: solo los niveles alcanzados */const X=n>=4?SPECS[id][Object.keys(SPECS[id])[n-4]]:null;
   h+=`<button class="stbtn lvbtn lvt${n===sn?' on':''}${ok?'':' off'}" data-a="clvs" data-v="${id}" data-n="${n}" title="${ok?(X?'Nv 4 · '+X.n:'Nv '+n):'No has alcanzado aún ese nivel'}">${galSvg(Math.min(n,4),0,.75,1)}${X?`<span class="lvx">${icOf(X)}</span>`:''}</button>`;}return `<span class="lvtabs">${h}</span>`;}
 function shopInfo(id,quiet){
  const T=TW[id],src='shop:'+id,st=quiet?cpState(id):{lv:1,spec:null},lv=st.lv,L=lvMods(id,lv,st.spec),X=st.spec?SPECS[id][st.spec]:T,

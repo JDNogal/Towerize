@@ -7,7 +7,7 @@ await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.disp
 const cur=()=>p.evaluate(()=>CP.lv.arrow||1);
 const tab=n=>p.evaluate(n=>{const b=document.querySelector(`#comp .bkp.r [data-a="clvs"][data-n="${n}"]`);if(b)b.click();return !!b;},n);
 const errTxt=()=>p.evaluate(()=>{const e=document.getElementById('errb');return e&&e.classList.contains('on')?e.textContent:'';});
-const tabsN=()=>p.evaluate(()=>document.querySelectorAll('#comp .bkp.r .lvt').length);
+const tabsN=()=>p.evaluate(()=>document.querySelectorAll('#comp .bkp.r .lvt, #comp .bkp.r .bksp:not(.off)').length);
 // 1. torre nunca subida: solo sale la pestaña de Nv 1
 await p.evaluate(()=>{toggleComp(true);CP.tab='tw';CP.sel.tw='arrow';CP.pageR=true;CP.lv={};renderComp();});await p.waitForTimeout(400);
 ck((await tabsN())===1,'salen niveles no alcanzados: '+(await tabsN()));ck(!(await tab(2)),'hay pestaña de Nv 2 sin alcanzarlo');ck((await cur())===1,'pasa de Nv 1 sin haberlo alcanzado');

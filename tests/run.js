@@ -22,7 +22,7 @@ const T=[
  ['fallos_estudio.js','Interferencia y empujones a jefes (jsdom)'],
  ['portal_union.js','Portal en medio solo al unir dos extremos con una pieza (jsdom)'],
  ['logros_y_tutorial.js','Logros, tutorial y pistas (jsdom)'],
- ['pausa_y_estadisticas.js','Pausa, estadísticas y bocadillo de error, en PC y móvil'],
+ ['pausa_y_estadisticas.js','Pausa, estadísticas y bocadillo de error, en PC y móvil',null,2],
  ['anillo_construccion.js','Anillo de construcción y compra marcada 🔖'],
  ['heroe_en_mapa.js','Héroe en el mapa: tocarlo, moverlo, bocadillo, avisos',['pc','m']],
  ['logros_ocultos.js','Logros ocultos sin spoilers'],
