@@ -52,6 +52,7 @@ out+="const ICSV={},ICFB={};let ICN=0xE000;\n"
 out+="const icReg=(o,svg)=>{if(!o)return;const ch=String.fromCodePoint(ICN++);ICFB[ch]=o.ic||'';ICSV[ch]=svg;o.ic=ch;return ch;};\n"
 out+="const ICKW="+json.dumps(KW,ensure_ascii=False)+";\n"
 out+="const ICX="+json.dumps(extra,ensure_ascii=False)+";\n"
+out+="const ICBG={\"altar.altar\":\"#ece0ff\"};\n"
 out+="const ICART="+json.dumps(art,ensure_ascii=False)+";\n"
 out+="try{\n"
 for e,s in maps: out+=f"icReg(typeof {e.split('[')[0]}!=='undefined'?{e}:null,{json.dumps(s,ensure_ascii=False)});\n"
@@ -78,7 +79,7 @@ if(typeof CanvasRenderingContext2D!=='undefined'){const ft2=CanvasRenderingConte
 // terrestre y volador (esquina de las cartas de torre y fichas)
 var ICTG=icReg({ic:'🥾'},ICKW.ground);var ICTA=icReg({ic:'🪽'},ICKW.fly);
 // dibujo de las torres (mapa, cartas y fichas): base y especializaciones de Nv 4
-for(const[kind,t,sp,svg]of ICART){const full='<svg viewBox=\"-4 -4 56 56\">'+svg+'</svg>';try{if(kind==='tw'&&TW[t])TW[t].icsvg=full;else if(kind==='spec'&&SPECS[t]&&SPECS[t][sp]){const X=SPECS[t][sp];X.o=Object.assign({},X.o||{},{icsvg:full});X.icsvg=full;}}catch(e){}}
+for(const[kind,t,sp,svg]of ICART){const full='<svg viewBox=\"-4 -4 56 56\">'+svg+'</svg>';try{if(kind==='tw'&&TW[t]){TW[t].icsvg=full;delete TW[t].icimg;}else if(kind==='spec'&&SPECS[t]&&SPECS[t][sp]){const X=SPECS[t][sp];const ob=ICBG[t+'.'+sp]?{icsvg:full,icbg:ICBG[t+'.'+sp]}:{icsvg:full};X.o=Object.assign({},X.o||{},ob);X.icsvg=full;}}catch(e){}}
 // Korr: nombres nuevos
 if(typeof HAB!=='undefined'&&HAB.korr){HAB.korr.b.n='Señuelo psiónico';HAB.korr.p8.n='Represalia';}
 """

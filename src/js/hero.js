@@ -69,7 +69,7 @@ const enIc=k=>EIC[k]||(ET[k]&&ET[k].ic)||null;
 const ENC={};function enIcDraw(c,k,x,y,sz){const ic=enIc(k);if(!ic)return;const s=Math.max(8,Math.round(sz*2)),key=k+':'+s;let cv=ENC[key];
  if(!cv){try{cv=document.createElement('canvas');cv.width=cv.height=s*2;const g=cv.getContext('2d');if(!g||!g.fillText)throw 0;icDraw(g,ic,s,s,s*1.45);ENC[key]=cv;}catch(e){ENC[key]=cv=null;}}
  if(cv&&c.drawImage)try{c.drawImage(cv,x-sz,y-sz,sz*2,sz*2);return;}catch(e){}icDraw(c,ic,x,y,sz*1.45);}
-const twIcO=X=>X&&X.icimg?{img:X.icimg}:X&&X.icsvg?{svg:X.icsvg,bg:X.col}:X&&X.icb?{f:X.ic,b:X.icb}:X.ic,twIc=k=>icHtml(twIcO(TW[k])),icOf=X=>X?icHtml(twIcO(X)):''/* v307: icono de cualquier ficha de torre (el dibujado si lo tiene; si no, el emoji) */;
+const twIcO=X=>X&&X.icimg?{img:X.icimg}:X&&X.icsvg?{svg:X.icsvg,bg:X.icbg||X.col}:X&&X.icb?{f:X.ic,b:X.icb}:X.ic,twIc=k=>icHtml(twIcO(TW[k])),icOf=X=>X?icHtml(twIcO(X)):''/* v307: icono de cualquier ficha de torre (el dibujado si lo tiene; si no, el emoji) */;
 // icono de cada unidad (por torre y especialización): círculo con su icono, como el héroe
 const UIC={bastion:{f:'🗡️',b:'🛡️',fs:.9},monk:'🧘',guild:{b:'🪙',f:'🗡️',fs:.85,fr:180},dragon:'🐲',pal:'⚜️',ass:'🗡️',fist:'🥋',drunk:'🍶'};
 const unitIc=t=>UIC[t.spec]||UIC[t.type]||null;
