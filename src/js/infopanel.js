@@ -56,7 +56,7 @@ function kwHtml0(id,src){
   if(id==='hblk')return '<b>Corpulencia</b><small>Capacidad de bloqueo. Una unidad con corpulencia 2 puede detener ella sola a un enemigo que necesita 2 unidades, o a <b>dos enemigos</b> que necesitan 1 a la vez. Ataca a uno cada vez, pero todos los que bloquea le golpean. Los héroes cuerpo a cuerpo tienen 2; los que atacan a distancia, 1.</small>';
   if(id==='mark')return '<b>Marcado</b><small>Un enemigo marcado recibe críticos con más probabilidad de tus torres, tus unidades y tus héroes mientras dure la marca. Se ve con el icono 🎯 sobre el enemigo.</small>';
   if(id==='umr')return '<b class="cmg">Resistencia mágica</b><small>Reduce el daño mágico que recibe una unidad aliada (soldado o héroe): resistencia ÷ (resistencia + '+ARM_K+'). La necesitas contra los enemigos que pegan con daño mágico, que ignoran la armadura.</small>';
-  if(id==='chill')return `<b>Hipotermia</b> · daño elemental`+R('cd','Daño de cada stack',CHILLD+' por segundo si está parado')+R('','Duración de cada stack',CHILLT+' s')+'<small>Lo contrario del sangrado: cada stack hace daño elemental según lo frenado que esté el enemigo. <b>Parado</b> (congelado, aturdido, enredado o bloqueado por una unidad): daño completo. <b>Ralentizado</b>: la parte proporcional (con un 50% de ralentización, la mitad). Moviéndose a velocidad normal: nada. Los stacks se acumulan y caducan por separado.</small>';
+  if(id==='chill')return `<b>Hipotermia</b> · daño elemental`+R('cd','Daño de cada stack',CHILLD+' por segundo si está parado')+R('','Duración de cada stack',CHILLT+' s')+'<small>Lo contrario del sangrado: cada stack hace daño elemental según lo frenado que esté el enemigo. <b>Parado</b> (congelado, aturdido, inmovilizado o bloqueado por una unidad): daño completo. <b>Ralentizado</b>: la parte proporcional (con un 50% de ralentización, la mitad). Moviéndose a velocidad normal: nada. Los stacks se acumulan y caducan por separado.</small>';
   if(id==='bleed')return `<b>Sangrado</b> · daño elemental`+R('cd','Daño de cada stack',BLEEDD+' por casilla recorrida')+R('','Duración de cada stack',BLEEDT+' s')+'<small>Cada stack hace daño elemental (ignora la armadura) por cada casilla que recorre el enemigo. Si está quieto, bloqueado o congelado, no sufre nada. Los stacks se acumulan y caducan por separado.</small>';
   if(id==='call')return '<b>Vástagos</b><small>Cada vez que el Coloso pierde un 25% de su vida, un trozo de él se desprende y se convierte en 2 Mini-élites. Solo aparece en la ronda 30 si eliges 30 rondas.</small>';
   if(id==='howl')return '<b>Aullido</b><small>Cuando el Lobo gris baja de la mitad de su vida, aúlla: los Lobatos a 3 casillas o menos corren un 20% más rápido durante 3 s. Solo una vez.</small>';
@@ -65,7 +65,7 @@ function kwHtml0(id,src){
   if(id==='push')return '<b>Empuje</b><small>Distancia que el golpe hace retroceder al enemigo por el camino. Los jefes retroceden la mitad.</small>';
   if(id==='bwall')return '<b>Muro</b><small>Un muro que corta el camino de lado a lado, como una barricada: detiene a los enemigos que llegan a él mientras dura. Para a todos, incluidos los que esquivan a tus unidades.</small>';
   if(id==='logk')return '<b>Tronco rodante</b><small>El tronco cae en el camino delante del enemigo más avanzado y rueda hacia atrás, hacia los portales, siguiendo las curvas. Ocupa todo el ancho del camino: golpea una vez a cada enemigo con el que se cruza y lo empuja.</small>';
-  if(id==='root')return '<b>Enredo</b><small>El enemigo enredado no puede moverse, pero sigue atacando a las unidades que tenga al alcance. Los jefes solo quedan enredados los 2 primeros segundos de la hiedra.</small>';
+  if(id==='root')return '<b>Inmovilizado</b><small>El enemigo inmovilizado no puede moverse, pero sigue atacando a las unidades que tenga al alcance. Los jefes solo quedan inmovilizados los 2 primeros segundos de la hiedra.</small>';
   if(id==='prey')return '<b>Presa</b><small>Un enemigo marcado como presa recibe un <span class="cd">15% más de daño</span> de todas las fuentes durante 4 s.</small>';
   if(id==='mheal')return '<b>Curación</b><small>Cada 4 s, cada monje cura un 10% de su vida máxima a la unidad aliada más herida a 2 casillas o menos: otros monjes, soldados de cualquier torre o tu héroe.</small>';
   if(id==='mhit')return '<b>Golpe espiritual</b><small>Cada golpe de un monje añade una parte de su daño como <span class="cmg">daño mágico</span> (20% de base). Así hace daño aunque el enemigo tenga mucha armadura.</small>';
@@ -187,8 +187,8 @@ function tgtRow0(t,src,pinned){
  return `<div class="tgt"><div>${kst('tgt','Objetivo',src)}</div><select class="tsel" data-a="tgt" data-id="${t.id}">`+Object.keys(TGT).map(k=>`<option value="${k}"${t.mode===k?' selected':''}>${TGT[k].n}</option>`).join('')+
   `</select><div class="tcp"><button data-a="tgtall" data-id="${t.id}">Copiar a todas las torres del mismo tipo</button><button class="${(S.dtg[t.type]||'core')===t.mode?'on':''}" data-a="tgtdef" data-id="${t.id}">Copiar a futuras torres creadas del mismo tipo</button></div></div>`;
 }
-function unitRows(T,src,t,pinned,hpm,uap){const U=T.unit,ap=U.ap+(uap||0),mr=t&&abRank(t,'sacred')?abRank(t,'sacred').a:0;
- return {u:1,n:R('',kst('usol','Nº de unidades',src),U.n),life:R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+(mr?R('cmg',kst('umr','Resistencia mágica',src),armTxt(mr)):'')+R('cr',kst('urez','Reaparición',src),U.rez+' s'),rng:U.range?R('cg',kst('rng','Rango',src),cas(U.range)):'',obj:objRow(!U.range,src),tail:
+function unitRows(T,src,t,pinned,hpm,uap,uspd){const U=T.unit,ap=U.ap+(uap||0),mr=t&&abRank(t,'sacred')?abRank(t,'sacred').a:0;
+ return {u:1,n:R('',kst('usol','Nº de unidades',src),U.n),life:R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+(mr?R('cmg',kst('umr','Resistencia mágica',src),armTxt(mr)):'')+R('cg',kst('espd','Velocidad',src),cas(Math.round(U.spd/K*(uspd||1)*10)/10)+'/s')+R('cr',kst('urez','Reaparición',src),U.rez+' s'),rng:U.range?R('cg',kst('rng','Rango',src),cas(U.range)):'',obj:objRow(!U.range,src),tail:
   (t?(pinned?`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover bandera</button></div>`:'<small>Haz clic en la torre para mover su bandera.</small>'):'')};}
 // ficha de una torre construida: solo información. Mejorar, especializar, comprar habilidades y vender se hacen en el menú de botones de la torre.
 // En Nv 4 se listan sus habilidades con el rango que tiene (el detalle, en el bocadillo de cada una).
@@ -198,7 +198,7 @@ function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
  const X=tinfo(t);
- return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap):tgtRow(t,src,PR.pinned&&PR.key===src))+
+ return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(s,twm(t.type,t.spec),src,T.unit?unitRows(T,src,t,PR.pinned&&PR.key===src,lvMods(t.type,t.lvl,t.spec).hp,X.uap,X.uspd):tgtRow(t,src,PR.pinned&&PR.key===src))+
   (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
@@ -209,7 +209,7 @@ function shopInfo(id,quiet){
  const T=TW[id],src='shop:'+id,st=quiet?cpState(id):{lv:1,spec:null},lv=st.lv,L=lvMods(id,lv,st.spec),X=st.spec?SPECS[id][st.spec]:T,
   s={dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:(T.splash||T.pr||0)*L.area,pen:L.pen||0},sn=CP.lv[id]||1;
  const lb=quiet?lvTabs(id,sn):'';
- return `<div class="ttl">${lb}<b>${X.n}</b> · ${icOf(X)}<br><span class="gd">${(quiet&&lv>1?kst('upc','Mejora '+upCost(T,lv)+' 🪙',src):kst('cost','Coste '+T.cost+' 🪙',src))}</span></div>`+rows(s,twm(id,st.spec),src,T.unit?unitRows(T,src,null,false,L.hp,X.uap):(quiet?'':R('',kst('tgt','Objetivo',src),TGT[S.dtg[id]||'core'].n)))+(st.spec?'<div style="margin-top:6px"><b>Habilidades</b></div>'+abList(id,st.spec,null):'')+(quiet?'':'<small>Valores base, sin bufos de casilla.</small>')+(T.unit?'':dpsRow(s,T,src));
+ return `<div class="ttl">${lb}<b>${X.n}</b> · ${icOf(X)}<br><span class="gd">${(quiet&&lv>1?kst('upc','Mejora '+upCost(T,lv)+' 🪙',src):kst('cost','Coste '+T.cost+' 🪙',src))}</span></div>`+rows(s,twm(id,st.spec),src,T.unit?unitRows(T,src,null,false,L.hp,X.uap,X.uspd):(quiet?'':R('',kst('tgt','Objetivo',src),TGT[S.dtg[id]||'core'].n)))+(st.spec?'<div style="margin-top:6px"><b>Habilidades</b></div>'+abList(id,st.spec,null):'')+(quiet?'':'<small>Valores base, sin bufos de casilla.</small>')+(T.unit?'':dpsRow(s,T,src));
 }
 
 // texto del bonus de una casilla con los multiplicadores que están activos ahora (valores reales: el jugador no tiene que calcular)
@@ -313,7 +313,7 @@ function openKw(a,pl){
 // ---- palabras de estado escritas como texto: se convierten solas en palabras clave (con su color y su tooltip) ----
 const AKW=[['poison','veneno|venenos|envenenad[oa]s?|envenena|envenenar'],['burn','quemaduras?|quemad[oa]s?'],['chill','hipotermia'],
  ['freeze','congela\\p{L}*'],['slow','ralentiza\\p{L}*'],['stun','aturd\\p{L}*'],['bleed','sangrado'],['ez','electrizad[oa]s?'],['wet','mojad[oa]s?'],
- ['root','enredad[oa]s?|enredo'],['fear','aterrad[oa]s?'],['cursed','maldit[oa]s?'],['sticky','pegajos[oa]s?'],['flam','inflamables?'],['poly','transformad[oa]s?'],['brk','armadura rota']];
+ ['root','inmovilizad[oa]s?|inmoviliza\\p{L}*'],['fear','aterrad[oa]s?'],['cursed','maldit[oa]s?'],['sticky','pegajos[oa]s?'],['flam','inflamables?'],['poly','transformad[oa]s?'],['brk','armadura rota']];
 const AKWR=new RegExp('(?<!\\p{L})('+AKW.map(a=>a[1]).join('|')+')(?!\\p{L})','giu'),AKWI=AKW.map(([id,r])=>[id,new RegExp('^(?:'+r+')$','iu')]);
 const AKWC='#tip,#side,#comp,#relic,.kpanel,#hint,#apan,#endscr';
 function akwRun(root){

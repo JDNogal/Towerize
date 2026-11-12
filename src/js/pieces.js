@@ -75,7 +75,7 @@ function heroInfo(id,quiet){
   R('cd',kst('hdmg','Daño',src)+(D.ranged?' ('+kst('hmel','Melee',src)+')':''),f(x.dmg)+(D.ranged?` (${f(x.dmg*HMELEE)})`:''))+R(DT[D.dt||'phys'].cls,kst('dtype','Tipo de daño',src),DT[D.dt||'phys'].n)+(D.area?R('ca',kst('harea','Área',src),cas(D.area)+' de radio'):'')+R('ccl',kst('hcd','Enfriamiento',src),f(x.cd)+' s')+objRow(!D.ranged,src)+
   (D.ranged?R('cg',kst('hrng','Rango',src),cas(D.base.range)):'')+
   (HFX[id]?R('cf','Efectos',HFX[id](src)):'')+R('',kst('hblk','Corpulencia',src),D.w>1?'Bloquea hasta '+D.w:'1')+
-  R('cg','Velocidad',cas(D.spd)+'/s')+`<small style="margin:0 0 2px">Fuera de combate se mueve ${HOOC} veces más rápido.</small>`+
+  R('cg',kst('espd','Velocidad',src),cas(D.spd)+'/s')+`<small style="margin:0 0 2px">Fuera de combate se mueve un ${Math.round((HOOC-1)*100)}% más rápido.</small>`+
   R('cr',kst('hrez','Reaparición',src),x.rez+' s')+
   (H?R('cf',kst('hxp','Experiencia',src),H.lvl>=HLMAX?'Nivel máximo':Math.floor(H.xp)+' / '+xpNeed(H.lvl+1)):quiet===1?R('cf',kst('hxp','Experiencia por nivel',src),xpNeed(2)+' → '+xpNeed(10)):'')+
   (H&&q&&q.hp<=0?`<small class="cr">Caído: vuelve en ${Math.ceil(q.rt)} s.</small>`:'')+

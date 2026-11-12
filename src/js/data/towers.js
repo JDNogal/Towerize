@@ -32,7 +32,7 @@ cannon:{n:'Cañoneros',ic:'💣',dt:'phys',era:2,cost:90,range:2.6,dmg:13,rate:.
 frost:{n:'Cryomago',ic:'🧊',dt:'elem',cost:70,range:2.4,dmg:3,rate:1.5,ps:9,slow:.5,col:'#6cc5ff',l:'H',fx:'Ralentiza 50% (1,5 s)'},
 laser:{n:'Láser de arco',ic:'⚡',dt:'elem',era:2,e2b:1,cost:110,range:2.8,dmg:2.6,rate:8,beam:1,arc:1,col:'#ffe24a',l:'L',fx:'Arco eléctrico continuo'},
 bunker:{n:'Búnker',ic:'🏚️',dt:'phys',era:2,e2b:1,cost:85,range:2.6,dmg:4.2,rate:5,ps:40,mag:30,reload:1.8,ramp:.6,col:'#9aa07a',l:'K',fx:'Cargador: la cadencia sube mientras dispara'},
-robots:{n:'Robots',ic:'🤖',dt:'phys',era:2,e2b:1,cost:90,range:2.5,dmg:6.5,rate:1,unit:{n:3,hp:58,ap:15,rez:9,spd:2},col:'#8aa0b8',l:'R',fx:'Ninguno'},
+robots:{n:'Robots',ic:'🤖',dt:'phys',era:2,e2b:1,cost:90,range:2.5,dmg:6.5,rate:1,unit:{n:3,hp:58,ap:15,rez:9,spd:1.8},col:'#8aa0b8',l:'R',fx:'Ninguno'},
 nano:{n:'Enjambre de nanitos',ic:'🫧',dt:'magic',era:2,e2b:1,cost:105,range:2.6,dmg:3.6,rate:4,swarm:1,col:'#8fb4ff',l:'E',fx:'Enjambre que persigue a los enemigos'},
 altar:{n:'Altar de runas',ic:'🪬',dt:'magic',cost:90,range:2.6,dmg:0,rate:0,support:1,bufo:1,col:'#c89aff',l:'A',fx:'Bufos temporales a las torres cercanas'},
 dron:{n:'Dron de mantenimiento',ic:'🛸',dt:'phys',era:2,cost:95,range:3,dmg:0,rate:0,support:1,bufo:1,col:'#e8b04a',l:'D',fx:'Afina la puntería de las torres cercanas'},
@@ -46,7 +46,7 @@ wood:{n:'Casa de madera',ic:'🪵',dt:'phys',cost:0,range:3,dmg:5,rate:.5,col:'#
 brick:{n:'Casa de ladrillo',ic:'🧱',dt:'phys',cost:0,range:3,dmg:0,rate:1/12,col:'#c0563a',l:'L',fx:'Muro',uniq:1,pig:1,wall:1,upc:[0,0,40,70,120],ev:'pigs'},
 glut:{n:'Mímico glotón',ic:'🧰',dt:'phys',cost:0,range:1.6,dmg:16,rate:.9,col:'#8a5626',l:'X',fx:'Ninguno',uniq:1,glut:1,ev:'chest'},
 bastion:{n:'Baluarte',ic:'🛡️',dt:'phys',cost:80,range:2.5,dmg:5.5,rate:1,unit:{n:3,hp:48,ap:10,rez:8,spd:2},col:'#5b8def',l:'B',fx:'Ninguno'},
-monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:5,rate:1,unit:{n:2,hp:42,ap:0,rez:8,spd:2},col:'#c9785c',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
+monk:{n:'Monasterio',ic:'🛕',dt:'phys',cost:90,range:2.5,dmg:5,rate:1,unit:{n:2,hp:42,ap:0,rez:8,spd:2.4},col:'#c9785c',l:'O',fx:'Curación',monk:1,mhit:.2,mheal:{cd:4,p:.1}},
 tesla:{n:'Tesla',ic:'🌩️',dt:'elem',era:3,cost:100,range:2.4,dmg:7,rate:1.5,zap:1,chain:{n:3,f:.75},col:'#f4d84a',l:'T',fx:'Rebote'},
  augur:{n:'Augur Voltaico',ic:'👁️',icb:'⚡',dt:'elem',augur:1,cost:100,range:2.6,dmg:12,rate:.8,splash:.9,shape:'Rayo del cielo',areaTxt:'El rayo cae sobre el objetivo y alcanza a los enemigos de alrededor.',col:'#8fd0ff',l:'U',fx:'Ninguno'},
 flame:{n:'Lanzallamas',ic:'🔥',dt:'elem',era:2,cost:110,range:2.2,dmg:.45,rate:4,burn:1,cone:60,shape:'Cono',areaTxt:'Todos los enemigos dentro del cono reciben los stacks.',col:'#ff6a2e',l:'Z',fx:'Quemadura'},
@@ -175,7 +175,7 @@ const AB={
  magz:{n:'Cargador ampliado',ranks:[{c:30,n:15},{c:35,n:30},{c:40,n:50}],txt:r=>`El ${kw('mag','cargador','')} tiene <b>+${r.n} balas</b>.`},
  expan:{n:'Balas expansivas',ranks:[{c:30,p:.1},{c:35,p:.15},{c:40,p:.2}],txt:r=>`Cada bala tiene un <span class="cc">${Math.round(r.p*100)}%</span> de aplicar 1 stack de ${kw('bleed','sangrado','')}.`},
  weak:{n:'Punto débil',ranks:[{c:35,m:.5},{c:40,m:1},{c:45,m:1.5}],txt:r=>`Los ${kw('crit','críticos','')} hacen <span class="cc">×${f(2+r.m)}</span> en vez de ×2.`},
- lmark:{n:'Marcador láser',ranks:[{c:40,m:.15},{c:50,m:.25}],txt:r=>`La torre apunta con un láser visible: su objetivo queda ${kw('lmk','marcado con láser','')} y recibe un <span class="cd">+${Math.round(r.m*100)}%</span> de daño de todas tus torres y unidades.`},
+ lmark:{n:'Marcador láser',ranks:[{c:40,v:2.5},{c:50,v:5}],txt:r=>`La torre apunta con un láser visible: su objetivo queda ${kw('lmk','fijado','')} y cada golpe de tus torres y unidades le hace <span class="cd">+${f(r.v)}</span> de daño plano. No se acumula.`},
  blink:{n:'Sin pestañear',ranks:[{c:45,p:1}],txt:r=>`Si un disparo mata a su objetivo, el siguiente disparo sale <b>al instante</b>.`},
  // ---- era 2 · Robots ----
  drill:{n:'¡Giga Taladro!',ranks:[{c:45,cd:20,d:4,m:2},{c:55,cd:15,d:6,m:2.5}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, si hay enemigos, el mecha carga desde su bandera <span class="ca">${r.d} casillas</span> hacia los portales con un taladro que ocupa todo el carril: <span class="cd">${r.m}×</span> su daño a todo lo que atraviesa y los ${kw('push','empuja','')} media casilla.`},
@@ -268,9 +268,9 @@ poison:{
  pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3*.85,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},
 monk:{
  fist:{n:'Monjes de Batalla',ic:'🥋',col:'#e07a3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2,area:1.3,hp:L4H*1.1,pen:0},ab:['chi','fists','counter'],d:'Monjes élficos que pelean con más daño y más daño mágico. Siguen curando al grupo.'},
- drunk:{n:'Maestros Ebrios',ic:'🍶',col:'#b07ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2,area:1.3,hp:L4H*1.4,pen:0},o:{noheal:1},ab:['gourd','stagger','fireb'],d:'Beben de su calabaza: se curan solos, esquivan y escupen fuego. Ya no curan al grupo.'}},
+ drunk:{n:'Maestros Ebrios',ic:'🍶',col:'#b07ad0',lv:{dmg:L4D*1.3,cd:.7,range:1.2,area:1.3,hp:L4H*1.4,pen:0},o:{noheal:1},uspd:.85,ab:['gourd','stagger','fireb'],d:'Beben de su calabaza: se curan solos, esquivan y escupen fuego. Ya no curan al grupo.'}},
 bastion:{
- pal:{n:'Paladines',ic:'⚜️',col:'#f0d36a',lv:{dmg:L4D*.7,cd:.7,range:1.2,area:1.3,hp:L4H*1.6,pen:0},uap:15,ab:['heal','wall','sacred'],d:'Soldados con más vida y armadura y menos daño. Se curan y bloquean mejor.'},
+ pal:{n:'Paladines',ic:'⚜️',col:'#f0d36a',lv:{dmg:L4D*.7,cd:.7,range:1.2,area:1.3,hp:L4H*1.6,pen:0},uap:15,uspd:.8,ab:['heal','wall','sacred'],d:'Soldados con más vida y armadura y menos daño. Se curan y bloquean mejor.'},
  ass:{n:'Asesinos',ic:'🗡️',col:'#9a4bd6',lv:{dmg:L4D*1.6,cd:.7*.6,range:1.2,area:1.3,hp:L4H*.6,pen:0},uspd:1.5,ab:['dodge','cut','back'],d:'Soldados rápidos y frágiles que golpean mucho. Esquivan y provocan sangrado.'}},
 tesla:{
  cad:{n:'Cadena',ic:'🔗',col:'#fff08a',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:{n:5,f:.8}},ab:['cond','disch','storm'],d:'El rayo salta hasta 5 veces entre enemigos, con un 20% menos de daño por salto. Pensada para hordas.'},
@@ -298,8 +298,8 @@ const lvMods=(type,lv,spec)=>lv>=4&&TW[type].uniq?{dmg:1.8*1.2,cd:.7,range:1.2,a
 const twm=(k,sp)=>{const T=TW[k];if(!sp)return T;const X=SPECS[k][sp];return{...T,...(X.dt?{dt:X.dt}:{}),...(X.o||{})};};
 const DRAG=[{n:'Huevo de dragón',ic:'🥚',col:'#d9c9a8'},{n:'Dragón bebé',ic:'🐲',col:'#d0603a'},{n:'Dragón adulto',ic:'🐉',col:'#b8402a'},{n:'Dragón anciano',ic:'👑',col:'#8a2a1a'}];
 const DRGAT=[0,3,6,10],DRGST=r=>r>=10?3:r>=6?2:r>=3?1:0,DBRCD=8,DBRN=8;
-const PIGU={brick:{n:'Cerdito albañil',ic:'🐖',col:'#c0563a',hp:290,ap:40,dmg:6,rate:1,d:'Pelea cuerpo a cuerpo. Hace poco daño, pero tiene mucha vida y armadura.'},
- wood:{n:'Cerdito leñador',ic:'🐗',col:'#a8743a',hp:200,ap:20,dmg:14,rate:.9,push:.6,d:'Cuerpo a cuerpo con hacha: más daño que el albañil, y cada 3 golpes empuja al enemigo.'},
- straw:{n:'Cerdito espantapájaros',ic:'🐽',col:'#e8cf6a',hp:120,ap:0,dmg:10,rate:1,rng:1,range:3,slow:.3,slowt:2,d:'Lanza paja desde lejos: daña en un área pequeña y ralentiza un 30%. Si le alcanzan, bloquea y pega a mitad de daño.'},
- mech:{n:'Mecha Cerdito',ic:'🤖',col:'#d08a5a',hp:700,ap:50,dmg:20,rate:.8,st:30}};
+const PIGU={brick:{n:'Cerdito albañil',ic:'🐖',col:'#c0563a',hp:290,ap:40,dmg:6,rate:1,spd:1.5,d:'Pelea cuerpo a cuerpo. Hace poco daño, pero tiene mucha vida y armadura.'},
+ wood:{n:'Cerdito leñador',ic:'🐗',col:'#a8743a',hp:200,ap:20,dmg:14,rate:.9,push:.6,spd:1.9,d:'Cuerpo a cuerpo con hacha: más daño que el albañil, y cada 3 golpes empuja al enemigo.'},
+ straw:{n:'Cerdito espantapájaros',ic:'🐽',col:'#e8cf6a',hp:120,ap:0,dmg:10,rate:1,rng:1,range:3,spd:2.2,slow:.3,slowt:2,d:'Lanza paja desde lejos: daña en un área pequeña y ralentiza un 30%. Si le alcanzan, bloquea y pega a mitad de daño.'},
+ mech:{n:'Mecha Cerdito',ic:'🤖',col:'#d08a5a',hp:700,ap:50,dmg:20,rate:.8,st:30,spd:1.6}};
 const tinfo=t=>t.tinf?t.tinf:t.type==='omega'&&typeof omegaT==='function'?omegaT(t):t.pigU?{...TW.bastion,...PIGU[t.pigU]}:t.beast?{...TW.bastion,...(BEASTS[t.beast]||SPECT[t.beast])}:t.hero?t.hero.def:TW[t.type]&&TW[t.type].dragon?{...TW[t.type],...DRAG[t.stage||0]}:t.spec?SPECS[t.type][t.spec]:TW[t.type];

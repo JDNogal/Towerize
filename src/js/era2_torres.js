@@ -16,7 +16,7 @@ const SVGIMG={};function svgImg(svg){let im=SVGIMG[svg];if(!im){im=new Image();i
  const _h=icHtml;icHtml=function(ic){if(ic&&typeof ic==='object'&&ic.img)return `<span class="icst icimg"><img src="${ic.img}" alt=""></span>`;if(ic&&typeof ic==='object'&&ic.svg)return `<span class="icst icsvg">${ic.svg}</span>`;return _h.apply(this,arguments);};}
 UIC.robots={f:'🤖',b:'🛡️',fs:.9};UIC.kami='💥';UIC.mecha='🦾';
 // ---- multiplicador de daño común (infección de los nanitos, marcador láser del Nido, bengala de Vega) ----
-function e2DmgM(e,src,ty){let m=1;if(e.inf&&e.inf.t>0)m*=1+e.inf.m;if(e.lmk&&e.lmk.t>0)m*=1+e.lmk.m;if(typeof flareM==='function')m*=flareM(e);return m;}
+function e2DmgM(e,src,ty){let m=1;if(e.inf&&e.inf.t>0)m*=1+e.inf.m;if(typeof flareM==='function')m*=flareM(e);return m;}
 // ---- estadísticas: calentamiento del Búnker, red eléctrica, enjambre devorador, críticos del Nido, bufos de runas y drones ----
 {const _st=stats;stats=function(t){const s=_st.apply(this,arguments);if(!t||t.hero||!TW[t.type])return s;const TT=twm(t.type,t.spec);
  if(TT.mag!=null&&TT.mag>0){const mx=magMax(t),h=1-Math.min(1,(t.magN==null?mx:t.magN)/mx),tr=abRank(t,'trigger');s.rate*=1+((TT.ramp||.6)+(tr?tr.r:0))*h;}
@@ -33,9 +33,9 @@ function bunkerFire(t,tg,s,dm,crit){const TT=twm(t.type,t.spec),mx=magMax(t);
  if(mx>0){if(t.magN==null)t.magN=mx;t.magN--;}
  S.proj.push({x:t.x,y:t.y,e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm,dt:'phys',src:t,sp:TT.ps||40,area:0,slow:0,pen:s.pen,col:TT.col,crit,bul:1});
  if(mx>0&&t.magN<=0){t.magN=mx;t.cd=Math.max(t.cd,TT.reload||1.8);t.rld=TT.reload||1.8;}
- if(abRank(t,'lmark')){t.lmE=tg;tg.lmk={t:.6,m:abRank(t,'lmark').m};}}
+ if(abRank(t,'lmark')){t.lmE=tg;const v=abRank(t,'lmark').v,q=tg.lmk&&tg.lmk.t>0?tg.lmk:null;tg.lmk={t:Math.max(1/s.rate+.4,q?q.t:0),v:Math.max(v,q?q.v:0)};}}
 // ---- Robots ----
-CLS.mecha={n:'Mecha',d:2,rt:.8,cr:.05,hp:2.5,ap:15};
+CLS.mecha={n:'Mecha',d:2,rt:.8,cr:.05,hp:2.5,ap:15,sp:.75};
 function robotsSpec(t){const T=TW[t.type];if(!T||t.type!=='robots'||!t.sd)return;
  if(t.spec==='mecha'){const s=t.sd[0];if(s&&!s.mech){s.mech=1;s.cls='mecha';s.wt=2;s.max*=2.5;s.hp=Math.min(s.max,s.hp*2.5);}}
  if(t.spec==='kami'){while(t.sd.length<4){const i=t.sd.length;t.sd.push({i,x:t.x,y:t.y,hp:sdHp(t),max:sdHp(t),en:null,cd:0,rt:0,tw:t,lock:true,fight:false});}}}
@@ -159,7 +159,7 @@ function e2DrawWorld(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000;
  for(const e of S.enemies){if(e.inf&&e.inf.t>0){g.strokeStyle='rgba(159,224,255,.9)';g.lineWidth=lw(1.5);g.setLineDash([lw(2),lw(2)]);g.beginPath();g.arc(X(e.x),X(e.y),ET[e.t].r*CS*EVS+lw(3),0,7);g.stroke();g.setLineDash([]);}}}
 // ---- palabras clave nuevas ----
 const E2KW={mag:()=>'<b>Cargador</b><small>El Búnker dispara ráfagas con un cargador: cuanto más vacío está, más rápido dispara. Al vaciarse, recarga durante un momento (barra naranja bajo la torre) y vuelve a empezar.</small>',
- lmk:()=>'<b>Marcado con láser</b><small>El Nido de francotirador apunta a su objetivo con un láser rojo visible. Mientras dura, el enemigo recibe más daño de todas tus torres y unidades.</small>',
+
  inf:()=>'<b>Infectado</b>'+R('','Duración','4 s')+'<small>Los nanitos han infectado al enemigo: recibe más daño de todas las fuentes. Con Virus, al morir contagia a los de alrededor; con Reprogramar, ataca a otros enemigos.</small>',
  vc:()=>'<b>Carga</b>'+R('','Máximo',VMAX)+'<small>El Arco voltaico carga de electricidad a su objetivo (anillo amarillo). Al llenarse, descarga: un golpe de 15× el daño de un tick y lo aturde 1 s.</small>'};
 {const _k=kwHtml0;kwHtml0=function(id,src){if(E2KW[id])return E2KW[id]();return _k.apply(this,arguments);};}

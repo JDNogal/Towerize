@@ -2,9 +2,9 @@
 // base: estadísticas de Nv 1 (rango en casillas). Por nivel: +12% vida, +10% daño y +apLv de armadura. w = unidades que cuenta al bloquear (cuerpo a cuerpo 2, a distancia 1).
 const HLMAX=10,HMELEE=.5,QR=5*K,HREZ=10;
 const HEROES={
- reinhart:{n:'Reinhart',ic:'⚔️',col:'#b8c4dd',ranged:false,w:2,spd:2,apLv:1,base:{hp:120,ap:20,dmg:9,cd:1,range:0},relic:'barricade',role:'Paladín',tags:['Cuerpo a cuerpo','Aguante','Físico'],d:'Un soldado pesado al estilo de un paladín. Aguanta en primera línea y detiene a los enemigos duros.'},
- sylvana:{n:'Sylvana',ic:'🌿',col:'#7ad06a',ranged:true,w:1,spd:2,apLv:.5,base:{hp:50,ap:0,dmg:7,cd:.5,range:3.5},relic:'quiver',role:'Cazadora',tags:['A distancia','Disparo rápido','Físico'],d:'Dispara desde lejos con muchos disparos rápidos. Si un enemigo la alcanza, bloquea cuerpo a cuerpo pero hace menos daño: conviene retirarla.'},
- radagast:{n:'Radagast',ic:'🧙',col:'#8a74e0',ranged:true,w:1,spd:2,apLv:.5,dt:'magic',area:.6,base:{hp:45,ap:0,dmg:12,cd:1,range:3},relic:'tome',role:'Mago',tags:['A distancia','Área','Mágico'],d:'Lanza orbes arcanos de daño mágico que ignoran la armadura y salpican a los enemigos cercanos. Más lento que Sylvana, pero mejor contra grupos y enemigos acorazados.'},
+ reinhart:{n:'Reinhart',ic:'⚔️',col:'#b8c4dd',ranged:false,w:2,spd:1.6,apLv:1,base:{hp:120,ap:20,dmg:9,cd:1,range:0},relic:'barricade',role:'Paladín',tags:['Cuerpo a cuerpo','Aguante','Físico'],d:'Un soldado pesado al estilo de un paladín. Aguanta en primera línea y detiene a los enemigos duros.'},
+ sylvana:{n:'Sylvana',ic:'🌿',col:'#7ad06a',ranged:true,w:1,spd:2.2,apLv:.5,base:{hp:50,ap:0,dmg:7,cd:.5,range:3.5},relic:'quiver',role:'Cazadora',tags:['A distancia','Disparo rápido','Físico'],d:'Dispara desde lejos con muchos disparos rápidos. Si un enemigo la alcanza, bloquea cuerpo a cuerpo pero hace menos daño: conviene retirarla.'},
+ radagast:{n:'Radagast',ic:'🧙',col:'#8a74e0',ranged:true,w:1,spd:1.7,apLv:.5,dt:'magic',area:.6,base:{hp:45,ap:0,dmg:12,cd:1,range:3},relic:'tome',role:'Mago',tags:['A distancia','Área','Mágico'],d:'Lanza orbes arcanos de daño mágico que ignoran la armadura y salpican a los enemigos cercanos. Más lento que Sylvana, pero mejor contra grupos y enemigos acorazados.'},
  yrsa:{n:'Yrsa',ic:'💠',col:'#d07a9a',ranged:false,w:2,spd:2,apLv:1,dt:'elem',late:1,base:{hp:90,ap:10,dmg:8,cd:.8,range:0},relic:'balance',role:'Elementalista',tags:['Cuerpo a cuerpo','Control','Elemental'],d:'Una elementalista que pelea en primera línea alternando golpes de fuego y de hielo. Lo que ella bloquea está parado, así que recibe todo el daño de su hipotermia.'}};
 const HFX={yrsa:src=>'Alterna golpes: 🔥 aplica 2 stacks de '+kw('burn','Quemadura',src)+'; ❄ aplica 2 stacks de '+kw('chill','Hipotermia',src)};
 const hsAt=(id,l)=>{const D=HEROES[id],b=D.base;return{hp:b.hp*Math.pow(1.12,l-1),dmg:b.dmg*Math.pow(1.1,l-1),ap:b.ap+D.apLv*(l-1),cd:b.cd,range:b.range*K,rez:HREZ};};
@@ -18,7 +18,7 @@ function xpTable(n){try{let cum=0;const c=[];for(let R=1;R<=n;R++){let x=0;for(c
 const xpNeed=l=>{const T=(typeof S!=='undefined'&&S&&S.xpT)||XPDEF;return T[Math.max(2,Math.min(10,l))]||XPDEF[l];};
 const RELARM=()=>S&&S.relics&&rp('barricade')?10:0;
 const unitTs=s=>s.list.filter(t=>t.sd).concat(s.list.filter(t=>t.pigT&&!t.pigT.off).map(t=>t.pigT)).concat(s.mecha&&s.mecha.on?[s.mecha.on]:[]).concat(s.hero?[s.hero.pt]:[]).concat(s.merc?[s.merc]:[]).concat(s.ally?[s.ally]:[]).concat(s.summ||[]),unitTowers=()=>unitTs(S);
-const unitOf=t=>{if(t.uov)return t.uov;if(!t.hero)return TW[t.type].unit;const x=hsAt(t.hero.id,t.hero.lvl);return{n:1,hp:x.hp,ap:x.ap,rez:x.rez,spd:t.hero.def.spd};};
+const unitOf=t=>{if(t.uov)return t.uov;if(!t.hero)return TW[t.type].unit;const x=hsAt(t.hero.id,t.hero.lvl);return{n:1,hp:x.hp,ap:x.ap,rez:x.rez,spd:t.hero.def.spd*K};};
 let HLV={};try{HLV=JSON.parse(localStorage.getItem('rt-hlv'))||{};}catch(e){}
 const hlvOk=(id,l)=>UNLOCK_ALL||l<=1||(HLV[id]||1)>=l;
 function giveXp(H,x){if(H.lvl>=HLMAX||!(x>0))return;if(S&&S.st)S.st.xp=(S.st.xp||0)+x;H.xp+=x;H.xpT=performance.now();let up=0;

@@ -43,7 +43,7 @@ KW={}
 for f in ['estados_final.json','tipos_dano_final.json','estadisticas_final.json']:
     for k,v in J(f).items():
         if not k.startswith('_'):KW[k]=inner(v)
-for a,b in {'uhp':'ehp','umr':'amagic','eud':'dmg','eac':'cool','erg':'rng','hlv':'lvl','hrez':'urez'}.items():KW[a]=KW[b]
+for a,b in {'uhp':'ehp','umr':'amagic','eud':'dmg','eac':'cool','erg':'rng','hlv':'lvl','hrez':'urez','rgn':'regen'}.items():KW[a]=KW[b]
 extra={'emb':inner(J('habilidades_heroes_e2_final.json')['korr_emb'])}
 out="// ==================== v308 · ICONOS DIBUJADOS (estilo B) ====================\n"
 out+="// Generado con tools/gen_iconos.py a partir de maquetas/*_final.json. No editar a mano.\n"

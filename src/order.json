@@ -90,6 +90,7 @@
   "elites.js",
   "jefes.js",
   "estados_unidades.js",
+  "estados_nuevos.js",
   "vales_boton.js",
   "heroes_e2.js",
   "reliquias_e2.js",

@@ -6,7 +6,7 @@ const HAB={
   p4:{n:'Provocación',ic:'🛡️',t:()=>'<span class="kw" data-kw="eblk" data-src="">Corpulencia 3</span> (bloquea hasta 3 enemigos) y <span class="chp">−15% de daño recibido</span>.'},
   p8:{n:'Veteranos',ic:'⚜️',t:()=>'Llamada a las armas invoca soldados pesados: más vida, daño y armadura.'},
   u:{n:'Carga Heroica',ic:'⚔️',t:()=>'Carga hasta un punto sin recibir daño: <span class="cd">300% de su daño</span> a lo que atraviesa y a 1,5 casillas, los empuja y los <span class="kw" data-kw="stun" data-src="">aturde</span> <b>2 s</b> (jefes, 1 s).'}},
- sylvana:{b:{n:'Hiedra enredadora',ic:'🌿',t:()=>`Una zona de hiedra (1,5 casillas) deja ${kw('root','enredados','')} <b>4 s</b> a los enemigos: no se mueven, pero atacan.`},
+ sylvana:{b:{n:'Hiedra enredadora',ic:'🌿',t:()=>`Una zona de hiedra (1,5 casillas) deja ${kw('root','inmovilizados','')} <b>4 s</b> a los enemigos: no se mueven, pero atacan.`},
   p4:{n:'Halcón de caza',ic:'🦅',t:()=>`Cada 6 s, un halcón golpea al enemigo con más vida cerca de Sylvana y lo marca como ${kw('prey','presa','')} <b>4 s</b>.`},
   p8:{n:'Hiedra venenosa',ic:'☘️',t:()=>`La hiedra además ${kw('poison','envenena','')} cada segundo.`},
   u:{n:'Llamada salvaje',ic:'🐾',t:()=>'Invoca <b>25 s</b> una bestia al azar: 🐻 oso (aguanta y bloquea a 3), 🐺 huargo (rápido) o 🐆 pantera (caza la retaguardia).'}},
@@ -84,7 +84,7 @@ function xPanel(){if(!S||!S.list)return '';const h=pigHouses();if(h.some(t=>!t))
 function startMecha(){if(S.aim==='mecha'){S.aim=null;S.msg='';ui();renderRelics();return;}const w=mechaOk();if(w){S.msg='¡Mecha Cerdito!: '+w.toLowerCase()+'.';ui();return;}closePrim();S.aim='mecha';S.msg='Elige un punto del camino para el ¡Mecha Cerdito!'+CANC();ui();renderRelics();}
 function castMecha(c){const p=pathNear(c.x,c.y);if(!p){S.msg='Elige un punto del camino.';ui();return;}const P=PIGU.mech;
  for(const t of pigHouses())if(t&&t.pigT)t.pigT.off=1;
- const m={type:'bastion',lvl:3,summ:1,pigU:'mech',ttl:MECHT,x:p.x,y:p.y,cells:[],flag:{x:p.x,y:p.y},ab:{},acd:{},uov:{n:1,hp:P.hp,ap:P.ap,rez:0,spd:TW.bastion.unit.spd*.8},ovr:{dmg:P.dmg,rate:P.rate,range:2.5*K,crit:CRIT,critm:2,area:0,gold:0,pen:0}};
+ const m={type:'bastion',lvl:3,summ:1,pigU:'mech',ttl:MECHT,x:p.x,y:p.y,cells:[],flag:{x:p.x,y:p.y},ab:{},acd:{},uov:{n:1,hp:P.hp,ap:P.ap,rez:0,spd:(P.spd||1.6)*K},ovr:{dmg:P.dmg,rate:P.rate,range:2.5*K,crit:CRIT,critm:2,area:0,gold:0,pen:0}};
  m.sd=[{i:0,x:p.x,y:p.y,hp:P.hp,max:P.hp,en:null,cd:0,rt:0,tw:m,lock:false,fight:false,wt:4,mech:1,st:.5}];
  reveal('mech');m.kills=0;S.mecha=S.mecha||{cd:0};S.mecha.on=m;S.mecha.cd=MECHCD;S.aim=null;S.msg='';S.fx.push({x:p.x,y:p.y,t:.7,m:.7,r:2*K,col:'#e8b06a'});ui();renderRelics();}
 function mechaEnd(){const M=S.mecha;if(!M||!M.on)return;M.on=null;for(const t of S.list)if(t.pigT){t.pigT.off=0;for(const s of t.pigT.sd){s.hp=s.max;s.rt=0;s.en=null;s.fight=false;s.lock=true;s.x=t.x;s.y=t.y;}}}
