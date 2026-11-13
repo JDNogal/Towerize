@@ -22,8 +22,8 @@ const AZIC={
 const AZT=[
  ['sup','Supercampeones','en',[[2,'Desde la ronda 6, algunos campeones ascienden a supercampeón con <b>1 rasgo</b> al azar: escudo frontal, paso rápido, regeneración o resistencia a control. Cada vez más a menudo en las rondas altas. Dan el doble de oro.'],[2,'Los supercampeones llevan <b>2 rasgos</b>.']],'ini'],
  ['ven','Venganza','en',[[3,'Cuando muere un élite o un jefe, los enemigos a 2 casillas se enfurecen <b>4 s</b>: corren un 50 % más y no se les puede retener.']],3],
- ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.']],6,1],
- ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.']],7,1],
+ ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.']],6],
+ ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.']],7],
  ['cor','Piezas corruptas','ma',[[2,'Cada <b>3</b> elecciones de pieza, las 3 piezas vienen corruptas. Su casilla maldita se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>2</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf',1],
  ['nie','Niebla de guerra','ma',[[1,'La línea de rondas solo enseña la <b>ronda siguiente</b>.'],[2,'Además, los enemigos no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces se ven siempre.'],[2,'Además, los portales no informan de la siguiente oleada.'],[2,'Además, no sabes <b>dónde están</b> los portales enemigos.']],5],
  ['gri','Grietas espaciotemporales','ma',[[3,'A veces se abre un portal especial por el que llegan escuadras extra de una era que ya has visto (con su oro).']],'e2',1],
