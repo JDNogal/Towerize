@@ -2374,7 +2374,7 @@ table.lbrkt{margin-top:34px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v324</div>
+<div id="ver">Towerize v325</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -5434,7 +5434,7 @@ function anyPlace(o){
  for(let r=0;r<4;r++){for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++)if(check(bx,by,p)===0)return true;p=rot(p);}
  return false;
 }
-const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+(BF[b.k].sup?BFCS:BFC),0);
+const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+(BF[b.k].free?0:BF[b.k].sup?BFCS:BFC),0);
 function dealTry(){
  // rescate: si solo queda un extremo libre, salen sí o sí la Bifurcación y el Cruce, gratis
  const E1=!S.tut&&S.round<ROUNDS?collectEnds():[],resc=E1.length===1,RN=['Bifurcación','Cruce'];
@@ -10329,6 +10329,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:325,f:'13 nov 2026',t:'Piezas corruptas',s:[['Amenazas',['Piezas corruptas: cada pocas elecciones, las piezas traen una casilla maldita (aspa roja). Hay que construir en ella antes que en ningún otro sitio, su torre no se puede vender y sus mejoras cuestan más.']]]},
  {v:324,f:'13 nov 2026',t:'Clasificación',s:[['Clasificación',['Al acabar una partida puedes subirla a la clasificación con el nombre de tu piloto y compararte con otros jugadores.','Puedes elegir que se suban solas cuando sea tu mejor marca (Opciones › Juego).','Nueva cinta «Clasificación» en el final de partida, con una tabla por era.']]]},
  {v:323,f:'13 nov 2026',t:'Amenazas nuevas',s:[['Amenazas',['Asedio sin tregua: desde que pones la pieza tienes 30 s (o 20 s) para construir; después la oleada empieza sola.','Inflación: cada torre del mismo tipo cuesta un 10 % más que la anterior.','Niebla de guerra, en 4 rangos: la línea de rondas solo enseña la siguiente; enemigos invisibles hasta que los detectas; portales sin información; y, para los más valientes, portales que no se ven.','Sabotaje: un saboteador va a por una torre (los dos salen marcados); si llega, la apaga 6 s.','Abanderados: mientras vive el abanderado, su escuadra no se puede ralentizar ni empujar.']]]},
  {v:320,f:'13 nov 2026',t:'Novedades y menú',s:[['Interfaz',['Novedades: el registro de cambios de cada versión, aquí mismo en el menú.','«Continuar partida» y «Nueva partida» del mismo tamaño, uno encima del otro.']]]},
@@ -12043,7 +12044,7 @@ const AZT=[
  ['ven','Venganza','en',[[3,'Cuando muere un élite o un jefe, los enemigos a 2 casillas se enfurecen <b>4 s</b>: corren un 50 % más y no se les puede retener.']],3],
  ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.']],6],
  ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.']],7],
- ['cor','Piezas corruptas','ma',[[2,'Cada <b>3</b> elecciones de pieza, las 3 piezas vienen corruptas. Su casilla maldita se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>2</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf',1],
+ ['cor','Piezas corruptas','ma',[[2,'Cada <b>3</b> elecciones de pieza, las 3 piezas vienen corruptas. Su casilla maldita se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>2</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf'],
  ['nie','Niebla de guerra','ma',[[1,'La línea de rondas solo enseña la <b>ronda siguiente</b>.'],[2,'Además, los enemigos no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces se ven siempre.'],[2,'Además, los portales no informan de la siguiente oleada.'],[2,'Además, no sabes <b>dónde están</b> los portales enemigos.']],5],
  ['gri','Grietas espaciotemporales','ma',[[3,'A veces se abre un portal especial por el que llegan escuadras extra de una era que ya has visto (con su oro).']],'e2',1],
  ['ref','Sin refuerzos','ri',[[1,'Tus soldados tardan un <b>50 %</b> más en reaparecer.'],[1,'Tardan un <b>100 %</b> más.'],[3,'Los que caen <b>no reaparecen</b> hasta la siguiente oleada.']],'ini'],
@@ -12245,6 +12246,36 @@ const azFlagOn=e=>{if(!e||!e.sqid||!S.flagSq)return false;const b=S.flagSq[e.sqi
      g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1.2);g.beginPath();g.moveTo(px,top);g.lineTo(px+CS*.6,top+CS*.15);g.lineTo(px,top+CS*.32);g.closePath();g.fill();g.stroke();}
     else{g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1);g.beginPath();g.moveTo(x-rr*.25,y-rr-lw(5));g.lineTo(x+rr*.25,y-rr-lw(5));g.lineTo(x,y-rr-lw(1));g.closePath();g.fill();g.stroke();}}}}
  }catch(x){}return r;};}
+
+// ==================== Piezas corruptas: la casilla maldita ====================
+// Cada 3 elecciones de pieza (R2: cada 2), las piezas que se ofrecen traen una casilla maldita en uno de sus solares.
+// Hay que construir en ella antes que en ningún otro sitio; su torre no se puede vender y sus mejoras (y habilidades) cuestan un 25 % más (R2: 50 %).
+// Dibujo elegido por Nogal (B1): aspa roja dentro de un círculo y borde rojo discontinuo con la forma de cada estilo de casilla.
+BFICO.curs='<circle cx="12" cy="12" r="9"/><path d="M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6" stroke-width="2.6"/>';
+const azCurM=()=>azRank('cor')>=2?.5:.25;
+BF.cur={n:'Casilla maldita',l:'✕',col:'#e0453a',base:'curs',free:1,get t(){return 'Hay que construir aquí <b>antes que en ningún otro sitio</b>. Su torre <b>no se puede vender</b> y sus mejoras cuestan un <b>'+Math.round(azCurM()*100)+' %</b> más.';}};
+{const _ts=bfTileSvg;bfTileSvg=function(k,st,e2,sz){const s=_ts.apply(this,arguments);if(k!=='cur'||!s)return s;st=st||tileSkin();e2=e2==null?bfEra2():e2;
+ const sh=st==='sello'?(e2?'<circle cx="32" cy="28" r="18.5" fill="none" stroke="#e0453a" stroke-width="1.6" stroke-dasharray="4 3"/>':'<circle cx="32" cy="32" r="29.5" fill="none" stroke="#e0453a" stroke-width="2" stroke-dasharray="5 4"/>')
+  :'<rect x="1.5" y="1.5" width="61" height="61" rx="'+(st==='losa'?8:10)+'" fill="none" stroke="#e0453a" stroke-width="2" stroke-dasharray="6 4"/>';
+ return s.replace(/<\/svg>$/,sh+'</svg>');};}
+{const _bo=bfOnTowers;bfOnTowers=function(){return _bo.apply(this,arguments).filter(k=>k!=='cur');};}
+const azIsCur=t=>{if(!t||!t.cells||!S||!S.buff)return false;for(const[x,y]of t.cells)if(S.buff[y]&&S.buff[y][x]==='cur')return true;return false;};
+// solares malditos aún sin torre
+function azCurPending(){const out=[];if(!S||!S.buff||!S.cc)return out;const seen=new Set();
+ for(let gy=0;gy<S.cc.length;gy++)for(let gx=0;gx<S.cc[gy].length;gx++){if(S.cc[gy][gx]!==1)continue;const fx=gx*K,fy=gy*K;if(!(S.buff[fy]&&S.buff[fy][fx]==='cur'))continue;
+  const q=sqOf(fx,fy),key=q.x+','+q.y;if(seen.has(key))continue;seen.add(key);if(!S.occ[key])out.push(q);}return out;}
+// reparto: cada N elecciones, las piezas vienen corruptas
+{const _pp=placePiece;placePiece=function(){const r=_pp.apply(this,arguments);try{if(S&&!S.tut)S.pkN=(S.pkN||0)+1;}catch(e){}return r;};}
+{const _dl=deal;deal=function(){const r=_dl.apply(this,arguments);try{const R=azRank('cor');if(R&&!S.tut&&S.offers&&S.offers.length){const f=R>=2?2:3,n=(S.pkN||0)+1;
+ if(n%f===0){for(const o of S.offers){const cs=[];o.p.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch==='S'&&!o.b.some(b=>b.x===x&&b.y===y))cs.push([x,y]);}));
+  if(!cs.length)continue;const c=cs[Math.floor(Math.random()*cs.length)];o.b.push({x:c[0],y:c[1],k:'cur'});o.cor=1;}try{see('bf','cur');}catch(e){}}}}catch(e){console.warn(e);}return r;};}
+// construir: primero la casilla maldita
+{const _b=build;build=function(fx,fy){try{if(azOn('cor')&&S&&inb(fx,fy)){const P0=azCurPending();if(P0.length){const q=sqOf(fx,fy);if(!P0.some(c=>c.x===q.x&&c.y===q.y)){
+ S.msg='Primero tienes que construir en la casilla maldita.';ui();return;}}}}catch(e){}return _b.apply(this,arguments);};}
+// su torre no se vende
+{const _s=sell;sell=function(t){if(azIsCur(t)){S.msg='La torre de una casilla maldita no se puede vender.';ui();return;}return _s.apply(this,arguments);};}
+// y sus mejoras cuestan más
+{const _tc=tCost;tCost=function(t,c){const v=_tc.apply(this,arguments);if(v>0&&azIsCur(t))return Math.round(v*(1+azCurM()));return v;};}
 // ==================== v324 · Clasificación de playtesters (servidor en Cloudflare) ====================
 // Nogal (13-nov-2026): al final de la partida, botón «Subir a la clasificación» en el hueco libre; si sigues sin subirla, aviso en el
 // centro con la pantalla oscurecida (Sí y siempre / Sí, solo esta / No, gracias + «No volver a mostrar»). El nombre es el del piloto:

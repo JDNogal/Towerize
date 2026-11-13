@@ -78,3 +78,33 @@ const azFlagOn=e=>{if(!e||!e.sqid||!S.flagSq)return false;const b=S.flagSq[e.sqi
      g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1.2);g.beginPath();g.moveTo(px,top);g.lineTo(px+CS*.6,top+CS*.15);g.lineTo(px,top+CS*.32);g.closePath();g.fill();g.stroke();}
     else{g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1);g.beginPath();g.moveTo(x-rr*.25,y-rr-lw(5));g.lineTo(x+rr*.25,y-rr-lw(5));g.lineTo(x,y-rr-lw(1));g.closePath();g.fill();g.stroke();}}}}
  }catch(x){}return r;};}
+
+// ==================== Piezas corruptas: la casilla maldita ====================
+// Cada 3 elecciones de pieza (R2: cada 2), las piezas que se ofrecen traen una casilla maldita en uno de sus solares.
+// Hay que construir en ella antes que en ningún otro sitio; su torre no se puede vender y sus mejoras (y habilidades) cuestan un 25 % más (R2: 50 %).
+// Dibujo elegido por Nogal (B1): aspa roja dentro de un círculo y borde rojo discontinuo con la forma de cada estilo de casilla.
+BFICO.curs='<circle cx="12" cy="12" r="9"/><path d="M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6" stroke-width="2.6"/>';
+const azCurM=()=>azRank('cor')>=2?.5:.25;
+BF.cur={n:'Casilla maldita',l:'✕',col:'#e0453a',base:'curs',free:1,get t(){return 'Hay que construir aquí <b>antes que en ningún otro sitio</b>. Su torre <b>no se puede vender</b> y sus mejoras cuestan un <b>'+Math.round(azCurM()*100)+' %</b> más.';}};
+{const _ts=bfTileSvg;bfTileSvg=function(k,st,e2,sz){const s=_ts.apply(this,arguments);if(k!=='cur'||!s)return s;st=st||tileSkin();e2=e2==null?bfEra2():e2;
+ const sh=st==='sello'?(e2?'<circle cx="32" cy="28" r="18.5" fill="none" stroke="#e0453a" stroke-width="1.6" stroke-dasharray="4 3"/>':'<circle cx="32" cy="32" r="29.5" fill="none" stroke="#e0453a" stroke-width="2" stroke-dasharray="5 4"/>')
+  :'<rect x="1.5" y="1.5" width="61" height="61" rx="'+(st==='losa'?8:10)+'" fill="none" stroke="#e0453a" stroke-width="2" stroke-dasharray="6 4"/>';
+ return s.replace(/<\/svg>$/,sh+'</svg>');};}
+{const _bo=bfOnTowers;bfOnTowers=function(){return _bo.apply(this,arguments).filter(k=>k!=='cur');};}
+const azIsCur=t=>{if(!t||!t.cells||!S||!S.buff)return false;for(const[x,y]of t.cells)if(S.buff[y]&&S.buff[y][x]==='cur')return true;return false;};
+// solares malditos aún sin torre
+function azCurPending(){const out=[];if(!S||!S.buff||!S.cc)return out;const seen=new Set();
+ for(let gy=0;gy<S.cc.length;gy++)for(let gx=0;gx<S.cc[gy].length;gx++){if(S.cc[gy][gx]!==1)continue;const fx=gx*K,fy=gy*K;if(!(S.buff[fy]&&S.buff[fy][fx]==='cur'))continue;
+  const q=sqOf(fx,fy),key=q.x+','+q.y;if(seen.has(key))continue;seen.add(key);if(!S.occ[key])out.push(q);}return out;}
+// reparto: cada N elecciones, las piezas vienen corruptas
+{const _pp=placePiece;placePiece=function(){const r=_pp.apply(this,arguments);try{if(S&&!S.tut)S.pkN=(S.pkN||0)+1;}catch(e){}return r;};}
+{const _dl=deal;deal=function(){const r=_dl.apply(this,arguments);try{const R=azRank('cor');if(R&&!S.tut&&S.offers&&S.offers.length){const f=R>=2?2:3,n=(S.pkN||0)+1;
+ if(n%f===0){for(const o of S.offers){const cs=[];o.p.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch==='S'&&!o.b.some(b=>b.x===x&&b.y===y))cs.push([x,y]);}));
+  if(!cs.length)continue;const c=cs[Math.floor(Math.random()*cs.length)];o.b.push({x:c[0],y:c[1],k:'cur'});o.cor=1;}try{see('bf','cur');}catch(e){}}}}catch(e){console.warn(e);}return r;};}
+// construir: primero la casilla maldita
+{const _b=build;build=function(fx,fy){try{if(azOn('cor')&&S&&inb(fx,fy)){const P0=azCurPending();if(P0.length){const q=sqOf(fx,fy);if(!P0.some(c=>c.x===q.x&&c.y===q.y)){
+ S.msg='Primero tienes que construir en la casilla maldita.';ui();return;}}}}catch(e){}return _b.apply(this,arguments);};}
+// su torre no se vende
+{const _s=sell;sell=function(t){if(azIsCur(t)){S.msg='La torre de una casilla maldita no se puede vender.';ui();return;}return _s.apply(this,arguments);};}
+// y sus mejoras cuestan más
+{const _tc=tCost;tCost=function(t,c){const v=_tc.apply(this,arguments);if(v>0&&azIsCur(t))return Math.round(v*(1+azCurM()));return v;};}
