@@ -28,7 +28,8 @@
     "26_amenazas.css",
     "27_logros_cerca.css",
     "28_novedades.css",
-    "29_clasificacion.css"
+    "29_clasificacion.css",
+    "30_apoyos.css"
   ],
   "js": [
     "00_config.js",
@@ -142,6 +143,8 @@
     "puntuacion.js",
     "amenazas.js",
     "amenazas2.js",
+    "apoyos.js",
+    "autopausa.js",
     "clasificacion.js",
     "logros_cerca.js"
   ]

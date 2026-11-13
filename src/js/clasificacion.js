@@ -18,7 +18,7 @@ OPTS.splice(Math.max(0,OPTS.findIndex(o=>o.tab==='jg')),0,{tab:'jg',type:'choice
 // la partida que acaba de terminar
 function lbRun(){if(!S||!S.hero||S.tut||S.pvE||S.pvH||(typeof PREVIEWING!=='undefined'&&PREVIEWING))return null;
  const sc=S.scF||(typeof scoreCalc==='function'?scoreCalc():{t:0});if(!(sc.t>0))return null;
- const era=(S.era||ERA||1),amz=(S.amz&&typeof azPtsOf==='function')?azPtsOf(S.amz):0;
+ const era=(S.era||ERA||1),amz=typeof apNetRun==='function'?apNetRun():(S.amz&&typeof azPtsOf==='function')?azPtsOf(S.amz):0;
  const sel={};for(const k in S.amz||{})if(S.amz[k]>0)sel[k]=S.amz[k];
  return {hero:S.hero.id,era,amz,score:Math.round(sc.t),round:Math.min(S.round,ROUNDS),won:S.phase==='won',sel,ver:String(NOVV())};}
 function lbBtnHTML(){const R=LBR.cur;if(!R)return '';const st=LBR.up,amzT=lbAmzOpen(R.era)?'Amenaza '+R.amz+' · ':'';

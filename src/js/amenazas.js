@@ -60,7 +60,7 @@ setInterval(()=>{try{if(azEraDone(1)&&!(ACHS&&ACHS.erac1))achieve('erac1');if(az
 // ---- pantalla de Amenazas ----
 const azRow=(t,sel,ro)=>{const[id,n,,rk]=t,r=sel[id]||0,lk=!azUn(t)||t[4]==='fut',p=rk.slice(0,r).reduce((a,x)=>a+x[0],0);
  return `<div class="amzr${r?' on':''}${!ro&&AZUI.sel===id?' sel':''}${lk?' lk':''}"${ro?'':` data-a="azsel" data-id="${id}"`}><span class="ai">${lk?AZLOCK:AZIC[id]}</span><span><b>${lk?'???':n}</b>${!lk&&t[5]?'<span class="tg">próximamente</span>':''}</span><span class="pp">${lk?'':rk.map((x,i)=>`<i class="${i<r?'f':''}"></i>`).join('')}</span><span class="pt">${p?'+'+p:''}</span></div>`;};
-const azTot=sel=>{const p=azPtsOf(sel);return `<span class="amztot"><span><small>Amenaza</small><b>${p}</b></span><span><small>Puntuación</small><b>${azMult(p)}</b></span></span>`;};
+const azTot=sel=>{const p=azPtsOf(sel);return `<span class="amztot"><span><small>Amenaza</small><b>${p}</b></span><span><small>Puntuación</small><b>${typeof azScoreM==='function'?azMultT(azScoreM(sel,{})):azMult(p)}</b></span></span>`;};
 function azParts(){const sel=AZ.sel[ERA]=AZ.sel[ERA]||{},t=AZT.find(x=>x[0]===AZUI.sel)||AZT[0],lk=!azUn(t)||t[4]==='fut';
  const left=`<h3>Amenazas</h3><div class="bksub">Opcional · hacen la partida más difícil y puntúan más · se guardan para la próxima partida</div><div class="amzl">${AZG.map(([g,n])=>`<div class="amzg">${n}</div>`+AZT.filter(x=>x[2]===g).map(x=>azRow(x,sel)).join('')).join('')}</div>`;
  let right;
@@ -78,9 +78,12 @@ function azResParts(){const id=RL.hsel,D=HEROES[id],E=ERADEF[ERA]||{},done=azEra
  return {marks:null,key:'res'+JSON.stringify(sel)+ERA+id,left,right,footL:`<button class="lbbk" data-a="azch" data-v="hero">‹ Héroe</button>`,footR:`<button class="gbtn" data-a="azgo">Empezar partida ›</button>`,after:azFit};}
 // botón de la era: a la derecha de las piezas (solo con la era completada)
 const azSeal=()=>{const sel=AZ.sel[ERA]||{},p=azPtsOf(sel),on=Object.entries(sel).filter(x=>x[1]>0);
- return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Amenazas</b>${on.length?`<small>${p} puntos · puntuación ${azMult(p)}</small><span class="act">${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: haz la partida más difícil</small>'}</span></div></div>`;};
+ // v326: con los Apoyos desbloqueados, el mismo botón pasa a «Apoyos / Amenazas» con el nivel neto y la puntuación completa
+ if(typeof apOk==='function'&&apOk()){const as=apSelOf(),pp=apPtsOf(as),m=azScoreM(sel,as),ao=APT.filter(t=>as[t[0]]);
+  return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Apoyos / Amenazas</b>${on.length||ao.length?`<small>${pp?`<span class="apc">−${pp}</span> · `:''}${p?`<span class="azc">+${p}</span> · `:''}amenaza ${Math.max(0,p-pp)} · puntuación ${azMultT(m)}</small><span class="act">${ao.map(t=>`<span class="ai">${APIC('#3a8a3a')}</span>`).join('')}${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: ayúdate o ponte las cosas difíciles</small>'}</span></div></div>`;}
+ return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Amenazas</b>${on.length?`<small>${p} puntos · puntuación ${typeof azScoreM==='function'?azMultT(azScoreM(sel,{})):azMult(p)}</small><span class="act">${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: haz la partida más difícil</small>'}</span></div></div>`;};
 {const _pp=prepParts;prepParts=function(){if(LB.step==='amz')return azParts();if(LB.step==='res')return azResParts();const P=_pp.apply(this,arguments);
- try{if(P&&(P.key==='era'||P.key==='era2')&&azEraDone(ERA)){P.key+='az'+azPtsOf(AZ.sel[ERA]);const _a=P.after;P.after=()=>{try{_a&&_a();}catch(e){}setTimeout(()=>{try{const pcs=document.querySelector('#comp .lbera .pcs');if(pcs&&!document.querySelector('#comp .amzpos')){pcs.classList.add('amzA');pcs.insertAdjacentHTML('afterend',azSeal());azFit();}}catch(e){}},0);};}}catch(e){}
+ try{if(P&&(P.key==='era'||P.key==='era2')&&azEraDone(ERA)){P.key+='az'+azPtsOf(AZ.sel[ERA])+(typeof apSelOf==='function'?JSON.stringify(apSelOf()):'');const _a=P.after;P.after=()=>{try{_a&&_a();}catch(e){}setTimeout(()=>{try{const pcs=document.querySelector('#comp .lbera .pcs');if(pcs&&!document.querySelector('#comp .amzpos')){pcs.classList.add('amzA');pcs.insertAdjacentHTML('afterend',azSeal());azFit();}}catch(e){}},0);};}}catch(e){}
  return P;};}
 // clics (antes que el resto: elegir héroe pasa por el resumen)
 document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
@@ -103,7 +106,7 @@ document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.clos
 {const _sc=scoreCalc;scoreCalc=function(){const r=_sc.apply(this,arguments);try{const p=azRunPts();if(p>0&&r.t>0){const x=Math.round(r.t*p*.1);r.rows.push(['amz','Amenazas',p+' puntos de amenaza · '+azMult(p),x]);r.t+=x;}}catch(e){}return r;};}
 {const _hr=hsRec;hsRec=function(){const r=_hr.apply(this,arguments);try{if(r&&S&&S.amz)r.amz=Object.assign({},S.amz);}catch(e){}return r;};}
 // ---- desbloqueos al ganar ----
-{const _eg=endGame;endGame=function(){const won=S&&S.phase==='won',p=azRunPts(),era=ERA,fast=won&&!S.tut&&(GT.r||1e9)<=ROUNDS*60,act=Object.assign({},S&&S.amz||{});const r=_eg.apply(this,arguments);try{if(won){const nu=[];AZ.rk=AZ.rk||{};
+{const _eg=endGame;endGame=function(){const won=S&&S.phase==='won',p=typeof apNetRun==='function'?apNetRun():azRunPts(),era=ERA,fast=won&&!S.tut&&(GT.r||1e9)<=ROUNDS*60,act=Object.assign({},S&&S.amz||{});const r=_eg.apply(this,arguments);try{if(won){const nu=[];AZ.rk=AZ.rk||{};
   for(const[k,v]of Object.entries(act)){const t=AZT.find(x=>x[0]===k);if(t&&v>=azRk(k)&&v<t[3].length){AZ.rk[k]=v+1;nu.push(t[1]+' (rango '+(v+1)+')');}}
   for(const t of AZT){if(azUn(t))continue;const c=t[4];if((typeof c==='number'&&p>=c)||(c==='e2'&&era===2&&p>0)||(c==='fast'&&fast)){AZ.un[t[0]]=1;nu.push(t[1]);}}
   if(nu.length){azSave();if(azEraDone(1)||azEraDone(2))setTimeout(()=>{try{toast('Amenazas desbloqueadas: <b>'+nu.join('</b>, <b>')+'</b>');}catch(e){}},1200);}}}catch(e){}return r;};}
@@ -111,7 +114,7 @@ document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.clos
 document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a="preset"]');if(b&&typeof OP!=='undefined'&&OP.rst){for(const k of['rt-amz','rt-prog'])try{localStorage.removeItem(k);}catch(e){}}},true);
 
 // ---- en partida: contador (en el sitio de los FPS; los FPS van a su derecha) ----
-setInterval(()=>{try{let c=$('amzchip');const p=azRunPts(),show=p>0&&typeof S!=='undefined'&&S&&S.hero&&!document.body.classList.contains('inmenu');
+setInterval(()=>{try{let c=$('amzchip');const p=typeof apNetRun==='function'?apNetRun():azRunPts(),show=p>0&&typeof S!=='undefined'&&S&&S.hero&&!document.body.classList.contains('inmenu');
  if(!show){if(c)c.style.display='none';return;}
  if(!c){c=document.createElement('div');c.id='amzchip';c.className='c amzchip';document.body.appendChild(c);}
  const h=`<span class="ai">${AZIC.sup}</span>Amenazas · ${p}`;if(c.dataset.h!==h){c.innerHTML=h;c.dataset.h=h;azFit();}c.style.display='';

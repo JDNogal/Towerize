@@ -2360,6 +2360,24 @@ table.lbrkt th{font-size:11px;text-transform:uppercase;opacity:.6}table.lbrkt .s
 table.lbrkt td.n{font-weight:800;width:26px}table.lbrkt tr.me td{background:#f3dc9a;font-weight:700}
 .lbbk.sm{padding:2px 8px;font-size:12px}
 table.lbrkt{margin-top:34px}
+/* v326 · Apoyos: doble página Apoyos (verde) | Amenazas (rojo) */
+.aph{margin-bottom:0}.aph.ap{color:#2f7a2f}.aph.az{color:#a33}
+.amzg.ap{color:#2f7a2f}
+.amzr.apr.on{border-color:#3a8a3a;background:rgba(58,138,58,.14)}
+.amzr .pt.ap{color:#2f7a2f}
+.apdot{display:inline-block;width:1.6em;height:1.6em;border-radius:50%;background:var(--c);border:2px solid #1b1712;box-sizing:border-box}
+.amzr .tg.ap{background:#2f7a2f;color:#fff;border-radius:4px;padding:0 4px;font-size:10px;margin-left:6px;font-weight:700}
+.apdet{margin-top:8px;border:2px solid currentColor;border-radius:10px;padding:7px 11px;background:rgba(255,250,240,.75);font-size:13px;line-height:1.35}
+.apdet.ap{color:#2f7a2f}.apdet.az{color:#a33}
+.apdet>b{display:block;font-size:14px}.apdet p b,.apdet p i{display:inline!important;width:auto;height:auto;border:0;background:none;margin:0;padding:0;font-size:inherit}.apdet p{color:var(--ink,#3a2617);margin:3px 0 0}.apdet p i{opacity:.8}
+.apdet .apbt{margin-top:4px;padding:4px 14px;font-size:13px;min-height:0}
+.apdet .amzbtns.sm{display:inline-grid;grid-template-columns:40px 40px;gap:8px;margin-top:6px}
+.apdet .amzbtns.sm button{width:40px;height:32px;font-size:20px}
+.apc{color:#2f7a2f;font-weight:700}.azc{color:#c0392b;font-weight:700}
+:root[data-skin="holo"] .aph.ap,:root[data-skin="holo"] .amzg.ap,:root[data-skin="holo"] .apdet.ap,:root[data-skin="holo"] .amzr .pt.ap,:root[data-skin="holo"] .apc{color:#5dff9a}
+:root[data-skin="holo"] .amzr.apr.on{border-color:#5dff9a;background:rgba(93,255,154,.12)}
+:root[data-skin="holo"] .apdet{background:rgba(10,30,36,.7)}:root[data-skin="holo"] .apdet p{color:#cfefff}
+:root[data-skin="holo"] .aph.az,:root[data-skin="holo"] .apdet.az{color:#ff5fb0}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2374,7 +2392,7 @@ table.lbrkt{margin-top:34px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v325</div>
+<div id="ver">Towerize v326</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -2649,7 +2667,7 @@ const XPV={vet:5,champ:12,runner:4,armored:15,bat:1,harpy:5,griffin:14,norm:2,fa
 // Curva de potencia: el DPS se multiplica ~2,2× en Nv 2, ~3,8× en Nv 3 y ~5,5× en Nv 4 (antes de habilidades)
 const L4D=3.2,L4H=2.7,LVMAX=3,LV={1:{dmg:1,cd:1,range:1,area:1,hp:1},2:{dmg:1.85,cd:.85,range:1.1,area:1.15,hp:1.6},3:{dmg:2.65,cd:.7,range:1.2,area:1.3,hp:2.2}};
 // Coste de subir de nivel (múltiplo de 5): Nv 2 = 150% del coste base, Nv 3 = 210%, Nv 4 = 300%
-const upCost0=(T,l)=>T.upc?T.upc[l]||0:Math.round(T.cost*(l===2?1.5:l===3?2.1:3)/5)*5,upCost=(T,l)=>{const v=upCost0(T,l);if(typeof S!=='undefined'&&S&&S.tut&&S.tut.freeUp)return 0;return typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('hammer')&&S.rs.hammer&&S.rs.hammer.cd===0&&!T.upc?Math.ceil(v*.85/5)*5:v;},phKey=()=>S?S.round+':'+S.phase:'',undoOk=t=>!!t&&t.bph===phKey(),sellVal=t=>TW[t.type].uniq?0:undoOk(t)?(t.undo||0):Math.floor((t.inv||TW[t.type].cost)/2);
+const upCost0=(T,l)=>T.upc?T.upc[l]||0:Math.round(T.cost*(l===2?1.5:l===3?2.1:3)/5)*5,upCost=(T,l)=>{const v=upCost0(T,l);if(typeof S!=='undefined'&&S&&S.tut&&S.tut.freeUp)return 0;return typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('hammer')&&S.rs.hammer&&S.rs.hammer.cd===0&&!T.upc?Math.ceil(v*.85/5)*5:v;},phKey=()=>S?S.round+':'+S.phase:'',undoOk=t=>!!t&&t.bph===phKey(),sellVal=t=>TW[t.type].uniq?0:undoOk(t)?(t.undo||0):typeof apOn==='function'&&apOn('rv')?(t.inv||0):Math.floor((t.inv||TW[t.type].cost)/2);
 // Nv 4: especializaciones (multiplicadores respecto a Nv 1, igual que LV) y habilidades compradas con oro, con rangos.
 const RAINP=.6,MAXPEN=25;
 // Sangrado: daño elemental por casilla recorrida y stack. Jefes: reducen un 50% cualquier efecto de control. Elementos de los rayos del Prisma (se repartirán en orden).
@@ -3664,8 +3682,9 @@ function castFreeze(c){
 }
 
 // ---- Dado de la suerte (pasivo): volver a tirar una vez en cada elección (piezas, ofertas de torres y cofres) ----
-const diceRr=k=>S&&S.relics&&rp('dice')&&!(S.drr||{})[k]?`<button class="drr" data-a="dreroll" data-k="${k}">🎲 Volver a tirar</button>`:'';
-function diceReroll(k){if(!rp('dice')||(S.drr||{})[k])return;
+// v326: el apoyo «Tirada de la ronda» también da una tirada (una por ronda, para piezas, torres o reliquias)
+const diceRr=k=>{if(!(S&&S.relics))return '';const dice=rp('dice')&&!(S.drr||{})[k],tir=typeof apTirOk==='function'&&apTirOk();return dice||tir?`<button class="drr" data-a="dreroll" data-k="${k}">🎲 ${dice?'Volver a tirar':'Tirada de la ronda'}</button>`:'';};
+function diceReroll(k){const dice=rp('dice')&&!(S.drr||{})[k];if(!dice&&!(typeof apTirOk==='function'&&apTirOk()))return;if(!dice)S.tirR=S.round;
  if(k==='pc'){if(S.phase!=='place')return;S.pi=null;deal();(S.drr=S.drr||{}).pc=1;}
  else if(k==='tw'){if(!RL.towo)return;const p=tPool();if(!p.length)return;RL.towo=towPick3(p);(S.drr=S.drr||{}).tw=1;renderTowerOffer();}
  else if(k==='rl'){if(!RL.choices)return;openRelic();(S.drr=S.drr||{}).rl=1;renderRelicPick();}
@@ -5434,7 +5453,7 @@ function anyPlace(o){
  for(let r=0;r<4;r++){for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++)if(check(bx,by,p)===0)return true;p=rot(p);}
  return false;
 }
-const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+(BF[b.k].free?0:BF[b.k].sup?BFCS:BFC),0);
+const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+Math.round((BF[b.k].free?0:BF[b.k].sup?BFCS:BFC)*(typeof apOn==='function'&&apOn('cb')?.5:1)),0);
 function dealTry(){
  // rescate: si solo queda un extremo libre, salen sí o sí la Bifurcación y el Cruce, gratis
  const E1=!S.tut&&S.round<ROUNDS?collectEnds():[],resc=E1.length===1,RN=['Bifurcación','Cruce'];
@@ -10329,6 +10348,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:326,f:'14 nov 2026',t:'Apoyos',s:[['Apoyos',['Nuevo: los Apoyos, la otra cara de las Amenazas. Hacen la partida más llevadera (oro al empezar, casillas baratas, una torre gratis por ronda, tirada gratis por ronda…) a cambio de restar amenaza y puntuación.','Se abren poco a poco: el primer grupo al ganar una partida con alguna amenaza, y el resto ganando con más amenaza.','El botón pasa a «Apoyos / Amenazas»: Apoyos a la izquierda y Amenazas a la derecha.']],['Puntuación',['Cada punto de amenaza suma un 10 % y cada punto de apoyo lo resta. Los rangos extremos (Niebla de guerra 4, Sin refuerzos 3) multiplican por 1,25 y los apoyos fuertes por 0,8. Nunca baja de ×0,5.','La clasificación usa la amenaza neta (amenazas − apoyos).']],['Opciones',['Pausa automática: si cambias de ventana en plena partida, el juego se pausa solo (Opciones › Juego).']]]},
  {v:325,f:'13 nov 2026',t:'Piezas corruptas',s:[['Amenazas',['Piezas corruptas: cada pocas elecciones, las piezas traen una casilla maldita (aspa roja). Hay que construir en ella antes que en ningún otro sitio, su torre no se puede vender y sus mejoras cuestan más.']]]},
  {v:324,f:'13 nov 2026',t:'Clasificación',s:[['Clasificación',['Al acabar una partida puedes subirla a la clasificación con el nombre de tu piloto y compararte con otros jugadores.','Puedes elegir que se suban solas cuando sea tu mejor marca (Opciones › Juego).','Nueva cinta «Clasificación» en el final de partida, con una tabla por era.']]]},
  {v:323,f:'13 nov 2026',t:'Amenazas nuevas',s:[['Amenazas',['Asedio sin tregua: desde que pones la pieza tienes 30 s (o 20 s) para construir; después la oleada empieza sola.','Inflación: cada torre del mismo tipo cuesta un 10 % más que la anterior.','Niebla de guerra, en 4 rangos: la línea de rondas solo enseña la siguiente; enemigos invisibles hasta que los detectas; portales sin información; y, para los más valientes, portales que no se ven.','Sabotaje: un saboteador va a por una torre (los dos salen marcados); si llega, la apaga 6 s.','Abanderados: mientras vive el abanderado, su escuadra no se puede ralentizar ni empujar.']]]},
@@ -12080,7 +12100,7 @@ setInterval(()=>{try{if(azEraDone(1)&&!(ACHS&&ACHS.erac1))achieve('erac1');if(az
 // ---- pantalla de Amenazas ----
 const azRow=(t,sel,ro)=>{const[id,n,,rk]=t,r=sel[id]||0,lk=!azUn(t)||t[4]==='fut',p=rk.slice(0,r).reduce((a,x)=>a+x[0],0);
  return `<div class="amzr${r?' on':''}${!ro&&AZUI.sel===id?' sel':''}${lk?' lk':''}"${ro?'':` data-a="azsel" data-id="${id}"`}><span class="ai">${lk?AZLOCK:AZIC[id]}</span><span><b>${lk?'???':n}</b>${!lk&&t[5]?'<span class="tg">próximamente</span>':''}</span><span class="pp">${lk?'':rk.map((x,i)=>`<i class="${i<r?'f':''}"></i>`).join('')}</span><span class="pt">${p?'+'+p:''}</span></div>`;};
-const azTot=sel=>{const p=azPtsOf(sel);return `<span class="amztot"><span><small>Amenaza</small><b>${p}</b></span><span><small>Puntuación</small><b>${azMult(p)}</b></span></span>`;};
+const azTot=sel=>{const p=azPtsOf(sel);return `<span class="amztot"><span><small>Amenaza</small><b>${p}</b></span><span><small>Puntuación</small><b>${typeof azScoreM==='function'?azMultT(azScoreM(sel,{})):azMult(p)}</b></span></span>`;};
 function azParts(){const sel=AZ.sel[ERA]=AZ.sel[ERA]||{},t=AZT.find(x=>x[0]===AZUI.sel)||AZT[0],lk=!azUn(t)||t[4]==='fut';
  const left=`<h3>Amenazas</h3><div class="bksub">Opcional · hacen la partida más difícil y puntúan más · se guardan para la próxima partida</div><div class="amzl">${AZG.map(([g,n])=>`<div class="amzg">${n}</div>`+AZT.filter(x=>x[2]===g).map(x=>azRow(x,sel)).join('')).join('')}</div>`;
  let right;
@@ -12098,9 +12118,12 @@ function azResParts(){const id=RL.hsel,D=HEROES[id],E=ERADEF[ERA]||{},done=azEra
  return {marks:null,key:'res'+JSON.stringify(sel)+ERA+id,left,right,footL:`<button class="lbbk" data-a="azch" data-v="hero">‹ Héroe</button>`,footR:`<button class="gbtn" data-a="azgo">Empezar partida ›</button>`,after:azFit};}
 // botón de la era: a la derecha de las piezas (solo con la era completada)
 const azSeal=()=>{const sel=AZ.sel[ERA]||{},p=azPtsOf(sel),on=Object.entries(sel).filter(x=>x[1]>0);
- return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Amenazas</b>${on.length?`<small>${p} puntos · puntuación ${azMult(p)}</small><span class="act">${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: haz la partida más difícil</small>'}</span></div></div>`;};
+ // v326: con los Apoyos desbloqueados, el mismo botón pasa a «Apoyos / Amenazas» con el nivel neto y la puntuación completa
+ if(typeof apOk==='function'&&apOk()){const as=apSelOf(),pp=apPtsOf(as),m=azScoreM(sel,as),ao=APT.filter(t=>as[t[0]]);
+  return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Apoyos / Amenazas</b>${on.length||ao.length?`<small>${pp?`<span class="apc">−${pp}</span> · `:''}${p?`<span class="azc">+${p}</span> · `:''}amenaza ${Math.max(0,p-pp)} · puntuación ${azMultT(m)}</small><span class="act">${ao.map(t=>`<span class="ai">${APIC('#3a8a3a')}</span>`).join('')}${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: ayúdate o ponte las cosas difíciles</small>'}</span></div></div>`;}
+ return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Amenazas</b>${on.length?`<small>${p} puntos · puntuación ${typeof azScoreM==='function'?azMultT(azScoreM(sel,{})):azMult(p)}</small><span class="act">${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: haz la partida más difícil</small>'}</span></div></div>`;};
 {const _pp=prepParts;prepParts=function(){if(LB.step==='amz')return azParts();if(LB.step==='res')return azResParts();const P=_pp.apply(this,arguments);
- try{if(P&&(P.key==='era'||P.key==='era2')&&azEraDone(ERA)){P.key+='az'+azPtsOf(AZ.sel[ERA]);const _a=P.after;P.after=()=>{try{_a&&_a();}catch(e){}setTimeout(()=>{try{const pcs=document.querySelector('#comp .lbera .pcs');if(pcs&&!document.querySelector('#comp .amzpos')){pcs.classList.add('amzA');pcs.insertAdjacentHTML('afterend',azSeal());azFit();}}catch(e){}},0);};}}catch(e){}
+ try{if(P&&(P.key==='era'||P.key==='era2')&&azEraDone(ERA)){P.key+='az'+azPtsOf(AZ.sel[ERA])+(typeof apSelOf==='function'?JSON.stringify(apSelOf()):'');const _a=P.after;P.after=()=>{try{_a&&_a();}catch(e){}setTimeout(()=>{try{const pcs=document.querySelector('#comp .lbera .pcs');if(pcs&&!document.querySelector('#comp .amzpos')){pcs.classList.add('amzA');pcs.insertAdjacentHTML('afterend',azSeal());azFit();}}catch(e){}},0);};}}catch(e){}
  return P;};}
 // clics (antes que el resto: elegir héroe pasa por el resumen)
 document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
@@ -12123,7 +12146,7 @@ document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.clos
 {const _sc=scoreCalc;scoreCalc=function(){const r=_sc.apply(this,arguments);try{const p=azRunPts();if(p>0&&r.t>0){const x=Math.round(r.t*p*.1);r.rows.push(['amz','Amenazas',p+' puntos de amenaza · '+azMult(p),x]);r.t+=x;}}catch(e){}return r;};}
 {const _hr=hsRec;hsRec=function(){const r=_hr.apply(this,arguments);try{if(r&&S&&S.amz)r.amz=Object.assign({},S.amz);}catch(e){}return r;};}
 // ---- desbloqueos al ganar ----
-{const _eg=endGame;endGame=function(){const won=S&&S.phase==='won',p=azRunPts(),era=ERA,fast=won&&!S.tut&&(GT.r||1e9)<=ROUNDS*60,act=Object.assign({},S&&S.amz||{});const r=_eg.apply(this,arguments);try{if(won){const nu=[];AZ.rk=AZ.rk||{};
+{const _eg=endGame;endGame=function(){const won=S&&S.phase==='won',p=typeof apNetRun==='function'?apNetRun():azRunPts(),era=ERA,fast=won&&!S.tut&&(GT.r||1e9)<=ROUNDS*60,act=Object.assign({},S&&S.amz||{});const r=_eg.apply(this,arguments);try{if(won){const nu=[];AZ.rk=AZ.rk||{};
   for(const[k,v]of Object.entries(act)){const t=AZT.find(x=>x[0]===k);if(t&&v>=azRk(k)&&v<t[3].length){AZ.rk[k]=v+1;nu.push(t[1]+' (rango '+(v+1)+')');}}
   for(const t of AZT){if(azUn(t))continue;const c=t[4];if((typeof c==='number'&&p>=c)||(c==='e2'&&era===2&&p>0)||(c==='fast'&&fast)){AZ.un[t[0]]=1;nu.push(t[1]);}}
   if(nu.length){azSave();if(azEraDone(1)||azEraDone(2))setTimeout(()=>{try{toast('Amenazas desbloqueadas: <b>'+nu.join('</b>, <b>')+'</b>');}catch(e){}},1200);}}}catch(e){}return r;};}
@@ -12131,7 +12154,7 @@ document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.clos
 document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a="preset"]');if(b&&typeof OP!=='undefined'&&OP.rst){for(const k of['rt-amz','rt-prog'])try{localStorage.removeItem(k);}catch(e){}}},true);
 
 // ---- en partida: contador (en el sitio de los FPS; los FPS van a su derecha) ----
-setInterval(()=>{try{let c=$('amzchip');const p=azRunPts(),show=p>0&&typeof S!=='undefined'&&S&&S.hero&&!document.body.classList.contains('inmenu');
+setInterval(()=>{try{let c=$('amzchip');const p=typeof apNetRun==='function'?apNetRun():azRunPts(),show=p>0&&typeof S!=='undefined'&&S&&S.hero&&!document.body.classList.contains('inmenu');
  if(!show){if(c)c.style.display='none';return;}
  if(!c){c=document.createElement('div');c.id='amzchip';c.className='c amzchip';document.body.appendChild(c);}
  const h=`<span class="ai">${AZIC.sup}</span>Amenazas · ${p}`;if(c.dataset.h!==h){c.innerHTML=h;c.dataset.h=h;azFit();}c.style.display='';
@@ -12276,6 +12299,115 @@ function azCurPending(){const out=[];if(!S||!S.buff||!S.cc)return out;const seen
 {const _s=sell;sell=function(t){if(azIsCur(t)){S.msg='La torre de una casilla maldita no se puede vender.';ui();return;}return _s.apply(this,arguments);};}
 // y sus mejoras cuestan más
 {const _tc=tCost;tCost=function(t,c){const v=_tc.apply(this,arguments);if(v>0&&azIsCur(t))return Math.round(v*(1+azCurM()));return v;};}
+// ==================== v326 · Apoyos (la otra cara de las Amenazas) ====================
+// Nogal (13/14-nov-2026): opcionales, hacen la partida más llevadera o más divertida sin cargarse mecánicas.
+// Cada apoyo resta puntos de amenaza (nivel neto = amenazas − apoyos, nunca menos de 0: decide la tabla de clasificación y los desbloqueos)
+// y baja la puntuación: −10 % por punto, y los «fuertes» además ×0,8 aparte. Las amenazas extremas (Niebla R4, Sin refuerzos R3) dan ×1,25 aparte.
+// Suelo de la puntuación: ×0,5. Se abren poco a poco: al ganar con amenazas, y luego ganando con amenaza neta 3, 5 y 7.
+// Pantalla: el botón pasa a «Apoyos / Amenazas»; doble página con los Apoyos a la izquierda (verde) y las Amenazas a la derecha (rojo).
+// datos: [id, nombre, grupo, puntos, fuerte, desbloqueo, texto, aún no listo]
+const APT=[
+ ['bi','Bolsa inicial','ec',1,0,'w1','Empiezas la partida con <b>150</b> de oro más.'],
+ ['cb','Casillas baratas','ec',1,0,'w1','Las casillas especiales de las piezas cuestan la <b>mitad</b>.'],
+ ['rv','Reventa justa','ec',1,0,3,'Al vender una torre recuperas <b>todo</b> lo que invertiste en ella.'],
+ ['pp','Primera piedra','ec',2,1,7,'La primera torre que construyes en cada ronda es <b>gratis</b>.'],
+ ['apr','Aprendices','to',1,0,3,'La especialización de Nv 4 y las habilidades cuestan un <b>20 %</b> menos.'],
+ ['ag','Ascenso gratuito','to',2,1,7,'Al empezar cada oleada, una de tus torres de Nv 1 sube a <b>Nv 2</b> gratis.'],
+ ['rr','Refuerzos rápidos','tr',1,0,'w1','Tus soldados reaparecen el <b>doble de rápido</b>.'],
+ ['hi','Héroe incansable','tr',1,0,3,'Tu héroe revive en la <b>mitad</b> de tiempo.'],
+ ['mf','Murallas firmes','tr',1,0,'w1','El núcleo empieza con <b>5</b> de vida más.'],
+ ['tir','Tirada de la ronda','ma',1,0,5,'Cada ronda tienes <b>una tirada gratis</b> para volver a sacar las piezas, las torres o las reliquias que te ofrecen. No se acumula: si no la gastas, sigue ahí; si la gastas, tienes otra en la siguiente ronda.'],
+ ['ba','Botín y aventura','ma',2,1,7,'Cada partida trae <b>un cofre y un evento más</b>.'],
+ ['vig','Vigía','in',1,0,5,'Al señalar las 2 rondas siguientes en la línea de rondas, ves exactamente qué enemigos vienen.',1]];
+const APG=[['ec','Economía'],['to','Torres'],['tr','Tropas y héroe'],['ma','Mapa y piezas'],['in','Información']];
+const AZX={nie:4,ref:3};/* rangos extremos de amenaza: ×1,25 aparte */
+AZ.ap=AZ.ap||{sel:{1:{},2:{}}};
+const apOk=()=>AZ.apw!=null;
+const apUn=t=>t[5]==='w1'?apOk():apOk()&&(AZ.apw||0)>=t[5];
+const apReady=t=>apUn(t)&&!t[7];
+function apOn(k){return !!(typeof S!=='undefined'&&S&&S.ap&&S.ap[k])&&!S.tut&&!S.pvE&&!S.pvH;}
+const apSelOf=()=>{const s=AZ.ap.sel[ERA]=AZ.ap.sel[ERA]||{};return s;};
+function apPtsOf(sel){return APT.reduce((a,t)=>a+(sel&&sel[t[0]]?t[3]:0),0);}
+// multiplicador de puntuación y nivel neto (para la selección o para la partida en curso)
+function azScoreM(amz,ap){const tp=azPtsOf(amz||{}),pp=apPtsOf(ap||{});let m=1+.1*tp-.1*pp;
+ for(const k in AZX)if((amz||{})[k]>=AZX[k])m*=1.25;for(const t of APT)if(ap&&ap[t[0]]&&t[4])m*=.8;return Math.max(.5,m);}
+function azNetOf(amz,ap){return Math.max(0,azPtsOf(amz||{})-apPtsOf(ap||{}));}
+function apNetRun(){return typeof S!=='undefined'&&S?azNetOf(S.amz,S.ap):0;}
+function azMultT(m){return '×'+(Math.round(m*100)/100).toFixed(2).replace(/0$/,'').replace('.',',');}
+// ---- al empezar: los apoyos elegidos (solo si la era tiene las Amenazas y están desbloqueados) ----
+{const _ch=chooseHero;chooseHero=function(id){try{if(typeof S!=='undefined'&&S&&!S.tut&&!S.ap){const sel=apSelOf();S.ap={};if(azEraDone(ERA))for(const t of APT)if(sel[t[0]]&&apReady(t))S.ap[t[0]]=1;}}catch(e){}
+ const r=_ch.apply(this,arguments);try{if(S&&S.ap&&!S.apIni){S.apIni=1;
+  if(S.ap.bi)S.gold+=150;if(S.ap.mf)S.hp+=5;
+  if(S.ap.ba){const k=freeSlot();if(k)S.chests[k]=1;
+   const used=new Set(Object.values(S.evts||{})),pool=shuf(Object.keys(EVENTS).filter(k=>evEraOk(k)&&!evLocked(k)&&!used.has(k)));
+   const c=Math.floor(BN/2),cand=[];for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const q=bx+','+by;if(S.blocks[q]||S.chests[q]||(S.evts&&S.evts[q])||(bx===c&&by===c))continue;cand.push(q);}
+   if(pool.length&&cand.length){S.evts=S.evts||{};S.evts[shuf(cand)[0]]=pool[0];}}
+  ui();}}catch(e){console.warn(e);}return r;};}
+{const _sg=startGame;startGame=function(){const r=_sg.apply(this,arguments);try{if(S){S.ap=null;S.apIni=0;}}catch(e){}return r;};}
+// ---- efectos ----
+// Refuerzos rápidos y Héroe incansable
+{const _ud=unitDeath;unitDeath=function(t,s){const r=_ud.apply(this,arguments);try{if(s&&s.rt>0&&s.rt<1e8){if(s.H&&apOn('hi'))s.rt*=.5;else if(!s.H&&t&&!t.hero&&apOn('rr'))s.rt*=.5;}}catch(e){}return r;};}
+// Aprendices (Nv 4: especialización y habilidades)
+{const _tc=tCost;tCost=function(t,c){const v=_tc.apply(this,arguments);if(v>0&&t&&t.lvl>=3&&apOn('apr'))return Math.round(v*.8);return v;};}
+// Primera piedra: la primera torre de cada ronda, gratis
+{const _b=build;build=function(fx,fy){const n0=S?S.list.length:0,g0=S?S.gold:0;const r=_b.apply(this,arguments);try{if(apOn('pp')&&S.list.length>n0&&S.ppR!==S.round){const t=S.list[S.list.length-1],paid=g0-S.gold;
+ if(paid>0&&!t.hero){S.gold+=paid;S.st.spent=Math.max(0,(S.st.spent||0)-paid);t.inv=0;t.undo=0;S.ppR=S.round;try{toast('<b>Primera piedra</b><br><small>Esta torre te sale gratis.</small>');}catch(e){}ui();}}}catch(e){}return r;};}
+// Ascenso gratuito: al empezar cada oleada, una torre de Nv 1 sube a Nv 2
+{const _sw=startWave;startWave=function(){const was=S&&S.phase;const r=_sw.apply(this,arguments);try{if(apOn('ag')&&was!=='wave'&&S.phase==='wave'){
+ const L=S.list.filter(t=>t.lvl===1&&!t.hero&&!t.summ&&TW[t.type]&&!TW[t.type].uniq&&!(t.holo>0));if(L.length){const t=L[Math.floor(Math.random()*L.length)],c=tCost(t,upCost(TW[t.type],2));
+  S.gold+=c;const sp=S.st.spent;upgrade(t);if(t.lvl===2){S.st.spent=sp;try{toast('<b>Ascenso gratuito</b><br><small>'+TW[t.type].n+' sube a Nv 2.</small>');}catch(e){}}else S.gold-=c;}}}catch(e){console.warn(e);}return r;};}
+// Tirada de la ronda: una tirada gratis por ronda (piezas, torres o reliquias); no se acumula
+function apTirOk(){return apOn('tir')&&S.tirR!==S.round;}
+// ---- puntuación: la de las amenazas pasa a contar también apoyos y extremos ----
+// (la fila 'amz' la añade amenazas.js; aquí se rehace con el multiplicador completo)
+{const _sc=scoreCalc;scoreCalc=function(){const r=_sc.apply(this,arguments);try{if(!S||!(S.amz||S.ap))return r;const i=r.rows.findIndex(x=>x[0]==='amz');if(i>=0){r.t-=r.rows[i][3];r.rows.splice(i,1);}
+ const tp=azPtsOf(S.amz||{}),pp=apPtsOf(S.ap||{});if(!tp&&!pp)return r;const m=azScoreM(S.amz,S.ap),x=Math.round(r.t*(m-1));
+ r.rows.push(['amz',pp?'Amenazas y apoyos':'Amenazas',`amenaza ${azNetOf(S.amz,S.ap)}${pp?' ('+tp+' − '+pp+')':''} · ${azMultT(m)}`,x]);r.t+=x;}catch(e){}return r;};}
+// ---- desbloqueo de los apoyos al ganar ----
+{const _eg=endGame;endGame=function(){const won=S&&S.phase==='won'&&!S.tut,tp=S?azPtsOf(S.amz||{}):0,net=apNetRun();const pre=APT.filter(apUn).map(t=>t[0]);const r=_eg.apply(this,arguments);try{
+ if(won&&tp>0){AZ.apw=Math.max(AZ.apw==null?-1:AZ.apw,net);azSave();const nu=APT.filter(t=>apUn(t)&&!pre.includes(t[0])).map(t=>t[1]);
+  if(nu.length)setTimeout(()=>{try{toast('Apoyos desbloqueados: <b>'+nu.join('</b>, <b>')+'</b>');}catch(e){}},2200);}}catch(e){}return r;};}
+// ---- pantalla: doble página Apoyos | Amenazas ----
+const APUI={sel:null};
+const APIC=c=>`<span class="apdot" style="--c:${c}"></span>`;
+const apRow=(t,sel)=>{const[id,n,,p,st]=t,on=!!sel[id],lk=!apUn(t);
+ return `<div class="amzr apr${on?' on':''}${APUI.sel===id?' sel':''}${lk?' lk':''}" data-a="apsel" data-id="${id}"><span class="ai">${lk?AZLOCK:APIC(on?'#3a8a3a':'#cfe5c9')}</span><span><b>${lk?'???':n}</b>${!lk&&st?'<span class="tg ap">fuerte</span>':''}${!lk&&t[7]?'<span class="tg">próximamente</span>':''}</span><span class="pt ap">${on?'−'+p:''}</span></div>`;};
+const apCond=u=>u==='w1'?'Gana una partida con alguna amenaza':'Gana una partida con amenaza '+u+' o más';
+function apDet(){const t=APT.find(x=>x[0]===APUI.sel);if(!t)return '<div class="apdet ap"><p>Elige un apoyo para ver qué hace. Pulsa otra vez para activarlo o quitarlo.</p></div>';
+ if(!apUn(t))return `<div class="apdet ap"><b>???</b><p>Para desbloquear: <b>${apCond(t[5])}</b></p></div>`;
+ const on=!!apSelOf()[t[0]];return `<div class="apdet ap"><b>${t[1]} · −${t[3]}${t[4]?' · fuerte':''}</b><p>${t[6]}${t[4]?' <i>Además, ×0,8 a la puntuación.</i>':''}</p>${t[7]?'<p class="bknote">Llegará en una próxima versión.</p>':`<button class="gbtn apbt" data-a="aptog">${on?'Quitar':'Activar'}</button>`}</div>`;}
+function azDetC(){const sel=AZ.sel[ERA]||{},t=AZT.find(x=>x[0]===AZUI.sel);if(!t)return '<div class="apdet az"><p>Elige una amenaza para ver sus rangos.</p></div>';
+ if(!azUn(t)||t[4]==='fut')return `<div class="apdet az"><b>???</b><p>Para desbloquear: <b>${azCond(t[4])}</b></p></div>`;
+ const r=sel[t[0]]||0,cur=t[3][Math.max(0,r-1)],nx=t[3][r],ex=AZX[t[0]];
+ return `<div class="apdet az"><b>${t[1]} · ${r?'Rango '+r+' de '+t[3].length:'sin activar'}${r&&ex&&r>=ex?' · extremo':''}</b><p>${r?cur[1]:t[3][0][1]}${!r?'':nx&&r<azRk(t[0])?' <i>Siguiente: '+nx[1]+'</i>':''}</p>${t[5]?'<p class="bknote">Llegará en una próxima versión.</p>':`<span class="amzbtns sm"><button class="gbtn" data-a="azdec"${r?'':' disabled'}><span>−</span></button><button class="gbtn" data-a="azinc"${r<Math.min(t[3].length,azRk(t[0]))?'':' disabled'}><span>+</span></button></span>`}</div>`;}
+const apTot=()=>{const a=AZ.sel[ERA]||{},p=apSelOf(),tp=azPtsOf(a),pp=apPtsOf(p),m=azScoreM(a,p);
+ return `<span class="amztot"><span><small>Amenaza</small><b>${pp?tp+' − '+pp+' = ':''}${Math.max(0,tp-pp)}</b></span><span><small>Puntuación</small><b>${azMultT(m)}</b></span></span>`;};
+{const _ap=azParts;azParts=function(){const P=_ap.apply(this,arguments);try{if(!apOk()||!azEraDone(ERA))return P;const sel=AZ.sel[ERA]||{},as=apSelOf();
+ P.left=`<h3 class="aph ap">Apoyos</h3><div class="bksub">Hacen la partida más llevadera · restan amenaza y puntuación</div><div class="amzl apl">${APG.map(([g,n])=>{const L=APT.filter(x=>x[2]===g);return L.length?`<div class="amzg ap">${n}</div>`+L.map(x=>apRow(x,as)).join(''):'';}).join('')}</div>${apDet()}`;
+ P.right=`<h3 class="aph az">Amenazas</h3><div class="bksub">Hacen la partida más difícil · suman amenaza y puntuación</div><div class="amzl apl">${AZG.map(([g,n])=>`<div class="amzg">${n}</div>`+AZT.filter(x=>x[2]===g).map(x=>azRow(x,sel)).join('')).join('')}</div>${azDetC()}`;
+ P.key='amzap'+JSON.stringify(sel)+JSON.stringify(as)+AZUI.sel+APUI.sel;P.footR=`<span class="amzft">${apTot()}<button class="gbtn" data-a="azback">Continuar ›</button></span>`;P.after=()=>{apFit();setTimeout(apFit,150);setTimeout(apFit,450);};}catch(e){console.warn(e);}return P;};}
+// cada lista llega justo hasta su detalle, que queda encima del pie del libro
+const apFit=()=>setTimeout(()=>{try{if(document.body.classList.contains('mfs'))return;const F=document.querySelector('#comp [data-a="azback"]');if(!F)return;const ft=F.getBoundingClientRect().top;
+ for(const L of document.querySelectorAll('#comp .apl')){const D=L.parentElement.querySelector('.apdet');if(!D)continue;const z=(L.getBoundingClientRect().height/(L.offsetHeight||1))||1,lt=L.getBoundingClientRect().top,dh=D.getBoundingClientRect().height;const h=ft-lt-dh-18;if(h>60)L.style.maxHeight=h/z+'px';}}catch(e){}},40);
+document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a="apsel"],[data-a="aptog"]');if(!b)return;ev.stopPropagation();ev.preventDefault();try{sfx('page');}catch(_){}
+ const sel=apSelOf();if(b.dataset.a==='apsel'){const id=b.dataset.id,t=APT.find(x=>x[0]===id);if(APUI.sel===id&&t&&apReady(t)){if(sel[id])delete sel[id];else sel[id]=1;azSave();}APUI.sel=id;}
+ else{const t=APT.find(x=>x[0]===APUI.sel);if(t&&apReady(t)){if(sel[t[0]])delete sel[t[0]];else sel[t[0]]=1;azSave();}}lbRender();},true);
+// el botón de la preparación y el resumen: «Apoyos / Amenazas», con el nivel neto y la puntuación
+{const _pp=prepParts;prepParts=function(){const P=_pp.apply(this,arguments);try{if(apOk()&&azEraDone(ERA)&&LB.step!=='amz'){const a=AZ.sel[ERA]||{},p=apSelOf(),tp=azPtsOf(a),pp=apPtsOf(p),m=azScoreM(a,p);
+ const fix=h=>String(h||'').replace(/<b>Amenazas<\/b>(<small>[^<]*<\/small>)?/,`<b>Apoyos / Amenazas</b><small>${pp?`<span class="apc">−${pp}</span> · `:''}${tp?`<span class="azc">+${tp}</span> · `:''}amenaza ${Math.max(0,tp-pp)} · puntuación ${azMultT(m)}</small>`);
+ for(const k of ['left','right'])if(typeof P[k]==='string')P[k]=fix(P[k]);if(LB.step==='res'&&typeof P.right==='string'){const on=APT.filter(t=>p[t[0]]&&apReady(t));if(on.length)P.right+=`<h3 class="aph ap" style="margin-top:10px">Apoyos</h3><div class="amzl" style="margin-top:6px">${on.map(t=>apRow(t,p)).join('')}</div>`;
+  P.right=P.right.replace(/\d+ puntos de amenaza · puntuación ×[\d,]+/,`amenaza ${Math.max(0,tp-pp)} · puntuación ${azMultT(m)}`);}}}catch(e){}return P;};}
+window.addEventListener('resize',()=>{if(typeof LB!=='undefined'&&LB.open&&LB.step==='amz')apFit();});
+setInterval(()=>{try{if(typeof LB!=='undefined'&&LB.open&&LB.area==='prep'&&LB.step==='amz'&&document.querySelector('#comp .apl'))apFit();}catch(e){}},500);
+// ==================== v326 · Pausa automática al cambiar de ventana ====================
+// Idea aprobada por Nogal (13-nov-2026): si la ventana del juego pierde el foco en plena partida, se abre el menú de pausa.
+// Se puede quitar en Opciones › Juego.
+if(OPT.autopause===undefined)OPT.autopause=true;
+OPTS.splice(Math.max(0,OPTS.findIndex(o=>o.tab==='jg')),0,{tab:'jg',type:'toggle',key:'autopause',def:true,label:'Pausa automática',desc:'Si cambias de ventana o de pestaña en plena partida, el juego se pausa solo.'});
+function apAutoPause(){try{if(!OPT.autopause||typeof S==='undefined'||!S||!S.hero||S.pvE||S.pvH||PREVIEWING)return;if(!(S.phase==='wave'||S.phase==='build'))return;
+ if(S.speed===0||(typeof LB!=='undefined'&&LB.open)||(typeof RL!=='undefined'&&RL.open)||document.body.classList.contains('inmenu'))return;openPause();}catch(e){}}
+addEventListener('blur',apAutoPause);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')apAutoPause();});
 // ==================== v324 · Clasificación de playtesters (servidor en Cloudflare) ====================
 // Nogal (13-nov-2026): al final de la partida, botón «Subir a la clasificación» en el hueco libre; si sigues sin subirla, aviso en el
 // centro con la pantalla oscurecida (Sí y siempre / Sí, solo esta / No, gracias + «No volver a mostrar»). El nombre es el del piloto:
@@ -12296,7 +12428,7 @@ OPTS.splice(Math.max(0,OPTS.findIndex(o=>o.tab==='jg')),0,{tab:'jg',type:'choice
 // la partida que acaba de terminar
 function lbRun(){if(!S||!S.hero||S.tut||S.pvE||S.pvH||(typeof PREVIEWING!=='undefined'&&PREVIEWING))return null;
  const sc=S.scF||(typeof scoreCalc==='function'?scoreCalc():{t:0});if(!(sc.t>0))return null;
- const era=(S.era||ERA||1),amz=(S.amz&&typeof azPtsOf==='function')?azPtsOf(S.amz):0;
+ const era=(S.era||ERA||1),amz=typeof apNetRun==='function'?apNetRun():(S.amz&&typeof azPtsOf==='function')?azPtsOf(S.amz):0;
  const sel={};for(const k in S.amz||{})if(S.amz[k]>0)sel[k]=S.amz[k];
  return {hero:S.hero.id,era,amz,score:Math.round(sc.t),round:Math.min(S.round,ROUNDS),won:S.phase==='won',sel,ver:String(NOVV())};}
 function lbBtnHTML(){const R=LBR.cur;if(!R)return '';const st=LBR.up,amzT=lbAmzOpen(R.era)?'Amenaza '+R.amz+' · ':'';

@@ -93,6 +93,7 @@ const T=[
  ['amenazas2.js','Amenazas, tanda 2: Asedio sin tregua, Inflación y Niebla de guerra'],
  ['amenazas3.js','Amenazas, tanda 3: Sabotaje y Abanderados'],
  ['amenazas4.js','Amenazas: Piezas corruptas (casilla maldita)'],
+ ['apoyos.js','Apoyos: desbloqueo, doble página, puntuación y efectos'],
  ['clasificacion.js','Clasificación: botón al final, aviso, nombre del piloto, subida y tabla'],
  ['logros_niveles.js','Logros por niveles (bronce, plata, oro, platino), bajas con cada torre y Estadísticas › Marcas'],
  ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],

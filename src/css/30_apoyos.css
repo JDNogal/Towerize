@@ -1,0 +1,18 @@
+/* v326 · Apoyos: doble página Apoyos (verde) | Amenazas (rojo) */
+.aph{margin-bottom:0}.aph.ap{color:#2f7a2f}.aph.az{color:#a33}
+.amzg.ap{color:#2f7a2f}
+.amzr.apr.on{border-color:#3a8a3a;background:rgba(58,138,58,.14)}
+.amzr .pt.ap{color:#2f7a2f}
+.apdot{display:inline-block;width:1.6em;height:1.6em;border-radius:50%;background:var(--c);border:2px solid #1b1712;box-sizing:border-box}
+.amzr .tg.ap{background:#2f7a2f;color:#fff;border-radius:4px;padding:0 4px;font-size:10px;margin-left:6px;font-weight:700}
+.apdet{margin-top:8px;border:2px solid currentColor;border-radius:10px;padding:7px 11px;background:rgba(255,250,240,.75);font-size:13px;line-height:1.35}
+.apdet.ap{color:#2f7a2f}.apdet.az{color:#a33}
+.apdet>b{display:block;font-size:14px}.apdet p b,.apdet p i{display:inline!important;width:auto;height:auto;border:0;background:none;margin:0;padding:0;font-size:inherit}.apdet p{color:var(--ink,#3a2617);margin:3px 0 0}.apdet p i{opacity:.8}
+.apdet .apbt{margin-top:4px;padding:4px 14px;font-size:13px;min-height:0}
+.apdet .amzbtns.sm{display:inline-grid;grid-template-columns:40px 40px;gap:8px;margin-top:6px}
+.apdet .amzbtns.sm button{width:40px;height:32px;font-size:20px}
+.apc{color:#2f7a2f;font-weight:700}.azc{color:#c0392b;font-weight:700}
+:root[data-skin="holo"] .aph.ap,:root[data-skin="holo"] .amzg.ap,:root[data-skin="holo"] .apdet.ap,:root[data-skin="holo"] .amzr .pt.ap,:root[data-skin="holo"] .apc{color:#5dff9a}
+:root[data-skin="holo"] .amzr.apr.on{border-color:#5dff9a;background:rgba(93,255,154,.12)}
+:root[data-skin="holo"] .apdet{background:rgba(10,30,36,.7)}:root[data-skin="holo"] .apdet p{color:#cfefff}
+:root[data-skin="holo"] .aph.az,:root[data-skin="holo"] .apdet.az{color:#ff5fb0}

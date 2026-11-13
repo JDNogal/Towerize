@@ -41,7 +41,7 @@ function anyPlace(o){
  for(let r=0;r<4;r++){for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++)if(check(bx,by,p)===0)return true;p=rot(p);}
  return false;
 }
-const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+(BF[b.k].free?0:BF[b.k].sup?BFCS:BFC),0);
+const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+Math.round((BF[b.k].free?0:BF[b.k].sup?BFCS:BFC)*(typeof apOn==='function'&&apOn('cb')?.5:1)),0);
 function dealTry(){
  // rescate: si solo queda un extremo libre, salen sí o sí la Bifurcación y el Cruce, gratis
  const E1=!S.tut&&S.round<ROUNDS?collectEnds():[],resc=E1.length===1,RN=['Bifurcación','Cruce'];

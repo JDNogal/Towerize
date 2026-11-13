@@ -84,7 +84,7 @@ const XPV={vet:5,champ:12,runner:4,armored:15,bat:1,harpy:5,griffin:14,norm:2,fa
 // Curva de potencia: el DPS se multiplica ~2,2× en Nv 2, ~3,8× en Nv 3 y ~5,5× en Nv 4 (antes de habilidades)
 const L4D=3.2,L4H=2.7,LVMAX=3,LV={1:{dmg:1,cd:1,range:1,area:1,hp:1},2:{dmg:1.85,cd:.85,range:1.1,area:1.15,hp:1.6},3:{dmg:2.65,cd:.7,range:1.2,area:1.3,hp:2.2}};
 // Coste de subir de nivel (múltiplo de 5): Nv 2 = 150% del coste base, Nv 3 = 210%, Nv 4 = 300%
-const upCost0=(T,l)=>T.upc?T.upc[l]||0:Math.round(T.cost*(l===2?1.5:l===3?2.1:3)/5)*5,upCost=(T,l)=>{const v=upCost0(T,l);if(typeof S!=='undefined'&&S&&S.tut&&S.tut.freeUp)return 0;return typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('hammer')&&S.rs.hammer&&S.rs.hammer.cd===0&&!T.upc?Math.ceil(v*.85/5)*5:v;},phKey=()=>S?S.round+':'+S.phase:'',undoOk=t=>!!t&&t.bph===phKey(),sellVal=t=>TW[t.type].uniq?0:undoOk(t)?(t.undo||0):Math.floor((t.inv||TW[t.type].cost)/2);
+const upCost0=(T,l)=>T.upc?T.upc[l]||0:Math.round(T.cost*(l===2?1.5:l===3?2.1:3)/5)*5,upCost=(T,l)=>{const v=upCost0(T,l);if(typeof S!=='undefined'&&S&&S.tut&&S.tut.freeUp)return 0;return typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('hammer')&&S.rs.hammer&&S.rs.hammer.cd===0&&!T.upc?Math.ceil(v*.85/5)*5:v;},phKey=()=>S?S.round+':'+S.phase:'',undoOk=t=>!!t&&t.bph===phKey(),sellVal=t=>TW[t.type].uniq?0:undoOk(t)?(t.undo||0):typeof apOn==='function'&&apOn('rv')?(t.inv||0):Math.floor((t.inv||TW[t.type].cost)/2);
 // Nv 4: especializaciones (multiplicadores respecto a Nv 1, igual que LV) y habilidades compradas con oro, con rangos.
 const RAINP=.6,MAXPEN=25;
 // Sangrado: daño elemental por casilla recorrida y stack. Jefes: reducen un 50% cualquier efecto de control. Elementos de los rayos del Prisma (se repartirán en orden).
