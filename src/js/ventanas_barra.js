@@ -28,3 +28,9 @@ setInterval(()=>{try{const cs=[...document.querySelectorAll('#relic.open .cgrid 
 // Regla de Nogal: grande pero sin taparlo todo, que asome un poco de mapa (≈78 % del ancho / 90 % del alto, igual en 1280, 1920 y 2560).
 {const bkz=()=>{const B=document.body.classList;let z=1;if(B.contains('dsk')&&!B.contains('mfs'))z=Math.max(0.8,Math.min(2.2,Math.min(innerWidth*0.78/1080,innerHeight*0.9/690)));z=Math.round(z*40)/40;
  const r=document.documentElement.style;if(r.getPropertyValue('--bkz')!==String(z))r.setProperty('--bkz',String(z));};bkz();addEventListener('resize',bkz);setInterval(bkz,1000);}
+// v314 · cabecera del compendio: el dibujo de reliquias y enemigos llena su círculo igual que el de las torres (≈62 % del círculo),
+// recolocando el viewBox según lo que ocupa de verdad el dibujo (algunos, como la Moneda antigua, eran muy pequeños dentro de su lienzo)
+setInterval(()=>{try{for(const s of document.querySelectorAll('#comp .bksh .bkbic:not(.bctw):not(.bkach) svg:not([data-fit])')){const host=s.closest('.bken i')||s.closest('.bkbic');
+ const bb=s.getBBox();if(!bb.width||!bb.height)continue;const sz=Math.max(bb.width,bb.height)/0.62*(host.getBoundingClientRect().width/Math.max(1,s.getBoundingClientRect().width)),cx=bb.x+bb.width/2,cy=bb.y+bb.height/2;
+ s.setAttribute('viewBox',`${(cx-sz/2).toFixed(2)} ${(cy-sz/2).toFixed(2)} ${sz.toFixed(2)} ${sz.toFixed(2)}`);s.style.setProperty('width','100%','important');s.style.setProperty('height','100%','important');s.style.overflow='visible';
+ const w=s.parentElement;if(w&&w!==host&&!w.matches('i')){w.style.setProperty('width','100%','important');w.style.setProperty('height','100%','important');w.style.display='grid';}s.dataset.fit='1';}}catch(e){}},200);

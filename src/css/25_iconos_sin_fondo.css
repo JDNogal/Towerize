@@ -7,3 +7,12 @@
 .bkbic:not(.bkach):not([style*="background"]){background:none!important;box-shadow:none!important;border:0!important;font-size:66px}
 .bksh .bkbic:not(.bkach):not([style*="background"]){font-size:52px}.bksh.bksm .bkbic:not(.bkach):not([style*="background"]){font-size:36px}
 .bkbic[style*="background"]:not(.bkach){border-radius:50%!important;box-shadow:0 0 0 2.5px #1b1712,0 2px 0 3px rgba(0,0,0,.18)!important}
+/* todas las fichas de la cabecera del compendio con el mismo círculo (el de las torres: 68 px; 48 px en la versión pequeña), y el dibujo llenándolo */
+.bksh .bken i{width:68px!important;height:68px!important;font-size:44px!important}
+.bksh .bken i .icesvg,.bksh .bken i .icesvg svg,.bksh .bken i>svg{width:50px!important;height:50px!important}
+.bksh .bkbic[style*="background"]:not(.bctw) .icsv,.bksh .bkbic[style*="background"]:not(.bctw)>svg{width:54px!important;height:54px!important}
+.bksh .bkpor{width:68px!important;height:68px!important}
+.bksh.bksm .bken i{width:48px!important;height:48px!important;font-size:30px!important}
+.bksh.bksm .bken i .icesvg,.bksh.bksm .bken i .icesvg svg,.bksh.bksm .bken i>svg{width:36px!important;height:36px!important}
+.bksh.bksm .bkbic[style*="background"]:not(.bctw) .icsv,.bksh.bksm .bkbic[style*="background"]:not(.bctw)>svg{width:38px!important;height:38px!important}
+.bksh.bksm .bkpor{width:48px!important;height:48px!important}
