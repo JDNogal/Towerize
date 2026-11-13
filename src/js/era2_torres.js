@@ -85,7 +85,7 @@ function nanoTick(dt){const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty
    if(dd>sp){w.x+=dx/dd*sp;w.y+=dy/dd*sp;}else{w.x=tx;w.y=ty;}
    if(!w.e)continue;const rad=.45*K*g;w.tk-=dt;
    if(Math.hypot(w.e.x-w.x,w.e.y-w.y)<=.5*K&&w.tk<=0){w.tk+=1/s.rate;const crit=Math.random()<s.crit+mkB(w.e),dm=s.dmg*(crit?s.critm:1);
-    for(const e of S.enemies){if(e.hp<=0)continue;const d=Math.hypot(e.x-w.x,e.y-w.y);if(d>rad&&e!==w.e)continue;const full=e===w.e;hurt(e,dm*(full?1:.6),t,'magic',s.pen);if(e.hp>0){if(inf)e.inf={t:4,m:inf.m,src:t};if(ac){e.ack=(e.ack||0)+1/s.rate;if(e.ack>=1){e.ack-=1;brkAdd(e,ac.a,ac.max);e.mrb=Math.min(ac.max,(e.mrb||0)+ac.a);e.mrbT=BRKT;}}}}
+    for(const e of S.enemies){if(e.hp<=0)continue;const d=Math.hypot(e.x-w.x,e.y-w.y);if(d>rad&&e!==w.e)continue;const full=e===w.e;hurt(e,dm*(full?1:.6),t,'magic',s.pen);if(e.hp>0){if(inf)e.inf={t:4,m:inf.m,src:t};if(ac){e.ack=(e.ack||0)+1/s.rate;if(e.ack>=1){e.ack-=1;brkAdd(e,ac.a,ac.max);mbrkAdd(e,ac.a,ac.max);}}}}
     if(crit)critMark(w.e);onHit(w.e,t);try{sfx('beam',{r:.7});}catch(e){}}}}
  // infección: caduca; reprogramar: el infectado ataca a otro enemigo
  for(const e of S.enemies){if(e.inf){e.inf.t-=dt;if(e.inf.t<=0)e.inf=null;else{const src=e.inf.src,rp=src&&S.list.includes(src)?abRank(src,'reprog'):null;if(rp){e.rpt=(e.rpt||0)+dt;if(e.rpt>=1){e.rpt-=1;if(Math.random()<rp.p){let o=null,bd=1*K;for(const q of S.enemies){if(q===e||q.hp<=0)continue;const d=Math.hypot(q.x-e.x,q.y-e.y);if(d<bd){bd=d;o=q;}}

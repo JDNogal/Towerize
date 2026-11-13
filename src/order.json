@@ -131,6 +131,7 @@
   "especializaciones_nuevas.js",
   "dron_proyector.js",
   "ventanas_barra.js",
+  "regen_resmag.js",
   "iconos_svg.js",
   "torres_evento_nv4.js",
   "logros_niveles.js",
