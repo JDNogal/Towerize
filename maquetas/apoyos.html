@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Apoyos y Amenazas</title><style>
+body{margin:0;background:#0d0b09;color:#eee;font:14px system-ui}
+.bar{display:flex;gap:6px;flex-wrap:wrap;padding:10px;background:#1b1712;position:sticky;top:0;z-index:9}
+.bar b{align-self:center;margin:0 4px 0 10px;font-size:12px;opacity:.7}
+.bar button{background:#2c251c;color:#eee;border:1px solid #4a3e30;border-radius:6px;padding:6px 10px;cursor:pointer}
+.bar button.on{background:#e9b949;color:#1b1712;font-weight:700}
+#wrap{padding:14px}
+#st{position:relative;width:1280px;height:720px;transform-origin:0 0;background:radial-gradient(#1a1f1a,#0b0d0b);overflow:hidden;color:#3a2617}
+.book{position:absolute;left:97px;top:73px;width:1020px;height:612px;background:#5a3418;border-radius:12px;box-shadow:0 20px 60px #000c}
+.pg{position:absolute;top:10px;bottom:10px;width:495px;background:linear-gradient(90deg,#f6ecd6,#efe2c4);padding:18px 24px;box-sizing:border-box}
+.pg.l{left:10px;border-radius:6px 0 0 6px}.pg.r{right:10px;border-radius:0 6px 6px 0;background:linear-gradient(90deg,#efe2c4,#f6ecd6)}
+h3{font:700 26px Georgia;margin:0}.sub{font:italic 12px Georgia;opacity:.7;margin:2px 0 10px}
+.g{font:700 10px system-ui;letter-spacing:.12em;text-transform:uppercase;margin:8px 0 4px}
+.lst{position:absolute;left:24px;right:16px;top:86px;bottom:204px;overflow-y:auto;padding-right:8px;scrollbar-width:thin;scrollbar-color:#b8a07a transparent}
+.row{display:flex;align-items:center;gap:8px;border:1px solid #c9b48c;border-radius:8px;background:#fbf4e4;padding:3px 8px;margin:3px 0;font-weight:700;font-size:13px}
+.seal i{width:24px;height:24px;border-radius:50%;border:2px solid #1b1712;display:inline-block}
+.row i{width:20px;height:20px;border-radius:50%;border:2px solid #1b1712;display:inline-block;flex:none}
+.row .pts{margin-left:auto;font-size:13px}
+.row .dots{display:flex;gap:3px}.row .dots s{width:10px;height:10px;border-radius:50%;border:1.5px solid #3a2617;display:inline-block}
+.A .row.on{background:#f8d9d2;border-color:#c0392b}.A .row.on s.f{background:#c0392b;border-color:#c0392b}.A .g{color:#a33}.A .pts{color:#c0392b}
+.P .row.on{background:#dcefd8;border-color:#3a8a3a}.P .row.on s.f{background:#3a8a3a;border-color:#3a8a3a}.P .g{color:#2f7a2f}.P .pts{color:#2f7a2f}
+.lk{opacity:.55}
+.ex{font-size:10px;background:#c0392b;color:#fff;border-radius:4px;padding:1px 4px;margin-left:4px}
+.P .ex{background:#2f7a2f}
+.det{position:absolute;left:24px;right:24px;bottom:78px;border:2px solid currentColor;border-radius:10px;padding:8px 12px;background:#fffaf0;font-size:13px;line-height:1.35}
+.A .det{color:#a33}.P .det{color:#2f7a2f}.det b{display:block;font-size:14px}.det span{color:#3a2617}
+.ft{position:absolute;right:24px;bottom:16px;display:flex;gap:10px;align-items:center}
+.tot{display:flex;gap:16px;border:2px solid #8a6a45;border-radius:10px;background:#fbf4e4;padding:6px 14px}
+.tot small{display:block;font-size:11px;opacity:.7}.tot b{font-size:20px}
+.cont{background:linear-gradient(#f2cd62,#dba63a);border:2px solid #8a5a1a;border-radius:10px;padding:12px 20px;font-weight:800;font-size:17px}
+.ann{position:absolute;border:3px solid #ff2a2a;border-radius:8px;pointer-events:none}.ann span{position:absolute;left:-3px;top:-24px;background:#ff2a2a;color:#fff;font:700 12px system-ui;padding:3px 7px;border-radius:5px;white-space:nowrap}
+body.noann .ann{display:none}
+.seal{position:absolute;display:flex;align-items:center;gap:10px;border:2px solid #8a6a45;border-radius:12px;background:#fbf4e4;padding:8px 14px;font-weight:800}
+.seal small{display:block;font-weight:500;font-size:11px;opacity:.75}
+.bub{position:absolute;width:300px;background:#fffaf0;border:2px solid #2f7a2f;border-radius:10px;padding:8px 12px;font-size:13px;box-shadow:0 8px 20px #0006}
+</style></head><body>
+<div class="bar"><b>Pantalla</b><button data-s="sel" class="on">1 · Botón en la preparación</button><button data-s="pan">2 · Apoyos | Amenazas</button><button data-s="lock">3 · Antes de desbloquear Apoyos</button>
+<b>Detalle</b><button data-d="abajo" class="on">A · Recuadro abajo de cada página</button><button data-d="bub">B · Bocadillo al señalar</button>
+<b>Resolución</b><button data-r="1280" class="on">1280×720</button><button data-r="2560">2560×1440</button><b></b><button id="an">Marcos rojos</button></div>
+<div id="wrap"><div id="st"></div></div>
+<script>
+const C=(c)=>`<i style="background:${c}"></i>`;
+const AP=[['Economía',[['Primera piedra',2,1,1],['Casillas baratas',1,0,0],['Bolsa inicial',1,0,1],['Reventa justa',1,0,0]]],['Torres',[['Ascenso gratuito',2,1,0],['Aprendices',1,0,0]]],['Tropas y héroe',[['Refuerzos rápidos',1,0,1],['Héroe incansable',1,0,0],['Murallas firmes',1,0,1]]],['Mapa y piezas',[['Botín y aventura',2,1,0]]]];
+const AM=[['Enemigos',[['Supercampeones',2,0,2,2],['Venganza',3,0,0,1],['Sabotaje',2,0,1,1],['Abanderados',2,0,0,1]]],['Mapa',[['Piezas corruptas',2,0,0,2],['Niebla de guerra',1,1,3,4]]],['Ritmo y tropas',[['Sin refuerzos',1,1,0,3],['Asedio sin tregua',2,0,0,2]]],['Economía',[['Saqueadores',2,0,0,1],['Inflación',2,0,0,1]]]];
+function apRow([n,p,s,on],i){return `<div class="row${on?' on':''}">${C(on?'#3a8a3a':'#cfe5c9')}${n}${s?'<span class="ex">fuerte</span>':''}<span class="pts">${on?'−'+p:''}</span></div>`;}
+function amRow([n,p,x,r,max]){let d='';for(let i=0;i<max;i++)d+=`<s class="${i<r?'f':''}"></s>`;return `<div class="row${r?' on':''}">${C(r?'#c0392b':'#f0d2cc')}${n}${x&&r>=max?'<span class="ex">extremo</span>':''}<span class="pts"><span class="dots">${d}</span></span></div>`;}
+let st={s:'sel',d:'abajo',r:'1280'};
+function page(){const det=st.d==='abajo';
+ const L=`<div class="pg l P"><h3 style="color:#2f7a2f">Apoyos</h3><div class="sub">Hacen la partida más llevadera · restan amenaza y puntuación</div><div class="lst">${AP.map(([g,L])=>`<div class="g">${g}</div>`+L.map(apRow).join('')).join('')}<div class="row lk">${C('#ddd')}??? <span class="pts" style="font-size:11px">Gana con amenaza 5</span></div></div>${det?'<div class="det"><b>Primera piedra · −2 · fuerte</b><span>La primera torre que construyes en cada ronda es gratis. Resta 2 de amenaza, −20 % de puntuación y además ×0,8.</span></div>':''}</div>`;
+ const R=`<div class="pg r A"><h3 style="color:#a33">Amenazas</h3><div class="sub">Hacen la partida más difícil · suman amenaza y puntuación</div><div class="lst">${AM.map(([g,L])=>`<div class="g">${g}</div>`+L.map(amRow).join('')).join('')}</div>${det?'<div class="det"><b>Niebla de guerra · Rango 3 de 4 · +5</b><span>La línea de rondas solo enseña la siguiente; enemigos invisibles hasta detectarlos; portales sin información.</span></div>':''}<div class="ft"><div class="tot"><div><small>Amenaza</small><b>12 − 4 = 8</b></div><div><small>Puntuación</small><b>×1,6</b></div></div><div class="cont">Continuar ›</div></div></div>`;
+ return `<div class="book">${L}${R}</div>`+(st.d==='bub'?'<div class="bub" style="left:330px;top:150px"><b style="color:#2f7a2f">Primera piedra · −2 · fuerte</b><br>La primera torre que construyes en cada ronda es gratis.</div>':'')
+ +'<div class="ann" style="left:103px;top:79px;width:503px;height:600px"><span>Izquierda: Apoyos (verde)</span></div><div class="ann" style="left:608px;top:79px;width:503px;height:600px"><span style="left:auto;right:-3px">Derecha: Amenazas (rojo)</span></div><div class="ann" style="left:728px;top:600px;width:212px;height:66px"><span>Amenaza neta (nunca menos de 0) y puntuación</span></div>';}
+const S={
+ sel:()=>`<div class="book"><div class="pg l"><h3>Elige la era</h3><div class="sub">(preparación de partida)</div></div><div class="pg r"></div></div><div class="seal" style="left:640px;top:520px"><span style="display:flex;gap:4px">${C('#3a8a3a')}${C('#c0392b')}</span><span>Apoyos / Amenazas<small><span style="color:#2f7a2f">−4</span> · <span style="color:#c0392b">+12</span> · amenaza 8 · puntuación ×1,6</small></span></div><div class="ann" style="left:632px;top:512px;width:330px;height:66px"><span>Mismo botón de siempre; cuando tienes Apoyos pasa a «Apoyos / Amenazas»</span></div>`,
+ pan:page,
+ lock:()=>`<div class="book"><div class="pg l"><h3>Elige la era</h3></div><div class="pg r"></div></div><div class="seal" style="left:640px;top:520px">${C('#c0392b')}<span>Amenazas<small>+5 puntos · puntuación ×1,5</small></span></div><div class="ann" style="left:632px;top:512px;width:270px;height:66px"><span>Sin Apoyos desbloqueados: igual que ahora</span></div>`};
+function R(){const el=document.getElementById('st');el.innerHTML=S[st.s]();const k=st.r==='2560'?2:1;el.style.transform='scale('+k+')';document.getElementById('wrap').style.height=(720*k+20)+'px';}
+document.querySelectorAll('.bar button[data-s],.bar button[data-d],.bar button[data-r]').forEach(b=>b.onclick=()=>{const k=b.dataset.s?'s':b.dataset.d?'d':'r';st[k]=b.dataset[k];document.querySelectorAll('.bar button[data-'+k+']').forEach(x=>x.classList.toggle('on',x===b));R();});
+document.getElementById('an').onclick=()=>document.body.classList.toggle('noann');
+const q=new URLSearchParams(location.search);for(const k of ['s','d'])if(q.get(k))st[k]=q.get(k);R();
+</script></body></html>
