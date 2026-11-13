@@ -106,7 +106,7 @@ function draw(){
  for(const t of S.list)if(t.fl&&S.phase==='wave')drawFlame(g,t,x=>x*CS+CS/2,y=>y*CS+CS/2,CS);
  const mst=fxOn('crown')?masterTw():null;
  for(const t of S.list){const T=TW[t.type];
-  const fr=t.hero||t.summ?'none':tfrSkin(),mt=t===mst;if(mt)drawHalo(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);if(fr!=='none')drawTFr(g,t,t.x*CS+CS/2,t.y*CS+CS/2,BCS,fr);
+  const fr=t.hero||t.summ?'none':tfrSkin(),mt=t===mst;if(mt)drawHalo(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);if(fr!=='none'||(typeof twHasBord==='function'&&twHasBord(t)))drawTFr(g,t,t.x*CS+CS/2,t.y*CS+CS/2,BCS,fr);
   const X=tinfo(t);g.fillStyle=X.col;g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,BCS*(fr!=='none'?.4:.44),0,7);g.fill();
   g.fillStyle='#14161c';icDraw(g,twIcO(evIcX(t,X)),t.x*CS+CS/2,t.y*CS+CS/2+1,BCS*.7);
   if(t.flash){g.strokeStyle='#fff';g.lineWidth=lw(3);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.flash.x*CS+CS/2,t.flash.y*CS+CS/2);g.stroke();}

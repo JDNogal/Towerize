@@ -54,6 +54,7 @@ const OPTS=[
  {tab:'gf',type:'toggle',key:'fps',def:false,label:'Mostrar FPS',desc:'Muestra en una esquina los fotogramas por segundo a los que va el juego (verde: 50 o más; amarillo: 30–49; rojo: menos de 30).'},
  {tab:'gf',type:'toggle',key:'fx',def:true,label:'Destellos de impacto y explosiones',desc:'Los círculos que se dibujan al impactar un proyectil o explotar un cañonazo.'},
  {tab:'ac',type:'toggle',key:'dpsx',def:true,label:'Tooltips de DPS avanzados',desc:'Al señalar el DPS de una torre, muestra también cómo se calcula.'},
+ {tab:'ps',type:'toggle',key:'twbord',def:true,label:'Bordes de bajas en las torres',desc:'Las torres con las que has conseguido el logro de bajas de bronce, plata u oro llevan su borde en el mapa (en lugar del marco de torre elegido).'},
  {tab:'ac',type:'toggle',key:'tagic',def:false,label:'Etiquetas con iconos',desc:'En las ofertas de torres, las etiquetas (a distancia, físico, área, rayo continuo…) se muestran con su icono en vez de con texto. Pasa el ratón o mantén pulsado para ver qué es cada una.'},
  {tab:'ac',type:'toggle',key:'dabbr',def:false,label:'Abreviar números de daño grandes',desc:'1.000 se muestra como 1K, 1.000.000 como 1M, y así sucesivamente.'},
  {tab:'ac',type:'toggle',key:'dsci',def:false,label:'Notación científica en números de daño',desc:'A partir de 1.000.000, los números se muestran como 1,2e6. Tiene prioridad sobre la abreviatura.'},

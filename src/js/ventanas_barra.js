@@ -18,3 +18,9 @@ setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.
    const inn=el.id==='relic'&&el.querySelector('.ppap'),rx=inn?inn.getBoundingClientRect().right-8:r.right;b.style.cssText=`left:${rx-9}px;top:${top}px;height:${h}px;z-index:${(parseInt(getComputedStyle(el).zIndex)||20)+30}`;b.firstChild.style.cssText=`height:${th}px;transform:translateY(${ty}px)`;}
   for(const[el,b]of SB)if(!seen.has(el)){b.remove();SB.delete(el);}}catch(e){}};
  setInterval(upd,150);document.addEventListener('scroll',upd,true);}
+// ==================== v312 · Tarjetas de reliquias del cofre: todos los recuadros de una fila con la misma altura ====================
+// La altura es la del texto más largo de esa fila, con un máximo de 3 líneas (2 en móvil); lo que no quepa, con scroll.
+setInterval(()=>{try{const cs=[...document.querySelectorAll('#relic.open .cgrid .rcard')];if(!cs.length)return;const lines=document.body.classList.contains('mfs')?2:3;
+ const sig=cs.map(c=>c.textContent.length).join()+'|'+innerWidth+'|'+innerHeight+'|'+lines;const g=cs[0].closest('.cgrid');if(g.dataset.eq===sig)return;g.dataset.eq=sig;
+ for(let i=0;i<2;i++){const bs=cs.map(c=>c.querySelectorAll('.rbd')[i]).filter(Boolean);bs.forEach(b=>b.style.height='');const lh=parseFloat(getComputedStyle(bs[0]).lineHeight)||18;
+  const h=Math.min(lh*lines,Math.max(...bs.map(b=>b.scrollHeight)));bs.forEach(b=>b.style.height=Math.ceil(h)+'px');}}catch(e){}},250);

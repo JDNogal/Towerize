@@ -2128,8 +2128,9 @@ body.mfs.pcpick #pkbar button{width:30px;height:30px;font-size:14px!important}
 body.mfs.pcpick #panel .pcpeek,body.mfs.pcpick #mzpk{display:none!important}
 body.mfs.pcpick.mzbtn #panel #ui>b,body.mfs.pcpick.mzbtn #panel #ui>small,body.mfs.pcpick.mzbtn #panel .ptt,body.mfs.pcpick.mzbtn #panel h3{padding-right:0!important;padding-left:0!important}
 /* cada descripción de reliquia ocupa justo 3 líneas; si tiene más, scroll dentro de su recuadro */
-#relic .cgrid .rcard .rbd{height:4.05em;line-height:1.35em;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;padding-right:2px}
-#relic .cgrid .rcard .rbx{max-height:none!important}
+#relic .cgrid .rcard .rbd{max-height:4.05em;line-height:1.35em;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;padding-right:2px}
+body.mfs #relic .cgrid .rcard .rbd{max-height:2.7em}
+#relic .cgrid .rcard .rbx{max-height:none!important;min-height:0!important}
 /* icono de la reliquia: redondo y con borde negro, como en el resto del juego, y lo más grande que cabe */
 #relic .cgrid .rcard .ric{border-radius:50%!important;border:2px solid #1b1712!important;box-sizing:border-box;width:56px!important;height:56px!important;font-size:34px!important;box-shadow:0 2px 4px rgba(0,0,0,.35)}
 body.mfs #relic .cgrid .rcard .ric{width:46px!important;height:46px!important;font-size:28px!important}
@@ -2151,6 +2152,13 @@ body:not(.mfs) .sbar{display:none}
 /* pantallas grandes: los paneles del mazo y del cofre crecen como las ventanas (antes se quedaban enanos) */
 @media (min-width:1500px) and (min-height:840px){body.dsk:not(.mfs) #mzside>div{zoom:1.45}}
 @media (min-width:2300px) and (min-height:1250px){body.dsk:not(.mfs) #mzside>div{zoom:1.9}}
+/* pasivo y activo de las reliquias, de colores distintos: ámbar el pasivo y turquesa el activo, el mismo color que las activas
+   del héroe (el rosa ya es el de los críticos y el magenta, el de acento de la tablet) */
+html:root .rbx.rrel.rac{border:1.5px solid #1f8a9a!important;background:color-mix(in srgb,var(--paper2) 62%,rgba(31,138,154,.13))!important}html:root .rbx.rrel.rac .rbt{color:#17707e!important}
+html:root[data-skin="holo"] .rbx.rrel.rac{border-color:#2fd6c0!important;background:rgba(47,214,192,.09)!important}html:root[data-skin="holo"] .rbx.rrel.rac .rbt{color:#4fe8d4!important}
+html:root[data-pal="noche"] .rbx.rrel.rac .rbt,html:root[data-pal="amb"] .rbx.rrel.rac .rbt{color:#5fd8e8!important}
+/* 2560×1440 y mayores: ventanas y paneles un poco más grandes */
+@media (min-width:2300px) and (min-height:1250px){body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:1.8!important}body.dsk:not(.mfs) #mzside>div{zoom:2.15}}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -3084,6 +3092,7 @@ const OPTS=[
  {tab:'gf',type:'toggle',key:'fps',def:false,label:'Mostrar FPS',desc:'Muestra en una esquina los fotogramas por segundo a los que va el juego (verde: 50 o más; amarillo: 30–49; rojo: menos de 30).'},
  {tab:'gf',type:'toggle',key:'fx',def:true,label:'Destellos de impacto y explosiones',desc:'Los círculos que se dibujan al impactar un proyectil o explotar un cañonazo.'},
  {tab:'ac',type:'toggle',key:'dpsx',def:true,label:'Tooltips de DPS avanzados',desc:'Al señalar el DPS de una torre, muestra también cómo se calcula.'},
+ {tab:'ps',type:'toggle',key:'twbord',def:true,label:'Bordes de bajas en las torres',desc:'Las torres con las que has conseguido el logro de bajas de bronce, plata u oro llevan su borde en el mapa (en lugar del marco de torre elegido).'},
  {tab:'ac',type:'toggle',key:'tagic',def:false,label:'Etiquetas con iconos',desc:'En las ofertas de torres, las etiquetas (a distancia, físico, área, rayo continuo…) se muestran con su icono en vez de con texto. Pasa el ratón o mantén pulsado para ver qué es cada una.'},
  {tab:'ac',type:'toggle',key:'dabbr',def:false,label:'Abreviar números de daño grandes',desc:'1.000 se muestra como 1K, 1.000.000 como 1M, y así sucesivamente.'},
  {tab:'ac',type:'toggle',key:'dsci',def:false,label:'Notación científica en números de daño',desc:'A partir de 1.000.000, los números se muestran como 1,2e6. Tiene prioridad sobre la abreviatura.'},
@@ -6250,7 +6259,7 @@ function draw(){
  for(const t of S.list)if(t.fl&&S.phase==='wave')drawFlame(g,t,x=>x*CS+CS/2,y=>y*CS+CS/2,CS);
  const mst=fxOn('crown')?masterTw():null;
  for(const t of S.list){const T=TW[t.type];
-  const fr=t.hero||t.summ?'none':tfrSkin(),mt=t===mst;if(mt)drawHalo(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);if(fr!=='none')drawTFr(g,t,t.x*CS+CS/2,t.y*CS+CS/2,BCS,fr);
+  const fr=t.hero||t.summ?'none':tfrSkin(),mt=t===mst;if(mt)drawHalo(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);if(fr!=='none'||(typeof twHasBord==='function'&&twHasBord(t)))drawTFr(g,t,t.x*CS+CS/2,t.y*CS+CS/2,BCS,fr);
   const X=tinfo(t);g.fillStyle=X.col;g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,BCS*(fr!=='none'?.4:.44),0,7);g.fill();
   g.fillStyle='#14161c';icDraw(g,twIcO(evIcX(t,X)),t.x*CS+CS/2,t.y*CS+CS/2+1,BCS*.7);
   if(t.flash){g.strokeStyle='#fff';g.lineWidth=lw(3);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.flash.x*CS+CS/2,t.flash.y*CS+CS/2);g.stroke();}
@@ -11140,6 +11149,12 @@ setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.
    const inn=el.id==='relic'&&el.querySelector('.ppap'),rx=inn?inn.getBoundingClientRect().right-8:r.right;b.style.cssText=`left:${rx-9}px;top:${top}px;height:${h}px;z-index:${(parseInt(getComputedStyle(el).zIndex)||20)+30}`;b.firstChild.style.cssText=`height:${th}px;transform:translateY(${ty}px)`;}
   for(const[el,b]of SB)if(!seen.has(el)){b.remove();SB.delete(el);}}catch(e){}};
  setInterval(upd,150);document.addEventListener('scroll',upd,true);}
+// ==================== v312 · Tarjetas de reliquias del cofre: todos los recuadros de una fila con la misma altura ====================
+// La altura es la del texto más largo de esa fila, con un máximo de 3 líneas (2 en móvil); lo que no quepa, con scroll.
+setInterval(()=>{try{const cs=[...document.querySelectorAll('#relic.open .cgrid .rcard')];if(!cs.length)return;const lines=document.body.classList.contains('mfs')?2:3;
+ const sig=cs.map(c=>c.textContent.length).join()+'|'+innerWidth+'|'+innerHeight+'|'+lines;const g=cs[0].closest('.cgrid');if(g.dataset.eq===sig)return;g.dataset.eq=sig;
+ for(let i=0;i<2;i++){const bs=cs.map(c=>c.querySelectorAll('.rbd')[i]).filter(Boolean);bs.forEach(b=>b.style.height='');const lh=parseFloat(getComputedStyle(bs[0]).lineHeight)||18;
+  const h=Math.min(lh*lines,Math.max(...bs.map(b=>b.scrollHeight)));bs.forEach(b=>b.style.height=Math.ceil(h)+'px');}}catch(e){}},250);
 // ==================== v308 · ICONOS DIBUJADOS (estilo B) ====================
 // Generado con tools/gen_iconos.py a partir de src/iconos/*_final.json. No editar a mano.
 // Cada icono recibe un carácter de uso privado (U+E000…) como «ic»: en la interfaz se cambia por su dibujo SVG;
