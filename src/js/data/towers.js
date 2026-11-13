@@ -121,6 +121,7 @@ const AB={
  split:{n:'Divisor',ranks:[{c:45,n:2},{c:50,n:3},{c:55,n:4}],txt:r=>`El rayo se divide en <b>${r.n}</b> rayos, cada uno sobre un enemigo distinto. Los rayos reparten los elementos en orden (${ELEMS.map(e=>`<span style="color:${tcol(e.col)}">${e.n}</span>`).join(', ')}) y cada rayo aplica 1 stack de su elemento cada 1,5 s.`},
  trail:{n:'Estela',ranks:[{c:35,p:.2},{c:45,p:.35}],txt:r=>`Los enemigos que cruza cada rayo de camino a su objetivo reciben el <span class="cd">${Math.round(r.p*100)}%</span> de su daño, sin stacks elementales.`},
  plague:{n:'Plaga',ranks:[{c:45,p:.5},{c:50,p:1}],txt:r=>`Cuando muere un enemigo envenenado por esta torre, el <span class="cc">${Math.round(r.p*100)}%</span> de sus stacks pasa a los enemigos cercanos (2 casillas).`},
+ catal:{n:'Catalizador',ranks:[{c:35,m:.15},{c:40,m:.2},{c:45,m:.25}],txt:r=>`El veneno de esta torre hace un <span class="cd">+${Math.round(r.m*100)}%</span> de daño a los enemigos que ya están sufriendo daño por otro estado distinto.`},
  corr:{n:'Corrosión',ranks:[{c:35,a:2,max:10},{c:40,a:3,max:15},{c:45,a:4,max:20}],txt:r=>`Cada segundo, por cada 5 stacks de veneno de esta torre que tenga el enemigo, recibe un golpe de ${kw('brk','armadura rota','')}: <span class="cph">−${r.a}</span> de armadura, acumulable hasta <span class="cph">−${r.max}</span>.`},
  ponz:{n:'Ponzoña',ranks:[{c:40,m:1.3},{c:50,m:1.6}],txt:r=>`Cada vez que esta torre aplica ${kw('poison','veneno','')}, pone <span class="cpo">${r.m} veces</span> los stacks.`},
  toxin:{n:'Toxina letal',ranks:[{c:35,cr:.1,el:.1},{c:40,cr:.15,el:.15},{c:45,cr:.2,el:.2}],txt:r=>`+<span class="cc">${Math.round(r.cr*100)}%</span> de probabilidad de crítico, y el veneno de esta torre hace más daño cuanta más vida tiene el objetivo: nada a los pequeños y hasta un +${Math.round(r.el*100)}% a élites y jefes.`},
@@ -282,7 +283,7 @@ dron:{
  dron:{n:'Helipuerto',ic:'🛸',col:'#e8b04a',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},ab:['fleet','overclock','weld'],d:'Más alcance. Los drones se pueden mejorar.'},
  petro:{n:'Dron petrolero',ic:'🛢️',col:'#8a6a3a',lv:{dmg:1,cd:1,range:1.3,area:1.3,hp:1,pen:0},petro:1,notgt:1,o:{dmg:3,rate:1,ground:1,dt:'phys',fx:'Charcos de brea'},ab:['mancha','chispazo','municion'],d:'Deja de ajustar torres: el dron recorre el camino dentro de su alcance soltando charcos de brea, que hacen poco daño, dejan pegajosos a los enemigos y arden si les llega fuego.'}},
 poison:{
- alch:{n:'Alquimista',ic:'⚗️',col:'#58c9a0',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3*1.3,hp:L4H,pen:0},ab:['plague','corr','flask'],d:'Charcos más grandes y más stacks. El veneno se contagia y corroe la armadura.'},
+ alch:{n:'Alquimista',ic:'⚗️',col:'#58c9a0',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3*1.3,hp:L4H,pen:0},ab:['plague','catal','flask'],d:'Charcos más grandes y más stacks. El veneno se contagia y rinde más junto a otros estados.'},
  pest:{n:'Pestilencia',ic:'🦠',col:'#a7d12a',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3*.85,hp:L4H,pen:0},ab:['ponz','toxin','epid'],d:'Charcos más pequeños pero con veneno mucho más potente.'}},
 monk:{
  fist:{n:'Monjes de Batalla',ic:'🥋',col:'#e07a3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2,area:1.3,hp:L4H*1.1,pen:0},uspd:1.125,ab:['chi','fists','counter'],d:'Monjes élficos que pelean con más daño y más daño mágico. Siguen curando al grupo.'},

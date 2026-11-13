@@ -73,7 +73,11 @@ E2KW.rgn=()=>'<b>Regeneración</b>'+R('chp','Campeones · mini-élites',rgPct(.0
 E2KW.mrbrk=()=>'<b>Resistencia mágica rota</b>'+R('cr','Duración de cada golpe',MBRKT+' s')+'<small>Reduce la resistencia mágica del enemigo. Cada golpe suma su reducción y caduca por separado, hasta el máximo de cada fuente. Puede quedar por debajo de 0: entonces recibe más daño mágico (como mucho, el doble). Beneficia a todo el daño mágico, venga de la torre que venga.</small>';
 MECUSE.rgn=Object.keys(RGEN).map(k=>'en:'+k);MECUSE.mrbrk=['tw:orb','tw:nano','hr:radagast','hr:korr'];MECUSE.cursed=[];
 // Trebuchet › Rompemurallas: menos disparos para llegar al tope (Nogal, 13-nov: es de área y lenta, raro que dé muchas veces al mismo)
-AB.breach.ranks=[{c:40,a:5,max:10},{c:50,a:10,max:15}];
+AB.breach.ranks=[{c:40,a:5,max:10},{c:50,a:10,max:20}];
 // Colmena › Corrosión del enjambre: ya quitaba resistencia mágica a quien muerden (mientras sigan encima); ahora se llama por su nombre
-{const _t=AB.swcor.txt;AB.swcor.txt=r=>`Cada criatura que muerde al mismo enemigo le deja ${kw('mrbrk','resistencia mágica rota','')}: <span class="cmg">−${r.a}</span> mientras siga encima (puede quedar negativa).`;}
+AB.swcor.n='Mordisco ácido';{AB.swcor.txt=r=>`Cada criatura que muerde al mismo enemigo le deja ${kw('mrbrk','resistencia mágica rota','')}: <span class="cmg">−${r.a}</span> mientras siga encima (puede quedar negativa).`;}
 MECUSE.mrbrk.push('tw:alien');
+// Alquimista: pierde Corrosión (la armadura rota con veneno queda solo en la era 2, Chorro de ácido) y gana Catalizador
+// «otro estado que hace daño»: quemadura, sangrado o hipotermia (el veneno de la propia torre no cuenta)
+const catOther=e=>e.bn>0||!!(e.bl&&e.bl.length)||!!(e.cs&&e.cs.length&&chillF(e)>0);
+try{MECUSE.brk=MECUSE.brk.filter(x=>x!=='tw:poison');}catch(e){}

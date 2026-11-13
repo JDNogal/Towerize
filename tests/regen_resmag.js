@@ -23,6 +23,8 @@ const r=await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.st
  // textos y compendio
  o.hex=AB.hex.ranks.map(x=>x.max).join('/');o.breach=AB.breach.ranks.map(x=>x.a+'/'+x.max).join(' ');o.rel=!!(RELIC.grim&&RELIC.emisor&&RELIC.grim.era===1&&RELIC.emisor.era===2);
  o.comp=/Regeneración/.test(enemyInfo('elite'))&&!/Regeneración/.test(enemyInfo('norm'));o.use=MECUSE.mrbrk.length>=5&&MECUSE.rgn.includes('en:boss');
+ o.alch=SPECS.poison.alch.ab.includes('catal')&&!SPECS.poison.alch.ab.includes('corr')&&/[\uE000-\uF8FF]/.test(AB.catal.ic||'x\uE000');o.mord=AB.swcor.n==='Mordisco ácido';
+ const ce={fx:{},bn:0};o.cat=!catOther(ce)&&(ce.bn=2,catOther(ce));
  o.icons=/[-]/.test(RELIC.grim.ic)&&/[-]/.test(RELIC.emisor.ic);
  return o;});
 console.log(JSON.stringify(r));
@@ -30,6 +32,6 @@ ck(Math.abs(r.out-.005)<1e-4,'élite fuera de combate: 0,5 % por segundo ('+r.ou
 ck(r.norm===.5,'un enemigo normal no regenera');ck(r.argos==null||r.argos===.5,'ARGOS no regenera');
 ck(r.cap===20,'el pulso de −20 no se pierde con un golpe de tope −10 ('+r.cap+')');ck(r.sin===.5,'Sin señal: no regenera con la resistencia mágica rota');
 ck(r.rad===5,'Radagast quita −5 de resistencia mágica');ck(r.trans!==1,'Transmutación cambia el daño físico');
-ck(r.hex==='10/15','Maleficio: hasta −10 / −15');ck(r.breach==='5/10 10/15','Rompemurallas: −5 hasta −10 y −10 hasta −15');ck(r.rel&&r.icons,'reliquias nuevas con su era y su icono');
+ck(r.hex==='10/15','Maleficio: hasta −10 / −15');ck(r.breach==='5/10 10/20','Rompemurallas: −5 hasta −10 y −10 hasta −20');ck(r.alch&&r.mord,'Alquimista con Catalizador (sin Corrosión) y Mordisco ácido');ck(r.cat,'Catalizador: cuenta quemadura, sangrado o hipotermia');ck(r.rel&&r.icons,'reliquias nuevas con su era y su icono');
 ck(r.comp&&r.use,'compendio: regeneración en la ficha y estados en uso');
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'regen_resmag ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();
