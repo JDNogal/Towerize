@@ -73,7 +73,7 @@ function lbRankParts(){const era=LBR.era,open=lbAmzOpen(era),T=(LBR.tiers[era]||
  const hn=id=>(HEROES[id]&&HEROES[id].n)||id;
  const left=`<h3>Clasificación</h3><div class="bksub">${open?'Una tabla por nivel de amenaza · ':''}tu mejor partida con cada héroe</div>
   ${eras.length>1?`<div class="lbrkeras">${eras.map(e=>`<button data-a="lbrkera" data-v="${e}" class="${e===era?'on':''}">${ERADEF[e].esc||'Era '+ERADEF[e].n}</button>`).join('')}</div>`:''}
-  ${open&&T.length?`<div class="lbrktabs">${T.map(n=>`<button data-a="lbrkamz" data-v="${n}" class="${n===LBR.sel?'on':''}">${n}</button>`).join('')}</div><p class="note">Amenaza: los puntos de las amenazas que llevabas.</p>`:''}
+  ${open&&T.length?`<div class="lbrktabs">${T.map(n=>`<button data-a="lbrkamz" data-v="${n}" class="${n===LBR.sel?'on':''}">${n?'Amenaza '+n:'Sin amenazas'}</button>`).join('')}</div><p class="note">Cada nivel de amenaza tiene su propia tabla, y cada era las suyas.</p>`:''}
   <p class="note">Piloto: <b>${lbPilot()||'sin nombre'}</b> · <button class="lbbk sm" data-a="lbrkname">Cambiar nombre</button></p>`;
  let right;if(LBR.err)right='<p class="note">No se ha podido cargar la clasificación. Comprueba la conexión.</p>';
  else if(!L)right='<p class="note">Cargando…</p>';
