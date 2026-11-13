@@ -93,6 +93,9 @@ css=f'''/* ===== v312 · Era Distópica: el dron proyector sustituye al pergamin
 {H} body.pcpick.mfs #panel::before{{display:none!important}}
 {H} body.mfs #relic.open:has(.pscr),{H} body.mfs #relic.open:has(.hdwin),{H} body.mfs #relic.hdcl{{padding-top:50px!important}}
 {H} body.mfs #relic .pscr::before,{H} body.mfs #relic .hdwin::before{{top:-48px;width:124px;height:48px;margin-left:-62px}}
+/* letra futurista de la tablet (Chakra Petch) en todo lo que proyecta el dron */
+html{H} #relic.open :is(h1,h2,h3,h4,b,strong,small,i,em,p,span,div,button,label,a,li),html{H} #mzside :is(h4,b,small,span,div,em),html{H} #mzpop :is(h4,b,small,span,div,em,button),html{H} body.pcpick #panel :is(b,small,span,div,button){{font-family:'Chakra Petch',system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}}
+html{H} #relic.open :is(i,em){{font-style:normal}}
 @media (prefers-reduced-motion:reduce){{{H} #relic .ppap,{H} #relic .hdwin,{H} body.pcpick #panel>*,{H} #mzside>div{{animation:none!important}}}}
 '''
 open('src/css/21_dron.css','w',encoding='utf8').write(css)

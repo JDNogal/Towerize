@@ -7,3 +7,14 @@ setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.
   b.innerHTML=`<button data-mz="deck" class="mzb" title="Ver tu mazo">${ic('m_deck','🃏')}</button><button data-mz="rel" class="mzb" title="Ver tus reliquias">${ic('m_chest','🧰')}</button><button data-a="ppeek" title="Ver el mapa">${ic('m_k_peek','👁')}</button>`;
   b.querySelectorAll('[data-mz]').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();try{mzOpen(x.dataset.mz);}catch(_){}}));document.body.appendChild(b);}
  b.classList.add('on');}catch(e){}},150);
+// ==================== v312 · Barra de scroll dibujada en lo que no cabe entero (en vez de la sombra de abajo) ====================
+// Donde salga la flechita ▼ (SMSEL: ventanas, cofre, fichas…), una barra vertical fina por dentro del borde derecho,
+// que no pisa la flechita. Se ve en móvil, donde el navegador no enseña la suya.
+{const SB=new Map();
+ const upd=()=>{try{const seen=new Set();for(const el of document.querySelectorAll(SMSEL)){
+   const r=el.getClientRects().length?el.getBoundingClientRect():null;const over=r&&r.width>0&&el.scrollHeight>el.clientHeight+8&&getComputedStyle(el).overflowY!=='visible';if(!over)continue;seen.add(el);
+   let b=SB.get(el);if(!b){b=document.createElement('div');b.className='sbar';b.innerHTML='<i></i>';document.body.appendChild(b);SB.set(el,b);}
+   const ir=el.id==='relic'&&el.querySelector('.ppap')?el.querySelector('.ppap').getBoundingClientRect():null,t0=Math.max(r.top,ir?ir.top:r.top),b0=Math.min(r.bottom,ir?ir.bottom:r.bottom),top=t0+10,h=Math.max(30,b0-t0-10-34),th=Math.max(18,h*el.clientHeight/el.scrollHeight),ty=(h-th)*el.scrollTop/Math.max(1,el.scrollHeight-el.clientHeight);
+   const inn=el.id==='relic'&&el.querySelector('.ppap'),rx=inn?inn.getBoundingClientRect().right-8:r.right;b.style.cssText=`left:${rx-9}px;top:${top}px;height:${h}px;z-index:${(parseInt(getComputedStyle(el).zIndex)||20)+30}`;b.firstChild.style.cssText=`height:${th}px;transform:translateY(${ty}px)`;}
+  for(const[el,b]of SB)if(!seen.has(el)){b.remove();SB.delete(el);}}catch(e){}};
+ setInterval(upd,150);document.addEventListener('scroll',upd,true);}

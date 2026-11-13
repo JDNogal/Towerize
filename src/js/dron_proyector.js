@@ -4,8 +4,12 @@
 // · al cambiar de escena dentro de la misma ventana (evento → resultado, otra oferta) hay interferencia y el dron no vuelve a llegar;
 // · al cerrar, la imagen se aplasta en una línea y el dron se va volando.
 const hdOn=()=>document.documentElement.dataset.skin==='holo';
-{const _rp=renderRelicPick;renderRelicPick=function(){const r=_rp.apply(this,arguments);try{if(hdOn()){const rl=$('relic');if(!rl.querySelector('.hdwin')){const w=document.createElement('div');w.className='hdwin';
- [...rl.childNodes].filter(n=>!(n.nodeType===1&&n.classList.contains('rlbar'))).forEach(n=>w.appendChild(n));rl.insertBefore(w,rl.querySelector('.rlbar')||null);}}}catch(e){}return r;};}
+// ¡Cofre abierto! va en la misma ventana que las demás: pergamino en la era 1 y dron en la era 2 (antes, solo las tarjetas sueltas)
+{const _rp=renderRelicPick;renderRelicPick=function(){const r=_rp.apply(this,arguments);try{const rl=$('relic');if(!rl.querySelector('.pscr')){
+ const sc=document.createElement('div');sc.className='pscr rpscr';sc.innerHTML='<i class="prod l"></i><i class="prod r"></i><div class="ppap"></div>';const pp=sc.querySelector('.ppap');
+ [...rl.childNodes].filter(n=>!(n.nodeType===1&&(n.classList.contains('rlbar')||n.classList.contains('wcomp')))).forEach(n=>pp.appendChild(n));
+ const t=pp.querySelector(':scope>b');if(t){t.className='ptt';t.removeAttribute('style');}const st=pp.querySelector(':scope>small');if(st)st.className='pst';[...pp.querySelectorAll(':scope>br')].forEach(x=>x.remove());
+ rl.insertBefore(sc,rl.firstChild);}}catch(e){}return r;};}
 {const HD={key:null,open:false,t:0};
  const keyOf=rl=>{const w=rl.querySelector('.pscr,.hdwin');if(!w)return null;const t=w.querySelector('.ptt,.evt,.evhead b,b');return (t?t.textContent:'')+'|'+(w.querySelector('.evrsl')?'r':'')+'|'+rl.querySelectorAll('[data-a="towpick"],[data-a="relic"],[data-a="evopt"]').length;};
  const init=()=>{const rl=$('relic');if(!rl)return setTimeout(init,200);
@@ -21,8 +25,8 @@ const hdOn=()=>document.documentElement.dataset.skin==='holo';
 setInterval(()=>{try{const B=document.body.classList,on=hdOn()&&B.contains('pcpick')&&B.contains('mfs');let d=$('hdpk');
  if(!on){if(d)d.classList.remove('on');return;}if(!d){d=document.createElement('div');d.id='hdpk';document.body.appendChild(d);}
  const r=$('panel').getBoundingClientRect();d.style.left=(r.left+r.width/2)+'px';d.style.top=Math.max(0,r.top-46)+'px';d.classList.add('on');}catch(e){}},150);
-// con los paneles del mazo y del cofre a los lados, la ventana del cofre cabe entre ellos (también con la ventana ampliada en pantallas grandes)
-setInterval(()=>{try{const w=document.querySelector('#relic.open .hdwin');if(!w)return;const B=document.body.classList;
- if(!hdOn()||!B.contains('dsk')||B.contains('mfs')||B.contains('mzbtn')){w.style.maxWidth='';return;}
+// con los paneles del mazo y del cofre a los lados, la ventana cabe entre ellos (también con la ventana ampliada en pantallas grandes)
+setInterval(()=>{try{const w=document.querySelector('#relic.open .pscr');if(!w)return;const B=document.body.classList;
+ if(!B.contains('dsk')||B.contains('mfs')||B.contains('mzbtn')){if(w.dataset.mw0){w.style.maxWidth='';delete w.dataset.mw0;}return;}
  const zm=parseFloat(getComputedStyle(w).zoom)||1,mzw=parseFloat(getComputedStyle($('mzside')||document.body).getPropertyValue('--mzw'))||168;
- const mx=Math.floor((innerWidth-2*(mzw+34))/zm)+'px';if(w.style.maxWidth!==mx)w.style.maxWidth=mx;}catch(e){}},200);
+ if(!w.dataset.mw0)w.dataset.mw0=String(parseFloat(getComputedStyle(w).maxWidth)||1e9);const mx=Math.min(+w.dataset.mw0,Math.floor((innerWidth-2*(mzw+34))/zm));if(w.style.maxWidth!==mx+'px')w.style.maxWidth=mx+'px';}catch(e){}},200);

@@ -2076,6 +2076,9 @@ body.era2g .cnf{background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%
 :root[data-skin="holo"] body.pcpick.mfs #panel::before{display:none!important}
 :root[data-skin="holo"] body.mfs #relic.open:has(.pscr),:root[data-skin="holo"] body.mfs #relic.open:has(.hdwin),:root[data-skin="holo"] body.mfs #relic.hdcl{padding-top:50px!important}
 :root[data-skin="holo"] body.mfs #relic .pscr::before,:root[data-skin="holo"] body.mfs #relic .hdwin::before{top:-48px;width:124px;height:48px;margin-left:-62px}
+/* letra futurista de la tablet (Chakra Petch) en todo lo que proyecta el dron */
+html:root[data-skin="holo"] #relic.open :is(h1,h2,h3,h4,b,strong,small,i,em,p,span,div,button,label,a,li),html:root[data-skin="holo"] #mzside :is(h4,b,small,span,div,em),html:root[data-skin="holo"] #mzpop :is(h4,b,small,span,div,em,button),html:root[data-skin="holo"] body.pcpick #panel :is(b,small,span,div,button){font-family:'Chakra Petch',system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}
+html:root[data-skin="holo"] #relic.open :is(i,em){font-style:normal}
 @media (prefers-reduced-motion:reduce){:root[data-skin="holo"] #relic .ppap,:root[data-skin="holo"] #relic .hdwin,:root[data-skin="holo"] body.pcpick #panel>*,:root[data-skin="holo"] #mzside>div{animation:none!important}}
 /* ===== v312 · Barra de arriba de las ventanas (oferta de torres, cofre, eventos y elegir pieza) =====
    El oro arriba a la derecha del todo; a su izquierda el ojo, las reliquias y el mazo, todos a la misma altura y centrados. */
@@ -2106,9 +2109,7 @@ body.mfs #relic .chips .tgi{width:24px;height:20px;font-size:13px}
    si una descripción es larga, su recuadro lleva barra de scroll en vez de alargar la tarjeta ===== */
 #relic .cgrid:has(.rcard){grid-template-columns:none!important;grid-auto-flow:column!important;grid-auto-columns:minmax(0,1fr)!important}
 #relic .cgrid .rcard{min-width:0;display:flex;flex-direction:column}
-#relic .cgrid .rcard .rbx{max-height:8.6em;overflow-y:auto;scrollbar-width:thin}
 #relic .cgrid .rcard>button{margin-top:auto}
-body.mfs #relic .cgrid .rcard .rbx{max-height:6.4em}
 /* ===== Torres en móvil: iconos siempre (no caben las etiquetas), sin borde redondo; terrestre/aire a un lado (solo los que golpea), un punto y el resto ===== */
 body.mfs #relic .tof .chips .tgmob .toftg span{background:none!important;border:0!important;width:auto!important;height:auto!important;font-size:17px}
 body.mfs #relic .tof .chips .tgmob .toftg span.off{display:none!important}
@@ -2126,6 +2127,25 @@ body.mfs.pcpick #pkbar button{width:30px;height:30px;font-size:14px!important}
 :root body.mfs.pcpick:not(.pcpeek) #panel,:root[data-skin] body.mfs.pcpick:not(.pcpeek) #panel:has(.prow){box-shadow:0 0 0 200vmax rgba(9,10,14,.95)!important}
 body.mfs.pcpick #panel .pcpeek,body.mfs.pcpick #mzpk{display:none!important}
 body.mfs.pcpick.mzbtn #panel #ui>b,body.mfs.pcpick.mzbtn #panel #ui>small,body.mfs.pcpick.mzbtn #panel .ptt,body.mfs.pcpick.mzbtn #panel h3{padding-right:0!important;padding-left:0!important}
+/* cada descripción de reliquia ocupa justo 3 líneas; si tiene más, scroll dentro de su recuadro */
+#relic .cgrid .rcard .rbd{height:4.05em;line-height:1.35em;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;padding-right:2px}
+#relic .cgrid .rcard .rbx{max-height:none!important}
+/* icono de la reliquia: redondo y con borde negro, como en el resto del juego, y lo más grande que cabe */
+#relic .cgrid .rcard .ric{border-radius:50%!important;border:2px solid #1b1712!important;box-sizing:border-box;width:56px!important;height:56px!important;font-size:34px!important;box-shadow:0 2px 4px rgba(0,0,0,.35)}
+body.mfs #relic .cgrid .rcard .ric{width:46px!important;height:46px!important;font-size:28px!important}
+/* el cofre en su ventana (pergamino / dron): las tarjetas como antes */
+#relic .rpscr .ppap{text-align:left}#relic .rpscr .ppap>.ptt,#relic .rpscr .ppap>.pst{text-align:center;display:block}
+#relic .rpscr .ppap>small:last-of-type{display:block;text-align:center;margin-top:6px}
+/* elegir pieza en móvil (pergamino): la ventana tiene scroll y recortaba los rodillos de fuera; van por dentro del borde */
+:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow){padding-left:30px!important;padding-right:30px!important}
+:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::before,:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::after{top:0!important;bottom:0!important;width:20px!important;position:absolute!important}
+:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::before{left:2px!important}:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::after{right:2px!important;left:auto!important}
+/* ===== Lo que no cabe entero: sin la sombra de abajo; queda la flechita ▼ y una barra de scroll por dentro del borde derecho ===== */
+.smore::after{background:none!important}
+.sbar{position:fixed;width:5px;border-radius:3px;background:rgba(0,0,0,.18);pointer-events:none}
+.sbar i{display:block;width:100%;border-radius:3px;background:color-mix(in srgb,var(--trim,#a0724a) 85%,#000)}
+:root[data-skin="holo"] .sbar{background:rgba(63,232,255,.12)}:root[data-skin="holo"] .sbar i{background:#3fe8ff;box-shadow:0 0 6px rgba(63,232,255,.6)}
+body:not(.mfs) .sbar{display:none}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -3382,7 +3402,7 @@ const RL={open:false,choices:[]};
 // pasivo y activo en dos recuadros, con título grande; el activo lleva su recarga
 // st: estado en partida (si la tienes). Lista / en curso / recargando va como etiqueta en la cabecera del activo, no como frase suelta
 const rdesc=(id,st)=>{const r=RELIC[id],tag=!st?`<small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`:st.t>0?`<small class="rstag ron">⚡ En curso · ${f(st.t)} s</small>`:st.cd>0?`<small class="rstag rrec">⏳ ${fmtT(st.cd)}</small>`:`<small class="rstag rok">✓ Lista</small><small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`;
- return `<div class="rbx rrel rps${st&&st.cd>0&&!(st.t>0)?' roff':''}"><div class="rbt"><span class="rbtt">${INF} Pasivo</span>${st&&st.cd>0&&!(st.t>0)?'<small class="rstag rrec">Desactivado</small>':''}</div>${r.pas()}</div><div class="rbx rrel rac"><div class="rbt"><span class="rbtt">${ACTI} Activo</span>${tag}</div>${r.act()}</div>`;};
+ return `<div class="rbx rrel rps${st&&st.cd>0&&!(st.t>0)?' roff':''}"><div class="rbt"><span class="rbtt">${INF} Pasivo</span>${st&&st.cd>0&&!(st.t>0)?'<small class="rstag rrec">Desactivado</small>':''}</div><div class="rbd">${r.pas()}</div></div><div class="rbx rrel rac"><div class="rbt"><span class="rbtt">${ACTI} Activo</span>${tag}</div><div class="rbd">${r.act()}</div></div>`;};
 const rcdTag=id=>`<span class="rcdt">${kw('rcd','⏳ '+RELIC[id].cd,'','st')}</span>`;
 const relicInfo=(id,quiet)=>{const r=RELIC[id],st=!quiet&&S.relics&&S.relics.includes(id)&&S.rs[id];
  return `<div class="ttl">${r.evr?`<small style="display:block;margin:0 0 2px">Reliquia de evento · «${EVENTS[r.ev]?EVENTS[r.ev].n:''}»</small>`:''}<b class="rttl"><i style="background:${r.col}">${r.ic}</i>${r.n}</b></div>`+rdesc(id,st||null);};
@@ -11069,8 +11089,12 @@ try{const add=(id,r)=>{MECUSE[id]=MECUSE[id]||[];if(!MECUSE[id].includes(r))MECU
 // · al cambiar de escena dentro de la misma ventana (evento → resultado, otra oferta) hay interferencia y el dron no vuelve a llegar;
 // · al cerrar, la imagen se aplasta en una línea y el dron se va volando.
 const hdOn=()=>document.documentElement.dataset.skin==='holo';
-{const _rp=renderRelicPick;renderRelicPick=function(){const r=_rp.apply(this,arguments);try{if(hdOn()){const rl=$('relic');if(!rl.querySelector('.hdwin')){const w=document.createElement('div');w.className='hdwin';
- [...rl.childNodes].filter(n=>!(n.nodeType===1&&n.classList.contains('rlbar'))).forEach(n=>w.appendChild(n));rl.insertBefore(w,rl.querySelector('.rlbar')||null);}}}catch(e){}return r;};}
+// ¡Cofre abierto! va en la misma ventana que las demás: pergamino en la era 1 y dron en la era 2 (antes, solo las tarjetas sueltas)
+{const _rp=renderRelicPick;renderRelicPick=function(){const r=_rp.apply(this,arguments);try{const rl=$('relic');if(!rl.querySelector('.pscr')){
+ const sc=document.createElement('div');sc.className='pscr rpscr';sc.innerHTML='<i class="prod l"></i><i class="prod r"></i><div class="ppap"></div>';const pp=sc.querySelector('.ppap');
+ [...rl.childNodes].filter(n=>!(n.nodeType===1&&(n.classList.contains('rlbar')||n.classList.contains('wcomp')))).forEach(n=>pp.appendChild(n));
+ const t=pp.querySelector(':scope>b');if(t){t.className='ptt';t.removeAttribute('style');}const st=pp.querySelector(':scope>small');if(st)st.className='pst';[...pp.querySelectorAll(':scope>br')].forEach(x=>x.remove());
+ rl.insertBefore(sc,rl.firstChild);}}catch(e){}return r;};}
 {const HD={key:null,open:false,t:0};
  const keyOf=rl=>{const w=rl.querySelector('.pscr,.hdwin');if(!w)return null;const t=w.querySelector('.ptt,.evt,.evhead b,b');return (t?t.textContent:'')+'|'+(w.querySelector('.evrsl')?'r':'')+'|'+rl.querySelectorAll('[data-a="towpick"],[data-a="relic"],[data-a="evopt"]').length;};
  const init=()=>{const rl=$('relic');if(!rl)return setTimeout(init,200);
@@ -11086,11 +11110,11 @@ const hdOn=()=>document.documentElement.dataset.skin==='holo';
 setInterval(()=>{try{const B=document.body.classList,on=hdOn()&&B.contains('pcpick')&&B.contains('mfs');let d=$('hdpk');
  if(!on){if(d)d.classList.remove('on');return;}if(!d){d=document.createElement('div');d.id='hdpk';document.body.appendChild(d);}
  const r=$('panel').getBoundingClientRect();d.style.left=(r.left+r.width/2)+'px';d.style.top=Math.max(0,r.top-46)+'px';d.classList.add('on');}catch(e){}},150);
-// con los paneles del mazo y del cofre a los lados, la ventana del cofre cabe entre ellos (también con la ventana ampliada en pantallas grandes)
-setInterval(()=>{try{const w=document.querySelector('#relic.open .hdwin');if(!w)return;const B=document.body.classList;
- if(!hdOn()||!B.contains('dsk')||B.contains('mfs')||B.contains('mzbtn')){w.style.maxWidth='';return;}
+// con los paneles del mazo y del cofre a los lados, la ventana cabe entre ellos (también con la ventana ampliada en pantallas grandes)
+setInterval(()=>{try{const w=document.querySelector('#relic.open .pscr');if(!w)return;const B=document.body.classList;
+ if(!B.contains('dsk')||B.contains('mfs')||B.contains('mzbtn')){if(w.dataset.mw0){w.style.maxWidth='';delete w.dataset.mw0;}return;}
  const zm=parseFloat(getComputedStyle(w).zoom)||1,mzw=parseFloat(getComputedStyle($('mzside')||document.body).getPropertyValue('--mzw'))||168;
- const mx=Math.floor((innerWidth-2*(mzw+34))/zm)+'px';if(w.style.maxWidth!==mx)w.style.maxWidth=mx;}catch(e){}},200);
+ if(!w.dataset.mw0)w.dataset.mw0=String(parseFloat(getComputedStyle(w).maxWidth)||1e9);const mx=Math.min(+w.dataset.mw0,Math.floor((innerWidth-2*(mzw+34))/zm));if(w.style.maxWidth!==mx+'px')w.style.maxWidth=mx+'px';}catch(e){}},200);
 // ==================== v312 · Elegir pieza en móvil: pantalla aparte, como la oferta de torres ====================
 // El fondo queda tapado (no se ve ni se puede tocar el mapa) y el mazo, las reliquias y el ojo van arriba a la derecha,
 // en el mismo sitio que en las demás ventanas. Los botones de dentro de la ventana se ocultan en móvil.
@@ -11100,6 +11124,17 @@ setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.
   b.innerHTML=`<button data-mz="deck" class="mzb" title="Ver tu mazo">${ic('m_deck','🃏')}</button><button data-mz="rel" class="mzb" title="Ver tus reliquias">${ic('m_chest','🧰')}</button><button data-a="ppeek" title="Ver el mapa">${ic('m_k_peek','👁')}</button>`;
   b.querySelectorAll('[data-mz]').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();try{mzOpen(x.dataset.mz);}catch(_){}}));document.body.appendChild(b);}
  b.classList.add('on');}catch(e){}},150);
+// ==================== v312 · Barra de scroll dibujada en lo que no cabe entero (en vez de la sombra de abajo) ====================
+// Donde salga la flechita ▼ (SMSEL: ventanas, cofre, fichas…), una barra vertical fina por dentro del borde derecho,
+// que no pisa la flechita. Se ve en móvil, donde el navegador no enseña la suya.
+{const SB=new Map();
+ const upd=()=>{try{const seen=new Set();for(const el of document.querySelectorAll(SMSEL)){
+   const r=el.getClientRects().length?el.getBoundingClientRect():null;const over=r&&r.width>0&&el.scrollHeight>el.clientHeight+8&&getComputedStyle(el).overflowY!=='visible';if(!over)continue;seen.add(el);
+   let b=SB.get(el);if(!b){b=document.createElement('div');b.className='sbar';b.innerHTML='<i></i>';document.body.appendChild(b);SB.set(el,b);}
+   const ir=el.id==='relic'&&el.querySelector('.ppap')?el.querySelector('.ppap').getBoundingClientRect():null,t0=Math.max(r.top,ir?ir.top:r.top),b0=Math.min(r.bottom,ir?ir.bottom:r.bottom),top=t0+10,h=Math.max(30,b0-t0-10-34),th=Math.max(18,h*el.clientHeight/el.scrollHeight),ty=(h-th)*el.scrollTop/Math.max(1,el.scrollHeight-el.clientHeight);
+   const inn=el.id==='relic'&&el.querySelector('.ppap'),rx=inn?inn.getBoundingClientRect().right-8:r.right;b.style.cssText=`left:${rx-9}px;top:${top}px;height:${h}px;z-index:${(parseInt(getComputedStyle(el).zIndex)||20)+30}`;b.firstChild.style.cssText=`height:${th}px;transform:translateY(${ty}px)`;}
+  for(const[el,b]of SB)if(!seen.has(el)){b.remove();SB.delete(el);}}catch(e){}};
+ setInterval(upd,150);document.addEventListener('scroll',upd,true);}
 // ==================== v308 · ICONOS DIBUJADOS (estilo B) ====================
 // Generado con tools/gen_iconos.py a partir de src/iconos/*_final.json. No editar a mano.
 // Cada icono recibe un carácter de uso privado (U+E000…) como «ic»: en la interfaz se cambia por su dibujo SVG;

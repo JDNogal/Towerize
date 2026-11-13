@@ -47,7 +47,7 @@ const RL={open:false,choices:[]};
 // pasivo y activo en dos recuadros, con título grande; el activo lleva su recarga
 // st: estado en partida (si la tienes). Lista / en curso / recargando va como etiqueta en la cabecera del activo, no como frase suelta
 const rdesc=(id,st)=>{const r=RELIC[id],tag=!st?`<small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`:st.t>0?`<small class="rstag ron">⚡ En curso · ${f(st.t)} s</small>`:st.cd>0?`<small class="rstag rrec">⏳ ${fmtT(st.cd)}</small>`:`<small class="rstag rok">✓ Lista</small><small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`;
- return `<div class="rbx rrel rps${st&&st.cd>0&&!(st.t>0)?' roff':''}"><div class="rbt"><span class="rbtt">${INF} Pasivo</span>${st&&st.cd>0&&!(st.t>0)?'<small class="rstag rrec">Desactivado</small>':''}</div>${r.pas()}</div><div class="rbx rrel rac"><div class="rbt"><span class="rbtt">${ACTI} Activo</span>${tag}</div>${r.act()}</div>`;};
+ return `<div class="rbx rrel rps${st&&st.cd>0&&!(st.t>0)?' roff':''}"><div class="rbt"><span class="rbtt">${INF} Pasivo</span>${st&&st.cd>0&&!(st.t>0)?'<small class="rstag rrec">Desactivado</small>':''}</div><div class="rbd">${r.pas()}</div></div><div class="rbx rrel rac"><div class="rbt"><span class="rbtt">${ACTI} Activo</span>${tag}</div><div class="rbd">${r.act()}</div></div>`;};
 const rcdTag=id=>`<span class="rcdt">${kw('rcd','⏳ '+RELIC[id].cd,'','st')}</span>`;
 const relicInfo=(id,quiet)=>{const r=RELIC[id],st=!quiet&&S.relics&&S.relics.includes(id)&&S.rs[id];
  return `<div class="ttl">${r.evr?`<small style="display:block;margin:0 0 2px">Reliquia de evento · «${EVENTS[r.ev]?EVENTS[r.ev].n:''}»</small>`:''}<b class="rttl"><i style="background:${r.col}">${r.ic}</i>${r.n}</b></div>`+rdesc(id,st||null);};

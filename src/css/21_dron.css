@@ -60,4 +60,7 @@
 :root[data-skin="holo"] body.pcpick.mfs #panel::before{display:none!important}
 :root[data-skin="holo"] body.mfs #relic.open:has(.pscr),:root[data-skin="holo"] body.mfs #relic.open:has(.hdwin),:root[data-skin="holo"] body.mfs #relic.hdcl{padding-top:50px!important}
 :root[data-skin="holo"] body.mfs #relic .pscr::before,:root[data-skin="holo"] body.mfs #relic .hdwin::before{top:-48px;width:124px;height:48px;margin-left:-62px}
+/* letra futurista de la tablet (Chakra Petch) en todo lo que proyecta el dron */
+html:root[data-skin="holo"] #relic.open :is(h1,h2,h3,h4,b,strong,small,i,em,p,span,div,button,label,a,li),html:root[data-skin="holo"] #mzside :is(h4,b,small,span,div,em),html:root[data-skin="holo"] #mzpop :is(h4,b,small,span,div,em,button),html:root[data-skin="holo"] body.pcpick #panel :is(b,small,span,div,button){font-family:'Chakra Petch',system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}
+html:root[data-skin="holo"] #relic.open :is(i,em){font-style:normal}
 @media (prefers-reduced-motion:reduce){:root[data-skin="holo"] #relic .ppap,:root[data-skin="holo"] #relic .hdwin,:root[data-skin="holo"] body.pcpick #panel>*,:root[data-skin="holo"] #mzside>div{animation:none!important}}
