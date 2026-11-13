@@ -38,7 +38,7 @@ setInterval(()=>{try{mzSide();}catch(e){}try{wcompDock();}catch(e){}},200);
 function relFit(){const rl=$('relic');if(!rl||!rl.classList.contains('open')||rl.querySelector('.toff'))return;if(!rl.firstElementChild)return;
  const kids=[...rl.children].filter(k=>!k.classList.contains('rlbar'));if(!kids.length)return;let tot=0;for(const k of kids)k.style.zoom='';
  const z=parseFloat(getComputedStyle(kids[0]).zoom)||1;const top=Math.min(...kids.map(k=>k.getBoundingClientRect().top)),bot=Math.max(...kids.map(k=>k.getBoundingClientRect().bottom));tot=bot-top;
- const room=innerHeight-48;if(tot>room){const nz=Math.max(.8,z*room/tot);for(const k of kids)k.style.zoom=String(nz);}}
+ const room=innerHeight-48-Math.max(0,(parseFloat(getComputedStyle(rl).paddingTop)||12)-12);/* v312: el hueco del dron arriba también cuenta */if(tot>room){const nz=Math.max(.8,z*room/tot);for(const k of kids)k.style.zoom=String(nz);}}
 setInterval(()=>{try{relFit();}catch(e){}},300);
 // v305 · cartas de reliquia del cofre: los recuadros de pasivo (y los de activo) miden lo mismo en todas las cartas
 function rcardAlign(){const rl=$('relic');if(!rl||!rl.classList.contains('open'))return;const cs=[...rl.querySelectorAll('.cgrid .rcard')];if(cs.length<2)return;

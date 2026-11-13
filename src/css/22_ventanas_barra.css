@@ -1,0 +1,25 @@
+/* ===== v312 · Barra de arriba de las ventanas (oferta de torres, cofre, eventos y elegir pieza) =====
+   El oro arriba a la derecha del todo; a su izquierda el ojo, las reliquias y el mazo, todos a la misma altura y centrados. */
+body .rlbar,body.mfs .rlbar{display:flex!important;flex-direction:row!important;align-items:center!important;gap:6px!important;grid-template-columns:none!important}
+body .rlbar>*,body.mfs .rlbar>*{margin:0!important;flex:none;align-self:center!important;vertical-align:middle;grid-column:auto!important;grid-row:auto!important}
+.rlbar .rlg{order:10}.rlbar [data-a="peek"]{order:9}.rlbar .wcomp{order:8}.rlbar [data-mz="rel"]{order:7}.rlbar [data-mz="deck"]{order:6}
+.rlbar button,.mzb,.pcpeek{display:inline-grid!important;place-items:center!important;line-height:0!important;padding:0!important;border-radius:50%!important;box-sizing:border-box}
+.rlbar .rlg{line-height:1!important;box-sizing:border-box}
+.mzb .icsv,.rlbar button .icsv,.pcpeek .icsv{width:1.25em;height:1.25em;vertical-align:0;display:block}
+body:not(.mzbtn) .mzb{display:none!important}
+body.mzbtn .mzb{display:inline-grid!important}
+/* elegir pieza: mazo, reliquias y ojo en fila arriba a la derecha de la ventana; el título no se mete debajo */
+#mzpk{display:flex!important;align-items:center;gap:6px}
+body.mfs.pcpick #mzpk{top:4px!important;right:40px!important}
+body.mfs.pcpick.mzbtn #panel #ui>b,body.mfs.pcpick.mzbtn #panel #ui>small,body.mfs.pcpick.mzbtn #panel .ptt,body.mfs.pcpick.mzbtn #panel h3{padding-right:96px!important;padding-left:96px!important}
+/* torres en móvil: terrestre / aéreo van con las etiquetas, no encima del icono */
+.tgmob{display:none}
+body.mfs #relic .tof>.toftg{display:none!important}
+body.mfs #relic .tof .chips .tgmob{display:inline-flex;gap:3px;align-items:center;background:none!important;border:0!important;padding:0 2px!important}
+body.mfs #relic .tof .chips .tgmob .toftg{position:static;display:flex;flex-direction:row;gap:3px}
+/* etiquetas con iconos (opción) */
+#relic .chips .tgi{display:inline-grid;place-items:center;width:28px;height:24px;padding:0!important;font-size:16px;cursor:help}
+body.mfs #relic .chips .tgi{width:24px;height:20px;font-size:13px}
+/* aspecto futurista: los botones de habilidades y reliquias, más claros para que el borde negro de los dibujos destaque; dibujos un poco más grandes */
+:root[data-skin="holo"] .hpb:not(.hpport),:root[data-skin="holo"] #relics .rl{background:linear-gradient(180deg,#56687a,#3c4a58)!important}
+.hpb:not(.hpport) .icsv{width:1.32em;height:1.32em;vertical-align:-.3em}

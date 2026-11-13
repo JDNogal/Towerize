@@ -20,7 +20,8 @@
   "18_eter_menu.css",
   "19_compendio_torres.css",
   "20_tutorial_v307.css",
-  "21_dron.css"
+  "21_dron.css",
+  "22_ventanas_barra.css"
  ],
  "js": [
   "00_config.js",

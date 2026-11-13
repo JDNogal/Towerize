@@ -61,11 +61,14 @@ css=f'''/* ===== v312 · Era Distópica: el dron proyector sustituye al pergamin
 {H} body.pcpick #panel>*{{animation:hdopen .6s .32s cubic-bezier(.2,.8,.3,1) both}}
 {H} body.pcpick #panel .prow .card{{background:rgba(63,232,255,.06)!important;border-color:rgba(63,232,255,.55)!important}}
 /* --- cofre abierto (elegir reliquia): se proyecta igual --- */
-{H} #relic .hdwin{{position:relative;{HOLO};padding:18px 22px 14px;margin:0 auto;text-align:center;max-width:100%;box-sizing:border-box;animation:hdopen .6s .32s cubic-bezier(.2,.8,.3,1) both,hdjit 7s 1.4s infinite}}
+{H} #relic .hdwin{{position:relative;{HOLO};padding:18px 22px 14px;margin:0 auto;text-align:center;max-width:100%;width:fit-content;box-sizing:border-box;animation:hdopen .6s .32s cubic-bezier(.2,.8,.3,1) both,hdjit 7s 1.4s infinite}}
 /* --- misma ventana: si solo se redibuja no se anima; si cambia de escena, interferencia (el dron no vuelve a llegar) --- */
 {H} #relic .hdkeep .ppap,{H} #relic .hdwin.hdkeep{{animation:hdjit 7s 1.4s infinite!important}}
 {H} #relic .hdwin.hdglitch{{animation:hdglitch .5s steps(1) both,hdjit 7s 1s infinite!important}}
 {H} #relic .pscr.hdkeep::before,{H} #relic .pscr.hdglitch::before,{H} #relic .hdwin.hdkeep::before,{H} #relic .hdwin.hdglitch::before{{animation:hdhov 2.6s ease-in-out infinite!important}}
+/* con los paneles del mazo y del cofre a los lados, la ventana no se mete debajo de ellos */
+{H} body.dsk:not(.mzbtn):not(.mfs) #relic .hdwin{{max-width:calc(100vw - 2 * (var(--mzw,168px) + 34px))}}
+{H} body.dsk:not(.mzbtn):not(.mfs) #relic .hdwin .cgrid{{max-width:100%!important;margin-left:auto!important;margin-right:auto!important}}
 /* --- se cierra: la imagen se aplasta en una línea y el dron se va --- */
 {H} #relic.hdcl{{display:block!important;pointer-events:none!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}
 {H} #relic.hdcl:has(.pscr),{H} #relic.hdcl:has(.hdwin){{display:flex!important;flex-direction:column;align-items:center;justify-content:safe center}}
@@ -74,9 +77,12 @@ css=f'''/* ===== v312 · Era Distópica: el dron proyector sustituye al pergamin
 {H} #relic.hdcl .hdwin>*{{visibility:hidden}}
 /* --- paneles de los lados: el mazo lo proyecta un dron pequeño; las reliquias, un paquete de ayuda militar en paracaídas --- */
 {H} #mzside .mzd,{H} #mzside .mzr{{{HOLO};color:#d4f4ff!important;overflow:visible!important;animation:hdopen .55s .45s both,hdflk 9s 2s infinite}}
+{H} #mzpop .mzbox.mzr,{H} #mzside .mzr{{background:linear-gradient(180deg,rgba(74,92,46,.94),rgba(42,54,26,.96)),repeating-linear-gradient(0deg,rgba(200,230,140,.07) 0 1px,transparent 1px 3px)!important;border-color:rgba(176,206,110,.85)!important;box-shadow:0 0 0 1px rgba(176,206,110,.25),0 0 26px rgba(150,190,80,.35),inset 0 0 30px rgba(176,206,110,.12)!important;color:#eef4d8!important}}
+{H} #mzpop .mzbox.mzr h4,{H} #mzside .mzr h4{{color:#d8ec9a!important;text-shadow:0 0 8px rgba(176,206,110,.6)!important}}
+{H} #mzside .mzr .mzgrid i,{H} #mzside .mzr .mzvac{{background:rgba(176,206,110,.12)!important;border-color:rgba(176,206,110,.5)!important;color:#d8e8b0!important}}
 {H} #mzside .mzd h4,{H} #mzside .mzr h4{{color:#3fe8ff;font-family:system-ui,sans-serif;text-shadow:0 0 8px rgba(63,232,255,.6)}}
 {H} #mzside .mzd .mzrow{{border-color:rgba(63,232,255,.25)!important}}
-{H} #mzside .mzr .mzgrid i,{H} #mzside .mzr .mzvac{{background:rgba(63,232,255,.08)!important;border-color:rgba(63,232,255,.4)!important;color:#9fc8d6}}
+{H} #mzside .mzd .mzgrid i{{background:rgba(63,232,255,.08)!important}}
 {H} #mzside>div{{overflow-y:visible!important}}
 {H} #mzside .mzd::before,{H} #mzside .mzr::before{{content:'';position:absolute;left:50%;pointer-events:none;z-index:3;filter:drop-shadow(0 4px 6px rgba(0,0,0,.5))}}
 {H} #mzside .mzd::before{{top:-40px;width:84px;height:43px;margin-left:-42px;background:{uri(MINI)} no-repeat center/contain;animation:hdin .45s cubic-bezier(.2,.9,.3,1.1) both,hdhov 2.4s .45s ease-in-out infinite}}

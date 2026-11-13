@@ -130,6 +130,7 @@ if(typeof LATSVG!=='undefined')for(const sk in ICLAT)for(const k in ICLAT[sk])if
  if(typeof GICO!=='undefined')for(const[k,e]of[['burn','\\u{1F525}'],['poison','\\u{1F9EA}']])if(ICKW[k])GICO[k]=icReg({ic:e},ICKW[k]);/* glifos de efectos en las barras */
  if(typeof MECG!=='undefined'){for(const[g,l]of MECG)for(const it of l)if(it[0]==='stk')it[2]=ICSI;if(MECI.stk)MECI.stk.ic=ICSI;}/* Acumulable: el tic verde, sin icono propio */
  for(const k in OIC)if(m('o_'+k))OIC[k]=m('o_'+k);
+ if(!m('o_tagic')&&m('c_tw'))OIC.tagic=m('c_tw');/* Etiquetas con iconos: de momento, el icono de Torres */
  for(const a of OTABS)if(m('op_'+a[0]))a[2]=m('op_'+a[0]);
  for(const k in LGICO)if(m('lg_'+k))LGICO[k]=m('lg_'+k);
  for(const a of STABS)if(m('st_'+a[0]))a[2]=m('st_'+a[0]);
