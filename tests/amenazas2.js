@@ -14,7 +14,7 @@ for(let i=0;i<20;i++){if(await p.evaluate(()=>AZASE.t!=null))break;await p.waitF
 r.wave=await p.evaluate(()=>S.phase);r.dbg=await p.evaluate(()=>JSON.stringify({t:AZASE.t,pc:document.body.classList.contains('pcpick'),rl:RL.open,lb:LB.open,dlg:DLG.on,sp:S.speed,menu:document.body.classList.contains('inmenu'),rank:azRank('ase')}));
 r.fog=await p.evaluate(()=>{const t=S.list.find(x=>!x.hero);const mk=(dx)=>{const hp=ehpOf('norm',1),q={t:'norm',x:t.x+dx,y:t.y,tx:t.x+dx,ty:t.y,hp,max:hp,fx:{},src:null,pv:[t.x,t.y]};S.enemies.push(q);return q;};const a=mk(0.2),f=mk(40);azFogTick();return [!!a.fog,!!f.fog];});
 console.log(JSON.stringify(r));
-ck(r.c1===Math.round(r.c0*1.1/5)*5,'Inflación: la segunda torre del mismo tipo cuesta un 10 % más ('+r.c0+' → '+r.c1+')');
+ck(r.c1===Math.round(r.c0*1.1),'Inflación: la segunda torre del mismo tipo cuesta un 10 % más ('+r.c0+' → '+r.c1+')');
 ck(r.wave==='wave','Asedio sin tregua: al acabarse el tiempo, la oleada empieza sola ('+r.wave+')');
 ck(r.fog[0]&&!r.fog[1],'Niebla de guerra: se ve el que está al alcance y no el lejano');
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'amenazas2 ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

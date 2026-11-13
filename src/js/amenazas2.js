@@ -14,7 +14,7 @@ setInterval(()=>{try{const R=azRank('ase'),B=document.body.classList;let c=$('az
  if(AZASE.t<=0){AZASE.t=null;c.style.display='none';try{startWave();}catch(e){}}}catch(e){}},200);
 // ---- Inflación: cada torre del mismo tipo cuesta un 10 % más que la anterior ----
 function azInfl(){try{const on=azOn('inf');for(const k of Object.keys(TW)){const T=TW[k];if(T.cost==null||T.uniq)continue;if(T.cost0==null)T.cost0=T.cost;
-  const n=on&&S&&S.list?S.list.filter(t=>t.type===k&&!t.hero&&!t.summ).length:0,c=n?Math.round(T.cost0*(1+.1*n)/5)*5:T.cost0;if(T.cost!==c)T.cost=c;}}catch(e){}}
+  const n=on&&S&&S.list?S.list.filter(t=>t.type===k&&!t.hero&&!t.summ).length:0,c=n?Math.round(T.cost0*(1+.1*n)):T.cost0;/* sin redondear a 5: es parte de la dificultad (Nogal) */if(T.cost!==c)T.cost=c;}}catch(e){}}
 {const _b=build;build=function(){azInfl();const r=_b.apply(this,arguments);azInfl();return r;};}
 {const _u=ui;ui=function(){azInfl();return _u.apply(this,arguments);};}
 {const _sg=startGame;startGame=function(){const r=_sg.apply(this,arguments);azInfl();return r;};}
