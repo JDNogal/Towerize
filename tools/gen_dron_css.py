@@ -21,14 +21,14 @@ MINI=f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 46">{ANIM}{GR}
 <rect x="24" y="13" width="42" height="22" rx="11" fill="url(#m)" stroke="{K}" stroke-width="2.2"/><path d="M33 18h24" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
 <circle class="bl" cx="36" cy="25" r="2.6" fill="#3fe8ff" stroke="{K}" stroke-width="1"/><circle cx="44" cy="25" r="2.6" fill="#3fe88f" stroke="{K}" stroke-width="1"/>
 <path d="M37 34h16v2a8 6 0 0 1-16 0z" fill="url(#e)" stroke="{K}" stroke-width="1.8"/></svg>'''
-CRATE=f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 112">{GR}
+CRATE=f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 102">{GR}
 <path d="M10 40Q10 6 60 6t50 34q-9-6-17 0-8-6-16 0-9-6-17 0-8-6-17 0-8-6-16 0-8-6-17 0z" fill="#e8e2d0" stroke="{K}" stroke-width="2.4" stroke-linejoin="round"/>
 <path d="M27 40Q32 12 60 8M93 40Q88 12 60 8M43 40Q47 10 60 8M77 40Q73 10 60 8" fill="none" stroke="#a8a090" stroke-width="1.6"/>
 <path d="M12 40L38 66M43 40L48 66M77 40L72 66M108 40L82 66" stroke="{K}" stroke-width="1.4"/>
 <rect x="36" y="64" width="48" height="36" rx="3" fill="#5a6a3a" stroke="{K}" stroke-width="2.4"/><path d="M36 74h48M36 90h48" stroke="#3a4626" stroke-width="2"/>
 <path d="M60 72l2.6 5.4 6 .8-4.3 4.2 1 6-5.3-2.8-5.3 2.8 1-6-4.3-4.2 6-.8z" fill="#f0ead8" stroke="{K}" stroke-width="1"/>
 <rect x="40" y="64" width="5" height="36" fill="#7a8a52" stroke="{K}" stroke-width="1.2"/><rect x="75" y="64" width="5" height="36" fill="#7a8a52" stroke="{K}" stroke-width="1.2"/>
-<path d="M52 100h16v2a8 6 0 0 1-16 0z" fill="url(#e)" stroke="{K}" stroke-width="1.8"/></svg>'''
+</svg>'''
 H=':root[data-skin="holo"]'
 HOLO='background:linear-gradient(180deg,rgba(18,64,80,.92),rgba(9,30,40,.96)),repeating-linear-gradient(0deg,rgba(63,232,255,.07) 0 1px,transparent 1px 3px)!important;background-blend-mode:screen;border:1px solid rgba(63,232,255,.8)!important;border-radius:4px!important;box-shadow:0 0 0 1px rgba(63,232,255,.2),0 0 30px rgba(63,232,255,.35),inset 0 0 40px rgba(63,232,255,.1)!important'
 css=f'''/* ===== v312 · Era Distópica: el dron proyector sustituye al pergamino (tools/gen_dron_css.py) =====

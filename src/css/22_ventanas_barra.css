@@ -54,13 +54,18 @@ body.mfs #relic .cgrid .rcard .ric{width:46px!important;height:46px!important;fo
 /* el cofre en su ventana (pergamino / dron): las tarjetas como antes */
 #relic .rpscr .ppap{text-align:left}#relic .rpscr .ppap>.ptt,#relic .rpscr .ppap>.pst{text-align:center;display:block}
 #relic .rpscr .ppap>small:last-of-type{display:block;text-align:center;margin-top:6px}
-/* elegir pieza en móvil (pergamino): la ventana tiene scroll y recortaba los rodillos de fuera; van por dentro del borde */
-:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow){padding-left:30px!important;padding-right:30px!important}
-:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::before,:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::after{top:0!important;bottom:0!important;width:20px!important;position:absolute!important}
-:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::before{left:2px!important}:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::after{right:2px!important;left:auto!important}
+/* elegir pieza en móvil (pergamino): los rodillos como en las demás ventanas del móvil (asoman por arriba y abajo);
+   el scroll va por dentro, así la ventana no los recorta */
+:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow){overflow:visible!important;padding-left:24px!important;padding-right:24px!important;margin:0 14px}
+:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow) #ui{max-height:calc(100vh - 40px);overflow-y:auto;overflow-x:hidden}
+:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::before,:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::after{width:22px!important;top:-10px!important;bottom:-10px!important}
+:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::before{left:-11px!important}:root:not([data-skin="holo"]) body.mfs.pcpick #panel:has(.prow)::after{right:-11px!important;left:auto!important}
 /* ===== Lo que no cabe entero: sin la sombra de abajo; queda la flechita ▼ y una barra de scroll por dentro del borde derecho ===== */
 .smore::after{background:none!important}
 .sbar{position:fixed;width:5px;border-radius:3px;background:rgba(0,0,0,.18);pointer-events:none}
 .sbar i{display:block;width:100%;border-radius:3px;background:color-mix(in srgb,var(--trim,#a0724a) 85%,#000)}
 :root[data-skin="holo"] .sbar{background:rgba(63,232,255,.12)}:root[data-skin="holo"] .sbar i{background:#3fe8ff;box-shadow:0 0 6px rgba(63,232,255,.6)}
 body:not(.mfs) .sbar{display:none}
+/* pantallas grandes: los paneles del mazo y del cofre crecen como las ventanas (antes se quedaban enanos) */
+@media (min-width:1500px) and (min-height:840px){body.dsk:not(.mfs) #mzside>div{zoom:1.45}}
+@media (min-width:2300px) and (min-height:1250px){body.dsk:not(.mfs) #mzside>div{zoom:1.9}}

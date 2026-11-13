@@ -28,5 +28,5 @@ setInterval(()=>{try{const B=document.body.classList,on=hdOn()&&B.contains('pcpi
 // con los paneles del mazo y del cofre a los lados, la ventana cabe entre ellos (también con la ventana ampliada en pantallas grandes)
 setInterval(()=>{try{const w=document.querySelector('#relic.open .pscr');if(!w)return;const B=document.body.classList;
  if(!B.contains('dsk')||B.contains('mfs')||B.contains('mzbtn')){if(w.dataset.mw0){w.style.maxWidth='';delete w.dataset.mw0;}return;}
- const zm=parseFloat(getComputedStyle(w).zoom)||1,mzw=parseFloat(getComputedStyle($('mzside')||document.body).getPropertyValue('--mzw'))||168;
+ const zm=parseFloat(getComputedStyle(w).zoom)||1,mzw=(parseFloat(getComputedStyle($('mzside')||document.body).getPropertyValue('--mzw'))||168)*((()=>{const d=document.querySelector('#mzside>div');return d?parseFloat(getComputedStyle(d).zoom)||1:1;})());
  if(!w.dataset.mw0)w.dataset.mw0=String(parseFloat(getComputedStyle(w).maxWidth)||1e9);const mx=Math.min(+w.dataset.mw0,Math.floor((innerWidth-2*(mzw+34))/zm));if(w.style.maxWidth!==mx+'px')w.style.maxWidth=mx+'px';}catch(e){}},200);
