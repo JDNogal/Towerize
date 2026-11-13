@@ -95,4 +95,4 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 addEventListener('keydown',e=>{const el=$('hsbig');if(e.key==='Escape'&&el&&el.classList.contains('on')){el.classList.remove('on');e.stopImmediatePropagation();e.preventDefault();}},true);
 
 // v307: en el historial, las torres sin especialización salen con su icono dibujado (lo guardado era el emoji)
-function hsIc(t){try{if(typeof t[0]==='string'&&t[0].startsWith('hero:'))return '<span class="hpsm">'+portrait(t[0].slice(5),1)+'</span>';}catch(e){}try{if(!t[1]&&TW[t[0]]&&TW[t[0]].icsvg)return twIc(t[0]);}catch(e){}return t[8]||'';}
+function hsIc(t){try{if(typeof t[0]==='string'&&t[0].startsWith('hero:'))return '<span class="hpsm">'+portrait(t[0].slice(5),1)+'</span>';}catch(e){}try{if(TW[t[0]]){const h=icOf(tinfo({type:t[0],spec:t[1]||null,lvl:t[2]||1,ab:{},acd:{}}));if(h)return h;}}catch(e){}try{if(TW[t[0]])return twIc(t[0]);}catch(e){}return t[8]||'';}
