@@ -2,7 +2,7 @@
 # Los dibujos viven en tools/dibujos_menus/menu_icons6.py; aquí solo se elige cuál va en cada sitio.
 import json,os,re
 os.chdir(os.path.dirname(os.path.abspath(__file__))+'/..')
-src=open('tools/dibujos_menus/menu_icons6.py',encoding='utf8').read()
+src=open('tools/dibujos_menus/menu_icons7.py',encoding='utf8').read()
 src=src[:src.index("\nI=[]\ndef A(grp")]
 exec(src)
 M={
@@ -16,6 +16,8 @@ M={
  'e_claw':claws(),'e_shield':shield2(),'e_banner':banner2(),'e_tele':tele2(),'e_camo':camo2(),'e_adapt':dna(),'e_burst':egg_burst(),'e_launch':hangar(),
  'e_throne':throne2(),'e_riches':moneybag(),'e_scepter':scepter(),'e_gens':gen_shield(),'e_anchor':platform(),'e_abregen':abyss2(),'e_stomp':foot2(),
  'e_line':factory(),'e_rift':portal2(),'e_wings':bat_wings(),'e_shell':shell_s(),'e_pulse':waves(),'e_core2':core_d(),'e_penta':penta(),
+ # cosméticos y tecla de pausa (ronda 3)
+ 'cs_frame':hero_frame(),'cs_pal':binding(),'cs_dec':deco(),'cs_path':path_c(),'cs_fx':effect(),'k_pause':pause_play(),
  # unidades
  'u_bastion':bastion2(),'u_monk':monk2(),'u_guild':guild2(),'u_robots':robot_u(),
 }

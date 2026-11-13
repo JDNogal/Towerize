@@ -10,8 +10,6 @@ def hero_frame():
     s=C(24,24,21,BRZ,2.4)+C(24,24,15.5,'#5a7ab8',2)
     s+=clip('hfr','M24 8.5a15.5 15.5 0 1 1 0 31a15.5 15.5 0 1 1 0-31z',P('M12 42c0-8 5-12 12-12s12 4 12 12z','#3a4a6a',2)+C(24,22,6.5,SK,2))
     s+=C(24,24,15.5,'none',2)
-    for a in range(0,360,45):
-        x,y=24+18.3*math.cos(math.radians(a)),24+18.3*math.sin(math.radians(a));s+=C(round(x,1),round(y,1),1.5,'#f2c94c',1)
     return s
 def binding():
     # libro cerrado: tapa de cuero, lomo y cantoneras doradas
@@ -23,7 +21,7 @@ def path_c():
     # camino empedrado
     d='M4 10h40v28H4z'
     st=P('M6 12h11v7H6zM19 12h13v7H19zM34 12h8v7h-8zM6 21h7v7H6zM15 21h13v7H15zM30 21h12v7H30zM6 30h11v6H6zM19 30h12v6H19zM33 30h9v6h-9z','#c8b898',1.6)
-    return P('M2 4h44v40H2z','#5fa84a',2.4)+L('M8 8l2-3M14 7l1-3M34 8l2-3M40 7l1-3M8 42l2-3M30 43l1-3M40 42l2-3','#3a7a2a',1.6)+P(d,'#8a7a62',2.4)+st+P(d,'none',2.4)
+    return P('M2 4h44v40H2z','#5fa84a',2.4)+P(d,'#8a7a62',2.4)+st+P(d,'none',2.4)
 def effect():
     # efecto de torre: la torre con un aura y destellos alrededor
     star=lambda x,y,r,f:P(f'M{x} {y-r}q{r*.18} {r*.82} {r} {r}q-{r*.82} {r*.18}-{r} {r}q-{r*.18}-{r*.82}-{r}-{r}q{r*.82}-{r*.18} {r}-{r}z',f,1.6)

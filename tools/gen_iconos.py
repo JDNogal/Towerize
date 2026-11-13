@@ -114,15 +114,15 @@ if(typeof LATSVG!=='undefined')for(const sk in ICLAT)for(const k in ICLAT[sk])if
 // menús e interfaz (13-nov-2026): cada sitio que tenía un emoji lleva su dibujo
 {const m=k=>ICU['m_'+k];try{
  const EM={'\\u{1F512}':m('lock'),'\\u{1F4CC}':m('pin'),'\\u231B':ICU.dur,'\\u23F3':ICU.dur,'\\u{1F441}':m('k_peek'),'\\u{1F5FA}':m('bigmap'),'\\u{1F4CA}':m('st_run'),'\\u{1F47E}':m('st_en'),'\\u25B6':ICU.play};
- Object.assign(EM,{'\\u26A0':m('warn'),'\\u2139':m('info'),'\\u23ED':m('skip'),'\\u{1F480}':m('skull'),'\\u{1F513}':m('op_un'),'\\u{1F0CF}':m('deck'),'\\u{1F9F0}':m('chest')});
+ Object.assign(EM,{'\\u26A0':m('warn'),'\\u2139':m('info'),'\\u23ED':m('skip'),'\\u{1F480}':m('skull'),'\\u{1F513}':m('op_un'),'\\u{1F5BC}':m('cs_frame'),'\\u{1F0CF}':m('deck'),'\\u{1F9F0}':m('chest')});
  if(typeof LATSVG!=='undefined'&&LATSVG.perg&&LATSVG.perg.cp)EM['\\u{1F4D6}']=icReg({ic:'\\u{1F4D6}'},'<g transform="scale(.75)">'+LATSVG.perg.cp+'</g>');/* el libro del compendio */
- {const KA={up:'k_up',nu:'k_up',upg:'k_up',left:'k_left',nl:'k_left',down:'k_down',nd:'k_down',right:'k_right',nr:'k_right'};for(const[g,rows]of KBL)for(const r of rows)if(KA[r[0]]&&m(KA[r[0]]))r[2]=m(KA[r[0]]);}
+ {const KA={up:'k_up',nu:'k_up',upg:'k_up',pause:'k_pause',left:'k_left',nl:'k_left',down:'k_down',nd:'k_down',right:'k_right',nr:'k_right'};for(const[g,rows]of KBL)for(const r of rows)if(KA[r[0]]&&m(KA[r[0]]))r[2]=m(KA[r[0]]);}
  if(typeof CTICO!=='undefined'){const CT={tw:'c_tw',hr:'lg_hr',pc:'c_pc',bf:'c_bf',rl:'st_rel',en:'st_en',ev:'lg_ev',mc:'op_jg'};for(const k in CT)if(m(CT[k]))CTICO[k]=m(CT[k]);}
  if(typeof ERADEF!=='undefined'){if(m('castle'))ERADEF[1].ic=m('castle');if(m('era2'))ERADEF[2].ic=m('era2');}
  if(typeof MECG!=='undefined')for(const[g,l]of MECG)for(const it of l)if(m('e_'+it[0])){it[2]=m('e_'+it[0]);if(MECI[it[0]])MECI[it[0]].ic=it[2];}
  if(typeof UIC!=='undefined')for(const k of['bastion','monk','guild','robots'])if(m('u_'+k))UIC[k]=m('u_'+k);
  if(typeof GICO!=='undefined'&&ICU.te_bwall)GICO.bwall=ICU.te_bwall;
- if(typeof CSKIND!=='undefined'){const CK={tfr:'frame',core:'e_core2',tile:'c_bf'};for(const k in CK)if(CSKIND[k]&&m(CK[k]))CSKIND[k][0]=m(CK[k]);}
+ if(typeof CSKIND!=='undefined'){const CK={tfr:'frame',core:'e_core2',tile:'c_bf',frame:'cs_frame',pal:'cs_pal',dec:'cs_dec',path:'cs_path',fx:'cs_fx'};for(const k in CK)if(CSKIND[k]&&m(CK[k]))CSKIND[k][0]=m(CK[k]);}
  if(typeof EVENTS!=='undefined'&&typeof evImg==='function')for(const k in EVENTS){try{const s=evImg(k,null);if(s)EVENTS[k].ic='<span class="evmini">'+s+'</span>';}catch(e){}}/* el icono de cada evento es su dibujo en pequeño */
  for(const k in EM)if(EM[k])ICEMO[k]=EM[k];if(typeof trofIc==='function')ICEMO['\\u{1F3C6}']=trofIc;
  ICRX=new RegExp('[\\\\uE000-\\\\uF8FF]|'+Object.keys(ICEMO).join('|'),'u');

@@ -58,7 +58,7 @@ function hsMini(r,W){const g=hsUnmap(r.map),n=r.N||g.length,MC=HSMC[r.era||1]||H
  const span=Math.max(x1-x0+1,y1-y0+1),s=W/span,ox=x0-(span-(x1-x0+1))/2,oy=y0-(span-(y1-y0+1))/2,X=v=>((v-ox)*s).toFixed(1),Y=v=>((v-oy)*s).toFixed(1),u=Math.max(1,(typeof K!=='undefined'?K:3));
  let h=`<svg class="hsmap" viewBox="0 0 ${W} ${W}" width="${W}" height="${W}" data-ox="${ox}" data-oy="${oy}" data-s="${s}"><rect width="${W}" height="${W}" fill="${MC.bg}"/>`;
  g.forEach((row,y)=>{for(let x=0;x<row.length;x++){const c=row[x];if(c==='.')continue;h+=`<rect x="${X(x)}" y="${Y(y)}" width="${(s+.4).toFixed(1)}" height="${(s+.4).toFixed(1)}" fill="${c==='#'?MC.path:MC.sol}"/>`;}});
- for(const t of r.tw)if(t[5]>=0&&!t[7]){const T=TW[t[0]],c=t[5]+.5,d=t[6]+.5,z=u*.42;h+=`<rect x="${X(c-z)}" y="${Y(d-z)}" width="${(2*z*s).toFixed(1)}" height="${(2*z*s).toFixed(1)}" rx="${(z*s*.35).toFixed(1)}" fill="${T?T.col:'#ccc'}" stroke="#14161c" stroke-width="${Math.max(.8,s*.2).toFixed(1)}"/><text x="${X(c)}" y="${Y(d)}" font-size="${(z*s*1.25).toFixed(1)}" text-anchor="middle" dominant-baseline="central">${t[8]||''}</text>`;}
+ for(const t of r.tw)if(t[5]>=0&&!t[7]){const T=TW[t[0]],c=t[5]+.5,d=t[6]+.5,z=u*.42;h+=`<rect x="${X(c-z)}" y="${Y(d-z)}" width="${(2*z*s).toFixed(1)}" height="${(2*z*s).toFixed(1)}" rx="${(z*s*.35).toFixed(1)}" fill="${T?T.col:'#ccc'}" stroke="#14161c" stroke-width="${Math.max(.8,s*.2).toFixed(1)}"/><foreignObject x="${X(c-z)}" y="${Y(d-z)}" width="${(2*z*s).toFixed(1)}" height="${(2*z*s).toFixed(1)}"><div xmlns="http://www.w3.org/1999/xhtml" class="hsmi">${hsMapIc(t)}</div></foreignObject>`;}
  for(const p of r.pt)h+=`<circle cx="${X(p[0]+.5)}" cy="${Y(p[1]+.5)}" r="${Math.max(3,s*1.1).toFixed(1)}" fill="#e8344a" stroke="#fff" stroke-width="${Math.max(.8,s*.25).toFixed(1)}"/>`;
  h+=`<circle cx="${X(r.core[0]+.5)}" cy="${Y(r.core[1]+.5)}" r="${Math.max(3.5,s*1.3).toFixed(1)}" fill="#3fe8ff" stroke="#0a4a5a" stroke-width="${Math.max(.8,s*.25).toFixed(1)}"/>`;return h+'</svg>';}
 function histParts(){hsLoad();const L=hsFiltered(),all=HIST.list||[],won=all.filter(r=>r.res==='w').length;if(HIST.sel>=L.length)HIST.sel=0;const r=L[HIST.sel];
@@ -95,4 +95,6 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 addEventListener('keydown',e=>{const el=$('hsbig');if(e.key==='Escape'&&el&&el.classList.contains('on')){el.classList.remove('on');e.stopImmediatePropagation();e.preventDefault();}},true);
 
 // v307: en el historial, las torres sin especialización salen con su icono dibujado (lo guardado era el emoji)
+/* icono dibujado dentro del mapa en miniatura (SVG): los caracteres privados se cambian aquí por su dibujo */
+function hsMapIc(t){let h=hsIc(t);try{h=String(h).replace(/[\uE000-\uF8FF]/g,c=>ICSV[c]?icSvg(c):c);}catch(e){}return h;}
 function hsIc(t){try{if(typeof t[0]==='string'&&t[0].startsWith('hero:'))return '<span class="hpsm">'+portrait(t[0].slice(5),1)+'</span>';}catch(e){}try{if(TW[t[0]]){const h=icOf(tinfo({type:t[0],spec:t[1]||null,lvl:t[2]||1,ab:{},acd:{}}));if(h)return h;}}catch(e){}try{if(TW[t[0]])return twIc(t[0]);}catch(e){}return t[8]||'';}
