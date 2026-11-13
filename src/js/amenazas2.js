@@ -80,7 +80,7 @@ const azFlagOn=e=>{if(!e||!e.sqid||!S.flagSq)return false;const b=S.flagSq[e.sqi
  }catch(x){}return r;};}
 
 // ==================== Piezas corruptas: la casilla maldita ====================
-// Cada 3 elecciones de pieza (R2: cada 2), las piezas que se ofrecen traen una casilla maldita en uno de sus solares.
+// Cada 4 elecciones de pieza (R2: cada 3), las piezas que se ofrecen traen una casilla maldita en uno de sus solares.
 // Hay que construir en ella antes que en ningún otro sitio; su torre no se puede vender y sus mejoras (y habilidades) cuestan un 25 % más (R2: 50 %).
 // Dibujo elegido por Nogal (B1): aspa roja dentro de un círculo y borde rojo discontinuo con la forma de cada estilo de casilla.
 BFICO.curs='<circle cx="12" cy="12" r="9"/><path d="M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6" stroke-width="2.6"/>';
@@ -98,7 +98,7 @@ function azCurPending(){const out=[];if(!S||!S.buff||!S.cc)return out;const seen
   const q=sqOf(fx,fy),key=q.x+','+q.y;if(seen.has(key))continue;seen.add(key);if(!S.occ[key])out.push(q);}return out;}
 // reparto: cada N elecciones, las piezas vienen corruptas
 {const _pp=placePiece;placePiece=function(){const r=_pp.apply(this,arguments);try{if(S&&!S.tut)S.pkN=(S.pkN||0)+1;}catch(e){}return r;};}
-{const _dl=deal;deal=function(){const r=_dl.apply(this,arguments);try{const R=azRank('cor');if(R&&!S.tut&&S.offers&&S.offers.length){const f=R>=2?2:3,n=(S.pkN||0)+1;
+{const _dl=deal;deal=function(){const r=_dl.apply(this,arguments);try{const R=azRank('cor');if(R&&!S.tut&&S.offers&&S.offers.length){const f=R>=2?3:4,n=(S.pkN||0)+1;
  if(n%f===0){for(const o of S.offers){const cs=[];o.p.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch==='S'&&!o.b.some(b=>b.x===x&&b.y===y))cs.push([x,y]);}));
   if(!cs.length)continue;const c=cs[Math.floor(Math.random()*cs.length)];o.b.push({x:c[0],y:c[1],k:'cur'});o.cor=1;}try{see('bf','cur');}catch(e){}}}}catch(e){console.warn(e);}return r;};}
 // construir: primero la casilla maldita

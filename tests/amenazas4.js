@@ -5,7 +5,7 @@ await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tut
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
 await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;OPT.eter=false;startGame(15);chooseHero('reinhart');for(let i=0;i<5&&DLG.on;i++)dlgEnd();HQ.q=[];if(HQ.cur)hintClose();});
 await p.waitForTimeout(600);
-const r=await p.evaluate(()=>{try{lbClose(true);}catch(e){}S.amz={cor:1};S.pkN=2;S.gold=9999;deal();const o={};o.cor=S.offers.filter(x=>x.b.some(b=>b.k==='cur')).length;
+const r=await p.evaluate(()=>{try{lbClose(true);}catch(e){}S.amz={cor:1};S.pkN=3;S.gold=9999;deal();const o={};o.cor=S.offers.filter(x=>x.b.some(b=>b.k==='cur')).length;
  o.cost=S.offers.map(x=>pcost(x));
  let placed=false;for(let pi=0;pi<S.offers.length&&!placed;pi++){if(!S.offers[pi].b.some(b=>b.k==='cur'))continue;S.pi=pi;const of=S.offers[pi];for(let r=0;r<4&&!placed;r++){for(let by=0;by<BN&&!placed;by++)for(let bx=0;bx<BN&&!placed;bx++)if(check(bx,by,of.p)===0){placePiece(bx,by);placed=true;}if(!placed)rotO(of);}}
  o.placed=placed;RL.open=false;$('relic').classList.remove('open');document.body.classList.remove('pcpick');S.phase='build';ui();
