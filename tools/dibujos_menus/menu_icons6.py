@@ -195,7 +195,7 @@ def boot2():
 AXE='<path d="M0 -12q1.6 10 -.6 18q-.6 4 .4 7" fill="none" stroke="#1b1712" stroke-width="5.2" stroke-linecap="round"/><path d="M0 -12q1.6 10 -.6 18q-.6 4 .4 7" fill="none" stroke="#c07a3a" stroke-width="2.8" stroke-linecap="round"/><circle cx="0.2" cy="13.6" r="1.9" fill="#c07a3a" stroke="#1b1712" stroke-width="1.2"/><path d="M-2 -15H9Q12 -8 10 -1Q5 -6 1.6 -8H-2z" fill="#6a7280" stroke="#1b1712" stroke-width="2.1" stroke-linejoin="round"/><path d="M7.6 -14Q10 -8 8.4 -2.6" fill="none" stroke="#c8d0d8" stroke-width="1.3" stroke-linecap="round"/><path d="M-2 -15H9Q12 -8 10 -1Q5 -6 1.6 -8H-2z" fill="none" stroke="#1b1712" stroke-width="2.1" stroke-linejoin="round"/>'
 def axe_spin2():
     # el hacha del cerdito leñador, en diagonal entre las flechas, con el filo hacia arriba
-    return carrow(24,24,20,150,250,4.2)+carrow(24,24,20,-30,70,4.2)+f'<g transform="translate(23 24.5) rotate(-42) scale(.6) translate(-4 0)">{AXE}</g>'
+    return carrow(24,24,20,150,250,4.2)+carrow(24,24,20,-30,70,4.2)+f'<g transform="translate(24 24) rotate(20) scale(.8) translate(-4 0)">{AXE}</g>'
 def flames2():
     star=poly([(24+(21 if i%2==0 else 13)*math.cos(i*math.pi/8),26+(21 if i%2==0 else 13)*math.sin(i*math.pi/8)) for i in range(16)])
     return P(star,'#ff5a3a',2.2)+G('translate(24 26) scale(.72) translate(-24 -26)',inner=flames())
