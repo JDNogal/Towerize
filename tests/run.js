@@ -84,6 +84,7 @@ const T=[
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
  ['especializaciones_nuevas.js','Especializaciones nuevas: Senda rúnica, Dron petrolero, Cañón de riel y Drones bombarderos',null,2],
  ['compendio_eventos.js','Compendio de eventos: imagen de cada evento, opciones y página de cada opción'],
+ ['puntuacion.js','Puntuación: durante la partida, en la pausa, en Estadísticas, al final y en Partidas'],
  ['logros_niveles.js','Logros por niveles (bronce, plata, oro, platino), bajas con cada torre y Estadísticas › Marcas'],
  ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],
 ];

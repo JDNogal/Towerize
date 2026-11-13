@@ -1,0 +1,15 @@
+/* ===== v314 · Puntuación ===== */
+.sctab{border-collapse:collapse;width:100%;margin-top:6px}
+.sctab td{padding:6px 4px;border-top:1px dashed var(--pline2);vertical-align:top}
+.sctab td small{display:block;opacity:.7;font-size:12px}
+.sctab td.n{text-align:right;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums;color:#2f8a3a}
+.sctab tr.neg td.n{color:#c0392b}
+.sctab tr.tot td{border-top:2px solid var(--pline3);font-size:16px}.sctab tr.tot td.n{color:var(--ink)}
+:root[data-skin="holo"] .sctab td.n{color:#4fe88f}:root[data-skin="holo"] .sctab tr.neg td.n{color:#ff6a6a}:root[data-skin="holo"] .sctab tr.tot td.n{color:#3fe8ff;text-shadow:0 0 6px rgba(63,232,255,.6)}
+.scbig{grid-column:1/-1}.scbig b{font-size:34px!important}
+.scnote{font-size:12.5px;opacity:.8;margin-top:10px}
+.scend{grid-column:1/-1;text-align:center;padding:6px 0 8px}.scend small{display:block;opacity:.75}.scend b{font-size:30px}
+:root[data-skin="holo"] .scend b,:root[data-skin="holo"] .lbscore b{color:#3fe8ff;text-shadow:0 0 8px rgba(63,232,255,.6)}
+.lbscore{text-align:center;margin:4px 0 6px}.lbscore small{display:block;font-size:12px;opacity:.75;letter-spacing:.08em;text-transform:uppercase}.lbscore b{font:700 26px Georgia,serif}
+:root[data-skin="holo"] .lbscore b{font-family:'Chakra Petch',system-ui,sans-serif}
+.hsv{display:flex;gap:6px;margin:8px 0 6px}.hsv button{padding:4px 12px;border-radius:14px;border:1px solid var(--pline2);background:var(--paper2);color:var(--ink);font-weight:700;cursor:pointer}.hsv button.on{background:var(--acc);color:#fff;border-color:var(--acc)}

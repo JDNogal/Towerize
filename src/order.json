@@ -22,7 +22,8 @@
   "20_tutorial_v307.css",
   "21_dron.css",
   "22_ventanas_barra.css",
-  "23_logros_niveles.css"
+  "23_logros_niveles.css",
+  "24_puntuacion.css"
  ],
  "js": [
   "00_config.js",
@@ -131,6 +132,7 @@
   "ventanas_barra.js",
   "iconos_svg.js",
   "torres_evento_nv4.js",
-  "logros_niveles.js"
+  "logros_niveles.js",
+  "puntuacion.js"
  ]
 }
