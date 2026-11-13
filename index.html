@@ -59,7 +59,7 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .hdots{display:flex;justify-content:center;gap:6px;margin:4px 0}.hpabs{display:flex;flex-direction:column;gap:calc(4px*var(--hs));margin:calc(6px*var(--hs)) 0}.hpab{display:flex;align-items:center;gap:6px;font-size:calc(12px*var(--hs));background:var(--panel);border-radius:7px;padding:calc(3px*var(--hs)) 6px;cursor:help}.hpab .habi{width:calc(24px*var(--hs));height:calc(24px*var(--hs));flex:0 0 auto;font-size:calc(14px*var(--hs))}.hpn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hpl{color:var(--hl);font-weight:700;font-size:calc(11px*var(--hs))}
 .hdots .hdot{width:10px;height:10px;min-width:0;padding:0;margin:0;border-radius:50%;background:var(--line2);border:0}.hdots .hdot.on{background:var(--hl)}
 .hbox{background:var(--btn);border:1px solid var(--line2);border-radius:10px;padding:calc(8px*var(--hs)) calc(11px*var(--hs));font-size:calc(12.5px*var(--hs))}.hbt{font-weight:700;margin-bottom:calc(5px*var(--hs));font-size:calc(13px*var(--hs))}.hbt small{font-weight:400}
-.hbox .hrt{font-size:calc(12.5px*var(--hs));line-height:1.4}.hbox b{font-size:calc(13.5px*var(--hs))}.hdesc{font-size:calc(11.5px*var(--hs))}.hright .htags span{font-size:calc(11px*var(--hs))}.hpk .hric{flex:0 0 calc(30px*var(--hs));width:calc(30px*var(--hs));height:calc(30px*var(--hs));font-size:calc(17px*var(--hs))}
+.hbox b{font-size:calc(13.5px*var(--hs))}.hdesc{font-size:calc(11.5px*var(--hs))}.hright .htags span{font-size:calc(11px*var(--hs))}.hpk .hric{flex:0 0 calc(30px*var(--hs));width:calc(30px*var(--hs));height:calc(30px*var(--hs));font-size:calc(17px*var(--hs))}
 .hdeck{display:flex;gap:6px;flex-wrap:wrap}.hdk{flex:1 1 140px;display:flex;gap:8px;align-items:center;background:var(--panel);border-radius:8px;padding:calc(6px*var(--hs)) calc(8px*var(--hs))}.hdk b{font-size:calc(13.5px*var(--hs))}.hdi{width:calc(28px*var(--hs));height:calc(28px*var(--hs));font-size:calc(16px*var(--hs))!important;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 28px}
 @media (max-width:640px){.hcols{grid-template-columns:1fr}.hleft .hport{height:120px}.hst{grid-template-columns:1fr}.harr{flex-basis:26px}}
 
@@ -71,7 +71,7 @@ button.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 #toast{position:fixed;top:62px;left:50%;transform:translateX(-50%);z-index:99;display:flex;flex-direction:column;gap:6px;pointer-events:none}
 .tst{background:color-mix(in srgb,var(--panel2) 96%,transparent);color:var(--fg);border:1px solid var(--hl);border-radius:10px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:tstin .38s ease-out;transition:opacity .5s,transform .5s;max-width:80vw}
 .tst.out{opacity:0;transform:translateY(-10px)}@keyframes tstin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}#comp.open,#opts.open,#relic.open{display:block}#errb{position:fixed;z-index:99;max-width:min(320px,calc(100vw - 20px));padding:8px 13px;border-radius:12px;background:#b8323f;color:#fff;font-size:13.5px;font-weight:600;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.45);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .18s,transform .18s}#errb.on{opacity:1;transform:none}
-.fbar{row-gap:6px}.fbar button{margin-bottom:6px!important}#relic .evopts button,#relic .pbot button{margin-bottom:6px}
+.fbar{row-gap:6px}.fbar button{margin-bottom:6px!important}#relic .evopts button{margin-bottom:6px}
 .kcap.bkq{position:static;transform:none;align-self:flex-end;margin:0 4px 22px;height:20px;line-height:17px;font-size:12px;min-width:22px}
 .oxb,.bkx{position:relative;overflow:visible!important}.kcap.kesc{top:auto;bottom:-22px;font-size:9.5px;height:15px;line-height:12px;padding:0 4px}
 .kfoc{outline:3px solid #f0b429!important;outline-offset:2px!important;box-shadow:0 0 14px rgba(240,180,41,.55)!important;position:relative;z-index:2}
@@ -111,7 +111,7 @@ body.dsk #comp.bkm,body.mfs #comp.bkm,body.inmenu #comp.bkm{position:fixed!impor
 .bkglow{animation:bkglow 1.5s ease-out}@keyframes bkglow{0%,40%{box-shadow:0 0 0 3px #e8b04a,0 0 20px 4px rgba(232,176,74,.8)}100%{box-shadow:0 0 0 0 transparent}}
 .bkhl{animation:bkglow 1.5s ease-out}
 .bkflt{margin:2px 0 8px;font-size:12px;display:flex;flex-direction:column;gap:7px}.bkfr{display:flex;flex-wrap:wrap;align-items:center;gap:5px}.bkflt button{margin:0!important;padding:1px 9px!important;border-radius:12px!important;background:transparent!important;border:1px solid var(--pline2)!important;color:var(--ink2)!important;font-size:12px}.bkflt button.on{background:var(--acc2)!important;border-color:var(--acc2)!important;color:var(--paper1)!important}.bkfl{color:var(--ink2);margin-right:4px;font-style:italic}
-.bkhd{float:right;margin:0 0 8px 12px}.bkbic{width:92px;height:92px;border-radius:18px;display:grid;place-items:center;font-size:52px;box-shadow:0 6px 14px rgba(90,40,10,.3);background:var(--paper3)}.bkach.off{filter:grayscale(.7);opacity:.7}
+.bkbic{width:92px;height:92px;border-radius:18px;display:grid;place-items:center;font-size:52px;box-shadow:0 6px 14px rgba(90,40,10,.3);background:var(--paper3)}.bkach.off{filter:grayscale(.7);opacity:.7}
 .bkpor{display:block;width:110px;height:110px;border-radius:16px;overflow:hidden;box-shadow:0 6px 14px rgba(90,40,10,.3)}.bkpor svg{width:100%;height:100%;display:block}.bkpor.lk{box-shadow:none;background:transparent;margin:0 auto 4px;width:150px;height:150px}.bkpor.lk svg{filter:brightness(0) opacity(.35)}.bkhun .hbox{text-align:left;margin:12px auto 0;max-width:320px;background:color-mix(in srgb,var(--paper1) 80%,transparent);border:1px solid var(--pline2);border-radius:10px;padding:8px 12px}
 #comp .bkp .ce.bkce{background:transparent!important;border:0!important;padding:0!important;box-shadow:none!important}
 #comp .bkp .ce{background:color-mix(in srgb,var(--paper1) 70%,transparent)!important;border-color:var(--pline2)!important}
@@ -175,7 +175,7 @@ body.dsk #comp.bkm,body.mfs #comp.bkm,body.inmenu #comp.bkm{position:fixed!impor
 #bmenu .tmb.sel{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 3px 10px rgba(0,0,0,.45)}
 #mbr button.go.arm{background:#2f6b3a!important;border-color:#6fdc8c!important;color:#fff!important;box-shadow:0 0 14px rgba(111,220,140,.55)!important}
 #panel.pempty{display:none!important}
-.kbk{min-width:92px;padding:6px 12px;border-radius:8px;border:1px solid var(--line2);background:var(--btn);color:var(--fg);font:700 13px ui-monospace,Consolas,monospace;text-align:center;cursor:pointer;flex:none}.kbk.on{border-color:var(--acc);color:var(--acc);animation:fpulse 1s infinite}.kbk.fix{opacity:.6;cursor:default;font-weight:600}.kbft{display:flex;justify-content:flex-end;margin:14px 0 4px}.kbk{margin-left:6px!important}.kbk.emp{opacity:.55;font-weight:500}.kbhd{display:flex;justify-content:flex-end;gap:6px;font-size:11px;color:var(--fg2);margin:4px 0 -4px}.kbhd b{min-width:92px;text-align:center;font-weight:600}.kbhd span{flex:1}.errfl{animation:errfl .9s ease-out}@keyframes errfl{0%{box-shadow:0 0 0 0 rgba(255,90,100,0)}22%{box-shadow:0 0 0 2px rgba(255,95,105,.85),0 0 16px 2px rgba(255,70,85,.45)}100%{box-shadow:0 0 0 0 rgba(255,90,100,0)}}#pmenu{z-index:59!important;background:rgba(8,9,12,.55)!important;backdrop-filter:blur(4px)!important;-webkit-backdrop-filter:blur(4px)!important}#pmenu .pmc{width:min(460px,calc(100vw - 24px))!important;padding:16px 18px!important;border-radius:16px!important;background:color-mix(in srgb,var(--panel) 97%,transparent)!important;box-shadow:0 20px 60px rgba(0,0,0,.55)}#pmenu .pmh2{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}#pmenu .pmh2 b{font:700 22px Georgia,serif;color:var(--acc)}#pmenu .pmh2 .oxb{min-height:0;width:34px;height:34px;padding:0;text-align:center}#pmenu .pchips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}#pmenu .pchips span{background:var(--btn);border:1px solid var(--line);border-radius:20px;padding:3px 10px;font-size:12.5px}#pmenu .ptiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}#pmenu .ptiles button{min-height:74px;text-align:center;padding:8px 4px;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}#pmenu .ptiles button em{font-style:normal;font-size:24px;line-height:1}#pmenu .pbot{display:grid;gap:8px;margin-top:4px}#pmenu .pbot button{text-align:center;min-height:42px;font-size:14px}#pmenu .pbot small{color:var(--fg2);font-weight:400}#pmenu button.pmain{width:100%}@media (max-height:460px){#pmenu .ptiles{grid-template-columns:repeat(6,1fr)}#pmenu .ptiles button{min-height:58px;font-size:11px}#pmenu .ptiles button em{font-size:19px}#pmenu .pchips{margin-bottom:6px}#pmenu .pmc{width:min(640px,calc(100vw - 24px))!important;padding:10px 14px!important}#pmenu .pbot{grid-template-columns:1fr 1fr}}#stw{position:fixed;inset:0;z-index:62;display:none;align-items:center;justify-content:center;background:rgba(8,9,12,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}#stw.open{display:flex}#stw .kp{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 6px}#stw .kp div{background:var(--btn);border:1px solid var(--line);border-radius:10px;padding:8px 10px}#stw .kp b{display:block;font-size:19px}#stw .kp small{color:var(--fg2);font-size:11.5px}#stw .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}#stw .srow{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}#stw .srow span:first-child{color:var(--fg1)}#stw table{width:100%;border-collapse:collapse;font-size:13px}#stw th{text-align:left;color:var(--fg2);font-weight:600;font-size:11.5px;padding:4px 6px;border-bottom:1px solid var(--line)}#stw td{padding:6px;border-bottom:1px solid var(--line);vertical-align:middle}#stw td.n,#stw th.n{text-align:right;white-space:nowrap}#stw .sbar{height:7px;border-radius:4px;background:var(--panel2);overflow:hidden;min-width:70px}#stw .sbar i{display:block;height:100%;border-radius:4px}#stw .sic{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:7px;margin-right:8px;font-size:15px;vertical-align:middle}#stw .srl{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}#stw .srl .ri{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:21px;flex:0 0 38px}#stw .srl small{display:block;color:var(--fg2)}#stw .srl .v{margin-left:auto;text-align:right;font-weight:700}#stw .snote{color:var(--fg2);font-size:12px;margin-top:8px}@media (max-width:640px),(max-height:460px){#stw .kp{grid-template-columns:repeat(2,1fr)}#stw .cols{grid-template-columns:1fr;gap:0}#stw td,#stw th{padding:3px 4px}#stw .hidem{display:none}}#opts{background:rgba(8,9,12,.55)!important;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:0!important;overflow:hidden!important}#opts.open{display:flex!important;align-items:center;justify-content:center}body.dsk #opts,body.mfs #opts,body.inmenu #opts{position:fixed!important;inset:0!important;border-radius:0!important;z-index:60}.omod{width:min(920px,calc(100vw - 24px));height:min(620px,calc(100vh - 24px));display:flex;background:color-mix(in srgb,var(--panel) 97%,transparent);border:1px solid var(--line2);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55);overflow:hidden;color:var(--fg)}.oside{flex:0 0 200px;padding:16px 10px;background:color-mix(in srgb,var(--bg) 60%,transparent);border-right:1px solid var(--line);overflow:auto}.oside h2{font:700 20px Georgia,serif;color:var(--acc);margin:0 10px 12px}.oside button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;padding:9px 12px;margin:0 0 2px;border:0;border-radius:9px;background:transparent;color:var(--fg1);font-size:14px;cursor:pointer}.oside button span{width:22px;text-align:center;font-size:16px}.oside button em{font-style:normal}.oside button:hover{background:color-mix(in srgb,var(--btn) 70%,transparent)}.oside button,.oside button:hover{border:0!important;box-shadow:none}.oside button:not(.on){background:transparent!important}.oside button:not(.on):hover{background:color-mix(in srgb,var(--btn) 60%,transparent)!important}.oside button.on{background:var(--btn)!important;color:var(--fg);box-shadow:inset 3px 0 0 var(--acc)!important}.oseg button{border:0!important;box-shadow:none!important}.omain{flex:1;min-width:0;overflow:auto;padding:16px 24px 18px}.otop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:4px}.otop b{font-size:18px}.otop small{display:block;color:var(--fg2);font-size:12px;margin-top:2px}.oxb{width:34px;height:34px;padding:0;border-radius:9px;flex:0 0 auto}.osec{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin:16px 0 2px}.omain .orow{margin:0;padding:10px 0;border-bottom:1px solid var(--line)}.omain .orow.otg{max-width:none;gap:14px}.omain .orow small{color:var(--fg2);font-size:12px;margin-top:2px}.oic{flex:0 0 26px;width:26px;display:grid;place-items:center;font-size:19px}.sw:not(.on) i{background:#fff}.oseg{display:inline-flex;flex-wrap:wrap;background:var(--bg);border:1px solid var(--line2);border-radius:9px;padding:2px;gap:2px}.oseg button{margin:0;padding:5px 10px;border:0;border-radius:7px;background:transparent;font-size:13px;color:var(--fg1)}.oseg button.on{background:var(--acc);color:var(--accfg);font-weight:700}.osr{display:flex;align-items:center;gap:8px;flex:0 0 auto}.osr input{width:min(180px,30vw);accent-color:var(--acc)}.osr output{min-width:42px;text-align:right;font-size:13px;color:var(--fg1)}.ocn{display:flex;gap:6px;flex:0 0 auto}.ocn input{font:inherit;width:140px;padding:6px 8px;border-radius:6px;border:1px solid var(--line2);background:var(--btn);color:var(--fg)}.onote{color:var(--fg2);font-size:13px}.odanger{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:18px;padding:10px 14px;border:1px dashed color-mix(in srgb,var(--red) 70%,transparent);border-radius:10px}.odanger b{color:var(--red);font-size:13px}.odanger small{display:block;color:var(--fg2);font-size:12px;margin-top:2px}.odanger button{flex:0 0 auto;border-color:var(--red);color:var(--red)}@media (max-width:640px),(max-height:460px){.oside{flex:0 0 58px;padding:10px 6px}.oside h2,.oside button em{display:none}.oside button{justify-content:center;padding:9px 0}.omain{padding:12px 14px}.osr input{width:110px}}@media (max-width:640px){.omain .orow.och{flex-wrap:wrap}.omain .orow.och .oseg{margin-left:44px}}#fsmb{position:fixed;top:8px;right:8px;z-index:97;width:40px;height:40px;padding:0;margin:0;border-radius:10px;font-size:20px;line-height:1;display:none;background:var(--btn);color:var(--fg);border:1px solid var(--line2);box-shadow:0 2px 8px rgba(0,0,0,.35)}#fsmb.on{display:grid;place-items:center}#tmenu{position:absolute;left:0;top:0;width:0;height:0;z-index:12;display:none}#tmenu.on{display:block}#tmenu .tmb{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;padding:0;border-radius:10px;background:var(--btn);border:1.5px solid var(--line2);display:grid;place-items:center;font-size:20px;line-height:1;color:var(--fg);box-shadow:0 3px 10px rgba(0,0,0,.45);cursor:pointer}#tmenu .tmb:hover{border-color:var(--acc)}#tmenu .tmb .p{position:absolute;top:41px;left:50%;transform:translateX(-50%);white-space:nowrap;font:700 11px system-ui,sans-serif;color:var(--gold);background:rgba(14,16,22,.88);padding:1px 5px;border-radius:6px;pointer-events:none}#tmenu .tmb.no .p{color:var(--red)}#tmenu .tmb.no .ic{opacity:.45;filter:grayscale(.7)}#tmenu .tmb.mx .p{color:#9aa0ad}#tmenu .tmb.arm{background:#2f6b3a;border-color:#6fdc8c;color:#fff;font-weight:800}#tmenu .tmb.sell{font:800 18px system-ui,sans-serif;color:#ffd75a}#tmenu .tmb.sell .p{color:#9be15d}#tmenu .tmb.flag{border-style:dashed;border-color:#5b8def}#tmenu .tmb .ab{font:800 15px Georgia,serif;color:var(--acc)}#tmenu .tmb .pip{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);display:flex;gap:2px;pointer-events:none}#tmenu .tmb .pip i{width:5px;height:5px;border-radius:50%;background:var(--acc);display:block}#tmenu .tmb .pip i.e{background:var(--line2)}#tmenu .tmb.wish{border-color:var(--gold)}#tmenu .tmb.wish::after{content:"🔖";position:absolute;top:-9px;right:-9px;font-size:13px}#tmcard{position:absolute;z-index:13;width:230px;box-sizing:border-box;background:var(--panel2);border:1px solid var(--acc);border-radius:9px;padding:8px 10px;box-shadow:0 6px 18px rgba(0,0,0,.5);pointer-events:none;font-size:12px;line-height:1.4;display:none}#tmcard.on{display:block}#tmcard b{color:var(--fg)}#tmcard small{display:block;color:var(--fg1);margin-top:3px}#tmcard .cf{margin-top:6px;font-weight:700;color:var(--t6fdc8c,#6fdc8c)}#tmcard .cf.no{color:var(--red)}#tmcard .tmcmp{margin:5px 0 2px}#tmcard .tmc{display:flex;justify-content:space-between;gap:10px;padding:1px 0}#tmcard .tmc span:first-child{color:var(--fg1)}#tmcard .tmc b{font-weight:600;white-space:nowrap}#tmcard .hn{margin-top:4px;color:var(--fg2);font-size:11px}#relic.peek{display:none!important}.rlbar{position:absolute;top:10px;right:12px;z-index:3;display:flex;gap:6px;align-items:center}.rlbar .rlg{font-weight:700;color:var(--gold);padding:5px 10px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}.rlbar button{padding:4px 10px;font-size:16px;line-height:1.2}#peekb{position:absolute;left:56px;top:8px;z-index:21;display:none;padding:9px 16px;font-weight:700;border-color:var(--gold);box-shadow:0 4px 14px rgba(0,0,0,.45);background:var(--panel)}#peekb.on{display:block}button.wish{border-color:var(--gold)!important;box-shadow:inset 0 0 0 1px var(--gold)}button.wish::after{content:" 🔖"}
+.kbk{min-width:92px;padding:6px 12px;border-radius:8px;border:1px solid var(--line2);background:var(--btn);color:var(--fg);font:700 13px ui-monospace,Consolas,monospace;text-align:center;cursor:pointer;flex:none}.kbk.on{border-color:var(--acc);color:var(--acc);animation:fpulse 1s infinite}.kbk.fix{opacity:.6;cursor:default;font-weight:600}.kbft{display:flex;justify-content:flex-end;margin:14px 0 4px}.kbk{margin-left:6px!important}.kbk.emp{opacity:.55;font-weight:500}.kbhd{display:flex;justify-content:flex-end;gap:6px;font-size:11px;color:var(--fg2);margin:4px 0 -4px}.kbhd b{min-width:92px;text-align:center;font-weight:600}.kbhd span{flex:1}.errfl{animation:errfl .9s ease-out}@keyframes errfl{0%{box-shadow:0 0 0 0 rgba(255,90,100,0)}22%{box-shadow:0 0 0 2px rgba(255,95,105,.85),0 0 16px 2px rgba(255,70,85,.45)}100%{box-shadow:0 0 0 0 rgba(255,90,100,0)}}#opts{background:rgba(8,9,12,.55)!important;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:0!important;overflow:hidden!important}#opts.open{display:flex!important;align-items:center;justify-content:center}body.dsk #opts,body.mfs #opts,body.inmenu #opts{position:fixed!important;inset:0!important;border-radius:0!important;z-index:60}.oseg button{border:0!important;box-shadow:none!important}.oxb{width:34px;height:34px;padding:0;border-radius:9px;flex:0 0 auto}.osec{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin:16px 0 2px}.oic{flex:0 0 26px;width:26px;display:grid;place-items:center;font-size:19px}.sw:not(.on) i{background:#fff}.oseg{display:inline-flex;flex-wrap:wrap;background:var(--bg);border:1px solid var(--line2);border-radius:9px;padding:2px;gap:2px}.oseg button{margin:0;padding:5px 10px;border:0;border-radius:7px;background:transparent;font-size:13px;color:var(--fg1)}.oseg button.on{background:var(--acc);color:var(--accfg);font-weight:700}.osr{display:flex;align-items:center;gap:8px;flex:0 0 auto}.osr input{width:min(180px,30vw);accent-color:var(--acc)}.osr output{min-width:42px;text-align:right;font-size:13px;color:var(--fg1)}.ocn{display:flex;gap:6px;flex:0 0 auto}.ocn input{font:inherit;width:140px;padding:6px 8px;border-radius:6px;border:1px solid var(--line2);background:var(--btn);color:var(--fg)}.onote{color:var(--fg2);font-size:13px}.odanger{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:18px;padding:10px 14px;border:1px dashed color-mix(in srgb,var(--red) 70%,transparent);border-radius:10px}.odanger b{color:var(--red);font-size:13px}.odanger small{display:block;color:var(--fg2);font-size:12px;margin-top:2px}.odanger button{flex:0 0 auto;border-color:var(--red);color:var(--red)}@media (max-width:640px),(max-height:460px){.osr input{width:110px}}#fsmb{position:fixed;top:8px;right:8px;z-index:97;width:40px;height:40px;padding:0;margin:0;border-radius:10px;font-size:20px;line-height:1;display:none;background:var(--btn);color:var(--fg);border:1px solid var(--line2);box-shadow:0 2px 8px rgba(0,0,0,.35)}#fsmb.on{display:grid;place-items:center}#tmenu{position:absolute;left:0;top:0;width:0;height:0;z-index:12;display:none}#tmenu.on{display:block}#tmenu .tmb{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;padding:0;border-radius:10px;background:var(--btn);border:1.5px solid var(--line2);display:grid;place-items:center;font-size:20px;line-height:1;color:var(--fg);box-shadow:0 3px 10px rgba(0,0,0,.45);cursor:pointer}#tmenu .tmb:hover{border-color:var(--acc)}#tmenu .tmb .p{position:absolute;top:41px;left:50%;transform:translateX(-50%);white-space:nowrap;font:700 11px system-ui,sans-serif;color:var(--gold);background:rgba(14,16,22,.88);padding:1px 5px;border-radius:6px;pointer-events:none}#tmenu .tmb.no .p{color:var(--red)}#tmenu .tmb.no .ic{opacity:.45;filter:grayscale(.7)}#tmenu .tmb.mx .p{color:#9aa0ad}#tmenu .tmb.arm{background:#2f6b3a;border-color:#6fdc8c;color:#fff;font-weight:800}#tmenu .tmb.sell{font:800 18px system-ui,sans-serif;color:#ffd75a}#tmenu .tmb.sell .p{color:#9be15d}#tmenu .tmb.flag{border-style:dashed;border-color:#5b8def}#tmenu .tmb .ab{font:800 15px Georgia,serif;color:var(--acc)}#tmenu .tmb .pip{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);display:flex;gap:2px;pointer-events:none}#tmenu .tmb .pip i{width:5px;height:5px;border-radius:50%;background:var(--acc);display:block}#tmenu .tmb .pip i.e{background:var(--line2)}#tmenu .tmb.wish{border-color:var(--gold)}#tmenu .tmb.wish::after{content:"🔖";position:absolute;top:-9px;right:-9px;font-size:13px}#tmcard{position:absolute;z-index:13;width:230px;box-sizing:border-box;background:var(--panel2);border:1px solid var(--acc);border-radius:9px;padding:8px 10px;box-shadow:0 6px 18px rgba(0,0,0,.5);pointer-events:none;font-size:12px;line-height:1.4;display:none}#tmcard.on{display:block}#tmcard b{color:var(--fg)}#tmcard small{display:block;color:var(--fg1);margin-top:3px}#tmcard .cf{margin-top:6px;font-weight:700;color:var(--t6fdc8c,#6fdc8c)}#tmcard .cf.no{color:var(--red)}#tmcard .tmcmp{margin:5px 0 2px}#tmcard .tmc{display:flex;justify-content:space-between;gap:10px;padding:1px 0}#tmcard .tmc span:first-child{color:var(--fg1)}#tmcard .tmc b{font-weight:600;white-space:nowrap}#tmcard .hn{margin-top:4px;color:var(--fg2);font-size:11px}#relic.peek{display:none!important}.rlbar{position:absolute;top:10px;right:12px;z-index:3;display:flex;gap:6px;align-items:center}.rlbar .rlg{font-weight:700;color:var(--gold);padding:5px 10px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}.rlbar button{padding:4px 10px;font-size:16px;line-height:1.2}#peekb{position:absolute;left:56px;top:8px;z-index:21;display:none;padding:9px 16px;font-weight:700;border-color:var(--gold);box-shadow:0 4px 14px rgba(0,0,0,.45);background:var(--panel)}#peekb.on{display:block}button.wish{border-color:var(--gold)!important;box-shadow:inset 0 0 0 1px var(--gold)}button.wish::after{content:" 🔖"}
 .orow{margin:14px 0}.orow small{display:block}.orow label{display:block}
 #comp .cgrid,#relic .gbody{margin-top:4px}
 .grow{display:grid;grid-template-columns:118px 1fr 74px;align-items:center;gap:8px;margin:calc(4px*var(--hs)) 0;font-size:calc(12px*var(--hs))}
@@ -205,7 +205,7 @@ small{opacity:.75}
 .ric,.rl{display:flex;align-items:center;justify-content:center}.ric{width:52px;height:52px;border-radius:10px;margin:4px auto 8px;font-size:28px}
 #relics{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:44px;margin:6px 0;box-sizing:border-box;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 10px}#relics:empty{display:none}
 .rl{width:38px;height:38px;border-radius:8px;border:1px solid var(--line);font-size:22px;cursor:pointer;position:relative;padding:0;margin:0;transition:opacity .15s}
-.rtip{border-bottom:1px dotted currentColor;cursor:help}.rcard{display:flex;flex-direction:column}.rcard>button{margin:auto 0 0}.rcard>.ric+*{}.rcard>small:last-of-type{margin-bottom:12px}.lock{opacity:.4;pointer-events:none}.rl.dim{opacity:.35}.rl.hero{box-shadow:inset 0 0 0 2px #f0d36a}.rl.off{opacity:.35}.rl.act{box-shadow:0 0 0 2px var(--gold)}.rl.rdy{box-shadow:0 0 0 2px var(--gold),0 0 9px color-mix(in srgb,var(--gold) 55%,transparent)}.rl.rdy.pul{animation:rpul 1.6s ease-in-out infinite}@keyframes rpul{0%,100%{box-shadow:0 0 0 2px var(--gold),0 0 6px color-mix(in srgb,var(--gold) 40%,transparent)}50%{box-shadow:0 0 0 3px var(--gold),0 0 18px var(--gold)}}.rl.rfl{animation:rfl .9s ease-out}@keyframes rfl{0%{transform:scale(1);filter:brightness(1)}30%{transform:scale(1.18);filter:brightness(1.8)}100%{transform:scale(1);filter:brightness(1)}}.rl.aim{box-shadow:0 0 0 2px #9fdcff}
+.rcard{display:flex;flex-direction:column}.rcard>button{margin:auto 0 0}.rcard>.ric+*{}.rcard>small:last-of-type{margin-bottom:12px}.lock{opacity:.4;pointer-events:none}.rl.dim{opacity:.35}.rl.hero{box-shadow:inset 0 0 0 2px #f0d36a}.rl.off{opacity:.35}.rl.act{box-shadow:0 0 0 2px var(--gold)}.rl.rdy{box-shadow:0 0 0 2px var(--gold),0 0 9px color-mix(in srgb,var(--gold) 55%,transparent)}.rl.rdy.pul{animation:rpul 1.6s ease-in-out infinite}@keyframes rpul{0%,100%{box-shadow:0 0 0 2px var(--gold),0 0 6px color-mix(in srgb,var(--gold) 40%,transparent)}50%{box-shadow:0 0 0 3px var(--gold),0 0 18px var(--gold)}}.rl.rfl{animation:rfl .9s ease-out}@keyframes rfl{0%{transform:scale(1);filter:brightness(1)}30%{transform:scale(1.18);filter:brightness(1.8)}100%{transform:scale(1);filter:brightness(1)}}.rl.aim{box-shadow:0 0 0 2px #9fdcff}
 .rl .bdg{position:absolute;right:-5px;bottom:-5px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;font-size:11px;padding:0 4px;line-height:14px;color:var(--fg);opacity:1}
 .dps{margin-top:auto;padding-top:10px}
 .ttl{margin-bottom:8px}
@@ -300,21 +300,21 @@ body.inmenu #stats,body.inmenu #relics,body.inmenu #ctl,body.inmenu #opt,body.in
 .erow{display:flex;align-items:center;gap:4px 12px;padding:5px 0;border-bottom:1px solid var(--btn);flex-wrap:wrap}
 .erow .en{flex:1 1 150px;min-width:0}.erow .ev{display:flex;gap:4px 14px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
 .ebar{flex:1 0 100%;height:4px;background:var(--line);border-radius:2px;margin-top:3px}.ebar span{display:block;height:100%;background:var(--acc);border-radius:2px}
-.eact{margin-top:16px}
+
 .cport svg{width:110px;height:110px;display:block;margin:0 auto 8px;border-radius:8px}
 .rl.hero svg{width:100%;height:100%;display:block;border-radius:7px;pointer-events:none}
-#relic .hgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
-@media (max-width:560px){#relic .hgrid{grid-template-columns:1fr}#relic .hgrid>*{order:var(--o)}#relic .hgrid>.hrelc{margin-top:-4px}}
-.hcard.hrelc{flex-direction:row;gap:8px;align-items:flex-start}.hrelc small{display:inline;margin:0}
-.hcard{background:var(--btn);border:2px solid var(--line2);border-radius:10px;padding:10px;cursor:pointer;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s,transform .15s}
-.hcard:hover{border-color:var(--hc)}.hcard.on{border-color:var(--hc);box-shadow:0 0 0 2px var(--hc),0 6px 18px rgba(0,0,0,.4);transform:translateY(-2px)}
+
+
+
+
+
 .hport{height:150px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,var(--hc),var(--panel) 78%);margin-bottom:8px;overflow:hidden}.hport svg{height:100%;width:auto;display:block}
-.hname{font:700 19px/1.1 Georgia,"Times New Roman",serif;color:var(--fg);text-align:center}.hrole{text-align:center;display:block;margin:2px 0 6px}
+.hname{font:700 19px/1.1 Georgia,"Times New Roman",serif;color:var(--fg);text-align:center}
 .htags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:8px}.htags span{font-size:11px;padding:1px 7px;border-radius:9px;background:var(--panel);border:1px solid var(--line2);color:var(--fg1)}
 .hbar{display:flex;align-items:center;gap:6px;font-size:12px;margin:3px 0}.hbar>span:first-child{width:52px;opacity:.8}.hbar .bt{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}.hbar .bf{display:block;height:100%;background:var(--hc);border-radius:3px}
-.hrelb{display:flex;gap:8px;align-items:flex-start;margin-top:8px;padding:6px 8px;border:1px solid var(--line2);border-radius:6px;background:var(--panel)}.hric{flex:0 0 30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px}.hrt{font-size:12px;margin-top:2px}
+.hric{flex:0 0 30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px}
 .hdet{margin-top:8px}.hdet summary{cursor:pointer;font-size:12px;opacity:.8;margin-bottom:4px}
-.hdet summary{user-select:none}#relic .fbar button{padding:4px 10px;margin:0}#relic .fbar button.on{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}.hgo{text-align:center;margin-top:12px;position:sticky;bottom:-12px;background:var(--panel2);padding:8px 0}.hgo button.go:not(:disabled){background:var(--acc);color:var(--accfg);border-color:var(--acc)}.hrelb small{display:inline;margin:0}.hgo button{min-width:220px;font-size:16px;padding:10px 18px}.hgo button:disabled{opacity:.5;cursor:default;background:var(--btn);color:var(--fg1);border-color:var(--line2)}
+.hdet summary{user-select:none}#relic .fbar button{padding:4px 10px;margin:0}#relic .fbar button.on{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}.hgo{text-align:center;margin-top:12px;position:sticky;bottom:-12px;background:var(--panel2);padding:8px 0}.hgo button.go:not(:disabled){background:var(--acc);color:var(--accfg);border-color:var(--acc)}.hgo button{min-width:220px;font-size:16px;padding:10px 18px}.hgo button:disabled{opacity:.5;cursor:default;background:var(--btn);color:var(--fg1);border-color:var(--line2)}
 @media (max-height:600px), (orientation:landscape) and (pointer:coarse) and (max-height:820px){.hport{height:84px}.hname{font-size:16px}.hgo{padding:6px 0;margin-top:6px}}
 #focus{position:absolute;inset:0;display:none;z-index:17;overflow:hidden;border-radius:6px}
 #ptips{position:absolute;inset:0;pointer-events:none;z-index:16;overflow:hidden;border-radius:6px}
@@ -358,7 +358,7 @@ body.inmenu #stats,body.inmenu #relics,body.inmenu #ctl,body.inmenu #opt,body.in
 @media (max-width:760px){body.dsk:not(.mfs) #stats{top:auto;bottom:auto;left:56px;transform:none}}.hpport svg{width:100%;height:100%;border-radius:9px}.hpport.off{filter:grayscale(1) brightness(.6)}
 .hcdv{position:absolute;inset:0;border-radius:9px;background:conic-gradient(rgba(10,12,16,.72) var(--p,0deg),transparent 0);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;pointer-events:none}
 .xpan{display:flex;padding:3px;border:1px dashed #e8b06a;border-radius:13px;background:rgba(60,40,20,.45)}.xpb{border-color:#e8b06a}
-.hpult.lock,.xpb.lock{background:repeating-linear-gradient(45deg,var(--btn) 0 6px,#232631 6px 12px)}.hlck{font-size:20px}.hchain{position:absolute;font-size:30px;opacity:.55}
+.hpult.lock,.xpb.lock{background:repeating-linear-gradient(45deg,var(--btn) 0 6px,#232631 6px 12px)}.hlck{font-size:20px}
 .hab{display:flex;gap:8px;align-items:flex-start;margin:6px 0}.habi{width:30px;height:30px;flex:0 0 30px;border-radius:7px;background:var(--panel);display:flex;align-items:center;justify-content:center;font-size:17px}
 #mbr button.go{height:auto;padding:9px 16px;font-size:15px;font-weight:700;background:var(--acc);color:var(--accfg);border-color:var(--acc)}
 .mctl .bdg{position:absolute;right:-6px;bottom:-6px;background:var(--panel2);border:1px solid var(--line2);border-radius:8px;font-size:10px;padding:0 4px;line-height:14px;color:var(--fg)}
@@ -379,7 +379,7 @@ canvas#c{position:relative;z-index:1}
 .evopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:8px;margin-bottom:10px}
 button.evo{display:block;width:100%;text-align:left;margin:0;padding:10px 12px;background:var(--btn);border:1px solid var(--line2);border-radius:8px;color:var(--fg)}button.evo:hover:not(:disabled){border-color:#c9b8ff}button.evo:disabled{opacity:.5;cursor:default}
 .evo b{display:block;color:var(--fg);margin-bottom:3px}.evo small{display:block;margin:2px 0 0}div.evo{margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
-.evres{margin:6px 0 14px;font-size:15px;line-height:1.8}
+
 .rcdt{float:right;margin-left:8px;font-size:12px;color:var(--fg1);white-space:nowrap}.rcard .rcdt{float:none;display:block;text-align:center;margin:2px 0 4px}
 
 /* ---- pantallas de entrada ---- */
@@ -391,7 +391,7 @@ button.evo{display:block;width:100%;text-align:left;margin:0;padding:10px 12px;b
 #intro .ist.on{opacity:1}
 #intro .imade{font-size:clamp(14px,2.4vw,18px);opacity:.75;letter-spacing:.04em}
 #intro .iclaude{font:600 clamp(40px,8vw,72px)/1 Georgia,"Times New Roman",serif;color:#e8a27c;letter-spacing:.01em}.iclaude img{height:clamp(48px,9vw,86px);width:auto;display:block;margin:6px auto 0}.crcl img{width:170px!important}[data-pal="perg"] .crcl,[data-pal="esc"] .crcl{background:#14161c;padding:8px 14px;border-radius:10px}
-#intro .inogal{font:800 clamp(38px,8vw,70px)/1 system-ui,sans-serif;letter-spacing:.06em}#intro .inogal span{color:#c9a46a}
+
 #intro .itag{font-size:clamp(12px,2vw,15px);opacity:.55;letter-spacing:.3em;text-transform:uppercase}
 #intro .ititle{position:absolute;top:12%;left:0;right:0;font:700 clamp(42px,9vw,84px)/1.1 Georgia,"Times New Roman",serif;text-shadow:0 4px 24px rgba(0,0,0,.6)}
 #intro .ipress{font-size:clamp(16px,3vw,22px);font-weight:600;animation:ipr 1.8s ease-in-out infinite;text-shadow:0 2px 12px rgba(0,0,0,.7)}
@@ -572,19 +572,19 @@ body.mfs .hpc .hinfo{max-height:calc(100% - 78px - 18px)!important;overflow-y:au
 .habs span{cursor:pointer}
 
 /* ---- menú de pausa ---- */
-#pmenu{position:fixed;inset:0;z-index:17;display:none;align-items:center;justify-content:center;background:rgba(8,9,12,.72);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
-#pmenu.open{display:flex}
-#pmenu .pmc{width:min(440px,calc(100vw - 24px));max-height:calc(100vh - 20px);max-height:calc(100dvh - 20px);overflow-y:auto;box-sizing:border-box;background:var(--panel);border:1px solid var(--line2);border-radius:16px;padding:12px 14px 14px;box-shadow:0 10px 40px rgba(0,0,0,.6);color:var(--fg)}
-#pmenu .pmh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}#pmenu .pmh b{font-size:19px}#pmenu .pmh small{color:var(--fg2)}
-#pmenu .pmg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-#pmenu button{min-height:46px;margin:0;border-radius:10px;border:1px solid var(--line2);background:var(--btn);color:var(--fg);font-size:15px;font-weight:600;text-align:left;padding:0 14px}
-#pmenu .pmh button{min-height:38px;font-size:13px}
-#pmenu button.pmain{grid-column:1/-1;background:var(--acc);color:var(--panel2);border-color:var(--acc);text-align:center;font-size:16px}
-#pmenu button.pwide{grid-column:1/-1;text-align:center}
-#pmenu button.pquit{grid-column:1/-1;border-color:#7a3b3b;color:#ff8a7a;text-align:center}
-#pmenu button.dim{opacity:.55}
-#pmenu .pmhelp{display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45}#pmenu .pmq .pmt{display:block;color:#f2d27a;font-weight:700;margin-bottom:2px}
-body.inmenu #pmenu{display:none!important}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* móvil: botones de juego de 44 puntos (tamaño mínimo cómodo para el dedo) */
 body.mfs .mctl button{min-width:44px;height:44px;font-size:20px;border-radius:10px}
 body.mfs #mtl .gap{height:6px}
@@ -624,7 +624,7 @@ body.mfs #panel:has(.pstrip) #msg{display:none}
 /* móvil: reliquias en columna a la izquierda; si hay más de 4, se desplazan */
 body.mfs #relics{left:6px!important;bottom:8px!important;top:auto!important;flex-direction:column-reverse;flex-wrap:nowrap;align-items:center;gap:6px;padding:5px!important;max-height:154px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y}
 body.mfs #relics .rl{width:44px;height:44px;flex:0 0 44px;font-size:24px}body.dsk:not(.mfs) #relics .rl{width:64px;height:64px;flex:0 0 64px;font-size:34px;border-radius:12px}body.dsk:not(.mfs) #relics .rl .bdg{font-size:13px;line-height:17px;padding:0 5px;border-radius:9px}body.dsk:not(.mfs) #relics{max-width:min(40vw,330px);gap:8px}@media (max-height:640px){body.dsk:not(.mfs) #relics .rl{width:52px;height:52px;flex:0 0 52px;font-size:28px}}
-.tutnext{text-align:left;margin:10px auto 4px;max-width:440px}.tutnext ul{margin:6px 0 0;padding-left:18px}.tutnext li{margin:3px 0;font-size:13px}
+
 .sfxg{margin:8px 0 10px}.sfxg>b{display:block;font-size:13px;color:var(--acc);margin-bottom:4px}.sfxr{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:3px 0;border-bottom:1px solid var(--line)}.sfxr>span{width:190px;font-size:13px}.sfxr button{font-size:12px;padding:3px 9px;margin:0}.sfxr button.on{border-color:var(--acc);color:var(--acc)}
 
 button[data-a="oclose"],button[data-a="cclose"]{background:var(--cxb)!important;border-color:var(--cxl)!important;color:var(--cxf)!important}
@@ -640,7 +640,7 @@ button[data-a="mback"]:hover,button[data-a="pback"]:hover,button[data-a="cback"]
 .cdec em{font-style:normal;font-size:10px;opacity:.75;min-height:12px}.cdec:not(.on):not(.lk) canvas{filter:grayscale(1) brightness(.7);opacity:.55}.cdec:not(.on):not(.lk){color:var(--fg2)}
 .frl{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.frw{display:flex;align-items:center;gap:8px;min-width:200px}.frw small{display:block}.hfr{display:inline-block;width:40px;height:40px;border-radius:9px;overflow:hidden;border:2px solid var(--line)}.hfr svg{width:100%;height:100%}
 .fr1{box-shadow:0 0 0 2px #b07a3a!important}.fr2{box-shadow:0 0 0 2px #c8ccd6,0 0 6px #c8ccd6!important}.fr3{box-shadow:0 0 0 2px #f1c84b,0 0 10px #f1c84b!important}.hart.fr1,.hart.fr2,.hart.fr3{box-shadow:none!important}.hart.fr1 svg{filter:drop-shadow(0 0 3px #b07a3a)}.hart.fr2 svg{filter:drop-shadow(0 0 5px #c8ccd6)}.hart.fr3 svg{filter:drop-shadow(0 0 8px #f1c84b)}
-.nug{display:flex;flex-direction:column;gap:12px;max-width:560px;margin:0 auto 6px;text-align:left}.nus>b{display:block;color:var(--acc);font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}.nul{display:flex;flex-wrap:wrap;gap:6px}.nui{display:flex;align-items:center;gap:8px;background:var(--btn);border:1px solid var(--line);border-radius:7px;padding:6px 10px}.nui>span{font-size:22px}.nui small{display:block;opacity:.75}
+
 
 body.mfs #relics{overflow-y:auto!important;overflow-x:hidden!important;padding-top:5px!important}body.mfs #relics .rl{overflow:hidden!important}
 body.mfs>#emap{position:fixed;left:50%;bottom:6px;top:auto;transform:translateX(-50%);z-index:30;width:auto;max-width:calc(100vw - 2*190px);box-sizing:border-box;white-space:nowrap;padding:3px 10px;font-size:11px}
@@ -791,8 +791,8 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 .gbtn{display:inline-block;margin:14px 0 0!important;min-height:44px;padding:0 22px!important;border-radius:10px!important;border:1px solid var(--lea2)!important;background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;font:800 16px Inter,system-ui,sans-serif!important;box-shadow:0 4px 0 var(--lea2),0 6px 14px rgba(0,0,0,.35)!important;cursor:pointer}
 .gbtn:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 96%,#fff),color-mix(in srgb,var(--gbtn) 96%,#000))!important}.gbtn:disabled{opacity:.5;box-shadow:none!important}
 .lbbk{margin:0!important;padding:8px 14px!important;border-radius:9px!important;border:1.5px solid var(--pline3)!important;background:var(--paper2)!important;color:var(--ink)!important;font-weight:700}
-.lbfoot{position:absolute;left:26px;bottom:18px;z-index:2}.lbfoot.r{left:auto;right:54px}.lbfoot .gbtn{margin:0!important}
-.bkp.one .lbfoot{position:static;margin-top:16px}
+
+
 .lbera .pc{border-color:var(--pline3)}.lbera .pc.got{border-color:#3fa7c9}.lbera{text-align:left}.lbera .pcs{justify-content:flex-start}.lbera small{color:var(--ink2)}
 .lbeter{background:color-mix(in srgb,var(--paper) 70%,#0e121a);border-color:#3fa7c9;color:var(--ink);margin:0 0 6px;white-space:normal;max-width:100%;box-sizing:border-box;line-height:1.45}.lbeter b{color:#1f7f9e}
 :root[data-pal="noche"] .lbeter,:root[data-pal="amb"] .lbeter{color:#dfeef5}
@@ -816,7 +816,7 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 .lbhpc .hrl .ri{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-size:20px;flex:none}.lbhpc .hrl small{display:block;color:var(--ink2)}
 .lbhpc details summary{color:var(--acc);cursor:pointer}
 .bkp.r:has(.lbhpc){padding-bottom:84px}.bkp.l:has(.lbhero){padding-bottom:70px}
-#comp.narrow .bkp.one.hero .lbhart{width:140px;margin-bottom:6px}#comp.narrow .bkp.one.hero .lbfoot{position:static;margin:12px 0}
+#comp.narrow .bkp.one.hero .lbhart{width:140px;margin-bottom:6px}
 .lbeter b{display:block;font-size:12px;letter-spacing:.12em;margin-bottom:4px}
 .lbhpc .chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}.lbhpc .chips>span{font-size:11.5px;padding:2px 8px;border-radius:9px;border:1px solid var(--pline2);background:var(--paper1)}
 .lbhpc .hsec{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin:14px 0 6px;font-weight:700}
@@ -847,7 +847,7 @@ body.lbopen #panel,body.lbopen #tip,body.lbopen #bmenu,body.lbopen #bmcard,body.
 .lbend .esum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}.lbend .esum>div{background:var(--paper1);border:1px solid var(--pline2);border-radius:12px;padding:10px 12px}.lbend .esum small{display:block;font-size:12px;color:var(--ink2);margin:0 0 2px;opacity:1}.lbend .esum b{font:700 22px Georgia,serif;color:var(--ink)}
 .lbend .esec{margin:0 0 6px;font:700 11px Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);border-bottom:1px solid var(--pline2);padding-bottom:3px}.lbend .esec~.esec{margin-top:16px}
 .lbend .erow{border-bottom:1px solid var(--pline);font-size:13px}.lbend .erow small{display:block;color:var(--ink2);font-size:11.5px}.lbend .ebar{background:var(--paper3)}.lbend .ebar span{background:var(--acc2)}
-.lbend .eact{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.lbend .eact .gbtn{margin:0!important;min-height:42px;font-size:15px!important}.lbend .eact .lbbk{min-height:42px}
+
 .bkp.one .lbend.r{margin-top:14px}
 /* ---- pies de página: volver abajo a la izquierda, seguir abajo a la derecha; fijos, sin taparse con el contenido ---- */
 .lbft{position:absolute;bottom:0;z-index:2;display:flex;gap:8px;align-items:center;padding:22px 26px 16px;box-sizing:border-box;pointer-events:none;background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 92%,var(--trim)) 45%)}
@@ -943,8 +943,8 @@ body.inmenu.lbsetup canvas#c{filter:none}
 #comp.narrow .tutem{font-size:34px}#comp.narrow .tutbig h3{font-size:20px}#comp.narrow .tutst{margin:6px 0 2px}
 /* aviso de era nueva: banda en la página que señala el marcapáginas de arriba, y el marcapáginas brilla */
 .bkmk.glow{box-shadow:0 0 0 2px #3fe8ff,0 0 14px #3fe8ff!important;animation:bkglow 1.2s ease-in-out infinite alternate}@keyframes bkglow{from{box-shadow:0 0 0 2px #3fe8ff,0 0 6px #3fe8ff}to{box-shadow:0 0 0 3px #8ff4ff,0 0 18px #3fe8ff}}
-.bkhint{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:9px 12px;border:1.5px solid #3fa8c0;border-radius:10px;background:rgba(63,232,255,.12);font-size:13px;line-height:1.4}.bkhint .bkht{display:block;font-weight:700;margin-bottom:2px;color:var(--inkh)}.bkhint .bkharr{font-size:22px;flex:0 0 auto}.bkhint .gbtn.sm{flex:0 0 auto;padding:5px 12px;font-size:12.5px;margin:0}
-#comp.narrow .bkhint{font-size:12px;padding:7px 10px;margin-bottom:8px}
+
+
 /* ---- bocadillo de pergamino (sustituye a la etiqueta del navegador) ---- */
 #ttb{position:fixed;left:0;top:0;z-index:200;pointer-events:none;max-width:260px;padding:5px 11px;border-radius:9px;background:var(--paper);border:1.5px solid var(--trim);color:var(--ink);font:600 12.5px/1.35 Inter,system-ui,sans-serif;box-shadow:0 6px 16px rgba(30,15,5,.4);opacity:0;transform:translateY(3px);transition:opacity .1s,transform .1s;white-space:normal;text-align:center}
 #ttb.on{opacity:1;transform:none}
@@ -975,7 +975,7 @@ body:not(.mfs) #mbr .hpan .hpport svg{border-radius:8px!important}
 .xpan{border-color:var(--trim);background:color-mix(in srgb,var(--lea2) 60%,transparent)}
 #relics{background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 50%,var(--lea2))!important;border:1px solid var(--lea2)!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 4px 12px rgba(0,0,0,.5)!important}
 #relics .rl{background:color-mix(in srgb,var(--lea2) 70%,transparent)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--trim) 50%,transparent)!important}
-#relics .rl.ready,#relics .rl.on{box-shadow:inset 0 0 0 2px var(--gbtn),0 0 10px color-mix(in srgb,var(--gbtn) 55%,transparent)!important}
+#relics .rl.on{box-shadow:inset 0 0 0 2px var(--gbtn),0 0 10px color-mix(in srgb,var(--gbtn) 55%,transparent)!important}
 /* Empezar oleada = el botón dorado de la portada */
 #mbr button.go{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;border:1px solid var(--lea2)!important;border-radius:10px!important;box-shadow:0 4px 0 var(--lea2),0 6px 14px rgba(0,0,0,.45)!important;font-weight:800}
 #mbr button.go:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 96%,#fff),color-mix(in srgb,var(--gbtn) 96%,#000))!important}
@@ -1049,7 +1049,7 @@ body:has(#relic.open) #lstack,body:has(#relic.open) #rstack,body.pcpick #lstack,
 body.mfs .hppig .pgp{width:24px;height:24px}body.mfs .hppig .pgp+.pgp{margin-left:-9px}
 /* ===== PERGAMINO: ventanas, tarjetas y bocadillos de partida, con marco de cuero como la tapa del libro ===== */
 /* marco de cuero: borde transparente pintado con el cuero, papel dentro y línea fina de remate entre ambos */
-body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#tip,#hpop,#tmcard,#bmcard,.hmsg,#side.tipc{
+body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,.kpanel,#tip,#hpop,#tmcard,#bmcard,.hmsg,#side.tipc{
  border:7px solid transparent!important;border-radius:14px!important;
  background:linear-gradient(180deg,var(--paper),color-mix(in srgb,var(--paper) 90%,var(--trim))) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2)) border-box!important;
  box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 75%,transparent),0 12px 30px rgba(0,0,0,.55)!important;color:var(--ink)}
@@ -1065,7 +1065,7 @@ body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.k
 .evhead b,#relic>b,#relic .ttl b,.tof .tnm,#panel .ttl b{font-family:Georgia,"Times New Roman",serif;color:var(--inkh)}
 #relic small,#panel small,.evwin small{color:var(--ink2)}
 #relic .ce.rcard{padding:14px 12px 12px!important}
-#relic .ce.rcard button,.tof button,.evopts button,#relic .pbot button,#panel button:not(.card):not(.rbtn),#relic button.go{border:1.5px solid var(--pline3);background:var(--paper2);color:var(--ink);border-radius:9px;font-weight:700}
+#relic .ce.rcard button,.tof button,.evopts button,#panel button:not(.card):not(.rbtn),#relic button.go{border:1.5px solid var(--pline3);background:var(--paper2);color:var(--ink);border-radius:9px;font-weight:700}
 #relic .ce.rcard button:hover,.tof button:hover,.evopts button:hover{border-color:var(--acc2);background:var(--paper1)}
 #relic button.go,.tof button.go,#panel button.go{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;border-color:var(--lea2)!important;box-shadow:0 3px 0 var(--lea2)}
 .evopts button{text-align:left;background:var(--paper1)}
@@ -1081,8 +1081,8 @@ body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.k
 /* botones de ver el mapa / oro de las ventanas (arriba a la derecha): cuero */
 #peekb,.rlbar button,.rlbar .rlg{background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2))!important;color:var(--leatxt)!important;border:1px solid var(--lea2)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--trim) 70%,transparent)}
 /* los títulos y notas sueltos sobre el fondo desenfocado (fuera de las tarjetas) se leen en claro */
-#relic.blur>b,#relic.blur>h2,#relic.blur>div:not(.evwin):not(.toff):not(.cgrid):not(.rlbar):not(.hpc):not(.towpk)>b{color:#f3e6c8;text-shadow:0 1px 3px rgba(0,0,0,.6);font-family:Georgia,"Times New Roman",serif}
-#relic.blur>small,#relic.blur>p,#relic.blur>div:not(.evwin):not(.toff):not(.cgrid):not(.rlbar):not(.hpc):not(.towpk)>small{color:rgba(243,230,200,.8);text-shadow:0 1px 3px rgba(0,0,0,.6)}
+#relic.blur>b,#relic.blur>h2{color:#f3e6c8;text-shadow:0 1px 3px rgba(0,0,0,.6);font-family:Georgia,"Times New Roman",serif}
+#relic.blur>small,#relic.blur>p{color:rgba(243,230,200,.8);text-shadow:0 1px 3px rgba(0,0,0,.6)}
 #relic.blur>button,#relic.blur>div>button[data-a="towskip"]{border:1.5px solid var(--trim);background:var(--paper2);color:var(--ink);border-radius:9px;font-weight:700}
 #hpop{z-index:70!important}
 
@@ -1112,7 +1112,7 @@ body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.k
 .prod::before{top:-6px}.prod::after{bottom:-6px}
 .prod.l{left:0}.prod.r{right:0}
 #relic .pscr i.prod{width:30px!important;height:auto!important;top:-10px!important;bottom:-10px!important;margin:0!important;display:block!important;font-size:0!important}
-.ppaper,.ppap{background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 78%,var(--lea)),var(--paper) 6%,color-mix(in srgb,var(--paper) 92%,#fff) 50%,var(--paper) 94%,color-mix(in srgb,var(--paper) 78%,var(--lea)));
+.ppap{background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 78%,var(--lea)),var(--paper) 6%,color-mix(in srgb,var(--paper) 92%,#fff) 50%,var(--paper) 94%,color-mix(in srgb,var(--paper) 78%,var(--lea)));
  border-top:3px solid var(--lea);border-bottom:3px solid var(--lea);color:var(--ink)}
 /* ---- elegir torre ---- */
 #relic .pscr{position:relative;margin:0 auto;max-width:900px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.55))}
@@ -1151,7 +1151,7 @@ body.mfs #relic .ppap .ptt{font-size:15px!important}body.mfs #relic .ppap .toff{
 
 /* «Ver detalles» general de la oferta (abre todas a la vez); los de cada tarjeta se ocultan */
 #relic .ppap .tof details>summary{display:none}
-#relic .pdet{margin-top:8px}#relic .pdet button{border:1px solid var(--pline2)!important;background:transparent!important;color:var(--ink)!important;border-radius:12px!important;padding:2px 12px!important;font-size:12.5px}
+
 /* oferta de torres: las etiquetas siempre ocupan dos líneas, para que las fichas de las tres torres empiecen a la misma altura */
 #relic .ppap .tof .chips{min-height:52px;align-content:flex-start}
 body.mfs #relic .ppap .tof .chips{min-height:38px}
@@ -1162,7 +1162,7 @@ body.mfs #relic .ppap .tof .chips{min-height:38px}
 #relic .tdt{display:none}#relic.tdeton .tdt{display:flex;flex:1;flex-direction:column}#relic.tdeton .tgl{display:none}
 #relic .tdt .tcard{flex:1;display:flex;flex-direction:column;text-align:left}#relic .tdt .tcard .dps{margin-top:auto}
 #relic .tgl{flex:1;text-align:left;font-size:12px;margin:2px 0 4px}#relic .tgl .gbody{display:flex;flex-direction:column;gap:3px}
-#relic .tgl .tun{margin-top:6px;font-size:12.5px;color:var(--ink)}#relic .tgl .tun b{color:var(--acc)}
+
 #relic .ppap .tof button[data-a="towpick"]{margin-top:8px}
 /* paneles flotantes más grandes en PC: salen en el borde sin mapa y se leen mejor (reliquias, habilidades, torres) */
 @media (min-width:1100px) and (min-height:640px){body.dsk:not(.mfs) #tip,body.dsk:not(.mfs) .kpanel{width:310px!important;font-size:15px;line-height:1.5}
@@ -1173,10 +1173,10 @@ body.mfs #relic .ppap .tof .chips{min-height:38px}
 #relic .ppap .tof .chips{min-height:52px;align-content:flex-start}
 /* iconos compuestos (uno detrás de otro) */
 .icst{position:relative;display:inline-grid;place-items:center;line-height:1;vertical-align:middle}.icst>span{grid-area:1/1}.icst .icb{transform:translate(8%,-4%) scale(1.05)}.icst .icf{transform:translate(-6%,8%) scale(.72)}
-#relic .tgl .tun{display:flex;align-items:center;gap:6px}.tuic{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-size:15px;box-shadow:0 0 0 1.5px #cfe0ff,0 1px 3px rgba(0,0,0,.35)}
+.tuic{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-size:15px;box-shadow:0 0 0 1.5px #cfe0ff,0 1px 3px rgba(0,0,0,.35)}
 .gal{display:inline-flex;align-items:center;vertical-align:middle;color:var(--ink,#3b2a17);line-height:0;margin-left:4px}.gal.g4{color:#8a5a14}
 .lvbtn .gal{margin:0}#tip .ttl .gal,.kpanel .ttl .gal{color:var(--fg)}
-#relic .tgl .tun{justify-content:center;margin:0 0 8px}
+
 .ttl.ttlg{display:flex;align-items:center;gap:6px}.ttl.ttlg>b{flex:1;min-width:0}.ttl.ttlg .gal{margin:0;flex:none}
 .lvt{display:inline-flex!important;align-items:center;justify-content:center;gap:2px;min-width:0!important;width:auto!important;padding:2px 7px!important;margin:0 3px 4px 0!important;height:auto!important;vertical-align:middle}
 .lvt.on{background:#f7d98a!important;border-color:#b5622a!important;box-shadow:inset 0 0 0 1px #b5622a}.lvt.off{opacity:.35;filter:grayscale(1)}.lvt .lvx{font-size:17px;line-height:1;margin-left:2px}
@@ -1249,9 +1249,9 @@ body:has(#dlg.on) #panel:has(.prow){visibility:hidden}
 #relic .evopts button.evo{display:grid;grid-template-columns:minmax(170px,30%) 1fr;align-items:center;gap:4px 16px;padding:11px 14px;height:auto}
 #relic .evopts button.evo>b{font-size:15.5px;margin:0}#relic .evo .evod small{font-size:13px}
 @media (max-width:620px){#relic .evopts button.evo{grid-template-columns:1fr}}
-#relic .evchose{font-weight:700;font-size:15px;margin:10px 0 4px;color:var(--acc)}
+
 #relic .evtale{font-style:italic;font-size:16.5px;line-height:1.6;margin:4px 0 14px;padding:10px 14px;border-left:3px solid var(--acc);background:color-mix(in srgb,var(--paper1,#f6ecd3) 70%,transparent);border-radius:0 8px 8px 0}
-#relic .evres{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;line-height:1.4;margin:0 0 14px}#relic .evres small{font-weight:700;opacity:.75;margin-right:2px}
+
 #relic .evchip{padding:3px 9px;border-radius:12px;border:1px solid var(--pline3,#4a5068)}
 #relic .evo .evod small{color:var(--ink);opacity:.72;font-weight:600}
 .usub b .uhic{width:22px;height:22px;font-size:13px;margin-right:7px;vertical-align:middle}
@@ -1265,13 +1265,13 @@ body.revl #panel{visibility:hidden}
 #relic .evp .evimg{line-height:0}#relic .evp .evimg svg{width:100%;height:auto;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
 #relic .evp .evhead{margin:10px 0 2px}#relic .evp .evhead b{font:700 20px Georgia,"Times New Roman",serif;color:var(--inkh)}
 #relic .evp p{margin:4px 0 0;line-height:1.45;color:var(--ink)!important;text-shadow:none!important}
-#relic .evp .evsub{display:block;color:var(--ink2)!important;opacity:.85}
+
 #relic .evp .evtale{font-style:italic}
 #relic .evp .evopts{margin-bottom:6px}
 #relic .evp .evps{display:block;text-align:center;color:var(--ink2)!important;opacity:.8}
 #relic .evp .evrc{display:flex;flex-direction:column;gap:10px;justify-content:center}
-#relic .evp .evres{display:flex;flex-direction:column;gap:8px}
-#relic .evp .evrt{font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--acc)!important}
+
+
 #relic .evp .evchip{display:block;padding:10px 12px;border:1.5px solid var(--pline3);border-radius:10px;background:var(--paper1);color:var(--ink)}
 #relic .evp button.go{align-self:flex-end}
 body.mfs #relic .ppap.evp{gap:10px 16px;padding:12px 26px 10px}body.mfs #relic .evp .evhead b{font-size:16px}body.mfs #relic .evp p{font-size:12.5px;line-height:1.35}
@@ -1470,7 +1470,7 @@ b.rttl{display:flex!important;align-items:center;gap:7px}b.rttl i{width:24px;hei
 body.mfs #relic .ppap{padding-top:6px!important;padding-bottom:6px!important}
 body.mfs #relic .ptt{font-size:16px!important;margin:0!important;line-height:1.2}
 body.mfs #relic .pst{font-size:10.5px!important;line-height:1.3!important;margin:1px 70px 4px!important;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-body.mfs #relic .pdet{position:absolute;top:8px;left:24px;margin:0!important}body.mfs #relic .pdet button{font-size:11px!important;padding:3px 9px!important;min-height:0!important}
+
 body.mfs #relic .toff{gap:8px!important;margin-top:2px!important}
 body.mfs #relic .tof{display:grid!important;grid-template-columns:34px 1fr auto;grid-template-rows:auto auto 1fr auto;column-gap:8px;row-gap:2px;align-items:center;align-content:stretch;padding:6px 9px 7px!important;text-align:left}
 body.mfs #relic .tof .tic{grid-column:1;grid-row:1/3;width:34px!important;height:34px!important;font-size:20px!important;margin:0!important;border-radius:8px!important}
@@ -1481,7 +1481,7 @@ body.mfs #relic .tof>.gd{grid-column:3;grid-row:1;font-size:12px!important;margi
 body.mfs #relic .tof .tgl,body.mfs #relic .tof .tdt,body.mfs #relic .tof>button{grid-column:1/4}
 body.mfs #relic .tof .tgl{margin:4px 0 0!important;align-self:start}
 body.mfs #relic .tof .grow{margin:1px 0!important;font-size:12px!important;row-gap:1px!important}body.mfs #relic .tof .gtr{height:5px!important}
-body.mfs #relic .tof .tun{margin:0 0 2px!important;font-size:12px!important}body.mfs #relic .tof .tun .tuic{width:20px!important;height:20px!important;font-size:12px!important}
+
 body.mfs #relic .tof>button{grid-row:4;align-self:end;padding:5px 8px!important;margin-top:4px!important;font-size:13px!important;min-height:0!important}
 body.mfs #relic .pskip{display:flex!important;align-items:center;justify-content:center;gap:10px;margin:6px 0 0!important}body.mfs #relic .pskip button{padding:4px 12px!important;font-size:12.5px!important;margin:0!important}
 body.mfs #relic .pskip small{font-size:10px!important;max-width:46%;text-align:left;margin:0!important;line-height:1.25}
@@ -1559,7 +1559,7 @@ body.mfs #pinbar .pnl{display:none;margin-top:6px}body.mfs #pinbar.open .pnl{dis
 /* v305 · novedades del compendio por ficha */
 .bti.nov{position:relative}.bti.nov::after{content:"";position:absolute;top:3px;right:3px;width:9px;height:9px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2),0 0 6px var(--gbtn);pointer-events:none}
 .bkmk.new{position:relative}.bkmk.new::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2);pointer-events:none}
-.bknovall{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;margin:6px 0 2px;padding:3px 10px;font-size:12px;border-radius:12px}.bknovall small{display:inline!important;margin:0!important}
+
 /* v305 · comparación de mejora con los colores de cada estadística */
 .tmcmp .tmold{opacity:.7;font-weight:500}
 /* v305 · pasar página: debajo se ve otra página (su mismo color), nunca la tapa; sin destellos */
@@ -1878,7 +1878,7 @@ html:root[data-pal="holo"] .crcl .lgl{display:none}html:root[data-pal="holo"] .c
 /* toda la tablet con Chakra Petch; los números de las fichas siguen con la letra sencilla */
 html:root[data-skin="holo"] #comp,html:root[data-skin="holo"] #comp :is(h1,h2,h3,h4,h5,b,strong,small,i,em,p,span,div,button,td,th,label,input,select,a,li){font-family:'Chakra Petch',system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}
 html:root[data-skin="holo"] #comp :is(.bksub,i){font-style:normal!important}
-html:root[data-skin="holo"] #comp .row>span:last-child,html:root[data-skin="holo"] #comp .row>span:last-child *,html:root[data-skin="holo"] #comp .kbk,html:root[data-skin="holo"] #comp :is(.gv,.gv2,.num){font-family:system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}
+html:root[data-skin="holo"] #comp .row>span:last-child,html:root[data-skin="holo"] #comp .row>span:last-child *,html:root[data-skin="holo"] #comp .kbk{font-family:system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}
 html:root[data-skin="holo"] #comp .bkp h3{letter-spacing:.01em}
 /* trofeos */
 .trof{display:inline-block;vertical-align:-.12em}
@@ -2275,9 +2275,9 @@ body.mfs .rlbar .rlg,body.mfs #pkbar .rlg{height:36px!important;font-size:15px!i
 .amzres{display:flex;flex-direction:column;gap:8px;margin-top:10px}.amzres .it{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;border:1.5px solid var(--pline3,#c9b48a);background:rgba(255,255,255,.25)}
 .amzres .it .ai{width:42px;height:42px;font-size:16px}.amzres .it small{display:block;opacity:.7;font-size:11px}.amzres .it b{font-size:15px}.amzres .it .ch{font-size:12px;padding:3px 10px}
 .amzres .hp{width:42px;height:42px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px #1b1712;background:var(--hc,#888)}.amzres .hp svg{width:100%;height:100%}
-#amzhud{font:600 13px system-ui}#amzhud .c{z-index:30}
-#amzhud .c{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(122,26,18,.92);color:#fff1d6;border:1.5px solid #1b1712}
-#amzhud .c .ai{width:1.5em;height:1.5em;font-size:11px}#amzhud .t{background:rgba(27,23,18,.9);border-color:#ff5a3c}#amzhud .t b{color:#ffcf4a;font-size:15px}
+
+
+
 :root[data-skin="holo"] .amzg{color:#3fe8ff}
 :root[data-skin="holo"] .amzr,:root[data-skin="holo"] .amzres .it{border-color:rgba(63,232,255,.35);background:rgba(63,232,255,.05);color:#d8fbff}
 :root[data-skin="holo"] .amzr.on{border-color:#ff4fd8;background:rgba(255,79,216,.12)}:root[data-skin="holo"] .amzr.sel{box-shadow:0 0 0 2px #3fe8ff}
@@ -2289,7 +2289,7 @@ body.mfs .rlbar .rlg,body.mfs #pkbar .rlg{height:36px!important;font-size:15px!i
 :root[data-skin="holo"] .amztot{background:rgba(255,79,216,.08);border-color:#ff4fd8;color:#ffe0f6}
 :root[data-skin="holo"] .amzrk div{border-color:rgba(63,232,255,.35);color:#d8fbff}:root[data-skin="holo"] .amzrk div.on{border-color:#ff4fd8;background:rgba(255,79,216,.1)}
 :root[data-skin="holo"] .amzseal{background:linear-gradient(rgba(255,79,216,.25),rgba(255,79,216,.08));border-color:#ff4fd8;box-shadow:0 0 14px rgba(255,79,216,.5)}:root[data-skin="holo"] .amzseal b,:root[data-skin="holo"] .amzseal small{color:#ffe0f6!important}
-:root[data-skin="holo"] .tg{color:#ffcf4a}:root[data-skin="holo"] #amzhud .c{background:rgba(40,8,36,.9);border-color:#ff4fd8;color:#ffe0f6}
+:root[data-skin="holo"] .tg{color:#ffcf4a}
 #amzchip{position:fixed;z-index:30;display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(122,26,18,.92);color:#fff1d6;border:1.5px solid #1b1712;font:600 13px system-ui;pointer-events:none}
 #amzchip .ai{width:1.5em;height:1.5em;font-size:11px}
 body.dsk:not(.mfs) #amzchip{zoom:var(--uiz,1)}
@@ -2360,6 +2360,24 @@ table.lbrkt th{font-size:11px;text-transform:uppercase;opacity:.6}table.lbrkt .s
 table.lbrkt td.n{font-weight:800;width:26px}table.lbrkt tr.me td{background:#f3dc9a;font-weight:700}
 .lbbk.sm{padding:2px 8px;font-size:12px}
 table.lbrkt{margin-top:34px}
+/* v326 · Apoyos: doble página Apoyos (verde) | Amenazas (rojo) */
+.aph{margin-bottom:0}.aph.ap{color:#2f7a2f}.aph.az{color:#a33}
+.amzg.ap{color:#2f7a2f}
+.amzr.apr.on{border-color:#3a8a3a;background:rgba(58,138,58,.14)}
+.amzr .pt.ap{color:#2f7a2f}
+.apdot{display:inline-block;width:1.6em;height:1.6em;border-radius:50%;background:var(--c);border:2px solid #1b1712;box-sizing:border-box}
+.amzr .tg.ap{background:#2f7a2f;color:#fff;border-radius:4px;padding:0 4px;font-size:10px;margin-left:6px;font-weight:700}
+.apdet{margin-top:8px;border:2px solid currentColor;border-radius:10px;padding:7px 11px;background:rgba(255,250,240,.75);font-size:13px;line-height:1.35}
+.apdet.ap{color:#2f7a2f}.apdet.az{color:#a33}
+.apdet>b{display:block;font-size:14px}.apdet p b,.apdet p i{display:inline!important;width:auto;height:auto;border:0;background:none;margin:0;padding:0;font-size:inherit}.apdet p{color:var(--ink,#3a2617);margin:3px 0 0}.apdet p i{opacity:.8}
+.apdet .apbt{margin-top:4px;padding:4px 14px;font-size:13px;min-height:0}
+.apdet .amzbtns.sm{display:inline-grid;grid-template-columns:40px 40px;gap:8px;margin-top:6px}
+.apdet .amzbtns.sm button{width:40px;height:32px;font-size:20px}
+.apc{color:#2f7a2f;font-weight:700}.azc{color:#c0392b;font-weight:700}
+:root[data-skin="holo"] .aph.ap,:root[data-skin="holo"] .amzg.ap,:root[data-skin="holo"] .apdet.ap,:root[data-skin="holo"] .amzr .pt.ap,:root[data-skin="holo"] .apc{color:#5dff9a}
+:root[data-skin="holo"] .amzr.apr.on{border-color:#5dff9a;background:rgba(93,255,154,.12)}
+:root[data-skin="holo"] .apdet{background:rgba(10,30,36,.7)}:root[data-skin="holo"] .apdet p{color:#cfefff}
+:root[data-skin="holo"] .aph.az,:root[data-skin="holo"] .apdet.az{color:#ff5fb0}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2374,7 +2392,7 @@ table.lbrkt{margin-top:34px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v324</div>
+<div id="ver">Towerize v326</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -2649,7 +2667,7 @@ const XPV={vet:5,champ:12,runner:4,armored:15,bat:1,harpy:5,griffin:14,norm:2,fa
 // Curva de potencia: el DPS se multiplica ~2,2× en Nv 2, ~3,8× en Nv 3 y ~5,5× en Nv 4 (antes de habilidades)
 const L4D=3.2,L4H=2.7,LVMAX=3,LV={1:{dmg:1,cd:1,range:1,area:1,hp:1},2:{dmg:1.85,cd:.85,range:1.1,area:1.15,hp:1.6},3:{dmg:2.65,cd:.7,range:1.2,area:1.3,hp:2.2}};
 // Coste de subir de nivel (múltiplo de 5): Nv 2 = 150% del coste base, Nv 3 = 210%, Nv 4 = 300%
-const upCost0=(T,l)=>T.upc?T.upc[l]||0:Math.round(T.cost*(l===2?1.5:l===3?2.1:3)/5)*5,upCost=(T,l)=>{const v=upCost0(T,l);if(typeof S!=='undefined'&&S&&S.tut&&S.tut.freeUp)return 0;return typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('hammer')&&S.rs.hammer&&S.rs.hammer.cd===0&&!T.upc?Math.ceil(v*.85/5)*5:v;},phKey=()=>S?S.round+':'+S.phase:'',undoOk=t=>!!t&&t.bph===phKey(),sellVal=t=>TW[t.type].uniq?0:undoOk(t)?(t.undo||0):Math.floor((t.inv||TW[t.type].cost)/2);
+const upCost0=(T,l)=>T.upc?T.upc[l]||0:Math.round(T.cost*(l===2?1.5:l===3?2.1:3)/5)*5,upCost=(T,l)=>{const v=upCost0(T,l);if(typeof S!=='undefined'&&S&&S.tut&&S.tut.freeUp)return 0;return typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('hammer')&&S.rs.hammer&&S.rs.hammer.cd===0&&!T.upc?Math.ceil(v*.85/5)*5:v;},phKey=()=>S?S.round+':'+S.phase:'',undoOk=t=>!!t&&t.bph===phKey(),sellVal=t=>TW[t.type].uniq?0:undoOk(t)?(t.undo||0):typeof apOn==='function'&&apOn('rv')?(t.inv||0):Math.floor((t.inv||TW[t.type].cost)/2);
 // Nv 4: especializaciones (multiplicadores respecto a Nv 1, igual que LV) y habilidades compradas con oro, con rangos.
 const RAINP=.6,MAXPEN=25;
 // Sangrado: daño elemental por casilla recorrida y stack. Jefes: reducen un 50% cualquier efecto de control. Elementos de los rayos del Prisma (se repartirán en orden).
@@ -3664,8 +3682,9 @@ function castFreeze(c){
 }
 
 // ---- Dado de la suerte (pasivo): volver a tirar una vez en cada elección (piezas, ofertas de torres y cofres) ----
-const diceRr=k=>S&&S.relics&&rp('dice')&&!(S.drr||{})[k]?`<button class="drr" data-a="dreroll" data-k="${k}">🎲 Volver a tirar</button>`:'';
-function diceReroll(k){if(!rp('dice')||(S.drr||{})[k])return;
+// v326: el apoyo «Tirada de la ronda» también da una tirada (una por ronda, para piezas, torres o reliquias)
+const diceRr=k=>{if(!(S&&S.relics))return '';const dice=rp('dice')&&!(S.drr||{})[k],tir=typeof apTirOk==='function'&&apTirOk();return dice||tir?`<button class="drr" data-a="dreroll" data-k="${k}">🎲 ${dice?'Volver a tirar':'Tirada de la ronda'}</button>`:'';};
+function diceReroll(k){const dice=rp('dice')&&!(S.drr||{})[k];if(!dice&&!(typeof apTirOk==='function'&&apTirOk()))return;if(!dice)S.tirR=S.round;
  if(k==='pc'){if(S.phase!=='place')return;S.pi=null;deal();(S.drr=S.drr||{}).pc=1;}
  else if(k==='tw'){if(!RL.towo)return;const p=tPool();if(!p.length)return;RL.towo=towPick3(p);(S.drr=S.drr||{}).tw=1;renderTowerOffer();}
  else if(k==='rl'){if(!RL.choices)return;openRelic();(S.drr=S.drr||{}).rl=1;renderRelicPick();}
@@ -5434,7 +5453,7 @@ function anyPlace(o){
  for(let r=0;r<4;r++){for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++)if(check(bx,by,p)===0)return true;p=rot(p);}
  return false;
 }
-const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+(BF[b.k].sup?BFCS:BFC),0);
+const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+Math.round((BF[b.k].free?0:BF[b.k].sup?BFCS:BFC)*(typeof apOn==='function'&&apOn('cb')?.5:1)),0);
 function dealTry(){
  // rescate: si solo queda un extremo libre, salen sí o sí la Bifurcación y el Cruce, gratis
  const E1=!S.tut&&S.round<ROUNDS?collectEnds():[],resc=E1.length===1,RN=['Bifurcación','Cruce'];
@@ -10329,6 +10348,8 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:326,f:'14 nov 2026',t:'Apoyos',s:[['Apoyos',['Nuevo: los Apoyos, la otra cara de las Amenazas. Hacen la partida más llevadera (oro al empezar, casillas baratas, una torre gratis por ronda, tirada gratis por ronda…) a cambio de restar amenaza y puntuación.','Se abren poco a poco: el primer grupo al ganar una partida con alguna amenaza, y el resto ganando con más amenaza.','El botón pasa a «Apoyos / Amenazas»: Apoyos a la izquierda y Amenazas a la derecha.']],['Puntuación',['Cada punto de amenaza suma un 10 % y cada punto de apoyo lo resta. Los rangos extremos (Niebla de guerra 4, Sin refuerzos 3) multiplican por 1,25 y los apoyos fuertes por 0,8. Nunca baja de ×0,5.','La clasificación usa la amenaza neta (amenazas − apoyos).']],['Opciones',['Pausa automática: si cambias de ventana en plena partida, el juego se pausa solo (Opciones › Juego).']]]},
+ {v:325,f:'13 nov 2026',t:'Piezas corruptas',s:[['Amenazas',['Piezas corruptas: cada pocas elecciones, las piezas traen una casilla maldita (aspa roja). Hay que construir en ella antes que en ningún otro sitio, su torre no se puede vender y sus mejoras cuestan más.']]]},
  {v:324,f:'13 nov 2026',t:'Clasificación',s:[['Clasificación',['Al acabar una partida puedes subirla a la clasificación con el nombre de tu piloto y compararte con otros jugadores.','Puedes elegir que se suban solas cuando sea tu mejor marca (Opciones › Juego).','Nueva cinta «Clasificación» en el final de partida, con una tabla por era.']]]},
  {v:323,f:'13 nov 2026',t:'Amenazas nuevas',s:[['Amenazas',['Asedio sin tregua: desde que pones la pieza tienes 30 s (o 20 s) para construir; después la oleada empieza sola.','Inflación: cada torre del mismo tipo cuesta un 10 % más que la anterior.','Niebla de guerra, en 4 rangos: la línea de rondas solo enseña la siguiente; enemigos invisibles hasta que los detectas; portales sin información; y, para los más valientes, portales que no se ven.','Sabotaje: un saboteador va a por una torre (los dos salen marcados); si llega, la apaga 6 s.','Abanderados: mientras vive el abanderado, su escuadra no se puede ralentizar ni empujar.']]]},
  {v:320,f:'13 nov 2026',t:'Novedades y menú',s:[['Interfaz',['Novedades: el registro de cambios de cada versión, aquí mismo en el menú.','«Continuar partida» y «Nueva partida» del mismo tamaño, uno encima del otro.']]]},
@@ -12043,7 +12064,7 @@ const AZT=[
  ['ven','Venganza','en',[[3,'Cuando muere un élite o un jefe, los enemigos a 2 casillas se enfurecen <b>4 s</b>: corren un 50 % más y no se les puede retener.']],3],
  ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.']],6],
  ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.']],7],
- ['cor','Piezas corruptas','ma',[[2,'Cada <b>3</b> elecciones de pieza, las 3 piezas vienen corruptas. Su casilla maldita se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>2</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf',1],
+ ['cor','Piezas corruptas','ma',[[2,'Cada <b>4</b> elecciones de pieza, las piezas vienen corruptas. Su casilla maldita se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>3</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf'],
  ['nie','Niebla de guerra','ma',[[1,'La línea de rondas solo enseña la <b>ronda siguiente</b>.'],[2,'Además, los enemigos no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces se ven siempre.'],[2,'Además, los portales no informan de la siguiente oleada.'],[2,'Además, no sabes <b>dónde están</b> los portales enemigos.']],5],
  ['gri','Grietas espaciotemporales','ma',[[3,'A veces se abre un portal especial por el que llegan escuadras extra de una era que ya has visto (con su oro).']],'e2',1],
  ['ref','Sin refuerzos','ri',[[1,'Tus soldados tardan un <b>50 %</b> más en reaparecer.'],[1,'Tardan un <b>100 %</b> más.'],[3,'Los que caen <b>no reaparecen</b> hasta la siguiente oleada.']],'ini'],
@@ -12079,7 +12100,7 @@ setInterval(()=>{try{if(azEraDone(1)&&!(ACHS&&ACHS.erac1))achieve('erac1');if(az
 // ---- pantalla de Amenazas ----
 const azRow=(t,sel,ro)=>{const[id,n,,rk]=t,r=sel[id]||0,lk=!azUn(t)||t[4]==='fut',p=rk.slice(0,r).reduce((a,x)=>a+x[0],0);
  return `<div class="amzr${r?' on':''}${!ro&&AZUI.sel===id?' sel':''}${lk?' lk':''}"${ro?'':` data-a="azsel" data-id="${id}"`}><span class="ai">${lk?AZLOCK:AZIC[id]}</span><span><b>${lk?'???':n}</b>${!lk&&t[5]?'<span class="tg">próximamente</span>':''}</span><span class="pp">${lk?'':rk.map((x,i)=>`<i class="${i<r?'f':''}"></i>`).join('')}</span><span class="pt">${p?'+'+p:''}</span></div>`;};
-const azTot=sel=>{const p=azPtsOf(sel);return `<span class="amztot"><span><small>Amenaza</small><b>${p}</b></span><span><small>Puntuación</small><b>${azMult(p)}</b></span></span>`;};
+const azTot=sel=>{const p=azPtsOf(sel);return `<span class="amztot"><span><small>Amenaza</small><b>${p}</b></span><span><small>Puntuación</small><b>${typeof azScoreM==='function'?azMultT(azScoreM(sel,{})):azMult(p)}</b></span></span>`;};
 function azParts(){const sel=AZ.sel[ERA]=AZ.sel[ERA]||{},t=AZT.find(x=>x[0]===AZUI.sel)||AZT[0],lk=!azUn(t)||t[4]==='fut';
  const left=`<h3>Amenazas</h3><div class="bksub">Opcional · hacen la partida más difícil y puntúan más · se guardan para la próxima partida</div><div class="amzl">${AZG.map(([g,n])=>`<div class="amzg">${n}</div>`+AZT.filter(x=>x[2]===g).map(x=>azRow(x,sel)).join('')).join('')}</div>`;
  let right;
@@ -12097,9 +12118,12 @@ function azResParts(){const id=RL.hsel,D=HEROES[id],E=ERADEF[ERA]||{},done=azEra
  return {marks:null,key:'res'+JSON.stringify(sel)+ERA+id,left,right,footL:`<button class="lbbk" data-a="azch" data-v="hero">‹ Héroe</button>`,footR:`<button class="gbtn" data-a="azgo">Empezar partida ›</button>`,after:azFit};}
 // botón de la era: a la derecha de las piezas (solo con la era completada)
 const azSeal=()=>{const sel=AZ.sel[ERA]||{},p=azPtsOf(sel),on=Object.entries(sel).filter(x=>x[1]>0);
- return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Amenazas</b>${on.length?`<small>${p} puntos · puntuación ${azMult(p)}</small><span class="act">${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: haz la partida más difícil</small>'}</span></div></div>`;};
+ // v326: con los Apoyos desbloqueados, el mismo botón pasa a «Apoyos / Amenazas» con el nivel neto y la puntuación completa
+ if(typeof apOk==='function'&&apOk()){const as=apSelOf(),pp=apPtsOf(as),m=azScoreM(sel,as),ao=APT.filter(t=>as[t[0]]);
+  return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Apoyos / Amenazas</b>${on.length||ao.length?`<small>${pp?`<span class="apc">−${pp}</span> · `:''}${p?`<span class="azc">+${p}</span> · `:''}amenaza ${Math.max(0,p-pp)} · puntuación ${azMultT(m)}</small><span class="act">${ao.map(t=>`<span class="ai">${APIC('#3a8a3a')}</span>`).join('')}${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: ayúdate o ponte las cosas difíciles</small>'}</span></div></div>`;}
+ return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Amenazas</b>${on.length?`<small>${p} puntos · puntuación ${typeof azScoreM==='function'?azMultT(azScoreM(sel,{})):azMult(p)}</small><span class="act">${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: haz la partida más difícil</small>'}</span></div></div>`;};
 {const _pp=prepParts;prepParts=function(){if(LB.step==='amz')return azParts();if(LB.step==='res')return azResParts();const P=_pp.apply(this,arguments);
- try{if(P&&(P.key==='era'||P.key==='era2')&&azEraDone(ERA)){P.key+='az'+azPtsOf(AZ.sel[ERA]);const _a=P.after;P.after=()=>{try{_a&&_a();}catch(e){}setTimeout(()=>{try{const pcs=document.querySelector('#comp .lbera .pcs');if(pcs&&!document.querySelector('#comp .amzpos')){pcs.classList.add('amzA');pcs.insertAdjacentHTML('afterend',azSeal());azFit();}}catch(e){}},0);};}}catch(e){}
+ try{if(P&&(P.key==='era'||P.key==='era2')&&azEraDone(ERA)){P.key+='az'+azPtsOf(AZ.sel[ERA])+(typeof apSelOf==='function'?JSON.stringify(apSelOf()):'');const _a=P.after;P.after=()=>{try{_a&&_a();}catch(e){}setTimeout(()=>{try{const pcs=document.querySelector('#comp .lbera .pcs');if(pcs&&!document.querySelector('#comp .amzpos')){pcs.classList.add('amzA');pcs.insertAdjacentHTML('afterend',azSeal());azFit();}}catch(e){}},0);};}}catch(e){}
  return P;};}
 // clics (antes que el resto: elegir héroe pasa por el resumen)
 document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
@@ -12122,7 +12146,7 @@ document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.clos
 {const _sc=scoreCalc;scoreCalc=function(){const r=_sc.apply(this,arguments);try{const p=azRunPts();if(p>0&&r.t>0){const x=Math.round(r.t*p*.1);r.rows.push(['amz','Amenazas',p+' puntos de amenaza · '+azMult(p),x]);r.t+=x;}}catch(e){}return r;};}
 {const _hr=hsRec;hsRec=function(){const r=_hr.apply(this,arguments);try{if(r&&S&&S.amz)r.amz=Object.assign({},S.amz);}catch(e){}return r;};}
 // ---- desbloqueos al ganar ----
-{const _eg=endGame;endGame=function(){const won=S&&S.phase==='won',p=azRunPts(),era=ERA,fast=won&&!S.tut&&(GT.r||1e9)<=ROUNDS*60,act=Object.assign({},S&&S.amz||{});const r=_eg.apply(this,arguments);try{if(won){const nu=[];AZ.rk=AZ.rk||{};
+{const _eg=endGame;endGame=function(){const won=S&&S.phase==='won',p=typeof apNetRun==='function'?apNetRun():azRunPts(),era=ERA,fast=won&&!S.tut&&(GT.r||1e9)<=ROUNDS*60,act=Object.assign({},S&&S.amz||{});const r=_eg.apply(this,arguments);try{if(won){const nu=[];AZ.rk=AZ.rk||{};
   for(const[k,v]of Object.entries(act)){const t=AZT.find(x=>x[0]===k);if(t&&v>=azRk(k)&&v<t[3].length){AZ.rk[k]=v+1;nu.push(t[1]+' (rango '+(v+1)+')');}}
   for(const t of AZT){if(azUn(t))continue;const c=t[4];if((typeof c==='number'&&p>=c)||(c==='e2'&&era===2&&p>0)||(c==='fast'&&fast)){AZ.un[t[0]]=1;nu.push(t[1]);}}
   if(nu.length){azSave();if(azEraDone(1)||azEraDone(2))setTimeout(()=>{try{toast('Amenazas desbloqueadas: <b>'+nu.join('</b>, <b>')+'</b>');}catch(e){}},1200);}}}catch(e){}return r;};}
@@ -12130,7 +12154,7 @@ document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.clos
 document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a="preset"]');if(b&&typeof OP!=='undefined'&&OP.rst){for(const k of['rt-amz','rt-prog'])try{localStorage.removeItem(k);}catch(e){}}},true);
 
 // ---- en partida: contador (en el sitio de los FPS; los FPS van a su derecha) ----
-setInterval(()=>{try{let c=$('amzchip');const p=azRunPts(),show=p>0&&typeof S!=='undefined'&&S&&S.hero&&!document.body.classList.contains('inmenu');
+setInterval(()=>{try{let c=$('amzchip');const p=typeof apNetRun==='function'?apNetRun():azRunPts(),show=p>0&&typeof S!=='undefined'&&S&&S.hero&&!document.body.classList.contains('inmenu');
  if(!show){if(c)c.style.display='none';return;}
  if(!c){c=document.createElement('div');c.id='amzchip';c.className='c amzchip';document.body.appendChild(c);}
  const h=`<span class="ai">${AZIC.sup}</span>Amenazas · ${p}`;if(c.dataset.h!==h){c.innerHTML=h;c.dataset.h=h;azFit();}c.style.display='';
@@ -12245,6 +12269,145 @@ const azFlagOn=e=>{if(!e||!e.sqid||!S.flagSq)return false;const b=S.flagSq[e.sqi
      g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1.2);g.beginPath();g.moveTo(px,top);g.lineTo(px+CS*.6,top+CS*.15);g.lineTo(px,top+CS*.32);g.closePath();g.fill();g.stroke();}
     else{g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1);g.beginPath();g.moveTo(x-rr*.25,y-rr-lw(5));g.lineTo(x+rr*.25,y-rr-lw(5));g.lineTo(x,y-rr-lw(1));g.closePath();g.fill();g.stroke();}}}}
  }catch(x){}return r;};}
+
+// ==================== Piezas corruptas: la casilla maldita ====================
+// Cada 4 elecciones de pieza (R2: cada 3), las piezas que se ofrecen traen una casilla maldita en uno de sus solares.
+// Hay que construir en ella antes que en ningún otro sitio; su torre no se puede vender y sus mejoras (y habilidades) cuestan un 25 % más (R2: 50 %).
+// Dibujo elegido por Nogal (B1): aspa roja dentro de un círculo y borde rojo discontinuo con la forma de cada estilo de casilla.
+BFICO.curs='<circle cx="12" cy="12" r="9"/><path d="M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6" stroke-width="2.6"/>';
+const azCurM=()=>azRank('cor')>=2?.5:.25;
+BF.cur={n:'Casilla maldita',l:'✕',col:'#e0453a',base:'curs',free:1,get t(){return 'Hay que construir aquí <b>antes que en ningún otro sitio</b>. Su torre <b>no se puede vender</b> y sus mejoras cuestan un <b>'+Math.round(azCurM()*100)+' %</b> más.';}};
+{const _ts=bfTileSvg;bfTileSvg=function(k,st,e2,sz){const s=_ts.apply(this,arguments);if(k!=='cur'||!s)return s;st=st||tileSkin();e2=e2==null?bfEra2():e2;
+ const sh=st==='sello'?(e2?'<circle cx="32" cy="28" r="18.5" fill="none" stroke="#e0453a" stroke-width="1.6" stroke-dasharray="4 3"/>':'<circle cx="32" cy="32" r="29.5" fill="none" stroke="#e0453a" stroke-width="2" stroke-dasharray="5 4"/>')
+  :'<rect x="1.5" y="1.5" width="61" height="61" rx="'+(st==='losa'?8:10)+'" fill="none" stroke="#e0453a" stroke-width="2" stroke-dasharray="6 4"/>';
+ return s.replace(/<\/svg>$/,sh+'</svg>');};}
+{const _bo=bfOnTowers;bfOnTowers=function(){return _bo.apply(this,arguments).filter(k=>k!=='cur');};}
+const azIsCur=t=>{if(!t||!t.cells||!S||!S.buff)return false;for(const[x,y]of t.cells)if(S.buff[y]&&S.buff[y][x]==='cur')return true;return false;};
+// solares malditos aún sin torre
+function azCurPending(){const out=[];if(!S||!S.buff||!S.cc)return out;const seen=new Set();
+ for(let gy=0;gy<S.cc.length;gy++)for(let gx=0;gx<S.cc[gy].length;gx++){if(S.cc[gy][gx]!==1)continue;const fx=gx*K,fy=gy*K;if(!(S.buff[fy]&&S.buff[fy][fx]==='cur'))continue;
+  const q=sqOf(fx,fy),key=q.x+','+q.y;if(seen.has(key))continue;seen.add(key);if(!S.occ[key])out.push(q);}return out;}
+// reparto: cada N elecciones, las piezas vienen corruptas
+{const _pp=placePiece;placePiece=function(){const r=_pp.apply(this,arguments);try{if(S&&!S.tut)S.pkN=(S.pkN||0)+1;}catch(e){}return r;};}
+{const _dl=deal;deal=function(){const r=_dl.apply(this,arguments);try{const R=azRank('cor');if(R&&!S.tut&&S.offers&&S.offers.length){const f=R>=2?3:4,n=(S.pkN||0)+1;
+ if(n%f===0){for(const o of S.offers){const cs=[];o.p.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch==='S'&&!o.b.some(b=>b.x===x&&b.y===y))cs.push([x,y]);}));
+  if(!cs.length)continue;const c=cs[Math.floor(Math.random()*cs.length)];o.b.push({x:c[0],y:c[1],k:'cur'});o.cor=1;}try{see('bf','cur');}catch(e){}}}}catch(e){console.warn(e);}return r;};}
+// construir: primero la casilla maldita
+{const _b=build;build=function(fx,fy){try{if(azOn('cor')&&S&&inb(fx,fy)){const P0=azCurPending();if(P0.length){const q=sqOf(fx,fy);if(!P0.some(c=>c.x===q.x&&c.y===q.y)){
+ S.msg='Primero tienes que construir en la casilla maldita.';ui();return;}}}}catch(e){}return _b.apply(this,arguments);};}
+// su torre no se vende
+{const _s=sell;sell=function(t){if(azIsCur(t)){S.msg='La torre de una casilla maldita no se puede vender.';ui();return;}return _s.apply(this,arguments);};}
+// y sus mejoras cuestan más
+{const _tc=tCost;tCost=function(t,c){const v=_tc.apply(this,arguments);if(v>0&&azIsCur(t))return Math.round(v*(1+azCurM()));return v;};}
+// ==================== v326 · Apoyos (la otra cara de las Amenazas) ====================
+// Nogal (13/14-nov-2026): opcionales, hacen la partida más llevadera o más divertida sin cargarse mecánicas.
+// Cada apoyo resta puntos de amenaza (nivel neto = amenazas − apoyos, nunca menos de 0: decide la tabla de clasificación y los desbloqueos)
+// y baja la puntuación: −10 % por punto, y los «fuertes» además ×0,8 aparte. Las amenazas extremas (Niebla R4, Sin refuerzos R3) dan ×1,25 aparte.
+// Suelo de la puntuación: ×0,5. Se abren poco a poco: al ganar con amenazas, y luego ganando con amenaza neta 3, 5 y 7.
+// Pantalla: el botón pasa a «Apoyos / Amenazas»; doble página con los Apoyos a la izquierda (verde) y las Amenazas a la derecha (rojo).
+// datos: [id, nombre, grupo, puntos, fuerte, desbloqueo, texto, aún no listo]
+const APT=[
+ ['bi','Bolsa inicial','ec',1,0,'w1','Empiezas la partida con <b>150</b> de oro más.'],
+ ['cb','Casillas baratas','ec',1,0,'w1','Las casillas especiales de las piezas cuestan la <b>mitad</b>.'],
+ ['rv','Reventa justa','ec',1,0,3,'Al vender una torre recuperas <b>todo</b> lo que invertiste en ella.'],
+ ['pp','Primera piedra','ec',2,1,7,'La primera torre que construyes en cada ronda es <b>gratis</b>.'],
+ ['apr','Aprendices','to',1,0,3,'La especialización de Nv 4 y las habilidades cuestan un <b>20 %</b> menos.'],
+ ['ag','Ascenso gratuito','to',2,1,7,'Al empezar cada oleada, una de tus torres de Nv 1 sube a <b>Nv 2</b> gratis.'],
+ ['rr','Refuerzos rápidos','tr',1,0,'w1','Tus soldados reaparecen el <b>doble de rápido</b>.'],
+ ['hi','Héroe incansable','tr',1,0,3,'Tu héroe revive en la <b>mitad</b> de tiempo.'],
+ ['mf','Murallas firmes','tr',1,0,'w1','El núcleo empieza con <b>5</b> de vida más.'],
+ ['tir','Tirada de la ronda','ma',1,0,5,'Cada ronda tienes <b>una tirada gratis</b> para volver a sacar las piezas, las torres o las reliquias que te ofrecen. No se acumula: si no la gastas, sigue ahí; si la gastas, tienes otra en la siguiente ronda.'],
+ ['ba','Botín y aventura','ma',2,1,7,'Cada partida trae <b>un cofre y un evento más</b>.'],
+ ['vig','Vigía','in',1,0,5,'Al señalar las 2 rondas siguientes en la línea de rondas, ves exactamente qué enemigos vienen.',1]];
+const APG=[['ec','Economía'],['to','Torres'],['tr','Tropas y héroe'],['ma','Mapa y piezas'],['in','Información']];
+const AZX={nie:4,ref:3};/* rangos extremos de amenaza: ×1,25 aparte */
+AZ.ap=AZ.ap||{sel:{1:{},2:{}}};
+const apOk=()=>AZ.apw!=null;
+const apUn=t=>t[5]==='w1'?apOk():apOk()&&(AZ.apw||0)>=t[5];
+const apReady=t=>apUn(t)&&!t[7];
+function apOn(k){return !!(typeof S!=='undefined'&&S&&S.ap&&S.ap[k])&&!S.tut&&!S.pvE&&!S.pvH;}
+const apSelOf=()=>{const s=AZ.ap.sel[ERA]=AZ.ap.sel[ERA]||{};return s;};
+function apPtsOf(sel){return APT.reduce((a,t)=>a+(sel&&sel[t[0]]?t[3]:0),0);}
+// multiplicador de puntuación y nivel neto (para la selección o para la partida en curso)
+function azScoreM(amz,ap){const tp=azPtsOf(amz||{}),pp=apPtsOf(ap||{});let m=1+.1*tp-.1*pp;
+ for(const k in AZX)if((amz||{})[k]>=AZX[k])m*=1.25;for(const t of APT)if(ap&&ap[t[0]]&&t[4])m*=.8;return Math.max(.5,m);}
+function azNetOf(amz,ap){return Math.max(0,azPtsOf(amz||{})-apPtsOf(ap||{}));}
+function apNetRun(){return typeof S!=='undefined'&&S?azNetOf(S.amz,S.ap):0;}
+function azMultT(m){return '×'+(Math.round(m*100)/100).toFixed(2).replace(/0$/,'').replace('.',',');}
+// ---- al empezar: los apoyos elegidos (solo si la era tiene las Amenazas y están desbloqueados) ----
+{const _ch=chooseHero;chooseHero=function(id){try{if(typeof S!=='undefined'&&S&&!S.tut&&!S.ap){const sel=apSelOf();S.ap={};if(azEraDone(ERA))for(const t of APT)if(sel[t[0]]&&apReady(t))S.ap[t[0]]=1;}}catch(e){}
+ const r=_ch.apply(this,arguments);try{if(S&&S.ap&&!S.apIni){S.apIni=1;
+  if(S.ap.bi)S.gold+=150;if(S.ap.mf)S.hp+=5;
+  if(S.ap.ba){const k=freeSlot();if(k)S.chests[k]=1;
+   const used=new Set(Object.values(S.evts||{})),pool=shuf(Object.keys(EVENTS).filter(k=>evEraOk(k)&&!evLocked(k)&&!used.has(k)));
+   const c=Math.floor(BN/2),cand=[];for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const q=bx+','+by;if(S.blocks[q]||S.chests[q]||(S.evts&&S.evts[q])||(bx===c&&by===c))continue;cand.push(q);}
+   if(pool.length&&cand.length){S.evts=S.evts||{};S.evts[shuf(cand)[0]]=pool[0];}}
+  ui();}}catch(e){console.warn(e);}return r;};}
+{const _sg=startGame;startGame=function(){const r=_sg.apply(this,arguments);try{if(S){S.ap=null;S.apIni=0;}}catch(e){}return r;};}
+// ---- efectos ----
+// Refuerzos rápidos y Héroe incansable
+{const _ud=unitDeath;unitDeath=function(t,s){const r=_ud.apply(this,arguments);try{if(s&&s.rt>0&&s.rt<1e8){if(s.H&&apOn('hi'))s.rt*=.5;else if(!s.H&&t&&!t.hero&&apOn('rr'))s.rt*=.5;}}catch(e){}return r;};}
+// Aprendices (Nv 4: especialización y habilidades)
+{const _tc=tCost;tCost=function(t,c){const v=_tc.apply(this,arguments);if(v>0&&t&&t.lvl>=3&&apOn('apr'))return Math.round(v*.8);return v;};}
+// Primera piedra: la primera torre de cada ronda, gratis
+{const _b=build;build=function(fx,fy){const n0=S?S.list.length:0,g0=S?S.gold:0;const r=_b.apply(this,arguments);try{if(apOn('pp')&&S.list.length>n0&&S.ppR!==S.round){const t=S.list[S.list.length-1],paid=g0-S.gold;
+ if(paid>0&&!t.hero){S.gold+=paid;S.st.spent=Math.max(0,(S.st.spent||0)-paid);t.inv=0;t.undo=0;S.ppR=S.round;try{toast('<b>Primera piedra</b><br><small>Esta torre te sale gratis.</small>');}catch(e){}ui();}}}catch(e){}return r;};}
+// Ascenso gratuito: al empezar cada oleada, una torre de Nv 1 sube a Nv 2
+{const _sw=startWave;startWave=function(){const was=S&&S.phase;const r=_sw.apply(this,arguments);try{if(apOn('ag')&&was!=='wave'&&S.phase==='wave'){
+ const L=S.list.filter(t=>t.lvl===1&&!t.hero&&!t.summ&&TW[t.type]&&!TW[t.type].uniq&&!(t.holo>0));if(L.length){const t=L[Math.floor(Math.random()*L.length)],c=tCost(t,upCost(TW[t.type],2));
+  S.gold+=c;const sp=S.st.spent;upgrade(t);if(t.lvl===2){S.st.spent=sp;try{toast('<b>Ascenso gratuito</b><br><small>'+TW[t.type].n+' sube a Nv 2.</small>');}catch(e){}}else S.gold-=c;}}}catch(e){console.warn(e);}return r;};}
+// Tirada de la ronda: una tirada gratis por ronda (piezas, torres o reliquias); no se acumula
+function apTirOk(){return apOn('tir')&&S.tirR!==S.round;}
+// ---- puntuación: la de las amenazas pasa a contar también apoyos y extremos ----
+// (la fila 'amz' la añade amenazas.js; aquí se rehace con el multiplicador completo)
+{const _sc=scoreCalc;scoreCalc=function(){const r=_sc.apply(this,arguments);try{if(!S||!(S.amz||S.ap))return r;const i=r.rows.findIndex(x=>x[0]==='amz');if(i>=0){r.t-=r.rows[i][3];r.rows.splice(i,1);}
+ const tp=azPtsOf(S.amz||{}),pp=apPtsOf(S.ap||{});if(!tp&&!pp)return r;const m=azScoreM(S.amz,S.ap),x=Math.round(r.t*(m-1));
+ r.rows.push(['amz',pp?'Amenazas y apoyos':'Amenazas',`amenaza ${azNetOf(S.amz,S.ap)}${pp?' ('+tp+' − '+pp+')':''} · ${azMultT(m)}`,x]);r.t+=x;}catch(e){}return r;};}
+// ---- desbloqueo de los apoyos al ganar ----
+{const _eg=endGame;endGame=function(){const won=S&&S.phase==='won'&&!S.tut,tp=S?azPtsOf(S.amz||{}):0,net=apNetRun();const pre=APT.filter(apUn).map(t=>t[0]);const r=_eg.apply(this,arguments);try{
+ if(won&&tp>0){AZ.apw=Math.max(AZ.apw==null?-1:AZ.apw,net);azSave();const nu=APT.filter(t=>apUn(t)&&!pre.includes(t[0])).map(t=>t[1]);
+  if(nu.length)setTimeout(()=>{try{toast('Apoyos desbloqueados: <b>'+nu.join('</b>, <b>')+'</b>');}catch(e){}},2200);}}catch(e){}return r;};}
+// ---- pantalla: doble página Apoyos | Amenazas ----
+const APUI={sel:null};
+const APIC=c=>`<span class="apdot" style="--c:${c}"></span>`;
+const apRow=(t,sel)=>{const[id,n,,p,st]=t,on=!!sel[id],lk=!apUn(t);
+ return `<div class="amzr apr${on?' on':''}${APUI.sel===id?' sel':''}${lk?' lk':''}" data-a="apsel" data-id="${id}"><span class="ai">${lk?AZLOCK:APIC(on?'#3a8a3a':'#cfe5c9')}</span><span><b>${lk?'???':n}</b>${!lk&&st?'<span class="tg ap">fuerte</span>':''}${!lk&&t[7]?'<span class="tg">próximamente</span>':''}</span><span class="pt ap">${on?'−'+p:''}</span></div>`;};
+const apCond=u=>u==='w1'?'Gana una partida con alguna amenaza':'Gana una partida con amenaza '+u+' o más';
+function apDet(){const t=APT.find(x=>x[0]===APUI.sel);if(!t)return '<div class="apdet ap"><p>Elige un apoyo para ver qué hace. Pulsa otra vez para activarlo o quitarlo.</p></div>';
+ if(!apUn(t))return `<div class="apdet ap"><b>???</b><p>Para desbloquear: <b>${apCond(t[5])}</b></p></div>`;
+ const on=!!apSelOf()[t[0]];return `<div class="apdet ap"><b>${t[1]} · −${t[3]}${t[4]?' · fuerte':''}</b><p>${t[6]}${t[4]?' <i>Además, ×0,8 a la puntuación.</i>':''}</p>${t[7]?'<p class="bknote">Llegará en una próxima versión.</p>':`<button class="gbtn apbt" data-a="aptog">${on?'Quitar':'Activar'}</button>`}</div>`;}
+function azDetC(){const sel=AZ.sel[ERA]||{},t=AZT.find(x=>x[0]===AZUI.sel);if(!t)return '<div class="apdet az"><p>Elige una amenaza para ver sus rangos.</p></div>';
+ if(!azUn(t)||t[4]==='fut')return `<div class="apdet az"><b>???</b><p>Para desbloquear: <b>${azCond(t[4])}</b></p></div>`;
+ const r=sel[t[0]]||0,cur=t[3][Math.max(0,r-1)],nx=t[3][r],ex=AZX[t[0]];
+ return `<div class="apdet az"><b>${t[1]} · ${r?'Rango '+r+' de '+t[3].length:'sin activar'}${r&&ex&&r>=ex?' · extremo':''}</b><p>${r?cur[1]:t[3][0][1]}${!r?'':nx&&r<azRk(t[0])?' <i>Siguiente: '+nx[1]+'</i>':''}</p>${t[5]?'<p class="bknote">Llegará en una próxima versión.</p>':`<span class="amzbtns sm"><button class="gbtn" data-a="azdec"${r?'':' disabled'}><span>−</span></button><button class="gbtn" data-a="azinc"${r<Math.min(t[3].length,azRk(t[0]))?'':' disabled'}><span>+</span></button></span>`}</div>`;}
+const apTot=()=>{const a=AZ.sel[ERA]||{},p=apSelOf(),tp=azPtsOf(a),pp=apPtsOf(p),m=azScoreM(a,p);
+ return `<span class="amztot"><span><small>Amenaza</small><b>${pp?tp+' − '+pp+' = ':''}${Math.max(0,tp-pp)}</b></span><span><small>Puntuación</small><b>${azMultT(m)}</b></span></span>`;};
+{const _ap=azParts;azParts=function(){const P=_ap.apply(this,arguments);try{if(!apOk()||!azEraDone(ERA))return P;const sel=AZ.sel[ERA]||{},as=apSelOf();
+ P.left=`<h3 class="aph ap">Apoyos</h3><div class="bksub">Hacen la partida más llevadera · restan amenaza y puntuación</div><div class="amzl apl">${APG.map(([g,n])=>{const L=APT.filter(x=>x[2]===g);return L.length?`<div class="amzg ap">${n}</div>`+L.map(x=>apRow(x,as)).join(''):'';}).join('')}</div>${apDet()}`;
+ P.right=`<h3 class="aph az">Amenazas</h3><div class="bksub">Hacen la partida más difícil · suman amenaza y puntuación</div><div class="amzl apl">${AZG.map(([g,n])=>`<div class="amzg">${n}</div>`+AZT.filter(x=>x[2]===g).map(x=>azRow(x,sel)).join('')).join('')}</div>${azDetC()}`;
+ P.key='amzap'+JSON.stringify(sel)+JSON.stringify(as)+AZUI.sel+APUI.sel;P.footR=`<span class="amzft">${apTot()}<button class="gbtn" data-a="azback">Continuar ›</button></span>`;P.after=()=>{apFit();setTimeout(apFit,150);setTimeout(apFit,450);};}catch(e){console.warn(e);}return P;};}
+// cada lista llega justo hasta su detalle, que queda encima del pie del libro
+const apFit=()=>setTimeout(()=>{try{if(document.body.classList.contains('mfs'))return;const F=document.querySelector('#comp [data-a="azback"]');if(!F)return;const ft=F.getBoundingClientRect().top;
+ for(const L of document.querySelectorAll('#comp .apl')){const D=L.parentElement.querySelector('.apdet');if(!D)continue;const z=(L.getBoundingClientRect().height/(L.offsetHeight||1))||1,lt=L.getBoundingClientRect().top,dh=D.getBoundingClientRect().height;const h=ft-lt-dh-18;if(h>60)L.style.maxHeight=h/z+'px';}}catch(e){}},40);
+document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a="apsel"],[data-a="aptog"]');if(!b)return;ev.stopPropagation();ev.preventDefault();try{sfx('page');}catch(_){}
+ const sel=apSelOf();if(b.dataset.a==='apsel'){const id=b.dataset.id,t=APT.find(x=>x[0]===id);if(APUI.sel===id&&t&&apReady(t)){if(sel[id])delete sel[id];else sel[id]=1;azSave();}APUI.sel=id;}
+ else{const t=APT.find(x=>x[0]===APUI.sel);if(t&&apReady(t)){if(sel[t[0]])delete sel[t[0]];else sel[t[0]]=1;azSave();}}lbRender();},true);
+// el botón de la preparación y el resumen: «Apoyos / Amenazas», con el nivel neto y la puntuación
+{const _pp=prepParts;prepParts=function(){const P=_pp.apply(this,arguments);try{if(apOk()&&azEraDone(ERA)&&LB.step!=='amz'){const a=AZ.sel[ERA]||{},p=apSelOf(),tp=azPtsOf(a),pp=apPtsOf(p),m=azScoreM(a,p);
+ const fix=h=>String(h||'').replace(/<b>Amenazas<\/b>(<small>[^<]*<\/small>)?/,`<b>Apoyos / Amenazas</b><small>${pp?`<span class="apc">−${pp}</span> · `:''}${tp?`<span class="azc">+${tp}</span> · `:''}amenaza ${Math.max(0,tp-pp)} · puntuación ${azMultT(m)}</small>`);
+ for(const k of ['left','right'])if(typeof P[k]==='string')P[k]=fix(P[k]);if(LB.step==='res'&&typeof P.right==='string'){const on=APT.filter(t=>p[t[0]]&&apReady(t));if(on.length)P.right+=`<h3 class="aph ap" style="margin-top:10px">Apoyos</h3><div class="amzl" style="margin-top:6px">${on.map(t=>apRow(t,p)).join('')}</div>`;
+  P.right=P.right.replace(/\d+ puntos de amenaza · puntuación ×[\d,]+/,`amenaza ${Math.max(0,tp-pp)} · puntuación ${azMultT(m)}`);}}}catch(e){}return P;};}
+window.addEventListener('resize',()=>{if(typeof LB!=='undefined'&&LB.open&&LB.step==='amz')apFit();});
+setInterval(()=>{try{if(typeof LB!=='undefined'&&LB.open&&LB.area==='prep'&&LB.step==='amz'&&document.querySelector('#comp .apl'))apFit();}catch(e){}},500);
+// ==================== v326 · Pausa automática al cambiar de ventana ====================
+// Idea aprobada por Nogal (13-nov-2026): si la ventana del juego pierde el foco en plena partida, se abre el menú de pausa.
+// Se puede quitar en Opciones › Juego.
+if(OPT.autopause===undefined)OPT.autopause=true;
+OPTS.splice(Math.max(0,OPTS.findIndex(o=>o.tab==='jg')),0,{tab:'jg',type:'toggle',key:'autopause',def:true,label:'Pausa automática',desc:'Si cambias de ventana o de pestaña en plena partida, el juego se pausa solo.'});
+function apAutoPause(){try{if(!OPT.autopause||typeof S==='undefined'||!S||!S.hero||S.pvE||S.pvH||PREVIEWING)return;if(!(S.phase==='wave'||S.phase==='build'))return;
+ if(S.speed===0||(typeof LB!=='undefined'&&LB.open)||(typeof RL!=='undefined'&&RL.open)||document.body.classList.contains('inmenu'))return;openPause();}catch(e){}}
+addEventListener('blur',apAutoPause);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')apAutoPause();});
 // ==================== v324 · Clasificación de playtesters (servidor en Cloudflare) ====================
 // Nogal (13-nov-2026): al final de la partida, botón «Subir a la clasificación» en el hueco libre; si sigues sin subirla, aviso en el
 // centro con la pantalla oscurecida (Sí y siempre / Sí, solo esta / No, gracias + «No volver a mostrar»). El nombre es el del piloto:
@@ -12253,8 +12416,9 @@ const azFlagOn=e=>{if(!e||!e.sqid||!S.flagSq)return false;const b=S.flagSq[e.sqi
 const LBURL='https://towerize-ranking.towerize.workers.dev';
 const LBR={up:null,busy:false,sel:null,era:null,data:{},tiers:{}};
 if(OPT.lbup===undefined)OPT.lbup='ask';
-const lbPilot=()=>{try{return localStorage.getItem('rt-pilot')||'';}catch(e){return '';}};
-const lbSetPilot=n=>{try{localStorage.setItem('rt-pilot',n);}catch(e){}};
+const lbPilot=()=>{try{return (typeof STO!=='undefined'&&STO.name)||localStorage.getItem('rt-pilot')||'';}catch(e){return '';}};
+// el nombre es el del piloto (el mismo que usa ÉTER y que se pone en la historia y en Opciones)
+const lbSetPilot=n=>{try{STO.name=n;saveSto();localStorage.setItem('rt-pilot',n);}catch(e){}};
 const lbBestK='rt-lbbest';
 const lbBestGet=()=>{try{return JSON.parse(localStorage.getItem(lbBestK))||{};}catch(e){return {};}};
 const lbAmzOpen=era=>{try{return azEraDone(era);}catch(e){return false;}};
@@ -12264,7 +12428,7 @@ OPTS.splice(Math.max(0,OPTS.findIndex(o=>o.tab==='jg')),0,{tab:'jg',type:'choice
 // la partida que acaba de terminar
 function lbRun(){if(!S||!S.hero||S.tut||S.pvE||S.pvH||(typeof PREVIEWING!=='undefined'&&PREVIEWING))return null;
  const sc=S.scF||(typeof scoreCalc==='function'?scoreCalc():{t:0});if(!(sc.t>0))return null;
- const era=(S.era||ERA||1),amz=(S.amz&&typeof azPtsOf==='function')?azPtsOf(S.amz):0;
+ const era=(S.era||ERA||1),amz=typeof apNetRun==='function'?apNetRun():(S.amz&&typeof azPtsOf==='function')?azPtsOf(S.amz):0;
  const sel={};for(const k in S.amz||{})if(S.amz[k]>0)sel[k]=S.amz[k];
  return {hero:S.hero.id,era,amz,score:Math.round(sc.t),round:Math.min(S.round,ROUNDS),won:S.phase==='won',sel,ver:String(NOVV())};}
 function lbBtnHTML(){const R=LBR.cur;if(!R)return '';const st=LBR.up,amzT=lbAmzOpen(R.era)?'Amenaza '+R.amz+' · ':'';
