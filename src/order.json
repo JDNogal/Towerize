@@ -25,7 +25,8 @@
   "23_logros_niveles.css",
   "24_puntuacion.css",
   "25_iconos_sin_fondo.css",
-  "26_amenazas.css"
+  "26_amenazas.css",
+  "27_logros_cerca.css"
  ],
  "js": [
   "00_config.js",
@@ -137,6 +138,7 @@
   "torres_evento_nv4.js",
   "logros_niveles.js",
   "puntuacion.js",
-  "amenazas.js"
+  "amenazas.js",
+  "logros_cerca.js"
  ]
 }
