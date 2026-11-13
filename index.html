@@ -12284,8 +12284,9 @@ function azCurPending(){const out=[];if(!S||!S.buff||!S.cc)return out;const seen
 const LBURL='https://towerize-ranking.towerize.workers.dev';
 const LBR={up:null,busy:false,sel:null,era:null,data:{},tiers:{}};
 if(OPT.lbup===undefined)OPT.lbup='ask';
-const lbPilot=()=>{try{return localStorage.getItem('rt-pilot')||'';}catch(e){return '';}};
-const lbSetPilot=n=>{try{localStorage.setItem('rt-pilot',n);}catch(e){}};
+const lbPilot=()=>{try{return (typeof STO!=='undefined'&&STO.name)||localStorage.getItem('rt-pilot')||'';}catch(e){return '';}};
+// el nombre es el del piloto (el mismo que usa ÉTER y que se pone en la historia y en Opciones)
+const lbSetPilot=n=>{try{STO.name=n;saveSto();localStorage.setItem('rt-pilot',n);}catch(e){}};
 const lbBestK='rt-lbbest';
 const lbBestGet=()=>{try{return JSON.parse(localStorage.getItem(lbBestK))||{};}catch(e){return {};}};
 const lbAmzOpen=era=>{try{return azEraDone(era);}catch(e){return false;}};

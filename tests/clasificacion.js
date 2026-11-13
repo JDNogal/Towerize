@@ -26,7 +26,7 @@ await p.evaluate(()=>{$('lbname').value='Piloto';});
 await p.evaluate(()=>{LBR.cont=null;});
 await p.evaluate(()=>document.querySelector('[data-lbd="name"]').click());await p.waitForTimeout(1500);
 r.posted=posted.length===1&&posted[0].nick==='Piloto'&&posted[0].hero==='reinhart'&&posted[0].score>0;
-r.pilot=await p.evaluate(()=>localStorage.getItem('rt-pilot'));
+r.pilot=await p.evaluate(()=>STO.name);
 await p.screenshot({path:'tests/out/clasif_tras.png'});
 r.after=await p.evaluate(()=>({phase:S.phase,area:LB.area,open:LB.open}));
 console.log(JSON.stringify(r),JSON.stringify(posted[0]||{}));
