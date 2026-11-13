@@ -24,7 +24,7 @@ async function addRun(req, env) {
   for (const r of top) { const id = r.nick.toLowerCase() + '|' + r.hero; if (seen.has(id)) continue; seen.add(id); out.push(r); if (out.length >= TOPN) break; }
   await env.RUNS.put(key, JSON.stringify(out));
   const pos = out.indexOf(run);
-  return J({ ok: true, pos: pos < 0 ? null : pos + 1 });
+  return J({ ok: true, pos: pos < 0 ? null : pos + 1, n: out.length });
 }
 
 export default {
