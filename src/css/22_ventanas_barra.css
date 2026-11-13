@@ -79,3 +79,5 @@ html:root[data-pal="noche"] .rbx.rrel.rac .rbt,html:root[data-pal="amb"] .rbx.rr
 @media (min-width:2300px) and (min-height:1250px){body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:1.8!important}body.dsk:not(.mfs) #mzside>div{zoom:2.15}}
 /* en móvil, con la barra de scroll dibujada, sobra la flechita */
 body.mfs .smore::after{content:none!important}
+/* pantallas grandes: el libro / la tablet crecen si caben (--bkz lo calcula ventanas_barra.js) */
+body.dsk:not(.mfs) #comp.bkm>.bkw,body.dsk:not(.mfs) #comp.bkm>.lbcv{zoom:var(--bkz,1)}

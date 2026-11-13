@@ -24,3 +24,7 @@ setInterval(()=>{try{const cs=[...document.querySelectorAll('#relic.open .cgrid 
  const sig=cs.map(c=>c.textContent.length).join()+'|'+innerWidth+'|'+innerHeight+'|'+lines;const g=cs[0].closest('.cgrid');if(g.dataset.eq===sig)return;g.dataset.eq=sig;
  for(let i=0;i<2;i++){const bs=cs.map(c=>c.querySelectorAll('.rbd')[i]).filter(Boolean);bs.forEach(b=>b.style.height='');const lh=parseFloat(getComputedStyle(bs[0]).lineHeight)||18;
   const h=Math.min(lh*lines,Math.max(...bs.map(b=>b.scrollHeight)));bs.forEach(b=>b.style.height=Math.ceil(h)+'px');}}catch(e){}},250);
+// ==================== v314 · Pantallas grandes: el libro / la tablet (opciones, compendio, pausa, final, partidas…) crecen si caben ====================
+// Regla de Nogal: grande pero sin taparlo todo, que asome un poco de mapa (≈78 % del ancho / 90 % del alto, igual en 1280, 1920 y 2560).
+{const bkz=()=>{const B=document.body.classList;let z=1;if(B.contains('dsk')&&!B.contains('mfs'))z=Math.max(0.8,Math.min(2.2,Math.min(innerWidth*0.78/1080,innerHeight*0.9/690)));z=Math.round(z*40)/40;
+ const r=document.documentElement.style;if(r.getPropertyValue('--bkz')!==String(z))r.setProperty('--bkz',String(z));};bkz();addEventListener('resize',bkz);setInterval(bkz,1000);}
