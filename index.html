@@ -8657,11 +8657,11 @@ E2KW.daze=()=>'<b>Desorientado</b>'+R('','Duración','0,4 s')+'<small>La onda de
 
 // ---- palabras clave por grupos: [id, nombre, icono] ----
 const MECG=[
- ['Estados',[['burn','Quemadura','🔥'],['poison','Veneno','☠️'],['bleed','Sangrado','🩸'],['chill','Hipotermia','🥶'],['ez','Electrizado','⚡'],['brk','Armadura rota','🔨'],['slow','Ralentización','🐌'],['freeze','Congelar','🧊'],['stun','Aturdir','💫'],['daze','Desorientado','🌀'],['root','Inmovilizado','🌿'],['sticky','Pegajoso','🍯'],['flam','Inflamable','🛢️'],['wet','Mojado','💧'],['cursed','Maldito','🌑'],['poly','Transformado','🐸'],['fear','Aterrado','😱'],['mark','Marcado','🎯'],['prey','Presa','🦅'],['inf','Infectado','🦠'],['lmk','Fijado','🔴'],['vc','Carga','🔋'],['stk','Acumulable','➕']]],
+ ['Estados',[['burn','Quemadura','🔥'],['poison','Veneno','☠️'],['bleed','Sangrado','🩸'],['chill','Hipotermia','🥶'],['ez','Electrizado','⚡'],['brk','Armadura rota','🔨'],['slow','Ralentización','🐌'],['freeze','Congelar','🧊'],['stun','Aturdir','💫'],['daze','Desorientado','🌀'],['root','Inmovilizado','🌿'],['sticky','Pegajoso','🍯'],['flam','Inflamable','🛢️'],['wet','Mojado','💧'],['cursed','Maldito','🌑'],['poly','Transformado','🐸'],['fear','Aterrado','😱'],['mark','Marcado','🎯'],['prey','Presa','🦅'],['inf','Infectado','🦠'],['lmk','Fijado','🔴'],['vc','Carga','🔋'],['stk','Acumulable','✔️']]],
  ['Tipos de daño',[['tphys','Daño físico','⚔️'],['tmagic','Daño mágico','✨'],['telem','Daño elemental','🌈'],['crit','Crítico','❗'],['penp','Penetración','🗡️'],['aoedmg','Daño en área','💥'],['area','Área','⭕'],['chain','Rebote','🔗'],['beam','Rayo continuo','📏'],['push','Empuje','👋']]],
  ['Estadísticas de torres',[['dmg','Daño','🎯'],['cool','Enfriamiento','⏱️'],['rng','Rango','📡'],['dps','DPS','📈'],['dur','Duración','⌛'],['tgt','Objetivo','🧭'],['tgts','Objetivos','🥾'],['eff','Efectos','🧪'],['mag','Cargador','🔫'],['lvl','Nivel','⭐'],['cost','Coste','🪙'],['upc','Mejora','⬆️']]],
  ['Unidades y enemigos',[['ehp','Vida','❤️'],['espd','Velocidad','👟'],['edmg','Daño al núcleo','💔'],['egold','Oro por baja','💰'],['eud','Daño a unidades','🗡️'],['eac','Enfriamiento enemigo','⏱️'],['erg','Rango enemigo','🏹'],['eblk','Corpulencia','🧱'],['aphys','Armadura','🛡️'],['amagic','Resistencia mágica','🔮'],['umr','Resistencia mágica de unidades','🔮'],['bres','Resistencia a control','👑'],['fly','Volador','🪽'],['tgnd','Terrestre','🥾'],['aura','Aura','🌟'],['dodge','Escurridizo','💨'],['steal','Saqueo','💸'],['pierce','Perforante','📌'],['curse','Maldición','🕯️'],['eheal','Curación tribal','🌿'],['usol','Soldados','💂'],['uhp','Vida del soldado','❤️'],['urez','Reaparición','🔄']]],
- ['Héroes',[['hlv','Nivel de héroe','⭐'],['hxp','Experiencia','✨'],['hrez','Reaparición del héroe','🔄'],['hrel','Reliquia inicial','💎'],['hmel','Daño en melee','✊'],['g_hab','Habilidad del héroe','🌀']]],
+ ['Héroes',[['hlv','Nivel de héroe','⭐'],['hxp','Experiencia','✨'],['hrez','Reaparición del héroe','🔄'],['hrel','Reliquia inicial','💎'],['hmel','Daño en melee',''],['g_hab','Habilidad del héroe','🌀']]],
  ['Partida',[['g_core','Núcleo','💠'],['g_piece','Pieza','🧩'],['g_portal','Portal','🌀'],['g_solar','Solar','⬜'],['g_tile','Casilla especial','✨'],['vch','Vale de mejora','🎟️'],['rcd','Recarga de reliquia','⏳']]]];
 // una sola estadística para torres, unidades, enemigos y héroes: los duplicados se quedan como alias del principal
 const MALIAS={uhp:'ehp',umr:'amagic',eud:'dmg',eac:'cool',erg:'rng',hlv:'lvl',hrez:'urez'};
@@ -11279,6 +11279,7 @@ if(typeof LATSVG!=='undefined')for(const sk in ICLAT)for(const k in ICLAT[sk])if
  ICRX=new RegExp('[\\uE000-\\uF8FF]|'+Object.keys(ICEMO).join('|'),'u');
  if(typeof DTSVG!=='undefined'&&ICKW.tphys)DTSVG.phys='<span class="dti">'+icReg({ic:'\u{1F5E1}\uFE0F'},ICKW.tphys)+'</span>';/* daño físico: la espada aprobada */
  if(typeof GICO!=='undefined')for(const[k,e]of[['burn','\u{1F525}'],['poison','\u{1F9EA}']])if(ICKW[k])GICO[k]=icReg({ic:e},ICKW[k]);/* glifos de efectos en las barras */
+ if(typeof MECG!=='undefined'){for(const[g,l]of MECG)for(const it of l)if(it[0]==='stk')it[2]=ICSI;if(MECI.stk)MECI.stk.ic=ICSI;}/* Acumulable: el tic verde, sin icono propio */
  for(const k in OIC)if(m('o_'+k))OIC[k]=m('o_'+k);
  for(const a of OTABS)if(m('op_'+a[0]))a[2]=m('op_'+a[0]);
  for(const k in LGICO)if(m('lg_'+k))LGICO[k]=m('lg_'+k);

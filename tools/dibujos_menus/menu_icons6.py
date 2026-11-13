@@ -170,40 +170,127 @@ def robot_u():
     s+=P('M15 8h18v12H15z','#c8ccd4',2.2)+P('M18 12h4v4h-4zM26 12h4v4h-4z',CY,1.4)+L('M24 8V3',K,2)+C(24,3,1.8,RD,1.2)
     s+=P('M6 24h6v12H6zM36 24h6v12h-6z','#7a848e',2)+P('M16 42h6v4h-6zM26 42h6v4h-6z','#5a626c',2)
     return s
+
+# ======== ronda 2: correcciones de Nogal ========
+def sword(x,y,ang,ln=22,blade=SV):
+    # espada completa: hoja, guarda, empuñadura y pomo (en coordenadas locales, la punta hacia arriba)
+    return G(f'translate({x} {y}) rotate({ang})',inner=P(f'M-1.8 0V-{ln}l1.8-3.2 1.8 3.2V0z',blade,1.8)+P('M-6 0h12v2.6H-6z',GD,1.6)+P('M-1.5 2.6h3v6h-3z',WD,1.5)+C(0,10.2,1.9,GD,1.3))
+def tframe():
+    o='M6 6h36v36H6z';i='M13 13h22v22H13z'
+    d=o+' '+i[0:]
+    ring='<path d="M6 6h36v36H6zM13 13v22h22V13z" fill="#8a4ad8" stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" fill-rule="evenodd"/>'
+    return ring+L('M9 9h30',  '#b88af0',1.6)+P('M4 4h7v7H4zM37 4h7v7h-7zM4 37h7v7H4zM37 37h7v7h-7z',GD,1.8)+C(24,24,8,'#e8b04a',2)+C(24,24,3.4,'#c88a2a',1.4)
+def tower_s(x,y,s):
+    return G(f'translate({x} {y}) scale({s}) translate(-24 -24)',inner=tower_c())
+def deck2():
+    c=lambda a,f:G(f'rotate({a} 24 40)',inner=P('M14 6h20a3 3 0 0 1 3 3v28a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3z',f,2.2))
+    return c(-22,'#d8c090')+c(-8,'#e8dcc0')+G('rotate(8 24 40)',inner=P('M14 6h20a3 3 0 0 1 3 3v28a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3z',PA,2.2)+tower_s(24,23,.52))
+def tile_buff2(top='#b87ad8',l='#7a3aa8',r='#5a2a80'):
+    d='M8 14l16-8 16 8-16 8z'
+    star=lambda x,y,rr,f:P(f'M{x} {y-rr}q{rr*.18} {rr*.82} {rr} {rr}q-{rr*.82} {rr*.18}-{rr} {rr}q-{rr*.18}-{rr*.82}-{rr}-{rr}q{rr*.82}-{rr*.18} {rr}-{rr}z',f,1.8)
+    return P('M8 14v12l16 8V22z',l,2.2)+P('M40 14v12l-16 8V22z',r,2.2)+P(d,top,2.2)+star(30,30,9,'#ffd84a')+star(15,33,5,'#fff2a0')+star(38,9,4,'#fff2a0')
+def boot2():
+    d='M13 5h14v21l12 5c3 1 5 4 5 8v3H13z'
+    return P(d,BR,2.4)+clip('bt2',d,L('M10 12h20M10 18h20','#5a3818',1.8))+P(d,'none',2.4)+P('M11 42h35v3.5H11z','#3a2818',2)
+AXE='<path d="M0 -12q1.6 10 -.6 18q-.6 4 .4 7" fill="none" stroke="#1b1712" stroke-width="5.2" stroke-linecap="round"/><path d="M0 -12q1.6 10 -.6 18q-.6 4 .4 7" fill="none" stroke="#c07a3a" stroke-width="2.8" stroke-linecap="round"/><circle cx="0.2" cy="13.6" r="1.9" fill="#c07a3a" stroke="#1b1712" stroke-width="1.2"/><path d="M-2 -15H9Q12 -8 10 -1Q5 -6 1.6 -8H-2z" fill="#6a7280" stroke="#1b1712" stroke-width="2.1" stroke-linejoin="round"/><path d="M7.6 -14Q10 -8 8.4 -2.6" fill="none" stroke="#c8d0d8" stroke-width="1.3" stroke-linecap="round"/><path d="M-2 -15H9Q12 -8 10 -1Q5 -6 1.6 -8H-2z" fill="none" stroke="#1b1712" stroke-width="2.1" stroke-linejoin="round"/>'
+def axe_spin2():
+    # el hacha del cerdito leñador, en diagonal entre las flechas, con el filo hacia arriba
+    return carrow(24,24,20,150,250,4.2)+carrow(24,24,20,-30,70,4.2)+f'<g transform="translate(23 24.5) rotate(-42) scale(.6) translate(-4 0)">{AXE}</g>'
+def flames2():
+    star=poly([(24+(21 if i%2==0 else 13)*math.cos(i*math.pi/8),26+(21 if i%2==0 else 13)*math.sin(i*math.pi/8)) for i in range(16)])
+    return P(star,'#ff5a3a',2.2)+G('translate(24 26) scale(.72) translate(-24 -26)',inner=flames())
+def quake2():
+    waves=''
+    for r,w in [(8,3.2),(14,2.8),(20,2.4)]:
+        waves+=L(f'M{24-r} 30a{r} {r*.45} 0 0 1 {2*r} 0',K,w+2.4)+L(f'M{24-r} 30a{r} {r*.45} 0 0 1 {2*r} 0','#ffb02e',w)
+    return P('M2 36h44v9H2z',BR,2.2)+L('M24 36l-3 4 3 2-2 3M12 36l2 4M36 36l-2 4',K,1.6)+waves
+def shield2():
+    d='M24 4l17 6v12c0 11-7 18-17 22C14 40 7 33 7 22V10z'
+    inn='M24 8.5l13 4.6V22c0 8.6-5.3 14.4-13 17.6C16.3 36.4 11 30.6 11 22v-8.9z'
+    return P(d,'#9aa5b0',2.4)+P(inn,'#b07a40',2)+clip('sh2',inn,L('M17.5 6v40M24 6v40M30.5 6v40','#7a4a20',1.6))+P(inn,'none',2)+C(24,22,3.4,'#9aa5b0',1.6)+C(13.5,14,1.3,'#5a626c',0)+C(34.5,14,1.3,'#5a626c',0)+C(24,36,1.3,'#5a626c',0)
+def banner2():
+    # estandarte de guerra: asta con punta, travesaño y paño colgando con el borde de abajo en picos
+    cloth='M11 11h26v24l-6.5-4-6.5 5-6.5-5L11 35z'
+    return P('M22.6 9h2.8v37h-2.8z',WD,1.8)+P('M24 1l3 6h-6z','#9aa5b0',1.6)+P('M8 8h32v3.4H8z',WD,1.8)+C(8,9.7,1.8,GD,1.2)+C(40,9.7,1.8,GD,1.2)+P(cloth,'#8a2a2a',2.2)+L('M14 14h20','#c84a3a',1.6)+P('M18 18l6 10 6-10-6 3z','#f0ead8',1.6)
+def tele2():
+    ring=lambda x,f:P(f'M{x-8} 40a8 3 0 1 0 16 0a8 3 0 1 0-16 0z',f,1.8)
+    return ring(10,'#b48ae8')+ring(38,'#7a4ad8')+carrow(24,36,14,192,348,4.4,'#e8d8ff')+P('M6 30l1.6-3 1.6 3-3 1.6zM42 24l1.2-2.4 1.2 2.4-2.4 1.2z','#d8b8ff',1.2)
+def camo2():
+    d='M24 4a8 8 0 0 1 8 8 8 8 0 0 1-3 6.3l7 3.7 2 22H10l2-22 7-3.7A8 8 0 0 1 16 12a8 8 0 0 1 8-8z'
+    return '<path d="'+d+'" fill="#9ab0b8" fill-opacity=".35" stroke="#1b1712" stroke-width="2.4" stroke-dasharray="4 3" stroke-linejoin="round"/>'+P('M30 32a8 5 0 0 1 14 0a8 5 0 0 1-14 0z','#f4ead8',1.8)+C(37,32,2.2,K,0)+L('M30 38l14-12',K,3.2)+L('M30 38l14-12',RD,1.6)
+def hangar():
+    arch='M4 42V26a20 18 0 0 1 40 0v16z'
+    return P(arch,'#9aa5b0',2.4)+clip('hg',arch,L('M4 30a20 18 0 0 1 40 0M4 36a20 18 0 0 1 40 0','#6a747e',1.4))+P(arch,'none',2.4)+P('M14 42V30a10 8 0 0 1 20 0v12z','#2a2e38',2)+P('M2 42h44v4H2z','#5a626c',2)+G('translate(31 6)',inner=P('M-6 4l6-3 6 3-6 3z','#c8ccd4',1.6)+L('M-8 1l3 2M8 1l-3 2',K,1.6)+C(0,4,1.2,CY,0))
+def throne2():
+    return P('M13 3h22v30H13z',GD,2.4)+P('M16 6h16v24H16z','#9a2a3a',1.8)+P('M21 3l3-3 3 3',GD,1.6)+C(24,12,2.2,'#4fd6e8',1.2)+P('M7 22h7v14H7zM34 22h7v14h-7z',GD,2)+P('M10 28h28v7H10z','#c8404f',2.2)+P('M9 35h30v4H9z',GS,2)+P('M10 39h4v6h-4zM34 39h4v6h-4z',GS,1.8)
+def scepter():
+    g=G('rotate(35 24 24)',inner=P('M22.4 14h3.2v32h-3.2z',GD,1.8)+P('M20 40h8v3h-8z',GS,1.6)+P('M19 14h10v3H19z',GS,1.6)+C(24,8.5,5.6,RD,2)+P('M18.5 6l2.5 2 3-4 3 4 2.5-2-1 5.5h-9z',GD,1.4)+C(24,47,1.8,GD,1.2))
+    return g+L('M22 9.5a3 3 0 0 1 2-2','#ffb0a0',1.2)
+def platform():
+    # plataforma sobre orugas con un emisor que lanza el láser hacia arriba
+    return P('M6 34h36a5 5 0 0 1 0 10H6a5 5 0 0 1 0-10z','#3a3e48',2.2)+C(8,39,2.6,'#7a848e',1.2)+C(17,39,2.6,'#7a848e',1.2)+C(26,39,2.6,'#7a848e',1.2)+C(35,39,2.6,'#7a848e',1.2)+P('M8 26h32l2 8H6z','#9aa5b0',2.2)+P('M19 18h10l2 8H17z','#7a848e',2)+P('M22 10h4v8h-4z','#c8ccd4',1.8)+L('M24 9V1',K,4.6)+L('M24 9V1','#ff5ad8',2.4)+P('M12 29h5v2h-5zM31 29h5v2h-5z',CY,1)
+def abyss2():
+    d='M24 42C6 30 6 12 16 12c4 0 7 3 8 6 1-3 4-6 8-6 10 0 10 18-8 30z'
+    return P('M14 13q-3-6 0-10q1 5 5 7zM34 13q3-6 0-10q-1 5-5 7z','#3a1a3a',1.8)+P(d,'#5a2a7a',2.4)+L('M14 26h5l2-4 3 8 2-4h8','#7aff9a',2.2)+L('M15 18q2-3 5-3','#8a5aaa',1.8)
+def foot2():
+    # planta del pie derecho: el dedo gordo a la izquierda y de mayor a menor hacia fuera
+    sole='M17 44c-5 0-8-4-7-10 1-7 3-12 7-15 4-3 10-3 13 0 4 4 2 10 0 15-2 6-6 10-13 10z'
+    return P(sole,SK,2.4)+P('M14 9a4.6 5.4 0 1 0 9.2 0a4.6 5.4 0 1 0-9.2 0z',SK,1.8)+C(27,8.5,3.2,SK,1.6)+C(33,11,2.8,SK,1.5)+C(37.5,15.5,2.4,SK,1.4)+C(40.5,21,2,SK,1.3)
+def portal2():
+    return P('M24 4c10 0 15 9 15 20s-5 20-15 20S9 35 9 24 14 4 24 4z','#5a5e68',2.4)+P('M24 9c6.6 0 10 7 10 15s-3.4 15-10 15-10-7-10-15 3.4-15 10-15z','#7a1a5a',2)+clip('pt2','M24 9c6.6 0 10 7 10 15s-3.4 15-10 15-10-7-10-15 3.4-15 10-15z',P('M24 14c4 0 6 5 6 10s-2 10-6 10-6-5-6-10 2-10 6-10z','#c03a8a',0)+P('M24 19c2 0 3 2.5 3 5s-1 5-3 5-3-2.5-3-5 1-5 3-5z','#ff8ac8',0))+P('M24 9c6.6 0 10 7 10 15s-3.4 15-10 15-10-7-10-15 3.4-15 10-15z','none',2)+P('M16 6l-3-5 6 3zM32 6l3-5-6 3z','#5a5e68',1.6)
+def waves():
+    s=C(24,24,5,'#4fd6e8',2.2)
+    for r,w in [(11,3),(17,2.6)]:
+        for a0,a1 in [(-40,40),(140,220)]:
+            p0=(24+r*math.cos(math.radians(a0)),24+r*math.sin(math.radians(a0)));p1=(24+r*math.cos(math.radians(a1)),24+r*math.sin(math.radians(a1)))
+            d=f'M{p0[0]:.1f} {p0[1]:.1f}A{r} {r} 0 0 1 {p1[0]:.1f} {p1[1]:.1f}'
+            s+=L(d,K,w+2.4)+L(d,'#4fd6e8',w)
+    return s
+def soldier_body():
+    return P('M14 44l2-14a8 8 0 0 1 16 0l2 14z','#6a7a9a',2.2)+P('M17 18a7 7 0 0 1 14 0v4H17z','#c8ccd4',2.2)+P('M18 22h12v3a6 6 0 0 1-12 0z',SK,2)+L('M17 19h14',K,1.6)
+def bastion2():
+    return sword(34,32,20,20)+soldier_body()+P('M6 26l11-3 1 12c0 5-4 8-6 9-3-2-6-5-6-10z',BL,2.2)+L('M11.5 27.5v13',GD,1.6)+C(33,33,2.6,SK,1.4)
+def guild2():
+    s=sword(38,34,28,18)+P('M14 44l2-14a8 8 0 0 1 16 0l2 14z','#3a7a4a',2.2)+C(24,19,7,SK,2.2)+P('M14 16q10-8 20 0l2 2H12z','#4a6a3a',2)+P('M29 13q4-8 10-10q-2 6-8 11z','#d84a3a',1.6)
+    return s+C(36.5,35,2.6,SK,1.4)+C(10,36,5,GD,1.8)+C(10,36,2.4,GS,1)
+def monk2():
+    staff=G('rotate(-12 34 26)',inner=P('M32.6 4h3v42h-3z',WD,1.8)+P('M32 8h4.2v3H32z',GS,1.4))
+    return staff+P('M12 44c0-10 4-18 12-18s12 8 12 18z','#e08a2a',2.2)+L('M24 26l-6 18','#b85a18',2)+C(24,17,7,SK,2.2)+L('M20 17h2.5M25.5 17H28',K,1.6)+P('M15 34q9-6 18 0l-2 4q-7-4-14 0z',SK,1.8)
+
+def penta():
+    pts=[(24+17*math.cos(math.radians(-90+i*144)),25+17*math.sin(math.radians(-90+i*144))) for i in range(5)]
+    d='M'+' L'.join(f'{x:.1f} {y:.1f}' for x,y in pts)+'z'
+    return C(24,25,20,'#3a1a2a',2.4)+C(24,25,17.5,'none',0)+L(d,K,4.6)+L(d,'#ff4a3a',2.4)+'<circle cx="24" cy="25" r="17.5" fill="none" stroke="#ff4a3a" stroke-width="1.6"/>'
+
 I=[]
 def A(grp,k,em,txt,svg):I.append((grp,k,em,txt,svg))
-G1='Interfaz'
-A(G1,'warn','⚠️','Borrar progreso (aviso)',warn())
-A(G1,'k_up','⬆️','Teclado · flecha arriba',keyarrow(0));A(G1,'k_left','⬅️','Teclado · flecha izquierda',keyarrow(-90));A(G1,'k_down','⬇️','Teclado · flecha abajo',keyarrow(180));A(G1,'k_right','➡️','Teclado · flecha derecha',keyarrow(90))
-A(G1,'info','ℹ️','Información (Desbloquear)',info())
-A(G1,'skip','⏭','Saltar',skip())
-A(G1,'skull','💀','Derrota y bajas',skull())
-A(G1,'unlock','🔓','Desbloqueas… (el candado abierto ya aprobado)',OK('op_un'))
-A(G1,'frame','🖼️','Marco de torre (cosmético)',picframe())
-A(G1,'deck','🃏','Ver tu mazo',deck())
-A(G1,'chest','🧰','Ver tus reliquias (cofre)',chest())
-A(G1,'stk','➕','Acumulable',plus())
-A(G1,'era2','🌆','Era Distópica (la Fantástica ya usa el castillo)',city())
-G2='Pestañas del compendio'
-A(G2,'c_tw','🗼','Torres',tower_c())
-A(G2,'c_hr','🦸','Héroes (el de Logros, ya aprobado)',OK('lg_hr'))
-A(G2,'c_pc','🧩','Piezas',piece())
-A(G2,'c_bf','✨','Casillas',tile_buff())
-A(G2,'c_rl','💎','Reliquias (la gema ya aprobada)',OK('st_rel'))
-A(G2,'c_en','👹','Enemigos (el orco ya aprobado)',OK('st_en'))
-A(G2,'c_ev','📜','Eventos (el pergamino ya aprobado)',OK('lg_ev'))
-A(G2,'c_mc','⚙️','Mecánicas (la rueda ya aprobada)',OK('op_jg'))
-G3='Habilidades de enemigos y unidades (Mecánicas)'
-for k,em,t,f in [('tgnd','🥾','Terrestre',boot),('charm','💗','Embeleso',charm),('jam','📡','Interferencia',antenna),('arcsh','💣','Disparo en arco',bomb_arc),('airatk','🛩️','Ataque aéreo',plane),
- ('whirl','🪓','Hachazo giratorio',axe_spin),('jet','🔥','Estallido de llamas',flames),('quake','💥','Golpe sísmico',quake),('claw','🐾','Barrido de garras',claws),('shield','🛡️','Escudo frontal',shield_f),
- ('banner','🚩','Estandarte',banner_e),('tele','🌀','Teletransporte',swirl),('camo','👻','Camuflaje',ghost),('adapt','🧬','Adaptación',dna),('burst','🥚','Puesta',egg_burst),('launch','🛸','Hangar',ufo),
- ('throne','🪑','Trono',throne),('riches','💰','Lluvia de riquezas',moneybag),('scepter','👑','Cetrazo real',crown_s),('gens','🔷','Escudo de generadores',gen_shield),('anchor','⚓','Plataforma móvil',anchor),
- ('abregen','💚','Regeneración abisal',abyss_heart),('stomp','🦶','Pisotón',foot),('line','🏭','Cadena de montaje',factory),('rift','🌀','Portal del abismo',rift),('wings','🦇','Alas',bat_wings),
- ('shell','🐚','Caparazón',shell_s),('pulse','📴','Pulso',no_signal),('core2','💠','Núcleo',core_d),('hmel','✊','Daño en melee (héroes)',fist)]:A(G3,'e_'+k,em,t,f())
-G4='Unidades'
-A(G4,'u_bastion','🗡️🛡️','Soldado del Bastión',bastion_u());A(G4,'u_monk','🧘','Monje',monk_u());A(G4,'u_guild','🪙🗡️','Aventurero del Gremio',guild_u());A(G4,'u_robot','🤖','Robot (era 2)',robot_u())
+G1='Corregidos'
+A(G1,'frame','🖼️','Marco de torre: el marco de casilla, en morado con remaches dorados',tframe())
+A(G1,'deck','🃏','Ver tu mazo: la torre en la carta de delante',deck2())
+A(G1,'c_bf','✨','Casillas: casilla morada',tile_buff2())
+A(G1,'c_bf_r','✨','Casillas: casilla roja (otra opción)',tile_buff2('#e8706a','#b83a3a','#8a2a2a'))
+A(G1,'e_tgnd','🥾','Terrestre: rayas dentro y talón recto',boot2())
+A(G1,'e_whirl','🪓','Hachazo giratorio: el hacha del cerdito, en diagonal y con el filo arriba',axe_spin2())
+A(G1,'e_jet','🔥','Estallido de llamas: llama sobre una explosión',flames2())
+A(G1,'e_quake','💥','Golpe sísmico: ondas sobre el suelo agrietado',quake2())
+A(G1,'e_shield','🛡️','Escudo frontal: de madera con borde de metal',shield2())
+A(G1,'e_banner','🚩','Estandarte: de guerra (asta, travesaño y paño en picos)',banner2())
+A(G1,'e_tele','🌀','Teletransporte: salta de un círculo violeta a otro más adelante',tele2())
+A(G1,'e_camo','👻','Camuflaje: figura casi invisible (borde de puntos) y ojo tachado',camo2())
+A(G1,'e_launch','🛸','Hangar: nave de techo curvo de la que sale un dron',hangar())
+A(G1,'e_throne','🪑','Trono: respaldo alto dorado, cojín rojo y brazos',throne2())
+A(G1,'e_scepter','👑','Cetrazo real: cetro con corona y rubí',scepter())
+A(G1,'e_anchor','⚓','Plataforma móvil: plataforma con orugas que lanza el láser',platform())
+A(G1,'e_abregen','💚','Regeneración abisal: corazón demoníaco con cuernos y pulso verde',abyss2())
+A(G1,'e_stomp','🦶','Pisotón: dedos en orden, del gordo al pequeño',foot2())
+A(G1,'e_rift','🌀','Portal del abismo: portal ovalado como los nuestros, en tonos del abismo',portal2())
+A(G1,'e_pulse','📴','Pulso: ondas que salen del centro',waves())
+A(G1,'e_penta','⛧','Pentagrama (también faltaba): círculo con la estrella encendida en rojo',penta())
+A(G1,'u_bastion','🗡️🛡️','Soldado del Bastión: espada con guarda, empuñadura y pomo',bastion2())
+A(G1,'u_guild','🪙🗡️','Aventurero del Gremio: espada completa',guild2())
+A(G1,'u_monk','🧘','Monje: bastón detrás y con borde',monk2())
 css='body{margin:0;background:#14161c;font-family:system-ui,sans-serif}.w{padding:16px;max-width:1240px}h1{color:#f4ead8;font-size:22px;margin:0 0 4px}p.s{color:#9aa0aa;margin:0 0 10px}h2{color:#f4ead8;margin:18px 0 8px;font-size:19px}.g{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.c{background:#f4ead8;border-radius:10px;padding:8px;border:3px solid #e02020;position:relative}.c .n{position:absolute;left:6px;top:4px;font:800 13px system-ui;color:#c02020}.c .e{position:absolute;right:6px;top:2px;font-size:20px}.c>svg{width:100%;height:auto;display:block;margin-top:14px}.sm{display:flex;gap:6px;align-items:center;justify-content:center;margin:2px 0}.sm svg{width:22px;height:22px}.sm .dk{background:#2a2e38;border-radius:4px;padding:2px}.t{font:600 12.5px system-ui;color:#1b1712;text-align:center;min-height:30px}'
-h=f'<!doctype html><html><head><meta charset="utf-8"><style>{css}</style></head><body><div class="w"><h1>Iconos que faltan · ronda 1</h1><p class="s">Número, emoji de ahora (arriba a la derecha), el dibujo grande, en pequeño sobre claro y oscuro, y para qué es.</p>'
+h=f'<!doctype html><html><head><meta charset="utf-8"><style>{css}</style></head><body><div class="w"><h1>Iconos que faltan · ronda 2</h1><p class="s">Número, emoji de ahora (arriba a la derecha), el dibujo grande, en pequeño sobre claro y oscuro, y para qué es.</p>'
 grp=None;n=0
 for g,k,em,t,s in I:
     if g!=grp:
@@ -211,6 +298,6 @@ for g,k,em,t,s in I:
         h+=f'<h2>{g}</h2><div class="g">';grp=g
     n+=1;sv=f'<svg viewBox="-4 -4 56 56">{s}</svg>'
     h+=f'<div class="c"><span class="n">{n}</span><span class="e">{em}</span>{sv}<div class="sm">{sv}<span class="dk">{sv}</span></div><div class="t">{t}</div></div>'
-open('maquetas/iconos_faltan_r1.html','w',encoding='utf8').write(h+'</div></div></body></html>')
-json.dump([(g,k,em,t,f'<svg viewBox="-4 -4 56 56">{s}</svg>') for g,k,em,t,s in I],open('maquetas/iconos_faltan_r1.json','w'),ensure_ascii=False)
+open('maquetas/iconos_faltan_r2.html','w',encoding='utf8').write(h+'</div></div></body></html>')
+json.dump([(g,k,em,t,f'<svg viewBox="-4 -4 56 56">{s}</svg>') for g,k,em,t,s in I],open('maquetas/iconos_faltan_r2.json','w'),ensure_ascii=False)
 print(n)
