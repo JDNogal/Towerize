@@ -2168,6 +2168,13 @@ html:root[data-pal="noche"] .rbx.rrel.rac .rbt,html:root[data-pal="amb"] .rbx.rr
 body.mfs .smore::after{content:none!important}
 /* pantallas grandes: el libro / la tablet crecen si caben (--bkz lo calcula ventanas_barra.js) */
 body.dsk:not(.mfs) #comp.bkm>.bkw,body.dsk:not(.mfs) #comp.bkm>.lbcv{zoom:var(--bkz,1)}
+/* v316 · barra de abajo (Nogal): las casillas de los héroes miden lo mismo que la de la reliquia, y «Empezar oleada» va encima de los héroes
+   (el botón siempre mide igual; la fila de héroes puede crecer). En pantallas grandes, la reliquia crece igual que los héroes. */
+body.dsk:not(.mfs) #relics{zoom:var(--uiz,1)}
+body:not(.mfs) #mbr .hpan .hpb{width:78px!important;height:78px!important;min-width:78px!important;font-size:38px;border-radius:12px}
+body:not(.mfs) #mbr .go{order:-1}body:not(.mfs) #mbr{gap:16px}
+body.dsk:not(.mfs) #relics .rl{width:64px!important;height:64px!important;flex:0 0 64px!important;font-size:34px;border-radius:12px}
+body.dsk:not(.mfs) #fps{zoom:var(--uiz,1)}
 /* ===== v313 · Logros por niveles y marcas de torres ===== */
 .lvtag{display:inline-block;margin-left:8px;font:800 10.5px system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px;border:1.5px solid #1b1410;vertical-align:2px;color:#1b1410}
 .lvtag.lvb{background:#c8803a}.lvtag.lvs{background:#c8d0d8}.lvtag.lvg{background:#f2c140}.lvtag.lvp{background:#e4eef4}
