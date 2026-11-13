@@ -2328,6 +2328,38 @@ body.dsk:not(.mfs) #nearach{zoom:var(--uiz,1)}
 .novr b.v{font-size:15px}.novr small{opacity:.7}.novr.sel{box-shadow:0 0 0 2px #e07a2a}.novr .nw{font:700 10px system-ui;color:#fff;background:#c0392b;border-radius:6px;padding:1px 6px}
 .novd h4{margin:0 0 2px}.novd .sec{margin-top:12px}.novd .sec b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a0522d;margin-bottom:4px}.novd ul{margin:0;padding-left:18px}.novd li{margin:3px 0;font-size:13.5px;line-height:1.4}
 :root[data-skin="holo"] .novr{border-color:rgba(63,232,255,.35);background:rgba(63,232,255,.05);color:#d8fbff}:root[data-skin="holo"] .novr.sel{box-shadow:0 0 0 2px #3fe8ff}:root[data-skin="holo"] .novr .nw{background:#ff4fd8}:root[data-skin="holo"] .novd .sec b{color:#3fe8ff}
+/* v324 · Clasificación: botón al final, diálogos centrados con fondo oscurecido y tabla */
+.esum .lbupb{display:flex;align-items:center;gap:10px;text-align:left;border-radius:10px;border:2px solid #8a5a1a;background:linear-gradient(#f2cd62,#dba63a);color:#3a2617;font-weight:800;font-size:15px;padding:8px 12px;cursor:pointer;min-height:58px;font-family:inherit}
+.esum .lbupb small{display:block;font-weight:500;font-size:11px;opacity:.8}
+.esum .lbupb svg{flex:none}
+.esum .lbupb.ok{background:#e5f2dc;border-color:#5b8a3a;display:block}.esum .lbupb.ok b{font-size:15px}
+.esum .lbupb.err{background:#f6dcd4;border-color:#a0452a}
+.esum .lbupb:disabled{opacity:.7;cursor:wait}
+#lbdlg{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:rgba(8,6,4,.72)}
+#lbdlg.on{display:flex}
+#lbdlg .lbdbox{zoom:var(--wz,1);width:520px;max-width:calc(100vw - 32px);box-sizing:border-box;background:#f6ecd6;color:#3a2617;border:3px solid #6b4426;border-radius:14px;box-shadow:0 20px 60px #000a;padding:22px 26px}
+#lbdlg h3{font:700 24px Georgia,serif;margin:0 0 6px}#lbdlg p{margin:0 0 14px;line-height:1.45}#lbdlg .note{font-size:12px;opacity:.75;margin:8px 0 0}
+#lbdlg .lbdb{border-radius:10px;padding:11px 14px;margin:6px 0;font-weight:700;font-size:15px;border:2px solid #8a6a45;background:#fbf4e4;color:inherit;cursor:pointer;font-family:inherit}
+#lbdlg .lbdb.wide{display:block;width:100%;text-align:left}
+#lbdlg .lbdb small{display:block;font-weight:400;font-size:12px;opacity:.75;margin-top:2px}
+#lbdlg .lbdb.main{background:linear-gradient(#f2cd62,#dba63a);border-color:#8a5a1a}
+#lbdlg .lbdrow{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+#lbdlg .lbchk{display:flex;gap:8px;align-items:center;font-size:13px;margin-top:10px;cursor:pointer}
+#lbdlg input#lbname{width:100%;box-sizing:border-box;border:2px solid #8a6a45;border-radius:8px;background:#fbf4e4;padding:10px 12px;font-size:17px;font-weight:700;color:inherit;font-family:inherit}
+#lbdlg input#lbname.bad{border-color:#c0392b}
+#lbdlg.holo .lbdbox{background:#0f1d24;color:#bff6ff;border-color:#3fe8ff;box-shadow:0 0 30px #3fe8ff55}
+#lbdlg.holo h3{font-family:inherit}
+#lbdlg.holo .lbdb,#lbdlg.holo input#lbname{background:#132a33;border-color:#2b8a99}
+#lbdlg.holo .lbdb.main{background:linear-gradient(#45e6ff,#1aa8c4);color:#04161b}
+.lbrkeras,.lbrktabs{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.lbrkeras button,.lbrktabs button{padding:5px 11px;border-radius:999px;border:1px solid #c9b48c;background:#fbf4e4;font-weight:700;font-size:13px;cursor:pointer;color:#3a2617;font-family:inherit}
+.lbrkeras button.on{background:#3a2617;color:#f6ecd6}.lbrktabs button.on{background:#c0392b;color:#fff;border-color:#8a2318}
+table.lbrkt{width:100%;border-collapse:collapse;font-size:14px}
+table.lbrkt td,table.lbrkt th{padding:7px 6px;border-bottom:1px solid #d9c7a3;text-align:left}
+table.lbrkt th{font-size:11px;text-transform:uppercase;opacity:.6}table.lbrkt .s{text-align:right;font-variant-numeric:tabular-nums}
+table.lbrkt td.n{font-weight:800;width:26px}table.lbrkt tr.me td{background:#f3dc9a;font-weight:700}
+.lbbk.sm{padding:2px 8px;font-size:12px}
+table.lbrkt{margin-top:34px}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2342,7 +2374,7 @@ body.dsk:not(.mfs) #nearach{zoom:var(--uiz,1)}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v323</div>
+<div id="ver">Towerize v324</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -10297,6 +10329,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:324,f:'13 nov 2026',t:'Clasificación',s:[['Clasificación',['Al acabar una partida puedes subirla a la clasificación con el nombre de tu piloto y compararte con otros jugadores.','Puedes elegir que se suban solas cuando sea tu mejor marca (Opciones › Juego).','Nueva cinta «Clasificación» en el final de partida, con una tabla por era.']]]},
  {v:323,f:'13 nov 2026',t:'Amenazas nuevas',s:[['Amenazas',['Asedio sin tregua: desde que pones la pieza tienes 30 s (o 20 s) para construir; después la oleada empieza sola.','Inflación: cada torre del mismo tipo cuesta un 10 % más que la anterior.','Niebla de guerra, en 4 rangos: la línea de rondas solo enseña la siguiente; enemigos invisibles hasta que los detectas; portales sin información; y, para los más valientes, portales que no se ven.','Sabotaje: un saboteador va a por una torre (los dos salen marcados); si llega, la apaga 6 s.','Abanderados: mientras vive el abanderado, su escuadra no se puede ralentizar ni empujar.']]]},
  {v:320,f:'13 nov 2026',t:'Novedades y menú',s:[['Interfaz',['Novedades: el registro de cambios de cada versión, aquí mismo en el menú.','«Continuar partida» y «Nueva partida» del mismo tamaño, uno encima del otro.']]]},
  {v:319,f:'13 nov 2026',t:'¡Cerca de un logro!',s:[['Logros',['Cuando te falta poco para un logro (80 %), sale un aviso con su progreso y un botón para fijarlo. Se puede quitar en Opciones › Juego.']]]},
@@ -12212,6 +12245,93 @@ const azFlagOn=e=>{if(!e||!e.sqid||!S.flagSq)return false;const b=S.flagSq[e.sqi
      g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1.2);g.beginPath();g.moveTo(px,top);g.lineTo(px+CS*.6,top+CS*.15);g.lineTo(px,top+CS*.32);g.closePath();g.fill();g.stroke();}
     else{g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1);g.beginPath();g.moveTo(x-rr*.25,y-rr-lw(5));g.lineTo(x+rr*.25,y-rr-lw(5));g.lineTo(x,y-rr-lw(1));g.closePath();g.fill();g.stroke();}}}}
  }catch(x){}return r;};}
+// ==================== v324 · Clasificación de playtesters (servidor en Cloudflare) ====================
+// Nogal (13-nov-2026): al final de la partida, botón «Subir a la clasificación» en el hueco libre; si sigues sin subirla, aviso en el
+// centro con la pantalla oscurecida (Sí y siempre / Sí, solo esta / No, gracias + «No volver a mostrar»). El nombre es el del piloto:
+// se pregunta la primera vez (en Steam será el de Steam). Una tabla por era y por nivel de amenaza (puntos de amenaza − apoyos).
+// Sin spoilers: si las Amenazas de esa era aún no están abiertas, no se habla de amenaza en ningún sitio.
+const LBURL='https://towerize-ranking.towerize.workers.dev';
+const LBR={up:null,busy:false,sel:null,era:null,data:{},tiers:{}};
+if(OPT.lbup===undefined)OPT.lbup='ask';
+const lbPilot=()=>{try{return localStorage.getItem('rt-pilot')||'';}catch(e){return '';}};
+const lbSetPilot=n=>{try{localStorage.setItem('rt-pilot',n);}catch(e){}};
+const lbBestK='rt-lbbest';
+const lbBestGet=()=>{try{return JSON.parse(localStorage.getItem(lbBestK))||{};}catch(e){return {};}};
+const lbAmzOpen=era=>{try{return azEraDone(era);}catch(e){return false;}};
+OPTS.splice(Math.max(0,OPTS.findIndex(o=>o.tab==='jg')),0,{tab:'jg',type:'choice',key:'lbup',label:'Subir partidas a la clasificación',
+ desc:'Preguntar: al acabar te lo pregunta si no la has subido. Siempre: se suben solas cuando es tu mejor marca con ese héroe. Solo con el botón: no pregunta nunca.',
+ get:()=>OPT.lbup||'ask',set:v=>{OPT.lbup=v;saveOpt();},choices:[['ask','Preguntar'],['always','Siempre'],['manual','Solo con el botón']]});
+// la partida que acaba de terminar
+function lbRun(){if(!S||!S.hero||S.tut||S.pvE||S.pvH||(typeof PREVIEWING!=='undefined'&&PREVIEWING))return null;
+ const sc=S.scF||(typeof scoreCalc==='function'?scoreCalc():{t:0});if(!(sc.t>0))return null;
+ const era=(S.era||ERA||1),amz=(S.amz&&typeof azPtsOf==='function')?azPtsOf(S.amz):0;
+ const sel={};for(const k in S.amz||{})if(S.amz[k]>0)sel[k]=S.amz[k];
+ return {hero:S.hero.id,era,amz,score:Math.round(sc.t),round:Math.min(S.round,ROUNDS),won:S.phase==='won',sel,ver:String(NOVV())};}
+function lbBtnHTML(){const R=LBR.cur;if(!R)return '';const st=LBR.up,amzT=lbAmzOpen(R.era)?'Amenaza '+R.amz+' · ':'';
+ const ic='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17V5M7 10l5-5 5 5"/></svg>';
+ if(st&&st.ok)return `<button class="lbupb ok" data-a="lbrank">${st.pos?`<b>¡Subida! Puesto ${st.pos}</b><small>de ${st.n}${lbAmzOpen(R.era)?' en Amenaza '+R.amz:''} · ${ERADEF[R.era].esc||'Era '+ERADEF[R.era].n}</small>`:'<b>¡Subida!</b><small>Tu mejor marca con este héroe sigue siendo otra</small>'}</button>`;
+ if(st&&st.err)return `<button class="lbupb err" data-a="lbup">${ic}<span>No se ha podido subir<small>Toca para reintentar</small></span></button>`;
+ return `<button class="lbupb" data-a="lbup"${LBR.busy?' disabled':''}>${ic}<span>${LBR.busy?'Subiendo…':'Subir a la clasificación'}<small>${amzT}${fi(R.score)} puntos</small></span></button>`;}
+function lbRefreshBtn(){if(!LB.end)return;LB.end.left=String(LB.end.left).replace(/<button class="lbupb[\s\S]*?<\/button>/,lbBtnHTML());if(LB.open&&LB.area==='end')lbRender();}
+async function lbUpload(){const R=LBR.cur;if(!R||LBR.busy||(LBR.up&&LBR.up.ok))return;const nick=lbPilot();if(!nick){lbNameDlg(()=>lbUpload());return;}
+ LBR.busy=true;lbRefreshBtn();
+ try{const r=await fetch(LBURL+'/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({nick},R))});const d=await r.json();
+  LBR.up=d&&d.ok?{ok:1,pos:d.pos,n:d.n}:{err:1};
+  if(d&&d.ok){const B=lbBestGet(),k=R.era+'|'+R.amz+'|'+R.hero;if(!(B[k]>=R.score)){B[k]=R.score;try{localStorage.setItem(lbBestK,JSON.stringify(B));}catch(e){}}delete LBR.data[R.era+'|'+R.amz];}
+ }catch(e){LBR.up={err:1};}
+ LBR.busy=false;lbRefreshBtn();}
+// ---- diálogos en el centro con todo lo demás oscurecido ----
+function lbDlg(html){let el=$('lbdlg');if(!el){el=document.createElement('div');el.id='lbdlg';document.body.appendChild(el);}
+ el.className=(typeof skinNow==='function'&&skinNow()==='holo')?'holo on':'on';el.innerHTML=`<div class="lbdbox">${html}</div>`;try{sfx('page');}catch(e){}return el;}
+function lbDlgClose(){const el=$('lbdlg');if(el){el.className='';el.innerHTML='';}}
+function lbNameDlg(then){const el=lbDlg(`<h3>¿Cómo se llama tu piloto?</h3><p>Es el nombre con el que saldrás en la clasificación.</p><input id="lbname" maxlength="16" autocomplete="off" value="${lbPilot().replace(/"/g,'')}" placeholder="Nombre del piloto"><p class="note">Se puede cambiar desde la clasificación.</p><div class="lbdrow"><button class="lbdb" data-lbd="cancel">Cancelar</button><button class="lbdb main" data-lbd="name">${then?'Subir partida':'Guardar'}</button></div>`);
+ LBR.then=then||null;const i=$('lbname');setTimeout(()=>{try{i.focus();i.select();}catch(e){}},50);
+ i.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter')el.querySelector('[data-lbd="name"]').click();if(e.key==='Escape')lbDlgClose();});}
+function lbAskDlg(cont){LBR.cont=cont;lbDlg(`<h3>Aún no has subido esta partida</h3><p>Ahora puedes subir tus partidas a la <b>clasificación</b> y compararte con otros jugadores. ¿Quieres subirla?</p>
+ <button class="lbdb main wide" data-lbd="always">Sí, y súbelas siempre<small>Se suben solas al acabar, solo cuando sea tu mejor marca con ese héroe</small></button>
+ <button class="lbdb wide" data-lbd="once">Sí, solo esta</button><button class="lbdb wide" data-lbd="no">No, gracias</button>
+ <label class="lbchk"><input type="checkbox" id="lbnomore"> No volver a mostrar este aviso</label><p class="note">Se puede cambiar en Opciones › Juego.</p>`);}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-lbd]');if(!b)return;e.stopPropagation();e.preventDefault();const a=b.dataset.lbd;
+ if(a==='cancel'){lbDlgClose();return;}
+ if(a==='name'){const v=String(($('lbname')||{}).value||'').replace(/[<>&"'`\\]/g,'').trim().slice(0,16);if(v.length<2){$('lbname').classList.add('bad');return;}lbSetPilot(v);lbDlgClose();const f=LBR.then;LBR.then=null;if(f)f();else lbRender();return;}
+ const nm=$('lbnomore')&&$('lbnomore').checked,cont=LBR.cont;LBR.cont=null;LBR.asked=1;lbDlgClose();
+ if(a==='always'){OPT.lbup='always';saveOpt();}else if(nm){OPT.lbup='manual';saveOpt();}
+ const go=()=>{if(cont)cont();};
+ if(a==='always'||a==='once'){const f=async()=>{await lbUpload();go();};if(!lbPilot())lbNameDlg(f);else f();}else go();},true);
+// ---- al acabar: botón en el hueco libre; con «Siempre», se sube sola si es tu mejor marca ----
+{const _eg=endGame;endGame=function(){const r=_eg.apply(this,arguments);try{LBR.cur=lbRun();LBR.up=null;LBR.busy=false;LBR.asked=0;
+ if(LBR.cur&&LB.end){LB.end.left=String(LB.end.left).replace(/<\/div>\s*$/,lbBtnHTML()+'</div>');if(LB.open)lbRender();
+  const R=LBR.cur,B=lbBestGet()[R.era+'|'+R.amz+'|'+R.hero];if(OPT.lbup==='always'&&lbPilot()&&!(B>=R.score))lbUpload();}}catch(e){console.warn(e);}return r;};}
+// seguir sin haberla subido (Jugar de nuevo / Menú principal): aviso, si toca
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="reset"],[data-a="menu"]');if(!b||!LB.open||LB.area!=='end'||b.dataset.lbok)return;
+ if(!LBR.cur||(LBR.up&&LBR.up.ok)||LBR.busy||LBR.asked||OPT.lbup!=='ask')return;
+ e.stopPropagation();e.preventDefault();lbAskDlg(()=>{b.dataset.lbok=1;b.click();delete b.dataset.lbok;});},true);
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="lbup"],[data-a="lbrank"],[data-a="lbrkera"],[data-a="lbrkamz"],[data-a="lbrkback"],[data-a="lbrkname"]');if(!b)return;e.stopPropagation();e.preventDefault();const a=b.dataset.a;
+ if(a==='lbup')lbUpload();else if(a==='lbrank')lbRankOpen();else if(a==='lbrkback'){LB.msg=null;lbOpen('end');}
+ else if(a==='lbrkname')lbNameDlg(null);
+ else{if(a==='lbrkera'){LBR.era=+b.dataset.v;LBR.sel=null;}else LBR.sel=+b.dataset.v;try{sfx('page');}catch(_){}lbRankLoad();lbRender();}},true);
+// ---- la tabla ----
+async function lbRankLoad(){const era=LBR.era;try{if(!LBR.tiers[era]){const d=await (await fetch(LBURL+'/tiers?era='+era)).json();LBR.tiers[era]=d.ok?d.tiers:[];}
+ const T=lbAmzOpen(era)?LBR.tiers[era]:LBR.tiers[era].filter(x=>x===0);if(LBR.sel==null||!T.includes(LBR.sel))LBR.sel=T.includes(LBR.cur&&LBR.cur.era===era?LBR.cur.amz:-1)?LBR.cur.amz:(T[0]??0);
+ const k=era+'|'+LBR.sel;if(!LBR.data[k]){const d=await (await fetch(LBURL+'/top?era='+era+'&amz='+LBR.sel)).json();LBR.data[k]=d.ok?d.top:[];}}catch(e){LBR.err=1;}
+ if(LB.open&&LB.area==='msg'&&LB.msg&&LB.msg.key==='rank')lbRender();}
+function lbRankParts(){const era=LBR.era,open=lbAmzOpen(era),T=(LBR.tiers[era]||[]).filter(x=>open||x===0),me=lbPilot().toLowerCase(),L=LBR.data[era+'|'+LBR.sel];
+ const eras=[1,2].filter(e=>e===1||(typeof era2Ok==='function'&&era2Ok()));
+ const hn=id=>(HEROES[id]&&HEROES[id].n)||id;
+ const left=`<h3>Clasificación</h3><div class="bksub">${open?'Una tabla por nivel de amenaza · ':''}tu mejor partida con cada héroe</div>
+  ${eras.length>1?`<div class="lbrkeras">${eras.map(e=>`<button data-a="lbrkera" data-v="${e}" class="${e===era?'on':''}">${ERADEF[e].esc||'Era '+ERADEF[e].n}</button>`).join('')}</div>`:''}
+  ${open&&T.length?`<div class="lbrktabs">${T.map(n=>`<button data-a="lbrkamz" data-v="${n}" class="${n===LBR.sel?'on':''}">${n?'Amenaza '+n:'Sin amenazas'}</button>`).join('')}</div><p class="note">Cada nivel de amenaza tiene su propia tabla, y cada era las suyas.</p>`:''}
+  <p class="note">Piloto: <b>${lbPilot()||'sin nombre'}</b> · <button class="lbbk sm" data-a="lbrkname">Cambiar nombre</button></p>`;
+ let right;if(LBR.err)right='<p class="note">No se ha podido cargar la clasificación. Comprueba la conexión.</p>';
+ else if(!L)right='<p class="note">Cargando…</p>';
+ else if(!L.length)right='<p class="note">Aún no hay partidas aquí. ¡Sé el primero!</p>';
+ else right=`<table class="lbrkt"><tr><th>#</th><th>Piloto</th><th>Héroe</th><th>Ronda</th><th class="s">Puntos</th></tr>${L.map((r,i)=>`<tr class="${r.nick.toLowerCase()===me?'me':''}"><td class="n">${i+1}</td><td>${r.nick}</td><td>${hn(r.hero)}</td><td>${r.round}${r.won?' ✓':''}</td><td class="s">${fi(r.score)}</td></tr>`).join('')}</table>`;
+ return {left,right};}
+function lbRankOpen(){LBR.err=0;LBR.era=LBR.era||(LBR.cur?LBR.cur.era:(S&&S.era)||ERA||1);
+ LB.msg={key:'rank',left:()=>lbRankParts().left,right:()=>lbRankParts().right,footL:`<button class="lbbk" data-a="${LB.end?'lbrkback':'menu'}">‹ Volver</button>`,footR:'',onBack:()=>{if(LB.end)lbOpen('end');}};
+ lbOpen('msg');lbRankLoad();}
+// cinta «Clasificación» en el final de partida
+{const _ep=endParts;endParts=function(){const p=_ep.apply(this,arguments);try{if(LBR.cur&&p.ribs)p.ribs=p.ribs.replace(/<\/div>\s*$/,`<button class="bkrib" data-a="lbrank" title="Clasificación"><svg width="24" height="22" viewBox="0 0 24 22" fill="#f2cd62" stroke="#1b1712" stroke-width="1.4"><rect x="8.5" y="6" width="7" height="15"/><rect x="1.5" y="11" width="7" height="10" fill="#d9d2c2"/><rect x="15.5" y="14" width="7" height="7" fill="#d08a4a"/><path d="M12 1l1 2 2 .3-1.5 1.4.4 2.1L12 5.8l-1.9 1 .4-2.1L9 3.3l2-.3z"/></svg><span>Clasificación</span></button></div>`);}catch(e){}return p;};}
 // ==================== v319 · Aviso de «¡Cerca de un logro!» ====================
 // Idea de Nogal (13-nov-2026): cuando un logro que se mide en partida llega al 80 %, el juego te avisa (abajo en el centro), con su trofeo,
 // su barra y un botón para fijarlo. Una vez por logro y partida; los de progreso entre partidas (bajas con cada torre, cofres…), una vez por nivel.
