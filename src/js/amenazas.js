@@ -25,12 +25,12 @@ const AZT=[
  ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.']],6,1],
  ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.']],7,1],
  ['cor','Piezas corruptas','ma',[[2,'Cada <b>3</b> elecciones de pieza, las 3 piezas vienen corruptas. Su casilla maldita se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>2</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf',1],
- ['nie','Niebla de guerra','ma',[[3,'Los enemigos no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces se ven siempre. La línea de rondas no enseña qué viene.']],5,1],
+ ['nie','Niebla de guerra','ma',[[3,'Los enemigos no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces se ven siempre. La línea de rondas no enseña qué viene.']],5],
  ['gri','Grietas espaciotemporales','ma',[[3,'A veces se abre un portal especial por el que llegan escuadras extra de una era que ya has visto (con su oro).']],'e2',1],
  ['ref','Sin refuerzos','ri',[[1,'Tus soldados tardan un <b>50 %</b> más en reaparecer.'],[1,'Tardan un <b>100 %</b> más.'],[3,'Los que caen <b>no reaparecen</b> hasta la siguiente oleada.']],'ini'],
- ['ase','Asedio sin tregua','ri',[[2,'Desde que pones la pieza tienes <b>30 s</b> para construir; después la oleada empieza sola.'],[1,'Solo <b>20 s</b>.']],'fast',1],
+ ['ase','Asedio sin tregua','ri',[[2,'Desde que pones la pieza tienes <b>30 s</b> para construir; después la oleada empieza sola.'],[1,'Solo <b>20 s</b>.']],'fast'],
  ['saq','Saqueadores','ec',[[2,'Cada enemigo que llega al núcleo, además de vida, te roba <b>20</b> de oro.']],'ini'],
- ['inf','Inflación','ec',[[2,'Cada torre del mismo tipo que construyes cuesta un <b>10 %</b> más que la anterior.']],8,1],
+ ['inf','Inflación','ec',[[2,'Cada torre del mismo tipo que construyes cuesta un <b>10 %</b> más que la anterior.']],8],
  ['jp','Jefes preparados','je',[],'fut'],['js','Jefe supremo','je',[],'fut']];
 // el último campo (1) marca las que aún no funcionan en partida: se ven, pero no se pueden activar hasta su versión
 const AZG=[['en','Enemigos'],['ma','Mapa'],['ri','Ritmo y tropas'],['ec','Economía'],['je','Jefes']];

@@ -90,6 +90,7 @@ const T=[
  ['amenazas.js','Amenazas: desbloqueo, botón, pantalla, resumen, Supercampeones, Venganza, puntuación y Borrar progreso'],
  ['logros_cerca.js','Aviso de «¡Cerca de un logro!» al 80 %, con botón para fijarlo'],
  ['novedades.js','Menú principal (Continuar / Nueva partida) y Novedades'],
+ ['amenazas2.js','Amenazas, tanda 2: Asedio sin tregua, Inflación y Niebla de guerra'],
  ['logros_niveles.js','Logros por niveles (bronce, plata, oro, platino), bajas con cada torre y Estadísticas › Marcas'],
  ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],
 ];

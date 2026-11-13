@@ -50,3 +50,8 @@ body.dsk:not(.mfs) #amzchip{zoom:var(--uiz,1)}
 .amzseal{cursor:pointer}.amzbtns button:disabled{opacity:.45}
 .amzrk div.lk{opacity:.55;border-style:dashed}
 :root[data-skin="holo"] .amzres .it>.ai{background:#0d2a33;box-shadow:0 0 0 2px #3fe8ff}
+.azase{position:fixed;z-index:30;display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(27,23,18,.92);color:#fff1d6;border:1.5px solid #ff5a3c;font:600 13px system-ui;pointer-events:none}
+.azase b{color:#ffcf4a;font-size:15px}.azase .ai{width:1.5em;height:1.5em;font-size:11px}.azase.pz{opacity:.6}.azase.hot{animation:azhot .5s ease-in-out infinite alternate}
+@keyframes azhot{to{box-shadow:0 0 14px #ff5a3c}}
+body.dsk:not(.mfs) .azase{zoom:var(--uiz,1)}
+:root[data-skin="holo"] .azase{background:rgba(40,8,36,.9);border-color:#ff4fd8;color:#ffe0f6}
