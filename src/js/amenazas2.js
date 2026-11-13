@@ -19,10 +19,16 @@ function azInfl(){try{const on=azOn('inf');for(const k of Object.keys(TW)){const
 {const _u=ui;ui=function(){azInfl();return _u.apply(this,arguments);};}
 {const _sg=startGame;startGame=function(){const r=_sg.apply(this,arguments);azInfl();return r;};}
 // ---- Niebla de guerra: no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces, siempre ----
-function azFogTick(){if(!azOn('nie')||!S||S.phase!=='wave')return;const tw=S.list||[];
- for(const e of S.enemies){if(e.fog||!(e.hp>0))continue;
+const azNie=()=>azOn('nie')?S.amz.nie:0;
+function azFogTick(){if(azNie()<2||!S||S.phase!=='wave')return;const tw=S.list||[];
+ const hs=[S.hero&&S.hero.s,S.hero2&&S.hero2.s].filter(h=>h&&h.hp>0);
+ for(const e of S.enemies){if(e.fog||!(e.hp>0))continue;if(hs.some(h=>Math.hypot(e.x-h.x,e.y-h.y)<=2*K)){e.fog=1;continue;}
   for(const t of tw){let rg=0;try{rg=stats(t).range||0;}catch(_){}if(Math.hypot(e.x-t.x,e.y-t.y)<=Math.max(rg,1.5*K)){e.fog=1;break;}
    for(const s of t.sd||[])if(s.hp>0&&Math.hypot(e.x-s.x,e.y-s.y)<=2*K){e.fog=1;break;}if(e.fog)break;}}}
 setInterval(()=>{try{azFogTick();}catch(e){}},100);
-{const _d=draw;draw=function(){if(!azOn('nie')||!S||!S.enemies)return _d.apply(this,arguments);const all=S.enemies;S.enemies=all.filter(e=>e.fog);try{return _d.apply(this,arguments);}finally{const add=S.enemies.filter(e=>!all.includes(e));S.enemies=all.concat(add);}};}
-{const _rd=rtlDot;rtlDot=function(r){const d=_rd.apply(this,arguments);if(azOn('nie')&&S&&r>=S.round&&!(S.phase==='wave'&&r===S.round))return Object.assign({},d,{c:'',h:''});return d;};}
+{const _d=draw;draw=function(){if(azNie()<2||!S||!S.enemies)return _d.apply(this,arguments);const all=S.enemies;S.enemies=all.filter(e=>e.fog);try{return _d.apply(this,arguments);}finally{const add=S.enemies.filter(e=>!all.includes(e));S.enemies=all.concat(add);}};}
+{const _rd=rtlDot;rtlDot=function(r){const d=_rd.apply(this,arguments);if(azNie()>=1&&r>(S.phase==='wave'?S.round+1:S.round))return Object.assign({},d,{c:'',h:''});return d;};}
+
+// Niebla R3: los portales no dicen qué va a salir
+{const _pi=portalInfo;portalInfo=function(p){if(p&&azNie()>=3)return '<b>Portal enemigo</b><small>La niebla no deja ver qué saldrá por aquí.</small>';return _pi.apply(this,arguments);};}
+{const _pr=portalRows;portalRows=function(p,lim){if(azNie()>=3)return lim?'':'<div class="pbh">Niebla: no se sabe qué viene</div>';return _pr.apply(this,arguments);};}
