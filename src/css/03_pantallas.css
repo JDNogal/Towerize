@@ -7,7 +7,7 @@
 #intro .ist.on{opacity:1}
 #intro .imade{font-size:clamp(14px,2.4vw,18px);opacity:.75;letter-spacing:.04em}
 #intro .iclaude{font:600 clamp(40px,8vw,72px)/1 Georgia,"Times New Roman",serif;color:#e8a27c;letter-spacing:.01em}.iclaude img{height:clamp(48px,9vw,86px);width:auto;display:block;margin:6px auto 0}.crcl img{width:170px!important}[data-pal="perg"] .crcl,[data-pal="esc"] .crcl{background:#14161c;padding:8px 14px;border-radius:10px}
-#intro .inogal{font:800 clamp(38px,8vw,70px)/1 system-ui,sans-serif;letter-spacing:.06em}#intro .inogal span{color:#c9a46a}
+
 #intro .itag{font-size:clamp(12px,2vw,15px);opacity:.55;letter-spacing:.3em;text-transform:uppercase}
 #intro .ititle{position:absolute;top:12%;left:0;right:0;font:700 clamp(42px,9vw,84px)/1.1 Georgia,"Times New Roman",serif;text-shadow:0 4px 24px rgba(0,0,0,.6)}
 #intro .ipress{font-size:clamp(16px,3vw,22px);font-weight:600;animation:ipr 1.8s ease-in-out infinite;text-shadow:0 2px 12px rgba(0,0,0,.7)}

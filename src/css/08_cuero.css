@@ -21,7 +21,7 @@ body:not(.mfs) #mbr .hpan .hpport svg{border-radius:8px!important}
 .xpan{border-color:var(--trim);background:color-mix(in srgb,var(--lea2) 60%,transparent)}
 #relics{background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 50%,var(--lea2))!important;border:1px solid var(--lea2)!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 4px 12px rgba(0,0,0,.5)!important}
 #relics .rl{background:color-mix(in srgb,var(--lea2) 70%,transparent)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--trim) 50%,transparent)!important}
-#relics .rl.ready,#relics .rl.on{box-shadow:inset 0 0 0 2px var(--gbtn),0 0 10px color-mix(in srgb,var(--gbtn) 55%,transparent)!important}
+#relics .rl.on{box-shadow:inset 0 0 0 2px var(--gbtn),0 0 10px color-mix(in srgb,var(--gbtn) 55%,transparent)!important}
 /* Empezar oleada = el botón dorado de la portada */
 #mbr button.go{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;border:1px solid var(--lea2)!important;border-radius:10px!important;box-shadow:0 4px 0 var(--lea2),0 6px 14px rgba(0,0,0,.45)!important;font-weight:800}
 #mbr button.go:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 96%,#fff),color-mix(in srgb,var(--gbtn) 96%,#000))!important}

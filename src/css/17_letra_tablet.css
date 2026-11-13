@@ -6,7 +6,7 @@
 /* toda la tablet con Chakra Petch; los números de las fichas siguen con la letra sencilla */
 html:root[data-skin="holo"] #comp,html:root[data-skin="holo"] #comp :is(h1,h2,h3,h4,h5,b,strong,small,i,em,p,span,div,button,td,th,label,input,select,a,li){font-family:'Chakra Petch',system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}
 html:root[data-skin="holo"] #comp :is(.bksub,i){font-style:normal!important}
-html:root[data-skin="holo"] #comp .row>span:last-child,html:root[data-skin="holo"] #comp .row>span:last-child *,html:root[data-skin="holo"] #comp .kbk,html:root[data-skin="holo"] #comp :is(.gv,.gv2,.num){font-family:system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}
+html:root[data-skin="holo"] #comp .row>span:last-child,html:root[data-skin="holo"] #comp .row>span:last-child *,html:root[data-skin="holo"] #comp .kbk{font-family:system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}
 html:root[data-skin="holo"] #comp .bkp h3{letter-spacing:.01em}
 /* trofeos */
 .trof{display:inline-block;vertical-align:-.12em}

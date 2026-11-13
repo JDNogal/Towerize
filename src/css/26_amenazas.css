@@ -28,9 +28,9 @@
 .amzres{display:flex;flex-direction:column;gap:8px;margin-top:10px}.amzres .it{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;border:1.5px solid var(--pline3,#c9b48a);background:rgba(255,255,255,.25)}
 .amzres .it .ai{width:42px;height:42px;font-size:16px}.amzres .it small{display:block;opacity:.7;font-size:11px}.amzres .it b{font-size:15px}.amzres .it .ch{font-size:12px;padding:3px 10px}
 .amzres .hp{width:42px;height:42px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px #1b1712;background:var(--hc,#888)}.amzres .hp svg{width:100%;height:100%}
-#amzhud{font:600 13px system-ui}#amzhud .c{z-index:30}
-#amzhud .c{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(122,26,18,.92);color:#fff1d6;border:1.5px solid #1b1712}
-#amzhud .c .ai{width:1.5em;height:1.5em;font-size:11px}#amzhud .t{background:rgba(27,23,18,.9);border-color:#ff5a3c}#amzhud .t b{color:#ffcf4a;font-size:15px}
+
+
+
 :root[data-skin="holo"] .amzg{color:#3fe8ff}
 :root[data-skin="holo"] .amzr,:root[data-skin="holo"] .amzres .it{border-color:rgba(63,232,255,.35);background:rgba(63,232,255,.05);color:#d8fbff}
 :root[data-skin="holo"] .amzr.on{border-color:#ff4fd8;background:rgba(255,79,216,.12)}:root[data-skin="holo"] .amzr.sel{box-shadow:0 0 0 2px #3fe8ff}
@@ -42,7 +42,7 @@
 :root[data-skin="holo"] .amztot{background:rgba(255,79,216,.08);border-color:#ff4fd8;color:#ffe0f6}
 :root[data-skin="holo"] .amzrk div{border-color:rgba(63,232,255,.35);color:#d8fbff}:root[data-skin="holo"] .amzrk div.on{border-color:#ff4fd8;background:rgba(255,79,216,.1)}
 :root[data-skin="holo"] .amzseal{background:linear-gradient(rgba(255,79,216,.25),rgba(255,79,216,.08));border-color:#ff4fd8;box-shadow:0 0 14px rgba(255,79,216,.5)}:root[data-skin="holo"] .amzseal b,:root[data-skin="holo"] .amzseal small{color:#ffe0f6!important}
-:root[data-skin="holo"] .tg{color:#ffcf4a}:root[data-skin="holo"] #amzhud .c{background:rgba(40,8,36,.9);border-color:#ff4fd8;color:#ffe0f6}
+:root[data-skin="holo"] .tg{color:#ffcf4a}
 #amzchip{position:fixed;z-index:30;display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(122,26,18,.92);color:#fff1d6;border:1.5px solid #1b1712;font:600 13px system-ui;pointer-events:none}
 #amzchip .ai{width:1.5em;height:1.5em;font-size:11px}
 body.dsk:not(.mfs) #amzchip{zoom:var(--uiz,1)}

@@ -1,6 +1,6 @@
 /* ===== PERGAMINO: ventanas, tarjetas y bocadillos de partida, con marco de cuero como la tapa del libro ===== */
 /* marco de cuero: borde transparente pintado con el cuero, papel dentro y línea fina de remate entre ambos */
-body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.kpanel,#tip,#hpop,#tmcard,#bmcard,.hmsg,#side.tipc{
+body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,.kpanel,#tip,#hpop,#tmcard,#bmcard,.hmsg,#side.tipc{
  border:7px solid transparent!important;border-radius:14px!important;
  background:linear-gradient(180deg,var(--paper),color-mix(in srgb,var(--paper) 90%,var(--trim))) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2)) border-box!important;
  box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 75%,transparent),0 12px 30px rgba(0,0,0,.55)!important;color:var(--ink)}
@@ -16,7 +16,7 @@ body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.k
 .evhead b,#relic>b,#relic .ttl b,.tof .tnm,#panel .ttl b{font-family:Georgia,"Times New Roman",serif;color:var(--inkh)}
 #relic small,#panel small,.evwin small{color:var(--ink2)}
 #relic .ce.rcard{padding:14px 12px 12px!important}
-#relic .ce.rcard button,.tof button,.evopts button,#relic .pbot button,#panel button:not(.card):not(.rbtn),#relic button.go{border:1.5px solid var(--pline3);background:var(--paper2);color:var(--ink);border-radius:9px;font-weight:700}
+#relic .ce.rcard button,.tof button,.evopts button,#panel button:not(.card):not(.rbtn),#relic button.go{border:1.5px solid var(--pline3);background:var(--paper2);color:var(--ink);border-radius:9px;font-weight:700}
 #relic .ce.rcard button:hover,.tof button:hover,.evopts button:hover{border-color:var(--acc2);background:var(--paper1)}
 #relic button.go,.tof button.go,#panel button.go{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;border-color:var(--lea2)!important;box-shadow:0 3px 0 var(--lea2)}
 .evopts button{text-align:left;background:var(--paper1)}
@@ -32,8 +32,8 @@ body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,#relic .towpk,.k
 /* botones de ver el mapa / oro de las ventanas (arriba a la derecha): cuero */
 #peekb,.rlbar button,.rlbar .rlg{background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2))!important;color:var(--leatxt)!important;border:1px solid var(--lea2)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--trim) 70%,transparent)}
 /* los títulos y notas sueltos sobre el fondo desenfocado (fuera de las tarjetas) se leen en claro */
-#relic.blur>b,#relic.blur>h2,#relic.blur>div:not(.evwin):not(.toff):not(.cgrid):not(.rlbar):not(.hpc):not(.towpk)>b{color:#f3e6c8;text-shadow:0 1px 3px rgba(0,0,0,.6);font-family:Georgia,"Times New Roman",serif}
-#relic.blur>small,#relic.blur>p,#relic.blur>div:not(.evwin):not(.toff):not(.cgrid):not(.rlbar):not(.hpc):not(.towpk)>small{color:rgba(243,230,200,.8);text-shadow:0 1px 3px rgba(0,0,0,.6)}
+#relic.blur>b,#relic.blur>h2{color:#f3e6c8;text-shadow:0 1px 3px rgba(0,0,0,.6);font-family:Georgia,"Times New Roman",serif}
+#relic.blur>small,#relic.blur>p{color:rgba(243,230,200,.8);text-shadow:0 1px 3px rgba(0,0,0,.6)}
 #relic.blur>button,#relic.blur>div>button[data-a="towskip"]{border:1.5px solid var(--trim);background:var(--paper2);color:var(--ink);border-radius:9px;font-weight:700}
 #hpop{z-index:70!important}
 

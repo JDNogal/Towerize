@@ -116,8 +116,8 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 .gbtn{display:inline-block;margin:14px 0 0!important;min-height:44px;padding:0 22px!important;border-radius:10px!important;border:1px solid var(--lea2)!important;background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;font:800 16px Inter,system-ui,sans-serif!important;box-shadow:0 4px 0 var(--lea2),0 6px 14px rgba(0,0,0,.35)!important;cursor:pointer}
 .gbtn:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 96%,#fff),color-mix(in srgb,var(--gbtn) 96%,#000))!important}.gbtn:disabled{opacity:.5;box-shadow:none!important}
 .lbbk{margin:0!important;padding:8px 14px!important;border-radius:9px!important;border:1.5px solid var(--pline3)!important;background:var(--paper2)!important;color:var(--ink)!important;font-weight:700}
-.lbfoot{position:absolute;left:26px;bottom:18px;z-index:2}.lbfoot.r{left:auto;right:54px}.lbfoot .gbtn{margin:0!important}
-.bkp.one .lbfoot{position:static;margin-top:16px}
+
+
 .lbera .pc{border-color:var(--pline3)}.lbera .pc.got{border-color:#3fa7c9}.lbera{text-align:left}.lbera .pcs{justify-content:flex-start}.lbera small{color:var(--ink2)}
 .lbeter{background:color-mix(in srgb,var(--paper) 70%,#0e121a);border-color:#3fa7c9;color:var(--ink);margin:0 0 6px;white-space:normal;max-width:100%;box-sizing:border-box;line-height:1.45}.lbeter b{color:#1f7f9e}
 :root[data-pal="noche"] .lbeter,:root[data-pal="amb"] .lbeter{color:#dfeef5}
@@ -141,7 +141,7 @@ body.inmenu #comp.bkm{background:transparent!important;backdrop-filter:none;-web
 .lbhpc .hrl .ri{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-size:20px;flex:none}.lbhpc .hrl small{display:block;color:var(--ink2)}
 .lbhpc details summary{color:var(--acc);cursor:pointer}
 .bkp.r:has(.lbhpc){padding-bottom:84px}.bkp.l:has(.lbhero){padding-bottom:70px}
-#comp.narrow .bkp.one.hero .lbhart{width:140px;margin-bottom:6px}#comp.narrow .bkp.one.hero .lbfoot{position:static;margin:12px 0}
+#comp.narrow .bkp.one.hero .lbhart{width:140px;margin-bottom:6px}
 .lbeter b{display:block;font-size:12px;letter-spacing:.12em;margin-bottom:4px}
 .lbhpc .chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}.lbhpc .chips>span{font-size:11.5px;padding:2px 8px;border-radius:9px;border:1px solid var(--pline2);background:var(--paper1)}
 .lbhpc .hsec{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin:14px 0 6px;font-weight:700}
@@ -172,7 +172,7 @@ body.lbopen #panel,body.lbopen #tip,body.lbopen #bmenu,body.lbopen #bmcard,body.
 .lbend .esum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}.lbend .esum>div{background:var(--paper1);border:1px solid var(--pline2);border-radius:12px;padding:10px 12px}.lbend .esum small{display:block;font-size:12px;color:var(--ink2);margin:0 0 2px;opacity:1}.lbend .esum b{font:700 22px Georgia,serif;color:var(--ink)}
 .lbend .esec{margin:0 0 6px;font:700 11px Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);border-bottom:1px solid var(--pline2);padding-bottom:3px}.lbend .esec~.esec{margin-top:16px}
 .lbend .erow{border-bottom:1px solid var(--pline);font-size:13px}.lbend .erow small{display:block;color:var(--ink2);font-size:11.5px}.lbend .ebar{background:var(--paper3)}.lbend .ebar span{background:var(--acc2)}
-.lbend .eact{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.lbend .eact .gbtn{margin:0!important;min-height:42px;font-size:15px!important}.lbend .eact .lbbk{min-height:42px}
+
 .bkp.one .lbend.r{margin-top:14px}
 /* ---- pies de página: volver abajo a la izquierda, seguir abajo a la derecha; fijos, sin taparse con el contenido ---- */
 .lbft{position:absolute;bottom:0;z-index:2;display:flex;gap:8px;align-items:center;padding:22px 26px 16px;box-sizing:border-box;pointer-events:none;background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 92%,var(--trim)) 45%)}
@@ -268,5 +268,5 @@ body.inmenu.lbsetup canvas#c{filter:none}
 #comp.narrow .tutem{font-size:34px}#comp.narrow .tutbig h3{font-size:20px}#comp.narrow .tutst{margin:6px 0 2px}
 /* aviso de era nueva: banda en la página que señala el marcapáginas de arriba, y el marcapáginas brilla */
 .bkmk.glow{box-shadow:0 0 0 2px #3fe8ff,0 0 14px #3fe8ff!important;animation:bkglow 1.2s ease-in-out infinite alternate}@keyframes bkglow{from{box-shadow:0 0 0 2px #3fe8ff,0 0 6px #3fe8ff}to{box-shadow:0 0 0 3px #8ff4ff,0 0 18px #3fe8ff}}
-.bkhint{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:9px 12px;border:1.5px solid #3fa8c0;border-radius:10px;background:rgba(63,232,255,.12);font-size:13px;line-height:1.4}.bkhint .bkht{display:block;font-weight:700;margin-bottom:2px;color:var(--inkh)}.bkhint .bkharr{font-size:22px;flex:0 0 auto}.bkhint .gbtn.sm{flex:0 0 auto;padding:5px 12px;font-size:12.5px;margin:0}
-#comp.narrow .bkhint{font-size:12px;padding:7px 10px;margin-bottom:8px}
+
+
