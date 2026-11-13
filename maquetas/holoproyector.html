@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holoproyector · bocetos</title>
+<style>
+:root{--cy:#3fe8ff;--mg:#ff4fd8;--ink:#dff6ff;--m1:#c8d0d8;--m2:#8e99a4;--m3:#5a646e;--m4:#2c333a}
+*{box-sizing:border-box}
+body{margin:0;background:#06080b;color:#dfe9ef;font:14px/1.4 Inter,system-ui,sans-serif}
+header{padding:14px 18px 6px}header h1{margin:0;font-size:18px;color:var(--cy)}header p{margin:4px 0 0;color:#8fa2b0;max-width:1000px}
+.tabs,.ctl{display:flex;gap:8px;padding:8px 18px;flex-wrap:wrap}
+button.t,.ctl button{background:#16212a;color:#dfe9ef;border:1px solid #2b3c48;border-radius:8px;padding:8px 12px;font:inherit;cursor:pointer}
+button.t.on{border-color:var(--cy);color:var(--cy)}
+.desc{padding:0 18px 10px;color:#a9bac6;max-width:1100px}.desc b{color:#fff}
+.stage{position:relative;margin:0 18px 18px;height:560px;border-radius:12px;overflow:hidden;border:1px solid #1d2730;
+ background:repeating-linear-gradient(0deg,#0d1218 0 39px,#121a21 39px 40px),repeating-linear-gradient(90deg,transparent 0 39px,#121a21 39px 40px)}
+.stage::after{content:'';position:absolute;inset:0;background:rgba(3,5,8,.5);pointer-events:none;z-index:1}
+.rig{position:absolute;inset:0;z-index:2}
+/* ---------- holograma común ---------- */
+.holo{position:absolute;left:50%;top:44%;width:min(720px,88%);height:330px;transform:translate(-50%,-50%);transform-origin:50% 100%;
+ background:linear-gradient(180deg,rgba(20,70,86,.78),rgba(10,34,44,.86));border:1px solid rgba(63,232,255,.75);border-radius:4px;
+ box-shadow:0 0 0 1px rgba(63,232,255,.25),0 0 28px rgba(63,232,255,.35),inset 0 0 40px rgba(63,232,255,.12);color:var(--ink);padding:16px 20px;overflow:hidden}
+.holo::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(63,232,255,.09) 0 1px,transparent 1px 3px);pointer-events:none;animation:scan 6s linear infinite}
+.holo::after{content:'';position:absolute;left:0;right:0;height:60px;top:-60px;background:linear-gradient(180deg,transparent,rgba(63,232,255,.16),transparent);pointer-events:none;animation:sweep 3.2s linear infinite}
+@keyframes scan{to{background-position:0 30px}}
+@keyframes sweep{to{top:110%}}
+.holo .br{position:absolute;width:16px;height:16px;border:2px solid var(--cy);opacity:.9}
+.holo .br.a{left:5px;top:5px;border-right:0;border-bottom:0}.holo .br.b{right:5px;top:5px;border-left:0;border-bottom:0}
+.holo .br.c{left:5px;bottom:5px;border-right:0;border-top:0}.holo .br.d{right:5px;bottom:5px;border-left:0;border-top:0}
+.holo h2{margin:0 0 10px;font:600 20px Georgia,serif;color:var(--cy);text-shadow:0 0 8px rgba(63,232,255,.6);border-bottom:1px solid rgba(63,232,255,.35);padding-bottom:7px;display:flex;justify-content:space-between;align-items:baseline}
+.holo h2 small{font:11px monospace;color:var(--mg);letter-spacing:.1em}
+.cnt{display:grid;grid-template-columns:1fr 1fr;gap:16px;height:calc(100% - 50px)}
+.img{border-radius:4px;background:linear-gradient(180deg,#c47a8a,#7a5a78 55%,#5b4a3e 56%,#6b5848);position:relative;overflow:hidden;border:1px solid rgba(63,232,255,.5);opacity:.92}
+.img::before{content:'';position:absolute;left:38%;bottom:22%;width:24%;height:38%;background:#7b3fa0;border-radius:50% 50% 8px 8px;border:3px solid #1b1418}
+.txt small{color:var(--mg);letter-spacing:.12em;font-weight:700;font-size:11px}
+.txt p{margin:6px 0 12px;font-size:13px}
+.opt{border:1px solid rgba(63,232,255,.55);border-radius:6px;padding:8px 12px;margin-bottom:8px;background:rgba(63,232,255,.07)}
+.opt b{display:block}.opt i{font-style:normal;color:#9fc8d6;font-size:12px}
+.holo.idle{animation:jit 7s infinite}
+@keyframes jit{0%,91%,100%{transform:translate(-50%,-50%);filter:none;opacity:1}92%{transform:translate(calc(-50% - 5px),-50%) skewX(-3deg);filter:hue-rotate(40deg) brightness(1.4)}93%{transform:translate(calc(-50% + 4px),-50%);opacity:.75}94%{transform:translate(-50%,-50%);opacity:1}96%{opacity:.85}97%{opacity:1}}
+.holo.off{transform:translate(-50%,-50%) scaleY(.004) scaleX(.3);opacity:0;filter:brightness(3)}
+.holo.on{transition:transform .5s cubic-bezier(.2,.9,.3,1.1),opacity .25s,filter .6s}
+.holo.closing{transition:transform .32s ease-in,opacity .2s .15s,filter .2s;transform:translate(-50%,-50%) scaleY(.004) scaleX(.3);opacity:0;filter:brightness(3)}
+.holo.glitch{animation:glitch .5s steps(1) both}
+@keyframes glitch{0%{clip-path:inset(0)}10%{clip-path:inset(20% 0 60% 0);transform:translate(calc(-50% - 8px),-50%)}20%{clip-path:inset(60% 0 10% 0);transform:translate(calc(-50% + 6px),-50%)}30%{clip-path:inset(0);filter:brightness(2.5) hue-rotate(60deg);transform:translate(-50%,-50%)}45%{opacity:.2}55%{opacity:1;filter:none}100%{clip-path:inset(0)}}
+.scene2 .img{background:linear-gradient(180deg,#2a6a7a,#163a48 55%,#3a3f44 56%,#2a2e33)}.scene2 .img::before{background:#3fe8ff;border-radius:6px;left:30%;width:40%;height:22%}
+/* luz del haz */
+.beam{position:absolute;z-index:0;pointer-events:none;opacity:0;transition:opacity .25s}
+.beam.on{opacity:1;animation:bfl 2.4s infinite}
+@keyframes bfl{50%{opacity:.8}52%{opacity:.55}54%{opacity:.85}}
+/* metal y piezas */
+.met{background:linear-gradient(180deg,var(--m1),var(--m2) 45%,var(--m3));border:2px solid #1b1712;box-shadow:0 6px 16px #000a}
+.screw{position:absolute;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#eef2f6,#59636d);border:1px solid #1b1712}
+.led{display:inline-block;width:9px;height:9px;border-radius:50%;border:1px solid #1b1712;background:#264a2c}
+.led.g{background:#3fe88f;box-shadow:0 0 6px #3fe88f}.led.c{background:var(--cy);box-shadow:0 0 6px var(--cy)}.led.m{background:var(--mg);box-shadow:0 0 6px var(--mg)}.led.r{background:#ff5a5a;box-shadow:0 0 6px #ff5a5a}
+.led.bl{animation:blink 1.2s steps(1) infinite}@keyframes blink{50%{opacity:.25}}
+.btn{display:inline-block;border-radius:50%;border:2px solid #1b1712;box-shadow:inset 0 -3px 0 rgba(0,0,0,.35),0 2px 3px #0008}
+.btn.pr{animation:press 3.6s infinite}@keyframes press{0%,88%,100%{transform:none}90%{transform:translateY(2px);filter:brightness(1.4)}}
+.vent{height:4px;border-radius:2px;background:#1b1712;margin:3px 0}
+.lcd{background:#071214;border:2px solid #1b1712;border-radius:4px;color:var(--cy);font:10px/1.2 monospace;padding:4px 6px;text-shadow:0 0 4px var(--cy)}
+/* ===== A · Base de mesa ===== */
+.A .base{position:absolute;left:50%;bottom:26px;width:420px;height:58px;transform:translateX(-50%);border-radius:10px 10px 14px 14px}
+.A .lens{position:absolute;left:50%;top:-10px;width:300px;height:12px;transform:translateX(-50%);border-radius:6px 6px 0 0;background:linear-gradient(180deg,#9ff6ff,var(--cy));border:2px solid #1b1712;box-shadow:0 0 14px var(--cy),0 -6px 24px rgba(63,232,255,.6)}
+.A .panel{position:absolute;left:16px;top:14px;display:flex;gap:7px;align-items:center}
+.A .panel2{position:absolute;right:16px;top:12px;display:flex;gap:10px;align-items:center}
+.A .beam{left:50%;bottom:84px;width:300px;height:180px;transform:translateX(-50%);background:linear-gradient(0deg,rgba(63,232,255,.35),rgba(63,232,255,0));clip-path:polygon(0 100%,100% 100%,108% 0,-8% 0)}
+.A.closed .base{transform:translate(-50%,110px)}
+.A .base{transition:transform .35s ease-out}
+/* ===== B · Postes gemelos (como los rodillos) ===== */
+.B .post{position:absolute;top:calc(44% - 190px);width:34px;height:400px;border-radius:12px;transition:left .55s cubic-bezier(.2,.9,.3,1.05),right .55s cubic-bezier(.2,.9,.3,1.05)}
+.B .post.l{left:calc(50% - 400px)}.B .post.r{right:calc(50% - 400px)}
+.B.closed .post.l{left:calc(50% - 40px)}.B.closed .post.r{right:calc(50% - 40px)}
+.B .post .cap{position:absolute;left:-5px;right:-5px;height:16px;border-radius:6px;background:linear-gradient(180deg,#59636d,#2c333a);border:2px solid #1b1712}
+.B .post .cap.t{top:-8px}.B .post .cap.b{bottom:-8px}
+.B .post .strip{position:absolute;top:22px;bottom:22px;width:6px;border-radius:3px;background:var(--cy);box-shadow:0 0 12px var(--cy);border:1px solid #1b1712}
+.B .post.l .strip{right:-2px}.B .post.r .strip{left:-2px}
+.B .post .leds{position:absolute;left:50%;top:40px;transform:translateX(-50%);display:flex;flex-direction:column;gap:6px}
+.B .post .knob{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);width:20px;height:20px}
+.B .beam{left:calc(50% - 366px);right:calc(50% - 366px);top:calc(44% - 170px);height:340px;background:linear-gradient(90deg,rgba(63,232,255,.25),transparent 12%,transparent 88%,rgba(63,232,255,.25))}
+.B .holo{width:700px}
+/* ===== C · Proyector de techo ===== */
+.C .arm{position:absolute;left:50%;top:-6px;width:16px;height:46px;transform:translateX(-50%);transition:height .35s}
+.C .head{position:absolute;left:50%;top:34px;width:150px;height:56px;transform:translateX(-50%);border-radius:14px 14px 40px 40px;transition:top .35s}
+.C .eye{position:absolute;left:50%;bottom:-12px;width:60px;height:22px;transform:translateX(-50%);border-radius:0 0 30px 30px;background:radial-gradient(ellipse at 50% 30%,#e8fbff,var(--cy) 45%,#0a6a7a);border:2px solid #1b1712;box-shadow:0 0 20px var(--cy)}
+.C .head .leds{position:absolute;left:14px;top:12px;display:flex;gap:5px}
+.C .head .btns{position:absolute;right:14px;top:9px;display:flex;gap:6px}
+.C .beam{left:50%;top:100px;width:720px;height:70px;transform:translateX(-50%);background:linear-gradient(180deg,rgba(63,232,255,.35),rgba(63,232,255,.05));clip-path:polygon(46% 0,54% 0,100% 100%,0 100%)}
+.C .holo{top:58%;transform-origin:50% 0}
+.C.closed .head{top:-80px}.C.closed .arm{height:0}
+.C .holo.off{transform:translate(-50%,-50%) scaleY(.004) scaleX(.3)}
+/* ===== D · Dron proyector ===== */
+.D .drone{position:absolute;left:50%;top:22px;width:170px;height:60px;transform:translateX(-50%);transition:top .5s cubic-bezier(.2,.9,.3,1.1)}
+.D .body{position:absolute;left:35px;right:35px;top:14px;height:34px;border-radius:16px}
+.D .rotor{position:absolute;top:0;width:58px;height:12px;border-radius:50%;background:rgba(200,215,225,.35);border:2px solid #1b1712;animation:spin .12s linear infinite}
+.D .rotor.l{left:-6px}.D .rotor.r{right:-6px}
+@keyframes spin{50%{transform:scaleX(.55)}}
+.D .strut{position:absolute;top:8px;width:40px;height:6px;background:#3a4249;border:2px solid #1b1712}
+.D .strut.l{left:16px;transform:rotate(12deg)}.D .strut.r{right:16px;transform:rotate(-12deg)}
+.D .eye{position:absolute;left:50%;bottom:-8px;width:26px;height:16px;transform:translateX(-50%);border-radius:0 0 13px 13px;background:radial-gradient(#e8fbff,var(--cy) 50%,#0a6a7a);border:2px solid #1b1712;box-shadow:0 0 14px var(--cy)}
+.D .body .leds{position:absolute;left:12px;top:11px;display:flex;gap:5px}
+.D .beam{left:50%;top:84px;width:720px;height:74px;transform:translateX(-50%);background:linear-gradient(180deg,rgba(63,232,255,.35),rgba(63,232,255,.04));clip-path:polygon(48% 0,52% 0,100% 100%,0 100%)}
+.D .holo{top:58%;transform-origin:50% 0}
+.D.idle .drone{animation:hover 2.6s ease-in-out infinite}@keyframes hover{50%{margin-top:6px}}
+.D.closed .drone{top:-120px}
+.note{position:absolute;right:12px;top:10px;z-index:9;font:12px monospace;color:#8fa2b0}
+</style></head><body>
+<header><h1>Holoproyector · cuatro diseños</h1>
+<p>Para la Era Distópica, en lugar del pergamino (eventos, elegir torre, elegir pieza, reliquias…). Todos tiemblan de vez en cuando como un holograma, tienen botones y luces que parpadean solos, se abren encendiendo el haz y se cierran aplastándose en una línea. Pulsa «Cambiar de escena» para ver la interferencia.</p></header>
+<div class="tabs"><button class="t on" data-o="A">A · Base de mesa</button><button class="t" data-o="B">B · Postes gemelos</button><button class="t" data-o="C">C · Proyector de techo</button><button class="t" data-o="D">D · Dron proyector</button></div>
+<div class="ctl"><button id="bo">▶ Abrir</button><button id="bs">⇄ Cambiar de escena</button><button id="bc">✕ Cerrar</button></div>
+<div class="desc" id="desc"></div>
+<div class="stage" id="stage"></div>
+<script>
+const D={
+A:'<b>A · Base de mesa.</b> Una base metálica sube desde abajo con su panel: pantallita «ÉTER · ENLACE», tres luces, dos botones (uno se pulsa solo de vez en cuando) y rejillas. Su lente se enciende y el haz proyecta la ventana hacia arriba. Es la evolución directa del boceto anterior y la que menos tapa el mapa.',
+B:'<b>B · Postes gemelos.</b> El equivalente de los rodillos del pergamino: dos postes metálicos salen juntos del centro y se separan, y entre ellos se tiende el holograma. Cada poste lleva su tira de luz, luces en columna y una rueda. Al cerrar, los postes vuelven a juntarse. Es el que más se parece en gesto al pergamino de la era 1.',
+C:'<b>C · Proyector de techo.</b> Un cabezal baja colgado de un brazo desde arriba, con luces y botones, y proyecta hacia abajo. Al cerrar, se recoge hacia arriba. Deja la parte de abajo libre, que es donde va el panel de piezas.',
+D:'<b>D · Dron proyector.</b> Un dron con hélices llega volando desde arriba, se queda flotando (sube y baja un poco) y proyecta la ventana. Al cerrar, se va volando. El más vistoso y con más vida, pero también el que más se mueve.'};
+let O='A',scene=0;const st=document.getElementById('stage');
+const holo=s2=>`<div class="holo off"><i class="br a"></i><i class="br b"></i><i class="br c"></i><i class="br d"></i><h2>${s2?'Resultado · Abrirla':'Cápsula caída'}<small>${s2?'REGISTRO 02':'EVENTO · SEÑAL 01'}</small></h2><div class="cnt ${s2?'scene2':''}"><div class="img"></div><div class="txt"><small>${s2?'OBTIENES':'EVENTO'}</small><p>${s2?'Dentro hay un dron de la colmena, dormido. Lo reprogramas: ahora es tuyo.':'Una cápsula orgánica humea en un cráter reciente. Algo respira dentro, despacio.'}</p>${s2?'<div class="opt"><b>Continuar ›</b></div>':'<div class="opt"><b>Abrirla</b><i>Obtienes: ???</i></div><div class="opt"><b>Entregársela a la Resistencia</b><i>Obtienes: ???</i></div>'}</div></div></div>`;
+const btn=(c,s,pr)=>`<span class="btn${pr?' pr':''}" style="width:${s}px;height:${s}px;background:${c}"></span>`;
+const rig={
+A:()=>`<div class="beam"></div>${holo()}<div class="base met"><div class="lens"></div><div class="panel"><div class="lcd">ÉTER · ENLACE<br>▮▮▮▮▯ 82%</div><span class="led g"></span><span class="led c bl"></span><span class="led m"></span></div><div class="panel2">${btn('#3fe8ff',20,1)}${btn('#ff4fd8',20)}<div style="width:40px">${'<div class="vent"></div>'.repeat(3)}</div></div><span class="screw" style="left:6px;bottom:6px"></span><span class="screw" style="right:6px;bottom:6px"></span></div>`,
+B:()=>{const post=s=>`<div class="post met ${s}"><i class="cap t"></i><i class="cap b"></i><i class="strip"></i><div class="leds"><span class="led c"></span><span class="led c bl"></span><span class="led m"></span><span class="led g"></span></div><span class="btn knob${s==='r'?' pr':''}" style="background:${s==='l'?'#ff4fd8':'#3fe8ff'}"></span><span class="screw" style="left:13px;top:14px"></span><span class="screw" style="left:13px;bottom:14px"></span></div>`;return `<div class="beam"></div>${holo()}${post('l')}${post('r')}`;},
+C:()=>`<div class="beam"></div>${holo()}<div class="arm met"></div><div class="head met"><div class="leds"><span class="led g"></span><span class="led c bl"></span><span class="led m"></span></div><div class="btns">${btn('#3fe8ff',16,1)}${btn('#ff4fd8',16)}</div><span class="screw" style="left:50%;top:30px;margin-left:-3px"></span><div class="eye"></div></div>`,
+D:()=>`<div class="beam"></div>${holo()}<div class="drone"><i class="strut l"></i><i class="strut r"></i><i class="rotor l"></i><i class="rotor r"></i><div class="body met"><div class="leds"><span class="led r bl"></span><span class="led c"></span></div><div class="eye"></div></div></div>`};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function build(){st.innerHTML='<div class="rig '+O+' closed"></div>';const r=st.firstChild;r.innerHTML=rig[O]();return r;}
+async function open(){scene=0;const r=build();await sleep(40);r.classList.remove('closed');await sleep(O==='D'?520:O==='B'?150:360);
+ r.querySelector('.beam').classList.add('on');await sleep(O==='B'?420:140);const h=r.querySelector('.holo');h.classList.add('on');h.classList.remove('off');await sleep(600);h.classList.remove('on');h.classList.add('idle');}
+async function close(){const r=st.firstChild;if(!r)return;const h=r.querySelector('.holo');h.classList.remove('idle');h.classList.add('closing');await sleep(320);r.querySelector('.beam').classList.remove('on');await sleep(150);r.classList.add('closed');await sleep(560);st.innerHTML='';}
+async function swap(){const r=st.firstChild;if(!r)return;let h=r.querySelector('.holo');h.classList.remove('idle');h.classList.add('glitch');await sleep(160);scene^=1;const t=document.createElement('div');t.innerHTML=holo(scene);const n=t.firstChild;n.classList.remove('off');n.classList.add('glitch');h.replaceWith(n);await sleep(380);n.classList.remove('glitch');n.classList.add('idle');}
+function sel(o){O=o;document.querySelectorAll('button.t').forEach(b=>b.classList.toggle('on',b.dataset.o===o));document.getElementById('desc').innerHTML=D[o];open();}
+document.querySelectorAll('button.t').forEach(b=>b.onclick=()=>sel(b.dataset.o));bo.onclick=open;bs.onclick=swap;bc.onclick=close;
+window.H={sel,open,close,swap,setO:o=>{O=o;document.getElementById('desc').innerHTML=D[o];}};
+sel('A');
+</script></body></html>
