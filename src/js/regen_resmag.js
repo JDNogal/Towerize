@@ -24,7 +24,7 @@ function rgTick(dt){for(const e of S.enemies){if(!(e.hp>0)){e.rgV=0;continue;}
   const ss=sinSenal(e);
   // los trolls tienen su propia regeneración (elites.js / jefes.js): Sin señal también la corta
   if(ss&&(e.t==='troll'||e.t==='atroll')&&e.hp>e.rgH)e.hp=e.rgH;
-  const v=RGEN[e.t];e.rgV=0;
+  const v=RGEN[e.t]||e.rgX;e.rgV=0;
   if(v&&!ss&&e.hp<e.max){const inC=e.rgL!=null&&S.wt-e.rgL<RGHIT;e.hp=Math.min(e.max,e.hp+e.max*v*(inC?.5:1)*dt);e.rgV=inC?1:2;}
   e.rgH=e.hp;}}
 {const _n=newStatesTick;newStatesTick=function(dt){const r=_n.apply(this,arguments);try{if(S&&S.phase==='wave')rgTick(dt);}catch(e){}return r;};}
