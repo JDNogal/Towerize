@@ -2168,6 +2168,18 @@ html:root[data-pal="noche"] .rbx.rrel.rac .rbt,html:root[data-pal="amb"] .rbx.rr
 body.mfs .smore::after{content:none!important}
 /* pantallas grandes: el libro / la tablet crecen si caben (--bkz lo calcula ventanas_barra.js) */
 body.dsk:not(.mfs) #comp.bkm>.bkw,body.dsk:not(.mfs) #comp.bkm>.lbcv{zoom:var(--bkz,1)}
+/* v316 · barra de abajo (Nogal): las casillas de los héroes miden lo mismo que la de la reliquia, y «Empezar oleada» va encima de los héroes
+   (el botón siempre mide igual; la fila de héroes puede crecer). En pantallas grandes, la reliquia crece igual que los héroes. */
+body.dsk:not(.mfs) #relics{zoom:var(--uiz,1)}
+body:not(.mfs) #mbr .hpan .hpb{width:78px!important;height:78px!important;min-width:78px!important;font-size:38px;border-radius:12px}
+body:not(.mfs) #mbr .go{order:-1}body:not(.mfs) #mbr{gap:16px}
+body.dsk:not(.mfs) #relics .rl{width:64px!important;height:64px!important;flex:0 0 64px!important;font-size:34px;border-radius:12px}
+body.dsk:not(.mfs) #fps{zoom:var(--uiz,1)}
+/* v317 · barra de arriba de las ventanas de elección (oro, ver el mapa, mazo, cofre): un pelín más grande, para reconocerla mejor (Nogal) */
+body:not(.mfs) #relic .rlbar button,body:not(.mfs) #relic .rlbar .mzb{width:44px!important;height:44px!important;min-width:44px!important;font-size:21px!important}
+body:not(.mfs) #relic .rlbar .rlg{height:44px!important;font-size:17px!important;padding:0 14px!important;display:inline-flex!important;align-items:center;gap:6px}
+body.mfs .rlbar button,body.mfs .rlbar .mzb,body.mfs #pkbar button{width:36px!important;height:36px!important;min-width:36px!important;font-size:18px!important}
+body.mfs .rlbar .rlg,body.mfs #pkbar .rlg{height:36px!important;font-size:15px!important;padding:0 11px!important;display:inline-flex!important;align-items:center;gap:5px}
 /* ===== v313 · Logros por niveles y marcas de torres ===== */
 .lvtag{display:inline-block;margin-left:8px;font:800 10.5px system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px;border:1.5px solid #1b1410;vertical-align:2px;color:#1b1410}
 .lvtag.lvb{background:#c8803a}.lvtag.lvs{background:#c8d0d8}.lvtag.lvg{background:#f2c140}.lvtag.lvp{background:#e4eef4}
@@ -2233,6 +2245,89 @@ body.dsk:not(.mfs) #comp.bkm>.bkw,body.dsk:not(.mfs) #comp.bkm>.lbcv{zoom:var(--
 .bksh.bksm .bken i .icesvg,.bksh.bksm .bken i .icesvg svg,.bksh.bksm .bken i>svg{width:36px!important;height:36px!important}
 .bksh.bksm .bkbic[style*="background"]:not(.bctw) .icsv,.bksh.bksm .bkbic[style*="background"]:not(.bctw)>svg{width:38px!important;height:38px!important}
 .bksh.bksm .bkpor{width:48px!important;height:48px!important}
+/* v318 · Amenazas (dificultad): pantalla, botón de la era, resumen y contador en partida */
+.amzsv{width:66%;height:66%;display:block;overflow:visible}
+.amzl{display:flex;flex-direction:column;gap:3px;margin-top:6px;overflow:auto;padding-right:4px}
+.amzg{font:700 10px/1 system-ui;letter-spacing:.12em;text-transform:uppercase;color:#a0522d;margin:8px 0 2px}
+.amzr{display:grid;grid-template-columns:2.2em 1fr auto auto;align-items:center;gap:8px;padding:3px 8px;border-radius:10px;border:1.5px solid var(--pline3,#c9b48a);background:rgba(255,255,255,.25);font-size:13px;flex:none}
+.amzr.on{border-color:#c0392b;background:rgba(192,57,43,.12)}.amzr.sel{box-shadow:0 0 0 2px #e07a2a}
+.ai{width:2.2em;height:2.2em;border-radius:50%;display:grid;place-items:center;background:#efe2c4;box-shadow:0 0 0 2px #1b1712;flex:none}
+.amzlk{filter:brightness(0);opacity:.45;font-size:1.05em;line-height:1;display:grid;place-items:center}
+.amzr.lk .ai{background:rgba(0,0,0,.08);box-shadow:0 0 0 2px rgba(27,23,18,.35)}.amzr.lk{color:rgba(60,40,20,.6)}
+.amzr .pp{display:flex;gap:3px}.amzr .pp i{width:10px;height:10px;border-radius:50%;border:1.5px solid #1b1712}.amzr .pp i.f{background:#c0392b}
+.amzr .pt{font-weight:700;color:#c0392b;min-width:2.2em;text-align:right}
+.tg{font-size:10px;font-weight:700;color:#7a5a2a;border:1px solid currentColor;border-radius:6px;padding:0 4px;margin-left:6px}
+.amztot{display:inline-flex;gap:14px;align-items:center;padding:4px 12px;border-radius:12px;background:rgba(192,57,43,.1);border:1.5px solid #c0392b;margin-right:10px;vertical-align:middle}
+.amztot b{font-size:17px;color:#c0392b;white-space:nowrap}.amztot small{white-space:nowrap}body.mfs .amztot small{display:none}body.mfs .amztot{padding:2px 8px;gap:8px}body.mfs .amzl{max-height:none!important;overflow:visible;padding-bottom:80px}body.mfs .amzres{padding-bottom:80px}.amztot small{font-size:11px;opacity:.75;margin-right:4px}
+.amzft{display:inline-flex;align-items:stretch;gap:10px}.amzft .gbtn{height:48px;font-size:16px;padding:0 22px;margin:0}.amzft .amztot{height:48px;box-sizing:border-box;margin:0;padding:0 14px}body.mfs .amzft .gbtn,body.mfs .amzft .amztot{height:auto}
+.amzd .big{width:4.6em;height:4.6em;border-radius:50%;display:grid;place-items:center;background:#efe2c4;box-shadow:0 0 0 2.5px #1b1712;font-size:20px;margin-bottom:8px}
+.amzd .big.lk{background:rgba(0,0,0,.08);box-shadow:0 0 0 2.5px rgba(27,23,18,.35)}.amzd .big .amzlk{font-size:1.9em}
+.amzrk{display:flex;flex-direction:column;gap:6px;margin-top:10px}.amzrk div{padding:7px 10px;border-radius:10px;border:1.5px solid var(--pline3,#c9b48a);font-size:13px}
+.amzrk div.on{border-color:#c0392b;background:rgba(192,57,43,.1)}.amzrk div b.n{color:#c0392b;margin-right:6px}
+.amzbtns{display:grid;grid-template-columns:48px 48px;gap:10px;margin-top:10px}.amzbtns button{width:48px;height:40px;padding:0!important;margin:0;font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center;text-indent:0}.amzbtns button span{display:block;line-height:1;transform:translateY(-1px)}
+.amzseal{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:14px;border:2px solid #7a1a12;background:linear-gradient(#a8352a,#7a1a12);color:#fff1d6;cursor:pointer;box-shadow:0 4px 0 #4a0e08}
+.amzseal .ai{width:2.2em;height:2.2em;font-size:14px}
+.amzseal b{font-size:15px;display:block;color:#fff1d6!important}.amzseal small{opacity:.9;color:#fff1d6!important;font-size:11px}
+.amzseal .act{display:flex;gap:4px;margin-top:4px}.amzseal .act .ai{width:1.7em;height:1.7em;font-size:11px;position:relative}.amzseal .act .ai i{position:absolute;right:-4px;bottom:-4px;font:700 9px/1 system-ui;background:#1b1712;color:#ffcf4a;border-radius:6px;padding:1px 3px;font-style:normal}
+.amzsealb{display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 8px;border-radius:12px;border:2px solid #7a1a12;background:linear-gradient(#a8352a,#7a1a12);color:#fff1d6;font:700 14px system-ui;box-shadow:0 3px 0 #4a0e08;cursor:pointer}.amzsealb .ai{width:1.9em;height:1.9em;font-size:12px}
+:root[data-skin="holo"] .amzsealb{background:linear-gradient(rgba(255,79,216,.25),rgba(255,79,216,.08));border-color:#ff4fd8;color:#ffe0f6;box-shadow:0 0 14px rgba(255,79,216,.5)}
+.amzpos{margin:10px 0}.amzpos.E{margin:10px 0 0}.amzpos.E .amzseal{display:flex;width:100%;box-sizing:border-box}.amzpos.A{display:inline-block;margin:0 0 0 14px;vertical-align:middle}.lbera .pcs.amzA{display:inline-flex;vertical-align:middle}
+.amzres{display:flex;flex-direction:column;gap:8px;margin-top:10px}.amzres .it{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;border:1.5px solid var(--pline3,#c9b48a);background:rgba(255,255,255,.25)}
+.amzres .it .ai{width:42px;height:42px;font-size:16px}.amzres .it small{display:block;opacity:.7;font-size:11px}.amzres .it b{font-size:15px}.amzres .it .ch{font-size:12px;padding:3px 10px}
+.amzres .hp{width:42px;height:42px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px #1b1712;background:var(--hc,#888)}.amzres .hp svg{width:100%;height:100%}
+#amzhud{font:600 13px system-ui}#amzhud .c{z-index:30}
+#amzhud .c{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(122,26,18,.92);color:#fff1d6;border:1.5px solid #1b1712}
+#amzhud .c .ai{width:1.5em;height:1.5em;font-size:11px}#amzhud .t{background:rgba(27,23,18,.9);border-color:#ff5a3c}#amzhud .t b{color:#ffcf4a;font-size:15px}
+:root[data-skin="holo"] .amzg{color:#3fe8ff}
+:root[data-skin="holo"] .amzr,:root[data-skin="holo"] .amzres .it{border-color:rgba(63,232,255,.35);background:rgba(63,232,255,.05);color:#d8fbff}
+:root[data-skin="holo"] .amzr.on{border-color:#ff4fd8;background:rgba(255,79,216,.12)}:root[data-skin="holo"] .amzr.sel{box-shadow:0 0 0 2px #3fe8ff}
+:root[data-skin="holo"] .ai,:root[data-skin="holo"] .amzft{display:inline-flex;align-items:stretch;gap:10px}.amzft .gbtn{height:48px;font-size:16px;padding:0 22px;margin:0}.amzft .amztot{height:48px;box-sizing:border-box;margin:0;padding:0 14px}body.mfs .amzft .gbtn,body.mfs .amzft .amztot{height:auto}
+.amzd .big{background:#cfe3ea}
+:root[data-skin="holo"] .amzr.lk .ai,:root[data-skin="holo"] .amzd .big.lk{background:rgba(63,232,255,.06);box-shadow:0 0 0 2px rgba(63,232,255,.3)}:root[data-skin="holo"] .amzlk{filter:brightness(0) invert(1);opacity:.35}:root[data-skin="holo"] .amzr.lk{color:rgba(216,251,255,.5)}
+:root[data-skin="holo"] .amzr .pp i{border-color:#3fe8ff}:root[data-skin="holo"] .amzr .pp i.f{background:#ff4fd8;border-color:#ff4fd8}
+:root[data-skin="holo"] .amzr .pt,:root[data-skin="holo"] .amztot b,:root[data-skin="holo"] .amzrk div b.n{color:#ff4fd8}
+:root[data-skin="holo"] .amztot{background:rgba(255,79,216,.08);border-color:#ff4fd8;color:#ffe0f6}
+:root[data-skin="holo"] .amzrk div{border-color:rgba(63,232,255,.35);color:#d8fbff}:root[data-skin="holo"] .amzrk div.on{border-color:#ff4fd8;background:rgba(255,79,216,.1)}
+:root[data-skin="holo"] .amzseal{background:linear-gradient(rgba(255,79,216,.25),rgba(255,79,216,.08));border-color:#ff4fd8;box-shadow:0 0 14px rgba(255,79,216,.5)}:root[data-skin="holo"] .amzseal b,:root[data-skin="holo"] .amzseal small{color:#ffe0f6!important}
+:root[data-skin="holo"] .tg{color:#ffcf4a}:root[data-skin="holo"] #amzhud .c{background:rgba(40,8,36,.9);border-color:#ff4fd8;color:#ffe0f6}
+#amzchip{position:fixed;z-index:30;display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(122,26,18,.92);color:#fff1d6;border:1.5px solid #1b1712;font:600 13px system-ui;pointer-events:none}
+#amzchip .ai{width:1.5em;height:1.5em;font-size:11px}
+body.dsk:not(.mfs) #amzchip{zoom:var(--uiz,1)}
+:root[data-skin="holo"] #amzchip{background:rgba(40,8,36,.9);border-color:#ff4fd8;color:#ffe0f6}
+.amzseal{cursor:pointer}.amzbtns button:disabled{opacity:.45}
+.amzrk div.lk{opacity:.55;border-style:dashed}
+:root[data-skin="holo"] .amzres .it>.ai{background:#0d2a33;box-shadow:0 0 0 2px #3fe8ff}
+.azase{position:fixed;z-index:30;display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(27,23,18,.92);color:#fff1d6;border:1.5px solid #ff5a3c;font:600 13px system-ui;pointer-events:none}
+.azase b{color:#ffcf4a;font-size:15px}.azase .ai{width:1.5em;height:1.5em;font-size:11px}.azase.pz{opacity:.6}.azase.hot{animation:azhot .5s ease-in-out infinite alternate}
+@keyframes azhot{to{box-shadow:0 0 14px #ff5a3c}}
+body.dsk:not(.mfs) .azase{zoom:var(--uiz,1)}
+:root[data-skin="holo"] .azase{background:rgba(40,8,36,.9);border-color:#ff4fd8;color:#ffe0f6}
+/* v319 · aviso de «¡Cerca de un logro!» */
+#nearach{position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);z-index:61;transition:transform .35s cubic-bezier(.2,1.3,.4,1),opacity .3s,bottom .3s;opacity:0;pointer-events:none}
+#nearach.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}#nearach.up{bottom:96px}
+body.dsk:not(.mfs) #nearach{zoom:var(--uiz,1)}
+.nearbx{display:flex;align-items:center;gap:12px;padding:8px 10px 8px 8px;border-radius:12px;background:#f5e9cf;color:#4a2e1c;box-shadow:0 0 0 3px #d4a12a,0 10px 26px rgba(0,0,0,.6);min-width:300px}
+.nearbx .ntr{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#efe2c4;box-shadow:0 0 0 2px #1b1712;flex:none}.nearbx .ntr svg,.nearbx .ntr .icsv{width:34px;height:34px}
+.nearbx .ntx{display:flex;flex-direction:column;gap:2px;flex:1}.nearbx .ntx b{font:700 11px system-ui;letter-spacing:.1em;text-transform:uppercase;color:#b07a10}.nearbx .nn{font-weight:700;font-size:14px}
+.nearbx .nbar{display:block;height:6px;border-radius:4px;background:rgba(0,0,0,.15);overflow:hidden;margin-top:2px}.nearbx .nbar i{display:block;height:100%;background:linear-gradient(90deg,#d4a12a,#ffcf4a)}
+.nearbx small{font-size:11px;opacity:.75}
+.nearbx .npin{display:inline-flex;align-items:center;gap:5px;margin:0;padding:6px 10px;border-radius:9px;border:1.5px solid #b07a10;background:#fff6dd;color:#5a3a10;font:700 12px system-ui;cursor:pointer}.nearbx .npin .icsv{width:1.1em;height:1.1em}.nearbx .npin.on{background:#d4a12a;color:#fff}
+:root[data-skin="holo"] .nearbx{background:rgba(8,26,36,.95);color:#d8fbff;box-shadow:0 0 0 2px #ffcf4a,0 0 18px rgba(255,207,74,.35)}:root[data-skin="holo"] .nearbx .ntr{background:#0d2a33;box-shadow:0 0 0 2px #3fe8ff}
+:root[data-skin="holo"] .nearbx .ntx b{color:#ffcf4a}:root[data-skin="holo"] .nearbx .npin{background:rgba(255,207,74,.1);color:#ffe9a8;border-color:#ffcf4a}:root[data-skin="holo"] .nearbx .npin.on{background:#ffcf4a;color:#1b1712}
+/* v320 · menú principal (Continuar / Nueva partida) y Novedades */
+.lbmains{display:flex;flex-direction:column;gap:8px;align-items:center;width:100%}
+.lbsv+.lbmains,.lbsv{margin-bottom:6px}
+.lbmain.lbalt{background:#efe2c4!important;color:#3a2412!important;border:2px solid var(--trim,#7a4a22)!important;box-shadow:0 4px 0 var(--trim,#7a4a22)}
+.lbmain.lbalt.warn{background:#f4d0c4!important;color:#7a1a12!important}
+:root[data-skin="holo"] .lbmain.lbalt{background:rgba(255,79,216,.12)!important;color:#ffe0f6!important;border:1.5px solid #ff4fd8!important;box-shadow:0 0 12px rgba(255,79,216,.4)}
+.lbnov{margin-top:10px;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--trim,#7a4a22);background:rgba(0,0,0,.18);color:inherit;font:700 13px system-ui;cursor:pointer}
+.lbnov i{width:8px;height:8px;border-radius:50%;background:#ff5a3c;box-shadow:0 0 6px #ff5a3c;display:inline-block}
+:root[data-skin="holo"] .lbnov{border-color:#3fe8ff;color:#bff6ff;background:rgba(63,232,255,.06)}:root[data-skin="holo"] .lbnov i{background:#ff4fd8;box-shadow:0 0 6px #ff4fd8}
+.novl{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.novr{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:6px 10px;border-radius:10px;border:1.5px solid var(--pline3,#c9b48a);background:rgba(255,255,255,.25);font-size:13px;cursor:pointer}
+.novr b.v{font-size:15px}.novr small{opacity:.7}.novr.sel{box-shadow:0 0 0 2px #e07a2a}.novr .nw{font:700 10px system-ui;color:#fff;background:#c0392b;border-radius:6px;padding:1px 6px}
+.novd h4{margin:0 0 2px}.novd .sec{margin-top:12px}.novd .sec b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a0522d;margin-bottom:4px}.novd ul{margin:0;padding-left:18px}.novd li{margin:3px 0;font-size:13.5px;line-height:1.4}
+:root[data-skin="holo"] .novr{border-color:rgba(63,232,255,.35);background:rgba(63,232,255,.05);color:#d8fbff}:root[data-skin="holo"] .novr.sel{box-shadow:0 0 0 2px #3fe8ff}:root[data-skin="holo"] .novr .nw{background:#ff4fd8}:root[data-skin="holo"] .novd .sec b{color:#3fe8ff}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2247,7 +2342,7 @@ body.dsk:not(.mfs) #comp.bkm>.bkw,body.dsk:not(.mfs) #comp.bkm>.lbcv{zoom:var(--
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v315</div>
+<div id="ver">Towerize v323</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -7547,7 +7642,7 @@ function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
   const marks=`<div class="bkmarks">${kcOn()&&eras.length>1?'<span class="kcap bkq">Q</span>':''}${eras.map(v=>`<button class="bkmk${v===ERA?' on':''}${v===2&&era2HintOn()?' glow':''}" data-a="erasel" data-v="${v}" title="Era ${ERADEF[v].n}">${ERADEF[v].ic}</button>`).join('')}${kcOn()&&eras.length>1?'<span class="kcap bkq">E</span>':''}</div>`;
   if(ERA===2){const pg=era2Page();return {marksHTML:marks,key:'era2',left:pg.left,right:pg.right,footL:toMenu,footR:`<button class="gbtn" data-a="erago">Continuar ›</button>`};}
   return {marksHTML:marks,key:'era',after:()=>era2Hint(),
-   left:era2HintHTML()+`<h3>Era Fantástica</h3><div class="bksub">Reino · Nueva partida · 1 de 3</div><div class="era lbera"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small><p style="margin-top:16px">Cada era trae sus propios héroes, torres, enemigos, reliquias y eventos. Gana partidas para reparar el núcleo y abrir el camino a la siguiente.</p>${done?'<div class="eline"><span class="on">Fantástica</span><span>Ruinas de Neón</span></div>':''}</div>`,
+   left:era2HintHTML()+`<h3>Era Fantástica</h3><div class="bksub">Reino · Nueva partida · 1 de 3</div><div class="era lbera"><div class="pcs">${[0,1,2].map(i=>`<div class="pc${i<STO.p?' got':''}">${i<STO.p?'💠':''}</div>`).join('')}</div><small>Núcleo ${Math.min(3,STO.p)} / 3${done?'':' · cada partida ganada (con cualquier héroe y duración) repara una pieza'}</small><p style="margin-top:16px">Un reino de leyenda: castillos, bosques y caminos de piedra por los que bajan orcos, goblins y demonios. Aquí cayó la nave y aquí empieza todo. Es la era más asequible para aprender.</p></div>`,
    right:`<div class="lbeter"><div class="lbeh"><span class="lbei">💠</span><b>ÉTER</b></div><p>${escH(ln.replace(/\{N\}/g,nm))}</p></div><div class="lbsys"><b>SISTEMA</b> · Integridad del núcleo: ${[9,38,71,100][Math.min(3,STO.p)]} %${STO.p>=3?' · Navegación parcial operativa':' · Fragmentos integrados: '+Math.min(3,STO.p)+' de 3'}</div>`,
    footL:toMenu,footR:`<button class="gbtn" data-a="erago">Continuar ›</button>`};}
  if(st==='rounds'){const mx=rMax();
@@ -7817,7 +7912,7 @@ function ffIdle(){if(!S.enemies||!S.enemies.length){return S.portals&&S.portals.
 let last=performance.now();
 function loop(t){
  const raw=Math.max(0,(t-last)/1000),rdt=Math.min(.05,raw);last=t;
- FPS.n++;FPS.t+=raw;if(FPS.t>=.5){FPS.v=Math.round(FPS.n/FPS.t);FPS.n=0;FPS.t=0;const fe=$('fps');if(fe){fe.style.display=OPT.fps?'block':'none';fe.innerHTML=`<i style="background:${FPS.v>=50?'#6fe07a':FPS.v>=30?'#f0c040':'#ff6b5e'}"></i>${FPS.v} FPS`;/* junto al botón de menú */const mb=document.querySelector('#mtl button');if(mb&&OPT.fps){const r=mb.getBoundingClientRect();fe.style.left=(r.right+8)+'px';fe.style.top=(r.top+(r.height-fe.offsetHeight)/2)+'px';fe.style.right='auto';}}}
+ FPS.n++;FPS.t+=raw;if(FPS.t>=.5){FPS.v=Math.round(FPS.n/FPS.t);FPS.n=0;FPS.t=0;const fe=$('fps');if(fe){fe.style.display=OPT.fps?'block':'none';fe.innerHTML=`<i style="background:${FPS.v>=50?'#6fe07a':FPS.v>=30?'#f0c040':'#ff6b5e'}"></i>${FPS.v} FPS`;/* junto al botón de menú */const ach=$('amzchip'),mb=ach&&ach.style.display!=='none'&&ach.offsetWidth?ach:document.querySelector('#mtl button');if(mb&&OPT.fps){const r=mb.getBoundingClientRect(),fz=parseFloat(getComputedStyle(fe).zoom)||1;fe.style.left=(r.right+8*fz)/fz+'px';fe.style.top=(r.top+(r.height-fe.offsetHeight*fz)/2)/fz+'px';fe.style.right='auto';}}}
  const gon=S&&(S.hero||S.tut)&&S.round>=1&&S.phase!=='won'&&S.phase!=='lost'&&!document.body.classList.contains('inmenu');if(gon)GT.r+=Math.min(raw,3600);try{heroCard();}catch(e){}try{emapTick(raw);}catch(e){}if(gon){/* héroe caído con una acción suya activa (moverlo, habilidad): se cancela para no bloquear el resto */const H=S.hero;if(H&&H.s&&H.s.hp<=0&&(S.aim==='hero'||S.aim==='habb'||S.aim==='habu')){S.aim=null;S.aimT=null;S.msg='';renderRelics();ui();}
  /* un enemigo junto al núcleo con el juego a más de ×1: se baja a ×1 para dar tiempo a reaccionar (una vez por enemigo) */
  if(S.phase==='wave'&&S.speed>1&&S.core&&!PREVIEWING){for(const e of S.enemies){if(e.hp>0&&!e.leak&&!e.nearC&&Math.hypot(e.x-S.core.x,e.y-S.core.y)<=1.6*K){e.nearC=1;S.lspd=1;S.speed=1;ui();toast('🐢 Velocidad ×1: un enemigo está a punto de llegar al núcleo.');break;}}}}hoverTick(rdt);layoutSide();posFocus();ptipTick();$('relic').classList.toggle('blur',!!(RL.open&&!RL.hpick&&(RL.towo||RL.ev||(RL.choices&&RL.choices.length))));{const lk=!compOk();for(const b of document.querySelectorAll('[data-a="comp"]'))b.classList.toggle('lk',lk);}if(APAN.open)apanTick();document.body.classList.toggle('ovl',!!(LB.open||RL.open||PMU.open||FO.open||$('endscr').classList.contains('open')));tryTowerOffer();hintTick(rdt);hpanTick();dnTick(rdt);
@@ -10197,29 +10292,41 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
  g.save();g.fillStyle='rgba(90,180,255,.10)';g.strokeStyle='rgba(110,190,255,.85)';g.lineWidth=lw(1.5);g.beginPath();g.arc(s.x*CS+CS/2,s.y*CS+CS/2,R*CS,0,7);g.fill();g.stroke();g.restore();});
 // v305: eventos que se desbloquean con un logro: en el compendio, si aún no lo tienes, sale el logro que lo desbloquea
 {const _bd=bkDetail;bkDetail=function(t,id){const h=_bd.apply(this,arguments);try{if(t==='ev'&&typeof evLocked==='function'&&evLocked(id)&&!seen('ev',id))return h.replace('Aún no descubierto.','Aún no descubierto. Se desbloquea con un logro:')+`<div class="evlk">${achLink(EVLOCK[id],'',1)}</div>`;}catch(e){}return h;};}
-// ==================== v305 · Novedades del compendio, ítem a ítem ====================
-// Cada cosa nueva (torre, enemigo, reliquia, mecánica, logro conseguido…) lleva su puntito hasta que abres su ficha.
-// La pestaña y la cinta del área solo se apagan cuando ya no queda ninguna por ver. «Marcar todos como vistos» limpia solo la pestaña en la que estás.
-var NOVO={};try{NOVO=JSON.parse(localStorage.getItem('rt-novo'))||{};}catch(e){}
-const novSave=()=>{try{localStorage.setItem('rt-novo',JSON.stringify(NOVO));}catch(e){}};
-function novAdd(t,k){if(t==null||k==null)return;(NOVO[t]=NOVO[t]||{})[k]=1;novSave();}
-function novSeen(t,k){if(NOVO[t]&&NOVO[t][k]){delete NOVO[t][k];if(!Object.keys(NOVO[t]).length)delete NOVO[t];novSave();return true;}return false;}
-function novHas(t){return !!(NOVO&&NOVO[t]&&Object.keys(NOVO[t]).length);}
-function novArea(a){return a==='lg'?novHas('lg'):['tw','hr','pc','bf','rl','en','ev','mc'].some(novHas);}
-function novMark(act,v){if(act==='ctab')return novHas(v);if(act==='achf')return !!(NOVO.lg&&Object.keys(NOVO.lg).some(id=>ACH[id]&&(v==='all'||(ACH[id].c||'cl')===v)));return false;}
-// mecánicas: se descubren solas al ver lo que las usa; se apuntan las que pasan a verse
-let MECK=null;try{MECK=JSON.parse(localStorage.getItem('rt-meck'));}catch(e){}
-function mecScan(mark){if(typeof MECI==='undefined'||typeof mecOk!=='function')return;const first=!MECK;MECK=MECK||{};let ch=false;
- for(const id in MECI){if(typeof MALIAS!=='undefined'&&MALIAS[id])continue;if(!MECK[id]&&mecOk(id)){MECK[id]=1;ch=true;if(!first&&mark)novAdd('mc',id);}}if(ch){try{localStorage.setItem('rt-meck',JSON.stringify(MECK));}catch(e){}}}
-try{mecScan(false);}catch(e){}
-{const _s=see;see=function(t,k){const nw=typeof SEEOK!=='undefined'&&SEEOK&&SEEN[t]&&!SEEN[t][k];const r=_s.apply(this,arguments);try{if(nw&&SEEN[t][k]){novAdd(t,k);mecScan(true);}}catch(e){}return r;};}
-{const _a=achieve;achieve=function(id){const nw=ACH[id]&&!ACHS[id];const r=_a.apply(this,arguments);try{if(nw&&ACHS[id])novAdd('lg',id);}catch(e){}return r;};}
-// al abrir una ficha, deja de ser nueva; puntito en las fichas nuevas y botón para marcar toda la pestaña
-{const _c=compParts;compParts=function(){const P=_c.apply(this,arguments);try{const t=CP.tab,k=CP.sel[t];
-  if(k!=null&&!(CP.prev||CP.hprev||CP.eprev)&&(!bkNarrow()||CP.pageR))novSeen(t,k);
-  const N=NOVO[t]||{};P.left=P.left.replace(/<button class="bti([^"]*)" data-a="csel" data-v="([^"]*)"/g,(m,c,v)=>N[v]?`<button class="bti${c} nov" data-a="csel" data-v="${v}"`:m);
-  if(Object.keys(N).length)P.left=P.left.replace(/(<div class="bksub">[\s\S]*?<\/div>)/,`$1<button class="bknovall" data-a="novall">✓ Marcar todos como vistos <small>(${Object.keys(N).length})</small></button>`);}catch(e){}return P;};}
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="novall"]');if(!b)return;e.stopPropagation();e.preventDefault();delete NOVO[CP.tab];novSave();try{sfx('ui');}catch(er){}lbRender();},true);
+// ==================== v320 · Novedades (registro de cambios en el propio juego) y menú principal ====================
+// Nogal (13-nov-2026): «Continuar partida» arriba y «Nueva partida» debajo, mismo tamaño y distinto color, con la línea de la partida
+// guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
+// Al publicar una versión: añadir su entrada arriba del todo en NOVL.
+const NOVL=[
+ {v:323,f:'13 nov 2026',t:'Amenazas nuevas',s:[['Amenazas',['Asedio sin tregua: desde que pones la pieza tienes 30 s (o 20 s) para construir; después la oleada empieza sola.','Inflación: cada torre del mismo tipo cuesta un 10 % más que la anterior.','Niebla de guerra, en 4 rangos: la línea de rondas solo enseña la siguiente; enemigos invisibles hasta que los detectas; portales sin información; y, para los más valientes, portales que no se ven.','Sabotaje: un saboteador va a por una torre (los dos salen marcados); si llega, la apaga 6 s.','Abanderados: mientras vive el abanderado, su escuadra no se puede ralentizar ni empujar.']]]},
+ {v:320,f:'13 nov 2026',t:'Novedades y menú',s:[['Interfaz',['Novedades: el registro de cambios de cada versión, aquí mismo en el menú.','«Continuar partida» y «Nueva partida» del mismo tamaño, uno encima del otro.']]]},
+ {v:319,f:'13 nov 2026',t:'¡Cerca de un logro!',s:[['Logros',['Cuando te falta poco para un logro (80 %), sale un aviso con su progreso y un botón para fijarlo. Se puede quitar en Opciones › Juego.']]]},
+ {v:318,f:'13 nov 2026',t:'Amenazas',s:[['Amenazas (dificultad)',['Al completar una era (sus 3 piezas) consigues el logro «Era completada» y se abren las Amenazas en esa era.','Cada amenaza cambia cómo se juega, suma puntos y cada punto da +10 % de puntuación. Se guardan para la siguiente partida.','Ya funcionan Supercampeones, Sin refuerzos y Saqueadores; el resto se desbloquea ganando con amenazas.','Nuevo resumen antes de empezar: era, duración, héroe y amenazas.']]]},
+ {v:317,f:'13 nov 2026',t:'Botones de las ventanas',s:[['Interfaz',['En las ventanas de elección, los botones de arriba (oro, ver el mapa, mazo y cofre) son un poco más grandes.','Móvil: ya no salen dos barras de botones montadas sobre el oro.']]]},
+ {v:316,f:'13 nov 2026',t:'Barra de abajo y arreglos',s:[['Arreglos',['Los paneles del mazo y del cofre vuelven a salir a los lados al elegir torre o reliquia.','En pantallas grandes, los FPS se colocan bien junto al menú.']],['Interfaz',['Los héroes miden lo mismo que la reliquia y «Empezar oleada» va encima.','La Era Fantástica tiene su propia descripción.']]]},
+ {v:315,f:'13 nov 2026',t:'Regeneración y resistencia mágica rota',s:[['Enemigos',['Los enemigos fuertes regeneran vida poco a poco (la mitad si les has golpeado hace poco).']],['Resistencia mágica rota',['La rompen el Maleficio, Radagast, Korr, el Ácido nanométrico y el Mordisco ácido.','Reliquias nuevas: Grimorio quebrado y Emisor de interferencias.']],['Torres',['Rompemurallas del Trebuchet, Catalizador del Alquimista, Mordisco ácido de la Colmena y Drones bombarderos algo más lentos.']]]},
+ {v:314,f:'13 nov 2026',t:'Puntuación, logros por niveles y dron',s:[['Puntuación',['Cada partida suma puntos: se ven en la pausa, en Estadísticas, al final y en Partidas, con tu récord por héroe.']],['Logros',['Bronce, plata, oro y platino; Exterminador con cada torre (con marco en el mapa) y Estadísticas › Marcas.']],['Era Distópica',['El dron proyector sustituye al pergamino en las ventanas de elección.']],['Interfaz',['Iconos dibujados en todo el juego; menús más grandes en pantallas grandes.']]]}];
+const NOVV=()=>{try{return parseInt(String(($('ver')||{}).textContent||'').replace(/\D+/g,''))||NOVL[0].v;}catch(e){return NOVL[0].v;}};
+const NOV={sel:null};let NOVSEEN=0;try{NOVSEEN=+localStorage.getItem('rt-novseen')||0;}catch(e){}
+const novNew=v=>v>NOVSEEN&&NOVSEEN>0;
+function novParts(){const cur=NOVV(),L=NOVL.filter(x=>x.v<=cur);if(!L.some(x=>x.v===NOV.sel))NOV.sel=(L[0]||NOVL[0]).v;const v=L.find(x=>x.v===NOV.sel)||NOVL[0];
+ const left=`<h3>Novedades</h3><div class="bksub">Lo que cambia en cada versión · estás jugando la v${cur}</div><div class="novl">${L.map(x=>`<div class="novr${x.v===NOV.sel?' sel':''}" data-a="novsel" data-v="${x.v}"><b class="v">v${x.v}</b><span>${x.t}<br><small>${x.f}</small></span>${novNew(x.v)?'<span class="nw">NUEVO</span>':''}</div>`).join('')}</div>`;
+ const right=`<div class="lbdet novd"><h4>v${v.v} · ${v.t}</h4><small>${v.f}</small>${v.s.map(([h,I])=>`<div class="sec"><b>${h}</b><ul>${I.map(l=>`<li>${l}</li>`).join('')}</ul></div>`).join('')}</div>`;
+ return {marks:null,left,right,key:'nov'+NOV.sel,footL:`<button class="lbbk" data-a="lbcover">‹ Menú</button>`,footR:''};}
+function novOpen(){LB.msg={key:'nov',left:()=>novParts().left,right:()=>novParts().right,footL:`<button class="lbbk" data-a="novback">‹ Menú</button>`,footR:''};NOV.sel=null;
+ lbOpen('msg');setTimeout(()=>{NOVSEEN=Math.max(NOVSEEN,NOVV());try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(e){}},400);}
+document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+ if(a==='novopen'){ev.stopPropagation();ev.preventDefault();try{sfx('page');}catch(_){}novOpen();}
+ else if(a==='novsel'){ev.stopPropagation();ev.preventDefault();NOV.sel=+b.dataset.v;try{sfx('page');}catch(_){}lbRender();}
+ else if(a==='novback'){ev.stopPropagation();ev.preventDefault();NOVSEEN=Math.max(NOVSEEN,NOVV());try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(_){}lbOpen(null,true);}},true);
+// la primera vez que se juega, lo de antes no cuenta como «nuevo»
+if(!NOVSEEN){NOVSEEN=NOVV();try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(e){}NOVSEEN=-1;}
+// ---- menú principal: línea de la partida guardada arriba; Continuar y Nueva partida iguales; Novedades debajo ----
+{const _cv=lbCoverHTML;lbCoverHTML=function(){let h=_cv.apply(this,arguments);try{if(typeof lbInGame==='function'&&lbInGame())return h;
+ const m=h.match(/<button class="lbmain" data-a="lbload">[\s\S]*?<\/button><div class="lbsv">[\s\S]*?<\/div><button class="lbnew([^"]*)" data-a="newgame">([\s\S]*?)<\/button>/);
+ if(m){const sv=m[0].match(/<div class="lbsv">[\s\S]*?<\/div>/)[0],ld=m[0].match(/<button class="lbmain" data-a="lbload">[\s\S]*?<\/button>/)[0];
+  h=h.replace(m[0],sv+'<div class="lbmains">'+ld+`<button class="lbmain lbalt${m[1]}" data-a="newgame">${LB.ask?m[2]:(typeof icU==='function'?icU('m_deck',''):'')+' Nueva partida'}</button></div>`);}
+ const cur=NOVV(),nw=NOVSEEN>0&&cur>NOVSEEN;
+ h=h.replace(/(<button class="lbmain[^"]*" data-a="newgame">[\s\S]*?<\/button>(<\/div>)?)/,`$1<button class="lbnov" data-a="novopen">${nw?'<i></i>':''}Novedades · v${cur}</button>`);}catch(e){}return h;};}
 // ==================== v305 · Historia de la era 2: Kai, el reencuentro de Vega y Ferro, y Korr al salir de la cápsula ====================
 // Kai (CERRADO en plan_era2): solo jugando con Vega, en una ronda de jefe de la Era Distópica (con 15 rondas o más, siempre la 15).
 // Kai aparece cazando al jefe; pelea esa oleada como aliada controlada por la máquina (cerca de tu héroe, a por el jefe).
@@ -10554,8 +10661,12 @@ const mzRel=()=>S.relics.length?`<div class="mzgrid">${S.relics.map(id=>`<i data
 function mzSide(){let el=$('mzside');if(!el){el=document.createElement('div');el.id='mzside';el.innerHTML='<div class="mzd"></div><div class="mzr"></div>';document.body.appendChild(el);}
  const on=mzOn();el.classList.toggle('on',on);if(!on){document.body.classList.remove('mzbtn');mzClose();return;}
  // ¿caben a los lados de la ventana? (si no, botones)
- const win=document.body.classList.contains('pcpick')?$('panel'):($('relic').querySelector('.pscr,.evwin,.cgrid')||$('relic').firstElementChild);
- const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null,gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&(gap>=150||(document.body.classList.contains('dsk')&&innerWidth>=900));if(fit)el.style.setProperty('--mzw',Math.round(Math.max(132,Math.min(168,gap-20)))+'px');
+ /* v316: se mide la ventana que está encima (torre, cofre o evento si está abierta; la de piezas solo si es la que se ve) */
+ const rlo=$('relic').classList.contains('open')&&$('relic').firstElementChild,win=rlo?($('relic').querySelector('.pscr,.evwin,.cgrid')||$('relic').firstElementChild):document.body.classList.contains('pcpick')?$('panel'):null;
+ const r=win&&win.getBoundingClientRect?win.getBoundingClientRect():null;
+ /* la ventana aún se está abriendo (mide 0): no se pasa a botones, se espera a la siguiente comprobación */
+ if(win&&r&&!(r.width>0)&&!document.body.classList.contains('mfs'))return;
+ const gap=r?Math.min(r.left,innerWidth-r.right):0,fit=!document.body.classList.contains('mfs')&&r&&r.width>0&&(gap>=150||(document.body.classList.contains('dsk')&&innerWidth>=900));if(fit)el.style.setProperty('--mzw',Math.round(Math.max(132,Math.min(168,gap-20)))+'px');
  /* ventanas que ocupan todo el ancho (cofre, eventos): en PC grande se estrechan para dejar sitio a los paneles */
  if(gap<150&&document.body.classList.contains('dsk')&&innerWidth>=1100&&!document.body.classList.contains('pcpick')&&win&&!win.dataset.mzcap){const zm=parseFloat(getComputedStyle($('relic').firstElementChild||win).zoom)||1;const g=$('relic').querySelector('.cgrid,.evwin')||win;g.dataset.mzcap=1;win.dataset.mzcap=1;g.style.maxWidth=Math.floor((innerWidth-370)/zm)+'px';g.style.marginLeft=g.style.marginRight='auto';return;}
  document.body.classList.toggle('mzbtn',!fit);
@@ -11207,7 +11318,7 @@ setInterval(()=>{try{const w=document.querySelector('#relic.open .pscr');if(!w)r
 // ==================== v312 · Elegir pieza en móvil: pantalla aparte, como la oferta de torres ====================
 // El fondo queda tapado (no se ve ni se puede tocar el mapa) y el mazo, las reliquias y el ojo van arriba a la derecha,
 // en el mismo sitio que en las demás ventanas. Los botones de dentro de la ventana se ocultan en móvil.
-setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.contains('mfs')&&!B.contains('pcpeek')&&!(typeof LB!=='undefined'&&LB.open);let b=$('pkbar');
+setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.contains('mfs')&&!B.contains('pcpeek')&&!(typeof LB!=='undefined'&&LB.open)&&!$('relic').classList.contains('open');let b=$('pkbar');/* v317: con otra ventana encima (torre, cofre, evento), su barra manda */
  if(!on){if(b)b.classList.remove('on');return;}
  if(!b){b=document.createElement('div');b.id='pkbar';b.className='rlbar pkbar';const ic=(k,fb)=>typeof icU==='function'?icU(k,fb):fb;
   b.innerHTML=`<button data-mz="deck" class="mzb" title="Ver tu mazo">${ic('m_deck','🃏')}</button><button data-mz="rel" class="mzb" title="Ver tus reliquias">${ic('m_chest','🧰')}</button><button data-a="ppeek" title="Ver el mapa">${ic('m_k_peek','👁')}</button>`;
@@ -11266,7 +11377,7 @@ function rgTick(dt){for(const e of S.enemies){if(!(e.hp>0)){e.rgV=0;continue;}
   const ss=sinSenal(e);
   // los trolls tienen su propia regeneración (elites.js / jefes.js): Sin señal también la corta
   if(ss&&(e.t==='troll'||e.t==='atroll')&&e.hp>e.rgH)e.hp=e.rgH;
-  const v=RGEN[e.t];e.rgV=0;
+  const v=RGEN[e.t]||e.rgX;e.rgV=0;
   if(v&&!ss&&e.hp<e.max){const inC=e.rgL!=null&&S.wt-e.rgL<RGHIT;e.hp=Math.min(e.max,e.hp+e.max*v*(inC?.5:1)*dt);e.rgV=inC?1:2;}
   e.rgH=e.hp;}}
 {const _n=newStatesTick;newStatesTick=function(dt){const r=_n.apply(this,arguments);try{if(S&&S.phase==='wave')rgTick(dt);}catch(e){}return r;};}
@@ -11873,4 +11984,264 @@ const hsBest=(hero,skip)=>{try{const L=(HIST.list||[]).filter(x=>x.hero===hero&&
  if(r&&p.right){const tabs=`<div class="hsv"><button class="${HIST.v==='sc'?'':'on'}" data-a="hsv" data-v="">Resumen</button><button class="${HIST.v==='sc'?'on':''}" data-a="hsv" data-v="sc">Puntuación${r.sc!=null?' · '+fi(r.sc):''}</button></div>`;
   if(HIST.v==='sc'){const best=hsBest(r.hero);p.right=String(p.right).replace(/(<div class="hshd">[\s\S]*?<\/div><\/div><\/div>)[\s\S]*$/,(m,a)=>a+tabs+(r.scr?`${scRows({t:r.sc,rows:r.scr})}${best!=null?`<p class="scnote">Récord con ${HEROES[r.hero]?HEROES[r.hero].n:r.hero}: <b>${fi(best)}</b>${best===r.sc?' (esta partida)':''}</p>`:''}`:'<p class="scnote">Esta partida es de antes de que hubiera puntuación.</p>'));}
   else p.right=String(p.right).replace(/(<div class="hshd">[\s\S]*?<\/div><\/div><\/div>)/,'$1'+tabs);}}catch(e){console.warn(e);}return p;};}
+// ==================== v318 · AMENAZAS (dificultad al estilo del Calor de Hades) ====================
+// Decidido con Nogal (13-nov-2026): mismo nombre en todas las eras; se desbloquean al completar la era (3 piezas → logro de plata);
+// botón a la derecha de las piezas; pantalla aparte agrupada por tipo; resumen antes de empezar; +10 % de puntuación por punto.
+// Tanda 1: el sistema y Supercampeones y Venganza. El resto se ven y se desbloquean, pero aún no se pueden activar.
+const AZSV=(b)=>`<svg viewBox="-4 -4 56 56" width="1em" height="1em" class="amzsv">${b}</svg>`;
+const AZK='stroke="#1b1712" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"';
+const AZIC={
+ sup:AZSV(`<path d="M10 40h28l3-18-9 7-8-13-8 13-9-7z" fill="#ffcf4a" ${AZK}/><circle cx="24" cy="14" r="3" fill="#ff5a64" ${AZK}/><circle cx="7" cy="20" r="2.5" fill="#5ab4ff" ${AZK}/><circle cx="41" cy="20" r="2.5" fill="#5ab4ff" ${AZK}/><path d="M10 40h28v5H10z" fill="#e0a52a" ${AZK}/>`),
+ ven:AZSV(`<path d="M24 4c6 8 14 12 13 24a13 13 0 01-26 0c0-8 6-10 6-17 3 3 4 5 4 8 3-5 4-10 3-15z" fill="#ff5a3c" ${AZK}/><path d="M17 27l6 3M31 27l-6 3" ${AZK} fill="none"/><path d="M19 37q5-4 10 0" fill="none" ${AZK}/>`),
+ cor:AZSV(`<path d="M6 10h14v14H6zM20 10h14v14H20zM20 24h14v14H20z" fill="#6a4a8a" ${AZK}/><path d="M34 24h8v14h-8z" fill="#3a2a4a" ${AZK}/><path d="M26 12l-3 7 5 4-4 7 3 6" fill="none" stroke="#c070ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`),
+ nie:AZSV(`<path d="M8 32a8 8 0 016-13 11 11 0 0121-2 8 8 0 016 15z" fill="#aab2bc" ${AZK}/><path d="M12 40h26M16 45h18" stroke="#8a929c" stroke-width="3" stroke-linecap="round"/><ellipse cx="24" cy="25" rx="8" ry="5" fill="#fff" ${AZK}/><circle cx="24" cy="25" r="2.5" fill="#1b1712"/>`),
+ ref:AZSV(`<path d="M10 26a14 14 0 0128 0v6H10z" fill="#9aa3ad" ${AZK}/><path d="M8 32h32v5H8z" fill="#6b7480" ${AZK}/><circle cx="35" cy="35" r="10" fill="#fff" ${AZK}/><path d="M35 29v6l4 3" fill="none" ${AZK}/>`),
+ ase:AZSV(`<path d="M12 4h24M12 44h24" ${AZK}/><path d="M15 4c0 12 18 12 18 20S15 32 15 44h18c0-12-18-12-18-20S33 16 33 4z" fill="#f2e3c0" ${AZK}/><path d="M18 40q6-6 12 0z" fill="#ff5a3c"/><path d="M20 12h8l-4 6z" fill="#ff5a3c"/>`),
+ sab:AZSV(`<rect x="8" y="22" width="20" height="18" rx="3" fill="#c0392b" ${AZK}/><path d="M18 22v-6q0-6 8-6h6" fill="none" ${AZK}/><path d="M34 6l4 4M38 4l1 5M32 10l-4 1" stroke="#ffcf4a" stroke-width="2.4" stroke-linecap="round"/><path d="M12 29h12M12 34h12" stroke="#1b1712" stroke-width="1.6"/>`),
+ gri:AZSV(`<ellipse cx="24" cy="26" rx="14" ry="18" fill="#3a1a5a" ${AZK}/><path d="M24 12c6 4 6 10 0 14s-6 10 0 14" fill="none" stroke="#c070ff" stroke-width="2.6" stroke-linecap="round"/><path d="M18 18q-4 8 2 16M30 18q4 8-2 16" fill="none" stroke="#7ad8ff" stroke-width="1.8" stroke-linecap="round"/>`),
+ aba:AZSV(`<path d="M12 44V6" ${AZK}/><path d="M12 8h26l-6 8 6 8H12z" fill="#c0392b" ${AZK}/><circle cx="22" cy="16" r="3.5" fill="#ffcf4a" ${AZK}/>`),
+ saq:AZSV(`<path d="M16 16h16l6 12a12 12 0 01-12 16h-4a12 12 0 01-12-16z" fill="#c9a05a" ${AZK}/><path d="M18 16l-3-8h18l-3 8" fill="#b08040" ${AZK}/><circle cx="24" cy="31" r="5" fill="#ffcf4a" ${AZK}/><path d="M36 10l6-4M38 16h6" stroke="#c0392b" stroke-width="2.6" stroke-linecap="round"/>`),
+ inf:AZSV(`<circle cx="20" cy="28" r="13" fill="#ffcf4a" ${AZK}/><circle cx="20" cy="28" r="8" fill="none" stroke="#c99a2a" stroke-width="1.8"/><path d="M34 26V6M28 12l6-6 6 6" fill="none" stroke="#c0392b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`)};
+
+// ---- datos: [id, nombre, grupo, rangos [[puntos, texto]], desbloqueo] ----
+// desbloqueo: 'ini' (de salida), número N (gana con N puntos de amenaza), 'e2' (gana con amenazas en la Era Distópica), 'fut' (aún no existe)
+const AZT=[
+ ['sup','Supercampeones','en',[[2,'Desde la ronda 6, algunos campeones ascienden a supercampeón con <b>1 rasgo</b> al azar: escudo frontal, paso rápido, regeneración o resistencia a control. Cada vez más a menudo en las rondas altas. Dan el doble de oro.'],[2,'Los supercampeones llevan <b>2 rasgos</b>.']],'ini'],
+ ['ven','Venganza','en',[[3,'Cuando muere un élite o un jefe, los enemigos a 2 casillas se enfurecen <b>4 s</b>: corren un 50 % más y no se les puede retener.']],3],
+ ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.']],6],
+ ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.']],7],
+ ['cor','Piezas corruptas','ma',[[2,'Cada <b>3</b> elecciones de pieza, las 3 piezas vienen corruptas. Su casilla maldita se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>2</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf',1],
+ ['nie','Niebla de guerra','ma',[[1,'La línea de rondas solo enseña la <b>ronda siguiente</b>.'],[2,'Además, los enemigos no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces se ven siempre.'],[2,'Además, los portales no informan de la siguiente oleada.'],[2,'Además, no sabes <b>dónde están</b> los portales enemigos.']],5],
+ ['gri','Grietas espaciotemporales','ma',[[3,'A veces se abre un portal especial por el que llegan escuadras extra de una era que ya has visto (con su oro).']],'e2',1],
+ ['ref','Sin refuerzos','ri',[[1,'Tus soldados tardan un <b>50 %</b> más en reaparecer.'],[1,'Tardan un <b>100 %</b> más.'],[3,'Los que caen <b>no reaparecen</b> hasta la siguiente oleada.']],'ini'],
+ ['ase','Asedio sin tregua','ri',[[2,'Desde que pones la pieza tienes <b>30 s</b> para construir; después la oleada empieza sola.'],[1,'Solo <b>20 s</b>.']],'fast'],
+ ['saq','Saqueadores','ec',[[2,'Cada enemigo que llega al núcleo, además de vida, te roba <b>20</b> de oro.']],'ini'],
+ ['inf','Inflación','ec',[[2,'Cada torre del mismo tipo que construyes cuesta un <b>10 %</b> más que la anterior.']],8],
+ ['jp','Jefes preparados','je',[],'fut'],['js','Jefe supremo','je',[],'fut']];
+// el último campo (1) marca las que aún no funcionan en partida: se ven, pero no se pueden activar hasta su versión
+const AZG=[['en','Enemigos'],['ma','Mapa'],['ri','Ritmo y tropas'],['ec','Economía'],['je','Jefes']];
+const AZ={sel:{1:{},2:{}},un:{}};try{Object.assign(AZ,JSON.parse(localStorage.getItem('rt-amz'))||{});}catch(e){}
+const azSave=()=>{try{localStorage.setItem('rt-amz',JSON.stringify(AZ));}catch(e){}};
+const azEraDone=era=>era===2?((typeof STO!=='undefined'&&STO.bb)||0)>=3:((typeof STO!=='undefined'&&STO.p)||0)>=3;
+const AZBF=8,azBfSeen=()=>{try{return Object.keys((typeof SEEN!=='undefined'&&SEEN.bf)||{}).length;}catch(e){return 0;}};
+const azUn=t=>t[4]==='ini'||!!AZ.un[t[0]]||(t[4]==='bf'&&azBfSeen()>=AZBF);
+const azRk=id=>Math.max(1,(AZ.rk&&AZ.rk[id])||1);// rango más alto abierto: el siguiente se abre ganando con el anterior
+const azReady=t=>azUn(t)&&!t[5]&&t[3].length>0;
+const azCond=c=>c==='fut'?'llegará con los jefes nuevos':c==='e2'?'gana una partida con amenazas en la Era Distópica':c==='bf'?'descubre '+AZBF+' casillas especiales distintas ('+Math.min(AZBF,azBfSeen())+' / '+AZBF+')':c==='fast'?'gana una partida en menos de 1 minuto por ronda (tiempo real)':'gana una partida con '+c+' puntos de amenaza o más';
+const azPtsOf=sel=>Object.entries(sel||{}).reduce((a,[k,r])=>{const t=AZT.find(x=>x[0]===k);if(!t)return a;for(let i=0;i<Math.min(r,t[3].length);i++)a+=t[3][i][0];return a;},0);
+const azMult=p=>'×'+(1+p*.1).toFixed(1).replace('.',',');
+const azOn=k=>!!(typeof S!=='undefined'&&S&&S.amz&&S.amz[k]>0)&&!S.tut&&!S.pvE&&!S.pvH;
+const azRank=k=>azOn(k)?S.amz[k]:0;
+const azRunPts=()=>typeof S!=='undefined'&&S&&S.amz?azPtsOf(S.amz):0;
+const AZUI={sel:'sup',from:'era'};
+const azFit=()=>setTimeout(()=>{try{const L=document.querySelector('#comp .amzl'),F=document.querySelector('#comp .lbft');if(L&&F&&!document.body.classList.contains('mfs')){const lt=L.getBoundingClientRect().top,ft=F.getBoundingClientRect().top;if(ft>lt+60)L.style.maxHeight=(ft-lt-10)/(parseFloat(getComputedStyle(L).zoom)||1)+'px';}
+ for(const s of document.querySelectorAll('.amzsv:not([data-f])')){const b=s.getBBox();if(!b.width)continue;const m=Math.max(b.width,b.height)*1.08;s.setAttribute('viewBox',`${b.x+b.width/2-m/2} ${b.y+b.height/2-m/2} ${m} ${m}`);s.dataset.f=1;}}catch(e){}},30);
+const AZLOCK=`<span class="amzlk">${typeof icU==='function'?icU('m_lock','🔒'):'🔒'}</span>`;
+
+// ---- logro: completar la era (las 3 piezas) desbloquea las Amenazas en esa era ----
+ACH.erac1={c:'tu',n:'Era Fantástica completada',d:'Consigue las 3 piezas del núcleo en la Era Fantástica.'};
+ACH.erac2={c:'tu',n:'Era Distópica completada',d:'Recupera los 3 registros de la Era Distópica.'};ACHVIS.erac2=()=>typeof eraList==='function'&&eraList().includes(2);
+setInterval(()=>{try{if(azEraDone(1)&&!(ACHS&&ACHS.erac1))achieve('erac1');if(azEraDone(2)&&!(ACHS&&ACHS.erac2))achieve('erac2');}catch(e){}},1500);
+
+// ---- pantalla de Amenazas ----
+const azRow=(t,sel,ro)=>{const[id,n,,rk]=t,r=sel[id]||0,lk=!azUn(t)||t[4]==='fut',p=rk.slice(0,r).reduce((a,x)=>a+x[0],0);
+ return `<div class="amzr${r?' on':''}${!ro&&AZUI.sel===id?' sel':''}${lk?' lk':''}"${ro?'':` data-a="azsel" data-id="${id}"`}><span class="ai">${lk?AZLOCK:AZIC[id]}</span><span><b>${lk?'???':n}</b>${!lk&&t[5]?'<span class="tg">próximamente</span>':''}</span><span class="pp">${lk?'':rk.map((x,i)=>`<i class="${i<r?'f':''}"></i>`).join('')}</span><span class="pt">${p?'+'+p:''}</span></div>`;};
+const azTot=sel=>{const p=azPtsOf(sel);return `<span class="amztot"><span><small>Amenaza</small><b>${p}</b></span><span><small>Puntuación</small><b>${azMult(p)}</b></span></span>`;};
+function azParts(){const sel=AZ.sel[ERA]=AZ.sel[ERA]||{},t=AZT.find(x=>x[0]===AZUI.sel)||AZT[0],lk=!azUn(t)||t[4]==='fut';
+ const left=`<h3>Amenazas</h3><div class="bksub">Opcional · hacen la partida más difícil y puntúan más · se guardan para la próxima partida</div><div class="amzl">${AZG.map(([g,n])=>`<div class="amzg">${n}</div>`+AZT.filter(x=>x[2]===g).map(x=>azRow(x,sel)).join('')).join('')}</div>`;
+ let right;
+ if(lk)right=`<div class="lbdet amzd"><div class="big lk">${AZLOCK}</div><h4>???</h4><p>Amenaza sin descubrir.</p><div class="lbcur">Para desbloquear: <b>${azCond(t[4])}</b></div></div>`;
+ else{const r=sel[t[0]]||0;right=`<div class="lbdet amzd"><div class="big">${AZIC[t[0]]}</div><h4>${t[1]}</h4><div class="amzrk">${t[3].map((x,i)=>i<azRk(t[0])?`<div class="${i<r?'on':''}"><b class="n">Rango ${i+1} · +${x[0]}</b>${x[1]}</div>`:`<div class="lk"><b class="n">Rango ${i+1} · +${x[0]}</b>Se abre al ganar una partida con el rango ${i}.</div>`).join('')}</div>${t[5]?'<p class="bknote">Todavía no se puede activar: llegará en una próxima versión.</p>':`<div class="amzbtns"><button class="gbtn" data-a="azdec"${r?'':' disabled'} title="Quitar rango"><span>−</span></button><button class="gbtn" data-a="azinc"${r<Math.min(t[3].length,azRk(t[0]))?'':' disabled'} title="Añadir rango"><span>+</span></button></div>`}</div>`;}
+ return {marks:null,key:'amz'+JSON.stringify(sel)+AZUI.sel,left,right,footL:'',footR:`<span class="amzft">${azTot(sel)}<button class="gbtn" data-a="azback">Continuar ›</button></span>`,after:azFit};}
+// ---- resumen antes de empezar ----
+function azResParts(){const id=RL.hsel,D=HEROES[id],E=ERADEF[ERA]||{},done=azEraDone(ERA),sel=AZ.sel[ERA]||{},on=AZT.filter(t=>(sel[t[0]]||0)>0),p=azPtsOf(sel);
+ const left=`<h3>Resumen</h3><div class="bksub">Nueva partida · revisa antes de empezar</div><div class="amzres">
+  <div class="it"><span class="ai">${E.ic||''}</span><span><small>Era</small><b>${ERA===2?'Distópica · Ruinas de Neón':'Fantástica · Reino'}</b></span><button class="lbbk ch" data-a="azch" data-v="era">Cambiar</button></div>
+  <div class="it"><span class="ai">${typeof icU==='function'?icU('m_hourglass','⏳'):'⏳'}</span><span><small>Duración</small><b>${ROUNDS} rondas</b></span><button class="lbbk ch" data-a="azch" data-v="rounds">Cambiar</button></div>
+  <div class="it" style="--hc:${D.col}"><span class="hp">${portrait(id)}</span><span><small>Héroe</small><b>${D.n}</b><small>${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</small></span><button class="lbbk ch" data-a="azch" data-v="hero">Cambiar</button></div></div>`;
+ const right=done?`<h3>Amenazas</h3><div class="bksub">${on.length?p+' puntos de amenaza · puntuación '+azMult(p):'Sin amenazas · partida normal'}</div><div class="amzl" style="margin-top:10px">${on.length?on.map(t=>azRow(t,sel,1)).join(''):'<p style="opacity:.75">Puedes añadir amenazas para que la partida sea más difícil y puntúe más.</p>'}</div><div style="margin-top:12px"><button class="amzsealb" data-a="azopen" data-v="res"><span class="ai">${AZIC.sup}</span>${on.length?'Cambiar amenazas':'Añadir amenazas'}</button></div>`
+  :`<div class="lbdet"><span class="lbdic">${E.ic||''}</span><h4>Todo listo</h4><p>Cuando estés preparado, empieza la partida.</p></div>`;
+ return {marks:null,key:'res'+JSON.stringify(sel)+ERA+id,left,right,footL:`<button class="lbbk" data-a="azch" data-v="hero">‹ Héroe</button>`,footR:`<button class="gbtn" data-a="azgo">Empezar partida ›</button>`,after:azFit};}
+// botón de la era: a la derecha de las piezas (solo con la era completada)
+const azSeal=()=>{const sel=AZ.sel[ERA]||{},p=azPtsOf(sel),on=Object.entries(sel).filter(x=>x[1]>0);
+ return `<div class="amzpos A"><div class="amzseal" data-a="azopen" data-v="era"><span class="ai">${AZIC.sup}</span><span><b>Amenazas</b>${on.length?`<small>${p} puntos · puntuación ${azMult(p)}</small><span class="act">${on.map(([k,r])=>`<span class="ai">${AZIC[k]}${r>1?`<i>${r}</i>`:''}</span>`).join('')}</span>`:'<small>Opcional: haz la partida más difícil</small>'}</span></div></div>`;};
+{const _pp=prepParts;prepParts=function(){if(LB.step==='amz')return azParts();if(LB.step==='res')return azResParts();const P=_pp.apply(this,arguments);
+ try{if(P&&(P.key==='era'||P.key==='era2')&&azEraDone(ERA)){P.key+='az'+azPtsOf(AZ.sel[ERA]);const _a=P.after;P.after=()=>{try{_a&&_a();}catch(e){}setTimeout(()=>{try{const pcs=document.querySelector('#comp .lbera .pcs');if(pcs&&!document.querySelector('#comp .amzpos')){pcs.classList.add('amzA');pcs.insertAdjacentHTML('afterend',azSeal());azFit();}}catch(e){}},0);};}}catch(e){}
+ return P;};}
+// clics (antes que el resto: elegir héroe pasa por el resumen)
+document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+ const stop=()=>{ev.stopPropagation();ev.preventDefault();try{sfx('page');}catch(_){}};
+ if(a==='pickhero'&&LB.area==='prep'&&(LB.step||'')!=='res'&&b.dataset.id&&!(typeof S!=='undefined'&&S&&S.tut)){stop();RL.hsel=b.dataset.id;LB.step='res';lbRender();return;}
+ if(!/^az/.test(a))return;stop();const sel=AZ.sel[ERA]=AZ.sel[ERA]||{},t=AZT.find(x=>x[0]===AZUI.sel);
+ if(a==='azopen'){AZUI.from=b.dataset.v||'era';LB.step='amz';}
+ else if(a==='azback'){LB.step=AZUI.from==='res'?'res':'era';}
+ else if(a==='azsel'){AZUI.sel=b.dataset.id;}
+ else if(a==='azinc'&&t&&azReady(t)){sel[t[0]]=Math.min(t[3].length,azRk(t[0]),(sel[t[0]]||0)+1);azSave();}
+ else if(a==='azdec'&&t){sel[t[0]]=Math.max(0,(sel[t[0]]||0)-1);if(!sel[t[0]])delete sel[t[0]];azSave();}
+ else if(a==='azch'){const v=b.dataset.v;LB.step=v==='hero'?'hero':v==='rounds'?'rounds':'era';}
+ else if(a==='azgo'){LB.step='hero';chooseHero(RL.hsel);return;}
+ lbRender();},true);
+// al empezar: las amenazas elegidas para esta era (solo si está completada y están desbloqueadas y listas)
+{const _ch=chooseHero;chooseHero=function(id){try{if(typeof S!=='undefined'&&S&&!S.tut&&!S.amz){const sel=AZ.sel[ERA]||{};S.amz={};if(azEraDone(ERA))for(const t of AZT)if(sel[t[0]]>0&&azReady(t))S.amz[t[0]]=Math.min(sel[t[0]],t[3].length,azRk(t[0]));}}catch(e){}return _ch.apply(this,arguments);};}
+{const _sg=startGame;startGame=function(){const r=_sg.apply(this,arguments);try{if(S)S.amz=null;}catch(e){}return r;};}
+
+// ---- puntuación: +10 % por punto de amenaza ----
+{const _sc=scoreCalc;scoreCalc=function(){const r=_sc.apply(this,arguments);try{const p=azRunPts();if(p>0&&r.t>0){const x=Math.round(r.t*p*.1);r.rows.push(['amz','Amenazas',p+' puntos de amenaza · '+azMult(p),x]);r.t+=x;}}catch(e){}return r;};}
+{const _hr=hsRec;hsRec=function(){const r=_hr.apply(this,arguments);try{if(r&&S&&S.amz)r.amz=Object.assign({},S.amz);}catch(e){}return r;};}
+// ---- desbloqueos al ganar ----
+{const _eg=endGame;endGame=function(){const won=S&&S.phase==='won',p=azRunPts(),era=ERA,fast=won&&!S.tut&&(GT.r||1e9)<=ROUNDS*60,act=Object.assign({},S&&S.amz||{});const r=_eg.apply(this,arguments);try{if(won){const nu=[];AZ.rk=AZ.rk||{};
+  for(const[k,v]of Object.entries(act)){const t=AZT.find(x=>x[0]===k);if(t&&v>=azRk(k)&&v<t[3].length){AZ.rk[k]=v+1;nu.push(t[1]+' (rango '+(v+1)+')');}}
+  for(const t of AZT){if(azUn(t))continue;const c=t[4];if((typeof c==='number'&&p>=c)||(c==='e2'&&era===2&&p>0)||(c==='fast'&&fast)){AZ.un[t[0]]=1;nu.push(t[1]);}}
+  if(nu.length){azSave();if(azEraDone(1)||azEraDone(2))setTimeout(()=>{try{toast('Amenazas desbloqueadas: <b>'+nu.join('</b>, <b>')+'</b>');}catch(e){}},1200);}}}catch(e){}return r;};}
+// ---- Borrar progreso: también las amenazas y el progreso de los logros ----
+document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a="preset"]');if(b&&typeof OP!=='undefined'&&OP.rst){for(const k of['rt-amz','rt-prog'])try{localStorage.removeItem(k);}catch(e){}}},true);
+
+// ---- en partida: contador (en el sitio de los FPS; los FPS van a su derecha) ----
+setInterval(()=>{try{let c=$('amzchip');const p=azRunPts(),show=p>0&&typeof S!=='undefined'&&S&&S.hero&&!document.body.classList.contains('inmenu');
+ if(!show){if(c)c.style.display='none';return;}
+ if(!c){c=document.createElement('div');c.id='amzchip';c.className='c amzchip';document.body.appendChild(c);}
+ const h=`<span class="ai">${AZIC.sup}</span>Amenazas · ${p}`;if(c.dataset.h!==h){c.innerHTML=h;c.dataset.h=h;azFit();}c.style.display='';
+ const mb=document.querySelector('#mtl button');if(mb){const z=parseFloat(getComputedStyle(c).zoom)||1,r=mb.getBoundingClientRect();c.style.left=(r.right+8*z)/z+'px';c.style.top=(r.top+(r.height-c.offsetHeight*z)/2)/z+'px';}}catch(e){}},200);
+
+// ---- Supercampeones ----
+const AZCH=new Set(['champ','dchamp','armored','centu','praet','brute','titan']);
+const AZTR=[['sh','Escudo frontal'],['fa','Paso rápido'],['rg','Regeneración'],['cc','Resistencia a control']];
+{const _se=spawnEnemy;spawnEnemy=function(t){const n=S&&S.enemies?S.enemies.length:0;const r=_se.apply(this,arguments);try{const R=azRank('sup');if(R&&S.enemies.length>n){const e=S.enemies[S.enemies.length-1];
+  if(AZCH.has(e.t)&&S.round>5){const pr=.1+.25*Math.max(0,Math.min(1,(S.round-6)/Math.max(1,ROUNDS-6)));if(Math.random()<pr){const tr=AZTR.map(x=>x[0]).sort(()=>Math.random()-.5).slice(0,R);e.sup=tr;
+   if(tr.includes('sh'))e.supSh=4;if(tr.includes('fa'))e.supFa=1;}}}}catch(x){}return r;};}
+{const _hm=eHurtMod;eHurtMod=function(e,a,src,ty){if(e&&e.supSh>0&&!DNK&&a>0){e.supSh--;S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.35*K,col:'#ffcf4a'});return 0;}return _hm.apply(this,arguments);};}
+{const _mv=move;move=function(e,dt){if(e&&(e.supFa||e.rage>0)){const h=e.fx.haste,m=(e.supFa?1.3:1)*(e.rage>0?1.5:1);if(!h||h.m<m)e.fx.haste={m,t:.3};if(e.rage>0)e.stopped=false;}return _mv.apply(this,arguments);};}
+{const _st=stunE;stunE=function(e,t){if(e&&e.sup&&e.sup.includes('cc'))t*=BOSSRES;return _st.call(this,e,t);};}
+{const _fr=freezeE;freezeE=function(e,t){if(e&&e.sup&&e.sup.includes('cc'))t*=BOSSRES;return _fr.call(this,e,t);};}
+{const _sl=slowE;slowE=function(e,m,t){if(e&&e.sup&&e.sup.includes('cc'))m=1-(1-m)*BOSSRES;return _sl.call(this,e,m,t);};}
+// regeneración del rasgo: como un élite (0,5 %/s, la mitad en combate) — la cuenta rgTick (regen_resmag.js)
+{const _rg=rgTick;rgTick=function(dt){for(const e of S.enemies)if(e.sup&&e.sup.includes('rg')&&!RGEN[e.t])e.rgX=.005;return _rg.apply(this,arguments);};}
+// oro doble y Venganza al morir
+{const _d=achDeath;achDeath=function(e){const r=_d.apply(this,arguments);try{if(!e.leak){
+  if(e.sup){const g=rndG(killGoldF(e.t));S.gold+=g;if(S.st)S.st.gKill+=g;}
+  if(azOn('ven')&&(isBoss(e)||(ET[e.t]&&ET[e.t].el))){for(const q of S.enemies)if(q!==e&&q.hp>0&&Math.hypot(q.x-e.x,q.y-e.y)<=2*K){q.rage=4;}S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:2*K,col:'#ff5a3c'});}}}catch(x){}return r;};}
+setInterval(()=>{try{if(!S||S.phase!=='wave')return;for(const e of S.enemies)if(e.rage>0)e.rage-=.1*(S.espd||1);}catch(e){}},100);
+// en el mapa: corona del supercampeón y aura roja del enfurecido
+{const _dw=e2DrawWorld;e2DrawWorld=function(lw){const r=_dw.apply(this,arguments);try{const X=v=>v*CS+CS/2,es=typeof EVS!=='undefined'?EVS:1;
+  for(const e of S.enemies){if(!(e.hp>0))continue;const rr=ET[e.t].r*CS*es,x=X(e.x),y=X(e.y);
+   if(e.sup){const w=rr*.9,h=rr*.55,top=y-rr-h*.6;g.fillStyle='#ffcf4a';g.strokeStyle='#1b1712';g.lineWidth=lw(1.6);g.beginPath();g.moveTo(x-w/2,top+h);g.lineTo(x-w/2,top+h*.25);g.lineTo(x-w/4,top+h*.6);g.lineTo(x,top);g.lineTo(x+w/4,top+h*.6);g.lineTo(x+w/2,top+h*.25);g.lineTo(x+w/2,top+h);g.closePath();g.fill();g.stroke();}
+   if(e.rage>0){g.strokeStyle='rgba(255,90,60,.85)';g.lineWidth=lw(2.4);g.beginPath();g.arc(x,y,rr+lw(5),0,7);g.stroke();}}}catch(x){}return r;};}
+
+// ---- Sin refuerzos: los soldados tardan más en reaparecer (R3: hasta la siguiente oleada) ----
+{const _ud=unitDeath;unitDeath=function(t,s){const r=_ud.apply(this,arguments);try{const R=azRank('ref');if(R&&t&&!t.hero&&s&&!s.H){if(R>=3)s.rt=1e9;else if(s.rt>0)s.rt*=R===2?2:1.5;}}catch(e){}return r;};}
+{const _sw=startWave;startWave=function(){const r=_sw.apply(this,arguments);try{if(S&&S.phase==='wave')for(const t of unitTowers())for(const s of t.sd||[])if(s.rt>1e8)s.rt=.5;}catch(e){}return r;};}
+// ---- Saqueadores: cada enemigo que llega al núcleo roba 20 de oro ----
+{const _d2=achDeath;achDeath=function(e){const r=_d2.apply(this,arguments);try{if(e&&e.leak&&azOn('saq')&&S.gold>0){const g=Math.min(S.gold,20);S.gold-=g;S.fx.push({x:S.core.x,y:S.core.y,t:.6,m:.6,r:.8*K,col:'#ffcf4a'});if(S.st)S.st.gSaq=(S.st.gSaq||0)+g;}}catch(x){}return r;};}
+// ==================== v321 · Amenazas, tanda 2: Asedio sin tregua, Inflación y Niebla de guerra ====================
+// ---- Asedio sin tregua: tras poner la pieza, 30 s (R2: 20 s) para construir; después la oleada empieza sola ----
+const AZASE={t:null,r:0,last:0};
+setInterval(()=>{try{const R=azRank('ase'),B=document.body.classList;let c=$('azase');
+ const run=R&&S&&S.phase==='build'&&S.hero&&!B.contains('pcpick')&&!(RL&&RL.open)&&!(LB&&LB.open)&&!(DLG&&DLG.on)&&S.speed!==0&&!document.body.classList.contains('inmenu');
+ if(!R||!S||S.phase!=='build'){AZASE.t=null;if(c)c.style.display='none';return;}
+ if(AZASE.r!==S.round||AZASE.t==null){AZASE.r=S.round;AZASE.t=R>=2?20:30;}
+ const now=performance.now(),dt=AZASE.last?Math.min(.5,(now-AZASE.last)/1000):0;AZASE.last=now;if(run)AZASE.t-=dt;
+ if(!c){c=document.createElement('div');c.id='azase';c.className='azase';document.body.appendChild(c);}
+ const sec=Math.max(0,Math.ceil(AZASE.t)),h=`<span class="ai">${AZIC.ase}</span>Empieza sola en <b>0:${String(sec).padStart(2,'0')}</b>`;if(c.dataset.h!==h){c.innerHTML=h;c.dataset.h=h;azFit();}
+ const go=document.querySelector('#mbr .go');c.style.display=go&&go.offsetWidth?'':'none';c.classList.toggle('pz',!run);c.classList.toggle('hot',AZASE.t<=5);
+ if(go){const z=document.body.classList.contains('mfs')?1:(parseFloat(getComputedStyle(c).zoom)||1),r=go.getBoundingClientRect();
+  if(document.body.classList.contains('mfs')){c.style.right=(innerWidth-r.left+8)+'px';c.style.bottom=(innerHeight-r.bottom)+'px';}else{c.style.right=(innerWidth-r.right)/z+'px';c.style.bottom=(innerHeight-r.top+13*z)/z+'px';}}
+ if(AZASE.t<=0){AZASE.t=null;c.style.display='none';try{startWave();}catch(e){}}}catch(e){}},200);
+// ---- Inflación: cada torre del mismo tipo cuesta un 10 % más que la anterior ----
+function azInfl(){try{const on=azOn('inf');for(const k of Object.keys(TW)){const T=TW[k];if(T.cost==null||T.uniq)continue;if(T.cost0==null)T.cost0=T.cost;
+  const n=on&&S&&S.list?S.list.filter(t=>t.type===k&&!t.hero&&!t.summ).length:0,c=n?Math.round(T.cost0*(1+.1*n)):T.cost0;/* sin redondear a 5: es parte de la dificultad (Nogal) */if(T.cost!==c)T.cost=c;}}catch(e){}}
+{const _b=build;build=function(){azInfl();const r=_b.apply(this,arguments);azInfl();return r;};}
+{const _u=ui;ui=function(){azInfl();return _u.apply(this,arguments);};}
+{const _sg=startGame;startGame=function(){const r=_sg.apply(this,arguments);azInfl();return r;};}
+// ---- Niebla de guerra: no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces, siempre ----
+const azNie=()=>azOn('nie')?S.amz.nie:0;
+function azFogTick(){if(azNie()<2||!S||S.phase!=='wave')return;const tw=S.list||[];
+ const hs=[S.hero&&S.hero.s,S.hero2&&S.hero2.s].filter(h=>h&&h.hp>0);
+ for(const e of S.enemies){if(e.fog||!(e.hp>0))continue;if(hs.some(h=>Math.hypot(e.x-h.x,e.y-h.y)<=2*K)){e.fog=1;continue;}
+  for(const t of tw){let rg=0;try{rg=stats(t).range||0;}catch(_){}if(Math.hypot(e.x-t.x,e.y-t.y)<=Math.max(rg,1.5*K)){e.fog=1;break;}
+   for(const s of t.sd||[])if(s.hp>0&&Math.hypot(e.x-s.x,e.y-s.y)<=2*K){e.fog=1;break;}if(e.fog)break;}}}
+setInterval(()=>{try{azFogTick();}catch(e){}},100);
+{const _d=draw;draw=function(){if(azNie()<2||!S||!S.enemies)return _d.apply(this,arguments);const all=S.enemies;S.enemies=all.filter(e=>e.fog);try{return _d.apply(this,arguments);}finally{const add=S.enemies.filter(e=>!all.includes(e));S.enemies=all.concat(add);}};}
+{const _rd=rtlDot;rtlDot=function(r){const d=_rd.apply(this,arguments);if(azNie()>=1&&r>(S.phase==='wave'?S.round+1:S.round))return Object.assign({},d,{c:'',h:''});return d;};}
+
+// Niebla R3: los portales no dicen qué va a salir
+{const _pi=portalInfo;portalInfo=function(p){if(p&&azNie()>=3)return '<b>Portal enemigo</b><small>Sin información sobre la siguiente oleada.</small>';return _pi.apply(this,arguments);};}
+{const _pr=portalRows;portalRows=function(p,lim){if(azNie()>=3)return lim?'':'<div class="pbh">Sin información sobre la oleada</div>';return _pr.apply(this,arguments);};}
+// Niebla R4: no se ve dónde están los portales (ni los extremos del camino); tampoco se pueden señalar
+{const _d=draw;draw=function(){if(azNie()<4||!S||!S.portals)return _d.apply(this,arguments);const P=S.portals,E=S.ends;S.portals=[];S.ends=[];try{return _d.apply(this,arguments);}finally{S.portals=P;S.ends=E;}};}
+{const _r=resolve;resolve=function(){const o=_r.apply(this,arguments);if(o&&azNie()>=4&&o.key&&o.key.startsWith('pt:'))return null;return o;};}
+{const _p=ptipTick;ptipTick=function(){if(azNie()>=4){const el=$('ptips');if(el&&el.innerHTML)el.innerHTML='';PTSIG='';return;}return _p.apply(this,arguments);};}
+
+// ==================== Sabotaje ====================
+// Desde la ronda 3: 1 saboteador por oleada (2 desde la 9, 3 desde la 15). Va a por una torre cerca del camino;
+// él y la torre salen marcados y una línea de puntos aparece y se desvanece. Si llega a 2 casillas, la torre se apaga 6 s (interferencia).
+const SABR=2,SABT=6;
+function azSabTargets(){const out=[];for(const t of S.list){const T=TW[t.type];if(!T||T.unit||T.uniq||t.hero)continue;let ok=false;
+  for(let y=Math.max(0,t.y-3);y<=Math.min(N-1,t.y+3)&&!ok;y++)for(let x=Math.max(0,t.x-3);x<=Math.min(N-1,t.x+3);x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=2.5){ok=true;break;}
+  if(ok)out.push(t);}return out;}
+{const _sw=startWave;startWave=function(){const r=_sw.apply(this,arguments);try{S.sabIdx=null;S.spN=0;S.flagSq={};
+  if(azOn('sab')&&S.round>=3){const n=S.round>=15?3:S.round>=9?2:1;let tot=0;for(const p of S.portals)for(const t of p.q||[])if(t!=='|')tot++;
+   const lim=Math.max(1,Math.floor(tot*.7)),set=new Set();let g=0;while(set.size<Math.min(n,lim)&&g++<50)set.add(Math.floor(Math.random()*lim));S.sabIdx=set;}}catch(e){}return r;};}
+{const _se=spawnEnemy;spawnEnemy=function(t,p,fo){const n=S&&S.enemies?S.enemies.length:0;const r=_se.apply(this,arguments);try{if(S.enemies.length>n){const e=S.enemies[S.enemies.length-1],E=ET[e.t]||{};
+  const i=S.spN=(S.spN||0)+1;
+  // saboteador: un enemigo de a pie normal
+  if(S.sabIdx&&S.sabIdx.has(i-1)){if(!isBoss(e)&&!E.el&&!E.fly){const ts=azSabTargets();if(ts.length){e.sab=ts[Math.floor(Math.random()*ts.length)];}}else S.sabIdx.add(i);}
+  // abanderado: el primero de una escuadra nueva, con probabilidad
+  if(azOn('aba')&&S.round>=4&&e.sqid&&!isBoss(e)&&!E.fly){S.flagSq=S.flagSq||{};if(!(e.sqid in S.flagSq)){const pr=.25+.15*Math.max(0,Math.min(1,(S.round-4)/Math.max(1,ROUNDS-4)));S.flagSq[e.sqid]=Math.random()<pr?e:null;if(S.flagSq[e.sqid])e.flag=1;}}
+ }}catch(x){}return r;};}
+function azSabTick(){if(!S||S.phase!=='wave'||!azOn('sab'))return;for(const e of S.enemies){const t=e.sab;if(!t||!(e.hp>0))continue;
+  if(!S.list.includes(t)){e.sab=null;continue;}
+  if(Math.hypot(e.x-t.x,e.y-t.y)<=SABR){t.jam=Math.max(t.jam||0,SABT);e.sab=null;e.sabDone=1;S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.2*K,col:'#e0453a'});}}}
+setInterval(()=>{try{azSabTick();}catch(e){}},100);
+// ==================== Abanderados ====================
+const azFlagOn=e=>{if(!e||!e.sqid||!S.flagSq)return false;const b=S.flagSq[e.sqid];return !!(b&&b.hp>0&&S.enemies.includes(b));};
+{const _sl=slowE;slowE=function(e,m,t){if(azOn('aba')&&azFlagOn(e))return;return _sl.apply(this,arguments);};}
+{const _kn=knock;knock=function(e,d){if(azOn('aba')&&azFlagOn(e))return;return _kn.apply(this,arguments);};}
+// dibujo: saboteador (aro rojo discontinuo + llave), su torre (aro + «!») y la línea que aparece y se desvanece; bandera del abanderado
+{const _dw=e2DrawWorld;e2DrawWorld=function(lw){const r=_dw.apply(this,arguments);try{if(!S||!S.enemies)return r;const X=v=>v*CS+CS/2,es=typeof EVS!=='undefined'?EVS:1,now=performance.now()/1000;
+  for(const e of S.enemies){if(!(e.hp>0))continue;const rr=ET[e.t].r*CS*es,x=X(e.x),y=X(e.y);
+   if(e.sab){const t=e.sab,tx=X(t.x),ty=X(t.y);
+    g.save();g.setLineDash([lw(4),lw(3)]);g.strokeStyle='#e0453a';g.lineWidth=lw(2);g.beginPath();g.arc(x,y,rr+lw(4),0,7);g.stroke();
+    const a=Math.max(0,Math.sin(now*2.4));g.globalAlpha=.85*a;g.setLineDash([lw(2),lw(5)]);g.lineWidth=lw(1.8);g.beginPath();g.moveTo(x,y);g.lineTo(tx,ty);g.stroke();g.globalAlpha=1;
+    g.setLineDash([lw(5),lw(3)]);g.lineWidth=lw(2.4);g.beginPath();g.arc(tx,ty,CS*1.4,0,7);g.stroke();g.setLineDash([]);
+    g.fillStyle='#e0453a';g.beginPath();g.arc(tx+CS*1.05,ty-CS*1.05,CS*.4,0,7);g.fill();g.fillStyle='#fff';g.font='bold '+(CS*.55|0)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('!',tx+CS*1.05,ty-CS*1.02);
+    // llave inglesa sobre el saboteador
+    const wx=x+rr*.9,wy=y-rr*.9,s=rr*.55;g.strokeStyle='#1b1712';g.lineWidth=lw(3.2);g.lineCap='round';g.beginPath();g.moveTo(wx-s,wy+s);g.lineTo(wx+s*.3,wy-s*.3);g.stroke();g.strokeStyle='#e0453a';g.lineWidth=lw(1.8);g.stroke();
+    g.beginPath();g.arc(wx+s*.45,wy-s*.45,s*.42,0,7);g.stroke();g.restore();}
+   if(azOn('aba')&&e.sqid&&S.flagSq){const b=S.flagSq[e.sqid];if(b&&b.hp>0){
+    if(b===e){const px=x+rr*.2,top=y-rr-CS*.9;g.strokeStyle='#3b2a18';g.lineWidth=lw(2);g.beginPath();g.moveTo(px,y-rr*.2);g.lineTo(px,top);g.stroke();
+     g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1.2);g.beginPath();g.moveTo(px,top);g.lineTo(px+CS*.6,top+CS*.15);g.lineTo(px,top+CS*.32);g.closePath();g.fill();g.stroke();}
+    else{g.fillStyle='#d9a52b';g.strokeStyle='#1b1712';g.lineWidth=lw(1);g.beginPath();g.moveTo(x-rr*.25,y-rr-lw(5));g.lineTo(x+rr*.25,y-rr-lw(5));g.lineTo(x,y-rr-lw(1));g.closePath();g.fill();g.stroke();}}}}
+ }catch(x){}return r;};}
+// ==================== v319 · Aviso de «¡Cerca de un logro!» ====================
+// Idea de Nogal (13-nov-2026): cuando un logro que se mide en partida llega al 80 %, el juego te avisa (abajo en el centro), con su trofeo,
+// su barra y un botón para fijarlo. Una vez por logro y partida; los de progreso entre partidas (bajas con cada torre, cofres…), una vez por nivel.
+// Nunca de logros ocultos o sin descubrir. Se puede quitar en Opciones › Juego.
+const NEARP=.8;
+OPTS.splice(Math.max(0,OPTS.findIndex(o=>o.tab==='jg')),0,{tab:'jg',type:'toggle',key:'nearach',def:true,label:'Avisar de logros cercanos',desc:'Cuando te falta poco para un logro (has hecho el 80 %), sale un aviso abajo con su progreso y un botón para fijarlo.'});
+if(OPT.nearach===undefined)OPT.nearach=true;
+const NEAR={q:[],cur:null,tm:0};let NEARC={};try{NEARC=JSON.parse(localStorage.getItem('rt-near'))||{};}catch(e){}
+const nearLv=id=>(ACH[id]&&ACH[id].lv)||(typeof ACHLV!=='undefined'&&ACHLV[id])||'s';
+function nearProg(id){const A=ACH[id];if(!A)return null;const M=typeof APM!=='undefined'&&APM[id];
+ if(M){if(M.cur&&id!=='curious')return [M.cur(),M.max,'run'];if(M.best)return [((S&&S.gbest)||{})[id]||0,M.max,'run'];return null;}
+ if(typeof A.prog==='function'){const p=A.prog();return p?[p[0],p[1],'car']:null;}return null;}
+function nearHtml(id){const A=ACH[id],p=nearProg(id)||[0,1],pc=Math.min(100,p[0]/p[1]*100),pin=typeof PINS!=='undefined'&&PINS.includes(id);
+ return `<div class="nearbx"><span class="ntr">${typeof trofIcL==='function'?trofIcL(nearLv(id)):trofIc()}</span><span class="ntx"><b>¡Cerca de un logro!</b><span class="nn">${A.n}</span><span class="nbar"><i style="width:${pc}%"></i></span><small>${fi(Math.min(p[0],p[1]))} / ${fi(p[1])}</small></span><button class="npin${pin?' on':''}" data-nearpin="${id}">${typeof icU==='function'?icU('m_pin','📌'):''}${pin?'Fijado':'Fijar'}</button></div>`;}
+function nearShow(id){let el=$('nearach');if(!el){el=document.createElement('div');el.id='nearach';document.body.appendChild(el);}NEAR.cur=id;el.innerHTML=nearHtml(id);el.classList.add('on');try{sfx('page');}catch(e){}
+ clearTimeout(NEAR.tm);NEAR.tm=setTimeout(()=>{el.classList.remove('on');NEAR.cur=null;},8000);}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nearpin]');if(!b)return;e.stopPropagation();e.preventDefault();const id=b.dataset.nearpin;
+ if(!PINS.includes(id)){if(PINS.length>=3){toast('Ya tienes 3 logros fijados: quita uno para fijar este.');return;}PINS.push(id);savePins();try{apanTick(1);}catch(_){}}
+ const el=$('nearach');if(el&&NEAR.cur===id){el.innerHTML=nearHtml(id);clearTimeout(NEAR.tm);NEAR.tm=setTimeout(()=>{el.classList.remove('on');NEAR.cur=null;},4000);}},true);
+setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.hero||S.tut||S.pvE||S.pvH||!OPT.nearach)return;if(S.phase!=='wave'&&S.phase!=='build')return;
+ S.near=S.near||{};
+ // el que se ve: progreso al día
+ if(NEAR.cur){const el=$('nearach'),p=nearProg(NEAR.cur);if(el&&p){const i=el.querySelector('.nbar i'),s=el.querySelector('.ntx small');if(i)i.style.width=Math.min(100,p[0]/p[1]*100)+'%';if(s)s.textContent=fi(Math.min(p[0],p[1]))+' / '+fi(p[1]);}}
+ for(const id of Object.keys(ACH)){if(ACHS[id]||S.near[id]||NEARC[id]||NEAR.q.includes(id)||NEAR.cur===id)continue;
+  try{if(typeof achVis==='function'&&!achVis(id))continue;if(typeof achFound==='function'&&!achFound(id))continue;if(typeof achSec==='function'&&achSec(id))continue;}catch(e){continue;}
+  const p=nearProg(id);if(!p||!(p[1]>0))continue;const r=p[0]/p[1];
+  if(r>=NEARP&&r<1){if(p[2]==='car'){NEARC[id]=1;try{localStorage.setItem('rt-near',JSON.stringify(NEARC));}catch(e){}}else S.near[id]=1;NEAR.q.push(id);}}
+ if(!NEAR.cur&&NEAR.q.length)nearShow(NEAR.q.shift());
+ // si sale a la vez el de enemigo nuevo, este se pone encima
+ const el=$('nearach'),ne=$('nenot');if(el)el.classList.toggle('up',!!(ne&&ne.classList.contains('on')));}catch(e){}},1000);
+// Borrar progreso: también los avisos ya dados
+document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a="preset"]');if(b&&typeof OP!=='undefined'&&OP.rst){try{localStorage.removeItem('rt-near');}catch(e){}}},true);
 </script></body></html>
