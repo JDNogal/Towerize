@@ -179,7 +179,7 @@ def tframe():
     o='M6 6h36v36H6z';i='M13 13h22v22H13z'
     d=o+' '+i[0:]
     ring='<path d="M6 6h36v36H6zM13 13v22h22V13z" fill="#8a4ad8" stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" fill-rule="evenodd"/>'
-    return ring+L('M9 9h30',  '#b88af0',1.6)+P('M4 4h7v7H4zM37 4h7v7h-7zM4 37h7v7H4zM37 37h7v7h-7z',GD,1.8)+C(24,24,8,'#e8b04a',2)+C(24,24,3.4,'#c88a2a',1.4)
+    return ring+L('M9 9h30',  '#b88af0',1.6)+P('M4 4h7v7H4zM37 4h7v7h-7zM4 37h7v7H4zM37 37h7v7h-7z',GD,1.8)
 def tower_s(x,y,s):
     return G(f'translate({x} {y}) scale({s}) translate(-24 -24)',inner=tower_c())
 def deck2():
@@ -207,14 +207,14 @@ def quake2():
 def shield2():
     d='M24 4l17 6v12c0 11-7 18-17 22C14 40 7 33 7 22V10z'
     inn='M24 8.5l13 4.6V22c0 8.6-5.3 14.4-13 17.6C16.3 36.4 11 30.6 11 22v-8.9z'
-    return P(d,'#9aa5b0',2.4)+P(inn,'#b07a40',2)+clip('sh2',inn,L('M17.5 6v40M24 6v40M30.5 6v40','#7a4a20',1.6))+P(inn,'none',2)+C(24,22,3.4,'#9aa5b0',1.6)+C(13.5,14,1.3,'#5a626c',0)+C(34.5,14,1.3,'#5a626c',0)+C(24,36,1.3,'#5a626c',0)
+    return P(d,'#9aa5b0',2.4)+P(inn,'#b07a40',2)+clip('sh2',inn,L('M17.5 6v40M24 6v40M30.5 6v40','#7a4a20',1.6))+P(inn,'none',2)+C(24,22,3.4,'#9aa5b0',1.6)+C(16,16,1.3,'#5a626c',0)+C(32,16,1.3,'#5a626c',0)+C(24,33,1.3,'#5a626c',0)
 def banner2():
     # estandarte de guerra: asta con punta, travesaño y paño colgando con el borde de abajo en picos
     cloth='M11 11h26v24l-6.5-4-6.5 5-6.5-5L11 35z'
     return P('M22.6 9h2.8v37h-2.8z',WD,1.8)+P('M24 1l3 6h-6z','#9aa5b0',1.6)+P('M8 8h32v3.4H8z',WD,1.8)+C(8,9.7,1.8,GD,1.2)+C(40,9.7,1.8,GD,1.2)+P(cloth,'#8a2a2a',2.2)+L('M14 14h20','#c84a3a',1.6)+P('M18 18l6 10 6-10-6 3z','#f0ead8',1.6)
 def tele2():
     ring=lambda x,f:P(f'M{x-8} 40a8 3 0 1 0 16 0a8 3 0 1 0-16 0z',f,1.8)
-    return ring(10,'#b48ae8')+ring(38,'#7a4ad8')+carrow(24,36,14,192,348,4.4,'#e8d8ff')+P('M6 30l1.6-3 1.6 3-3 1.6zM42 24l1.2-2.4 1.2 2.4-2.4 1.2z','#d8b8ff',1.2)
+    return ring(10,'#b48ae8')+ring(38,'#7a4ad8')+carrow(24,36,14,192,348,4.4,'#e8d8ff')
 def camo2():
     d='M24 4a8 8 0 0 1 8 8 8 8 0 0 1-3 6.3l7 3.7 2 22H10l2-22 7-3.7A8 8 0 0 1 16 12a8 8 0 0 1 8-8z'
     return '<path d="'+d+'" fill="#9ab0b8" fill-opacity=".35" stroke="#1b1712" stroke-width="2.4" stroke-dasharray="4 3" stroke-linejoin="round"/>'+P('M30 32a8 5 0 0 1 14 0a8 5 0 0 1-14 0z','#f4ead8',1.8)+C(37,32,2.2,K,0)+L('M30 38l14-12',K,3.2)+L('M30 38l14-12',RD,1.6)
@@ -231,7 +231,7 @@ def platform():
     return P('M6 34h36a5 5 0 0 1 0 10H6a5 5 0 0 1 0-10z','#3a3e48',2.2)+C(8,39,2.6,'#7a848e',1.2)+C(17,39,2.6,'#7a848e',1.2)+C(26,39,2.6,'#7a848e',1.2)+C(35,39,2.6,'#7a848e',1.2)+P('M8 26h32l2 8H6z','#9aa5b0',2.2)+P('M19 18h10l2 8H17z','#7a848e',2)+P('M22 10h4v8h-4z','#c8ccd4',1.8)+L('M24 9V1',K,4.6)+L('M24 9V1','#ff5ad8',2.4)+P('M12 29h5v2h-5zM31 29h5v2h-5z',CY,1)
 def abyss2():
     d='M24 42C6 30 6 12 16 12c4 0 7 3 8 6 1-3 4-6 8-6 10 0 10 18-8 30z'
-    return P('M14 13q-3-6 0-10q1 5 5 7zM34 13q3-6 0-10q-1 5-5 7z','#3a1a3a',1.8)+P(d,'#5a2a7a',2.4)+L('M14 26h5l2-4 3 8 2-4h8','#7aff9a',2.2)+L('M15 18q2-3 5-3','#8a5aaa',1.8)
+    return P('M14 15q-3-5 0-8.5q1 4.5 5 6.5zM34 15q3-5 0-8.5q-1 4.5-5 6.5z','#3a1a3a',1.8)+P(d,'#5a2a7a',2.4)+L('M14 26h5l2-4 3 8 2-4h8','#7aff9a',2.2)+L('M15 18q2-3 5-3','#8a5aaa',1.8)
 def foot2():
     # planta del pie derecho: el dedo gordo a la izquierda y de mayor a menor hacia fuera
     sole='M17 44c-5 0-8-4-7-10 1-7 3-12 7-15 4-3 10-3 13 0 4 4 2 10 0 15-2 6-6 10-13 10z'
@@ -249,9 +249,9 @@ def waves():
 def soldier_body():
     return P('M14 44l2-14a8 8 0 0 1 16 0l2 14z','#6a7a9a',2.2)+P('M17 18a7 7 0 0 1 14 0v4H17z','#c8ccd4',2.2)+P('M18 22h12v3a6 6 0 0 1-12 0z',SK,2)+L('M17 19h14',K,1.6)
 def bastion2():
-    return sword(34,32,20,20)+soldier_body()+P('M6 26l11-3 1 12c0 5-4 8-6 9-3-2-6-5-6-10z',BL,2.2)+L('M11.5 27.5v13',GD,1.6)+C(33,33,2.6,SK,1.4)
+    return soldier_body()+sword(34,32,20,20)+P('M6 26l11-3 1 12c0 5-4 8-6 9-3-2-6-5-6-10z',BL,2.2)+L('M11.5 27.5v13',GD,1.6)+C(33,33,2.6,SK,1.4)
 def guild2():
-    s=sword(38,34,28,18)+P('M14 44l2-14a8 8 0 0 1 16 0l2 14z','#3a7a4a',2.2)+C(24,19,7,SK,2.2)+P('M14 16q10-8 20 0l2 2H12z','#4a6a3a',2)+P('M29 13q4-8 10-10q-2 6-8 11z','#d84a3a',1.6)
+    s=P('M14 44l2-14a8 8 0 0 1 16 0l2 14z','#3a7a4a',2.2)+C(24,19,7,SK,2.2)+P('M14 16q10-8 20 0l2 2H12z','#4a6a3a',2)+P('M29 13q4-8 10-10q-2 6-8 11z','#d84a3a',1.6)+sword(38,34,28,18)
     return s+C(36.5,35,2.6,SK,1.4)+C(10,36,5,GD,1.8)+C(10,36,2.4,GS,1)
 def monk2():
     staff=G('rotate(-12 34 26)',inner=P('M32.6 4h3v42h-3z',WD,1.8)+P('M32 8h4.2v3H32z',GS,1.4))
