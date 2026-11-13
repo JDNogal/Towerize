@@ -88,3 +88,8 @@ body:not(.mfs) #mbr .hpan .hpb{width:78px!important;height:78px!important;min-wi
 body:not(.mfs) #mbr .go{order:-1}body:not(.mfs) #mbr{gap:16px}
 body.dsk:not(.mfs) #relics .rl{width:64px!important;height:64px!important;flex:0 0 64px!important;font-size:34px;border-radius:12px}
 body.dsk:not(.mfs) #fps{zoom:var(--uiz,1)}
+/* v317 · barra de arriba de las ventanas de elección (oro, ver el mapa, mazo, cofre): un pelín más grande, para reconocerla mejor (Nogal) */
+body:not(.mfs) #relic .rlbar button,body:not(.mfs) #relic .rlbar .mzb{width:44px!important;height:44px!important;min-width:44px!important;font-size:21px!important}
+body:not(.mfs) #relic .rlbar .rlg{height:44px!important;font-size:17px!important;padding:0 14px!important;display:inline-flex!important;align-items:center;gap:6px}
+body.mfs .rlbar button,body.mfs .rlbar .mzb,body.mfs #pkbar button{width:36px!important;height:36px!important;min-width:36px!important;font-size:18px!important}
+body.mfs .rlbar .rlg,body.mfs #pkbar .rlg{height:36px!important;font-size:15px!important;padding:0 11px!important;display:inline-flex!important;align-items:center;gap:5px}
