@@ -13,11 +13,12 @@ const r=await p.evaluate(()=>{try{lbClose(true);}catch(e){}RL.open=false;$('reli
 for(let i=0;i<20;i++){if(await p.evaluate(()=>AZASE.t!=null))break;await p.waitForTimeout(200);}await p.evaluate(()=>{AZASE.t=.4;});for(let i=0;i<20;i++){await p.waitForTimeout(300);if(await p.evaluate(()=>S.phase==="wave"))break;}
 r.wave=await p.evaluate(()=>S.phase);r.dbg=await p.evaluate(()=>JSON.stringify({t:AZASE.t,pc:document.body.classList.contains('pcpick'),rl:RL.open,lb:LB.open,dlg:DLG.on,sp:S.speed,menu:document.body.classList.contains('inmenu'),rank:azRank('ase')}));
 r.fog=await p.evaluate(()=>{const t=S.list.find(x=>!x.hero);const mk=(dx)=>{const hp=ehpOf('norm',1),q={t:'norm',x:t.x+dx,y:t.y,tx:t.x+dx,ty:t.y,hp,max:hp,fx:{},src:null,pv:[t.x,t.y]};S.enemies.push(q);return q;};const a=mk(0.2),f=mk(40);azFogTick();return [!!a.fog,!!f.fog];});
-r.nie=await p.evaluate(()=>{const b=S.phase;S.phase='build';const nx=rtlDot(S.round),far=rtlDot(S.round+2);const pi=portalInfo(S.portals[0]||{plan:{}});S.amz.nie=1;const pi1=portalInfo(S.portals[0]||{plan:{}});S.amz.nie=3;S.phase=b;return {far:(far.c||'')+(far.h||''),pi:/niebla/i.test(pi),pi1:/niebla/i.test(pi1)};});
+r.nie=await p.evaluate(()=>{const b=S.phase;S.phase='build';const nx=rtlDot(S.round),far=rtlDot(S.round+2);const pi=portalInfo(S.portals[0]||{plan:{}});S.amz.nie=1;const pi1=portalInfo(S.portals[0]||{plan:{}});S.amz.nie=4;const P=S.portals.slice();let inDraw=-1;const _g=S;draw();const back=S.portals.length===P.length;S.amz.nie=3;S.phase=b;return {back,r4:AZT.find(t=>t[0]==='nie')[3].length===4,far:(far.c||'')+(far.h||''),pi:/Sin información/.test(pi),pi1:/Sin información/.test(pi1)};});
 console.log(JSON.stringify(r));
 ck(r.c1===Math.round(r.c0*1.1),'Inflación: la segunda torre del mismo tipo cuesta un 10 % más ('+r.c0+' → '+r.c1+')');
 ck(r.wave==='wave','Asedio sin tregua: al acabarse el tiempo, la oleada empieza sola ('+r.wave+')');
 ck(!r.nie.far,'Niebla R1: la línea de rondas no enseña más allá de la siguiente');
 ck(r.nie.pi&&!r.nie.pi1,'Niebla R3: el portal no dice qué sale (y en R1 sí)');
+ck(r.nie.back&&r.nie.r4,'Niebla R4: existe y, tras dibujar sin portales, los portales vuelven intactos');
 ck(r.fog[0]&&!r.fog[1],'Niebla de guerra: se ve el que está al alcance y no el lejano');
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'amenazas2 ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

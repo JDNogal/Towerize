@@ -30,5 +30,9 @@ setInterval(()=>{try{azFogTick();}catch(e){}},100);
 {const _rd=rtlDot;rtlDot=function(r){const d=_rd.apply(this,arguments);if(azNie()>=1&&r>(S.phase==='wave'?S.round+1:S.round))return Object.assign({},d,{c:'',h:''});return d;};}
 
 // Niebla R3: los portales no dicen qué va a salir
-{const _pi=portalInfo;portalInfo=function(p){if(p&&azNie()>=3)return '<b>Portal enemigo</b><small>La niebla no deja ver qué saldrá por aquí.</small>';return _pi.apply(this,arguments);};}
-{const _pr=portalRows;portalRows=function(p,lim){if(azNie()>=3)return lim?'':'<div class="pbh">Niebla: no se sabe qué viene</div>';return _pr.apply(this,arguments);};}
+{const _pi=portalInfo;portalInfo=function(p){if(p&&azNie()>=3)return '<b>Portal enemigo</b><small>Sin información sobre la siguiente oleada.</small>';return _pi.apply(this,arguments);};}
+{const _pr=portalRows;portalRows=function(p,lim){if(azNie()>=3)return lim?'':'<div class="pbh">Sin información sobre la oleada</div>';return _pr.apply(this,arguments);};}
+// Niebla R4: no se ve dónde están los portales (ni los extremos del camino); tampoco se pueden señalar
+{const _d=draw;draw=function(){if(azNie()<4||!S||!S.portals)return _d.apply(this,arguments);const P=S.portals,E=S.ends;S.portals=[];S.ends=[];try{return _d.apply(this,arguments);}finally{S.portals=P;S.ends=E;}};}
+{const _r=resolve;resolve=function(){const o=_r.apply(this,arguments);if(o&&azNie()>=4&&o.key&&o.key.startsWith('pt:'))return null;return o;};}
+{const _p=ptipTick;ptipTick=function(){if(azNie()>=4){const el=$('ptips');if(el&&el.innerHTML)el.innerHTML='';PTSIG='';return;}return _p.apply(this,arguments);};}
