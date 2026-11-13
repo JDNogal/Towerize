@@ -60,7 +60,7 @@ out+="""}catch(e){console.warn('iconos',e);}
 // palabras clave: MECG (lista del compendio) y MECI (búsqueda por id)
 {const kwIc={};for(const[g,l]of MECG)for(const it of l){const svg=ICKW[it[0]];if(!svg)continue;const o={ic:it[2]};const ch=icReg(o,svg);it[2]=ch;kwIc[it[0]]=ch;}
  if(typeof MECI!=='undefined')for(const id in kwIc)if(MECI[id])MECI[id].ic=kwIc[id];}
-const ICRX=/[\\uE000-\\uF8FF]/;
+var ICRX=/[\\uE000-\\uF8FF]/u;var ICEMO={};/* emojis que se dibujan siempre con su icono aprobado (candado, chincheta), estén donde estén */
 const icSvg=ch=>'<svg class="icsv" viewBox="-4 -4 56 56" aria-hidden="true">'+ICSV[ch]+'</svg>';
 // lienzo: el carácter privado vuelve a su emoji
 if(typeof CanvasRenderingContext2D!=='undefined'){const ft2=CanvasRenderingContext2D.prototype.fillText,mt2=CanvasRenderingContext2D.prototype.measureText;
@@ -72,7 +72,7 @@ if(typeof CanvasRenderingContext2D!=='undefined'){const ft2=CanvasRenderingConte
  CanvasRenderingContext2D.prototype.measureText=function(t){return mt2.call(this,back(t));};}
 // interfaz: cada carácter privado se cambia por su dibujo
 {const fixI=n=>{if(n.nodeType===3){if(!ICRX.test(n.data)||!n.parentNode)return;const p=n.parentNode;if(p.tagName==='TITLE'||p.tagName==='OPTION'||p.tagName==='TEXTAREA'){n.data=n.data.replace(/[\\uE000-\\uF8FF]/g,c=>ICFB[c]||'');return;}
-   const fr=document.createDocumentFragment();let buf='';for(const c of n.data){if(ICSV[c]){if(buf){fr.appendChild(document.createTextNode(buf));buf='';}const t=document.createElement('template');t.innerHTML=icSvg(c);fr.appendChild(t.content.firstChild);}else buf+=c;}
+   const fr=document.createDocumentFragment();let buf='';for(const c0 of n.data){const c=ICEMO[c0]||c0;if(typeof c==='function'){if(buf){fr.appendChild(document.createTextNode(buf));buf='';}const t=document.createElement('template');t.innerHTML=c();if(t.content.firstChild)fr.appendChild(t.content.firstChild);continue;}if(c0==='\\uFE0F'&&!buf&&fr.lastChild&&fr.lastChild.nodeType===1)continue;if(ICSV[c]){if(buf){fr.appendChild(document.createTextNode(buf));buf='';}const t=document.createElement('template');t.innerHTML=icSvg(c);fr.appendChild(t.content.firstChild);}else buf+=c;}
    if(buf)fr.appendChild(document.createTextNode(buf));p.replaceChild(fr,n);return;}
   if(n.nodeType===1&&n.tagName!=='SCRIPT'&&n.tagName!=='STYLE'){if(n.namespaceURI==='http://www.w3.org/2000/svg')return;const w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT),Ls=[];let x;while((x=w.nextNode()))if(ICRX.test(x.data))Ls.push(x);Ls.forEach(fixI);
    for(const at of ['title','aria-label','placeholder'])n.querySelectorAll&&n.querySelectorAll('['+at+']').forEach(e=>{const v=e.getAttribute(at);if(v&&ICRX.test(v))e.setAttribute(at,v.replace(/[\\uE000-\\uF8FF]/g,c=>ICFB[c]||''));});}};
@@ -100,12 +100,29 @@ LAT={'perg':{
  'cr':'<g stroke="#1b1410" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M16 14h32v34H16z" fill="#f4ead8"/><path d="M12 8h38a4 4 0 0 1 0 8H12a4 4 0 0 1 0-8z" fill="#d8c090"/><path d="M12 44h38a4 4 0 0 1 0 8H12a4 4 0 0 1 0-8z" fill="#d8c090"/><path d="M22 24h20M22 31h20M22 38h12" stroke="#a08060" stroke-width="1.8"/><path d="M42 36l2 4 4 .6-3 2.8.8 4.2-3.8-2-3.8 2 .8-4.2-3-2.8 4-.6z" fill="#c0392b" stroke-width="1.2"/></g>',
  'st':'<g stroke="#1b1410" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M8 8h48v48H8z" fill="#f4ead8"/><path d="M16 46V34h8v12zM28 46V22h8v24zM40 46V28h8v18z" fill="#c0392b"/><path d="M12 48h40" fill="none"/></g>'},
  'holo':{'st':'<path d="M8 8h48v48h-48z" fill="none" stroke="#3fe8ff" stroke-width="3.2" stroke-linejoin="round"/><path d="M18 46V34M30 46V22M42 46V28" fill="none" stroke="#ff4fd8" stroke-width="6" stroke-linecap="round"/>'}}
+for k,v in J('menus_final.json').items():
+    if not k.startswith('_'):UI['m_'+k]=inner(v)
 out+="const ICUIS="+json.dumps(UI,ensure_ascii=False)+",ICLAT="+json.dumps(LAT,ensure_ascii=False)+";\n"
 out+="""
 // interfaz: portada del libro, cintas y Sí/No de acumulable
 var ICU={};for(const k in ICUIS)ICU[k]=icReg({ic:''},ICUIS[k]);
 var ICSI=icReg({ic:'Sí'},ICKW.stk_si),ICNO=icReg({ic:'No'},ICKW.stk_no);
 if(typeof LATSVG!=='undefined')for(const sk in ICLAT)for(const k in ICLAT[sk])if(!LATSVG[sk][k])LATSVG[sk][k]=ICLAT[sk][k];
+// menús e interfaz (13-nov-2026): cada sitio que tenía un emoji lleva su dibujo
+{const m=k=>ICU['m_'+k];try{
+ const EM={'\\u{1F512}':m('lock'),'\\u{1F4CC}':m('pin'),'\\u231B':ICU.dur,'\\u23F3':ICU.dur,'\\u{1F441}':m('k_peek'),'\\u{1F5FA}':m('bigmap'),'\\u{1F4CA}':m('st_run'),'\\u{1F47E}':m('st_en'),'\\u25B6':ICU.play};
+ for(const k in EM)if(EM[k])ICEMO[k]=EM[k];if(typeof trofIc==='function')ICEMO['\\u{1F3C6}']=trofIc;
+ ICRX=new RegExp('[\\\\uE000-\\\\uF8FF]|'+Object.keys(ICEMO).join('|'),'u');
+ if(typeof DTSVG!=='undefined'&&ICKW.tphys)DTSVG.phys='<span class="dti">'+icReg({ic:'\\u{1F5E1}\\uFE0F'},ICKW.tphys)+'</span>';/* daño físico: la espada aprobada */
+ if(typeof GICO!=='undefined')for(const[k,e]of[['burn','\\u{1F525}'],['poison','\\u{1F9EA}']])if(ICKW[k])GICO[k]=icReg({ic:e},ICKW[k]);/* glifos de efectos en las barras */
+ for(const k in OIC)if(m('o_'+k))OIC[k]=m('o_'+k);
+ for(const a of OTABS)if(m('op_'+a[0]))a[2]=m('op_'+a[0]);
+ for(const k in LGICO)if(m('lg_'+k))LGICO[k]=m('lg_'+k);
+ for(const a of STABS)if(m('st_'+a[0]))a[2]=m('st_'+a[0]);
+ const H={play:'h_play',keys:'h_keys',tips:'h_tips',tut:'h_tut',hints:'h_hints'};for(const a of LBHELP)if(m(H[a[0]]))a[2]=m(H[a[0]]);
+ const ZB={'+':'zin','-':'zout','0':'zall','c':'zcore','pt':'ptips'};document.querySelectorAll('#zm [data-z]').forEach(b=>{const k=ZB[b.dataset.z];if(k&&m(k))b.textContent=m(k);});
+ const KB={zin:'zin',zout:'zout',hab:'k_hab',ult:'k_ult',hero:'k_flag',ally:'k_flag',pigs:'k_flag',wave:'k_wave',flag:'k_flag',ptips:'ptips',peek:'k_peek'};for(const[g,rows]of KBL)for(const r of rows)if(KB[r[0]]&&m(KB[r[0]]))r[2]=m(KB[r[0]]);
+}catch(e){console.error(e);}}
 if(typeof LB!=='undefined'&&LB.open)try{lbRender();}catch(e){}
 """
 open('src/js/iconos_svg.js','w').write(out)

@@ -34,6 +34,7 @@ function errFlash(x,y){try{const e=document.elementFromPoint(x,y);if(!e||e.tagNa
 setInterval(()=>{try{if(typeof S==='undefined'||!S)return;const m=S.msg||'';if(m===LMSG)return;LMSG=m;const t=m.replace(/<[^>]+>/g,'');if(t&&ERRRX.test(t)&&!/^(Elige|Pulsa)/.test(t)){errBubble(t);S.msg='';LMSG='';ui();}}catch(e){}},50);
 
 // ---- ventana de estadísticas de la partida ----
+const heroIcS=H=>{try{return '<span class="hpsm">'+portrait(H.id,1)+'</span>';}catch(e){return H.def.ic;}};/* retrato pequeño del héroe en las tablas (en vez de su emoji) */
 const STW={tab:'run'};const STABS=[['run','Partida','📊'],['dmg','Daño','⚔️'],['rel','Reliquias','💎'],['hero','Héroe','🦸'],['en','Enemigos','👾']];
 function statsHTML(tab){const st=S.st||{},g=n=>`<span class="gd">${fi(n||0)} 🪙</span>`,d=n=>`<span class="cd">${fi(n||0)}</span>`,R=(a,b)=>`<div class="srow"><span>${a}</span><b>${b}</b></div>`,H=S.hero;
  const earned=(st.gKill||0)+(st.gTile||0)+(st.gRound||0)+(st.gRel||0)+(st.gEv||0);
@@ -43,7 +44,7 @@ function statsHTML(tab){const st=S.st||{},g=n=>`<span class="gd">${fi(n||0)} �
   `<div><h3 class="osec">Partida</h3>${R('Ronda',Math.min(S.round,ROUNDS)+' / '+ROUNDS)}${R('Piezas colocadas',Math.max(0,Object.keys(S.blocks||{}).length-1))}${R('Torres construidas',all.length+(sold?' ('+sold+' vendidas)':''))}${R('Reliquias',(S.relics||[]).length)}${R('Reintentos usados',st.retries||0)}${R('Tiempo real',fClk(GT.r))}${R('Tiempo de combate',fClk(GT.c))}</div></div>`;}
  if(tab==='dmg'){const all=(st.all||[]).slice().sort((a,b)=>(b.dmgT||0)-(a.dmgT||0)),hd=H?(H.pt.dmgT||0):0,tdm=all.reduce((s2,t)=>s2+(t.dmgT||0),0),other=Math.max(0,(st.dmg||0)-tdm-hd),tot=st.dmg||0,pc=v=>tot>0?Math.round(v/tot*100):0;
   const rows=all.map(t=>{const X=tinfo(t),dm=t.dmgT||0,a=t.act||0;return{ic:icOf(X),n:X.n+(t.sold?' <small>(vendida)</small>':''),lv:'Nv '+t.lvl,col:X.col||'#e8b04a',dm,k:t.kills||0,dps:a>0?dm/a:0};});
-  if(H)rows.push({ic:H.def.ic,n:H.def.n+' <small>(héroe)</small>',lv:'Nv '+H.lvl,col:'#b8c4dd',dm:hd,k:H.pt.kills||0,dps:H.pt.act>0?hd/H.pt.act:0});
+  if(H)rows.push({ic:heroIcS(H),n:H.def.n+' <small>(héroe)</small>',lv:'Nv '+H.lvl,col:'#b8c4dd',dm:hd,k:H.pt.kills||0,dps:H.pt.act>0?hd/H.pt.act:0});
   if(other>0)rows.push({ic:'✨',n:'Otras fuentes <small>(reliquias, explosiones…)</small>',lv:'',col:'#9aa0ad',dm:other,k:'—',dps:null});
   rows.sort((a,b)=>b.dm-a.dm);const mx=Math.max(1,...rows.map(r=>r.dm));
   return rows.length?`<table><tr><th>Fuente</th><th class="n">Daño</th><th class="hidem"></th><th class="n">%</th><th class="n">Bajas</th><th class="n">DPS</th></tr>`+rows.map(r=>`<tr><td><span class="sic" style="background:${r.col}33">${r.ic}</span>${r.n} <small style="color:var(--fg2)">${r.lv}</small></td><td class="n cd">${fi(r.dm)}</td><td class="hidem" style="width:28%"><div class="sbar"><i style="width:${r.dm/mx*100}%;background:${r.col}"></i></div></td><td class="n">${pc(r.dm)}%</td><td class="n">${r.k}</td><td class="n">${r.dps==null?'—':fi(r.dps)}</td></tr>`).join('')+'</table><div class="snote">Incluye las torres vendidas y el héroe. «Otras fuentes» suma el daño de reliquias, explosiones de veneno, barricadas…</div>':'<div class="snote">Todavía no has hecho daño en esta partida.</div>';}
@@ -52,7 +53,7 @@ function statsHTML(tab){const st=S.st||{},g=n=>`<span class="gd">${fi(n||0)} �
   return S.relics.map(id=>{const Rr=RELIC[id],r=RS(id),v=rt[id]?rt[id](r):r.gold?`${g(r.gold)} generado`:r.dmg?`≈ ${d(r.dmg)} de daño`:r.n?`${fi(r.n)} activaciones`:'—';return `<div class="srl"><div class="ri" style="background:${Rr.col||'#333'}">${Rr.ic}</div><div><b>${Rr.n}</b><small>${S.rs&&S.rs[id]&&S.rs[id].cd>0?'En enfriamiento: '+S.rs[id].cd+' rondas':'Lista'}</small></div><div class="v">${v}</div></div>`;}).join('')+'<div class="snote">El daño de las reliquias es una estimación: la parte del daño que no existiría sin ellas.</div>';}
  if(tab==='hero'){if(!H)return '<div class="snote">No tienes héroe en esta partida.</div>';
   return `<div class="kp"><div><b>${d(H.pt.dmgT||0)}</b><small>Daño</small></div><div><b>${fi(H.pt.kills||0)}</b><small>Bajas</small></div><div><b class="cf">${fi(st.xp||0)} xp</b><small>Experiencia ganada</small></div><div><b>${fi(st.hDie||0)}</b><small>Veces caído</small></div></div>`+
-  R('Héroe',H.def.ic+' '+H.def.n+' · Nv '+H.lvl)+R('Habilidad usada',(st.habB||0)+' veces')+R('Definitiva usada',(st.habU||0)+' veces')+R('DPS medio',H.pt.act>0?fi((H.pt.dmgT||0)/H.pt.act):0);}
+  R('Héroe',heroIcS(H)+' '+H.def.n+' · Nv '+H.lvl)+R('Habilidad usada',(st.habB||0)+' veces')+R('Definitiva usada',(st.habU||0)+' veces')+R('DPS medio',H.pt.act>0?fi((H.pt.dmgT||0)/H.pt.act):0);}
  if(tab==='en'){const ek=st.ek||{},ks=Object.keys(ek).sort((a,b)=>ek[b].k-ek[a].k);
   return ks.length?`<table><tr><th>Enemigo</th><th class="n">Eliminados</th><th class="n">Llegaron al núcleo</th><th class="n">Oro dado</th></tr>`+ks.map(k=>{const E=ET[k],q=ek[k];return `<tr><td><span class="sic" style="background:${E.col||'#888'}44">${E.ic||'👾'}</span>${E.n}</td><td class="n">${fi(q.k)}</td><td class="n${q.l?' cd':''}">${fi(q.l)}</td><td class="n">${g(q.g)}</td></tr>`;}).join('')+'</table>':'<div class="snote">Todavía no te has cruzado con ningún enemigo en esta partida.</div>';}
  return '';}
@@ -228,7 +229,7 @@ function otherSpec(k){const cur=CP.lv[k]||1,nx=cur===4?5:4;if(!tlvOk(k,nx)){errB
 // salir del juego: de momento cierra la pestaña (solo funciona si el navegador lo permite; si no, se avisa)
 function exitGame(){LB.exit=0;try{saveRun&&svLive()&&saveRun('exit');}catch(e){}try{window.close();}catch(e){}setTimeout(()=>{if(!window.closed){lbRender();toast('🚪 Tu navegador no deja cerrar la pestaña desde el juego: ciérrala tú (Ctrl+W).');}},250);}
 // bocadillos de los portales siempre visibles: se encienden y apagan con un botón del mapa (o la tecla P)
-function togglePtips(){const on=!(OPT.ptip||OPT.ptipw);OPT.ptip=OPT.ptipw=on;saveOpt();const b=$('ptb');if(b)b.classList.toggle('on',on);try{sfx('ui');}catch(e){}toast(on?'💀 Bocadillos de los portales: siempre visibles':'💀 Bocadillos de los portales: solo al pasar el ratón');}
+function togglePtips(){const on=!(OPT.ptip||OPT.ptipw);OPT.ptip=OPT.ptipw=on;saveOpt();const b=$('ptb');if(b)b.classList.toggle('on',on);try{sfx('ui');}catch(e){}toast(on?icU('m_ptips','💀')+' Bocadillos de los portales: siempre visibles':'💀 Bocadillos de los portales: solo al pasar el ratón');}
 function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
  /* con una ventana (oferta, cofre, evento) abierta solo valen sus botones… salvo dentro del libro abierto encima (compendio desde el mazo, las reliquias o el 📖) */
@@ -274,8 +275,10 @@ function act(e){
  else if(a==='pm')setPM(b.dataset.v);
  else if(a==='comp'){if(!compOk()&&!CP.open){lockToast('Compendio bloqueado','curious');return;}if(LB.open&&!LB.cover&&CP.open)lbBack();else lbOpen('cp');}
  else if(a==='cclose')lbBack();
- else if(a==='ctab'){CP.tab=b.dataset.v;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;renderComp();}
- else if(a==='csel'){CP.sel[CP.tab]=b.dataset.v;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=true;renderComp();}
+ else if(a==='ctab'){CP.evo=null;CP.tab=b.dataset.v;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;renderComp();}
+ else if(a==='cevo'){CP.evo=+b.dataset.v;CP.pageR=true;renderComp();}
+ else if(a==='cevob'){CP.evo=null;renderComp();}
+ else if(a==='csel'){CP.evo=null;CP.sel[CP.tab]=b.dataset.v;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=true;renderComp();}
  else if(a==='cbkl'){CP.pageR=false;CP.prev=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;renderComp();}
  else if(a==='cachgo'){cpGo('lg',b.dataset.v);}
  else if(a==='cprev'){const es=Object.keys(ET).filter(e=>seen('en',e));if(!es.includes(CP.pen))CP.pen=es[0]||'norm';CP.prev=b.dataset.v;newPrev(CP.prev,CP.pen);$('comp').scrollTop=0;renderComp();}

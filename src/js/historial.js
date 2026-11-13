@@ -50,7 +50,7 @@ function hsFiltered(){const L=HIST.list||[];return HIST.flt==='w'?L.filter(r=>r.
 function hsPor(id,big){const D=HEROES[id];return `<span class="hspor${big?' big':''}" style="background:${D?D.col:'#888'}">${typeof portrait==='function'?portrait(id,1):D?D.ic:'?'}</span>`;}
 // v305: el fondo del minimapa depende de la era (bosque en la Fantástica, asfalto de neón en la Distópica)
 const HSMC={1:{bg:'#26391f',path:'#a8875a',sol:'#2f4a2a'},2:{bg:'#171a2c',path:'#4a5677',sol:'#252a44'}};
-const hsEraIc=r=>{const E=ERADEF[r.era||1]||ERADEF[1];return `<span class="hsera e${r.era||1}" style="--ec:${E.col}">${E.ic}</span>`;};
+const hsEraIc=r=>{const E=ERADEF[r.era||1]||ERADEF[1];return `<span class="hsera e${r.era||1}" style="--ec:${E.col}">${(r.era||1)==1?icU('m_castle',E.ic):E.ic}</span>`;};
 function hsMini(r,W){const g=hsUnmap(r.map),n=r.N||g.length,MC=HSMC[r.era||1]||HSMC[1];
  // solo la zona construida (con un margen), no todo el tablero vacío
  let x0=n,y0=n,x1=0,y1=0;g.forEach((row,y)=>{for(let x=0;x<row.length;x++)if(row[x]!=='.'){x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);}});
@@ -62,7 +62,7 @@ function hsMini(r,W){const g=hsUnmap(r.map),n=r.N||g.length,MC=HSMC[r.era||1]||H
  for(const p of r.pt)h+=`<circle cx="${X(p[0]+.5)}" cy="${Y(p[1]+.5)}" r="${Math.max(3,s*1.1).toFixed(1)}" fill="#e8344a" stroke="#fff" stroke-width="${Math.max(.8,s*.25).toFixed(1)}"/>`;
  h+=`<circle cx="${X(r.core[0]+.5)}" cy="${Y(r.core[1]+.5)}" r="${Math.max(3.5,s*1.3).toFixed(1)}" fill="#3fe8ff" stroke="#0a4a5a" stroke-width="${Math.max(.8,s*.25).toFixed(1)}"/>`;return h+'</svg>';}
 function histParts(){hsLoad();const L=hsFiltered(),all=HIST.list||[],won=all.filter(r=>r.res==='w').length;if(HIST.sel>=L.length)HIST.sel=0;const r=L[HIST.sel];
- const fl=[['all','Todas'],['w','Ganadas'],['l','Perdidas'],['s','⭐ Guardadas']].map(([k,l])=>`<button class="pill${HIST.flt===k?' on':''}" data-a="hsflt" data-v="${k}">${l}</button>`).join('');
+ const fl=[['all','Todas'],['w','Ganadas'],['l','Perdidas'],['s',icU('m_save','⭐')+' Guardadas']].map(([k,l])=>`<button class="pill${HIST.flt===k?' on':''}" data-a="hsflt" data-v="${k}">${l}</button>`).join('');
  const rows=L.map((x,i)=>{const H=HEROES[x.hero],[rt,rc]=hsRes(x);return `<button class="hsrun${i===HIST.sel?' on':''}" data-a="hssel" data-v="${i}">${hsEraIc(x)}${hsPor(x.hero)}<span class="hsrt"><b>${H?H.n:x.hero} · Nv ${x.hlv}${x.star?' ⭐':''}</b><small>${hsWhen(x.t0)} · ${x.tut?'Tutorial':(ERADEF[x.era||1]||ERADEF[1]).n} · ${x.res==='w'?x.R+' rondas · '+hsDur(x.time):'ronda '+x.r+'/'+x.R}</small></span><span class="hsres ${rc}">${rt}</span></button>`;}).join('');
  const left=`<h3>Partidas</h3><div class="bksub">${all.length?`Tus partidas · ${all.length} jugada${all.length===1?'':'s'}, ${won} ganada${won===1?'':'s'}`:'Aquí aparecerán tus partidas'}</div><div class="hsflt">${fl}</div>${rows||'<p class="hsempty">'+(all.length?'Ninguna partida con este filtro.':'Todavía no hay partidas registradas. A partir de esta versión, cada partida queda apuntada aquí.')+'</p>'}`;
  let right='<div class="lbdet"><span class="lbdic">📚</span><h4>Registro de partidas</h4><p>Elige una partida para ver cómo fue: el mapa, las torres, el daño y dónde perdiste vida.</p></div>';
@@ -77,7 +77,7 @@ function histParts(){hsLoad();const L=hsFiltered(),all=HIST.list||[],won=all.fil
   <div class="hssec">Vida perdida por ronda</div><div class="hschart">${ch}</div>
   ${r.rel.length?`<div class="hssec">Reliquias</div><div class="hsrel">${r.rel.map(k=>RELIC[k]?`<span title="${RELIC[k].n}">${RELIC[k].ic}</span>`:'').join('')}</div>`:''}
   ${W?`<div class="hsnote">Lo que más daño te hizo: <b>${W.n}</b> (${r.worst.n} de vida)${r.worst.r?' en la ronda '+r.worst.r:''}.</div>`:r.res==='w'&&!hl.some(v=>v>0)?'<div class="hsnote">Ningún enemigo llegó a tu núcleo.</div>':''}
-  <div class="hsbtns"><button class="go" data-a="hsbig">🗺️ Ver mapa grande</button><button data-a="hsstar">${r.star?'★ Quitar de guardadas':'⭐ Guardar'}</button></div>`;}
+  <div class="hsbtns"><button class="go" data-a="hsbig">${icU('m_bigmap','🗺️')} Ver mapa grande</button><button data-a="hsstar">${r.star?'★ Quitar de guardadas':icU('m_save','⭐')+' Guardar'}</button></div>`;}
  return {marks:null,left,right,key:'pt|'+HIST.flt+'|'+HIST.sel+'|'+(HIST.list?HIST.list.length:0)+'|'+(r?r.star:''),one:false};}
 function hsBig(){const L=hsFiltered(),r=L[HIST.sel];if(!r)return;let el=$('hsbig');if(!el){el=document.createElement('div');el.id='hsbig';document.body.appendChild(el);}
  const W=Math.min(innerWidth-40,innerHeight-90);el.innerHTML=`<div class="hsbw"><div class="hsbt"><b>${(HEROES[r.hero]||{}).n||''} · ${hsWhen(r.t0)}</b><small>Pasa el ratón por una torre para ver su daño</small><button data-a="hsbigx">✕</button></div><div class="hsbm">${hsMini(r,W)}<div class="hsbtip"></div></div></div>`;
@@ -95,4 +95,4 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 addEventListener('keydown',e=>{const el=$('hsbig');if(e.key==='Escape'&&el&&el.classList.contains('on')){el.classList.remove('on');e.stopImmediatePropagation();e.preventDefault();}},true);
 
 // v307: en el historial, las torres sin especialización salen con su icono dibujado (lo guardado era el emoji)
-function hsIc(t){try{if(!t[1]&&TW[t[0]]&&TW[t[0]].icsvg)return twIc(t[0]);}catch(e){}return t[8]||'';}
+function hsIc(t){try{if(typeof t[0]==='string'&&t[0].startsWith('hero:'))return '<span class="hpsm">'+portrait(t[0].slice(5),1)+'</span>';}catch(e){}try{if(!t[1]&&TW[t[0]]&&TW[t[0]].icsvg)return twIc(t[0]);}catch(e){}return t[8]||'';}

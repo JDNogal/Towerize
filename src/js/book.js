@@ -28,7 +28,7 @@ function bkItems(t){const L=[];
   const run=inRun(),frac=id=>{const M=APM[id];if(!M)return 0;const v=M.best&&!M.cur?(ACHBEST[id]||0):M.cur&&(run||id==='curious')?M.cur():0;return Math.min(1,v/M.max);},rk=id=>ACHS[id]?3:PINS.includes(id)?0:!achFound(id)?2.5:frac(id)>0?1:2,ord=(a,b)=>rk(a)-rk(b)||(rk(a)===1?frac(b)-frac(a):0)||(rk(a)===3?ACHS[b]-ACHS[a]:0);
   for(const [c,cn] of ACHCATS){const ids=Object.keys(ACH).filter(id=>achVis(id)&&(ACH[id].c||'cl')===c&&(CP.af==='all'||c===CP.af)&&(CP.as==='all'||(CP.as==='ok')===!!ACHS[id])).sort(ord);if(!ids.length)continue;
    L.push({sec:cn});for(const id of ids){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||trofIc()):trofIc(),n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd,pin:PINS.includes(id)});}}
-  const pn=PINS.filter(id=>ACH[id]&&achVis(id)&&!ACHS[id]&&achFound(id)&&(CP.as!=='ok'));if(pn.length)L.unshift({sec:'📌 Fijados'},...pn.map(id=>({id,ic:ACH[id].ic||trofIc(),n:ACH[id].n,ok:true,pin:true})));
+  const pn=PINS.filter(id=>ACH[id]&&achVis(id)&&!ACHS[id]&&achFound(id)&&(CP.as!=='ok'));if(pn.length)L.unshift({sec:icU('m_pin','📌')+' Fijados'},...pn.map(id=>({id,ic:ACH[id].ic||trofIc(),n:ACH[id].n,ok:true,pin:true})));
   const rest=Object.keys(ACH).filter(id=>achVis(id)&&!ACHCATS.some(([c])=>(ACH[id].c||'cl')===c)&&(CP.af==='all')&&(CP.as==='all'||(CP.as==='ok')===!!ACHS[id]));
   if(rest.length){L.push({sec:'Otros'});for(const id of rest){const fnd=achFound(id);L.push({id,ic:fnd?(ACH[id].ic||trofIc()):trofIc(),n:fnd?ACH[id].n:'???',ok:true,got:!!ACHS[id],hid:!fnd});}}}
  return L;}

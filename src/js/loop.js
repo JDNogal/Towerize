@@ -8,12 +8,12 @@ function emapTick(raw){EMAP.t-=raw;if(EMAP.t>0)return;EMAP.t=.25;let el=document
  // en construcción: resumen de lo que saldrá en la próxima oleada (suma de los portales)
  if(bld){const c={};let n=0;for(const p of S.portals||[])for(const t in (p.plan||{})){const k=t==='wanted'?'elite':t;c[k]=(c[k]||0)+p.plan[t];n+=p.plan[t];}
   const ks=Object.keys(c).filter(k=>c[k]>0).sort((a,b)=>c[b]-c[a]),sg='B'+ks.map(k=>k+c[k]).join(',');if(!n){el.classList.remove('on');EMAP.sg='';return;}
-  if(sg!==EMAP.sg){EMAP.sg=sg;el.innerHTML=`<div class="emh">⚔️ Próxima oleada <b>${n}</b></div>`+(ks.length?'<div class="eml">'+ks.map(k=>`<span data-tip="emap:${k}"><i class="emi" style="background:${ET[k]?ET[k].col:'#888'}">${enIc(k)?icHtml(enIc(k)):''}</i>×${c[k]}</span>`).join('')+'</div>':'')+'<div class="emf">Saldrán por los portales al empezar.</div>';}
+  if(sg!==EMAP.sg){EMAP.sg=sg;el.innerHTML=`<div class="emh">${icU('m_swords','⚔️')} Próxima oleada <b>${n}</b></div>`+(ks.length?'<div class="eml">'+ks.map(k=>`<span data-tip="emap:${k}"><i class="emi" style="background:${ET[k]?ET[k].col:'#888'}">${enIc(k)?icHtml(enIc(k)):''}</i>×${c[k]}</span>`).join('')+'</div>':'')+'<div class="emf">Saldrán por los portales al empezar.</div>';}
   el.classList.add('on');return;}
  const c={};let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak){c[e.t]=(c[e.t]||0)+1;n++;}
  let q=0;for(const p of S.portals||[])q+=(p.q||[]).filter(x=>x!=='|').length;
  const ks=Object.keys(c).sort((a,b)=>c[b]-c[a]),sg=ks.map(k=>k+c[k]).join(',')+'|'+(S.wk||0)+'|'+q;
- if(sg!==EMAP.sg){EMAP.sg=sg;el.innerHTML=`<div class="emh">⚔️ En el mapa <b>${n}</b></div>`+(ks.length?'<div class="eml">'+ks.map(k=>`<span data-tip="emap:${k}"><i class="emi" style="background:${ET[k]?ET[k].col:'#888'}">${enIc(k)?icHtml(enIc(k)):''}</i>×${c[k]}</span>`).join('')+'</div>':'')+`<div class="emf">💀 ${S.wk||0} eliminados${q?` · ${q} por salir`:''}</div>`;}
+ if(sg!==EMAP.sg){EMAP.sg=sg;el.innerHTML=`<div class="emh">${icU('m_swords','⚔️')} En el mapa <b>${n}</b></div>`+(ks.length?'<div class="eml">'+ks.map(k=>`<span data-tip="emap:${k}"><i class="emi" style="background:${ET[k]?ET[k].col:'#888'}">${enIc(k)?icHtml(enIc(k)):''}</i>×${c[k]}</span>`).join('')+'</div>':'')+`<div class="emf">💀 ${S.wk||0} eliminados${q?` · ${q} por salir`:''}</div>`;}
  el.classList.add('on');}
 // columna del margen izquierdo: contador de enemigos arriba y compras en cola debajo, centrados juntos en vertical
 function rstack(){let c=document.getElementById('rstack');if(!c){c=document.createElement('div');c.id='rstack';document.body.appendChild(c);}return c;}

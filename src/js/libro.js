@@ -65,14 +65,14 @@ function lbCoverHTML(){
  const tiles=`<div class="lbtiles">${areas.map(([k,l,i])=>`<button data-a="lbarea" data-v="${k}" class="${k==='cp'&&!compOk()?'dim':''}${lbHasNew(k)?' new':''}"><em>${i}</em>${l}</button>`).join('')}${(FSOK||IOS)&&B?`<button data-a="pfs"><em>⛶</em>${IOS?'Pantalla completa en iPhone':isFS()?'Salir de pantalla completa':'Pantalla completa'}</button>`:''}</div>`;
  const rt=inG&&S.phase==='wave'&&S.snap&&S.rc>0;
  const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}${svOk()?`<button data-a="psave" title="${S.phase==='wave'?'Se guardará el principio de esta oleada':'Guarda la partida tal como está'}">${icU('save','💾')} Guardar y salir</button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Se perderá la partida':icU('flag','🏳')+' Abandonar partida'}</button></div>`:`<div class="lbbot"><button data-a="pexit" class="pquit">${LB.exit?'¿Seguro? Pulsa otra vez para salir':icU('door','🚪')+' Salir del juego'}</button></div>`;
- return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:'🏰'}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
+ return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:icU('m_castle','🏰')}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
 }
 // ---- estadísticas: tabla a la izquierda, cifras grandes y resumen a la derecha ----
 function statParts(){const T=STABS.find(t=>t[0]===STW.tab)||STABS[0],st=S.st||{};
  let h=statsHTML(STW.tab),kp='';const m=h.match(/^<div class="kp">[\s\S]*?<\/div><\/div>/);if(m){kp=m[0];h=h.slice(m[0].length);}
  const K=(b,s)=>`<div><b>${b}</b><small>${s}</small></div>`;
  if(!kp){
-  if(STW.tab==='dmg'){const all=(st.all||[]).slice(),H=S.hero;let top=null,tv=0;for(const t of all)if((t.dmgT||0)>tv){tv=t.dmgT;top=icOf(tinfo(t))+' '+tinfo(t).n;}if(H&&(H.pt.dmgT||0)>tv){tv=H.pt.dmgT;top=H.def.ic+' '+H.def.n;}
+  if(STW.tab==='dmg'){const all=(st.all||[]).slice(),H=S.hero;let top=null,tv=0;for(const t of all)if((t.dmgT||0)>tv){tv=t.dmgT;top=icOf(tinfo(t))+' '+tinfo(t).n;}if(H&&(H.pt.dmgT||0)>tv){tv=H.pt.dmgT;top=heroIcS(H)+' '+H.def.n;}
    kp=`<div class="kp">${K(`<span class="cd">${fi(st.dmg||0)}</span>`,'Daño total')}${K(fi(st.kills||0),'Enemigos eliminados')}${K(top||'—','Quien más daño ha hecho')}${K(st.dmg>0&&tv?Math.round(tv/st.dmg*100)+'%':'—','Su parte del total')}</div>`;}
   else if(STW.tab==='rel')kp=`<div class="kp">${K((S.relics||[]).length,'Reliquias')}${K(`<span class="gd">${fi(st.gRel||0)} 🪙</span>`,'Oro generado por reliquias')}</div>`;
   else if(STW.tab==='en'){const ek=st.ek||{},ks=Object.keys(ek),sum=f=>ks.reduce((a,k)=>a+(ek[k][f]||0),0);kp=`<div class="kp">${K(fi(sum('k')),'Eliminados')}${K(`<span class="${sum('l')?'cd':''}">${fi(sum('l'))}</span>`,'Llegaron al núcleo')}${K(ks.length,'Tipos distintos')}${K(`<span class="gd">${fi(sum('g'))} 🪙</span>`,'Oro que dieron')}</div>`;}}
@@ -150,7 +150,7 @@ function endParts(){const E=LB.end||{left:'',right:''};
 }
 // ---- créditos ----
 function credParts(){const ver=($('ver')&&$('ver').textContent)||'Towerize';
- return {marks:null,left:`<h3>Créditos</h3><div class="bksub">Quienes han hecho posible Towerize</div>${credHTML()}`,right:`<div class="lbdet"><span class="lbdic lbembic">🏰</span><h4>${ver}</h4><p>Gracias por jugar. Towerize está en desarrollo: lo que ves puede cambiar de una versión a otra.</p></div>`,one:true,key:'cr'};
+ return {marks:null,left:`<h3>Créditos</h3><div class="bksub">Quienes han hecho posible Towerize</div>${credHTML()}`,right:`<div class="lbdet"><span class="lbdic lbembic">${icU('m_castle','🏰')}</span><h4>${ver}</h4><p>Gracias por jugar. Towerize está en desarrollo: lo que ves puede cambiar de una versión a otra.</p></div>`,one:true,key:'cr'};
 }
 // ---- montaje ----
 function lbRender(){

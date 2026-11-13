@@ -13,7 +13,7 @@ const ACHFND={pigs:()=>PIGS.some(k=>seen('tw',k)),cloink:()=>PIGS.some(k=>seen('
  bowl:()=>hUnl('reinhart'),jungle:()=>hUnl('sylvana'),bhole:()=>hUnl('radagast'),pure:()=>hUnl('radagast'),zero:()=>hUnl('yrsa'),thermal:()=>hUnl('yrsa'),circuit:()=>seen('tw','tesla'),elem:()=>tunl('sala')&&tunl('frost')};
 const achFound=id=>UNLOCK_ALL||!!ACHS[id]||!ACHFND[id]||ACHFND[id]();
 const achReq=id=>ACH[id]?(achFound(id)?'🏆 '+ACH[id].n+': '+ACH[id].d:'🏆 Un logro oculto: sigue jugando para descubrirlo.'):'';
-function lockToast(title,id){toast('🔒 <b>'+title+'</b>'+(id&&ACH[id]?'<br><small>'+achReq(id)+'</small>':''));}
+function lockToast(title,id){toast(icU('m_lock','🔒')+' <b>'+title+'</b>'+(id&&ACH[id]?'<br><small>'+achReq(id)+'</small>':''));}
 const compOk=()=>UNLOCK_ALL||OPT.u_cp||OPT.u_cpa||!!ACHS.curious;
 // niveles de torre vistos (sin spoilers): nivel más alto alcanzado con cada torre y especializaciones elegidas, entre partidas
 let TLV={};try{TLV=JSON.parse(localStorage.getItem('rt-tlv'))||{};}catch(e){}
@@ -101,7 +101,7 @@ function achProg(id,run){const M=APM[id];let h='';
  return h;}
 const APAN={open:false,sig:''};
 function apanTick(force){const el=$('apan');if(!el)return;const on=APAN.open&&inRun();el.classList.toggle('on',on);if(!on)return;
- const h=(PINS.length?PINS.filter(id=>ACH[id]).map(id=>{const A=ACH[id];return `<div class="apr"><b>📌 ${A.n}</b><br><small>${achSec(id)?'???':A.d}</small>${achProg(id,true)}</div>`;}).join(''):'<small>No tienes logros fijados. Fija hasta 3 para seguir su progreso mientras juegas.</small>')+'<button data-a="achm">🏆 Ver todos los logros</button>';
+ const h=(PINS.length?PINS.filter(id=>ACH[id]).map(id=>{const A=ACH[id];return `<div class="apr"><b>${icU('m_pin','📌')} ${A.n}</b><br><small>${achSec(id)?'???':A.d}</small>${achProg(id,true)}</div>`;}).join(''):'<small>No tienes logros fijados. Fija hasta 3 para seguir su progreso mientras juegas.</small>')+'<button data-a="achm">🏆 Ver todos los logros</button>';
  if(force||h!==APAN.sig){APAN.sig=h;el.innerHTML='<b>Logros fijados</b>'+h;}}
 // recompensa de un logro: candado abierto + icono (en silueta si aún no lo tienes)
 let ALKS={};try{ALKS=JSON.parse(localStorage.getItem('rt-alks'))||{};}catch(e){}

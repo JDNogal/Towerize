@@ -79,14 +79,14 @@ function endGame(){
  const row=(en,ev,bar)=>`<div class="erow"><div class="en">${en}</div><div class="ev">${ev}</div>${bar!==undefined?`<div class="ebar"><span style="width:${Math.min(100,bar)}%"></span></div>`:''}</div>`;
  const sum=(l,v)=>`<div><small>${l}</small><b>${v}</b></div>`;
  let h=`<h2>${won?'🏆 ¡Victoria!':'💀 Derrota'}</h2><small>${won?'El jefe ha caído y la expedición ha sido un éxito.':'El núcleo ha caído.'}</small>`+
-  '<div class="esum">'+sum('Rondas alcanzadas',S.round+' / '+ROUNDS)+(H?sum('Héroe',H.def.ic+' '+H.def.n+' · Nv '+H.lvl):'')+sum('Oro obtenido',g(earned))+
+  '<div class="esum">'+sum('Rondas alcanzadas',S.round+' / '+ROUNDS)+(H?sum('Héroe',heroIcS(H)+' '+H.def.n+' · Nv '+H.lvl):'')+sum('Oro obtenido',g(earned))+
   sum('Enemigos eliminados',fi(st.kills))+sum('Daño total',d(st.dmg))+sum('Tiempo real',fClk(GT.r))+sum('Tiempo de combate',fClk(GT.c))+(st.retries?sum('Reintentos usados',st.retries):'')+(won?sum('Vida del núcleo',S.hp):'')+'</div>';
  h+='<div class="esec">Torres</div>';
  if(!all.length)h+='<small>No construiste ninguna torre.</small>';
  for(const t of all){const X=tinfo(t),a=t.act||0,dm=t.dmgT||0;
   h+=row(`${icOf(X)} <b>${X.n}</b> · Nv ${t.lvl}${t.sold?' <small>(vendida)</small>':''}<small>Ronda ${t.rd} · ${bj(t.kills||0)}</small>`,
    `<span>DPS <span class="cd">${a>0?fi(dm/a):0}</span></span><span>Daño <span class="cd">${fi(dm)}</span> (${pc(dm)}%)</span>`,pc(dm));}
- if(H){const dm=H.pt.dmgT||0;h+=row(`${H.def.ic} <b>${H.def.n}</b> · Nv ${H.lvl}<small>Héroe · ${bj(H.pt.kills||0)}</small>`,
+ if(H){const dm=H.pt.dmgT||0;h+=row(`${heroIcS(H)} <b>${H.def.n}</b> · Nv ${H.lvl}<small>Héroe · ${bj(H.pt.kills||0)}</small>`,
    `<span>DPS <span class="cd">${H.pt.act>0?fi(dm/H.pt.act):0}</span></span><span>Daño <span class="cd">${fi(dm)}</span> (${pc(dm)}%)</span>`,pc(dm));}
  if(pc(other)>=1)h+=row('Otras fuentes<small>Explosiones de veneno, barricadas…</small>',`<span>Daño <span class="cd">${fi(other)}</span> (${pc(other)}%)</span>`,pc(other));
  const rt={coin:()=>`${g(st.gRel)} generado`,venom:r=>`≈ ${d(r.dmg)} de daño por veneno`,frost:r=>`${fi(r.n)} ralentizaciones · ${fi(r.n2)} congelados`,

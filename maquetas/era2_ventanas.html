@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Era 2 · cómo se abren las ventanas</title>
+<style>
+:root{--cy:#3fe8ff;--mg:#ff4fd8;--bg:#0b0e13;--pan:#141b22;--pan2:#1b2730;--ink:#dfe9ef;--met1:#5c6670;--met2:#9aa5b0;--met3:#2c333a}
+*{box-sizing:border-box}
+body{margin:0;background:#06080b;color:var(--ink);font:14px/1.4 Inter,system-ui,sans-serif}
+header{padding:14px 18px;border-bottom:1px solid #1f2a33}
+header h1{margin:0;font-size:18px;color:var(--cy)}header p{margin:4px 0 0;color:#8fa2b0}
+.tabs{display:flex;gap:8px;padding:12px 18px;flex-wrap:wrap}
+.tabs button,.ctl button{background:#16212a;color:var(--ink);border:1px solid #2b3c48;border-radius:8px;padding:8px 12px;font:inherit;cursor:pointer}
+.tabs button.on{border-color:var(--cy);color:var(--cy)}
+.ctl{display:flex;gap:8px;padding:0 18px 10px;flex-wrap:wrap}
+.ctl button{border-color:#3a4c58}
+.desc{padding:0 18px 12px;color:#a9bac6;max-width:1000px}
+.desc b{color:var(--ink)}
+/* escenario: un trozo de partida oscurecida */
+.stage{position:relative;margin:0 18px 18px;height:520px;border-radius:12px;overflow:hidden;border:1px solid #1d2730;
+ background:repeating-linear-gradient(0deg,#0d1218 0 39px,#121a21 39px 40px),repeating-linear-gradient(90deg,transparent 0 39px,#121a21 39px 40px);}
+.stage::after{content:'';position:absolute;inset:0;background:rgba(3,5,8,.55);pointer-events:none;z-index:1}
+.win{position:absolute;left:50%;top:50%;width:min(760px,92%);height:330px;transform:translate(-50%,-50%);z-index:2}
+/* contenido común */
+.scr{position:absolute;inset:0;background:linear-gradient(180deg,var(--pan2),var(--pan));border-radius:6px;padding:18px 22px;overflow:hidden}
+.scr h2{margin:0 0 10px;font:600 20px Georgia,serif;color:var(--cy);border-bottom:1px solid #2f4350;padding-bottom:8px}
+.cnt{display:grid;grid-template-columns:1fr 1fr;gap:18px;height:calc(100% - 52px)}
+.img{border-radius:6px;background:linear-gradient(180deg,#c47a8a,#7a5a78 55%,#5b4a3e 56%,#6b5848);position:relative;overflow:hidden;border:2px solid #0a0d10}
+.img::before{content:'';position:absolute;left:38%;bottom:22%;width:24%;height:38%;background:#7b3fa0;border-radius:50% 50% 8px 8px;border:3px solid #1b1418}
+.txt small{color:var(--mg);letter-spacing:.12em;font-weight:700;font-size:11px}
+.txt p{margin:6px 0 12px;font-size:13px}
+.opt{border:1px solid #2f5866;border-radius:8px;padding:9px 12px;margin-bottom:8px;background:#1d2b33}
+.opt b{display:block}.opt i{font-style:normal;color:#9fb3bf;font-size:12px}
+.scene2 .img{background:linear-gradient(180deg,#2a6a7a,#163a48 55%,#3a3f44 56%,#2a2e33)}
+.scene2 .img::before{background:#3fe8ff;border-radius:6px;left:30%;width:40%;height:22%}
+/* piezas (panel de abajo) */
+.bot{position:absolute;left:50%;bottom:14px;width:min(620px,90%);height:120px;transform:translateX(-50%);z-index:2}
+.bot .scr{padding:12px 16px;display:flex;gap:14px;align-items:center;justify-content:center}
+.pz{width:90px;height:90px;border:1px solid #2f5866;border-radius:8px;background:#1d2b33;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:12px}
+.pz i{background:#3fe8ff33;border:1px solid #3fe8ff88;border-radius:2px}.pz i.o{background:none;border:none}
+/* ======== A · HOLOPROYECTOR ======== */
+.A .emit{position:absolute;left:50%;bottom:-34px;width:300px;height:22px;transform:translateX(-50%);border-radius:6px;
+ background:linear-gradient(180deg,var(--met2),var(--met1) 45%,var(--met3));box-shadow:0 4px 10px #000a;z-index:3}
+.A .emit::before{content:'';position:absolute;left:12px;right:12px;top:-3px;height:5px;border-radius:3px;background:var(--cy);box-shadow:0 0 12px var(--cy),0 0 26px var(--cy)}
+.A .beam{position:absolute;left:50%;bottom:-14px;width:300px;height:0;transform:translateX(-50%);z-index:1;
+ background:linear-gradient(0deg,#3fe8ff55,#3fe8ff00);clip-path:polygon(0 100%,100% 100%,100% 0,0 0);opacity:0}
+.A .scr{box-shadow:0 0 0 1px #3fe8ff88,0 0 30px #3fe8ff44;background:linear-gradient(180deg,#14303acc,#0e1c24dd)}
+.A .scr::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,#3fe8ff10 0 1px,transparent 1px 3px);pointer-events:none}
+.A.closed .scr{transform:scaleY(.004) scaleX(.4);opacity:0;filter:brightness(3)}
+.A.closed .emit{transform:translateX(-50%) translateY(60px)}
+.A .scr{transition:transform .45s cubic-bezier(.2,.9,.3,1.1) .3s,opacity .2s .3s,filter .5s .3s;transform-origin:50% 100%}
+.A .emit{transition:transform .3s ease-out}
+.A.closing .scr{transition:transform .3s ease-in,opacity .15s .25s,filter .2s;transform:scaleY(.004) scaleX(.4);filter:brightness(3);opacity:0}
+.A.closing .emit{transition:transform .3s ease-in .35s;transform:translateX(-50%) translateY(60px)}
+.A.swap .scr{animation:glitch .5s steps(1) both}
+@keyframes glitch{0%{clip-path:inset(0)}10%{clip-path:inset(20% 0 60% 0);transform:translateX(-8px)}20%{clip-path:inset(60% 0 10% 0);transform:translateX(6px)}30%{clip-path:inset(0);filter:brightness(2.5) hue-rotate(60deg);transform:none}45%{opacity:.2}55%{opacity:1;filter:none}100%{clip-path:inset(0)}}
+/* ======== B · COMPUERTAS BLINDADAS ======== */
+.B .frame{position:absolute;inset:-14px;border-radius:12px;background:linear-gradient(135deg,var(--met2),var(--met1) 40%,var(--met3));box-shadow:0 10px 30px #000c;z-index:-1}
+.B .frame::before{content:'';position:absolute;inset:6px;border-radius:8px;border:1px solid #0006}
+.B .bolt{position:absolute;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#dfe6ec,#59636d);z-index:4}
+.B .door{position:absolute;left:0;right:0;height:50%;z-index:3;background:
+ repeating-linear-gradient(135deg,#d9b13a 0 18px,#22262b 18px 36px) top/100% 16px no-repeat,linear-gradient(180deg,#59636d,#3a4249);
+ border:2px solid #22282e;transition:transform .55s cubic-bezier(.6,0,.2,1)}
+.B .door.t{top:0;border-radius:6px 6px 0 0;background-position:bottom;background:
+ linear-gradient(180deg,#59636d,#3a4249) top/100% calc(100% - 16px) no-repeat,repeating-linear-gradient(135deg,#d9b13a 0 18px,#22262b 18px 36px) bottom/100% 16px no-repeat}
+.B .door.b{bottom:0;border-radius:0 0 6px 6px}
+.B .door::after{content:'';position:absolute;left:50%;width:46px;height:10px;margin-left:-23px;border-radius:5px;background:#1a1e22;box-shadow:inset 0 0 0 2px #0008}
+.B .door.t::after{bottom:24px}.B .door.b::after{top:24px}
+.B .lamp{position:absolute;top:-28px;left:50%;width:44px;height:10px;margin-left:-22px;border-radius:5px;background:#5a1a1a;z-index:5;transition:background .2s,box-shadow .2s}
+.B.open .lamp{background:#3fe88f;box-shadow:0 0 12px #3fe88f}
+.B.open .door.t{transform:translateY(-100%)}.B.open .door.b{transform:translateY(100%)}
+.B .doorclip{position:absolute;inset:0;overflow:hidden;border-radius:6px;z-index:3;pointer-events:none}
+.B.closedw{transform:translate(-50%,-50%) scale(.6);opacity:0}
+.B{transition:transform .35s cubic-bezier(.2,.9,.3,1.15),opacity .25s}
+/* ======== C · TERMINAL QUE SUBE ======== */
+.C .case{position:absolute;inset:-12px -12px -40px;border-radius:14px 14px 8px 8px;background:linear-gradient(180deg,#4a535c,#2a3036);box-shadow:0 12px 30px #000c;z-index:-1}
+.C .case::after{content:'';position:absolute;left:50%;bottom:10px;width:120px;margin-left:-60px;height:16px;border-radius:4px;
+ background:repeating-linear-gradient(90deg,#1a1e22 0 6px,#59636d 6px 9px)}
+.C .led{position:absolute;right:18px;bottom:-30px;width:10px;height:10px;border-radius:50%;background:#3fe88f;box-shadow:0 0 8px #3fe88f;z-index:4}
+.C{transition:transform .5s cubic-bezier(.2,.9,.25,1.05)}
+.C.down{transform:translate(-50%,calc(-50% + 520px))}
+.C .scr{background:#05080a}
+.C .scr>*{transition:opacity .2s}
+.C .scr.off>*{opacity:0}
+.C .scr::before{content:'';position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:#e8fbff;box-shadow:0 0 18px #3fe8ff;transform:scaleX(0);opacity:0;z-index:5}
+.C .scr.on::before{animation:crt .45s ease-out}
+@keyframes crt{0%{transform:scaleX(0);opacity:1}40%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1) scaleY(140);opacity:0}}
+.C .scr.static::after{content:'';position:absolute;inset:0;z-index:6;opacity:.9;
+ background:repeating-radial-gradient(circle at 17% 32%,#fff2 0 1px,#0000 1px 3px),repeating-linear-gradient(0deg,#9ab3 0 1px,#0000 1px 2px);animation:stat .08s steps(2) infinite}
+@keyframes stat{50%{background-position:3px 5px,0 1px}}
+.C .bar{position:absolute;left:0;right:0;top:0;height:22px;background:#0f1a20;border-bottom:1px solid #2f4350;font:11px monospace;color:var(--cy);padding:4px 10px;z-index:4;display:flex;justify-content:space-between}
+.C .scr h2{margin-top:16px}
+/* panel de piezas en cada estilo */
+.bot.A .emit{width:200px}.bot.A .beam{width:200px}
+.note{position:absolute;right:12px;top:10px;z-index:9;font:12px monospace;color:#8fa2b0}
+</style></head><body>
+<header><h1>Era Distópica · cómo se abren las ventanas (sustituto del pergamino)</h1>
+<p>Para eventos, elegir torre y elegir pieza. En la Fantástica el pergamino se desenrolla; aquí cada idea tiene su forma de abrirse, cerrarse y cambiar de escena.</p></header>
+<div class="tabs"><button data-o="A" class="on">A · Holoproyector</button><button data-o="B">B · Compuertas blindadas</button><button data-o="C">C · Terminal que sube</button></div>
+<div class="ctl"><button id="bo">▶ Abrir</button><button id="bs">⇄ Cambiar de escena (evento → resultado)</button><button id="bc">✕ Cerrar</button><button id="bp">Panel de piezas (abajo)</button></div>
+<div class="desc" id="desc"></div>
+<div class="stage" id="stage"><span class="note" id="st"></span></div>
+<script>
+const D={
+A:'<b>A · Holoproyector.</b> Un emisor metálico sube desde el borde de la pantalla, se enciende su franja cian y proyecta la ventana: aparece como una línea de luz que se estira hacia arriba (tramado de holograma). <b>Cerrar:</b> la imagen se aplasta en una línea y el emisor baja. <b>Cambiar de escena:</b> un parpadeo con interferencias (glitch) y sale la siguiente. Pega con la tablet de la pausa, que ya proyecta un holograma. <i>Pro:</i> el más ligero y «futurista»; se lee bien encima del mapa. <i>Contra:</i> la ventana es semitransparente, hay que cuidar el contraste del texto.',
+B:'<b>B · Compuertas blindadas.</b> La ventana es un marco de acero atornillado; dentro, dos compuertas con franjas de peligro tapan la pantalla. Al abrir, se enciende el piloto verde y las compuertas se separan (arriba y abajo). <b>Cerrar:</b> se juntan de golpe y el marco se encoge. <b>Cambiar de escena:</b> las compuertas se cierran y se vuelven a abrir con el contenido nuevo, como una esclusa. <i>Pro:</i> el gesto más claro y físico, el equivalente directo de enrollar y desenrollar; muy de búnker. <i>Contra:</i> más pesado de ver muchas veces (cada pieza y cada torre); habría que hacerlo rápido.',
+C:'<b>C · Terminal que sube.</b> Una consola sale desde abajo de la pantalla; al llegar, su monitor se enciende como una tele antigua (línea blanca que se abre). <b>Cerrar:</b> la pantalla se apaga en una línea y la consola baja. <b>Cambiar de escena:</b> estática un instante, como cambiar de canal. <i>Pro:</i> cuenta bien «llega algo nuevo» y el panel de piezas de abajo encaja natural (una bandeja de consola). <i>Contra:</i> el movimiento largo de subir y bajar tarda más que los otros dos.'};
+let O='A',bottom=false;
+const st=document.getElementById('stage');
+const scr=(s2)=>`<div class="scr ${s2?'scene2':''}"><h2>${s2?'Resultado · Abrirla':'Cápsula caída'}</h2><div class="cnt"><div class="img"></div><div class="txt"><small>${s2?'OBTIENES':'EVENTO'}</small><p>${s2?'Dentro hay un dron de la colmena, dormido. Lo reprogramas: ahora es tuyo.':'Una cápsula orgánica humea en un cráter reciente. Algo respira dentro, despacio.'}</p>${s2?'<div class="opt"><b>Continuar ›</b></div>':'<div class="opt"><b>Abrirla</b><i>Obtienes: ???</i></div><div class="opt"><b>Entregársela a la Resistencia</b><i>Obtienes: ???</i></div>'}</div></div></div>`;
+const pzs=()=>`<div class="scr">${[[1,1,0,0,1,0,0,1,0],[1,1,1,0,1,0,0,0,0],[0,1,0,1,1,1,0,1,0]].map(p=>'<div class="pz">'+p.map(v=>'<i class="'+(v?'':'o')+'"></i>').join('')+'</div>').join('')}</div>`;
+function build(){st.querySelectorAll('.win,.bot').forEach(e=>e.remove());const w=document.createElement('div');w.className=(bottom?'bot ':'win ')+O;
+ if(O==='A')w.innerHTML=(bottom?pzs():scr())+'<div class="emit"></div>';
+ if(O==='B')w.innerHTML='<div class="frame"></div><span class="lamp"></span>'+(bottom?pzs():scr())+'<div class="doorclip"><div class="door t"></div><div class="door b"></div></div>';
+ if(O==='C')w.innerHTML='<div class="case"></div>'+(bottom?pzs():scr())+'<span class="led"></span>';
+ st.appendChild(w);return w;}
+const W=()=>st.querySelector('.win,.bot');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function open(){const w=build();
+ if(O==='A'){w.classList.add('closed');await sleep(30);w.classList.remove('closed');}
+ if(O==='B'){w.classList.add('closedw');await sleep(30);w.classList.remove('closedw');await sleep(320);w.classList.add('open');}
+ if(O==='C'){const s=w.querySelector('.scr');s.classList.add('off');w.classList.add('down');await sleep(30);w.classList.remove('down');await sleep(480);s.classList.remove('off');s.classList.add('on');}}
+async function close(){const w=W();if(!w)return;
+ if(O==='A'){w.classList.add('closing');await sleep(700);}
+ if(O==='B'){w.classList.remove('open');await sleep(560);w.classList.add('closedw');await sleep(300);}
+ if(O==='C'){const s=w.querySelector('.scr');s.classList.remove('on');s.classList.add('off');await sleep(260);w.classList.add('down');await sleep(500);}
+ w.remove();}
+async function swap(){const w=W();if(!w||bottom)return;const put=()=>{const s=w.querySelector('.scr');s.outerHTML=scr(1);};
+ if(O==='A'){w.classList.remove('swap');void w.offsetWidth;w.classList.add('swap');await sleep(150);put();}
+ if(O==='B'){w.classList.remove('open');await sleep(600);put();await sleep(120);w.classList.add('open');}
+ if(O==='C'){let s=w.querySelector('.scr');s.classList.add('static');await sleep(380);put();s=w.querySelector('.scr');s.classList.add('static');await sleep(120);s.classList.remove('static');}}
+function sel(o){O=o;document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.o===o));document.getElementById('desc').innerHTML=D[o];open();}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{bottom=false;sel(b.dataset.o);});
+bo.onclick=()=>{bottom=false;open();};bs.onclick=swap;bc.onclick=close;bp.onclick=()=>{bottom=true;open();};
+window.T={sel,open,close,swap,build,set:(o,b)=>{O=o;bottom=!!b;document.getElementById('desc').innerHTML=D[o];}};
+sel('A');
+</script></body></html>

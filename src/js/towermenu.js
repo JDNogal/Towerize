@@ -6,8 +6,8 @@ function tmOpts(t){const T=TW[t.type],top=[],bot=[];let side=null;
  else if(t.lvl===3&&SPECS[t.type]&&!T.uniq)for(const sp in SPECS[t.type])top.push({k:'spec',v:sp,ic:SPECS[t.type][sp].ic,c:tCost(t,upCost(T,4))});
  else if(abIds(t).length)for(const id of abIds(t)){const D=AB[id],rk=t.ab&&t.ab[id]||0,n=D.ranks.length;top.push({k:'abuy',v:id,ab:1,rk,n,c:rk<n?tCost(t,D.ranks[rk].c):null,lk:!!abReq(t,id)});}
  else if(tmHas(t,'up')||(!T.uniq&&!T.guild&&t.lvl<3))top.push({k:'up',ic:'⬆',c:tCost(t,upCost(T,t.lvl+1))});
- bot.push({k:'lupa',ic:'🔍'});if(!T.uniq)bot.push({k:'sell',ic:'$',sv:sellVal(t)});
- if(T.faro){bot.push({k:'flz',v:'0',ic:'🔦'});if((t.lvl||1)>=4)bot.push({k:'flz',v:'1',ic:'🔦'});}
+ bot.push({k:'lupa',ic:icU('m_lupa','🔍')});if(!T.uniq)bot.push({k:'sell',ic:'$',sv:sellVal(t)});
+ if(T.faro){bot.push({k:'flz',v:'0',ic:icU('m_faro','🔦')});if((t.lvl||1)>=4)bot.push({k:'flz',v:'1',ic:icU('m_faro','🔦')});}
  if(tmHas(t,'flag'))side={k:'flag',ic:FLAGI};
  return{top,bot,side};}
 const tmKey=o=>o.k+(o.v?':'+o.v:'');

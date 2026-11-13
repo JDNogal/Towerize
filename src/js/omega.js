@@ -38,7 +38,7 @@ function omegaInfo(t,lvo){const fam=t?t.fam||[]:[],lv=t?t.lvl:(lvo||1),rg=t?stat
 // ---- menú: anillo normal (subir, construir encima, lupa) y submenú con las torres ----
 {const _o=tmOpts;tmOpts=function(t){if(!t||t.type!=='omega')return _o.apply(this,arguments);const av=omAvail(t),fam=t.fam||[];
  if(TM.osub)return{top:av.map(a=>({k:'ofeed',v:a.k,ic:icHtml(twIcO(TW[a.k])),c:a.c,fm:a.f})).concat([{k:'oback',ic:'↩'}]),bot:[],side:null};
- const top=[];if(fam.length&&t.lvl<4)top.push({k:'oup',ic:'⬆',c:OMUP[t.lvl+1],lk:fam.length<omCap(t)});if(av.length)top.push({k:'obuild',ic:'🔧',lk:omFull(t)});return{top,bot:[{k:'lupa',ic:'🔍'}],side:null};};}
+ const top=[];if(fam.length&&t.lvl<4)top.push({k:'oup',ic:'⬆',c:OMUP[t.lvl+1],lk:fam.length<omCap(t)});if(av.length)top.push({k:'obuild',ic:'🔧',lk:omFull(t)});return{top,bot:[{k:'lupa',ic:icU('m_lupa','🔍')}],side:null};};}
 {const _b=tmBuild;tmBuild=function(){const r=_b.apply(this,arguments);try{const t=TM.t,m=$('tmenu');if(t&&t.type==='omega'&&m){m.classList.toggle('osub',!!TM.osub);for(const b of m.querySelectorAll('.tmb')){const a=b.dataset.tm,p=b.querySelector('.p');
    if(a==='obuild'&&p){p.textContent='Añadir';b.classList.remove('mx');}if(a==='oback'){if(p)p.remove();b.classList.remove('mx');b.classList.add('oback');}
    if(a==='ofeed'){const x=m._o.top.find(o=>tmKey(o)===b.dataset.k);if(x&&!b.querySelector('.ofm')){const s=document.createElement('span');s.className='ofm';s.style.borderColor=OMF[x.fm].col;s.innerHTML=omPc(x.fm);b.appendChild(s);}}}}else if(m)m.classList.remove('osub');}catch(e){}return r;};}
