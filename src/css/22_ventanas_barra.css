@@ -77,3 +77,5 @@ html:root[data-skin="holo"] .rbx.rrel.rac{border-color:#2fd6c0!important;backgro
 html:root[data-pal="noche"] .rbx.rrel.rac .rbt,html:root[data-pal="amb"] .rbx.rrel.rac .rbt{color:#5fd8e8!important}
 /* 2560×1440 y mayores: ventanas y paneles un poco más grandes */
 @media (min-width:2300px) and (min-height:1250px){body.dsk:not(.mfs) #relic.open>*,body.dsk:not(.mfs).pcpick #panel{zoom:1.8!important}body.dsk:not(.mfs) #mzside>div{zoom:2.15}}
+/* en móvil, con la barra de scroll dibujada, sobra la flechita */
+body.mfs .smore::after{content:none!important}

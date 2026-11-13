@@ -21,7 +21,8 @@
   "19_compendio_torres.css",
   "20_tutorial_v307.css",
   "21_dron.css",
-  "22_ventanas_barra.css"
+  "22_ventanas_barra.css",
+  "23_logros_niveles.css"
  ],
  "js": [
   "00_config.js",
@@ -129,6 +130,7 @@
   "dron_proyector.js",
   "ventanas_barra.js",
   "iconos_svg.js",
-  "torres_evento_nv4.js"
+  "torres_evento_nv4.js",
+  "logros_niveles.js"
  ]
 }

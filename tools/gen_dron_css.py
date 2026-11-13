@@ -91,7 +91,8 @@ css=f'''/* ===== v312 · Era Distópica: el dron proyector sustituye al pergamin
 #hdpk{{display:none}}
 {H} body.pcpick.mfs #hdpk.on{{display:block;position:fixed;width:124px;height:48px;margin-left:-62px;z-index:61;pointer-events:none;background:{uri(DRONE)} no-repeat center/contain;filter:drop-shadow(0 6px 8px rgba(0,0,0,.55));animation:hdin .45s cubic-bezier(.2,.9,.3,1.1) both,hdhov 2.6s .45s ease-in-out infinite}}
 {H} body.pcpick.mfs #panel::before{{display:none!important}}
-{H} body.mfs #relic.open:has(.pscr),{H} body.mfs #relic.open:has(.hdwin),{H} body.mfs #relic.hdcl{{padding-top:50px!important}}
+{H} body.mfs #relic.open:has(.pscr),{H} body.mfs #relic.open:has(.hdwin),{H} body.mfs #relic.hdcl{{padding-top:40px!important}}
+{H} body.mfs #relic .pscr{{margin-top:0!important}}
 {H} body.mfs #relic .pscr::before,{H} body.mfs #relic .hdwin::before{{top:-48px;width:124px;height:48px;margin-left:-62px}}
 /* letra futurista de la tablet (Chakra Petch) en todo lo que proyecta el dron */
 html{H} #relic.open :is(h1,h2,h3,h4,b,strong,small,i,em,p,span,div,button,label,a,li),html{H} #mzside :is(h4,b,small,span,div,em),html{H} #mzpop :is(h4,b,small,span,div,em,button),html{H} body.pcpick #panel :is(b,small,span,div,button){{font-family:'Chakra Petch',system-ui,sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"!important}}
