@@ -26,7 +26,8 @@
   "24_puntuacion.css",
   "25_iconos_sin_fondo.css",
   "26_amenazas.css",
-  "27_logros_cerca.css"
+  "27_logros_cerca.css",
+  "28_novedades.css"
  ],
  "js": [
   "00_config.js",

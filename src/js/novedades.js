@@ -1,23 +1,34 @@
-// ==================== v305 · Novedades del compendio, ítem a ítem ====================
-// Cada cosa nueva (torre, enemigo, reliquia, mecánica, logro conseguido…) lleva su puntito hasta que abres su ficha.
-// La pestaña y la cinta del área solo se apagan cuando ya no queda ninguna por ver. «Marcar todos como vistos» limpia solo la pestaña en la que estás.
-var NOVO={};try{NOVO=JSON.parse(localStorage.getItem('rt-novo'))||{};}catch(e){}
-const novSave=()=>{try{localStorage.setItem('rt-novo',JSON.stringify(NOVO));}catch(e){}};
-function novAdd(t,k){if(t==null||k==null)return;(NOVO[t]=NOVO[t]||{})[k]=1;novSave();}
-function novSeen(t,k){if(NOVO[t]&&NOVO[t][k]){delete NOVO[t][k];if(!Object.keys(NOVO[t]).length)delete NOVO[t];novSave();return true;}return false;}
-function novHas(t){return !!(NOVO&&NOVO[t]&&Object.keys(NOVO[t]).length);}
-function novArea(a){return a==='lg'?novHas('lg'):['tw','hr','pc','bf','rl','en','ev','mc'].some(novHas);}
-function novMark(act,v){if(act==='ctab')return novHas(v);if(act==='achf')return !!(NOVO.lg&&Object.keys(NOVO.lg).some(id=>ACH[id]&&(v==='all'||(ACH[id].c||'cl')===v)));return false;}
-// mecánicas: se descubren solas al ver lo que las usa; se apuntan las que pasan a verse
-let MECK=null;try{MECK=JSON.parse(localStorage.getItem('rt-meck'));}catch(e){}
-function mecScan(mark){if(typeof MECI==='undefined'||typeof mecOk!=='function')return;const first=!MECK;MECK=MECK||{};let ch=false;
- for(const id in MECI){if(typeof MALIAS!=='undefined'&&MALIAS[id])continue;if(!MECK[id]&&mecOk(id)){MECK[id]=1;ch=true;if(!first&&mark)novAdd('mc',id);}}if(ch){try{localStorage.setItem('rt-meck',JSON.stringify(MECK));}catch(e){}}}
-try{mecScan(false);}catch(e){}
-{const _s=see;see=function(t,k){const nw=typeof SEEOK!=='undefined'&&SEEOK&&SEEN[t]&&!SEEN[t][k];const r=_s.apply(this,arguments);try{if(nw&&SEEN[t][k]){novAdd(t,k);mecScan(true);}}catch(e){}return r;};}
-{const _a=achieve;achieve=function(id){const nw=ACH[id]&&!ACHS[id];const r=_a.apply(this,arguments);try{if(nw&&ACHS[id])novAdd('lg',id);}catch(e){}return r;};}
-// al abrir una ficha, deja de ser nueva; puntito en las fichas nuevas y botón para marcar toda la pestaña
-{const _c=compParts;compParts=function(){const P=_c.apply(this,arguments);try{const t=CP.tab,k=CP.sel[t];
-  if(k!=null&&!(CP.prev||CP.hprev||CP.eprev)&&(!bkNarrow()||CP.pageR))novSeen(t,k);
-  const N=NOVO[t]||{};P.left=P.left.replace(/<button class="bti([^"]*)" data-a="csel" data-v="([^"]*)"/g,(m,c,v)=>N[v]?`<button class="bti${c} nov" data-a="csel" data-v="${v}"`:m);
-  if(Object.keys(N).length)P.left=P.left.replace(/(<div class="bksub">[\s\S]*?<\/div>)/,`$1<button class="bknovall" data-a="novall">✓ Marcar todos como vistos <small>(${Object.keys(N).length})</small></button>`);}catch(e){}return P;};}
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="novall"]');if(!b)return;e.stopPropagation();e.preventDefault();delete NOVO[CP.tab];novSave();try{sfx('ui');}catch(er){}lbRender();},true);
+// ==================== v320 · Novedades (registro de cambios en el propio juego) y menú principal ====================
+// Nogal (13-nov-2026): «Continuar partida» arriba y «Nueva partida» debajo, mismo tamaño y distinto color, con la línea de la partida
+// guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
+// Al publicar una versión: añadir su entrada arriba del todo en NOVL.
+const NOVL=[
+ {v:320,f:'13 nov 2026',t:'Novedades y menú',s:[['Interfaz',['Novedades: el registro de cambios de cada versión, aquí mismo en el menú.','«Continuar partida» y «Nueva partida» del mismo tamaño, uno encima del otro.']]]},
+ {v:319,f:'13 nov 2026',t:'¡Cerca de un logro!',s:[['Logros',['Cuando te falta poco para un logro (80 %), sale un aviso con su progreso y un botón para fijarlo. Se puede quitar en Opciones › Juego.']]]},
+ {v:318,f:'13 nov 2026',t:'Amenazas',s:[['Amenazas (dificultad)',['Al completar una era (sus 3 piezas) consigues el logro «Era completada» y se abren las Amenazas en esa era.','Cada amenaza cambia cómo se juega, suma puntos y cada punto da +10 % de puntuación. Se guardan para la siguiente partida.','Ya funcionan Supercampeones, Sin refuerzos y Saqueadores; el resto se desbloquea ganando con amenazas.','Nuevo resumen antes de empezar: era, duración, héroe y amenazas.']]]},
+ {v:317,f:'13 nov 2026',t:'Botones de las ventanas',s:[['Interfaz',['En las ventanas de elección, los botones de arriba (oro, ver el mapa, mazo y cofre) son un poco más grandes.','Móvil: ya no salen dos barras de botones montadas sobre el oro.']]]},
+ {v:316,f:'13 nov 2026',t:'Barra de abajo y arreglos',s:[['Arreglos',['Los paneles del mazo y del cofre vuelven a salir a los lados al elegir torre o reliquia.','En pantallas grandes, los FPS se colocan bien junto al menú.']],['Interfaz',['Los héroes miden lo mismo que la reliquia y «Empezar oleada» va encima.','La Era Fantástica tiene su propia descripción.']]]},
+ {v:315,f:'13 nov 2026',t:'Regeneración y resistencia mágica rota',s:[['Enemigos',['Los enemigos fuertes regeneran vida poco a poco (la mitad si les has golpeado hace poco).']],['Resistencia mágica rota',['La rompen el Maleficio, Radagast, Korr, el Ácido nanométrico y el Mordisco ácido.','Reliquias nuevas: Grimorio quebrado y Emisor de interferencias.']],['Torres',['Rompemurallas del Trebuchet, Catalizador del Alquimista, Mordisco ácido de la Colmena y Drones bombarderos algo más lentos.']]]},
+ {v:314,f:'13 nov 2026',t:'Puntuación, logros por niveles y dron',s:[['Puntuación',['Cada partida suma puntos: se ven en la pausa, en Estadísticas, al final y en Partidas, con tu récord por héroe.']],['Logros',['Bronce, plata, oro y platino; Exterminador con cada torre (con marco en el mapa) y Estadísticas › Marcas.']],['Era Distópica',['El dron proyector sustituye al pergamino en las ventanas de elección.']],['Interfaz',['Iconos dibujados en todo el juego; menús más grandes en pantallas grandes.']]]}];
+const NOVV=()=>{try{return parseInt(String(($('ver')||{}).textContent||'').replace(/\D+/g,''))||NOVL[0].v;}catch(e){return NOVL[0].v;}};
+const NOV={sel:null};let NOVSEEN=0;try{NOVSEEN=+localStorage.getItem('rt-novseen')||0;}catch(e){}
+const novNew=v=>v>NOVSEEN&&NOVSEEN>0;
+function novParts(){const cur=NOVV(),L=NOVL.filter(x=>x.v<=cur);if(!L.some(x=>x.v===NOV.sel))NOV.sel=(L[0]||NOVL[0]).v;const v=L.find(x=>x.v===NOV.sel)||NOVL[0];
+ const left=`<h3>Novedades</h3><div class="bksub">Lo que cambia en cada versión · estás jugando la v${cur}</div><div class="novl">${L.map(x=>`<div class="novr${x.v===NOV.sel?' sel':''}" data-a="novsel" data-v="${x.v}"><b class="v">v${x.v}</b><span>${x.t}<br><small>${x.f}</small></span>${novNew(x.v)?'<span class="nw">NUEVO</span>':''}</div>`).join('')}</div>`;
+ const right=`<div class="lbdet novd"><h4>v${v.v} · ${v.t}</h4><small>${v.f}</small>${v.s.map(([h,I])=>`<div class="sec"><b>${h}</b><ul>${I.map(l=>`<li>${l}</li>`).join('')}</ul></div>`).join('')}</div>`;
+ return {marks:null,left,right,key:'nov'+NOV.sel,footL:`<button class="lbbk" data-a="lbcover">‹ Menú</button>`,footR:''};}
+function novOpen(){LB.msg={key:'nov',left:()=>novParts().left,right:()=>novParts().right,footL:`<button class="lbbk" data-a="novback">‹ Menú</button>`,footR:''};NOV.sel=null;
+ lbOpen('msg');setTimeout(()=>{NOVSEEN=Math.max(NOVSEEN,NOVV());try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(e){}},400);}
+document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+ if(a==='novopen'){ev.stopPropagation();ev.preventDefault();try{sfx('page');}catch(_){}novOpen();}
+ else if(a==='novsel'){ev.stopPropagation();ev.preventDefault();NOV.sel=+b.dataset.v;try{sfx('page');}catch(_){}lbRender();}
+ else if(a==='novback'){ev.stopPropagation();ev.preventDefault();NOVSEEN=Math.max(NOVSEEN,NOVV());try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(_){}lbOpen(null,true);}},true);
+// la primera vez que se juega, lo de antes no cuenta como «nuevo»
+if(!NOVSEEN){NOVSEEN=NOVV();try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(e){}NOVSEEN=-1;}
+// ---- menú principal: línea de la partida guardada arriba; Continuar y Nueva partida iguales; Novedades debajo ----
+{const _cv=lbCoverHTML;lbCoverHTML=function(){let h=_cv.apply(this,arguments);try{if(typeof lbInGame==='function'&&lbInGame())return h;
+ const m=h.match(/<button class="lbmain" data-a="lbload">[\s\S]*?<\/button><div class="lbsv">[\s\S]*?<\/div><button class="lbnew([^"]*)" data-a="newgame">([\s\S]*?)<\/button>/);
+ if(m){const sv=m[0].match(/<div class="lbsv">[\s\S]*?<\/div>/)[0],ld=m[0].match(/<button class="lbmain" data-a="lbload">[\s\S]*?<\/button>/)[0];
+  h=h.replace(m[0],sv+'<div class="lbmains">'+ld+`<button class="lbmain lbalt${m[1]}" data-a="newgame">${LB.ask?m[2]:(typeof icU==='function'?icU('m_deck',''):'')+' Nueva partida'}</button></div>`);}
+ const cur=NOVV(),nw=NOVSEEN>0&&cur>NOVSEEN;
+ h=h.replace(/(<button class="lbmain[^"]*" data-a="newgame">[\s\S]*?<\/button>(<\/div>)?)/,`$1<button class="lbnov" data-a="novopen">${nw?'<i></i>':''}Novedades · v${cur}</button>`);}catch(e){}return h;};}

@@ -1,0 +1,14 @@
+/* v320 · menú principal (Continuar / Nueva partida) y Novedades */
+.lbmains{display:flex;flex-direction:column;gap:8px;align-items:center;width:100%}
+.lbsv+.lbmains,.lbsv{margin-bottom:6px}
+.lbmain.lbalt{background:#efe2c4!important;color:#3a2412!important;border:2px solid var(--trim,#7a4a22)!important;box-shadow:0 4px 0 var(--trim,#7a4a22)}
+.lbmain.lbalt.warn{background:#f4d0c4!important;color:#7a1a12!important}
+:root[data-skin="holo"] .lbmain.lbalt{background:rgba(255,79,216,.12)!important;color:#ffe0f6!important;border:1.5px solid #ff4fd8!important;box-shadow:0 0 12px rgba(255,79,216,.4)}
+.lbnov{margin-top:10px;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--trim,#7a4a22);background:rgba(0,0,0,.18);color:inherit;font:700 13px system-ui;cursor:pointer}
+.lbnov i{width:8px;height:8px;border-radius:50%;background:#ff5a3c;box-shadow:0 0 6px #ff5a3c;display:inline-block}
+:root[data-skin="holo"] .lbnov{border-color:#3fe8ff;color:#bff6ff;background:rgba(63,232,255,.06)}:root[data-skin="holo"] .lbnov i{background:#ff4fd8;box-shadow:0 0 6px #ff4fd8}
+.novl{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.novr{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:6px 10px;border-radius:10px;border:1.5px solid var(--pline3,#c9b48a);background:rgba(255,255,255,.25);font-size:13px;cursor:pointer}
+.novr b.v{font-size:15px}.novr small{opacity:.7}.novr.sel{box-shadow:0 0 0 2px #e07a2a}.novr .nw{font:700 10px system-ui;color:#fff;background:#c0392b;border-radius:6px;padding:1px 6px}
+.novd h4{margin:0 0 2px}.novd .sec{margin-top:12px}.novd .sec b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a0522d;margin-bottom:4px}.novd ul{margin:0;padding-left:18px}.novd li{margin:3px 0;font-size:13.5px;line-height:1.4}
+:root[data-skin="holo"] .novr{border-color:rgba(63,232,255,.35);background:rgba(63,232,255,.05);color:#d8fbff}:root[data-skin="holo"] .novr.sel{box-shadow:0 0 0 2px #3fe8ff}:root[data-skin="holo"] .novr .nw{background:#ff4fd8}:root[data-skin="holo"] .novd .sec b{color:#3fe8ff}
