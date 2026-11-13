@@ -1925,10 +1925,10 @@ html:root[data-skin="holo"] .rbx.rhb.rult{border-color:#ffd75a!important;backgro
 /* v307 · consola solo con iconos: el nombre sale en el bocadillo al pasar el ratón */
 :root[data-skin="holo"] .lbcv .bkrib span,:root[data-skin="holo"] .bkribs .bkrib span{display:none!important}
 :root[data-skin="holo"] .lbcv .bkrib .latic,:root[data-skin="holo"] .bkribs .bkrib .latic{width:30px!important;height:30px!important}
-/* v314 · en la pausa el bocadillo sale hacia fuera, a la derecha de la consola, para no tapar «Continuar» (pico hacia el altavoz) */
-:root[data-skin="holo"] .lbcv.a.ing .etmbub{right:auto;left:calc(100% + 152px);bottom:14px;width:300px;border-radius:10px 10px 10px 2px;transform:translate(-8px,6px) scale(.96);transform-origin:0 100%}
+/* v314 · en la pausa el bocadillo sale hacia fuera: el mismo de siempre (altura y pico fino en diagonal), volteado a la derecha del altavoz */
+:root[data-skin="holo"] .lbcv.a.ing .etmbub{right:auto;left:calc(100% + 118px);width:300px;border-radius:10px 10px 10px 2px;transform:translate(-8px,6px) scale(.96);transform-origin:0 100%}
 :root[data-skin="holo"] .lbcv.a.ing .etmbub.on{transform:none}
-:root[data-skin="holo"] .lbcv.a.ing .etmbub::after{right:auto;left:-22px;bottom:-1px;width:22px;height:18px;clip-path:polygon(100% 0,100% 100%,0 100%)}
+:root[data-skin="holo"] .lbcv.a.ing .etmbub::after{right:auto;left:-22px;clip-path:polygon(50% 0,100% 0,0 100%)}
 /* v307 · Compendio: las torres como en el mapa, un círculo de su color con borde negro y el icono encima (sin cuadrado ni disco oscuro) */
 .bic.bctw[style*="background"],.bkbic.bctw{border-radius:50%!important;box-shadow:0 0 0 2.5px #1b1712,0 2px 0 3px rgba(0,0,0,.18)!important}
 .bic.bctw[style*="background"] .icsvg svg,.bkbic.bctw .icsvg svg{background:none!important;width:1.45em!important;height:1.45em!important}
@@ -2215,6 +2215,15 @@ body.dsk:not(.mfs) #comp.bkm>.bkw,body.dsk:not(.mfs) #comp.bkm>.lbcv{zoom:var(--
 .lbscore{text-align:center;margin:4px 0 6px}.lbscore small{display:block;font-size:12px;opacity:.75;letter-spacing:.08em;text-transform:uppercase}.lbscore b{font:700 26px Georgia,serif}
 :root[data-skin="holo"] .lbscore b{font-family:'Chakra Petch',system-ui,sans-serif}
 .hsv{display:flex;gap:6px;margin:8px 0 6px}.hsv button{padding:4px 12px;border-radius:14px;border:1px solid var(--pline2);background:var(--paper2);color:var(--ink);font-weight:700;cursor:pointer}.hsv button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+/* v314 · Iconos sin el cuadrado gris de fondo (Nogal, 13-nov-2026): los iconos se dibujaron para ir sobre fondo redondo o sin fondo.
+   · cabecera de la página derecha (opciones, partidas, tutorial…): el icono va directamente sobre el papel / la tablet, más grande;
+   · fichas del compendio (mecánicas, enemigos…): igual, sin cuadrado;
+   · reliquias y torres con su color: círculo con borde negro, como en las tarjetas del cofre;
+   · los logros conservan su recuadro (decisión pendiente de Nogal). */
+.lbdet .lbdic:not(.lbembic){background:none!important;box-shadow:none!important;border:0!important;width:104px;height:104px;font-size:76px}
+.bkbic:not(.bkach):not([style*="background"]){background:none!important;box-shadow:none!important;border:0!important;font-size:66px}
+.bksh .bkbic:not(.bkach):not([style*="background"]){font-size:52px}.bksh.bksm .bkbic:not(.bkach):not([style*="background"]){font-size:36px}
+.bkbic[style*="background"]:not(.bkach){border-radius:50%!important;box-shadow:0 0 0 2.5px #1b1712,0 2px 0 3px rgba(0,0,0,.18)!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>

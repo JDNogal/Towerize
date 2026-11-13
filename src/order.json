@@ -23,7 +23,8 @@
   "21_dron.css",
   "22_ventanas_barra.css",
   "23_logros_niveles.css",
-  "24_puntuacion.css"
+  "24_puntuacion.css",
+  "25_iconos_sin_fondo.css"
  ],
  "js": [
   "00_config.js",

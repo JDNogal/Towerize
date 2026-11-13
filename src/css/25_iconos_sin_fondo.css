@@ -1,0 +1,9 @@
+/* v314 · Iconos sin el cuadrado gris de fondo (Nogal, 13-nov-2026): los iconos se dibujaron para ir sobre fondo redondo o sin fondo.
+   · cabecera de la página derecha (opciones, partidas, tutorial…): el icono va directamente sobre el papel / la tablet, más grande;
+   · fichas del compendio (mecánicas, enemigos…): igual, sin cuadrado;
+   · reliquias y torres con su color: círculo con borde negro, como en las tarjetas del cofre;
+   · los logros conservan su recuadro (decisión pendiente de Nogal). */
+.lbdet .lbdic:not(.lbembic){background:none!important;box-shadow:none!important;border:0!important;width:104px;height:104px;font-size:76px}
+.bkbic:not(.bkach):not([style*="background"]){background:none!important;box-shadow:none!important;border:0!important;font-size:66px}
+.bksh .bkbic:not(.bkach):not([style*="background"]){font-size:52px}.bksh.bksm .bkbic:not(.bkach):not([style*="background"]){font-size:36px}
+.bkbic[style*="background"]:not(.bkach){border-radius:50%!important;box-shadow:0 0 0 2.5px #1b1712,0 2px 0 3px rgba(0,0,0,.18)!important}
