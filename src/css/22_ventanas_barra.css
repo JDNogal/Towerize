@@ -2,7 +2,7 @@
    El oro arriba a la derecha del todo; a su izquierda el ojo, las reliquias y el mazo, todos a la misma altura y centrados. */
 body .rlbar,body.mfs .rlbar{display:flex!important;flex-direction:row!important;align-items:center!important;gap:6px!important;grid-template-columns:none!important}
 body .rlbar>*,body.mfs .rlbar>*{margin:0!important;flex:none;align-self:center!important;vertical-align:middle;grid-column:auto!important;grid-row:auto!important}
-.rlbar .rlg{order:10}.rlbar [data-a="peek"]{order:9}.rlbar .wcomp{order:8}.rlbar [data-mz="rel"]{order:7}.rlbar [data-mz="deck"]{order:6}
+.rlbar .rlg{order:10}.rlbar [data-a="peek"],.rlbar [data-a="ppeek"]{order:9}.rlbar .wcomp{order:8}.rlbar [data-mz="rel"]{order:7}.rlbar [data-mz="deck"]{order:6}
 .rlbar button,.mzb,.pcpeek{display:inline-grid!important;place-items:center!important;line-height:0!important;padding:0!important;border-radius:50%!important;box-sizing:border-box}
 .rlbar .rlg{line-height:1!important;box-sizing:border-box}
 .mzb .icsv,.rlbar button .icsv,.pcpeek .icsv{width:1.25em;height:1.25em;vertical-align:0;display:block}
@@ -23,3 +23,27 @@ body.mfs #relic .chips .tgi{width:24px;height:20px;font-size:13px}
 /* aspecto futurista: los botones de habilidades y reliquias, más claros para que el borde negro de los dibujos destaque; dibujos un poco más grandes */
 :root[data-skin="holo"] .hpb:not(.hpport),:root[data-skin="holo"] #relics .rl{background:linear-gradient(180deg,#56687a,#3c4a58)!important}
 .hpb:not(.hpport) .icsv{width:1.32em;height:1.32em;vertical-align:-.3em}
+/* ===== ¡Cofre abierto!: las reliquias siempre en una sola fila (más estrechas si hace falta) y todas de la misma altura;
+   si una descripción es larga, su recuadro lleva barra de scroll en vez de alargar la tarjeta ===== */
+#relic .cgrid:has(.rcard){grid-template-columns:none!important;grid-auto-flow:column!important;grid-auto-columns:minmax(0,1fr)!important}
+#relic .cgrid .rcard{min-width:0;display:flex;flex-direction:column}
+#relic .cgrid .rcard .rbx{max-height:8.6em;overflow-y:auto;scrollbar-width:thin}
+#relic .cgrid .rcard>button{margin-top:auto}
+body.mfs #relic .cgrid .rcard .rbx{max-height:6.4em}
+/* ===== Torres en móvil: iconos siempre (no caben las etiquetas), sin borde redondo; terrestre/aire a un lado (solo los que golpea), un punto y el resto ===== */
+body.mfs #relic .tof .chips .tgmob .toftg span{background:none!important;border:0!important;width:auto!important;height:auto!important;font-size:17px}
+body.mfs #relic .tof .chips .tgmob .toftg span.off{display:none!important}
+body.mfs #relic .tof .chips .tgmob::after{content:'·';font-weight:900;margin:0 2px 0 3px;opacity:.75;align-self:center}
+body.mfs #relic .chips .tgi{background:none!important;border:0!important;width:auto!important;height:auto!important;font-size:17px;padding:0 1px!important;box-shadow:none!important}
+body.mfs #relic .tof .chips{display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:3px!important}
+/* ===== «Ver detalles» junto a «Saltar» (arriba se cortaba) ===== */
+#relic .pskip{display:flex!important;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
+#relic .pskip>small,#relic .pskip>p,#relic .pskip>div:not(.dice){flex-basis:100%;text-align:center}
+/* ===== Elegir pieza en móvil: pantalla aparte ===== */
+#pkbar{display:none!important}
+body.mfs.pcpick:not(.pcpeek) #pkbar.on{display:flex!important;position:fixed;top:8px;right:10px;z-index:46}
+body.mfs.pcpick #pkbar .mzb{display:inline-grid!important;width:30px;height:30px}
+body.mfs.pcpick #pkbar button{width:30px;height:30px;font-size:14px!important}
+:root body.mfs.pcpick:not(.pcpeek) #panel,:root[data-skin] body.mfs.pcpick:not(.pcpeek) #panel:has(.prow){box-shadow:0 0 0 200vmax rgba(9,10,14,.95)!important}
+body.mfs.pcpick #panel .pcpeek,body.mfs.pcpick #mzpk{display:none!important}
+body.mfs.pcpick.mzbtn #panel #ui>b,body.mfs.pcpick.mzbtn #panel #ui>small,body.mfs.pcpick.mzbtn #panel .ptt,body.mfs.pcpick.mzbtn #panel h3{padding-right:0!important;padding-left:0!important}

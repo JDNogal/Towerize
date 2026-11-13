@@ -2081,7 +2081,7 @@ body.era2g .cnf{background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%
    El oro arriba a la derecha del todo; a su izquierda el ojo, las reliquias y el mazo, todos a la misma altura y centrados. */
 body .rlbar,body.mfs .rlbar{display:flex!important;flex-direction:row!important;align-items:center!important;gap:6px!important;grid-template-columns:none!important}
 body .rlbar>*,body.mfs .rlbar>*{margin:0!important;flex:none;align-self:center!important;vertical-align:middle;grid-column:auto!important;grid-row:auto!important}
-.rlbar .rlg{order:10}.rlbar [data-a="peek"]{order:9}.rlbar .wcomp{order:8}.rlbar [data-mz="rel"]{order:7}.rlbar [data-mz="deck"]{order:6}
+.rlbar .rlg{order:10}.rlbar [data-a="peek"],.rlbar [data-a="ppeek"]{order:9}.rlbar .wcomp{order:8}.rlbar [data-mz="rel"]{order:7}.rlbar [data-mz="deck"]{order:6}
 .rlbar button,.mzb,.pcpeek{display:inline-grid!important;place-items:center!important;line-height:0!important;padding:0!important;border-radius:50%!important;box-sizing:border-box}
 .rlbar .rlg{line-height:1!important;box-sizing:border-box}
 .mzb .icsv,.rlbar button .icsv,.pcpeek .icsv{width:1.25em;height:1.25em;vertical-align:0;display:block}
@@ -2102,6 +2102,30 @@ body.mfs #relic .chips .tgi{width:24px;height:20px;font-size:13px}
 /* aspecto futurista: los botones de habilidades y reliquias, más claros para que el borde negro de los dibujos destaque; dibujos un poco más grandes */
 :root[data-skin="holo"] .hpb:not(.hpport),:root[data-skin="holo"] #relics .rl{background:linear-gradient(180deg,#56687a,#3c4a58)!important}
 .hpb:not(.hpport) .icsv{width:1.32em;height:1.32em;vertical-align:-.3em}
+/* ===== ¡Cofre abierto!: las reliquias siempre en una sola fila (más estrechas si hace falta) y todas de la misma altura;
+   si una descripción es larga, su recuadro lleva barra de scroll en vez de alargar la tarjeta ===== */
+#relic .cgrid:has(.rcard){grid-template-columns:none!important;grid-auto-flow:column!important;grid-auto-columns:minmax(0,1fr)!important}
+#relic .cgrid .rcard{min-width:0;display:flex;flex-direction:column}
+#relic .cgrid .rcard .rbx{max-height:8.6em;overflow-y:auto;scrollbar-width:thin}
+#relic .cgrid .rcard>button{margin-top:auto}
+body.mfs #relic .cgrid .rcard .rbx{max-height:6.4em}
+/* ===== Torres en móvil: iconos siempre (no caben las etiquetas), sin borde redondo; terrestre/aire a un lado (solo los que golpea), un punto y el resto ===== */
+body.mfs #relic .tof .chips .tgmob .toftg span{background:none!important;border:0!important;width:auto!important;height:auto!important;font-size:17px}
+body.mfs #relic .tof .chips .tgmob .toftg span.off{display:none!important}
+body.mfs #relic .tof .chips .tgmob::after{content:'·';font-weight:900;margin:0 2px 0 3px;opacity:.75;align-self:center}
+body.mfs #relic .chips .tgi{background:none!important;border:0!important;width:auto!important;height:auto!important;font-size:17px;padding:0 1px!important;box-shadow:none!important}
+body.mfs #relic .tof .chips{display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:3px!important}
+/* ===== «Ver detalles» junto a «Saltar» (arriba se cortaba) ===== */
+#relic .pskip{display:flex!important;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
+#relic .pskip>small,#relic .pskip>p,#relic .pskip>div:not(.dice){flex-basis:100%;text-align:center}
+/* ===== Elegir pieza en móvil: pantalla aparte ===== */
+#pkbar{display:none!important}
+body.mfs.pcpick:not(.pcpeek) #pkbar.on{display:flex!important;position:fixed;top:8px;right:10px;z-index:46}
+body.mfs.pcpick #pkbar .mzb{display:inline-grid!important;width:30px;height:30px}
+body.mfs.pcpick #pkbar button{width:30px;height:30px;font-size:14px!important}
+:root body.mfs.pcpick:not(.pcpeek) #panel,:root[data-skin] body.mfs.pcpick:not(.pcpeek) #panel:has(.prow){box-shadow:0 0 0 200vmax rgba(9,10,14,.95)!important}
+body.mfs.pcpick #panel .pcpeek,body.mfs.pcpick #mzpk{display:none!important}
+body.mfs.pcpick.mzbtn #panel #ui>b,body.mfs.pcpick.mzbtn #panel #ui>small,body.mfs.pcpick.mzbtn #panel .ptt,body.mfs.pcpick.mzbtn #panel h3{padding-right:0!important;padding-left:0!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2838,7 +2862,7 @@ function tryTowerOffer(){if(S&&S.tut){const o=S.tut.off;if(o&&!RL.open&&!S.aim&&
  const p=tPool();if(S.deck.length>=DECKMAX||!p.length)return;RL.towo=towPick3(p);(S.drr=S.drr||{}).tw=0;renderTowerOffer();}
 // etiqueta de una torre: texto, o su icono si está activada la opción (con su descripción al pasar el ratón)
 const TAGKW={'A distancia':'rng','Corto alcance':'rng','Unidades':'usol','Físico':'tphys','Mágico':'tmagic','Elemental':'telem','Área':'area','Ralentiza':'slow','Rebote':'chain','Rayo continuo':'beam','Quemadura':'burn','Veneno':'poison','Curación':'eheal'};
-const tagHtml=(c,k)=>{const id=TAGKW[c],M=id&&typeof MECI!=='undefined'&&MECI[id];return OPT.tagic&&M&&M.ic?`<span class="kw tgi" data-kw="${id}" data-src="shop:${k}">${M.ic}</span>`:`<span>${c}</span>`;};
+const tagHtml=(c,k)=>{const id=TAGKW[c],M=id&&typeof MECI!=='undefined'&&MECI[id];return (OPT.tagic||document.body.classList.contains('mfs'))&&M&&M.ic?`<span class="kw tgi" data-kw="${id}" data-src="shop:${k}">${M.ic}</span>`:`<span>${c}</span>`;};
 const twChips=k=>{const T=TW[k],o=[];if(!T.beam||T.unit)o.push(T.unit?'Unidades':T.range<=2*K?'Corto alcance':'A distancia');/* el rayo continuo ya dice en su ficha que es a distancia */o.push(DT[T.dt]?DT[T.dt].n:'Físico');if(T.splash||T.puddle||T.cone)o.push('Área');if(T.slow)o.push('Ralentiza');if(T.zap)o.push('Rebote');if(T.beam)o.push('Rayo continuo');if(T.burn)o.push('Quemadura');if(T.dot)o.push('Veneno');if(T.monk)o.push('Curación');return o;};
 // botón para consultar el compendio desde una ventana de elección (torre, reliquia, evento); al cerrar el libro se vuelve a la ventana
 const wcompBtn=t=>compOk()?`<button class="wcomp" data-a="wincomp" data-v="${t}" title="Abrir el compendio">📖</button>`:'';
@@ -2854,12 +2878,14 @@ function tofGlance(k){const g=twGlance(k),i=g.indexOf('<div class="gbody">');con
  b=b.replace(/<div class="grow gt"><span class="cf">[\s\S]*?<\/span><\/span><span class="gv2 gleft">([\s\S]*?)<\/span><\/div>/,'<div class="tofx">$1</div>');
  return b;}
 // a qué golpea (🥾 tierra · 🪽 aire), en la esquina de la carta; las torres de apoyo no atacan
+/* «Ver detalles» va abajo, a la izquierda de «Saltar» (arriba se cortaba) */
+const tdetB=()=>`<button class="tdetb" data-a="tdet">${RL.tdet?'− Ocultar detalles':'+ Ver detalles'}</button>`;
 const tofTg=k=>{const T=TW[k];if(T.support||T.custom&&!T.dmg)return '';const g=T.unit?!T.unit.range:!!T.ground;return `<div class="toftg"><span class="kw st" data-kw="tgnd" data-src="shop:${k}">${icTG()}</span><span class="kw st${g?' off':''}" data-kw="tair" data-src="shop:${k}">${icTA()}</span></div>`;};
 const tofBadge=k=>{const T=TW[k],u=T.unit&&UNAME[k];return T.unit?`<span class="tubdg" title="${u?u[0]:'Unidades'} ×${T.unit.n}">${u?`<span class="tuic" style="background:${T.col}">${icHtml(UIC[k])}</span>`:''}×${T.unit.n}</span>`:'';};
 function renderTowerOffer(){try{(RL.towo||[]).forEach(k=>see('tw',k));}catch(e){}closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.classList.toggle('tdeton',!!RL.tdet);el.scrollTop=0;const g=SKIPG[S.skips||0]||0;
- el.innerHTML=`<div class="pscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap"><b class="ptt">${RL.towT||'Nueva torre para tu mazo'}</b><small class="pst">${RL.towD||'Elige una torre: a partir de ahora podrás construirla en esta partida. Tu mazo: '+S.deck.length+'/'+DECKMAX+'.'} ${RL.towP?'':' El juego está en pausa.'}</small><div class="pdet"><button data-a="tdet">${RL.tdet?'− Ocultar detalles':'+ Ver detalles'}</button></div><div>`+
+ el.innerHTML=`<div class="pscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap"><b class="ptt">${RL.towT||'Nueva torre para tu mazo'}</b><small class="pst">${RL.towD||'Elige una torre: a partir de ahora podrás construirla en esta partida. Tu mazo: '+S.deck.length+'/'+DECKMAX+'.'} ${RL.towP?'':' El juego está en pausa.'}</small><div>`+
   '</div><div class="toff">'+RL.towo.map(k=>{const T=TW[k];return `<div class="tof">${tofTg(k)}<div class="tic twd" style="background:${T.col}">${twIc(k)}${tofBadge(k)}</div><div class="tnm">${T.n}</div><div class="chips"><span class="tgmob">${tofTg(k)}</span>${twChips(k).map(c=>tagHtml(c,k)).join('')}</div><span class="gd">${T.cost} 🪙</span><div class="tgl">${tofGlance(k)}</div><div class="tdt" data-k="${k}"><div class="ce tcard" style="margin:0">${shopInfo(k,1)}</div></div>${RL.towP?'':`<button data-a="towpick" data-k="${k}">Añadir al mazo</button>`}</div>`;}).join('')+
-  `</div>`+(RL.towP?'<div class="pskip"><button class="go" data-a="towok">Entendido ›</button></div>':RL.towNS?'':`<div class="pskip">${diceRr('tw')}<button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><small>Conservas el hueco: en 2 rondas te ofrecerán torres otra vez.${g?' El oro que recibes se reduce cada vez.':''}</small></div>`)+'</div></div>'+wcompBtn('tw');try{sfx('page');}catch(e){}}
+  `</div>`+(RL.towP?'<div class="pskip">'+tdetB()+'<button class="go" data-a="towok">Entendido ›</button></div>':RL.towNS?`<div class="pskip">${tdetB()}</div>`:`<div class="pskip">${tdetB()}${diceRr('tw')}<button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><small>Conservas el hueco: en 2 rondas te ofrecerán torres otra vez.${g?' El oro que recibes se reduce cada vez.':''}</small></div>`)+'</div></div>'+wcompBtn('tw');try{sfx('page');}catch(e){}}
 // cerrar la presentación de las torres del héroe (tutorial): ya están en el mazo
 function towerOk(){RL.towo=null;RL.towP=0;RL.towT=RL.towD=null;RL.towNS=0;RL.open=false;$('relic').classList.remove('open');ui();}
 function towerPick(k){if(!RL.towo||!RL.towo.includes(k))return;if(S.deck.includes(k)){towerOk();return;}RL.towT=RL.towD=null;RL.towNS=0;S.deck.push(k);see('tw',k);RL.towo=null;RL.open=false;$('relic').classList.remove('open','tdeton');S.msg=TW[k].n+' se añade a tu mazo.';ui();}
@@ -11060,6 +11086,20 @@ const hdOn=()=>document.documentElement.dataset.skin==='holo';
 setInterval(()=>{try{const B=document.body.classList,on=hdOn()&&B.contains('pcpick')&&B.contains('mfs');let d=$('hdpk');
  if(!on){if(d)d.classList.remove('on');return;}if(!d){d=document.createElement('div');d.id='hdpk';document.body.appendChild(d);}
  const r=$('panel').getBoundingClientRect();d.style.left=(r.left+r.width/2)+'px';d.style.top=Math.max(0,r.top-46)+'px';d.classList.add('on');}catch(e){}},150);
+// con los paneles del mazo y del cofre a los lados, la ventana del cofre cabe entre ellos (también con la ventana ampliada en pantallas grandes)
+setInterval(()=>{try{const w=document.querySelector('#relic.open .hdwin');if(!w)return;const B=document.body.classList;
+ if(!hdOn()||!B.contains('dsk')||B.contains('mfs')||B.contains('mzbtn')){w.style.maxWidth='';return;}
+ const zm=parseFloat(getComputedStyle(w).zoom)||1,mzw=parseFloat(getComputedStyle($('mzside')||document.body).getPropertyValue('--mzw'))||168;
+ const mx=Math.floor((innerWidth-2*(mzw+34))/zm)+'px';if(w.style.maxWidth!==mx)w.style.maxWidth=mx;}catch(e){}},200);
+// ==================== v312 · Elegir pieza en móvil: pantalla aparte, como la oferta de torres ====================
+// El fondo queda tapado (no se ve ni se puede tocar el mapa) y el mazo, las reliquias y el ojo van arriba a la derecha,
+// en el mismo sitio que en las demás ventanas. Los botones de dentro de la ventana se ocultan en móvil.
+setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.contains('mfs')&&!B.contains('pcpeek')&&!(typeof LB!=='undefined'&&LB.open);let b=$('pkbar');
+ if(!on){if(b)b.classList.remove('on');return;}
+ if(!b){b=document.createElement('div');b.id='pkbar';b.className='rlbar pkbar';const ic=(k,fb)=>typeof icU==='function'?icU(k,fb):fb;
+  b.innerHTML=`<button data-mz="deck" class="mzb" title="Ver tu mazo">${ic('m_deck','🃏')}</button><button data-mz="rel" class="mzb" title="Ver tus reliquias">${ic('m_chest','🧰')}</button><button data-a="ppeek" title="Ver el mapa">${ic('m_k_peek','👁')}</button>`;
+  b.querySelectorAll('[data-mz]').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();try{mzOpen(x.dataset.mz);}catch(_){}}));document.body.appendChild(b);}
+ b.classList.add('on');}catch(e){}},150);
 // ==================== v308 · ICONOS DIBUJADOS (estilo B) ====================
 // Generado con tools/gen_iconos.py a partir de src/iconos/*_final.json. No editar a mano.
 // Cada icono recibe un carácter de uso privado (U+E000…) como «ic»: en la interfaz se cambia por su dibujo SVG;

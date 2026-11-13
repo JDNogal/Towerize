@@ -21,3 +21,8 @@ const hdOn=()=>document.documentElement.dataset.skin==='holo';
 setInterval(()=>{try{const B=document.body.classList,on=hdOn()&&B.contains('pcpick')&&B.contains('mfs');let d=$('hdpk');
  if(!on){if(d)d.classList.remove('on');return;}if(!d){d=document.createElement('div');d.id='hdpk';document.body.appendChild(d);}
  const r=$('panel').getBoundingClientRect();d.style.left=(r.left+r.width/2)+'px';d.style.top=Math.max(0,r.top-46)+'px';d.classList.add('on');}catch(e){}},150);
+// con los paneles del mazo y del cofre a los lados, la ventana del cofre cabe entre ellos (también con la ventana ampliada en pantallas grandes)
+setInterval(()=>{try{const w=document.querySelector('#relic.open .hdwin');if(!w)return;const B=document.body.classList;
+ if(!hdOn()||!B.contains('dsk')||B.contains('mfs')||B.contains('mzbtn')){w.style.maxWidth='';return;}
+ const zm=parseFloat(getComputedStyle(w).zoom)||1,mzw=parseFloat(getComputedStyle($('mzside')||document.body).getPropertyValue('--mzw'))||168;
+ const mx=Math.floor((innerWidth-2*(mzw+34))/zm)+'px';if(w.style.maxWidth!==mx)w.style.maxWidth=mx;}catch(e){}},200);
