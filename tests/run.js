@@ -86,6 +86,7 @@ const T=[
  ['compendio_eventos.js','Compendio de eventos: imagen de cada evento, opciones y página de cada opción'],
  ['puntuacion.js','Puntuación: durante la partida, en la pausa, en Estadísticas, al final y en Partidas'],
  ['regen_resmag.js','Regeneración de enemigos fuertes y resistencia mágica rota'],
+ ['paneles_mazo.js','Paneles del mazo y del cofre con la elección de pieza pendiente'],
  ['logros_niveles.js','Logros por niveles (bronce, plata, oro, platino), bajas con cada torre y Estadísticas › Marcas'],
  ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],
 ];
