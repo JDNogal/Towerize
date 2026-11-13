@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Logros por niveles · maqueta</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#14161c;color:#e8e2d4;font:14px/1.45 Inter,system-ui,sans-serif}
+header{padding:14px 18px 4px}h1{margin:0;font-size:19px;color:#f2c94c}header p{margin:4px 0 0;color:#a8a090;max-width:1150px}
+.tabs,.sub{display:flex;gap:8px;padding:8px 18px;flex-wrap:wrap}
+.tabs button,.sub button{background:#22252e;color:#e8e2d4;border:1px solid #3a3e48;border-radius:8px;padding:8px 12px;font:inherit;cursor:pointer}
+.tabs button.on,.sub button.on{border-color:#f2c94c;color:#f2c94c}
+.pane{display:none;padding:6px 18px 24px}.pane.on{display:block}
+.desc{color:#b8b0a0;max-width:1150px;margin:0 0 10px}.desc b{color:#fff}
+.grid{display:grid;gap:12px}
+.card{border:3px solid #e02020;border-radius:10px;padding:10px;position:relative}
+.card .lb{font:800 12px system-ui;color:#ff8080;margin-bottom:6px;display:block}
+.perg{background:#f4ead8;color:#2a2118}.holo{background:#0c1a22;color:#d4f4ff}
+.row{display:flex;gap:16px;align-items:flex-end;justify-content:center;flex-wrap:wrap}
+.tr{display:flex;flex-direction:column;align-items:center;gap:4px;font:700 12px system-ui}
+.tr svg{width:72px;height:72px}
+.tr.sm svg{width:28px;height:28px}
+/* lista de logros de ejemplo */
+.ach{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;margin:5px 0}
+.perg .ach{background:#ebdcbc;border:1px solid #c9a87a}.holo .ach{background:#102630;border:1px solid #2a6a7a}
+.ach svg{width:34px;height:34px;flex:none}.ach b{display:block}.ach small{opacity:.75}
+.ach .tg{margin-left:auto;font:800 10.5px system-ui;letter-spacing:.08em;padding:2px 7px;border-radius:10px}
+/* bordes */
+canvas{display:block}
+.bd{display:grid;grid-template-columns:repeat(4,auto);gap:14px;justify-content:center;align-items:center}
+.bd .c{text-align:center;font:700 12px system-ui}
+/* marcas */
+.book{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#5a2e1c;padding:14px;border-radius:12px;max-width:1100px}
+.page{background:linear-gradient(90deg,#f0e2c4,#f6ecd3 8%,#f6ecd3 92%,#eadbb8);color:#2a2118;padding:16px 18px;min-height:470px}
+.page h3{margin:0 0 2px;font:700 21px Georgia,serif}.page .s{font-size:12px;opacity:.7;margin-bottom:10px}
+table{border-collapse:collapse;width:100%}
+th{font:800 10.5px system-ui;letter-spacing:.05em;padding:4px 3px;text-align:center;vertical-align:bottom}
+td{padding:5px 3px;text-align:center;border-top:1px dashed rgba(0,0,0,.18);font-size:13px}
+td.n{text-align:left;white-space:nowrap}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%;border:2px solid rgba(0,0,0,.25);vertical-align:middle}
+.ok{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#3faa4a;color:#fff;font-weight:900;font-size:13px;border:2px solid #1b1712}
+.tw{display:inline-block;width:20px;height:20px;border-radius:50%;border:2px solid #1b1712;vertical-align:-5px;margin-right:6px}
+tr.sel td{background:rgba(242,193,64,.25)}
+.det .m{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-top:1px dashed rgba(0,0,0,.18)}
+.det .m b{display:block}.det .m small{opacity:.75}
+.bar{height:7px;border-radius:4px;background:#d8c8a0;margin-top:4px;overflow:hidden}.bar i{display:block;height:100%}
+.tab{background:#0c1a22;border:1px solid #3fe8ff88;border-radius:10px;padding:14px;color:#d4f4ff;max-width:1100px;font-family:'Chakra Petch',system-ui}
+.tab th{color:#7fdcf0}.tab td{border-color:rgba(63,232,255,.18)}
+.tab .dot{border-color:rgba(63,232,255,.35)}
+.prop{outline:2px dashed #ff8a3a;outline-offset:-2px}
+.legend{font-size:12px;color:#b8b0a0;margin-top:8px}
+</style></head><body>
+<header><h1>Logros por niveles · trofeos, bordes de torre y marcas por torre</h1>
+<p>Cambia de pestaña y de opción para comparar. Todo es propuesta: dime qué opción eliges en cada parte y qué cambiarías.</p></header>
+<div class="tabs"><button data-p="tro" class="on">Trofeos</button><button data-p="bor">Bordes de torre</button><button data-p="mar">Marcas por torre (Estadísticas)</button><button data-p="num">Cantidades y logros nuevos</button></div>
+
+<!-- ============ TROFEOS ============ -->
+<div class="pane on" id="tro">
+<div class="sub" id="trsub"><button data-o="A" class="on">Opción A · el trofeo de siempre en cada metal</button><button data-o="B">Opción B · metal + marcas del nivel</button><button data-o="C">Opción C · trofeo con lazo de color</button></div>
+<p class="desc" id="trdesc"></p>
+<div class="grid" style="grid-template-columns:1fr 1fr">
+ <div class="card perg"><span class="lb">LIBRO (era 1)</span><div class="row" id="trp"></div><div id="achp" style="margin-top:12px"></div></div>
+ <div class="card holo"><span class="lb">TABLET · NEÓN (era 2)</span><div class="row" id="trh"></div><div id="achh" style="margin-top:12px"></div></div>
+</div></div>
+
+<!-- ============ BORDES ============ -->
+<div class="pane" id="bor">
+<div class="sub" id="bdsub"><button data-o="A" class="on">Opción A · aro con remaches</button><button data-o="B">Opción B · corona de laurel</button><button data-o="C">Opción C · estrella de puntas (como el de Latón)</button></div>
+<p class="desc" id="bddesc"></p>
+<div class="grid" style="grid-template-columns:1fr 1fr">
+ <div class="card perg" style="background:#3a5a30"><span class="lb" style="color:#ffd0d0">ERA FANTÁSTICA · sobre el mapa</span><div class="bd" id="bd1"></div></div>
+ <div class="card holo" style="background:#121a21"><span class="lb">ERA DISTÓPICA · sobre el mapa</span><div class="bd" id="bd2"></div></div>
+</div>
+<p class="legend">El borde solo se pone en la torre de la que has conseguido el logro (cada torre tiene sus tres). Se elige en Opciones › Personalización, como los marcos de ahora; si no eliges, se pone el mejor que tengas.</p>
+</div>
+
+<!-- ============ MARCAS ============ -->
+<div class="pane" id="mar">
+<div class="sub" id="mksub"><button data-o="book" class="on">Libro (era 1)</button><button data-o="tab">Tablet (era 2)</button></div>
+<p class="desc" id="mkdesc"></p>
+<div id="mkbox"></div>
+<p class="legend">Con borde naranja discontinuo: columnas que propongo yo, además de las tuyas. De momento la marca conseguida es un tic verde; más adelante, su icono.</p>
+</div>
+
+<!-- ============ CANTIDADES ============ -->
+<div class="pane" id="num">
+<div class="desc" style="max-width:900px">
+<p><b>Bajas con cada torre (logros de bronce, plata y oro; desbloquean su borde):</b></p>
+<table style="max-width:640px;background:#1c1f26;border-radius:8px"><tr><th style="text-align:left">Torres</th><th>Bronce</th><th>Plata</th><th>Oro</th></tr>
+<tr><td class="n">Torres normales (de serie)</td><td>2.500</td><td>5.000</td><td>10.000</td></tr>
+<tr><td class="n">Torres de evento (salen pocas veces)</td><td>1.000</td><td>2.000</td><td>4.000</td></tr></table>
+<p style="margin-top:10px">Cuenta: una torre que juegas mucho hace unas 150-300 bajas por partida, así que el bronce sale en unas 10-15 partidas con ella, la plata en unas 25 y el oro en unas 50. En las de evento lo bajo a menos de la mitad porque no siempre te salen.</p>
+<p><b>Logros de bronce nuevos (sencillos) que propongo, además de las bajas:</b></p>
+<ul>
+<li>Ganar tu primera partida con cada héroe.</li>
+<li>Subir un héroe a Nv 10 por primera vez.</li>
+<li>Llevar una torre a Nv 4 por primera vez (y una de cada especialización: plata).</li>
+<li>Abrir 25 / 100 cofres (bronce / plata).</li>
+<li>Completar 10 / 50 eventos (bronce / plata).</li>
+<li>Matar 1 / 10 / 50 jefes (bronce / plata / oro).</li>
+<li>Descubrir todas las piezas, todas las torres, todos los enemigos de una era (plata).</li>
+</ul>
+<p><b>Niveles de los logros que ya hay:</b> casi todos pasan a <b>plata</b>; a <b>oro</b> los más difíciles (por ejemplo «Intocable», «Por los pelos», «Austeridad» y «Minimalista»). Te paso la lista completa para que la revises antes de meterlo. <b>Platino:</b> conseguir todos los demás.</p>
+</div></div>
+
+<script>
+const K='#1b1410';
+const MET={bronce:{cup:'#c8803a',hl:'#f0b070',stem:'#a8642a',gem:'#3fae6a',n:'Bronce'},plata:{cup:'#c8d0d8',hl:'#ffffff',stem:'#9aa4ae',gem:'#4a7ad8',n:'Plata'},oro:{cup:'#f2c140',hl:'#ffd75a',stem:'#e0a830',gem:'#e0405a',n:'Oro'},platino:{cup:'#e4eef4',hl:'#ffffff',stem:'#b8ccd8',gem:'#a86ae8',n:'Platino'}};
+const NEON={bronce:'#ff9a4a',plata:'#e8f0ff',oro:'#ffd84a',platino:'#c890ff'};
+function perg(m,opt){const c=MET[m];let s=`<svg viewBox="0 0 64 64"><g stroke="${K}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">`;
+ if(opt==='C')s+=`<path d="M24 34l-6 18 6-3 3 5 4-18zM40 34l6 18-6-3-3 5-4-18z" fill="${m==='bronce'?'#3f8a5a':m==='plata'?'#3a6ad0':m==='oro'?'#d03a4a':'#8a4ad8'}"/>`;
+ s+=`<path d="M18 10h28v8c0 10-6 17-14 17s-14-7-14-17z" fill="${c.cup}"/><path d="M18 14c-8 0-9 12 1 14M46 14c8 0 9 12-1 14" fill="none" stroke-width="3.5"/><path d="M18 14c-8 0-9 12 1 14M46 14c8 0 9 12-1 14" fill="none" stroke="${c.hl}" stroke-width="1.5"/><path d="M28 35h8l-1 8h-6z" fill="${c.stem}"/><path d="M22 43h20v5H22zM18 48h28v7H18z" fill="#7a4a2a"/><circle cx="32" cy="21" r="3.6" fill="${c.gem}"/><path d="M22 13.5h20" stroke="${c.hl}" stroke-width="1.6" opacity=".8"/>`;
+ if(opt==='B'){const n={bronce:1,plata:2,oro:3,platino:4}[m];for(let i=0;i<n;i++){const x=32+(i-(n-1)/2)*6;s+=`<path d="M${x} 49l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.2-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z" fill="${c.hl==='#ffffff'?'#f4f8fb':'#ffd75a'}" stroke-width="1"/>`;}}
+ if(m==='platino')s+=`<path d="M50 6l1.6 3.4 3.4 1.6-3.4 1.6L50 16l-1.6-3.4-3.4-1.6 3.4-1.6z" fill="#fff" stroke-width="1.2"/><path d="M12 30l1.2 2.4 2.4 1.2-2.4 1.2L12 37l-1.2-2.4-2.4-1.2 2.4-1.2z" fill="#fff" stroke-width="1.1"/>`;
+ return s+'</g></svg>';}
+function holo(m,opt){const c=NEON[m];const out=opt==='B'?c:'#3fe8ff',arm=opt==='B'?c:'#ff4fd8';
+ let s=`<svg viewBox="0 0 64 64"><g fill="none" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 3px ${c})">`;
+ if(opt==='C')s+=`<path d="M24 36l-5 16 5-2 3 4 3-16M40 36l5 16-5-2-3 4-3-16" stroke="${c}" stroke-width="2.6"/>`;
+ s+=`<path d="M18 10h28v8c0 10-6 17-14 17s-14-7-14-17z" stroke="${out}" stroke-width="3.4"/><path d="M18 14c-8 0-9 12 1 14M46 14c8 0 9 12-1 14M28 35v8M36 35v8M22 43h20M18 54h28" stroke="${arm}" stroke-width="3.4"/><path d="M22 48.5h20" stroke="${out}" stroke-width="3.4"/>`;
+ s+=`<path d="M32 13l2.6 5.2 5.6.8-4.1 4 1 5.6L32 26l-5.1 2.6 1-5.6-4.1-4 5.6-.8z" fill="${c}" stroke="none"/>`;
+ if(m==='platino')s+=`<path d="M50 6l1.6 3.4 3.4 1.6-3.4 1.6L50 16l-1.6-3.4-3.4-1.6 3.4-1.6z" fill="#fff" stroke="none"/>`;
+ return s+'</g></svg>';}
+const TRD={A:'<b>A.</b> El trofeo de siempre, solo cambiando el metal: bronce, plata, oro (el actual) y platino (blanco azulado con brillos). En neón, la estrella del centro va del color de su metal. Es lo más limpio y se distingue de un vistazo.',
+ B:'<b>B.</b> Como A, y además unas estrellitas en la base: 1 bronce, 2 plata, 3 oro, 4 platino. En neón, el contorno entero va del color del metal. Ayuda a los que distinguen mal los colores.',
+ C:'<b>C.</b> El trofeo con un lazo colgando del color del nivel (verde, azul, rojo, morado). En neón, el lazo de luz del color del metal. Más vistoso, pero con más cosas en un icono pequeño.'};
+function drawTro(o){document.getElementById('trdesc').innerHTML=TRD[o];
+ document.getElementById('trp').innerHTML=Object.keys(MET).map(m=>`<div class="tr">${perg(m,o)}${MET[m].n}<span class="tr sm">${perg(m,o)}</span></div>`).join('');
+ document.getElementById('trh').innerHTML=Object.keys(MET).map(m=>`<div class="tr">${holo(m,o)}${MET[m].n}<span class="tr sm">${holo(m,o)}</span></div>`).join('');
+ const L=[['bronce','Puntería de arquero','Haz 2.500 bajas con Arqueros.'],['plata','Austeridad','Gana sin pagar ninguna casilla especial.'],['oro','Intocable','Gana sin que ningún enemigo llegue al núcleo.'],['platino','Leyenda de Towerize','Consigue todos los logros.']];
+ const tg=(m,h)=>`<span class="tg" style="background:${h?'transparent':MET[m].cup};border:1px solid ${h?NEON[m]:'#1b1410'};color:${h?NEON[m]:'#1b1410'}">${MET[m].n.toUpperCase()}</span>`;
+ document.getElementById('achp').innerHTML=L.map(([m,n,d])=>`<div class="ach">${perg(m,o)}<div><b>${n}</b><small>${d}</small></div>${tg(m)}</div>`).join('');
+ document.getElementById('achh').innerHTML=L.map(([m,n,d])=>`<div class="ach">${holo(m,o)}<div><b>${n}</b><small>${d}</small></div>${tg(m,1)}</div>`).join('');}
+// ---- bordes ----
+const BM={bronce:['#b8702a','#7a4410','#f0b070'],plata:['#c8d0d8','#6a747e','#ffffff'],oro:['#e8b830','#6a4a10','#fff1b8']};
+const BN={bronce:'#ff9a4a',plata:'#dfe8ff',oro:'#ffd84a'};
+function tower(g,X,Y,B,col,era){g.fillStyle=col;g.strokeStyle='#1b1712';g.lineWidth=B*.04;g.beginPath();g.arc(X,Y,B*.36,0,7);g.fill();g.stroke();
+ g.fillStyle='#1b1712';g.font=`${B*.32}px serif`;g.textAlign='center';g.textBaseline='middle';g.fillText(era===2?'⚡':'🏹',X,Y+1);}
+function frame1(g,X,Y,B,m,o){const[c,d,h]=BM[m];g.save();
+ if(o==='A'){g.fillStyle=c;g.strokeStyle='#1b1712';g.lineWidth=B*.035;g.beginPath();g.arc(X,Y,B*.5,0,7);g.arc(X,Y,B*.38,0,7,true);g.fill('evenodd');g.beginPath();g.arc(X,Y,B*.5,0,7);g.stroke();g.beginPath();g.arc(X,Y,B*.38,0,7);g.stroke();
+  g.strokeStyle=h;g.lineWidth=B*.02;g.beginPath();g.arc(X,Y,B*.46,3.6,5.2);g.stroke();
+  for(let k=0;k<8;k++){const a=k/8*Math.PI*2;g.fillStyle=h;g.beginPath();g.arc(X+Math.cos(a)*B*.44,Y+Math.sin(a)*B*.44,B*.028,0,7);g.fill();g.strokeStyle=d;g.lineWidth=B*.01;g.stroke();}}
+ if(o==='B'){for(const sgn of[-1,1])for(let k=0;k<7;k++){const a=Math.PI/2+sgn*(0.35+k*.33),x=X+Math.cos(a)*B*.47,y=Y+Math.sin(a)*B*.47;g.save();g.translate(x,y);g.rotate(a+sgn*1.2);g.fillStyle=c;g.strokeStyle='#1b1712';g.lineWidth=B*.022;g.beginPath();g.ellipse(0,0,B*.1,B*.045,0,0,7);g.fill();g.stroke();g.strokeStyle=h;g.lineWidth=B*.012;g.beginPath();g.moveTo(-B*.06,0);g.lineTo(B*.06,0);g.stroke();g.restore();}
+  g.fillStyle=c;g.strokeStyle='#1b1712';g.lineWidth=B*.025;g.beginPath();g.arc(X,Y+B*.5,B*.06,0,7);g.fill();g.stroke();}
+ if(o==='C'){const n=m==='bronce'?12:m==='plata'?14:16;g.fillStyle=c;g.beginPath();for(let k=0;k<n*2;k++){const a=k/(n*2)*Math.PI*2,r=B*(k%2?.46:.55);g.lineTo(X+Math.cos(a)*r,Y+Math.sin(a)*r);}g.closePath();g.fill();g.strokeStyle='#1b1712';g.lineWidth=B*.03;g.stroke();
+  g.fillStyle=h;for(let k=0;k<4;k++){const a=k*Math.PI/2+Math.PI/4;g.beginPath();g.arc(X+Math.cos(a)*B*.465,Y+Math.sin(a)*B*.465,B*.028,0,7);g.fill();}}
+ g.restore();}
+function frame2(g,X,Y,B,m,o){const c=BN[m];g.save();g.shadowColor=c;g.shadowBlur=B*.12;g.strokeStyle=c;g.lineCap='round';
+ if(o==='A'){g.lineWidth=B*.045;for(let k=0;k<6;k++){const a=k/6*Math.PI*2+.15;g.beginPath();g.arc(X,Y,B*.47,a,a+.75);g.stroke();}g.lineWidth=B*.02;g.globalAlpha=.6;g.beginPath();g.arc(X,Y,B*.41,0,7);g.stroke();}
+ if(o==='B'){g.lineWidth=B*.04;g.beginPath();for(let k=0;k<6;k++){const a=k/6*Math.PI*2+Math.PI/6;g.lineTo(X+Math.cos(a)*B*.52,Y+Math.sin(a)*B*.52);}g.closePath();g.stroke();g.fillStyle=c;for(let k=0;k<6;k++){const a=k/6*Math.PI*2+Math.PI/6;g.beginPath();g.arc(X+Math.cos(a)*B*.52,Y+Math.sin(a)*B*.52,B*.035,0,7);g.fill();}}
+ if(o==='C'){g.lineWidth=B*.035;const n=m==='bronce'?3:m==='plata'?4:5;for(let k=0;k<n;k++){const a=k/n*Math.PI*2-Math.PI/2;g.beginPath();g.moveTo(X+Math.cos(a)*B*.42,Y+Math.sin(a)*B*.42);g.lineTo(X+Math.cos(a)*B*.58,Y+Math.sin(a)*B*.58);g.stroke();}g.beginPath();g.arc(X,Y,B*.45,0,7);g.stroke();}
+ g.restore();}
+const BDD={A:'<b>A · Aro con remaches.</b> Un aro de metal alrededor de la torre con ocho remaches y un brillo arriba. En la era 2, un aro de neón partido en seis tramos con otro aro fino dentro. El más discreto: se ve el metal sin tapar nada.',
+ B:'<b>B · Corona de laurel.</b> Hojas de laurel de metal a los dos lados, cerradas abajo con un botón. En la era 2, un hexágono de neón con luces en las esquinas. El más «de premio».',
+ C:'<b>C · Estrella de puntas.</b> Como el marco de Latón que ya existe, en bronce, plata y oro, con más puntas cuanto mejor es el nivel (12, 14, 16). En la era 2, un aro de neón con 3, 4 o 5 rayas según el nivel. Sigue el estilo de los marcos actuales.'};
+function drawBor(o){document.getElementById('bddesc').innerHTML=BDD[o];
+ for(const era of[1,2]){const box=document.getElementById('bd'+era);box.innerHTML='';
+  for(const m of['ninguno','bronce','plata','oro']){const d=document.createElement('div');d.className='c';const cv=document.createElement('canvas');cv.width=cv.height=200;cv.style.width=cv.style.height='100px';const g=cv.getContext('2d');g.scale(2,2);
+   g.fillStyle=era===1?'#4a6a3a':'#18222b';g.fillRect(0,0,100,100);g.strokeStyle=era===1?'#3a5a2a':'#22303a';for(let i=0;i<=100;i+=25){g.beginPath();g.moveTo(i,0);g.lineTo(i,100);g.stroke();g.beginPath();g.moveTo(0,i);g.lineTo(100,i);g.stroke();}
+   if(m!=='ninguno')(era===1?frame1:frame2)(g,50,50,72,m,o);tower(g,50,50,72,era===1?'#e8b04a':'#ffe24a',era);
+   d.appendChild(cv);d.appendChild(document.createTextNode(m==='ninguno'?'Sin borde':m[0].toUpperCase()+m.slice(1)));box.appendChild(d);}}}
+// ---- marcas ----
+const TWS=[['Arqueros','#e8b04a',['ok','ok','ok','','ok','ok','b']],['Catapulta','#a8987a',['ok','','ok','ok','','ok','s']],['Orbe arcano','#8a6ae8',['ok','ok','','','ok','','g']],['Monasterio','#d86a4a',['ok','','','','','','']],['Lanzallamas','#e8603a',['','','','','','','b']],['Faro (evento)','#f2c94c',['ok','','ok','—','','','']]];
+const COL=[['Ganar',0],['Ganar sin perder vida',0],['Nv 4 máx. · espec. A',0],['Nv 4 máx. · espec. B',0],['Ganar siendo la de más DPS',0],['Ganar en partida de 20 rondas',1],['Bajas (bronce/plata/oro)',1]];
+const cell=v=>v==='ok'?'<span class="ok">✓</span>':v==='—'?'—':v==='b'||v==='s'||v==='g'?`<span class="dot" style="background:${v==='b'?'#c8803a':v==='s'?'#c8d0d8':'#f2c140'};border-color:#1b1712"></span>`:'<span class="dot"></span>';
+function tableH(num){return `<table><tr><th style="text-align:left">Torre</th>${COL.map(([c,p],i)=>`<th class="${p?'prop':''}" title="${c}">${num?'①②③④⑤⑥⑦'.charAt(i):c}</th>`).join('')}</tr>${TWS.map(([n,c,v],i)=>`<tr class="${i===0?'sel':''}"><td class="n"><span class="tw" style="background:${c}"></span>${n}</td>${v.map(x=>'<td>'+cell(x)+'</td>').join('')}</tr>`).join('')}</table>`;}
+const MKD={book:'<b>Libro.</b> Página izquierda: la lista de torres con una columna estrecha por marca (solo el tic o el círculo vacío; el nombre de la marca sale en el bocadillo al pasar por la cabecera). Página derecha: la torre elegida con cada marca explicada y, en las bajas, su barra de progreso hacia el siguiente borde. Arriba, marcapáginas para cambiar entre Fantástica y Distópica.',
+ tab:'<b>Tablet.</b> Toda la tabla en una pantalla, con los nombres de las marcas en la cabecera y la torre elegida resaltada; al pulsar una fila se abre su ficha con el detalle, como en el libro.'};
+function drawMk(o){document.getElementById('mkdesc').innerHTML=MKD[o];const b=document.getElementById('mkbox');
+ if(o==='book')b.innerHTML=`<div class="book"><div class="page"><h3>Marcas de torres</h3><div class="s">Fantástica · 4 de 7 marcas con Arqueros</div>${tableH(1)}<div class="legend" style="color:#6a5a40">① Ganar · ② Sin perder vida · ③④ Nv 4 al máximo con cada especialización · ⑤ La de más DPS · ⑥ Partida de 20 rondas · ⑦ Bajas</div></div>
+ <div class="page det"><h3><span class="tw" style="background:#e8b04a;width:28px;height:28px;vertical-align:-7px"></span>Arqueros</h3><div class="s">Marcas conseguidas: 5 de 7</div>
+ ${[['ok','Ganar con ella','Gana una partida con Arqueros en el mazo.'],['ok','Ganar sin perder vida','Gana con ella sin que te quiten vida.'],['ok','Nv 4 al máximo · Ballestero','Súbela a Nv 4 con esa especialización y todas sus habilidades al máximo.'],['','Nv 4 al máximo · Tirador','Súbela a Nv 4 con esa especialización y todas sus habilidades al máximo.'],['ok','La de más DPS','Gana con ella como la torre que más daño ha hecho.'],['ok','Partida de 20 rondas','Gana una partida de 20 rondas con ella.']].map(([v,n,d])=>`<div class="m">${cell(v)}<div><b>${n}</b><small>${d}</small></div></div>`).join('')}
+ <div class="m">${cell('b')}<div style="flex:1"><b>Bajas: 3.120 · borde de bronce</b><small>Siguiente: plata a las 5.000.</small><div class="bar"><i style="width:62%;background:#c8d0d8"></i></div></div></div></div></div>`;
+ else b.innerHTML=`<div class="tab"><h3 style="margin:0 0 8px;color:#3fe8ff">MARCAS DE TORRES · DISTÓPICA</h3>${tableH()}</div>`;}
+// ---- pestañas ----
+const subs={trsub:drawTro,bdsub:drawBor,mksub:drawMk};
+for(const id in subs)document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.toggle('on',x===b));subs[id](b.dataset.o);});
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id===b.dataset.p));});
+drawTro('A');drawBor('A');drawMk('book');
+window.M={tab:p=>document.querySelector(`.tabs [data-p="${p}"]`).click(),sub:(id,o)=>document.querySelector(`#${id} [data-o="${o}"]`).click()};
+</script></body></html>
