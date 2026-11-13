@@ -19,3 +19,7 @@
 /* v307 · consola solo con iconos: el nombre sale en el bocadillo al pasar el ratón */
 :root[data-skin="holo"] .lbcv .bkrib span,:root[data-skin="holo"] .bkribs .bkrib span{display:none!important}
 :root[data-skin="holo"] .lbcv .bkrib .latic,:root[data-skin="holo"] .bkribs .bkrib .latic{width:30px!important;height:30px!important}
+/* v314 · en la pausa el bocadillo sale hacia fuera, a la derecha de la consola, para no tapar «Continuar» (pico hacia el altavoz) */
+:root[data-skin="holo"] .lbcv.a.ing .etmbub{right:auto;left:calc(100% + 152px);bottom:14px;width:300px;border-radius:10px 10px 10px 2px;transform:translate(-8px,6px) scale(.96);transform-origin:0 100%}
+:root[data-skin="holo"] .lbcv.a.ing .etmbub.on{transform:none}
+:root[data-skin="holo"] .lbcv.a.ing .etmbub::after{right:auto;left:-22px;bottom:-1px;width:22px;height:18px;clip-path:polygon(100% 0,100% 100%,0 100%)}
