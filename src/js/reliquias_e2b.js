@@ -56,12 +56,13 @@ nrAdd({id:'jetpack',n:'Mochila cohete',ic:'🚀',col:'#6a3a2a',era:2,cd:3,
   const dm=Math.max(hdm()*2.5,r3Hp()*.5);let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-q.x,e.y-q.y)<=1.3*K){hurt(e,dm,H.pt,'phys');stunE(e,1);n++;}RS('jetpack').n+=n;S.fx.push({x:q.x,y:q.y,t:.5,m:.5,r:1.3*K,col:'#ffa060'});return true;}});
 {const _u=uSpdM;uSpdM=function(t){return _u.apply(this,arguments)*(t&&t.hero&&r3On('jetpack')?1.3:1);};}
 // ---- Rastreador de combate ----
-nrAdd({id:'scouter',n:'Rastreador de combate',ic:'🥽',col:'#2a6a3a',era:2,cd:3,
+// v329 (idea de Nogal): el activo es un guiño a la lectura de poder más famosa del anime: un golpe en área de 1 a 9000, al azar
+nrAdd({id:'scouter',n:'Rastreador de combate',ic:'🥽',col:'#2a6a3a',era:2,cd:5,
  pas:()=>'Tus torres, tus unidades y tu héroe hacen un <span class="cd">+20% de daño</span> a élites y jefes.',
- act:()=>'Lees el poder de un enemigo: pierde el <b>10%</b> de su vida máxima (jefes, el 5%). Si tiene <b>más de 9000</b>, pierde el doble… y la reliquia tarda el doble en recargarse.'},
- {aim:'Elige el enemigo que vas a leer.',r:1*K,col:'120,255,140',use:c=>{const e=r3Near(c,1.5*K);if(!e){S.msg='Rastreador de combate: elige un enemigo.';return false;}let d=e.max*(isBoss(e)?.05:.1);const big=e.max>9000;if(big)d*=2;
-  hurt(e,d,null,'elem');S.scX=big?1:0;RS('scouter').n++;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:.9*K,col:big?'#ff4f4f':'#7aff8a'});if(big){S.msg='¡Más de 9000! El rastreador ha reventado.';return 'msg';}return true;}});
-{const _s=setCD;setCD=function(id){const r=_s.apply(this,arguments);if(id==='scouter'&&S.scX){S.scX=0;S.rs.scouter.cd*=2;}return r;};}
+ act:()=>'<i>«¡Su nivel de poder… supera los 9000!»</i> Golpea un área: cada enemigo dentro recibe <b>entre 1 y 9000</b> de daño, al azar.'},
+ {aim:'Elige dónde leer el poder.',r:1.5*K,col:'120,255,140',use:c=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&Math.hypot(e.x-c.x,e.y-c.y)<=1.5*K);if(!L.length){S.msg='Rastreador de combate: no hay enemigos ahí.';return false;}
+  let top=0;for(const e of L){const d=1+Math.floor(Math.random()*9000);top=Math.max(top,d);hurt(e,d,null,'elem');}RS('scouter').n+=L.length;
+  S.fx.push({x:c.x,y:c.y,t:.7,m:.7,r:1.5*K,col:top>8000?'#ff4f4f':'#7aff8a'});S.msg=top>8000?'¡Lectura máxima: '+top.toLocaleString('es-ES')+'!':'Rastreador de combate: lectura de '+top.toLocaleString('es-ES')+'.';return 'msg';}});
 // ---- Satélite láser ----
 nrAdd({id:'satlaser',n:'Satélite láser',ic:'🛰️',col:'#3a2a5a',era:2,cd:3,
  pas:()=>'Cada <b>20 s</b> de oleada, un impacto orbital cae sobre el enemigo con más vida: mucho daño en el centro y algo menos alrededor (2 casillas).',
