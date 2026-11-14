@@ -9,3 +9,5 @@ PIECES.push({n:"Rotonda",p:["###.###", "###.###", "##...##", "...#...", "##...##
 function pzeOf(n){return ({'Desvío':[2,1],'Ocho':[2,1],'Recoveco':[2,2],'Rotonda':[2,3]})[n];}/* función (no const): se consulta antes de cargar este archivo */
 function pieceOk(n){const z=pzeOf(n);if(!z)return true;if(typeof S!=='undefined'&&S&&S.tut)return false;return (typeof bfzLv==='function'?bfzLv(z[0]):0)>=z[1];}
 function pieceEraOk(n){const z=pzeOf(n);return !z||z[0]===1||(typeof era2Ok==='function'&&era2Ok());}
+// v329: las piezas también pueden salir en espejo (la mitad de las veces), con sus solares y casillas especiales
+function mirO(o){o.p=o.p.map(r=>[...r].reverse().join(''));o.b=(o.b||[]).map(({x,y,k})=>({x:P-1-x,y,k}));}

@@ -52,6 +52,7 @@ function dealTry(){
    if(S.round>=BUFFS_FROM&&Math.random()<.6){const cs=[];of.p.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));
     shuf(cs);
     const two=Math.random()>=.7,dbl=two&&Math.random()<DSUP;for(let i=two?2:1;i>0&&cs.length;i--){const c=cs.pop();of.b.push({x:c[0],y:c[1],k:dbl?(P=>P[Math.floor(Math.random()*P.length)])(typeof bfPool==='function'?bfPool():BK)+'+':rollBuff()});}if(dbl)S.sup=SUP0;}
+   if(typeof mirO==='function'&&Math.random()<.5)mirO(of);/* v329: las piezas también salen en espejo */
    for(let i=Math.floor(Math.random()*4);i>0;i--)rotO(of);return of;});
   // siempre hay una pieza gratis (sin casillas especiales) entre las que se pueden colocar, y solo salen casillas que puedas pagar
   if(!S.tut){const okI=S.offers.map((o,i)=>i).filter(i=>anyPlace(S.offers[i]));if(okI.length)S.offers[okI[Math.floor(Math.random()*okI.length)]].b=[];

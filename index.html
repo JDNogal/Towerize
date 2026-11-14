@@ -5505,6 +5505,7 @@ function dealTry(){
    if(S.round>=BUFFS_FROM&&Math.random()<.6){const cs=[];of.p.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));
     shuf(cs);
     const two=Math.random()>=.7,dbl=two&&Math.random()<DSUP;for(let i=two?2:1;i>0&&cs.length;i--){const c=cs.pop();of.b.push({x:c[0],y:c[1],k:dbl?(P=>P[Math.floor(Math.random()*P.length)])(typeof bfPool==='function'?bfPool():BK)+'+':rollBuff()});}if(dbl)S.sup=SUP0;}
+   if(typeof mirO==='function'&&Math.random()<.5)mirO(of);/* v329: las piezas también salen en espejo */
    for(let i=Math.floor(Math.random()*4);i>0;i--)rotO(of);return of;});
   // siempre hay una pieza gratis (sin casillas especiales) entre las que se pueden colocar, y solo salen casillas que puedas pagar
   if(!S.tut){const okI=S.offers.map((o,i)=>i).filter(i=>anyPlace(S.offers[i]));if(okI.length)S.offers[okI[Math.floor(Math.random()*okI.length)]].b=[];
@@ -12676,6 +12677,8 @@ PIECES.push({n:"Rotonda",p:["###.###", "###.###", "##...##", "...#...", "##...##
 function pzeOf(n){return ({'Desvío':[2,1],'Ocho':[2,1],'Recoveco':[2,2],'Rotonda':[2,3]})[n];}/* función (no const): se consulta antes de cargar este archivo */
 function pieceOk(n){const z=pzeOf(n);if(!z)return true;if(typeof S!=='undefined'&&S&&S.tut)return false;return (typeof bfzLv==='function'?bfzLv(z[0]):0)>=z[1];}
 function pieceEraOk(n){const z=pzeOf(n);return !z||z[0]===1||(typeof era2Ok==='function'&&era2Ok());}
+// v329: las piezas también pueden salir en espejo (la mitad de las veces), con sus solares y casillas especiales
+function mirO(o){o.p=o.p.map(r=>[...r].reverse().join(''));o.b=(o.b||[]).map(({x,y,k})=>({x:P-1-x,y,k}));}
 // ==================== v329 · Logros: trofeo en su metal también para los logros que se definen después de logros_niveles.js ====================
 // (p. ej. «Era Fantástica/Distópica completada», de amenazas.js, salían con el trofeo genérico)
 for(const id in ACH){const A=ACH[id],d=Object.getOwnPropertyDescriptor(A,'ic');if(!d)Object.defineProperty(A,'ic',{get:()=>trofIcL(achLv(id)),configurable:true});}
