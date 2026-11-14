@@ -57,11 +57,11 @@ nrAdd({id:'jetpack',n:'Mochila cohete',ic:'🚀',col:'#6a3a2a',era:2,cd:3,
 {const _u=uSpdM;uSpdM=function(t){return _u.apply(this,arguments)*(t&&t.hero&&r3On('jetpack')?1.3:1);};}
 // ---- Rastreador de combate ----
 // v329 (idea de Nogal): el activo es un guiño a la lectura de poder más famosa del anime: un golpe en área de 1 a 9000, al azar
-nrAdd({id:'scouter',n:'Rastreador de combate',ic:'🥽',col:'#2a6a3a',era:2,cd:5,
+nrAdd({id:'scouter',n:'Rastreador de combate',ic:'🥽',col:'#2a6a3a',era:2,cd:3,
  pas:()=>'Tus torres, tus unidades y tu héroe hacen un <span class="cd">+20% de daño</span> a élites y jefes.',
  act:()=>'<i>«¡Su nivel de poder… supera los 9000!»</i> Golpea un área: cada enemigo dentro recibe <b>entre 1 y 9000</b> de daño, al azar.'},
  {aim:'Elige dónde leer el poder.',r:1.5*K,col:'120,255,140',use:c=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&Math.hypot(e.x-c.x,e.y-c.y)<=1.5*K);if(!L.length){S.msg='Rastreador de combate: no hay enemigos ahí.';return false;}
-  let top=0;for(const e of L){const d=1+Math.floor(Math.random()*9000);top=Math.max(top,d);hurt(e,d,null,'elem');}RS('scouter').n+=L.length;
+  /* suerte entre partidas (suerte.js): sin lecturas altas, el empujón sube; al tope, una sale a 9000 */let top=0,forz=luck('scouter')>=1;for(const e of L){const d=forz?9000:luckHigh('scouter',9000);forz=false;top=Math.max(top,d);hurt(e,d,null,'elem');}luckSet('scouter',top>=8000?0:luck('scouter')+.1);RS('scouter').n+=L.length;
   S.fx.push({x:c.x,y:c.y,t:.7,m:.7,r:1.5*K,col:top>8000?'#ff4f4f':'#7aff8a'});S.msg=top>8000?'¡Lectura máxima: '+top.toLocaleString('es-ES')+'!':'Rastreador de combate: lectura de '+top.toLocaleString('es-ES')+'.';return 'msg';}});
 // ---- Satélite láser ----
 nrAdd({id:'satlaser',n:'Satélite láser',ic:'🛰️',col:'#3a2a5a',era:2,cd:3,

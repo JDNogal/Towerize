@@ -39,7 +39,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  give('jetpack');out.jpSpd=Math.abs(uSpdM(H.pt)-1.3)<1e-6||uSpdM(H.pt)>1.29;clr();a=mk(6,1e5);useRelic('jetpack');out.jpUse=NR.jetpack.use({x:a.x,y:a.y})===true;S.aim=null;out.jpLand=Math.hypot(H.s.x-a.x,H.s.y-a.y)<1.5&&a.hp<1e5&&!!a.fx.stun;
  // Rastreador
  give('scouter');clr();a=mk(4,5000);useRelic('scouter');NR.scouter.use({x:a.x,y:a.y});S.aim=null;out.scHit=a.hp>=5000-9000&&a.hp<=4999;/* v329: golpe en área de 1 a 9000 al azar */
- S.rs.scouter.cd=0;b=mk(4,20000);const b2=mk(4,20000);b2.x=b.x+.5;useRelic('scouter');const rr=NR.scouter.use({x:b.x,y:b.y});S.aim=null;out.sc9000=rr==='msg'&&b.hp<20000&&b.hp>=11000&&b2.hp<20000&&RELIC.scouter.cd===180;
+ S.rs.scouter.cd=0;b=mk(4,20000);const b2=mk(4,20000);b2.x=b.x+.5;useRelic('scouter');const rr=NR.scouter.use({x:b.x,y:b.y});S.aim=null;out.sc9000=rr==='msg'&&b.hp<20000&&b.hp>=11000&&b2.hp<20000&&RELIC.scouter.cd===120;
  // Satélite
  give('satlaser');clr();a=mk(5,1e6);S.satT=19.9;run(.2);out.satAim=!!S.satX;run(1.1);out.satHit=a.hp<1e6;
  b=mk(3,1e6);useRelic('satlaser');out.swUse=NR.satlaser.use({x:b.x,y:b.y})===true;S.aim=null;run(.6);out.swHit=b.hp<1e6&&b.bn>0;

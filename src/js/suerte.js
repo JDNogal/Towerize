@@ -12,3 +12,13 @@ const PRDW=new WeakMap();
 function prdRoll(owner,p,key){if(!(p>0))return false;if(p>=.5||!owner||typeof owner!=='object')return Math.random()<p;
  let m=PRDW.get(owner);if(!m){m={};PRDW.set(owner,m);}const k=key||'_',n=(m[k]||0)+1,C=prdC(p);
  if(Math.random()<n*C){m[k]=0;return true;}m[k]=n;return false;}
+
+// ---- v329 · Suerte que se recuerda entre partidas (Nogal, 14-nov) ----
+// Para efectos raros y vistosos que en una sola partida casi nunca se ven (p. ej. la lectura de 9000 del Rastreador de combate):
+// cada uso sin el resultado alto sube un «empujón» guardado entre partidas (0 a 1); al salir el resultado alto, vuelve a 0.
+// Como todo lo de este archivo, es interno: no se cuenta en el juego.
+const LUCK=(()=>{try{return JSON.parse(localStorage.getItem('rt-luck'))||{};}catch(e){return {};}})();
+function luck(k){return LUCK[k]||0;}
+function luckSet(k,v){LUCK[k]=Math.max(0,Math.min(1,v));try{localStorage.setItem('rt-luck',JSON.stringify(LUCK));}catch(e){}}
+// un número de 1 a max, tanto más alto cuanto mayor el empujón (con empujón 1, al menos uno sale al máximo)
+function luckHigh(k,max){const pt=luck(k);return 1+Math.floor((max-1)*Math.pow(Math.random(),1/(1+3*pt)));}
