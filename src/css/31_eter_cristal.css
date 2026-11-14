@@ -7,12 +7,12 @@
 @keyframes etsw{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
 .etcr .etglow{opacity:.15;transition:opacity .35s}.etcr .etgem{filter:saturate(.35) brightness(.8);transition:filter .35s}
 .lbcv.a.etmon .etcr .etglow,.lbcv.a .etmbt:hover .etcr .etglow{opacity:1}.lbcv.a.etmon .etcr .etgem,.lbcv.a .etmbt:hover .etcr .etgem{filter:none}
-.lbcv.a.etmtalk .etcr .etgem{animation:etpulse .5s ease-in-out infinite alternate}
-@keyframes etpulse{from{filter:brightness(1)}to{filter:brightness(1.25)}}
+.lbcv.a.etmtalk .etcr .etglow{opacity:var(--etl,1);transition:opacity .05s}
+.lbcv.a.etmtalk .etcr .etgem{filter:saturate(calc(.35 + .65*var(--etl,1))) brightness(calc(.8 + .35*var(--etl,1)));transition:filter .05s}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub{display:block;position:absolute;left:calc(100% + 34px);top:-58px;width:300px;box-sizing:border-box;padding:10px 14px 11px;z-index:8;pointer-events:none;
  background:#f6ecd6;border:2px solid #6b4426;border-radius:12px;box-shadow:0 8px 24px #0008;color:#3a2617;font:14px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:left;
  opacity:0;transform:translate(-8px,6px) scale(.96);transform-origin:0 50%;transition:opacity .2s,transform .2s}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub.on{opacity:1;transform:none}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub b{display:block;color:#2a7fa8;font-size:11px;letter-spacing:.14em;margin-bottom:3px}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub::after{content:"";position:absolute;left:-26px;top:34px;width:30px;height:20px;background:#f6ecd6;clip-path:polygon(100% 0,100% 70%,0 100%)}
-@media (prefers-reduced-motion:reduce){.etcr .etsw,.lbcv.a.etmtalk .etcr .etgem{animation:none}}
+@media (prefers-reduced-motion:reduce){.etcr .etsw{animation:none}}

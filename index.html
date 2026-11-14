@@ -2387,15 +2387,15 @@ table.lbrkt{margin-top:34px}
 @keyframes etsw{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
 .etcr .etglow{opacity:.15;transition:opacity .35s}.etcr .etgem{filter:saturate(.35) brightness(.8);transition:filter .35s}
 .lbcv.a.etmon .etcr .etglow,.lbcv.a .etmbt:hover .etcr .etglow{opacity:1}.lbcv.a.etmon .etcr .etgem,.lbcv.a .etmbt:hover .etcr .etgem{filter:none}
-.lbcv.a.etmtalk .etcr .etgem{animation:etpulse .5s ease-in-out infinite alternate}
-@keyframes etpulse{from{filter:brightness(1)}to{filter:brightness(1.25)}}
+.lbcv.a.etmtalk .etcr .etglow{opacity:var(--etl,1);transition:opacity .05s}
+.lbcv.a.etmtalk .etcr .etgem{filter:saturate(calc(.35 + .65*var(--etl,1))) brightness(calc(.8 + .35*var(--etl,1)));transition:filter .05s}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub{display:block;position:absolute;left:calc(100% + 34px);top:-58px;width:300px;box-sizing:border-box;padding:10px 14px 11px;z-index:8;pointer-events:none;
  background:#f6ecd6;border:2px solid #6b4426;border-radius:12px;box-shadow:0 8px 24px #0008;color:#3a2617;font:14px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:left;
  opacity:0;transform:translate(-8px,6px) scale(.96);transform-origin:0 50%;transition:opacity .2s,transform .2s}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub.on{opacity:1;transform:none}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub b{display:block;color:#2a7fa8;font-size:11px;letter-spacing:.14em;margin-bottom:3px}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub::after{content:"";position:absolute;left:-26px;top:34px;width:30px;height:20px;background:#f6ecd6;clip-path:polygon(100% 0,100% 70%,0 100%)}
-@media (prefers-reduced-motion:reduce){.etcr .etsw,.lbcv.a.etmtalk .etcr .etgem{animation:none}}
+@media (prefers-reduced-motion:reduce){.etcr .etsw{animation:none}}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -10996,6 +10996,9 @@ const ETCRSVG='<svg class="etcr" viewBox="0 0 60 140" width="60" height="140" ar
 {const _lr=lbRender;lbRender=function(){const r=_lr.apply(this,arguments);try{const b=document.querySelector('.lbcv.a .etmbt');if(b&&!b.querySelector('.etcr'))b.insertAdjacentHTML('beforeend',ETCRSVG);}catch(e){}return r;};}
 // la opción «ÉTER habla solo» también vale en la era fantástica
 try{const o=OPTS.find(x=>x.key==='eterm');if(o)delete o.show;}catch(e){}
+// el cristal parpadea al ritmo de lo que escribe ÉTER, igual que el altavoz de la tablet: copia el brillo que etmSay da a la rejilla (.etmgr)
+{const _lr=lbRender;lbRender=function(){const r=_lr.apply(this,arguments);try{const cv=document.querySelector('.lbcv.a'),gr=cv&&cv.querySelector('.etmgr');
+ if(gr&&!gr._etob){gr._etob=new MutationObserver(()=>{const v=gr.style.opacity;cv.style.setProperty('--etl',v===''?'1':v);});gr._etob.observe(gr,{attributes:true,attributeFilter:['style']});}}catch(e){}return r;};}
 // ==================== v308 · Botón «Atrás» del libro ====================
 // Como el «atrás» del navegador: el libro apunta cada página que ves (área, sección, ficha y su Nv o especialización)
 // y el botón ↩ (junto a la ✕) o la tecla Retroceso te devuelven a la anterior.

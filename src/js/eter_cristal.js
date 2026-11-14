@@ -11,3 +11,6 @@ const ETCRSVG='<svg class="etcr" viewBox="0 0 60 140" width="60" height="140" ar
 {const _lr=lbRender;lbRender=function(){const r=_lr.apply(this,arguments);try{const b=document.querySelector('.lbcv.a .etmbt');if(b&&!b.querySelector('.etcr'))b.insertAdjacentHTML('beforeend',ETCRSVG);}catch(e){}return r;};}
 // la opción «ÉTER habla solo» también vale en la era fantástica
 try{const o=OPTS.find(x=>x.key==='eterm');if(o)delete o.show;}catch(e){}
+// el cristal parpadea al ritmo de lo que escribe ÉTER, igual que el altavoz de la tablet: copia el brillo que etmSay da a la rejilla (.etmgr)
+{const _lr=lbRender;lbRender=function(){const r=_lr.apply(this,arguments);try{const cv=document.querySelector('.lbcv.a'),gr=cv&&cv.querySelector('.etmgr');
+ if(gr&&!gr._etob){gr._etob=new MutationObserver(()=>{const v=gr.style.opacity;cv.style.setProperty('--etl',v===''?'1':v);});gr._etob.observe(gr,{attributes:true,attributeFilter:['style']});}}catch(e){}return r;};}
