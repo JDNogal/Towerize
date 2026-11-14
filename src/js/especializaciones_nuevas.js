@@ -98,7 +98,7 @@ function bombTick(t,dt){const s=stats(t),eq=abRank(t,'escuad'),n=2+(eq?eq.n:0);t
  free.forEach((d,j)=>{if(gs.length)asg.set(d,gs[j%gs.length]);});
  const mt=abRank(t,'metafil');
  for(const d of live){const g=asg.get(d),tx=g?g.lead.x:t.x,ty=g?g.lead.y:t.y,dx=tx-d.x,dy=ty-d.y,dd=Math.hypot(dx,dy),st=BDSPD*K*dt;if(dd>st){d.x+=dx/dd*st;d.y+=dy/dd*st;}else{d.x=tx;d.y=ty;}
-  d.cd=Math.max(0,d.cd-dt);if(g&&dd<=.6*K&&d.cd<=0){d.cd=1/s.rate;const crit=Math.random()<s.crit+mkB(g.lead);(S.bombs=S.bombs||[]).push({x:g.lead.x,y:g.lead.y,t:.22,m:.22,src:t,dm:s.dmg*(crit?s.critm:1),area:s.area,pen:s.pen,bl:mt?mt.n:0,crit,e:g.lead});}}
+  d.cd=Math.max(0,d.cd-dt);if(g&&dd<=.6*K&&d.cd<=0){d.cd=1/s.rate;const crit=prdRoll(d,s.crit+mkB(g.lead),"cr");(S.bombs=S.bombs||[]).push({x:g.lead.x,y:g.lead.y,t:.22,m:.22,src:t,dm:s.dmg*(crit?s.critm:1),area:s.area,pen:s.pen,bl:mt?mt.n:0,crit,e:g.lead});}}
  // Bombardeo en picado: contra el grupo más grande (también voladores)
  const pk=abRank(t,'picado');if(pk){t.pkT=(t.pkT===undefined?pk.cd/2:t.pkT)-dt;if(t.pkT<=0){const R=s.area*2,inR=S.enemies.filter(e=>e.hp>0&&!(e.hk>0)&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range);let be=null,bn=0;
    for(const e of inR){let c=0;for(const o of inR)if(Math.hypot(o.x-e.x,o.y-e.y)<=R)c++;if(c>bn){bn=c;be=e;}}

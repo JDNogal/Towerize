@@ -72,7 +72,7 @@ function zap(t,tg,s,dm,TT,big){
   if(ez){const ac=abRank(t,'accum'),rs=abRank(t,'reson'),cc=abRank(t,'short'),q=e.ez||(e.ez={n:0,t:0});
    q.n=Math.min(EZMAX,q.n+(ac?ac.n:1)*stkM(e));q.t=rs?rs.t:4;
    if(cc&&q.n>=EZMAX){hurt(e,dm*cc.m,t,'elem');e.ez=null;S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:.7*K,col:'#ffe97a'});}}
-  if(ds&&Math.random()<ds.p)stunE(e,STUNT);});
+  if(ds&&prdRoll(ds,ds.p))stunE(e,STUNT);});
  S.fx.push({bolt:pts,t:.18,m:.18,big});
 }
 // Corazón Volcánico: el Calor sube disparando (8 s) y baja sin objetivo (4 s; Brasas internas lo frena)
@@ -113,9 +113,9 @@ function auraAP(s){let b=0;for(const t of S.list){const r=t.flag&&abRank(t,'sacr
 function critMark(e){e.crF=DNF;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,mk:1});}
 function strike(e,dm,t,ty,pen,pz){
  const m=hurt(e,dm,t,ty,pen);
- if(t.ab){const pr=abRank(t,'poison');if(pr&&(pz===undefined?Math.random()<pr.p:pz))addPois(e,1,t);
-  const sh=abRank(t,'shrap');if(sh&&Math.random()<sh.p)addBleed(e,t,1);
-  const fz=abRank(t,'frzh');if(fz&&Math.random()<fz.p&&freezeE(e,1))e.fx.freeze.src=t;
+ if(t.ab){const pr=abRank(t,'poison');if(pr&&(pz===undefined?prdRoll(pr,pr.p):pz))addPois(e,1,t);
+  const sh=abRank(t,'shrap');if(sh&&prdRoll(sh,sh.p))addBleed(e,t,1);
+  const fz=abRank(t,'frzh');if(fz&&prdRoll(fz,fz.p)&&freezeE(e,1))e.fx.freeze.src=t;
   const mr=abRank(t,'mark');if(mr&&e.hp>0)e.mk={t:4,cr:Math.max(mr.cr,e.mk&&e.mk.t>0?e.mk.cr:0)};
   const pc=abRank(t,'pierce');if(pc&&e.hp<=0)pierceChain(e,-e.hp/m,t,ty,pen,pc.r*K);}
  return m;

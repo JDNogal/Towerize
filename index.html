@@ -2410,7 +2410,7 @@ table.lbrkt{margin-top:34px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v328</div>
+<div id="ver">Towerize v329</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3678,9 +3678,9 @@ function nearChest(e){const NB=N/BN,R=2*NB/P;for(const k in S.chests){if(!S.ches
 function freeSlot(){const c=[];for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k])continue;if(D.some(([a,b])=>S.blocks[(bx+a)+','+(by+b)]))c.push(k);}return c.length?c[Math.floor(Math.random()*c.length)]:null;}
 function addPois(e,w,src,rv){(e.ps=e.ps||[]).push({w:w*stkM(e),t:POISD,src,rv});}
 function onHit(e,src){
- if(rp('frost')&&Math.random()<.1){slowE(e,TW.frost.slow,SLOWT);RS('frost').n++;}
- if(rp('venom')&&Math.random()<.2)addPois(e,1,src,1);
- if(rp('ember')&&src&&Math.random()<.1){const n=Math.max(1,stats(src).dmg*.25);emberBurn(e,src,n);RS('ember').n++;}}
+ if(rp('frost')&&prdRoll(S.rs.frost||S,.1,'frost')){slowE(e,TW.frost.slow,SLOWT);RS('frost').n++;}
+ if(rp('venom')&&prdRoll(S.rs.venom||S,.2,'venom'))addPois(e,1,src,1);
+ if(rp('ember')&&src&&prdRoll(S.rs.ember||S,.1,'ember')){const n=Math.max(1,stats(src).dmg*.25);emberBurn(e,src,n);RS('ember').n++;}}
 function venomBlast(){
  for(const e of S.enemies){if(!e.ps||!e.ps.length)continue;let tot=0;for(const q of e.ps){tot+=q.w*q.t;if(q.rv)RS('venom').dmg+=q.w*q.t;}
   const src=e.ps[e.ps.length-1].src;e.pb=e.ps;e.ps=[];DNK='poison';hurt(e,tot,src,'elem');DNK=null;S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:.8*K,col:'#7bd34a'});}
@@ -5804,8 +5804,8 @@ function unitCombat(dt){
   if(!s.en){uRegen(s,dt);continue;}
   if(!s.fight){s.cd=0;continue;}
   const t=s.tw,st=stats(t);s.cd-=dt;let n=0;
-  const CM=CLS[s.cls]||CLS0;while(s.cd<=0&&n++<4&&s.en&&s.en.hp>0){s.cd+=1/(st.rate*CM.rt*(s.rtm||1));const crit=Math.random()<st.crit+CM.cr+mkB(s.en),bk=abRank(t,'back'),bm=bk&&s.bk!==s.en?bk.m:1;if(bk)s.bk=s.en;{const dh=st.dmg*CM.d*(crit?st.critm:1)*bm*(1+(s.ren||0));sfxHit(s.H?null:t,'phys',s);const _he=s.en;hurt(s.en,dh,t,s.H&&s.H.def.dt||TW[t.type]&&TW[t.type].udt||'phys');if(TW[t.type]&&TW[t.type].alien&&typeof alienHit==='function')alienHit(t,s,_he,dh);if(s.H&&s.H.id==='yrsa'&&s.en.hp>0){s.alt=!s.alt;if(s.alt)addBurn(s.en,t,2);else addChill(s.en,t,2);S.fx.push({x:s.en.x,y:s.en.y,t:.15,m:.15,r:.35*K,col:s.alt?'#ff7a3c':'#9fe4ff'});}const MT=TW[t.type];if(MT&&MT.monk&&s.en.hp>0){const ch=abRank(t,'chi');DNK='magic';hurt(s.en,dh*(ch?ch.m:MT.mhit),t,'magic');DNK=null;}}if(crit)critMark(s.en);onHit(s.en,t);if(s.pig==='wood'&&s.en.hp>0){s.pk=(s.pk||0)+1;if(s.pk>=3){s.pk=0;knock(s.en,PIGU.wood.push*K);}}
-   const ck=abRank(t,'cut');if(ck&&s.en.hp>0){const q=s.en;if(q.bl&&q.bl.length){DNK='bleed';hurt(q,q.bl.length*BLEEDD,t,'elem');DNK=null;}if(Math.random()<ck.p)addBleed(q,t,1);}}}
+  const CM=CLS[s.cls]||CLS0;while(s.cd<=0&&n++<4&&s.en&&s.en.hp>0){s.cd+=1/(st.rate*CM.rt*(s.rtm||1));const crit=prdRoll(s,st.crit+CM.cr+mkB(s.en),"cr"),bk=abRank(t,'back'),bm=bk&&s.bk!==s.en?bk.m:1;if(bk)s.bk=s.en;{const dh=st.dmg*CM.d*(crit?st.critm:1)*bm*(1+(s.ren||0));sfxHit(s.H?null:t,'phys',s);const _he=s.en;hurt(s.en,dh,t,s.H&&s.H.def.dt||TW[t.type]&&TW[t.type].udt||'phys');if(TW[t.type]&&TW[t.type].alien&&typeof alienHit==='function')alienHit(t,s,_he,dh);if(s.H&&s.H.id==='yrsa'&&s.en.hp>0){s.alt=!s.alt;if(s.alt)addBurn(s.en,t,2);else addChill(s.en,t,2);S.fx.push({x:s.en.x,y:s.en.y,t:.15,m:.15,r:.35*K,col:s.alt?'#ff7a3c':'#9fe4ff'});}const MT=TW[t.type];if(MT&&MT.monk&&s.en.hp>0){const ch=abRank(t,'chi');DNK='magic';hurt(s.en,dh*(ch?ch.m:MT.mhit),t,'magic');DNK=null;}}if(crit)critMark(s.en);onHit(s.en,t);if(s.pig==='wood'&&s.en.hp>0){s.pk=(s.pk||0)+1;if(s.pk>=3){s.pk=0;knock(s.en,PIGU.wood.push*K);}}
+   const ck=abRank(t,'cut');if(ck&&s.en.hp>0){const q=s.en;if(q.bl&&q.bl.length){DNK='bleed';hurt(q,q.bl.length*BLEEDD,t,'elem');DNK=null;}if(prdRoll(ck,ck.p))addBleed(q,t,1);}}}
  for(const e of S.enemies){const E=ET[e.t];let tg=null;
   if(e.hp<=0||e.sw||e.fx.freeze||e.fx.poly||e.fx.fear){e.acd=E.ac;continue;}
   if(E.rg==='ranged'){if(e.rw>0)e.rw-=dt;else{let bd=RANGED_R;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;tg=s;}}
@@ -5813,9 +5813,9 @@ function unitCombat(dt){
   else if(e.ct>0){/* cuerpo a cuerpo: le pega a la unidad que lo retiene (también los que retiene de más) */tg=SL.find(s=>s.fight&&s.en===e)||SL.find(s=>s.en2===e&&s.hp>0)||null;if(tg&&Math.hypot(tg.x-e.x,tg.y-e.y)>MELR)tg=null;e.stopped=e.ct>=(E.need||1);}
   else if(e.sqid&&!e.loose&&!isFly(e)&&(E.ud||0)>0){/* v305 · escuadra frenada: si una unidad tuya pelea con alguien de su escuadra, los de al lado se paran y le pegan también (no se quedan mirando) */const m=SL.find(s=>s.hp>0&&s.en&&s.en.sqid===e.sqid&&s.en.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<=MELR*1.5);if(m){tg=m;e.stopped=true;}}
   if(tg){const U=unitOf(tg.tw);e.acd=(e.acd===undefined?E.ac:e.acd)-dt;
-   while(e.acd<=0&&tg.hp>0){e.acd+=E.ac;if(E.rg==='ranged')S.fx.push({x:tg.x,y:tg.y,t:.25,m:.25,r:.35*K,col:E.dt==='magic'?'#a58bff':'#d9c08a'});const sg=tg.drunk>0&&abRank(tg.tw,'stagger');if(sg&&Math.random()<sg.p){if(S.pvE&&S.dn)dnAdd(tg,0,'taken');continue;}
-    {const co=abRank(tg.tw,'counter');if(co&&Math.random()<co.p){const cs=stats(tg.tw),cd=cs.dmg;hurt(e,cd,tg.tw,'phys');const MT=TW[tg.tw.type],ch=abRank(tg.tw,'chi');if(MT&&MT.monk){DNK='magic';hurt(e,cd*(ch?ch.m:MT.mhit),tg.tw,'magic');DNK=null;}S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.4*K,col:'#ffd27a'});}}
-    const ua=E.dt==='magic'?auraAP(tg):(uapOf(tg.tw)+auraAP(tg)+((CLS[tg.cls]||CLS0).ap))*(1-(E.pierce||0)),wl=abRank(tg.tw,'wall'),dg=abRank(tg.tw,'dodge');if(!(dg&&Math.random()<dg.p)){let ud=(tg.H&&tg.H.inv>0)?0:E.ud*udM(e)*furyM()*(1-ua/(ua+ARM_K))*(1-(wl?wl.red:0))*(tg.H&&tg.H.id==='reinhart'&&tg.H.lvl>=4?.85:1);if(ud>0&&typeof uHitMod==='function')ud=uHitMod(tg,ud,e);tg.hp-=ud;tg.lh=S.wt;if(S.pvE&&S.dn)dnAdd(tg,ud,'taken');if(E.splashU&&typeof splashUnits==='function')splashUnits(tg,ud*.5,e);if(E.upois&&typeof uAddPois==='function')uAddPois(tg,E.upois,e);}if(tg.hp<=0&&!tg.H&&ra('banner'))tg.hp=1;if(tg.hp<=0){if(tg.H&&S.st)S.st.hDie=(S.st.hDie||0)+1;tg.rt=U.rez*(!tg.H&&rp('banner')?.7:1);tg.en=null;tg.fight=false;}}}
+   while(e.acd<=0&&tg.hp>0){e.acd+=E.ac;if(E.rg==='ranged')S.fx.push({x:tg.x,y:tg.y,t:.25,m:.25,r:.35*K,col:E.dt==='magic'?'#a58bff':'#d9c08a'});const sg=tg.drunk>0&&abRank(tg.tw,'stagger');if(sg&&prdRoll(sg,sg.p)){if(S.pvE&&S.dn)dnAdd(tg,0,'taken');continue;}
+    {const co=abRank(tg.tw,'counter');if(co&&prdRoll(co,co.p)){const cs=stats(tg.tw),cd=cs.dmg;hurt(e,cd,tg.tw,'phys');const MT=TW[tg.tw.type],ch=abRank(tg.tw,'chi');if(MT&&MT.monk){DNK='magic';hurt(e,cd*(ch?ch.m:MT.mhit),tg.tw,'magic');DNK=null;}S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.4*K,col:'#ffd27a'});}}
+    const ua=E.dt==='magic'?auraAP(tg):(uapOf(tg.tw)+auraAP(tg)+((CLS[tg.cls]||CLS0).ap))*(1-(E.pierce||0)),wl=abRank(tg.tw,'wall'),dg=abRank(tg.tw,'dodge');if(!(dg&&prdRoll(dg,dg.p))){let ud=(tg.H&&tg.H.inv>0)?0:E.ud*udM(e)*furyM()*(1-ua/(ua+ARM_K))*(1-(wl?wl.red:0))*(tg.H&&tg.H.id==='reinhart'&&tg.H.lvl>=4?.85:1);if(ud>0&&typeof uHitMod==='function')ud=uHitMod(tg,ud,e);tg.hp-=ud;tg.lh=S.wt;if(S.pvE&&S.dn)dnAdd(tg,ud,'taken');if(E.splashU&&typeof splashUnits==='function')splashUnits(tg,ud*.5,e);if(E.upois&&typeof uAddPois==='function')uAddPois(tg,E.upois,e);}if(tg.hp<=0&&!tg.H&&ra('banner'))tg.hp=1;if(tg.hp<=0){if(tg.H&&S.st)S.st.hDie=(S.st.hDie||0)+1;tg.rt=U.rez*(!tg.H&&rp('banner')?.7:1);tg.en=null;tg.fight=false;}}}
   else e.acd=E.ac;}
  monkTick(dt);
  for(const b of S.barr)for(const e of S.enemies)if(e.hp>0&&!isFly(e)&&segD(e.x+.5,e.y+.5,b.seg)<=1.1){e.stopped=true;if(!e.bq){e.bq=1;RS('barricade').n++;}}
@@ -6002,6 +6002,20 @@ function move(e,dt){if(isBoss(e))e.blk=e.stopped?(e.blk||0)+dt:Math.max(0,(e.blk
  }
  return false;
 }
+// ==================== v329 · «Mala suerte con red» (distribución pseudoaleatoria) ====================
+// Nogal (14-nov-2026): las habilidades con probabilidad baja (< 50 %) no deben pasar rachas largas sin salir.
+// Cada intento fallido sube un poco la probabilidad del siguiente; al salir, vuelve a la base. La media es la misma.
+// Es lógica interna: no se cuenta en el compendio ni en Mecánicas. Los efectos del 50 % o más siguen siendo azar puro.
+const PRDC={};
+// la constante C que da, de media, la probabilidad p (P(n) = n·C tras n−1 fallos)
+function prdC(p){const k=Math.round(p*1000);if(PRDC[k]!=null)return PRDC[k];
+ const avg=C=>{let ex=0,none=1;for(let n=1;none>1e-9;n++){const q=Math.min(1,n*C);ex+=n*none*q;none*=1-q;if(q>=1)break;}return 1/ex;};
+ let lo=0,hi=p;for(let i=0;i<40;i++){const m=(lo+hi)/2;if(avg(m)<p)lo=m;else hi=m;}return PRDC[k]=(lo+hi)/2;}
+const PRDW=new WeakMap();
+// owner: el objeto al que pertenece la cuenta (el rango de la habilidad, la torre…); key: para separar cuentas del mismo dueño
+function prdRoll(owner,p,key){if(!(p>0))return false;if(p>=.5||!owner||typeof owner!=='object')return Math.random()<p;
+ let m=PRDW.get(owner);if(!m){m={};PRDW.set(owner,m);}const k=key||'_',n=(m[k]||0)+1,C=prdC(p);
+ if(Math.random()<n*C){m[k]=0;return true;}m[k]=n;return false;}
 // Efectos de control: los jefes reducen un 50% su fuerza (ralentización), duración (congelación) o distancia (empuje).
 const isBoss=e=>e.t==='boss'||e.t==='colossus'||e.t==='bob'||!!(ET[e.t]&&ET[e.t].story),udM=e=>isBoss(e)?(ROUNDS>=26?1+.1*S.round:1)*(1+Math.max(0,(e.blk||0)-BLKT0)*BLKUP):1;
 // v307 · un jefe al que tus unidades tienen parado se enfurece: pasados 8 s seguidos bloqueado, pega un 15 % más a las unidades por cada segundo (se le pasa al volver a andar). Así no se le puede retener para siempre.
@@ -6076,7 +6090,7 @@ function zap(t,tg,s,dm,TT,big){
   if(ez){const ac=abRank(t,'accum'),rs=abRank(t,'reson'),cc=abRank(t,'short'),q=e.ez||(e.ez={n:0,t:0});
    q.n=Math.min(EZMAX,q.n+(ac?ac.n:1)*stkM(e));q.t=rs?rs.t:4;
    if(cc&&q.n>=EZMAX){hurt(e,dm*cc.m,t,'elem');e.ez=null;S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:.7*K,col:'#ffe97a'});}}
-  if(ds&&Math.random()<ds.p)stunE(e,STUNT);});
+  if(ds&&prdRoll(ds,ds.p))stunE(e,STUNT);});
  S.fx.push({bolt:pts,t:.18,m:.18,big});
 }
 // Corazón Volcánico: el Calor sube disparando (8 s) y baja sin objetivo (4 s; Brasas internas lo frena)
@@ -6117,9 +6131,9 @@ function auraAP(s){let b=0;for(const t of S.list){const r=t.flag&&abRank(t,'sacr
 function critMark(e){e.crF=DNF;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,mk:1});}
 function strike(e,dm,t,ty,pen,pz){
  const m=hurt(e,dm,t,ty,pen);
- if(t.ab){const pr=abRank(t,'poison');if(pr&&(pz===undefined?Math.random()<pr.p:pz))addPois(e,1,t);
-  const sh=abRank(t,'shrap');if(sh&&Math.random()<sh.p)addBleed(e,t,1);
-  const fz=abRank(t,'frzh');if(fz&&Math.random()<fz.p&&freezeE(e,1))e.fx.freeze.src=t;
+ if(t.ab){const pr=abRank(t,'poison');if(pr&&(pz===undefined?prdRoll(pr,pr.p):pz))addPois(e,1,t);
+  const sh=abRank(t,'shrap');if(sh&&prdRoll(sh,sh.p))addBleed(e,t,1);
+  const fz=abRank(t,'frzh');if(fz&&prdRoll(fz,fz.p)&&freezeE(e,1))e.fx.freeze.src=t;
   const mr=abRank(t,'mark');if(mr&&e.hp>0)e.mk={t:4,cr:Math.max(mr.cr,e.mk&&e.mk.t>0?e.mk.cr:0)};
   const pc=abRank(t,'pierce');if(pc&&e.hp<=0)pierceChain(e,-e.hp/m,t,ty,pen,pc.r*K);}
  return m;
@@ -6186,7 +6200,7 @@ const soulB=o=>{const h=abRank(o,'harvest');return h?Math.min(h.max,(o.souls||0)
 function orbHit(t,tg,s,dmg){const hx=abRank(t,'hex'),nv=abRank(t,'nova'),pl=abRank(t,'poly');
  if(hx)tg.fx.hex={t:HEXT,m:Math.max(hx.m,tg.fx.hex?tg.fx.hex.m:0)};
  if(nv){t.nvN=(t.nvN||0)+1;if(t.nvN>nv.ch){t.nvN=0;const dm=dmg*nv.m,cx=tg.x,cy=tg.y;for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-cx,o.y-cy)<=nv.r*K)hurt(o,dm,t,'magic',s.pen);S.fx.push({x:cx,y:cy,t:.5,m:.5,r:nv.r*K,col:'#a58bff'});}}
- if(pl&&tg.hp>0&&!isBoss(tg)&&!tg.fx.poly&&Math.random()<pl.p)tg.fx.poly={t:ET[tg.t].el?pl.d/2:pl.d};}
+ if(pl&&tg.hp>0&&!isBoss(tg)&&!tg.fx.poly&&prdRoll(pl,pl.p))tg.fx.poly={t:ET[tg.t].el?pl.d/2:pl.d};}
 // un orbe mágico: bola brillante que crece con el nivel de la torre (Nv 1 → Nv 4)
 function drawOrbP(c,px,py,lv,cs,col){const r=cs*(.12+.035*((lv||1)-1)),pu=1+.08*Math.sin(performance.now()/90);
  c.fillStyle='rgba(165,139,255,.28)';c.beginPath();c.arc(px,py,r*2*pu,0,7);c.fill();
@@ -6316,7 +6330,7 @@ function update(dt){
   let n=0;
   while(t.cd<=0&&n++<6){
    t.cd+=1/s.rate;if(typeof ecoShot==='function'&&ecoShot(t))t.cd-=1/s.rate;
-   const crit=Math.random()<s.crit+mkB(tg),dm=s.dmg*(crit?s.critm:1),pzr=abRank(t,'poison'),pz=!!(pzr&&Math.random()<pzr.p),col=pz?'#7bd34a':T.col;
+   const crit=prdRoll(t,s.crit+mkB(tg),"cr"),dm=s.dmg*(crit?s.critm:1),pzr=abRank(t,'poison'),pz=!!(pzr&&prdRoll(pzr,pzr.p)),col=pz?'#7bd34a':T.col;
    if(X.aura){const dp=abRank(t,'deep'),bi=abRank(t,'bite');
     for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-t.x,e.y-t.y)>s.range)continue;
      const fa=(e.fa&&S.wt-e.fa.u<1.2)?e.fa:(e.fa={s:S.wt,u:S.wt});fa.u=S.wt;const tin=S.wt-fa.s;
@@ -6334,7 +6348,7 @@ function update(dt){
      if(stk){if(r.el.k==='bleed')addBleed(r.e,t,1);else addPois(r.e,1,t);}
      if(tr){const ax=t.x,ay=t.y,bx=r.e.x-ax,by=r.e.y-ay,L2=bx*bx+by*by||1;
       for(const o of S.enemies){if(o.hp<=0||tgs.has(o))continue;const u=((o.x-ax)*bx+(o.y-ay)*by)/L2;if(u<=0||u>=1)continue;if(Math.hypot(ax+bx*u-o.x,ay+by*u-o.y)<=.5*K)hurt(o,dm*tr.p,t,'elem');}}
-     if(rf&&Math.random()<rf.p){const o=S.enemies.find(o=>o!==r.e&&o.hp>0&&Math.hypot(o.x-r.e.x,o.y-r.e.y)<=2*K);
+     if(rf&&prdRoll(rf,rf.p)){const o=S.enemies.find(o=>o!==r.e&&o.hp>0&&Math.hypot(o.x-r.e.x,o.y-r.e.y)<=2*K);
       if(o){hurt(o,dm,t,'elem');if(stk){if(r.el.k==='bleed')addBleed(o,t,1);else addPois(o,1,t);}S.fx.push({bolt:[[r.e.x,r.e.y],[o.x,o.y]],t:.15,m:.15});}}}
     continue;}
    if(X.rail){railShot(t,tg,s,dm,crit);continue;}
@@ -8672,7 +8686,7 @@ function awayNext(x,y){const f0=S.field[y]&&S.field[y][x];if(f0==null||f0<0)retu
 function awayRoute(x,y,n){const r=[{x,y}];let cx=x,cy=y;for(let i=0;i<n;i++){const nx=awayNext(cx,cy);if(!nx.length)break;const q=nx[Math.floor(Math.random()*nx.length)];r.push(q);cx=q.x;cy=q.y;}return r;}
 function mechaTickE2(dt){for(const t of S.list){if(t.type!=='robots'||!t.sd)continue;const st=stats(t);
   // blindaje reactivo: si un robot ha perdido vida desde el último fotograma, puede rebotar el golpe
-  const rc=abRank(t,'react');for(const s of t.sd){if(s.hp>0&&s.php!=null&&s.hp<s.php&&rc&&Math.random()<rc.p){const d=s.php-s.hp;s.hp=Math.min(s.max,s.hp+d/2);if(s.en&&s.en.hp>0){hurt(s.en,st.dmg,t,'phys',st.pen);S.fx.push({x:s.x,y:s.y,t:.2,m:.2,r:.5*K,col:'#9fe8ff'});}}s.php=s.hp;}
+  const rc=abRank(t,'react');for(const s of t.sd){if(s.hp>0&&s.php!=null&&s.hp<s.php&&rc&&prdRoll(rc,rc.p)){const d=s.php-s.hp;s.hp=Math.min(s.max,s.hp+d/2);if(s.en&&s.en.hp>0){hurt(s.en,st.dmg,t,'phys',st.pen);S.fx.push({x:s.x,y:s.y,t:.2,m:.2,r:.5*K,col:'#9fe8ff'});}}s.php=s.hp;}
   if(t.spec==='mecha'){const m=t.sd[0];for(const k in t.acd)t.acd[k]=Math.max(0,(t.acd[k]||0)-dt);
    const sh=abRank(t,'shoulder');if(sh&&m&&m.hp>0&&!(t.acd.shoulder>0)){const f=t.flag||t;let be=null;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-f.x,e.y-f.y)<=3*K&&(!be||e.hp>be.hp))be=e;
     if(be){t.acd.shoulder=sh.cd;S.proj.push({x:m.x,y:m.y,e:be,tx:be.x,ty:be.y,vx:0,vy:0,dm:st.dmg*sh.m,dt:'phys',src:t,sp:9*K,area:sh.r*K,slow:0,pen:st.pen,col:'#ff9a5c',crit:false});}}
@@ -8705,11 +8719,11 @@ function nanoTick(dt){const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty
    const tx=w.e?w.e.x:t.x,ty=w.e?w.e.y:t.y,dx=tx-w.x,dy=ty-w.y,dd=Math.hypot(dx,dy),sp=6*K*dt;
    if(dd>sp){w.x+=dx/dd*sp;w.y+=dy/dd*sp;}else{w.x=tx;w.y=ty;}
    if(!w.e)continue;const rad=.45*K*g;w.tk-=dt;
-   if(Math.hypot(w.e.x-w.x,w.e.y-w.y)<=.5*K&&w.tk<=0){w.tk+=1/s.rate;const crit=Math.random()<s.crit+mkB(w.e),dm=s.dmg*(crit?s.critm:1);
+   if(Math.hypot(w.e.x-w.x,w.e.y-w.y)<=.5*K&&w.tk<=0){w.tk+=1/s.rate;const crit=prdRoll(w,s.crit+mkB(w.e),"cr"),dm=s.dmg*(crit?s.critm:1);
     for(const e of S.enemies){if(e.hp<=0)continue;const d=Math.hypot(e.x-w.x,e.y-w.y);if(d>rad&&e!==w.e)continue;const full=e===w.e;hurt(e,dm*(full?1:.6),t,'magic',s.pen);if(e.hp>0){if(inf)e.inf={t:4,m:inf.m,src:t};if(ac){e.ack=(e.ack||0)+1/s.rate;if(e.ack>=1){e.ack-=1;brkAdd(e,ac.a,ac.max);mbrkAdd(e,ac.a,ac.max);}}}}
     if(crit)critMark(w.e);onHit(w.e,t);try{sfx('beam',{r:.7});}catch(e){}}}}
  // infección: caduca; reprogramar: el infectado ataca a otro enemigo
- for(const e of S.enemies){if(e.inf){e.inf.t-=dt;if(e.inf.t<=0)e.inf=null;else{const src=e.inf.src,rp=src&&S.list.includes(src)?abRank(src,'reprog'):null;if(rp){e.rpt=(e.rpt||0)+dt;if(e.rpt>=1){e.rpt-=1;if(Math.random()<rp.p){let o=null,bd=1*K;for(const q of S.enemies){if(q===e||q.hp<=0)continue;const d=Math.hypot(q.x-e.x,q.y-e.y);if(d<bd){bd=d;o=q;}}
+ for(const e of S.enemies){if(e.inf){e.inf.t-=dt;if(e.inf.t<=0)e.inf=null;else{const src=e.inf.src,rp=src&&S.list.includes(src)?abRank(src,'reprog'):null;if(rp){e.rpt=(e.rpt||0)+dt;if(e.rpt>=1){e.rpt-=1;if(prdRoll(rp,rp.p)){let o=null,bd=1*K;for(const q of S.enemies){if(q===e||q.hp<=0)continue;const d=Math.hypot(q.x-e.x,q.y-e.y);if(d<bd){bd=d;o=q;}}
     if(o){const st=stats(src);hurt(o,st.dmg,src,'magic',st.pen);S.fx.push({bolt:[[e.x,e.y],[o.x,o.y]],t:.15,m:.15});if(o.hp<=0)infPass(e,src,true);}}}}}}
   if(e.mrbT>0){e.mrbT-=dt;if(e.mrbT<=0)e.mrb=0;}}}
 // la infección (y la reprogramación) pasa a otro enemigo cercano
@@ -8741,12 +8755,12 @@ function laserTick(dt){const reds=S.list.filter(t=>t.type==='laser'&&t.spec==='r
 function netGroup(t){const seen=new Set([t]),q=[t];while(q.length){const a=q.pop();for(const[x,y]of S.net){const o=x===a?y:y===a?x:null;if(o&&!seen.has(o)){seen.add(o);q.push(o);}}}return[...seen];}
 // ---- golpes: cortocircuito, carga voltaica, balas expansivas, «sin pestañear», mecha en área ----
 {const _oh=onHit;onHit=function(e,t){const r=_oh.apply(this,arguments);try{if(!t||!TW[t.type]||!S.list.includes(t))return r;const st=()=>stats(t);
-  if(t.type==='laser'&&t.spec==='red'){const sc=abRank(t,'shortc');if(sc&&Math.random()<sc.p){const grp=netGroup(t).filter(q=>q!==t);let o=null;for(const q of grp){for(const x of S.enemies)if(x!==e&&x.hp>0&&Math.hypot(x.x-q.x,x.y-q.y)<=1.5*K){o=x;break;}if(o)break;}
+  if(t.type==='laser'&&t.spec==='red'){const sc=abRank(t,'shortc');if(sc&&prdRoll(sc,sc.p)){const grp=netGroup(t).filter(q=>q!==t);let o=null;for(const q of grp){for(const x of S.enemies)if(x!==e&&x.hp>0&&Math.hypot(x.x-q.x,x.y-q.y)<=1.5*K){o=x;break;}if(o)break;}
     if(o){hurt(o,st().dmg*.6,t,'elem');S.fx.push({bolt:[[e.x,e.y],[o.x,o.y]],t:.15,m:.15});}}}
   if(t.type==='laser'&&t.spec==='volt'&&e.hp>0){const hv=abRank(t,'hv');e.vc=e.vc||{};e.vc[t.id]=(e.vc[t.id]||0)+1+(hv?hv.n:0);
    if(e.vc[t.id]>=VMAX){e.vc[t.id]=0;const dm=st().dmg*15;hurt(e,dm,t,'elem');stunE(e,1);const gr=abRank(t,'ground');if(gr)for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=gr.r*K)hurt(o,dm*gr.p,t,'elem');
     S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:(gr?gr.r:.6)*K,col:'#fff08a'});S.fx.push({bolt:[[t.x,t.y],[e.x,e.y]],t:.2,m:.2,big:1});try{sfx('zap');}catch(er){}const jp=abRank(t,'jump');if(jp)t.vcarry=VMAX*jp.k;}}
-  if(t.type==='bunker'){const ex=abRank(t,'expan');if(ex&&e.hp>0&&Math.random()<ex.p)addBleed(e,t,1);if(e.hp<=0&&abRank(t,'blink'))t.cd=Math.min(t.cd,0);}
+  if(t.type==='bunker'){const ex=abRank(t,'expan');if(ex&&e.hp>0&&prdRoll(ex,ex.p))addBleed(e,t,1);if(e.hp<=0&&abRank(t,'blink'))t.cd=Math.min(t.cd,0);}
   if(t.type==='robots'&&t.spec==='mecha'&&t.sd&&t.sd[0]&&t.sd[0].fight&&t.sd[0].en===e){const m=t.sd[0],dm=st().dmg*2*.5;for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-m.x,o.y-m.y)<=.7*K)hurt(o,dm,t,'phys',st().pen);}
  }catch(er){}return r;};}
 // ---- tick común y limpieza al acabar la ronda ----
@@ -8978,7 +8992,7 @@ function fwallAll(dt){if(!S.fwall||!S.fwall.length)return;for(const w of S.fwall
 {const _ft=flameTick;flameTick=function(t,tg,s,cm,TT){if(t.spec==='muro'){fwallShot(t,tg,s);return;}const r=_ft.apply(this,arguments);try{detonTick(t);}catch(e){}return r;};}
 // ==================== CHORRO DE ÁCIDO ====================
 function acidShot(t,tg,s,dm){const cc=abRank(t,'conc'),so=abRank(t,'sores');addPois(tg,dm,t);brkAdd(tg,cc?cc.a:1,cc?cc.max:5);
- if(so&&armorOf(tg,'phys')<=0&&Math.random()<so.p)addBleed(tg,t,1);
+ if(so&&armorOf(tg,'phys')<=0&&prdRoll(so,so.p))addBleed(tg,t,1);
  S.fx.push({line:[t.x,t.y,tg.x,tg.y],t:.16,m:.16,col:'rgba(155,225,93,.9)'});try{sfx('beam',{r:1.5});}catch(e){}}
 // Nube viajera: nace en el camino junto a la torre y va contra corriente hacia los portales
 function cloudLaunch(t,s){const c=nearPathT(t,s.range);if(!c)return;const df=abRank(t,'dfront'),sa=abRank(t,'slowadv'),tr=abRank(t,'trailx'),n=df?2:1;S.tcl=S.tcl||[];
@@ -8996,7 +9010,7 @@ function cloudAll(dt){if(!S.tcl||!S.tcl.length)return;S.tcl=S.tcl.filter(c=>{if(
 function acidTick(t,s,dt){t.cd=Math.max(-.1,t.cd-dt);const TT=twm(t.type,t.spec);
  if(TT.tcloud){if(t.cd<=0){const has=S.enemies.some(e=>e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range*1.5);if(has){t.cd=CLOUDCD/(s.rate/TW.acid.rate);cloudLaunch(t,s);}}return;}
  const tg=unlTarget(t,s,true);if(!tg){t.cd=Math.max(t.cd,0);return;}let n=0;
- while(t.cd<=0&&n++<6){t.cd+=1/s.rate;if(ecoShot(t))t.cd-=1/s.rate;const crit=Math.random()<s.crit+mkB(tg),dm=s.dmg*(crit?s.critm:1);acidShot(t,tg,s,dm);if(crit)critMark(tg);onHit(tg,t);}}
+ while(t.cd<=0&&n++<6){t.cd+=1/s.rate;if(ecoShot(t))t.cd-=1/s.rate;const crit=prdRoll(t,s.crit+mkB(tg),"cr"),dm=s.dmg*(crit?s.critm:1);acidShot(t,tg,s,dm);if(crit)critMark(tg);onHit(tg,t);}}
 // Charcos: los enemigos que mata el veneno de una Corrosión se deshacen en un charco
 {const _ad=achDeath;achDeath=function(e){try{const k=e.src;if(k&&k.type==='acid'&&k.spec==='corr'&&S.list.includes(k)&&e.kdn==='poison'){const pd=abRank(k,'pudd');if(pd){const st=stats(k);S.pools.push({x:e.x,y:e.y,t:pd.t,n:st.dmg*rateF(k,st),tk:0,src:k,r:.6*K});}}}catch(x){}return _ad.apply(this,arguments);};}
 // ==================== TORRE SÓNICA ====================
@@ -9818,8 +9832,8 @@ nrAdd({id:'core2',n:'Núcleo adaptativo',ic:'⚛️',col:'#2a4a6a',era:2,evr:1,e
   if(!fx.size){S.msg='Núcleo adaptativo: esa torre no tiene al lado ninguna torre con estados que copiar.';return false;}t.asim={t:15,fx:[...fx]};S.msg=tinfo(t).n+' asimila: '+[...fx].map(k=>R2FXN[k]).join(', ')+'.';S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.6*K,col:'#7ad8ff'});return 'msg';}});
 // ---- pasivas que cuelgan de cada impacto ----
 {const _oh=onHit;onHit=function(e,src){const r=_oh.apply(this,arguments);try{if(!e||e.hp<=0||!S.relics)return r;
-  if(src&&!src.hero){if(S.relics.includes('emp')&&rp('emp')&&Math.random()<.1){h2Ez(e,1);RS('emp').n2++;}
-   if(S.relics.includes('repro')&&rp('repro')&&Math.random()<.03&&r2Poly(e,2))RS('repro').n2++;
+  if(src&&!src.hero){if(S.relics.includes('emp')&&rp('emp')&&prdRoll(S.rs.emp||S,.1,'emp')){h2Ez(e,1);RS('emp').n2++;}
+   if(S.relics.includes('repro')&&rp('repro')&&prdRoll(S.rs.repro||S,.03,'repro')&&r2Poly(e,2))RS('repro').n2++;
    if(S.relics.includes('cryo')&&rp('cryo')){e.cry=(e.cry||0)+1;if(e.cry>=5){e.cry=0;addChill(e,src,1);}}}
   if(src&&src.asim&&src.asim.t>0){for(const k of src.asim.fx){if(k==='burn')addBurn(e,src,Math.max(1,stats(src).dmg*.25));else if(k==='pois')addPois(e,2,src);else if(k==='slow')slowE(e,.7,1.5);else if(k==='ez')h2Ez(e,1);else if(k==='chill')addChill(e,src,1);else if(k==='bleed'&&Math.random()<.5)addBleed(e,src,1);}}}catch(x){}return r;};}
 // ---- estadísticas: daño y cadencia que dan estas reliquias ----
@@ -10099,7 +10113,7 @@ nrAdd({id:'clone',n:'Cápsula de clonación',ic:'🧬',col:'#2a5a6a',era:2,cd:3,
  {dur:10,use:()=>{const H=S.hero;if(!H||H.s.hp<=0){S.msg='Cápsula de clonación: tu héroe tiene que estar vivo.';return false;}const s=H.s,st=stats(H.pt),hp=s.max*.5;
   const t={type:'bastion',lvl:2,summ:1,ttl:10,x:s.x,y:s.y,cells:[],flag:{x:Math.round(s.x),y:Math.round(s.y)},ab:{},acd:{},sd:[],uspdx:(H.def.spd||2)/2,tinf:{n:'Clon de '+H.def.n,ic:H.def.ic,col:'#3fe8ff',dt:H.def.dt||'phys',range:st.range/K,dmg:st.dmg*.5,rate:st.rate,unit:{n:1,hp,ap:5,rez:99,spd:(H.def.spd||2)*K}},ovr:{dmg:st.dmg*.5,rate:st.rate,range:Math.max(2.5*K,st.range),crit:.05,critm:2,area:0,gold:0,pen:0}};
   t.sd=[{i:0,x:s.x,y:s.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,clone:H.id,rng:H.def.ranged?1:0}];(S.summ=S.summ||[]).push(t);RS('clone').n2++;S.fx.push({x:s.x,y:s.y,t:.6,m:.6,r:K,col:'#3fe8ff'});return true;}});
-{const _u=unitDeath;unitDeath=function(t,s){const r=_u.apply(this,arguments);try{if(!t.summ&&!t.merc&&!S.pvE&&r3On('clone')&&Math.random()<.25){s.hp=s.max;s.rt=0;s.dd=0;s.en=null;s.fight=false;RS('clone').n++;S.fx.push({x:s.x,y:s.y,t:.5,m:.5,r:.8*K,col:'#3fe8ff'});}}catch(e){}return r;};}
+{const _u=unitDeath;unitDeath=function(t,s){const r=_u.apply(this,arguments);try{if(!t.summ&&!t.merc&&!S.pvE&&r3On('clone')&&prdRoll(S.rs.clone||S,.25,'clone')){s.hp=s.max;s.rt=0;s.dd=0;s.en=null;s.fight=false;RS('clone').n++;S.fx.push({x:s.x,y:s.y,t:.5,m:.5,r:.8*K,col:'#3fe8ff'});}}catch(e){}return r;};}
 // ---- Chip de IA táctica ----
 nrAdd({id:'aichip',n:'Chip de IA táctica',ic:'💾',col:'#1a4a4a',era:2,cd:3,
  pas:()=>'Tus torres eligen solas el mejor objetivo: las de área, el grupo más grande; las demás, el enemigo con más vida. Si cambias a mano el objetivo de una torre, se queda con tu elección.',
@@ -10387,6 +10401,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:329,f:'14 nov 2026',t:'Ajustes',s:[['Equilibrio',['Pequeños ajustes internos de equilibrio.']],['ÉTER',['El cristal de ÉTER parpadea al ritmo de lo que escribe.']]]},
  {v:328,f:'14 nov 2026',t:'ÉTER en el libro',s:[['ÉTER',['En el libro (menú principal y pausa) ÉTER aparece como un cristal con la forma del núcleo, atado a una cinta arriba a la derecha. Brilla al hablar; púlsalo y te dirá algo.']]]},
  {v:327,f:'14 nov 2026',t:'Enemigos poco a poco',s:[['Enemigos',['En las tres primeras partidas de cada era los enemigos van entrando poco a poco: la primera trae lo básico, la segunda los que piden más táctica y la tercera los más duros. Desde la tercera pieza, todo mezclado.']]]},
  {v:326,f:'14 nov 2026',t:'Apoyos',s:[['Apoyos',['Nuevo: los Apoyos, la otra cara de las Amenazas. Hacen la partida más llevadera (oro al empezar, casillas baratas, una torre gratis por ronda, tirada gratis por ronda…) a cambio de restar amenaza y puntuación.','Se abren poco a poco: el primer grupo al ganar una partida con alguna amenaza, y el resto ganando con más amenaza.','El botón pasa a «Apoyos / Amenazas»: Apoyos a la izquierda y Amenazas a la derecha.']],['Puntuación',['Cada punto de amenaza suma un 10 % y cada punto de apoyo lo resta. Los rangos extremos (Niebla de guerra 4, Sin refuerzos 3) multiplican por 1,25 y los apoyos fuertes por 0,8. Nunca baja de ×0,5.','La clasificación usa la amenaza neta (amenazas − apoyos).']],['Opciones',['Pausa automática: si cambias de ventana en plena partida, el juego se pausa solo (Opciones › Juego).']]]},
@@ -11334,7 +11349,7 @@ function bombTick(t,dt){const s=stats(t),eq=abRank(t,'escuad'),n=2+(eq?eq.n:0);t
  free.forEach((d,j)=>{if(gs.length)asg.set(d,gs[j%gs.length]);});
  const mt=abRank(t,'metafil');
  for(const d of live){const g=asg.get(d),tx=g?g.lead.x:t.x,ty=g?g.lead.y:t.y,dx=tx-d.x,dy=ty-d.y,dd=Math.hypot(dx,dy),st=BDSPD*K*dt;if(dd>st){d.x+=dx/dd*st;d.y+=dy/dd*st;}else{d.x=tx;d.y=ty;}
-  d.cd=Math.max(0,d.cd-dt);if(g&&dd<=.6*K&&d.cd<=0){d.cd=1/s.rate;const crit=Math.random()<s.crit+mkB(g.lead);(S.bombs=S.bombs||[]).push({x:g.lead.x,y:g.lead.y,t:.22,m:.22,src:t,dm:s.dmg*(crit?s.critm:1),area:s.area,pen:s.pen,bl:mt?mt.n:0,crit,e:g.lead});}}
+  d.cd=Math.max(0,d.cd-dt);if(g&&dd<=.6*K&&d.cd<=0){d.cd=1/s.rate;const crit=prdRoll(d,s.crit+mkB(g.lead),"cr");(S.bombs=S.bombs||[]).push({x:g.lead.x,y:g.lead.y,t:.22,m:.22,src:t,dm:s.dmg*(crit?s.critm:1),area:s.area,pen:s.pen,bl:mt?mt.n:0,crit,e:g.lead});}}
  // Bombardeo en picado: contra el grupo más grande (también voladores)
  const pk=abRank(t,'picado');if(pk){t.pkT=(t.pkT===undefined?pk.cd/2:t.pkT)-dt;if(t.pkT<=0){const R=s.area*2,inR=S.enemies.filter(e=>e.hp>0&&!(e.hk>0)&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range);let be=null,bn=0;
    for(const e of inR){let c=0;for(const o of inR)if(Math.hypot(o.x-e.x,o.y-e.y)<=R)c++;if(c>bn){bn=c;be=e;}}

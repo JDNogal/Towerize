@@ -32,7 +32,7 @@ const soulB=o=>{const h=abRank(o,'harvest');return h?Math.min(h.max,(o.souls||0)
 function orbHit(t,tg,s,dmg){const hx=abRank(t,'hex'),nv=abRank(t,'nova'),pl=abRank(t,'poly');
  if(hx)tg.fx.hex={t:HEXT,m:Math.max(hx.m,tg.fx.hex?tg.fx.hex.m:0)};
  if(nv){t.nvN=(t.nvN||0)+1;if(t.nvN>nv.ch){t.nvN=0;const dm=dmg*nv.m,cx=tg.x,cy=tg.y;for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-cx,o.y-cy)<=nv.r*K)hurt(o,dm,t,'magic',s.pen);S.fx.push({x:cx,y:cy,t:.5,m:.5,r:nv.r*K,col:'#a58bff'});}}
- if(pl&&tg.hp>0&&!isBoss(tg)&&!tg.fx.poly&&Math.random()<pl.p)tg.fx.poly={t:ET[tg.t].el?pl.d/2:pl.d};}
+ if(pl&&tg.hp>0&&!isBoss(tg)&&!tg.fx.poly&&prdRoll(pl,pl.p))tg.fx.poly={t:ET[tg.t].el?pl.d/2:pl.d};}
 // un orbe mágico: bola brillante que crece con el nivel de la torre (Nv 1 → Nv 4)
 function drawOrbP(c,px,py,lv,cs,col){const r=cs*(.12+.035*((lv||1)-1)),pu=1+.08*Math.sin(performance.now()/90);
  c.fillStyle='rgba(165,139,255,.28)';c.beginPath();c.arc(px,py,r*2*pu,0,7);c.fill();

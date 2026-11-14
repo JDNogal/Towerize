@@ -71,9 +71,9 @@ function nearChest(e){const NB=N/BN,R=2*NB/P;for(const k in S.chests){if(!S.ches
 function freeSlot(){const c=[];for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k])continue;if(D.some(([a,b])=>S.blocks[(bx+a)+','+(by+b)]))c.push(k);}return c.length?c[Math.floor(Math.random()*c.length)]:null;}
 function addPois(e,w,src,rv){(e.ps=e.ps||[]).push({w:w*stkM(e),t:POISD,src,rv});}
 function onHit(e,src){
- if(rp('frost')&&Math.random()<.1){slowE(e,TW.frost.slow,SLOWT);RS('frost').n++;}
- if(rp('venom')&&Math.random()<.2)addPois(e,1,src,1);
- if(rp('ember')&&src&&Math.random()<.1){const n=Math.max(1,stats(src).dmg*.25);emberBurn(e,src,n);RS('ember').n++;}}
+ if(rp('frost')&&prdRoll(S.rs.frost||S,.1,'frost')){slowE(e,TW.frost.slow,SLOWT);RS('frost').n++;}
+ if(rp('venom')&&prdRoll(S.rs.venom||S,.2,'venom'))addPois(e,1,src,1);
+ if(rp('ember')&&src&&prdRoll(S.rs.ember||S,.1,'ember')){const n=Math.max(1,stats(src).dmg*.25);emberBurn(e,src,n);RS('ember').n++;}}
 function venomBlast(){
  for(const e of S.enemies){if(!e.ps||!e.ps.length)continue;let tot=0;for(const q of e.ps){tot+=q.w*q.t;if(q.rv)RS('venom').dmg+=q.w*q.t;}
   const src=e.ps[e.ps.length-1].src;e.pb=e.ps;e.ps=[];DNK='poison';hurt(e,tot,src,'elem');DNK=null;S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:.8*K,col:'#7bd34a'});}

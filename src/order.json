@@ -66,6 +66,7 @@
     "path.js",
     "towers.js",
     "waves.js",
+    "suerte.js",
     "damage.js",
     "towers_fantasy.js",
     "update.js",

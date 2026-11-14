@@ -61,7 +61,7 @@ function update(dt){
   let n=0;
   while(t.cd<=0&&n++<6){
    t.cd+=1/s.rate;if(typeof ecoShot==='function'&&ecoShot(t))t.cd-=1/s.rate;
-   const crit=Math.random()<s.crit+mkB(tg),dm=s.dmg*(crit?s.critm:1),pzr=abRank(t,'poison'),pz=!!(pzr&&Math.random()<pzr.p),col=pz?'#7bd34a':T.col;
+   const crit=prdRoll(t,s.crit+mkB(tg),"cr"),dm=s.dmg*(crit?s.critm:1),pzr=abRank(t,'poison'),pz=!!(pzr&&prdRoll(pzr,pzr.p)),col=pz?'#7bd34a':T.col;
    if(X.aura){const dp=abRank(t,'deep'),bi=abRank(t,'bite');
     for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-t.x,e.y-t.y)>s.range)continue;
      const fa=(e.fa&&S.wt-e.fa.u<1.2)?e.fa:(e.fa={s:S.wt,u:S.wt});fa.u=S.wt;const tin=S.wt-fa.s;
@@ -79,7 +79,7 @@ function update(dt){
      if(stk){if(r.el.k==='bleed')addBleed(r.e,t,1);else addPois(r.e,1,t);}
      if(tr){const ax=t.x,ay=t.y,bx=r.e.x-ax,by=r.e.y-ay,L2=bx*bx+by*by||1;
       for(const o of S.enemies){if(o.hp<=0||tgs.has(o))continue;const u=((o.x-ax)*bx+(o.y-ay)*by)/L2;if(u<=0||u>=1)continue;if(Math.hypot(ax+bx*u-o.x,ay+by*u-o.y)<=.5*K)hurt(o,dm*tr.p,t,'elem');}}
-     if(rf&&Math.random()<rf.p){const o=S.enemies.find(o=>o!==r.e&&o.hp>0&&Math.hypot(o.x-r.e.x,o.y-r.e.y)<=2*K);
+     if(rf&&prdRoll(rf,rf.p)){const o=S.enemies.find(o=>o!==r.e&&o.hp>0&&Math.hypot(o.x-r.e.x,o.y-r.e.y)<=2*K);
       if(o){hurt(o,dm,t,'elem');if(stk){if(r.el.k==='bleed')addBleed(o,t,1);else addPois(o,1,t);}S.fx.push({bolt:[[r.e.x,r.e.y],[o.x,o.y]],t:.15,m:.15});}}}
     continue;}
    if(X.rail){railShot(t,tg,s,dm,crit);continue;}

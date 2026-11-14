@@ -94,8 +94,8 @@ nrAdd({id:'core2',n:'Núcleo adaptativo',ic:'⚛️',col:'#2a4a6a',era:2,evr:1,e
   if(!fx.size){S.msg='Núcleo adaptativo: esa torre no tiene al lado ninguna torre con estados que copiar.';return false;}t.asim={t:15,fx:[...fx]};S.msg=tinfo(t).n+' asimila: '+[...fx].map(k=>R2FXN[k]).join(', ')+'.';S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.6*K,col:'#7ad8ff'});return 'msg';}});
 // ---- pasivas que cuelgan de cada impacto ----
 {const _oh=onHit;onHit=function(e,src){const r=_oh.apply(this,arguments);try{if(!e||e.hp<=0||!S.relics)return r;
-  if(src&&!src.hero){if(S.relics.includes('emp')&&rp('emp')&&Math.random()<.1){h2Ez(e,1);RS('emp').n2++;}
-   if(S.relics.includes('repro')&&rp('repro')&&Math.random()<.03&&r2Poly(e,2))RS('repro').n2++;
+  if(src&&!src.hero){if(S.relics.includes('emp')&&rp('emp')&&prdRoll(S.rs.emp||S,.1,'emp')){h2Ez(e,1);RS('emp').n2++;}
+   if(S.relics.includes('repro')&&rp('repro')&&prdRoll(S.rs.repro||S,.03,'repro')&&r2Poly(e,2))RS('repro').n2++;
    if(S.relics.includes('cryo')&&rp('cryo')){e.cry=(e.cry||0)+1;if(e.cry>=5){e.cry=0;addChill(e,src,1);}}}
   if(src&&src.asim&&src.asim.t>0){for(const k of src.asim.fx){if(k==='burn')addBurn(e,src,Math.max(1,stats(src).dmg*.25));else if(k==='pois')addPois(e,2,src);else if(k==='slow')slowE(e,.7,1.5);else if(k==='ez')h2Ez(e,1);else if(k==='chill')addChill(e,src,1);else if(k==='bleed'&&Math.random()<.5)addBleed(e,src,1);}}}catch(x){}return r;};}
 // ---- estadísticas: daño y cadencia que dan estas reliquias ----

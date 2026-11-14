@@ -51,7 +51,7 @@ function awayNext(x,y){const f0=S.field[y]&&S.field[y][x];if(f0==null||f0<0)retu
 function awayRoute(x,y,n){const r=[{x,y}];let cx=x,cy=y;for(let i=0;i<n;i++){const nx=awayNext(cx,cy);if(!nx.length)break;const q=nx[Math.floor(Math.random()*nx.length)];r.push(q);cx=q.x;cy=q.y;}return r;}
 function mechaTickE2(dt){for(const t of S.list){if(t.type!=='robots'||!t.sd)continue;const st=stats(t);
   // blindaje reactivo: si un robot ha perdido vida desde el último fotograma, puede rebotar el golpe
-  const rc=abRank(t,'react');for(const s of t.sd){if(s.hp>0&&s.php!=null&&s.hp<s.php&&rc&&Math.random()<rc.p){const d=s.php-s.hp;s.hp=Math.min(s.max,s.hp+d/2);if(s.en&&s.en.hp>0){hurt(s.en,st.dmg,t,'phys',st.pen);S.fx.push({x:s.x,y:s.y,t:.2,m:.2,r:.5*K,col:'#9fe8ff'});}}s.php=s.hp;}
+  const rc=abRank(t,'react');for(const s of t.sd){if(s.hp>0&&s.php!=null&&s.hp<s.php&&rc&&prdRoll(rc,rc.p)){const d=s.php-s.hp;s.hp=Math.min(s.max,s.hp+d/2);if(s.en&&s.en.hp>0){hurt(s.en,st.dmg,t,'phys',st.pen);S.fx.push({x:s.x,y:s.y,t:.2,m:.2,r:.5*K,col:'#9fe8ff'});}}s.php=s.hp;}
   if(t.spec==='mecha'){const m=t.sd[0];for(const k in t.acd)t.acd[k]=Math.max(0,(t.acd[k]||0)-dt);
    const sh=abRank(t,'shoulder');if(sh&&m&&m.hp>0&&!(t.acd.shoulder>0)){const f=t.flag||t;let be=null;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-f.x,e.y-f.y)<=3*K&&(!be||e.hp>be.hp))be=e;
     if(be){t.acd.shoulder=sh.cd;S.proj.push({x:m.x,y:m.y,e:be,tx:be.x,ty:be.y,vx:0,vy:0,dm:st.dmg*sh.m,dt:'phys',src:t,sp:9*K,area:sh.r*K,slow:0,pen:st.pen,col:'#ff9a5c',crit:false});}}
@@ -84,11 +84,11 @@ function nanoTick(dt){const prog=e=>S.field[e.ty][e.tx]+Math.hypot(e.tx-e.x,e.ty
    const tx=w.e?w.e.x:t.x,ty=w.e?w.e.y:t.y,dx=tx-w.x,dy=ty-w.y,dd=Math.hypot(dx,dy),sp=6*K*dt;
    if(dd>sp){w.x+=dx/dd*sp;w.y+=dy/dd*sp;}else{w.x=tx;w.y=ty;}
    if(!w.e)continue;const rad=.45*K*g;w.tk-=dt;
-   if(Math.hypot(w.e.x-w.x,w.e.y-w.y)<=.5*K&&w.tk<=0){w.tk+=1/s.rate;const crit=Math.random()<s.crit+mkB(w.e),dm=s.dmg*(crit?s.critm:1);
+   if(Math.hypot(w.e.x-w.x,w.e.y-w.y)<=.5*K&&w.tk<=0){w.tk+=1/s.rate;const crit=prdRoll(w,s.crit+mkB(w.e),"cr"),dm=s.dmg*(crit?s.critm:1);
     for(const e of S.enemies){if(e.hp<=0)continue;const d=Math.hypot(e.x-w.x,e.y-w.y);if(d>rad&&e!==w.e)continue;const full=e===w.e;hurt(e,dm*(full?1:.6),t,'magic',s.pen);if(e.hp>0){if(inf)e.inf={t:4,m:inf.m,src:t};if(ac){e.ack=(e.ack||0)+1/s.rate;if(e.ack>=1){e.ack-=1;brkAdd(e,ac.a,ac.max);mbrkAdd(e,ac.a,ac.max);}}}}
     if(crit)critMark(w.e);onHit(w.e,t);try{sfx('beam',{r:.7});}catch(e){}}}}
  // infección: caduca; reprogramar: el infectado ataca a otro enemigo
- for(const e of S.enemies){if(e.inf){e.inf.t-=dt;if(e.inf.t<=0)e.inf=null;else{const src=e.inf.src,rp=src&&S.list.includes(src)?abRank(src,'reprog'):null;if(rp){e.rpt=(e.rpt||0)+dt;if(e.rpt>=1){e.rpt-=1;if(Math.random()<rp.p){let o=null,bd=1*K;for(const q of S.enemies){if(q===e||q.hp<=0)continue;const d=Math.hypot(q.x-e.x,q.y-e.y);if(d<bd){bd=d;o=q;}}
+ for(const e of S.enemies){if(e.inf){e.inf.t-=dt;if(e.inf.t<=0)e.inf=null;else{const src=e.inf.src,rp=src&&S.list.includes(src)?abRank(src,'reprog'):null;if(rp){e.rpt=(e.rpt||0)+dt;if(e.rpt>=1){e.rpt-=1;if(prdRoll(rp,rp.p)){let o=null,bd=1*K;for(const q of S.enemies){if(q===e||q.hp<=0)continue;const d=Math.hypot(q.x-e.x,q.y-e.y);if(d<bd){bd=d;o=q;}}
     if(o){const st=stats(src);hurt(o,st.dmg,src,'magic',st.pen);S.fx.push({bolt:[[e.x,e.y],[o.x,o.y]],t:.15,m:.15});if(o.hp<=0)infPass(e,src,true);}}}}}}
   if(e.mrbT>0){e.mrbT-=dt;if(e.mrbT<=0)e.mrb=0;}}}
 // la infección (y la reprogramación) pasa a otro enemigo cercano
@@ -120,12 +120,12 @@ function laserTick(dt){const reds=S.list.filter(t=>t.type==='laser'&&t.spec==='r
 function netGroup(t){const seen=new Set([t]),q=[t];while(q.length){const a=q.pop();for(const[x,y]of S.net){const o=x===a?y:y===a?x:null;if(o&&!seen.has(o)){seen.add(o);q.push(o);}}}return[...seen];}
 // ---- golpes: cortocircuito, carga voltaica, balas expansivas, «sin pestañear», mecha en área ----
 {const _oh=onHit;onHit=function(e,t){const r=_oh.apply(this,arguments);try{if(!t||!TW[t.type]||!S.list.includes(t))return r;const st=()=>stats(t);
-  if(t.type==='laser'&&t.spec==='red'){const sc=abRank(t,'shortc');if(sc&&Math.random()<sc.p){const grp=netGroup(t).filter(q=>q!==t);let o=null;for(const q of grp){for(const x of S.enemies)if(x!==e&&x.hp>0&&Math.hypot(x.x-q.x,x.y-q.y)<=1.5*K){o=x;break;}if(o)break;}
+  if(t.type==='laser'&&t.spec==='red'){const sc=abRank(t,'shortc');if(sc&&prdRoll(sc,sc.p)){const grp=netGroup(t).filter(q=>q!==t);let o=null;for(const q of grp){for(const x of S.enemies)if(x!==e&&x.hp>0&&Math.hypot(x.x-q.x,x.y-q.y)<=1.5*K){o=x;break;}if(o)break;}
     if(o){hurt(o,st().dmg*.6,t,'elem');S.fx.push({bolt:[[e.x,e.y],[o.x,o.y]],t:.15,m:.15});}}}
   if(t.type==='laser'&&t.spec==='volt'&&e.hp>0){const hv=abRank(t,'hv');e.vc=e.vc||{};e.vc[t.id]=(e.vc[t.id]||0)+1+(hv?hv.n:0);
    if(e.vc[t.id]>=VMAX){e.vc[t.id]=0;const dm=st().dmg*15;hurt(e,dm,t,'elem');stunE(e,1);const gr=abRank(t,'ground');if(gr)for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=gr.r*K)hurt(o,dm*gr.p,t,'elem');
     S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:(gr?gr.r:.6)*K,col:'#fff08a'});S.fx.push({bolt:[[t.x,t.y],[e.x,e.y]],t:.2,m:.2,big:1});try{sfx('zap');}catch(er){}const jp=abRank(t,'jump');if(jp)t.vcarry=VMAX*jp.k;}}
-  if(t.type==='bunker'){const ex=abRank(t,'expan');if(ex&&e.hp>0&&Math.random()<ex.p)addBleed(e,t,1);if(e.hp<=0&&abRank(t,'blink'))t.cd=Math.min(t.cd,0);}
+  if(t.type==='bunker'){const ex=abRank(t,'expan');if(ex&&e.hp>0&&prdRoll(ex,ex.p))addBleed(e,t,1);if(e.hp<=0&&abRank(t,'blink'))t.cd=Math.min(t.cd,0);}
   if(t.type==='robots'&&t.spec==='mecha'&&t.sd&&t.sd[0]&&t.sd[0].fight&&t.sd[0].en===e){const m=t.sd[0],dm=st().dmg*2*.5;for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-m.x,o.y-m.y)<=.7*K)hurt(o,dm,t,'phys',st().pen);}
  }catch(er){}return r;};}
 // ---- tick común y limpieza al acabar la ronda ----

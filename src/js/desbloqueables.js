@@ -59,7 +59,7 @@ function fwallAll(dt){if(!S.fwall||!S.fwall.length)return;for(const w of S.fwall
 {const _ft=flameTick;flameTick=function(t,tg,s,cm,TT){if(t.spec==='muro'){fwallShot(t,tg,s);return;}const r=_ft.apply(this,arguments);try{detonTick(t);}catch(e){}return r;};}
 // ==================== CHORRO DE ÁCIDO ====================
 function acidShot(t,tg,s,dm){const cc=abRank(t,'conc'),so=abRank(t,'sores');addPois(tg,dm,t);brkAdd(tg,cc?cc.a:1,cc?cc.max:5);
- if(so&&armorOf(tg,'phys')<=0&&Math.random()<so.p)addBleed(tg,t,1);
+ if(so&&armorOf(tg,'phys')<=0&&prdRoll(so,so.p))addBleed(tg,t,1);
  S.fx.push({line:[t.x,t.y,tg.x,tg.y],t:.16,m:.16,col:'rgba(155,225,93,.9)'});try{sfx('beam',{r:1.5});}catch(e){}}
 // Nube viajera: nace en el camino junto a la torre y va contra corriente hacia los portales
 function cloudLaunch(t,s){const c=nearPathT(t,s.range);if(!c)return;const df=abRank(t,'dfront'),sa=abRank(t,'slowadv'),tr=abRank(t,'trailx'),n=df?2:1;S.tcl=S.tcl||[];
@@ -77,7 +77,7 @@ function cloudAll(dt){if(!S.tcl||!S.tcl.length)return;S.tcl=S.tcl.filter(c=>{if(
 function acidTick(t,s,dt){t.cd=Math.max(-.1,t.cd-dt);const TT=twm(t.type,t.spec);
  if(TT.tcloud){if(t.cd<=0){const has=S.enemies.some(e=>e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range*1.5);if(has){t.cd=CLOUDCD/(s.rate/TW.acid.rate);cloudLaunch(t,s);}}return;}
  const tg=unlTarget(t,s,true);if(!tg){t.cd=Math.max(t.cd,0);return;}let n=0;
- while(t.cd<=0&&n++<6){t.cd+=1/s.rate;if(ecoShot(t))t.cd-=1/s.rate;const crit=Math.random()<s.crit+mkB(tg),dm=s.dmg*(crit?s.critm:1);acidShot(t,tg,s,dm);if(crit)critMark(tg);onHit(tg,t);}}
+ while(t.cd<=0&&n++<6){t.cd+=1/s.rate;if(ecoShot(t))t.cd-=1/s.rate;const crit=prdRoll(t,s.crit+mkB(tg),"cr"),dm=s.dmg*(crit?s.critm:1);acidShot(t,tg,s,dm);if(crit)critMark(tg);onHit(tg,t);}}
 // Charcos: los enemigos que mata el veneno de una Corrosión se deshacen en un charco
 {const _ad=achDeath;achDeath=function(e){try{const k=e.src;if(k&&k.type==='acid'&&k.spec==='corr'&&S.list.includes(k)&&e.kdn==='poison'){const pd=abRank(k,'pudd');if(pd){const st=stats(k);S.pools.push({x:e.x,y:e.y,t:pd.t,n:st.dmg*rateF(k,st),tk:0,src:k,r:.6*K});}}}catch(x){}return _ad.apply(this,arguments);};}
 // ==================== TORRE SÓNICA ====================
