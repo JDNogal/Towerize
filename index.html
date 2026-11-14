@@ -2378,6 +2378,15 @@ table.lbrkt{margin-top:34px}
 :root[data-skin="holo"] .amzr.apr.on{border-color:#5dff9a;background:rgba(93,255,154,.12)}
 :root[data-skin="holo"] .apdet{background:rgba(10,30,36,.7)}:root[data-skin="holo"] .apdet p{color:#cfefff}
 :root[data-skin="holo"] .aph.az,:root[data-skin="holo"] .apdet.az{color:#ff5fb0}
+/* v329 · rasgos de Supercampeones en la ficha de la amenaza */
+.suptr{margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px}.suptrh{grid-column:1/-1;font:800 11px system-ui;letter-spacing:.5px;text-transform:uppercase;opacity:.75;margin-bottom:2px}
+.suptr .rg{display:flex;gap:7px;align-items:center;border:1.5px dashed #c9b48a;border-radius:9px;padding:3px 7px;margin:0;color:var(--ink,#3a2617)}
+.suptr .rg.on{border-style:solid;border-color:#d0a63a;background:rgba(240,200,90,.15)}
+.suptr .rg b{display:block!important;font-size:12.5px}.suptr .rg small{display:block;font-size:10.5px;opacity:.8;line-height:1.2}
+.suptr .ri{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe7a0;border:2px solid #1b1712;font-size:16px;flex:none}.suptr .ri.q{background:#d8cdb4;color:#7a6a50;font:800 15px system-ui}
+:root[data-skin="holo"] .suptr .rg{border-color:rgba(63,232,255,.35);color:#cfefff}:root[data-skin="holo"] .suptr .rg.on{border-color:#ffcf4a;background:rgba(255,207,74,.1)}
+.bti .supic{font-size:30px;display:grid;place-items:center;width:44px;height:44px}
+.apdet .suptr .rg small{display:none}.apdet .suptr .rg{padding:2px 6px}
 /* v328 · ÉTER en el libro: cinta con el cristal (núcleo en miniatura) arriba a la derecha; bocadillo arriba a la derecha, fuera del libro */
 :root:not([data-skin="holo"]) .lbcv.a .etmbt{display:block;position:absolute;right:46px;top:-3px;width:60px;height:140px;margin:0;padding:0;border:0;background:none;box-shadow:none;cursor:pointer;z-index:7}
 :root:not([data-skin="holo"]) .lbcv.a .etmbt:focus-visible{outline:2px solid #3fe8ff;outline-offset:2px;border-radius:6px}
@@ -2396,6 +2405,13 @@ table.lbrkt{margin-top:34px}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub b{display:block;color:#2a7fa8;font-size:11px;letter-spacing:.14em;margin-bottom:3px}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub::after{content:"";position:absolute;left:-26px;top:34px;width:30px;height:20px;background:#f6ecd6;clip-path:polygon(100% 0,100% 70%,0 100%)}
 @media (prefers-reduced-motion:reduce){.etcr .etsw{animation:none}}
+/* v329 · Logros sin recuadro (Nogal, 14-nov): el trofeo sin caja y más grande; los conseguidos, con fondo verde suave */
+.bti.ach .bic{background:none!important;box-shadow:none!important;border:0!important;width:54px!important;height:54px!important;font-size:40px!important}
+.bti.ach.got .bic{filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.bti.ach.got{background:linear-gradient(rgba(96,170,78,.2),rgba(96,170,78,.2)),var(--paper2)!important;border-color:rgba(70,140,60,.55)!important}
+.bti.ach.got.on{background:linear-gradient(rgba(96,170,78,.28),rgba(96,170,78,.28)),var(--paper1)!important}
+html:root[data-skin="holo"] .bti.ach.got,html:root[data-skin="holo"] #comp .bti.ach.got{background:linear-gradient(180deg,rgba(63,232,150,.2),rgba(63,232,150,.07))!important;box-shadow:inset 0 0 0 1px rgba(63,232,150,.45)!important}
+.lbdet .bkbic,.bksh .bkbic{background:none!important;box-shadow:none!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -11954,11 +11970,12 @@ const LVN={b:'Bronce',s:'Plata',g:'Oro',p:'Platino'};
 // ---------- trofeos en cada metal ----------
 const TROFM={b:{cup:'#c8803a',hl:'#f0b070',stem:'#a8642a',gem:'#3fae6a'},s:{cup:'#c8d0d8',hl:'#ffffff',stem:'#9aa4ae',gem:'#4a7ad8'},g:{cup:'#f2c140',hl:'#ffd75a',stem:'#e0a830',gem:'#e0405a'},p:{cup:'#e4eef4',hl:'#ffffff',stem:'#b8ccd8',gem:'#a86ae8'}};
 const TROFN={b:'#ff9a4a',s:'#e8f0ff',g:'#ffd84a',p:'#c890ff'};
+// v329: en neón, la base del trofeo va del color del metal y la copa sigue en azul (opción B, Nogal 14-nov)
 const TROFL={perg:{},holo:{}};
 for(const lv in TROFM){const c=TROFM[lv];
  TROFL.perg[lv]=TROF.perg.replace('fill="#f2c140"',`fill="${c.cup}"`).replace('stroke="#ffd75a"',`stroke="${c.hl}"`).replace('fill="#e0a830"',`fill="${c.stem}"`).replace('fill="#e0405a"',`fill="${c.gem}"`).replace('stroke="#fff6c0"',`stroke="${c.hl}"`)
   .replace('</g></svg>',lv==='p'?'<path d="M50 6l1.6 3.4 3.4 1.6-3.4 1.6L50 16l-1.6-3.4-3.4-1.6 3.4-1.6z" fill="#fff" stroke-width="1.2"/><path d="M12 30l1.2 2.4 2.4 1.2-2.4 1.2L12 37l-1.2-2.4-2.4-1.2 2.4-1.2z" fill="#fff" stroke-width="1.1"/></g></svg>':'</g></svg>');
- TROFL.holo[lv]=TROF.holo.replace('fill="#fff" stroke="none"',`fill="${TROFN[lv]}" stroke="none"`).replace('</g></svg>',lv==='p'?'<path d="M50 6l1.6 3.4 3.4 1.6-3.4 1.6L50 16l-1.6-3.4-3.4-1.6 3.4-1.6z" fill="#fff" stroke="none"/></g></svg>':'</g></svg>');}
+ TROFL.holo[lv]=TROF.holo.replace('stroke="#ff4fd8"',`stroke="${TROFN[lv]}"`).replace('fill="#fff" stroke="none"',`fill="${TROFN[lv]}" stroke="none"`).replace('</g></svg>',lv==='p'?'<path d="M50 6l1.6 3.4 3.4 1.6-3.4 1.6L50 16l-1.6-3.4-3.4-1.6 3.4-1.6z" fill="#fff" stroke="none"/></g></svg>':'</g></svg>');}
 const trofIcL=lv=>{const k=typeof skinNow==='function'&&skinNow()==='holo'?'holo':'perg';return TROFL[k][lv]||TROF[k];};
 
 // ---------- logros nuevos ----------
@@ -12640,4 +12657,36 @@ function rebBeam(t,tg,dm,dt,pen){if(!t||!t.cells||t.hero)return;const n=Math.flo
 {const _d=e2DrawWorld;e2DrawWorld=function(lw){const r=_d.apply(this,arguments);try{if(S&&S.phase==='wave'&&S.list){const X=v=>v*CS+CS/2;
  for(const t of S.list){const b=t.rbB;if(!b||!(b.u>(S.wt||0))||!(b.a&&b.a.hp>0))continue;const T=TW[t.type]||{};g.save();g.strokeStyle=T.col||'#a6d84a';g.globalAlpha=.75;g.lineWidth=lw(1.8);
   for(const e of b.L){if(!(e.hp>0))continue;g.beginPath();g.moveTo(X(b.a.x),X(b.a.y));g.lineTo(X(e.x),X(e.y));g.stroke();}g.restore();}}}catch(e){}return r;};}
+// ==================== v329 · Logros: trofeo en su metal también para los logros que se definen después de logros_niveles.js ====================
+// (p. ej. «Era Fantástica/Distópica completada», de amenazas.js, salían con el trofeo genérico)
+for(const id in ACH){const A=ACH[id],d=Object.getOwnPropertyDescriptor(A,'ic');if(!d)Object.defineProperty(A,'ic',{get:()=>trofIcL(achLv(id)),configurable:true});}
+// ==================== v329 · Supercampeones: rasgos que se descubren (Nogal, 14-nov) ====================
+// · En la ficha de la amenaza: la lista de rasgos posibles; los que aún no has visto salen como «???» con «Todavía no has encontrado este rasgo».
+// · Se descubren al ver por primera vez en el mapa un supercampeón con ese rasgo (con Niebla, cuando ya se ve) y se recuerdan entre partidas.
+// · También en el compendio, Mecánicas › Supercampeones.
+const SUPTR={sh:['Escudo frontal','Sus 4 primeros golpes no le hacen daño.','<path d="M12 2.5l8 3v6c0 5-3.6 8.4-8 10-4.4-1.6-8-5-8-10v-6z" fill="#ffcf4a" stroke="#1b1712" stroke-width="1.8" stroke-linejoin="round"/>'],
+ fa:['Paso rápido','Camina un 30 % más rápido.','<path d="M3 8h9M2 12h11M4 16h8" stroke="#1b1712" stroke-width="2" stroke-linecap="round"/><path d="M14 6l7 6-7 6z" fill="#ffcf4a" stroke="#1b1712" stroke-width="1.8" stroke-linejoin="round"/>'],
+ rg:['Regeneración','Recupera vida poco a poco, como un élite.','<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z" fill="#6fe07a" stroke="#1b1712" stroke-width="1.8" stroke-linejoin="round"/>'],
+ cc:['Resistencia a control','Los aturdimientos, congelaciones y ralentizaciones le afectan mucho menos.','<rect x="3" y="8" width="8" height="8" rx="4" fill="none" stroke="#1b1712" stroke-width="2.6"/><rect x="13" y="8" width="8" height="8" rx="4" fill="none" stroke="#1b1712" stroke-width="2.6"/><rect x="3" y="8" width="8" height="8" rx="4" fill="none" stroke="#c0c8d0" stroke-width="1.3"/><rect x="13" y="8" width="8" height="8" rx="4" fill="none" stroke="#c0c8d0" stroke-width="1.3"/>']};
+const supTrIc=k=>`<svg viewBox="0 0 24 24" width="1em" height="1em">${SUPTR[k][2]}</svg>`;
+const supSeen=k=>!!(STO.supT&&STO.supT[k]);
+function supSee(k){if(supSeen(k)||!SUPTR[k])return;(STO.supT=STO.supT||{})[k]=1;try{saveSto();}catch(e){}}
+setInterval(()=>{try{if(!S||S.phase!=='wave'||S.tut||!S.enemies)return;const fog=typeof azNie==='function'&&azNie()>=2;
+ for(const e of S.enemies)if(e.sup&&e.hp>0&&(!fog||e.fog))for(const k of e.sup)supSee(k);}catch(e){}},400);
+function supTrList(){const n=Object.keys(SUPTR).filter(supSeen).length;
+ return `<div class="suptr"><div class="suptrh">Rasgos · ${n} de ${Object.keys(SUPTR).length} descubiertos</div>`+Object.keys(SUPTR).map(k=>supSeen(k)?
+  `<div class="rg on"><span class="ri">${supTrIc(k)}</span><span><b>${SUPTR[k][0]}</b><small>${SUPTR[k][1]}</small></span></div>`:
+  `<div class="rg"><span class="ri q">?</span><span><b>???</b><small>Todavía no has encontrado este rasgo.</small></span></div>`).join('')+'</div>';}
+// ficha de la amenaza (las dos maquetaciones: con y sin Apoyos)
+if(typeof azDetC==='function'){const _dc=azDetC;azDetC=function(){const h=_dc.apply(this,arguments);try{const t=AZT.find(x=>x[0]===AZUI.sel);if(t&&t[0]==='sup'&&azUn(t))return h.replace(/<\/div>$/,supTrList()+'</div>');}catch(e){}return h;};}
+{const _ap=azParts;azParts=function(){const P=_ap.apply(this,arguments);try{const t=AZT.find(x=>x[0]===AZUI.sel);if(P&&t&&t[0]==='sup'&&azUn(t)&&P.right&&P.right.includes('amzd')&&!P.right.includes('suptr')){
+  P.right=P.right.replace(/(<div class="lbdet amzd">[\s\S]*)<\/div>/,(m,a)=>a+supTrList()+'</div>');P.key=(P.key||'')+'|st'+Object.keys(STO.supT||{}).join('');}
+  else if(P&&P.key)P.key+='|st'+Object.keys(STO.supT||{}).join('');}catch(e){}return P;};}
+// compendio › Mecánicas › Supercampeones (solo si ya tienes la amenaza abierta)
+MECG.push(['Supercampeones',Object.keys(SUPTR).map(k=>['st_'+k,'???','⭐'])]);
+{const _bi=bkItems;bkItems=function(t){const L=_bi.apply(this,arguments);if(t!=='mc')return L;try{const sup=AZT.find(x=>x[0]==='sup');const show=sup&&azUn(sup);
+  const out=[];let skip=false;for(const it of L){if(it.sec){skip=it.sec==='Supercampeones'&&!show;if(!skip)out.push(it);continue;}if(skip)continue;
+   if(it.id&&it.id.startsWith('st_')){const k=it.id.slice(3),ok=supSeen(k);out.push(Object.assign({},it,{n:ok?SUPTR[k][0]:'???',ok,ic:`<span class="supic">${supTrIc(k)}</span>`}));}else out.push(it);}
+  return out;}catch(e){return L;}};}
+{const _k=kwHtml0;kwHtml0=function(id,src){if(id&&id.startsWith&&id.startsWith('st_')&&SUPTR[id.slice(3)]){const k=id.slice(3);return supSeen(k)?`<b>${SUPTR[k][0]}</b><small>Rasgo de supercampeón (amenaza Supercampeones). ${SUPTR[k][1]}</small>`:'<b>???</b><small>Todavía no has encontrado este rasgo.</small>';}return _k.apply(this,arguments);};}
 </script></body></html>

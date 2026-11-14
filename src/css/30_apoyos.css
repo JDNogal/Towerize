@@ -16,3 +16,12 @@
 :root[data-skin="holo"] .amzr.apr.on{border-color:#5dff9a;background:rgba(93,255,154,.12)}
 :root[data-skin="holo"] .apdet{background:rgba(10,30,36,.7)}:root[data-skin="holo"] .apdet p{color:#cfefff}
 :root[data-skin="holo"] .aph.az,:root[data-skin="holo"] .apdet.az{color:#ff5fb0}
+/* v329 · rasgos de Supercampeones en la ficha de la amenaza */
+.suptr{margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px}.suptrh{grid-column:1/-1;font:800 11px system-ui;letter-spacing:.5px;text-transform:uppercase;opacity:.75;margin-bottom:2px}
+.suptr .rg{display:flex;gap:7px;align-items:center;border:1.5px dashed #c9b48a;border-radius:9px;padding:3px 7px;margin:0;color:var(--ink,#3a2617)}
+.suptr .rg.on{border-style:solid;border-color:#d0a63a;background:rgba(240,200,90,.15)}
+.suptr .rg b{display:block!important;font-size:12.5px}.suptr .rg small{display:block;font-size:10.5px;opacity:.8;line-height:1.2}
+.suptr .ri{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe7a0;border:2px solid #1b1712;font-size:16px;flex:none}.suptr .ri.q{background:#d8cdb4;color:#7a6a50;font:800 15px system-ui}
+:root[data-skin="holo"] .suptr .rg{border-color:rgba(63,232,255,.35);color:#cfefff}:root[data-skin="holo"] .suptr .rg.on{border-color:#ffcf4a;background:rgba(255,207,74,.1)}
+.bti .supic{font-size:30px;display:grid;place-items:center;width:44px;height:44px}
+.apdet .suptr .rg small{display:none}.apdet .suptr .rg{padding:2px 6px}

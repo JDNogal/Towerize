@@ -30,7 +30,8 @@
   "28_novedades.css",
   "29_clasificacion.css",
   "30_apoyos.css",
-  "31_eter_cristal.css"
+  "31_eter_cristal.css",
+  "32_logros_sin_recuadro.css"
  ],
  "js": [
   "00_config.js",
@@ -151,6 +152,8 @@
   "autopausa.js",
   "clasificacion.js",
   "logros_cerca.js",
-  "casillas_era.js"
+  "casillas_era.js",
+  "logros_v329.js",
+  "supercampeones_rasgos.js"
  ]
 }

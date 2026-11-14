@@ -22,11 +22,12 @@ const LVN={b:'Bronce',s:'Plata',g:'Oro',p:'Platino'};
 // ---------- trofeos en cada metal ----------
 const TROFM={b:{cup:'#c8803a',hl:'#f0b070',stem:'#a8642a',gem:'#3fae6a'},s:{cup:'#c8d0d8',hl:'#ffffff',stem:'#9aa4ae',gem:'#4a7ad8'},g:{cup:'#f2c140',hl:'#ffd75a',stem:'#e0a830',gem:'#e0405a'},p:{cup:'#e4eef4',hl:'#ffffff',stem:'#b8ccd8',gem:'#a86ae8'}};
 const TROFN={b:'#ff9a4a',s:'#e8f0ff',g:'#ffd84a',p:'#c890ff'};
+// v329: en neón, la base del trofeo va del color del metal y la copa sigue en azul (opción B, Nogal 14-nov)
 const TROFL={perg:{},holo:{}};
 for(const lv in TROFM){const c=TROFM[lv];
  TROFL.perg[lv]=TROF.perg.replace('fill="#f2c140"',`fill="${c.cup}"`).replace('stroke="#ffd75a"',`stroke="${c.hl}"`).replace('fill="#e0a830"',`fill="${c.stem}"`).replace('fill="#e0405a"',`fill="${c.gem}"`).replace('stroke="#fff6c0"',`stroke="${c.hl}"`)
   .replace('</g></svg>',lv==='p'?'<path d="M50 6l1.6 3.4 3.4 1.6-3.4 1.6L50 16l-1.6-3.4-3.4-1.6 3.4-1.6z" fill="#fff" stroke-width="1.2"/><path d="M12 30l1.2 2.4 2.4 1.2-2.4 1.2L12 37l-1.2-2.4-2.4-1.2 2.4-1.2z" fill="#fff" stroke-width="1.1"/></g></svg>':'</g></svg>');
- TROFL.holo[lv]=TROF.holo.replace('fill="#fff" stroke="none"',`fill="${TROFN[lv]}" stroke="none"`).replace('</g></svg>',lv==='p'?'<path d="M50 6l1.6 3.4 3.4 1.6-3.4 1.6L50 16l-1.6-3.4-3.4-1.6 3.4-1.6z" fill="#fff" stroke="none"/></g></svg>':'</g></svg>');}
+ TROFL.holo[lv]=TROF.holo.replace('stroke="#ff4fd8"',`stroke="${TROFN[lv]}"`).replace('fill="#fff" stroke="none"',`fill="${TROFN[lv]}" stroke="none"`).replace('</g></svg>',lv==='p'?'<path d="M50 6l1.6 3.4 3.4 1.6-3.4 1.6L50 16l-1.6-3.4-3.4-1.6 3.4-1.6z" fill="#fff" stroke="none"/></g></svg>':'</g></svg>');}
 const trofIcL=lv=>{const k=typeof skinNow==='function'&&skinNow()==='holo'?'holo':'perg';return TROFL[k][lv]||TROF[k];};
 
 // ---------- logros nuevos ----------
