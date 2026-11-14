@@ -13,3 +13,11 @@ function iosNote(force){if(!IOS)return;if(!force){try{if(localStorage.getItem('r
  el.classList.add('on');el.querySelector('button').onclick=()=>{el.classList.remove('on');try{localStorage.setItem('rt-iosfs','1');}catch(e){}};}
 // la primera vez, en cuanto termina la intro
 if(IOS&&!navigator.webdriver){const iv=setInterval(()=>{if(typeof INTRO!=='undefined'&&INTRO.on)return;clearInterval(iv);setTimeout(()=>iosNote(0),400);},300);}
+// v330 · iPhone desde la pantalla de inicio: al girar, iOS avisa del cambio de tamaño antes de terminar de girar y el lienzo
+// se quedaba con las medidas de antes (el juego se veía estirado). Se vuelve a medir poco después de girar y, por si acaso, cada medio segundo.
+{const remeasure=()=>{try{setDsk();}catch(e){}};
+ const later=()=>{for(const t of [60,250,600,1200])setTimeout(remeasure,t);};
+ addEventListener('orientationchange',later);addEventListener('resize',later);
+ if(window.visualViewport)visualViewport.addEventListener('resize',later);
+ addEventListener('pageshow',later);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')later();});
+ setInterval(remeasure,500);}
