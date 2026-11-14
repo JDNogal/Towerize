@@ -17,7 +17,7 @@ const APT=[
  ['mf','Murallas firmes','tr',1,0,'w1','El núcleo empieza con <b>5</b> de vida más.'],
  ['tir','Tirada de la ronda','ma',1,0,5,'Cada ronda tienes <b>una tirada gratis</b> para volver a sacar las piezas, las torres o las reliquias que te ofrecen. No se acumula: si no la gastas, sigue ahí; si la gastas, tienes otra en la siguiente ronda.'],
  ['ba','Botín y aventura','ma',2,1,7,'Cada partida trae <b>un cofre y un evento más</b>.'],
- ['vig','Vigía','in',1,0,5,'Al señalar las 2 rondas siguientes en la línea de rondas, ves exactamente qué enemigos vienen.',1]];
+ ['vig','Vigía','in',1,0,5,'Al señalar las 2 rondas siguientes en la línea de rondas, ves exactamente qué escuadras y enemigos vienen.']];
 const APG=[['ec','Economía'],['to','Torres'],['tr','Tropas y héroe'],['ma','Mapa y piezas'],['in','Información']];
 const AZX={nie:4,ref:3};/* rangos extremos de amenaza: ×1,25 aparte */
 AZ.ap=AZ.ap||{sel:{1:{},2:{}}};

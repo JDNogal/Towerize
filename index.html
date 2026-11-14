@@ -2387,6 +2387,13 @@ table.lbrkt{margin-top:34px}
 :root[data-skin="holo"] .suptr .rg{border-color:rgba(63,232,255,.35);color:#cfefff}:root[data-skin="holo"] .suptr .rg.on{border-color:#ffcf4a;background:rgba(255,207,74,.1)}
 .bti .supic{font-size:30px;display:grid;place-items:center;width:44px;height:44px}
 .apdet .suptr .rg small{display:none}.apdet .suptr .rg{padding:2px 6px}
+/* v329 · Vigía */
+.vigb{margin-top:6px;padding-top:5px;border-top:1px dashed rgba(90,60,30,.35)}.vigt{font:800 10.5px system-ui;letter-spacing:.6px;text-transform:uppercase;color:#2f7a2f;display:flex;align-items:center;gap:4px}
+.vigs{font-size:12px;font-weight:600;margin:2px 0 3px}.vigb .pbr{flex-wrap:wrap;gap:4px 9px;font-size:12px}
+#vigauto .viga{position:fixed;transform:translateX(-50%);z-index:30;background:var(--paper1,#f6ecd6);color:var(--ink,#3a2617);border:2px solid #6b4426;border-radius:10px;padding:5px 9px;font-size:12px;max-width:540px;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,250px);gap:12px;box-shadow:0 6px 14px rgba(0,0,0,.35);pointer-events:none}
+#vigauto .viga>b{font-size:12.5px}#vigauto .vigb{margin-top:2px;border-top:0;padding-top:0}
+:root[data-skin="holo"] #vigauto .viga{background:rgba(8,24,30,.94);color:#cfefff;border-color:#3fe8ff}:root[data-skin="holo"] .vigt{color:#5dff9a}:root[data-skin="holo"] .vigb{border-top-color:rgba(63,232,255,.35)}
+.vigb .pbc{color:inherit!important;opacity:.7}
 /* v328 · ÉTER en el libro: cinta con el cristal (núcleo en miniatura) arriba a la derecha; bocadillo arriba a la derecha, fuera del libro */
 :root:not([data-skin="holo"]) .lbcv.a .etmbt{display:block;position:absolute;right:46px;top:-3px;width:60px;height:140px;margin:0;padding:0;border:0;background:none;box-shadow:none;cursor:pointer;z-index:7}
 :root:not([data-skin="holo"]) .lbcv.a .etmbt:focus-visible{outline:2px solid #3fe8ff;outline-offset:2px;border-radius:6px}
@@ -12406,7 +12413,7 @@ const APT=[
  ['mf','Murallas firmes','tr',1,0,'w1','El núcleo empieza con <b>5</b> de vida más.'],
  ['tir','Tirada de la ronda','ma',1,0,5,'Cada ronda tienes <b>una tirada gratis</b> para volver a sacar las piezas, las torres o las reliquias que te ofrecen. No se acumula: si no la gastas, sigue ahí; si la gastas, tienes otra en la siguiente ronda.'],
  ['ba','Botín y aventura','ma',2,1,7,'Cada partida trae <b>un cofre y un evento más</b>.'],
- ['vig','Vigía','in',1,0,5,'Al señalar las 2 rondas siguientes en la línea de rondas, ves exactamente qué enemigos vienen.',1]];
+ ['vig','Vigía','in',1,0,5,'Al señalar las 2 rondas siguientes en la línea de rondas, ves exactamente qué escuadras y enemigos vienen.']];
 const APG=[['ec','Economía'],['to','Torres'],['tr','Tropas y héroe'],['ma','Mapa y piezas'],['in','Información']];
 const AZX={nie:4,ref:3};/* rangos extremos de amenaza: ×1,25 aparte */
 AZ.ap=AZ.ap||{sel:{1:{},2:{}}};
@@ -12689,4 +12696,33 @@ MECG.push(['Supercampeones',Object.keys(SUPTR).map(k=>['st_'+k,'???','⭐'])]);
    if(it.id&&it.id.startsWith('st_')){const k=it.id.slice(3),ok=supSeen(k);out.push(Object.assign({},it,{n:ok?SUPTR[k][0]:'???',ok,ic:`<span class="supic">${supTrIc(k)}</span>`}));}else out.push(it);}
   return out;}catch(e){return L;}};}
 {const _k=kwHtml0;kwHtml0=function(id,src){if(id&&id.startsWith&&id.startsWith('st_')&&SUPTR[id.slice(3)]){const k=id.slice(3);return supSeen(k)?`<b>${SUPTR[k][0]}</b><small>Rasgo de supercampeón (amenaza Supercampeones). ${SUPTR[k][1]}</small>`:'<b>???</b><small>Todavía no has encontrado este rasgo.</small>';}return _k.apply(this,arguments);};}
+// ==================== v329 · Apoyo «Vigía» (Nogal, 14-nov) ====================
+// · En la línea de rondas, el bocadillo de las 2 rondas siguientes dice qué escuadras vienen y cuántos enemigos de cada tipo.
+// · Para que lo que ves sea lo que llega, las escuadras de esas rondas se deciden por adelantado y se guardan (S.vigW).
+// · Si tienes activado «Tooltips de portales abiertos en fase de construcción», en la preparación también se abren solos.
+//   Durante la oleada, solo al pasar el ratón.
+function vigOn(){return typeof apOn==='function'&&apOn('vig');}
+{const _ws=waveSquads;waveSquads=function(r){try{if(vigOn()&&S.vigW&&S.vigW[r]){const w=S.vigW[r];S.lastTh=w.th.slice();return w.out.slice();}}catch(e){}return _ws.apply(this,arguments);};
+ // reparte las escuadras de las rondas que faltan hasta r (encadenando las de la ronda anterior, como el juego normal)
+ window.vigPlan=function(r){if(!vigOn()||r>ROUNDS)return null;S.vigW=S.vigW||{};if(S.vigW[r])return S.vigW[r];
+  const made=S.mpR===S.round,k0=made?S.round+1:S.round,keep=(S.lastTh||[]).slice();
+  for(let k=k0;k<=r;k++){if(S.vigW[k]){S.lastTh=S.vigW[k].th.slice();continue;}const out=_ws(k);S.vigW[k]={out,th:(S.lastTh||[]).slice()};}
+  S.lastTh=keep;return S.vigW[r];};}
+{const _mp=makePortals;makePortals=function(){const r=_mp.apply(this,arguments);try{if(S)S.mpR=S.round;}catch(e){}return r;};}
+// lo que trae la ronda r: escuadras (agrupadas) y enemigos por tipo
+function vigRows(r){const w=vigPlan(r);if(!w)return '';const cnt={},tot={};let i=0;const n=w.out.length;
+ for(const sq of w.out){cnt[sq]=(cnt[sq]||0)+1;const tr=typeof sqTierOf==='function'?sqTierOf(i,n,r):0,m=typeof sqTierM==='function'?sqTierM(sq,tr,r):sqM(sq);i++;for(const t in m)tot[t]=(tot[t]||0)+m[t];}
+ const sqs=Object.entries(cnt).map(([k,c])=>`${(SQUADS[k]&&SQUADS[k].n)||k}${c>1?' ×'+c:''}`).join(' · ');
+ const types=Object.entries(tot).sort((a,b)=>b[1]-a[1]);
+ return `<div class="vigb"><div class="vigt">${typeof icU==='function'?icU('m_eye',''):''}Vigía</div><div class="vigs">${sqs}</div>${rowHtml(types).replace('class="pbr"','class="pbr pbw"')}</div>`;}
+{const _t=rtlTip;rtlTip=function(r){let h=_t.apply(this,arguments);try{const d=r-S.round;if(vigOn()&&d>=1&&d<=2)h+=vigRows(r);}catch(e){}return h;};}
+// en la preparación, con los bocadillos de los portales siempre abiertos: también los del Vigía
+function vigAuto(){let el=document.getElementById('vigauto');const on=vigOn()&&OPT.ptip&&S&&S.phase==='build'&&!RL.open&&!LB.open&&!document.body.classList.contains('inmenu')&&document.getElementById('rtl')&&document.getElementById('rtl').classList.contains('on');
+ if(!on){if(el)el.style.display='none';return;}
+ if(!el){el=document.createElement('div');el.id='vigauto';document.body.appendChild(el);}
+ const rs=[1,2].map(d=>S.round+d).filter(r=>r<=ROUNDS),dots=rs.map(r=>document.querySelector(`#rtl [data-tip="rtl:${r}"]`)).filter(Boolean);if(!dots.length||!(dots[0].getBoundingClientRect().width>0)){el.style.display='none';return;}
+ const b0=dots[0].getBoundingClientRect(),b1=dots[dots.length-1].getBoundingClientRect(),x=Math.round((b0.left+b1.right)/2),y=Math.round(Math.max(b0.bottom,b1.bottom)+8);
+ const h=`<div class="viga" style="left:${x}px;top:${y}px">${rs.map(r=>`<div><b>Ronda ${r}</b>${vigRows(r)}</div>`).join('')}</div>`;
+ if(el.dataset.h!==h){el.dataset.h=h;el.innerHTML=h;}el.style.display='';}
+if(typeof window!=='undefined')setInterval(()=>{try{vigAuto();}catch(e){}},250);
 </script></body></html>
