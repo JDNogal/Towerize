@@ -5,7 +5,9 @@ setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.
  if(!on){if(b)b.classList.remove('on');return;}
  if(!b){b=document.createElement('div');b.id='pkbar';b.className='rlbar pkbar';const ic=(k,fb)=>typeof icU==='function'?icU(k,fb):fb;
   b.innerHTML=`<button data-mz="deck" class="mzb" title="Ver tu mazo">${ic('m_deck','🃏')}</button><button data-mz="rel" class="mzb" title="Ver tus reliquias">${ic('m_chest','🧰')}</button><button data-a="ppeek" title="Ver el mapa">${ic('m_k_peek','👁')}</button>`;
-  b.querySelectorAll('[data-mz]').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();try{mzOpen(x.dataset.mz);}catch(_){}}));document.body.appendChild(b);}
+  b.querySelectorAll('[data-mz]').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();try{mzOpen(x.dataset.mz);}catch(_){}}));
+  /* v331: el ojo de esta barra está fuera de las zonas que escuchan los botones del juego: sin esto no hacía nada */
+  b.querySelector('[data-a="ppeek"]').addEventListener('click',e=>{e.stopPropagation();e.preventDefault();try{S.ppk=S.ppk?0:1;sfx('ui');}catch(_){}ui();});document.body.appendChild(b);}
  b.classList.add('on');}catch(e){}},150);
 // ==================== v312 · Barra de scroll dibujada en lo que no cabe entero (en vez de la sombra de abajo) ====================
 // Donde salga la flechita ▼ (SMSEL: ventanas, cofre, fichas…), una barra vertical fina por dentro del borde derecho,

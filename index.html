@@ -2475,7 +2475,7 @@ html:root[data-skin="holo"] .bti.ach.got,html:root[data-skin="holo"] #comp .bti.
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v330</div>
+<div id="ver">Towerize v331</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -10486,6 +10486,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:331,f:'14 nov 2026',t:'Arreglo en móvil',s:[['Arreglos',['Móvil: el ojo de arriba al elegir pieza no hacía nada. Ya deja ver el mapa.']]]},
  {v:330,f:'14 nov 2026',t:'Arreglo en iPhone',s:[['Arreglos',['iPhone: si abrías el juego desde la pantalla de inicio y girabas el móvil, el mapa podía verse estirado. Ya se ve bien.']]]},
  {v:329,f:'14 nov 2026',t:'Sorpresas',s:[['Reliquias',['Hay nuevas sorpresas al elegir reliquia. Descúbrelas en tu próxima partida y ya nos contarás.','Alguna reliquia de la era distópica ha cambiado. ¿Notarás cuál?']],['Piezas',['Los caminos ya no se unen por cualquier sitio: fíjate bien en los bordes.','Hay piezas nuevas esperando en la era distópica, y alguna puede llegar del revés.']],['Casillas especiales',['Las casillas especiales han cambiado: algunas se dejan ver antes que otras y hay una que aún nadie ha pisado.']],['Logros',['Los trofeos estrenan aspecto.']],['Apoyos y Amenazas',['Un apoyo que estaba en camino ya ha llegado.','Las amenazas esconden más rangos de los que crees.']]]},
  {v:328,f:'14 nov 2026',t:'ÉTER en el libro y solares nuevos',s:[['ÉTER',['En el libro (menú principal y pausa) ÉTER aparece como un cristal con la forma del núcleo, atado a una cinta arriba a la derecha. Brilla al hablar; púlsalo y te dirá algo.','Parpadea al ritmo de lo que escribe, como el altavoz de la tablet.']],['Piezas',['Solares revisados: algunas piezas cambian dónde están sus solares y todas estrenan una tercera disposición.','Fuera el Valle: era la misma pieza que el Arco, girada.']],['Enemigos',['Algunas mecánicas de enemigos cambian de nombre para explicarse mejor.']],['Equilibrio',['Pequeños ajustes internos de equilibrio.']]]},
@@ -11534,7 +11535,9 @@ setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.
  if(!on){if(b)b.classList.remove('on');return;}
  if(!b){b=document.createElement('div');b.id='pkbar';b.className='rlbar pkbar';const ic=(k,fb)=>typeof icU==='function'?icU(k,fb):fb;
   b.innerHTML=`<button data-mz="deck" class="mzb" title="Ver tu mazo">${ic('m_deck','🃏')}</button><button data-mz="rel" class="mzb" title="Ver tus reliquias">${ic('m_chest','🧰')}</button><button data-a="ppeek" title="Ver el mapa">${ic('m_k_peek','👁')}</button>`;
-  b.querySelectorAll('[data-mz]').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();try{mzOpen(x.dataset.mz);}catch(_){}}));document.body.appendChild(b);}
+  b.querySelectorAll('[data-mz]').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();try{mzOpen(x.dataset.mz);}catch(_){}}));
+  /* v331: el ojo de esta barra está fuera de las zonas que escuchan los botones del juego: sin esto no hacía nada */
+  b.querySelector('[data-a="ppeek"]').addEventListener('click',e=>{e.stopPropagation();e.preventDefault();try{S.ppk=S.ppk?0:1;sfx('ui');}catch(_){}ui();});document.body.appendChild(b);}
  b.classList.add('on');}catch(e){}},150);
 // ==================== v312 · Barra de scroll dibujada en lo que no cabe entero (en vez de la sombra de abajo) ====================
 // Donde salga la flechita ▼ (SMSEL: ventanas, cofre, fichas…), una barra vertical fina por dentro del borde derecho,
