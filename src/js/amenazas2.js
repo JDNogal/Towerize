@@ -103,8 +103,8 @@ function azCurPending(){const out=[];if(!S||!S.buff||!S.cc)return out;const seen
   if(!cs.length)continue;const c=cs[Math.floor(Math.random()*cs.length)];o.b.push({x:c[0],y:c[1],k:'cur'});o.cor=1;}try{see('bf','cur');}catch(e){}}}}catch(e){console.warn(e);}return r;};}
 // construir: primero la casilla maldita
 {const _b=build;build=function(fx,fy){try{if(azOn('cor')&&S&&inb(fx,fy)){const P0=azCurPending();if(P0.length){const q=sqOf(fx,fy);if(!P0.some(c=>c.x===q.x&&c.y===q.y)){
- S.msg='Primero tienes que construir en la casilla maldita.';ui();return;}}}}catch(e){}return _b.apply(this,arguments);};}
+ S.msg='Primero tienes que construir en la casilla defectuosa.';ui();return;}}}}catch(e){}return _b.apply(this,arguments);};}
 // su torre no se vende
-{const _s=sell;sell=function(t){if(azIsCur(t)){S.msg='La torre de una casilla maldita no se puede vender.';ui();return;}return _s.apply(this,arguments);};}
+{const _s=sell;sell=function(t){if(azIsCur(t)){S.msg='La torre de una casilla defectuosa no se puede vender.';ui();return;}return _s.apply(this,arguments);};}
 // y sus mejoras cuestan más
 {const _tc=tCost;tCost=function(t,c){const v=_tc.apply(this,arguments);if(v>0&&azIsCur(t))return Math.round(v*(1+azCurM()));return v;};}

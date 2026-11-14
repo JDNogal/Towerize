@@ -2410,7 +2410,7 @@ table.lbrkt{margin-top:34px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v328</div>
+<div id="ver">Towerize v329</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3875,7 +3875,7 @@ function compBodyOld(){setTimeout(()=>{if(!ALKNEW.size)return;for(const id of AL
    `<small style="display:block;max-width:288px;margin-top:6px">El héroe defiende el camino contra enemigos que llegan sin parar. Su vida depende del nivel elegido: ronda 1 con Nv 1, ronda 7 con Nv 5 y ronda 14 con Nv 10. Los niveles con 🔒 se desbloquean al alcanzarlos con este héroe en una partida. Los números rojos son el daño que recibe el héroe; si cae, reaparece al instante.</small>${D.d?'<div class="ddesc">'+D.d+'</div>':''}<div class="ce" style="margin-top:10px">${relicInfo(D.relic,1)}</div><div class="ce" style="margin-top:10px">${heroAbHtml(id)}</div></div></div></div>`;}
  else if(CP.tab==='hr')body='<div class="cgrid">'+Object.keys(HEROES).filter(h=>UNLOCK_ALL||heroVis(h)).map(id=>HEROES[id].lockTxt&&!UNLOCK_ALL?`<div class="ce tcard hlock"><div class="cport hport">${portrait(id)}</div><div class="ttl"><b>🔒 ???</b></div>${heroLockBox(id)}</div>`:`<div class="ce tcard">${heroGlance(id)}<div class="pvrow"><button class="pvbtn" data-a="chprev" data-v="${id}" title="Ver toda la información y una previsualización del héroe"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="6.8" cy="6.8" r="4.6"/><path d="M10.3 10.3L14 14"/></svg></button></div></div>`).join('')+'</div><small style="display:block;margin-top:8px">Valores a Nv 1. Pulsar la lupa de una tarjeta muestra todos sus valores y una previsualización.</small>';
  else if(CP.tab==='pc')body='<small>Las piezas se muestran sin rotar y con todos los solares de la disposición elegida (1, 2…). Al ofrecerse pueden salir giradas, con casillas especiales (siempre sobre un solar) y con otra decoración. Solo se construye en los <b>solares</b>; árboles, casas, campos y estanques son decorativos.</small><div class="cgrid">'+PIECES.map((o,i)=>seen('pc',o.n)?`<div class="ce"><div class="ttl">${(SOLARES[o.n]||[]).length>1?`<button class="stbtn lvbtn" data-a="cpcv" data-v="${i}" title="Ver la otra disposición de solares">V${((CP.pcv||{})[i]||0)+1}</button>`:''}<b>${o.n}</b> · ${opens(o.p)} salidas</div><canvas width="112" height="112" data-pi="${i}"></canvas><small>Solares en partida: <b>${SOLN[o.n]||'—'}</b></small></div>`:lock).join('')+'</div>';
- else if(CP.tab==='bf'){const all=BK.every(k=>CP.sup[k]);body=`<div class="fbar"><button class="${all?'on':''}" data-a="csupall">${all?'<span class="stg">★</span>':'☆'} Mostrar versión super</button></div>`+'<div class="cgrid">'+BK.map(k=>seen('bf',k)?`<div class="ce">${buffInfo(CP.sup[k]?k+'+':k,1)}</div>`:lock).join('')+'</div><small style="display:block;margin-top:8px">Pulsar el icono de estrella (☆) de una tarjeta muestra la versión super de esa casilla (bonus x2).</small>'}
+ else if(CP.tab==='bf'){const all=BK.every(k=>CP.sup[k]);body=`<div class="fbar"><button class="${all?'on':''}" data-a="csupall">${all?'<span class="stg">★</span>':'☆'} Mostrar versión super</button></div>`+'<div class="cgrid">'+BK.filter(k=>typeof bfEraOk!=='function'||bfEraOk(k)).map(k=>seen('bf',k)?`<div class="ce">${buffInfo(CP.sup[k]?k+'+':k,1)}</div>`:lock).join('')+'</div><small style="display:block;margin-top:8px">Pulsar el icono de estrella (☆) de una tarjeta muestra la versión super de esa casilla (bonus x2).</small>'}
  else if(CP.tab==='rl')body=csec('Reliquias normales','Se consiguen en cofres y en algunas opciones de evento, como comprarle o robarle al mercader.')+'<div class="cgrid">'+RELICS.filter(r=>!r.evr&&relSeeEra(r)).map(r=>seen('rl',r.id)?`<div class="ce">${relicInfo(r.id,1)}</div>`:shd(r.ic)).join('')+'</div>'+csec('Reliquias de evento','Solo se consiguen en eventos concretos, nunca en cofres.')+'<div class="cgrid">'+RELICS.filter(r=>r.evr&&relSeeEra(r)).map(r=>seen('rl',r.id)?`<div class="ce">${relicInfo(r.id,1)}</div>`:shd(r.ic)).join('')+'</div>';
  else if(CP.tab==='lg'){CP.af=CP.af||'all';CP.as=CP.as||'all';const run=inRun();
   const frac=id=>{const M=APM[id];if(!M)return 0;const v=M.best&&!M.cur?(ACHBEST[id]||0):M.cur&&(run||id==='curious')?M.cur():0;return Math.min(1,v/M.max);};
@@ -3963,7 +3963,7 @@ function bkItems(t){const L=[];
   L.push({sec:'Torres de evento'});for(const k of Object.keys(TW).filter(k=>TW[k].uniq))L.push({id:k,ic:twIc(k),col:TW[k].col,n:TW[k].n,ok:seen('tw',k)});}
  else if(t==='hr'){for(const id of Object.keys(HEROES).filter(h=>UNLOCK_ALL||heroVis(h)))L.push({id,por:1,col:HEROES[id].col,n:HEROES[id].n,ok:UNLOCK_ALL||!HEROES[id].lockTxt,lk:!UNLOCK_ALL&&!!HEROES[id].lockTxt});}
  else if(t==='pc'){PIECES.forEach((o,i)=>L.push({id:String(i),pc:i,n:o.n,ok:seen('pc',o.n)}));}
- else if(t==='bf'){for(const k of BK)L.push({id:k,bf:k,n:bname?bname(k):BF[k].n,ok:seen('bf',k)});}
+ else if(t==='bf'){for(const k of BK.filter(k=>typeof bfEraOk!=='function'||bfEraOk(k)))L.push({id:k,bf:k,n:bname?bname(k):BF[k].n,ok:seen('bf',k)});}
  else if(t==='rl'){L.push({sec:'Reliquias normales'});for(const r of RELICS.filter(r=>!r.evr&&relSeeEra(r)))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});
   L.push({sec:'Reliquias de evento'});for(const r of RELICS.filter(r=>r.evr&&relSeeEra(r)))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});}
  else if(t==='en'){const fl=CFILTERS.en,act=fl.filter(f=>CP.flt[f.key]),ok=k=>act.every(f=>seen('en',k)&&f.test(k,CP.flt[f.key]));
@@ -5481,7 +5481,7 @@ function dealTry(){
   S.offers=pool.map(o=>{const of={n:o.n,p:o.p,b:[]};solarize(of);decorate(of);
    if(S.round>=BUFFS_FROM&&Math.random()<.6){const cs=[];of.p.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));
     shuf(cs);
-    const two=Math.random()>=.7,dbl=two&&Math.random()<DSUP;for(let i=two?2:1;i>0&&cs.length;i--){const c=cs.pop();of.b.push({x:c[0],y:c[1],k:dbl?BK[Math.floor(Math.random()*BK.length)]+'+':rollBuff()});}if(dbl)S.sup=SUP0;}
+    const two=Math.random()>=.7,dbl=two&&Math.random()<DSUP;for(let i=two?2:1;i>0&&cs.length;i--){const c=cs.pop();of.b.push({x:c[0],y:c[1],k:dbl?(P=>P[Math.floor(Math.random()*P.length)])(typeof bfPool==='function'?bfPool():BK)+'+':rollBuff()});}if(dbl)S.sup=SUP0;}
    for(let i=Math.floor(Math.random()*4);i>0;i--)rotO(of);return of;});
   // siempre hay una pieza gratis (sin casillas especiales) entre las que se pueden colocar, y solo salen casillas que puedas pagar
   if(!S.tut){const okI=S.offers.map((o,i)=>i).filter(i=>anyPlace(S.offers[i]));if(okI.length)S.offers[okI[Math.floor(Math.random()*okI.length)]].b=[];
@@ -6373,7 +6373,7 @@ function update(dt){
   const dx=p.tx-p.x,dy=p.ty-p.y,dd=Math.hypot(dx,dy),st=p.sp*dt;if(dd<=st&&p.crit&&alive(p.e))critMark(p.e);
   if(dd>st){p.vx=dx/dd;p.vy=dy/dd;p.x+=p.vx*st;p.y+=p.vy*st;return true;}
   p.x=p.tx;p.y=p.ty;if(p.inc&&p.e){p.e.inc=Math.max(0,(p.e.inc||0)-p.inc);p.inc=0;}const hit=alive(p.e),sh=abRank(p.src,'shock'),kd=sh?sh.k*K:0;
-  if(hit){sfxHit(p.src,p.dt);strike(p.e,p.dm,p.src,p.dt,p.pen,p.pz);onHit(p.e,p.src);if(p.orb&&p.src&&p.src.ab)orbHit(p.src,p.e,stats(p.src),p.dm);if(p.slow)slowE(p.e,p.slow,p.slowt||SLOWT);if(kd&&p.e.hp>0&&p.area)knock(p.e,kd);}
+  if(hit){sfxHit(p.src,p.dt);strike(p.e,p.dm,p.src,p.dt,p.pen,p.pz);onHit(p.e,p.src);if(p.orb&&p.src&&p.src.ab)orbHit(p.src,p.e,stats(p.src),p.dm);if(p.slow)slowE(p.e,p.slow,p.slowt||SLOWT);if(kd&&p.e.hp>0&&p.area)knock(p.e,kd);if(typeof rebShot==='function')rebShot(p);}
   if(p.area){for(const e of S.enemies)if(e!==p.e&&e.hp>0&&!(p.cata&&isFly(e))&&Math.hypot(e.x-p.x,e.y-p.y)<=p.area){hurt(e,p.dm*SPLASH,p.src,p.dt,p.pen);if(p.slowA&&p.slow&&e.hp>0)slowE(e,p.slow,p.slowt||SLOWT);if(kd&&e.hp>0)knock(e,kd);}
    {const cr=p.src&&p.src.ab&&abRank(p.src,'cluster');if(cr)cluster(p,cr);}
    S.fx.push({x:p.x,y:p.y,t:.25,m:.25,r:p.area,col:p.col});}
@@ -12135,7 +12135,7 @@ const AZT=[
  ['ven','Venganza','en',[[3,'Cuando muere un élite o un jefe, los enemigos a 2 casillas se enfurecen <b>4 s</b>: corren un 50 % más y no se les puede retener.']],3],
  ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.']],6],
  ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.']],7],
- ['cor','Piezas corruptas','ma',[[2,'Cada <b>4</b> elecciones de pieza, las piezas vienen corruptas. Su casilla maldita se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>3</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf'],
+ ['cor','Piezas corruptas','ma',[[2,'Cada <b>4</b> elecciones de pieza, las piezas vienen corruptas. Su casilla defectuosa se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>3</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf'],
  ['nie','Niebla de guerra','ma',[[1,'La línea de rondas solo enseña la <b>ronda siguiente</b>.'],[2,'Además, los enemigos no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces se ven siempre.'],[2,'Además, los portales no informan de la siguiente oleada.'],[2,'Además, no sabes <b>dónde están</b> los portales enemigos.']],5],
  ['gri','Grietas espaciotemporales','ma',[[3,'A veces se abre un portal especial por el que llegan escuadras extra de una era que ya has visto (con su oro).']],'e2',1],
  ['ref','Sin refuerzos','ri',[[1,'Tus soldados tardan un <b>50 %</b> más en reaparecer.'],[1,'Tardan un <b>100 %</b> más.'],[3,'Los que caen <b>no reaparecen</b> hasta la siguiente oleada.']],'ini'],
@@ -12365,9 +12365,9 @@ function azCurPending(){const out=[];if(!S||!S.buff||!S.cc)return out;const seen
   if(!cs.length)continue;const c=cs[Math.floor(Math.random()*cs.length)];o.b.push({x:c[0],y:c[1],k:'cur'});o.cor=1;}try{see('bf','cur');}catch(e){}}}}catch(e){console.warn(e);}return r;};}
 // construir: primero la casilla maldita
 {const _b=build;build=function(fx,fy){try{if(azOn('cor')&&S&&inb(fx,fy)){const P0=azCurPending();if(P0.length){const q=sqOf(fx,fy);if(!P0.some(c=>c.x===q.x&&c.y===q.y)){
- S.msg='Primero tienes que construir en la casilla maldita.';ui();return;}}}}catch(e){}return _b.apply(this,arguments);};}
+ S.msg='Primero tienes que construir en la casilla defectuosa.';ui();return;}}}}catch(e){}return _b.apply(this,arguments);};}
 // su torre no se vende
-{const _s=sell;sell=function(t){if(azIsCur(t)){S.msg='La torre de una casilla maldita no se puede vender.';ui();return;}return _s.apply(this,arguments);};}
+{const _s=sell;sell=function(t){if(azIsCur(t)){S.msg='La torre de una casilla defectuosa no se puede vender.';ui();return;}return _s.apply(this,arguments);};}
 // y sus mejoras cuestan más
 {const _tc=tCost;tCost=function(t,c){const v=_tc.apply(this,arguments);if(v>0&&azIsCur(t))return Math.round(v*(1+azCurM()));return v;};}
 // ==================== v326 · Apoyos (la otra cara de las Amenazas) ====================
@@ -12599,4 +12599,37 @@ setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.hero||S.tut||S.pvE||S.pvH
  const el=$('nearach'),ne=$('nenot');if(el)el.classList.toggle('up',!!(ne&&ne.classList.contains('on')));}catch(e){}},1000);
 // Borrar progreso: también los avisos ya dados
 document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a="preset"]');if(b&&typeof OP!=='undefined'&&OP.rst){try{localStorage.removeItem('rt-near');}catch(e){}}},true);
+// ==================== v329 · Casillas especiales por era y casilla Rebote (Nogal, 14-nov-2026) ====================
+// · Era 1, las básicas: 1.ª partida Alcance, Potencia, Frenesí y Codicia · 2.ª + Precisión y Expansión · 3.ª + Cuartel y Persistencia.
+// · Era 2: 1.ª partida + Perforación y Taller · 2.ª + Eco · 3.ª + Rebote (nueva).
+// · Como los enemigos (enemigos_pz.js): «partida» = piezas de esa era que ya tienes + 1. Las ★ entran con su casilla.
+// · Una vez descubiertas salen en cualquier era (STO.bfz guarda hasta dónde has llegado en cada era).
+// · Las de una era no alcanzada no salen en el compendio.
+// · Casilla defectuosa (antes «maldita», Piezas corruptas) con el rojo de antes de Potencia; Potencia con el rojo intenso.
+const BFZ={rng:[1,1],pow:[1,1],spd:[1,1],gold:[1,1],crt:[1,2],aoe:[1,2],cua:[1,3],per:[1,3],prf:[2,1],tal:[2,1],eco:[2,2],reb:[2,3]};
+// Rebote: cada disparo que acierta salta a 1 enemigo cercano (★: a 2) con el 40 % del daño; la roca de la Catapulta rebota con su área
+const REBM=.4,REBR=1.6;
+BFICO.reb='<path d="M2.5 19.5L8 9l5 7 6.5-11.5"/><circle cx="19.5" cy="4.6" r="2.4" fill="currentColor"/><path d="M2 21.5h7" stroke-width="1.6"/>';
+BF.reb={n:'Rebote',l:'B',col:'#a6d84a',reb:1,t:'Cada disparo que acierta <b>rebota</b> a un enemigo cercano con el <span class="cd">40%</span> del daño',note:'Solo en torres que lanzan proyectiles. La roca de la Catapulta rebota con su área.'};
+BF['reb+']={...BF.reb,reb:2,t:'Cada disparo que acierta <b>rebota</b> a <b>2</b> enemigos cercanos con el <span class="cd">40%</span> del daño',sup:1,base:'reb'};
+if(!BK.includes('reb'))BK.push('reb');
+if(typeof BFSUP!=='undefined')BFSUP.reb={reb:2,t:BF['reb+'].t};
+// colores: Potencia se queda el rojo intenso y la defectuosa el de antes de Potencia
+BF.pow.col=BF['pow+'].col='#e0453a';
+if(BF.cur){BF.cur.n='Casilla defectuosa';BF.cur.col='#e0605a';}
+// hasta qué partida has llegado en cada era (1-3; 0 = aún no)
+function bfzLv(e){const z=(STO.bfz=STO.bfz||{}),n=e===1?(STO.p||0):(STO.bb||0);let v=Math.max(z[e]||0,Math.min(3,n));
+ if(typeof S!=='undefined'&&S&&!S.tut&&(S.era||1)===e&&typeof pzMax==='function')v=Math.max(v,pzMax());
+ if(v>(z[e]||0)){z[e]=v;try{saveSto();}catch(_){}}return v;}
+function bfPool(){if(typeof S!=='undefined'&&S&&S.tut)return BK.filter(k=>BFZ[k]&&BFZ[k][0]===1);
+ const L=[bfzLv(1),bfzLv(2)],P=BK.filter(k=>{const z=BFZ[k];return !z||z[1]<=L[z[0]-1];});return P.length?P:BK.slice(0,4);}
+rollBuff=function(){const P=bfPool(),k=P[Math.floor(Math.random()*P.length)];
+ if(Math.random()<S.sup){S.sup=SUP0;return k+'+';}S.sup=Math.min(1,S.sup+SUPUP);return k;};
+// compendio: las casillas de una era que aún no has alcanzado no aparecen
+function bfEraOk(k){const z=BFZ[k];return !z||z[0]===1||(typeof era2Ok==='function'&&era2Ok());}
+// Rebote: se llama al acertar un proyectil (update.js); los rebotes no vuelven a rebotar
+function rebShot(p){const t=p.src;if(!t||p.rb||!t.cells||t.hero)return;const n=Math.floor(tileV(t,'reb',0));if(!n)return;
+ const c=S.enemies.filter(e=>e!==p.e&&e.hp>0&&!(p.cata&&isFly(e))&&Math.hypot(e.x-p.x,e.y-p.y)<=REBR*K).sort((a,b)=>Math.hypot(a.x-p.x,a.y-p.y)-Math.hypot(b.x-p.x,b.y-p.y));
+ for(let i=0;i<n&&i<c.length;i++)(S.rbq=S.rbq||[]).push({x:p.x,y:p.y,e:c[i],tx:c[i].x,ty:c[i].y,vx:0,vy:0,dm:p.dm*REBM,dt:p.dt,src:t,sp:Math.max(8,(p.sp||12)*.8),area:p.area||0,slow:p.slow||0,slowt:p.slowt,pen:p.pen,col:p.col||'#a6d84a',rb:1});}
+{const _u=update;update=function(dt){const r=_u.apply(this,arguments);try{if(S&&S.rbq&&S.rbq.length){S.proj.push(...S.rbq);S.rbq=[];}}catch(e){}return r;};}
 </script></body></html>
