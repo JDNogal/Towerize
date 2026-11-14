@@ -7,7 +7,7 @@ body{margin:0;background:#0d0b09;color:#eee;font:14px system-ui}
 #st{position:relative;width:1280px;height:720px;margin:0 14px 14px;overflow:hidden;background:#000 center/100% 100%}
 #st .dim{position:absolute;left:0;right:0;top:46px;bottom:0;background:rgba(5,4,3,.68);opacity:0;transition:opacity .3s;-webkit-mask-image:linear-gradient(to right,transparent 182px,#000 205px,#000 1075px,transparent 1098px);mask-image:linear-gradient(to right,transparent 182px,#000 205px,#000 1075px,transparent 1098px)}
 #st.go .dim{opacity:1}
-.card{position:absolute;opacity:0;will-change:transform;filter:drop-shadow(0 12px 20px rgba(0,0,0,.65))}
+.card{position:absolute;opacity:0;will-change:transform;cursor:pointer;transition:rotate .25s;filter:drop-shadow(0 12px 20px rgba(0,0,0,.65))}
 .rays{position:absolute;left:640px;top:400px;width:1800px;height:1800px;margin:-900px 0 0 -900px;border-radius:50%;opacity:0;pointer-events:none;
  background:radial-gradient(circle,rgba(255,246,200,.95) 0,rgba(255,215,110,.55) 7%,rgba(255,200,90,.0) 32%),repeating-conic-gradient(from 0deg,rgba(255,226,140,.38) 0 5deg,rgba(255,226,140,0) 5deg 15deg);
  -webkit-mask-image:radial-gradient(circle,#000 0,#000 25%,transparent 55%);mask-image:radial-gradient(circle,#000 0,#000 25%,transparent 55%)}
@@ -70,8 +70,8 @@ const CB=`<svg viewBox="0 0 220 130" width="220" height="130"><defs>
 <g class="pnl" style="transform-origin:-56px 64px"><rect x="-56" y="-44" width="12" height="108" fill="#5a6a46" stroke="#1c2416" stroke-width="2.5"/></g>
 <g class="pnr" style="transform-origin:56px 64px"><rect x="44" y="-44" width="12" height="108" fill="#5a6a46" stroke="#1c2416" stroke-width="2.5"/></g></svg>`;
 let era='perg',slow=1;
-const CX=[358,640,922],CY=[352,340,352],ROT=[-4,0,4];
-const DESC={perg:'<b>Era fantástica · cofre.</b> El cofre entra grande, en primer plano, y tiembla; la cerradura brilla (ahí podrá entrar una llave más adelante). La tapa se abre hacia atrás, como la verías de frente, con un destello que llena casi toda la pantalla. El cofre se echa hacia atrás y las 3 reliquias salen al frente, separadas y flotando. Solo se oscurece el centro: los paneles de los lados siguen a la vista y se pueden usar.',
+const CX=[344,640,936],CY=[352,340,352],ROT=[-4,0,4];
+const DESC={perg:'<b>Era fantástica · cofre.</b> El cofre entra grande, en primer plano, y tiembla; la cerradura brilla (ahí podrá entrar una llave más adelante). La tapa se abre hacia atrás, como la verías de frente, con un destello que llena casi toda la pantalla. El cofre se echa hacia atrás y las 3 reliquias salen al frente, separadas y flotando. Al pasar el ratón, cada carta se acerca, se endereza un poco hacia el ratón y brilla. Solo se oscurece el centro: los paneles de los lados siguen a la vista y se pueden usar.',
 holo:'<b>Era distópica · paquete de ayuda.</b> El paquete baja más grande, con un paracaídas de gajos que se balancea; al aterrizar el paracaídas se desinfla y se lo lleva el viento. Se abren los laterales, sale el haz cian y suben las 3 reliquias. Solo se oscurece el centro.'};
 const A=(el,kf,o)=>el.animate(kf,Object.assign({fill:'forwards',easing:'ease-out'},o));
 function play(){const st=document.getElementById('st'),d=D[era],pr=document.getElementById('prop'),tt=document.getElementById('ttl'),hn=document.getElementById('hint'),ry=document.getElementById('rays'),fl=document.getElementById('flash'),T=t=>t*slow*1000;
@@ -104,7 +104,12 @@ function play(){const st=document.getElementById('st'),d=D[era],pr=document.getE
  d.cards.forEach((src,i)=>{const im=new Image();im.src=src;im.className='card';Object.assign(im.style,{left:(CX[i]-123)+'px',top:(CY[i]-186)+'px'});st.insertBefore(im,tt);
   const dx=640-CX[i],dy=(era==='perg'?600:560)-CY[i],r=ROT[i];
   A(im,[{transform:`translate(${dx}px,${dy}px) scale(.1) rotate(${r*-6}deg)`,opacity:0},{opacity:1,offset:.15},{transform:`translate(${dx*.08}px,${dy*.08-36}px) scale(1.06) rotate(${r*1.6}deg)`,opacity:1,offset:.72},{transform:`rotate(${r}deg)`,opacity:1}],{duration:T(.6),delay:T(t0+i*.09),easing:'cubic-bezier(.2,.8,.3,1)'});
-  im.animate([{translate:'0 0'},{translate:'0 -6px'},{translate:'0 0'}],{duration:2600,delay:T(t0+.8)+i*350,iterations:Infinity,easing:'ease-in-out'});});
+  im.animate([{translate:'0 0'},{translate:'0 -6px'},{translate:'0 0'}],{duration:2600,delay:T(t0+.8)+i*350,iterations:Infinity,easing:'ease-in-out'});
+  // al pasar el ratón: la carta se acerca un poco, se endereza y brilla (otro sonido en el juego)
+  let hv=null;im.onmouseenter=()=>{hv&&hv.cancel();hv=im.animate([{scale:'1',filter:'drop-shadow(0 12px 20px rgba(0,0,0,.65))'},{scale:'1.07',filter:'drop-shadow(0 18px 26px rgba(0,0,0,.7)) drop-shadow(0 0 14px '+(era==='perg'?'rgba(255,214,110,.75)':'rgba(63,232,255,.75)')+')'}],{duration:160,fill:'forwards',easing:'cubic-bezier(.3,1.6,.5,1)'});};
+  im.onmouseleave=()=>{hv&&hv.cancel();hv=im.animate([{scale:'1.07'},{scale:'1'}],{duration:180,fill:'forwards',easing:'ease-out'});};
+  im.onmousemove=ev=>{const r=im.getBoundingClientRect(),x=(ev.clientX-r.left)/r.width-.5;im.style.rotate=(x*4)+'deg';};
+  im.addEventListener('mouseleave',()=>{im.style.rotate='';});});
  A(tt,[{opacity:0,transform:'translate(-50%,-34px)'},{opacity:1,transform:'translate(-50%,0)'}],{duration:T(.32),delay:T(t0+.45)});
  A(hn,[{opacity:0},{opacity:.8}],{duration:T(.3),delay:T(t0+.65)});
  setTimeout(()=>st.classList.add('done'),T(t0+1));}
