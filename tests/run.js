@@ -97,6 +97,7 @@ const T=[
  ['enemigos_pz.js','Enemigos que entran poco a poco en cada era'],
  ['eter_cristal.js','ÉTER en la era fantástica: cristal atado a la cinta del libro'],
  ['suerte.js','Mala suerte con red: misma media y sin rachas largas'],
+ ['solares.js','Solares revisados: tres disposiciones por pieza'],
  ['clasificacion.js','Clasificación: botón al final, aviso, nombre del piloto, subida y tabla'],
  ['logros_niveles.js','Logros por niveles (bronce, plata, oro, platino), bajas con cada torre y Estadísticas › Marcas'],
  ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],
