@@ -63,7 +63,7 @@ function eEliteDraw(g,lw){if(!S)return;
   if(E.adapt&&e.adTop&&e.res&&e.res[e.adTop]>0){g.strokeStyle=e.adTop==='phys'?'#8fb0d0':e.adTop==='magic'?'#a070ff':'#4fd6b8';g.lineWidth=lw(2+6*e.res[e.adTop]);g.beginPath();g.arc(px,py,r+lw(4),0,7);g.stroke();}}}
 // palabras clave y consejos
 {const _k=kwHtml0;kwHtml0=function(id,src){
- if(id==='regen')return '<b>Regeneración</b><small>Recupera un 3 % de su vida máxima cada segundo, salvo mientras sufra quemadura, veneno o sangrado.</small>';
+ if(id==='regen')return '<b>Sangre de troll</b><small>Los trolls recuperan un 3 % de su vida máxima cada segundo. Recibir golpes no la frena: solo la cortan la quemadura, el veneno y el sangrado.</small>';
  if(id==='shield')return '<b>Escudo frontal</b><small>Su escudo para por completo los primeros golpes que recibe (6). Los estados (quemadura, veneno…) no lo gastan y le hacen daño igual.</small>';
  if(id==='banner')return '<b>Estandarte</b><small>Cada '+BANCD+' s planta un estandarte: los enemigos de tierra que pasen a '+f(BANR/K)+' casillas o menos van un 25 % más rápido. El estandarte se puede destruir como un enemigo más (no se mueve ni ataca) y se cae solo a los '+BANT+' s.</small>';
  if(id==='tele')return '<b>Teletransporte</b><small>Cada '+TELECD+' s brilla en violeta durante '+TELEW+' s y salta '+f(TELED/K)+' casillas hacia delante por el camino. Si lo aturdes, congelas, aterras o empujas mientras brilla, el salto se cancela.</small>';
@@ -72,7 +72,7 @@ function eEliteDraw(g,lw){if(!S)return;
  if(id==='burst')return '<b>Puesta</b><small>Al morir suelta '+ET.brood.burst+' Acechadores.</small>';
  if(id==='launch')return '<b>Hangar</b><small>Cada '+LAUNCHCD+' s lanza '+ET.carrier.launch+' Drones enjambre.</small>';
  return _k(id,src);};}
-{const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(['regen','Regeneración','💚'],['shield','Escudo frontal','🛡️'],['banner','Estandarte','🚩'],['tele','Teletransporte','🌀'],['camo','Camuflaje','👻'],['adapt','Adaptación','🧬'],['burst','Puesta','🥚'],['launch','Hangar','🛸']);}
+{const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(['regen','Sangre de troll','💚'],['shield','Escudo frontal','🛡️'],['banner','Estandarte','🚩'],['tele','Teletransporte','🌀'],['camo','Camuflaje','👻'],['adapt','Adaptación','🧬'],['burst','Puesta','🥚'],['launch','Hangar','🛸']);}
 Object.assign(MECUSE,{regen:['en:troll'],shield:['en:hknight'],banner:['en:warlord'],tele:['en:wander'],camo:['en:infil'],adapt:['en:mutant'],burst:['en:brood'],launch:['en:carrier']});
 Object.assign(ETIP,{troll:'Se regenera sin parar: quémalo, envenénalo o hazle sangrar para cortarlo.',hknight:'Su escudo para los primeros golpes: gástalo con torres rápidas o usa estados.',
  warlord:'Sus estandartes aceleran a los que pasan: destrúyelos y mátalo pronto.',wander:'Salta hacia delante cada 10 s: aturdirlo, congelarlo o empujarlo mientras brilla cancela el salto.',
