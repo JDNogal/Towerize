@@ -2351,6 +2351,10 @@ body.dsk:not(.mfs) #nearach{zoom:var(--uiz,1)}
 .bkx.bkhist.drawin>svg path{stroke-dasharray:40;animation:bkhdraw .55s .1s ease-out both}
 @keyframes bkhin{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
 @keyframes bkhdraw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
+/* v335 · el pie del libro es el mismo papel que su página (mismo degradado hacia el lomo y misma sombra), y se funde por arriba sin línea */
+.lbft.l,.lbft.r{background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 90%,var(--pedge,var(--trim))),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--pedge,var(--trim))))!important;-webkit-mask-image:linear-gradient(transparent,#000 34px);mask-image:linear-gradient(transparent,#000 34px)}
+.lbft.r{background:linear-gradient(270deg,color-mix(in srgb,var(--paper) 90%,var(--pedge,var(--trim))),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--pedge,var(--trim))))!important}
+.bk.hasft .lbft.r:empty{display:block!important;height:44px;padding:0!important;pointer-events:none}
 /* v324 · Clasificación: botón al final, diálogos centrados con fondo oscurecido y tabla */
 .esum .lbupb{display:flex;align-items:center;gap:10px;text-align:left;border-radius:10px;border:2px solid #8a5a1a;background:linear-gradient(#f2cd62,#dba63a);color:#3a2617;font-weight:800;font-size:15px;padding:8px 12px;cursor:pointer;min-height:58px;font-family:inherit}
 .esum .lbupb small{display:block;font-weight:500;font-size:11px;opacity:.8}
@@ -2441,7 +2445,7 @@ table.lbrkt{margin-top:34px}
 .bti.ach.got{background:linear-gradient(rgba(96,170,78,.2),rgba(96,170,78,.2)),var(--paper2)!important;border-color:rgba(70,140,60,.55)!important}
 .bti.ach.got.on{background:linear-gradient(rgba(96,170,78,.28),rgba(96,170,78,.28)),var(--paper1)!important}
 html:root[data-skin="holo"] .bti.ach.got,html:root[data-skin="holo"] #comp .bti.ach.got{background:linear-gradient(180deg,rgba(63,232,150,.2),rgba(63,232,150,.07))!important;box-shadow:inset 0 0 0 1px rgba(63,232,150,.45)!important}
-.lbdet .bkbic,.bksh .bkbic{background:none!important;box-shadow:none!important}
+.lbdet .bkbic:not([style*="background"]),.bksh .bkbic:not([style*="background"]){background:none!important;box-shadow:none!important}
 /* v329 · Cofre y paquete de ayuda sin marco (cofre_anim.js) */
 #relic.cofre:has(.cfsign) .pscr{filter:none;max-width:1100px}#relic.cofre:has(.cfsign) .pscr i.prod,#relic.cofre:has(.cfsign) .prod{display:none!important}#relic.cofre:has(.cfsign) .pscr::before,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr::before{display:none!important;content:none!important}
 #relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr{background:none!important;box-shadow:none!important;border:0!important;padding:0 0 10px!important;margin:0!important;animation:none!important}
@@ -2580,6 +2584,32 @@ body.mfs #zm button[data-z="c"] svg{width:30px;height:30px}
 #bossban.on{transform:translate(-50%,0);opacity:1}#bossban small{display:block;font-size:11px;color:#ffcf8a;text-transform:uppercase;letter-spacing:.08em}#bossban b{font:700 17px Georgia,serif;margin-right:4px}
 #bossban .bbic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:2px solid #1b1712;overflow:hidden;font-size:22px}#bossban .bbic svg{width:100%;height:100%}
 :root[data-skin="holo"] #bossban{background:rgba(40,8,30,.92);border-color:#ff4fd8;box-shadow:0 0 22px rgba(255,79,216,.6)}
+/* v335 · botón de fallo fuera del libro, siempre a mano */
+#bugfab{position:fixed;top:10px;left:12px;z-index:95;display:none;align-items:center;gap:6px;margin:0;padding:6px 11px;border-radius:16px;font:600 12.5px system-ui,sans-serif;cursor:pointer;
+ border:1px solid color-mix(in srgb,var(--trim,#c9a052) 60%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--lea,#5a3a22) 86%,#fff 14%),var(--lea,#5a3a22) 45%,var(--lea2,#3a2414));color:var(--leatxt,#f2e6cc);box-shadow:0 2px 6px rgba(0,0,0,.4)}
+#bugfab.on{display:flex}#bugfab:hover{filter:brightness(1.12)}#bugfab svg{width:16px;height:16px}
+.mctl button.bugm svg{width:17px;height:17px;vertical-align:middle}
+@media (max-width:760px),(max-height:460px){#bugfab{top:6px;left:6px;padding:5px 7px}#bugfab span{display:none}}
+:root[data-skin="holo"] #bugfab{background:rgba(6,30,40,.85);border-color:#3fe8ff88;color:#bff6ff}
+body:has(#bugfab.on) #comp.narrow .bkmarks{left:46px}
+body:has(#bugfab.on) #comp:not(.narrow) .bkmarks{left:max(34px,calc(186px - (100vw - min(1080px,100vw - 40px))/2))}
+/* v335 · «Volver a tirar»: con el dado dibujado y separado de las cartas */
+button.drr{display:inline-flex!important;align-items:center;gap:6px;margin-top:16px!important}
+button.drr .drric{display:inline-grid;place-items:center;width:20px;height:20px}button.drr .drric svg,button.drr .drric .icsvg{width:20px!important;height:20px!important}
+#panel .pctt~button.drr{margin-top:0!important}
+/* puntos de la pausa: letra oscura y marcada sobre la cinta dorada (con algunas paletas salía blanca y no se leía) */
+.lbscr,.lbscr b,.lbscr small{color:#3a1e08!important;text-shadow:0 1px 0 rgba(255,240,190,.7)!important}
+#bugfab.ingame{left:52px}
+/* v335 · el HUD de arriba nunca parte sus datos en dos líneas (el reloj salía montado en el borde) */
+#stats{flex-wrap:nowrap!important;white-space:nowrap}#stats>span{flex:none;white-space:nowrap}
+/* v335 · botones de volver del ojo: todos abajo en el centro, más grandes y con el mismo estilo */
+#pcback,#peekb.on{position:fixed!important;left:50%!important;right:auto!important;top:auto!important;bottom:18px!important;transform:translateX(-50%)!important;z-index:41!important;display:inline-flex!important;align-items:center;gap:9px;
+ padding:13px 26px!important;font:700 17px system-ui,sans-serif!important;border-radius:14px!important;border:1px solid var(--lea2)!important;color:var(--leatxt)!important;cursor:pointer;
+ background:linear-gradient(180deg,color-mix(in srgb,var(--lea) 86%,#fff 14%),var(--lea) 45%,var(--lea2))!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--trim) 70%,transparent),0 6px 18px rgba(0,0,0,.5)!important}
+#peekb.on svg,#pcback svg{width:1.6em!important;height:1.6em!important;margin:-6px 0;flex:none}
+body.mfs #pcback,body.mfs #peekb.on{padding:9px 18px!important;font-size:14px!important;bottom:10px!important}
+/* v335 · los avisos de la ronda (voladores, enemigo nuevo) van debajo del número de la ronda, sin tapar la línea ni la ronda actual */
+#rtl .rtws{top:auto!important;right:auto!important;left:50%!important;bottom:-34px!important;transform:translateX(-50%)}
 /* ===== v334 · Pergamino nuevo (Era Fantástica): papel envejecido, rodillos de papel enrollado, cinta de título, cartas a pluma, destello y lacre ===== */
 :root:not([data-skin="holo"]){--pgnoise:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .38 0 0 0 0 .18 0 0 0 -1.6 .75'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"),url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .3 0 0 0 0 .15 0 0 0 -1.1 .62'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23m)' opacity='.5'/%3E%3C/svg%3E")}
 /* papel con manchas y grano */
@@ -2623,6 +2653,16 @@ body.mfs #zm button[data-z="c"] svg{width:30px;height:30px}
 .pgstamp{position:fixed;z-index:400;pointer-events:none;transition:opacity .3s}.pgstamp svg{width:100%;height:100%;overflow:visible}
 .pgchosen{box-shadow:0 0 0 2px #e0a83a,0 0 14px rgba(255,214,110,.6)!important}
 @media (prefers-reduced-motion:reduce){.pgopen *,.pgopen{animation:none!important}}
+
+/* v335 · el pergamino es siempre papel claro: dentro se usan los colores de la paleta Pergamino (con paletas oscuras, las letras salían claras sobre el papel y no se leían) */
+#relic .pscr:has(.toff) .ppap{--lea:#5a2e1c;--lea2:#3a1a0e;--trim:#a0724a;--paper:#f6ecd3;--ink:#2a2118;--acc:#9a4a1c;--acc2:#c0662a;--gbtn:#f0c060;--gbtnf:#3a1a0e;--paper1:color-mix(in srgb,#f6ecd3 55%,#fff);--paper2:color-mix(in srgb,#f6ecd3 86%,#a0724a);--paper3:color-mix(in srgb,#f6ecd3 70%,#a0724a);--pline:color-mix(in srgb,#f6ecd3 72%,#a0724a);--pline2:color-mix(in srgb,#f6ecd3 50%,#a0724a);--pline3:color-mix(in srgb,#a0724a 70%,#2a2118);--ink2:color-mix(in srgb,#2a2118 65%,#f6ecd3);--inkh:#5a2e1c;--leatxt:#f3e6c8;--bg:#3a1a0e;--bgg:#5a2e1c;--bg2:#0d0f14;--gold:#805700;--red:#8e1f16;--cxl:#a3261b;--cxf:#8e1f16;--cxb:color-mix(in srgb,#a3261b 16%,#f6ecd3);--bkl:#2f5fb8;--bkf:#24498e;--bkb:color-mix(in srgb,#2f5fb8 16%,#f6ecd3);color-scheme:light;--panel:var(--paper2);--panel2:var(--paper1);--btn:var(--paper2);--line:var(--pline2);--line2:var(--pline3);--fg:var(--ink);--fg1:color-mix(in srgb,var(--ink) 80%,var(--paper));--fg2:var(--ink2);--accfg:var(--paper1);--hl:var(--acc2);--t6fdc8c:#1b6c3d;--te0b8ff:#863daa;--t8fd18f:#286c2b;--tff9a4a:#9e4200;--t5fdc7a:#1b6c33;--tc8a060:#7a5520;--t9fe4ff:#096683;--tcdf2ff:#266582;--t7fb4d9:#2e638c;--ta8d8ff:#26619a;--td2b48c:#78592f;--tfff2a0:#6e5d00;--tff5a64:#b0202e;--tffe14d:#735a00;--t5ab4ff:#155fab;--t7ad06a:#376a1e;--td0a0ff:#7a3cb8;--tb07cff:#6a2cc0;--tff8fd0:#a62d77;--td9c08a:#6e5a28;--te0a050:#85510f;--t9be15d:#376a10;--t8f9bff:#3f4fd0;--t4fd6b8:#0d6a55;--tff4fa8:#b21666;--tff9a3c:#9e4400;--tb8c4ff:#4c58a9;--tf3e7a1:#6c5e0e;--ta15cff:#6a1fd0;--tffb35a:#904d00;--t6fe07a:#1f6c2c}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap :is(.pst,.pskip small,.tnm),:root:not([data-skin="holo"]) body.pcpick #panel:has(.prow)>#ui>small,:root:not([data-skin="holo"]) body.pcpick #panel .pctt+small{color:#5a3a1e!important}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .tnm{color:#3a2410!important}
+/* v335 · con la reliquia de la cuarta pieza las cartas se salían del pergamino: con 4, más estrechas */
+body.pcpick #ui .prow:has(>.cardw:nth-child(4)) .cardw{max-width:148px!important;flex:0 0 148px!important}
+body.pcpick #ui .prow:has(>.cardw:nth-child(4)){gap:12px!important}
+body.mfs.pcpick #ui .prow:has(>.cardw:nth-child(4)) .cardw{max-width:84px!important;flex:0 0 84px!important}
+body:has(#relic.peek) .pgpenl,body.pcpeek .pgpenl{display:none!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2637,7 +2677,7 @@ body.mfs #zm button[data-z="c"] svg{width:30px;height:30px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v334</div>
+<div id="ver">Towerize v335</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3977,7 +4017,7 @@ function castFreeze(c){
 
 // ---- Dado de la suerte (pasivo): volver a tirar una vez en cada elección (piezas, ofertas de torres y cofres) ----
 // v326: el apoyo «Tirada de la ronda» también da una tirada (una por ronda, para piezas, torres o reliquias)
-const diceRr=k=>{if(!(S&&S.relics))return '';const dice=rp('dice')&&!(S.drr||{})[k],tir=typeof apTirOk==='function'&&apTirOk();return dice||tir?`<button class="drr" data-a="dreroll" data-k="${k}">🎲 ${dice?'Volver a tirar':'Tirada de la ronda'}</button>`:'';};
+const diceRr=k=>{if(!(S&&S.relics))return '';const dice=rp('dice')&&!(S.drr||{})[k],tir=typeof apTirOk==='function'&&apTirOk();return dice||tir?`<button class="drr" data-a="dreroll" data-k="${k}"><span class="drric">${(()=>{try{return RELIC.dice&&typeof RELIC.dice.ic==='object'?icHtml(RELIC.dice.ic):'🎲';}catch(e){return '🎲';}})()}</span>${dice?'Volver a tirar':'Tirada de la ronda'}</button>`:'';};
 function diceReroll(k){const dice=rp('dice')&&!(S.drr||{})[k];if(!dice&&!(typeof apTirOk==='function'&&apTirOk()))return;if(!dice)S.tirR=S.round;
  if(k==='pc'){if(S.phase!=='place')return;S.pi=null;deal();(S.drr=S.drr||{}).pc=1;}
  else if(k==='tw'){if(!RL.towo)return;const p=tPool();if(!p.length)return;RL.towo=towPick3(p);(S.drr=S.drr||{}).tw=1;renderTowerOffer();}
@@ -7318,7 +7358,7 @@ function ui(){
  else h=(S.phase==='lost'&&S.snap&&S.rc>0?`<button class="go" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="go" data-a="results">Ver resultados</button><button data-a="reset">Jugar de nuevo</button><button data-a="menu">Menú principal</button>';
  $('ui').innerHTML=h;$('panel').classList.toggle('pempty',!h&&!S.msg);
  {/* elegir pieza: ventana centrada y grande, sin poder hacer nada más; 👁 para mirar el mapa */document.body.classList.toggle('revl',S.revAt>0&&S.phase==='place');const pk=S.phase==='place'&&S.pi==null&&!(S.revAt>0)&&!(S.tut&&HQ.cur&&HQ.cur.id==='tut_welcome'&&!HQ.cur.si)&&!(typeof LB!=='undefined'&&LB.open)&&!document.body.classList.contains('inmenu')&&!(typeof DLG!=='undefined'&&DLG.on);if(!pk)S.ppk=0;document.body.classList.toggle('pcpick',pk&&!S.ppk);document.body.classList.toggle('pcpeek',pk&&!!S.ppk);
-  let pb=$('pcback');if(pk&&S.ppk&&!pb){pb=document.createElement('button');pb.id='pcback';pb.innerHTML=(typeof icU==='function'?icU('m_c_pc','🧩'):'🧩')+' Volver a las piezas';document.body.appendChild(pb);pb.addEventListener('click',e=>{e.stopPropagation();S.ppk=0;ui();});}if(pb&&!(pk&&S.ppk))pb.remove();}
+  let pb=$('pcback');if(pk&&S.ppk&&!pb){pb=document.createElement('button');pb.id='pcback';pb.innerHTML=(typeof icU==='function'?icU('m_c_pc','🧩'):'🧩')+' Volver a la selección de piezas';document.body.appendChild(pb);pb.addEventListener('click',e=>{e.stopPropagation();S.ppk=0;ui();});}if(pb&&!(pk&&S.ppk))pb.remove();}
  {let ch=0;if(BARX.pc&&S.pi==null){BARX.pc=0;if(!HSEEN.barpc){HSEEN.barpc=1;ch=1;}}if(BARX.tw&&!S.tsel){BARX.tw=0;if(!HSEEN.bartw){HSEEN.bartw=1;ch=1;}}if(ch)try{localStorage.setItem('rt-hints',JSON.stringify(HSEEN));}catch(e){}}
  $('ui').querySelectorAll('canvas[data-i]').forEach(cn=>drawPat(cn.getContext('2d'),S.offers[+cn.dataset.i],14,0,0,1));
  markSpeed();
@@ -7636,7 +7676,7 @@ setInterval(()=>{try{wqTick();}catch(e){}},150);
 function peekLbl(){const r=$('relic');return r.querySelector('[data-a="relic"]')?'reliquias':r.querySelector('[data-a="towpick"]')?'oferta':r.querySelector('[data-a="evopt"],[data-a="evok"]')?'evento':'ventana';}
 function setPeek(on){RL.peek=!!on;$('relic').classList.toggle('peek',RL.peek);let b=$('peekb');
  if(!b){b=document.createElement('button');b.id='peekb';b.onclick=()=>setPeek(false);$('cw').appendChild(b);}
- const l=peekLbl();b.textContent='👁 Volver '+(l==='reliquias'?'a las reliquias':l==='oferta'?'a la oferta':l==='evento'?'al evento':'a la ventana');b.title='Volver (Tab)';b.classList.toggle('on',RL.peek);
+ const l=peekLbl();b.innerHTML=(typeof icU==='function'?icU('k_peek','👁'):'👁')+' Volver '+(l==='reliquias'?'a la selección de reliquias':l==='oferta'?'a la selección de torres':l==='evento'?'al evento':'a la ventana');b.title='Volver (Tab)';b.classList.toggle('on',RL.peek);
  if(RL.peek){closePrim();}ui();}
 function rlBar(){const r=$('relic');if(!RL.open||RL.hpick||typeof S==='undefined'||!S||!S.list){if(RL.peek)setPeek(false);return;}
  if(!r.querySelector('[data-a="relic"],[data-a="towpick"],[data-a="evopt"],[data-a="evok"]'))return;
@@ -7891,6 +7931,7 @@ function act(e){
  else if(a==='qend'||a==='qskip'){if(QS.on)quickSeen();if(a==='qend'){try{localStorage.setItem('rt-qdone','1');}catch(e){}}closeQuick();if(QS.after==='setup'){renderEra();}else renderHelp();}
  else if(a==='hreset'){HSEEN={};try{localStorage.removeItem('rt-hints');}catch(e){}LB.note='Pistas restablecidas ✓';lbRender();}
  else if(a==='begin')startGame();
+ else if(a==='herobk'){/* v335: desde elegir héroe se vuelve a la pantalla anterior (duración), no al menú */RL.hpick=false;showMenu();renderSetup();}
  else if(a==='tutskip'){try{localStorage.setItem('rt-tutchoice','skip');}catch(e){}OPT.hints=false;saveOpt();renderSkip();}
  else if(a==='skipok')renderEra();
  else if(a==='htog'){OPT.hints=!OPT.hints;saveOpt();lbRender();}
@@ -8046,7 +8087,7 @@ function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
  const left=`<div class="lbhero${lk?' lk':''}" style="--hc:${D.col}"><span class="lbhart fr${hTier(id)}">${portrait(id,0,lk)}</span><div class="lbhn">${lk?'???':D.n}</div><div class="lbhc">${lk?'Héroe por desbloquear':D.role+' · '+(D.ranged?'A distancia':'Cuerpo a cuerpo')}</div></div>`;
  const right=`<div class="lbhpc" style="--hc:${D.col}">${heroSheet(id)}</div>`;
  return {marksHTML,left,right,key:'hero'+id,flip:LB.lastK!=='prep|hero'+id,hero:1,
-  footL:S.tut?'':`<button class="lbbk" data-a="menu" data-bk="1">‹ Menú</button>`,footR:`<button class="gbtn hok2" data-a="pickhero" data-id="${lk?'':id}"${lk?' disabled':''}>${lk?'Bloqueado':'Elegir a '+D.n+' ✓'}</button>`};
+  footL:S.tut?'':`<button class="lbbk" data-a="herobk">‹ Duración</button>`,footR:`<button class="gbtn hok2" data-a="pickhero" data-id="${lk?'':id}"${lk?' disabled':''}>${lk?'Bloqueado':'Elegir a '+D.n+' ✓'}</button>`};
 }
 // ---- final de partida: la crónica ----
 // página de mensaje: dos páginas con lo que haya en LB.msg (left/right pueden ser funciones), pie y sin cintas
@@ -10712,6 +10753,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:335,f:'14 nov 2026',t:'Arreglos rápidos',s:[['Arreglos',['El botón de informar de un fallo ya se ve en todas las pantallas (libro, compendio, elegir héroe, ventanas…) y no se monta con el borde del libro. En la partida está en la columna de arriba a la izquierda.','Novedades: al abrir una versión, solo deja de ser «nueva» esa, no todas.','Compendio: el círculo de la torre en su ficha vuelve a tener su color.','Nueva torre: con paletas oscuras, las letras salían claras sobre el pergamino y no se leían. Ya se leen.','Con la reliquia de la cuarta pieza, las cartas ya caben en el pergamino.','El pie del libro ya no hace un corte raro junto al lomo.','Ojo: el botón para volver sale siempre abajo en el centro, más grande, y dice a qué selección vuelves (piezas, torres, reliquias o evento).','Elegir héroe: el botón de abajo a la izquierda vuelve a la duración, no al menú.','«Volver a tirar» lleva el dado dibujado y está más separado de las cartas.','Los puntos de la pausa se leen con cualquier paleta.','Los avisos de la siguiente ronda (voladores, enemigo nuevo) van debajo de su número y ya no tapan la línea.','El tiempo real y el de combate ya no se salen de la barra de arriba.']]]},
  {v:334,f:'14 nov 2026',t:'Arreglos de ventanas',s:[['Novedades',['Las páginas de elegir pieza y torre tienen nuevo aspecto.','Cuando sale un jefe, ya no pasa desapercibido.']],['Arreglos',['Después de abrir un cofre, la siguiente ventana (nueva torre, evento…) salía sin su fondo y casi no se leía. Ya sale bien.','Cofre abierto: en pantallas grandes, el cartel quedaba muy separado de arriba y las cartas tapaban el mapa. Ahora todo sube.','Cofre abierto: algunas descripciones salían con barra de scroll aunque cupieran.','Los paneles del mazo y del cofre quedan centrados entre el borde de la pantalla y la ventana.','Al elegir pieza, la tecla del ojo (Tab, o la que tengas puesta) no hacía nada. Ya deja ver el mapa.','Eventos: lo que obtienes ya se lee seguido, sin cortarse en columnas.','Torres de apoyo: su ficha ya no muestra estadísticas que no tienen (como «Enfriamiento Infinity s»).','Compendio: los efectos largos de un héroe (como los de Yrsa) ya no se salen con barra; la reliquia inicial sale solo en su recuadro.','El aviso de logro cercano ya no sale si ese logro ya no se puede conseguir en la partida.','El pie del libro ya no deja ver a medias lo que hay detrás junto al lomo.','La marca de compra en cola cuelga de la esquina de la torre, en vez de flotar encima.','A partir de media partida, si el camino tiene dos o más finales, los enemigos salen como mínimo por dos portales.','Previsualización del libro: ya no suena el núcleo ni las bajas en bucle.','Botón ↩ del libro: si estabas viendo una torre en acción, la página de la derecha ya vuelve también.','Compendio · Eventos: todas las opciones tienen el mismo tamaño y su letra se lee con cualquier paleta.','Compendio · Mecánicas: «Lo usan» solo enseña lo que ya has visto, y con el nombre de la especialización o habilidad que lo usa.','Compendio: todas las torres tienen ya su descripción.']],['Ayudas',['ÉTER ya no habla cada vez que pausas: solo de vez en cuando, o si te quedas un buen rato en la pausa.','Un consejo nuevo sobre abrir muchas salidas, y un aviso al perder si tenías muchos portales abiertos.']]]},
  {v:333,f:'14 nov 2026',t:'Arreglo del libro',s:[['Arreglos',['Novedades: al cerrarla con la ✕ o con Esc desde el menú principal, el libro desaparecía y no se podía hacer nada. Ahora vuelve a la portada.']]]},
  {v:332,f:'14 nov 2026',t:'Ayudas',s:[['Ayudas',['¿Algo falla? Ahora puedes contárnoslo sin salir del juego. Busca un bichito en el libro.','Perder ya no es solo perder: el final de partida tiene algo que contarte.','Antes de empezar una oleada, alguien vigila tu bolsa.','La línea de rondas se ha vuelto más habladora.','Hay una forma nueva de verlo todo en redondo: busca el botón… o la tecla.','ÉTER tiene cosas que contarte en la pausa, si le dejas.','Tu puntuación luce ahora en la pausa.']],['Estadísticas',['Estadísticas estrena una pestaña con toda tu historia.']],['Opciones',['Todas las ayudas, juntas y con su interruptor, en Opciones › Juego.']],['Libro',['Novedades más ordenada, y algún botón que solo aparece cuando hace falta.']],['Arreglos',['Elegir tutorial: el botón para empezarlo no hacía nada. Ya funciona, y tocar un tutorial solo lo elige.','Móvil: algunos iconos se han puesto al día.']]]},
@@ -10733,17 +10775,21 @@ const NOVL=[
  {v:314,f:'13 nov 2026',t:'Puntuación, logros por niveles y dron',s:[['Puntuación',['Cada partida suma puntos: se ven en la pausa, en Estadísticas, al final y en Partidas, con tu récord por héroe.']],['Logros',['Bronce, plata, oro y platino; Exterminador con cada torre (con marco en el mapa) y Estadísticas › Marcas.']],['Era Distópica',['El dron proyector sustituye al pergamino en las ventanas de elección.']],['Interfaz',['Iconos dibujados en todo el juego; menús más grandes en pantallas grandes.']]]}];
 const NOVV=()=>{try{return parseInt(String(($('ver')||{}).textContent||'').replace(/\D+/g,''))||NOVL[0].v;}catch(e){return NOVL[0].v;}};
 const NOV={sel:null};let NOVSEEN=0;try{NOVSEEN=+localStorage.getItem('rt-novseen')||0;}catch(e){}
-const novNew=v=>v>NOVSEEN&&NOVSEEN>0;
-function novParts(){const cur=NOVV(),L=NOVL.filter(x=>x.v<=cur);if(!L.some(x=>x.v===NOV.sel))NOV.sel=(L[0]||NOVL[0]).v;const v=L.find(x=>x.v===NOV.sel)||NOVL[0];
+// v335: cada versión deja de ser «nueva» solo cuando la abres (antes, al abrir Novedades se quitaba de todas)
+let NOVVIS={};try{NOVVIS=JSON.parse(localStorage.getItem('rt-novvis'))||{};}catch(e){}
+const novNew=v=>v>NOVSEEN&&NOVSEEN>0&&!NOVVIS[v];
+function novMark(v){if(!(v>NOVSEEN)||NOVVIS[v])return;NOVVIS[v]=1;const cur=NOVV();let all=true;for(const x of NOVL)if(x.v>NOVSEEN&&x.v<=cur&&!NOVVIS[x.v])all=false;
+ if(all){NOVSEEN=cur;NOVVIS={};try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(e){}}try{localStorage.setItem('rt-novvis',JSON.stringify(NOVVIS));}catch(e){}}
+function novParts(){const cur=NOVV(),L=NOVL.filter(x=>x.v<=cur);if(!L.some(x=>x.v===NOV.sel))NOV.sel=(L[0]||NOVL[0]).v;const v=L.find(x=>x.v===NOV.sel)||NOVL[0];try{if(LB.open&&LB.area==='msg')novMark(v.v);}catch(e){}
  const left=`<h3>Novedades</h3><div class="bksub">Lo que cambia en cada versión · estás jugando la v${cur}</div><div class="novl">${L.map(x=>`<div class="novr${x.v===NOV.sel?' sel':''}" data-a="novsel" data-v="${x.v}"><b class="v">v${x.v}</b><span>${x.t}<br><small>${x.f}</small></span>${novNew(x.v)?'<span class="nw">NUEVO</span>':''}</div>`).join('')}</div>`;
  const right=`<div class="lbdet novd"><h4>v${v.v} · ${v.t}</h4><small>${v.f}</small>${v.s.map(([h,I])=>`<div class="sec"><b>${h}</b><ul>${I.map(l=>`<li>${l}</li>`).join('')}</ul></div>`).join('')}</div>`;
  return {marks:null,left,right,key:'nov'+NOV.sel,footL:`<button class="lbbk" data-a="lbcover">‹ Menú</button>`,footR:''};}
-function novOpen(){LB.msg={key:'nov',onBack:()=>{NOVSEEN=Math.max(NOVSEEN,NOVV());try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(_){}lbOpen(null,true);},left:()=>novParts().left,right:()=>novParts().right,footL:`<button class="lbbk" data-a="novback">‹ Menú</button>`,footR:''};NOV.sel=null;
- lbOpen('msg');setTimeout(()=>{NOVSEEN=Math.max(NOVSEEN,NOVV());try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(e){}},400);}
+function novOpen(){LB.msg={key:'nov',onBack:()=>{lbOpen(null,true);},left:()=>novParts().left,right:()=>novParts().right,footL:`<button class="lbbk" data-a="novback">‹ Menú</button>`,footR:''};NOV.sel=null;
+ lbOpen('msg');}
 document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
  if(a==='novopen'){ev.stopPropagation();ev.preventDefault();try{sfx('page');}catch(_){}novOpen();}
  else if(a==='novsel'){ev.stopPropagation();ev.preventDefault();NOV.sel=+b.dataset.v;try{sfx('page');}catch(_){}lbRender();}
- else if(a==='novback'){ev.stopPropagation();ev.preventDefault();NOVSEEN=Math.max(NOVSEEN,NOVV());try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(_){}lbOpen(null,true);}},true);
+ else if(a==='novback'){ev.stopPropagation();ev.preventDefault();lbOpen(null,true);}},true);
 // la primera vez que se juega, lo de antes no cuenta como «nuevo»
 if(!NOVSEEN){NOVSEEN=NOVV();try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(e){}NOVSEEN=-1;}
 // ---- menú principal: línea de la partida guardada arriba; Continuar y Nueva partida iguales; Novedades debajo ----
@@ -10751,7 +10797,7 @@ if(!NOVSEEN){NOVSEEN=NOVV();try{localStorage.setItem('rt-novseen',String(NOVSEEN
  const m=h.match(/<button class="lbmain" data-a="lbload">[\s\S]*?<\/button><div class="lbsv">[\s\S]*?<\/div><button class="lbnew([^"]*)" data-a="newgame">([\s\S]*?)<\/button>/);
  if(m){const sv=m[0].match(/<div class="lbsv">[\s\S]*?<\/div>/)[0],ld=m[0].match(/<button class="lbmain" data-a="lbload">[\s\S]*?<\/button>/)[0];
   h=h.replace(m[0],sv+'<div class="lbmains">'+ld+`<button class="lbmain lbalt${m[1]}" data-a="newgame">${LB.ask?m[2]:(typeof icU==='function'?icU('m_deck',''):'')+' Nueva partida'}</button></div>`);}
- const cur=NOVV(),nw=NOVSEEN>0&&cur>NOVSEEN;
+ const cur=NOVV(),nw=NOVL.some(x=>x.v<=cur&&novNew(x.v));
  h=h.replace(/(<button class="lbmain[^"]*" data-a="newgame">[\s\S]*?<\/button>(<\/div>)?)/,`$1<button class="lbnov" data-a="novopen">${nw?'<i></i>':''}Novedades · v${cur}</button>`);}catch(e){}return h;};}
 // ==================== v305 · Historia de la era 2: Kai, el reencuentro de Vega y Ferro, y Korr al salir de la cápsula ====================
 // Kai (CERRADO en plan_era2): solo jugando con Vega, en una ronda de jefe de la Era Distópica (con 15 rondas o más, siempre la 15).
@@ -13376,7 +13422,6 @@ const BUGSVG='<svg viewBox="0 0 24 24" width="20" height="20" style="vertical-al
 // botones en la portada del libro (pausa y menú principal) y consejo «Sabías que…»
 {const _cv=lbCoverHTML;lbCoverHTML=function(){let h=_cv.apply(this,arguments);try{
   const bug=`<button data-a="bugrep" class="bugbtn" aria-label="Informar de un fallo">${BUGSVG}<span>Informar de un fallo</span></button>`;
-  h=h.replace('<div class="lbcvin">','<div class="lbcvin">'+bug);
   // puntuación: cinta bajo el retrato en lugar del texto suelto de arriba
   h=h.replace(/<div class="lbscore"><small>Puntuación<\/small><b>([^<]*)<\/b><\/div>(<div class="lbemb">[\s\S]*?<\/div>)/,(m,t,emb)=>`<div class="lbembw">${emb}<div class="lbscr"><b>${t}</b><small>puntos</small></div></div>`);
  }catch(e){}return h;};}
@@ -13435,6 +13480,16 @@ document.addEventListener('pointerdown',e=>{try{const b=document.querySelector('
  if(!b.contains(e.target)){clearTimeout(ETM.hide);b.classList.remove('on');cv.classList.remove('etmon','etmtalk');}}catch(_){}},true);
 document.addEventListener('click',e=>{try{if(ETMSKIP.on){ETMSKIP.on=0;e.preventDefault();e.stopPropagation();}}catch(_){}},true);
 const ETMSKIP={on:0};
+
+// v335 · «Informar de un fallo» en todas las pantallas: con el libro abierto (portada, compendio, opciones…), arriba a la izquierda de la pantalla, fuera del libro;
+// en la partida, un botón más en la columna de arriba a la izquierda
+function bugFab(){try{let f=$('bugfab');if(!f){f=document.createElement('button');f.id='bugfab';f.dataset.a='bugrep';f.setAttribute('aria-label','Informar de un fallo');f.innerHTML=BUGSVG+'<span>Informar de un fallo</span>';document.body.appendChild(f);}
+ const bk=typeof LB!=='undefined'&&LB.open,menu=document.body.classList.contains('inmenu'),bw=$('bugw'),busy=bw&&bw.classList.contains('open'),intro=typeof INTRO!=='undefined'&&INTRO.on;
+ const m=$('mtl');if(m&&S&&!S.tut&&!m.querySelector('[data-a="bugrep"]'))m.insertAdjacentHTML('beforeend',`<button data-a="bugrep" class="bugm" aria-label="Informar de un fallo">${BUGSVG}</button>`);
+ // si el de la partida no se ve o algo lo tapa (ventanas, elegir héroe, libro…), sale el de arriba a la izquierda
+ let mOk=false;const mb=m&&m.querySelector('.bugm');if(mb&&!bk&&!menu){const r=mb.getBoundingClientRect();if(r.width>0){const t=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);mOk=!!(t&&mb.contains(t));}}
+ f.classList.toggle('on',!mOk&&!busy&&!intro);f.classList.toggle('ingame',!bk&&!menu);}catch(e){}}
+setInterval(bugFab,250);
 // ==================== v334 · Paneles del mazo y del cofre centrados en su hueco ====================
 // Con una ventana abierta (oferta de torres, cofre, evento…), cada panel lateral queda a la misma distancia
 // del borde de la pantalla que de la ventana. Sin ventana, vuelven a su sitio de siempre. Vale para las dos eras.
