@@ -4,7 +4,7 @@ const AZASE={t:null,r:0,last:0};
 setInterval(()=>{try{const R=azRank('ase'),B=document.body.classList;let c=$('azase');
  const run=R&&S&&S.phase==='build'&&S.hero&&!B.contains('pcpick')&&!(RL&&RL.open)&&!(LB&&LB.open)&&!(DLG&&DLG.on)&&S.speed!==0&&!document.body.classList.contains('inmenu');
  if(!R||!S||S.phase!=='build'){AZASE.t=null;if(c)c.style.display='none';return;}
- if(AZASE.r!==S.round||AZASE.t==null){AZASE.r=S.round;AZASE.t=R>=2?20:30;}
+ if(AZASE.r!==S.round||AZASE.t==null){AZASE.r=S.round;AZASE.t=R>=3?15:R>=2?20:30;}
  const now=performance.now(),dt=AZASE.last?Math.min(.5,(now-AZASE.last)/1000):0;AZASE.last=now;if(run)AZASE.t-=dt;
  if(!c){c=document.createElement('div');c.id='azase';c.className='azase';document.body.appendChild(c);}
  const sec=Math.max(0,Math.ceil(AZASE.t)),h=`<span class="ai">${AZIC.ase}</span>Empieza sola en <b>0:${String(sec).padStart(2,'0')}</b>`;if(c.dataset.h!==h){c.innerHTML=h;c.dataset.h=h;azFit();}
@@ -14,7 +14,7 @@ setInterval(()=>{try{const R=azRank('ase'),B=document.body.classList;let c=$('az
  if(AZASE.t<=0){AZASE.t=null;c.style.display='none';try{startWave();}catch(e){}}}catch(e){}},200);
 // ---- Inflación: cada torre del mismo tipo cuesta un 10 % más que la anterior ----
 function azInfl(){try{const on=azOn('inf');for(const k of Object.keys(TW)){const T=TW[k];if(T.cost==null||T.uniq)continue;if(T.cost0==null)T.cost0=T.cost;
-  const n=on&&S&&S.list?S.list.filter(t=>t.type===k&&!t.hero&&!t.summ).length:0,c=n?Math.round(T.cost0*(1+.1*n)):T.cost0;/* sin redondear a 5: es parte de la dificultad (Nogal) */if(T.cost!==c)T.cost=c;}}catch(e){}}
+  const n=on&&S&&S.list?S.list.filter(t=>t.type===k&&!t.hero&&!t.summ).length:0,c=n?Math.round(T.cost0*(1+(azRank('inf')>=2?.15:.1)*n)):T.cost0;/* sin redondear a 5: es parte de la dificultad (Nogal) */if(T.cost!==c)T.cost=c;}}catch(e){}}
 {const _b=build;build=function(){azInfl();const r=_b.apply(this,arguments);azInfl();return r;};}
 {const _u=ui;ui=function(){azInfl();return _u.apply(this,arguments);};}
 {const _sg=startGame;startGame=function(){const r=_sg.apply(this,arguments);azInfl();return r;};}
@@ -45,7 +45,7 @@ function azSabTargets(){const out=[];for(const t of S.list){const T=TW[t.type];i
   for(let y=Math.max(0,t.y-3);y<=Math.min(N-1,t.y+3)&&!ok;y++)for(let x=Math.max(0,t.x-3);x<=Math.min(N-1,t.x+3);x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=2.5){ok=true;break;}
   if(ok)out.push(t);}return out;}
 {const _sw=startWave;startWave=function(){const r=_sw.apply(this,arguments);try{S.sabIdx=null;S.spN=0;S.flagSq={};
-  if(azOn('sab')&&S.round>=3){const n=S.round>=15?3:S.round>=9?2:1;let tot=0;for(const p of S.portals)for(const t of p.q||[])if(t!=='|')tot++;
+  if(azOn('sab')&&S.round>=3){const n=(S.round>=15?3:S.round>=9?2:1)+(azRank('sab')>=2?1:0);let tot=0;for(const p of S.portals)for(const t of p.q||[])if(t!=='|')tot++;
    const lim=Math.max(1,Math.floor(tot*.7)),set=new Set();let g=0;while(set.size<Math.min(n,lim)&&g++<50)set.add(Math.floor(Math.random()*lim));S.sabIdx=set;}}catch(e){}return r;};}
 {const _se=spawnEnemy;spawnEnemy=function(t,p,fo){const n=S&&S.enemies?S.enemies.length:0;const r=_se.apply(this,arguments);try{if(S.enemies.length>n){const e=S.enemies[S.enemies.length-1],E=ET[e.t]||{};
   const i=S.spN=(S.spN||0)+1;
@@ -56,7 +56,7 @@ function azSabTargets(){const out=[];for(const t of S.list){const T=TW[t.type];i
  }}catch(x){}return r;};}
 function azSabTick(){if(!S||S.phase!=='wave'||!azOn('sab'))return;for(const e of S.enemies){const t=e.sab;if(!t||!(e.hp>0))continue;
   if(!S.list.includes(t)){e.sab=null;continue;}
-  if(Math.hypot(e.x-t.x,e.y-t.y)<=SABR){t.jam=Math.max(t.jam||0,SABT);e.sab=null;e.sabDone=1;S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.2*K,col:'#e0453a'});}}}
+  if(Math.hypot(e.x-t.x,e.y-t.y)<=SABR){t.jam=Math.max(t.jam||0,azRank('sab')>=2?10:SABT);e.sab=null;e.sabDone=1;S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.2*K,col:'#e0453a'});}}}
 setInterval(()=>{try{azSabTick();}catch(e){}},100);
 // ==================== Abanderados ====================
 const azFlagOn=e=>{if(!e||!e.sqid||!S.flagSq)return false;const b=S.flagSq[e.sqid];return !!(b&&b.hp>0&&S.enemies.includes(b));};

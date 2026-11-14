@@ -101,6 +101,7 @@ const T=[
  ['casillas_era.js','Casillas especiales por era y Rebote'],
  ['supercampeones_rasgos.js','Supercampeones: rasgos que se descubren'],
  ['vigia.js','Apoyo Vigía: las 2 rondas siguientes en la línea de rondas'],
+ ['amenazas_rangos.js','Rangos nuevos de amenazas'],
  ['clasificacion.js','Clasificación: botón al final, aviso, nombre del piloto, subida y tabla'],
  ['logros_niveles.js','Logros por niveles (bronce, plata, oro, platino), bajas con cada torre y Estadísticas › Marcas'],
  ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],

@@ -19,7 +19,7 @@ const APT=[
  ['ba','Botín y aventura','ma',2,1,7,'Cada partida trae <b>un cofre y un evento más</b>.'],
  ['vig','Vigía','in',1,0,5,'Al señalar las 2 rondas siguientes en la línea de rondas, ves exactamente qué escuadras y enemigos vienen.']];
 const APG=[['ec','Economía'],['to','Torres'],['tr','Tropas y héroe'],['ma','Mapa y piezas'],['in','Información']];
-const AZX={nie:4,ref:3};/* rangos extremos de amenaza: ×1,25 aparte */
+const AZX={nie:4,ref:3,sup:3};/* rangos extremos de amenaza: ×1,25 aparte */
 AZ.ap=AZ.ap||{sel:{1:{},2:{}}};
 const apOk=()=>AZ.apw!=null;
 const apUn=t=>t[5]==='w1'?apOk():apOk()&&(AZ.apw||0)>=t[5];

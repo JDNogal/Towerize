@@ -20,17 +20,17 @@ const AZIC={
 // ---- datos: [id, nombre, grupo, rangos [[puntos, texto]], desbloqueo] ----
 // desbloqueo: 'ini' (de salida), número N (gana con N puntos de amenaza), 'e2' (gana con amenazas en la Era Distópica), 'fut' (aún no existe)
 const AZT=[
- ['sup','Supercampeones','en',[[2,'Desde la ronda 6, algunos campeones ascienden a supercampeón con <b>1 rasgo</b> al azar: escudo frontal, paso rápido, regeneración o resistencia a control. Cada vez más a menudo en las rondas altas. Dan el doble de oro.'],[2,'Los supercampeones llevan <b>2 rasgos</b>.']],'ini'],
+ ['sup','Supercampeones','en',[[2,'Desde la ronda 6, algunos campeones ascienden a supercampeón con <b>1 rasgo</b> al azar: escudo frontal, paso rápido, regeneración o resistencia a control. Cada vez más a menudo en las rondas altas. Dan el doble de oro.'],[2,'Los supercampeones llevan <b>2 rasgos</b>.'],[2,'Desde la ronda 12, algunos supercampeones llevan <b>3 rasgos</b>.']],'ini'],
  ['ven','Venganza','en',[[3,'Cuando muere un élite o un jefe, los enemigos a 2 casillas se enfurecen <b>4 s</b>: corren un 50 % más y no se les puede retener.']],3],
- ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.']],6],
- ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.']],7],
+ ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.'],[2,'La torre se apaga <b>10 s</b> y sale un saboteador más.']],6],
+ ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.'],[2,'Además, su escuadra corre un <b>15 %</b> más mientras él vive.']],7],
  ['cor','Piezas corruptas','ma',[[2,'Cada <b>4</b> elecciones de pieza, las piezas vienen corruptas. Su casilla defectuosa se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>3</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf'],
  ['nie','Niebla de guerra','ma',[[1,'La línea de rondas solo enseña la <b>ronda siguiente</b>.'],[2,'Además, los enemigos no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces se ven siempre.'],[2,'Además, los portales no informan de la siguiente oleada.'],[2,'Además, no sabes <b>dónde están</b> los portales enemigos.']],5],
  ['gri','Grietas espaciotemporales','ma',[[3,'A veces se abre un portal especial por el que llegan escuadras extra de una era que ya has visto (con su oro).']],'e2',1],
  ['ref','Sin refuerzos','ri',[[1,'Tus soldados tardan un <b>50 %</b> más en reaparecer.'],[1,'Tardan un <b>100 %</b> más.'],[3,'Los que caen <b>no reaparecen</b> hasta la siguiente oleada.']],'ini'],
- ['ase','Asedio sin tregua','ri',[[2,'Desde que pones la pieza tienes <b>30 s</b> para construir; después la oleada empieza sola.'],[1,'Solo <b>20 s</b>.']],'fast'],
- ['saq','Saqueadores','ec',[[2,'Cada enemigo que llega al núcleo, además de vida, te roba <b>20</b> de oro.']],'ini'],
- ['inf','Inflación','ec',[[2,'Cada torre del mismo tipo que construyes cuesta un <b>10 %</b> más que la anterior.']],8],
+ ['ase','Asedio sin tregua','ri',[[2,'Desde que pones la pieza tienes <b>30 s</b> para construir; después la oleada empieza sola.'],[1,'Solo <b>20 s</b>.'],[2,'Solo <b>15 s</b>.']],'fast'],
+ ['saq','Saqueadores','ec',[[2,'Cada enemigo que llega al núcleo, además de vida, te roba <b>20</b> de oro.'],[1,'Te roba <b>40</b> de oro.']],'ini'],
+ ['inf','Inflación','ec',[[2,'Cada torre del mismo tipo que construyes cuesta un <b>10 %</b> más que la anterior.'],[2,'Un <b>15 %</b> más por cada torre igual, y sus mejoras también se encarecen.']],8],
  ['jp','Jefes preparados','je',[],'fut'],['js','Jefe supremo','je',[],'fut']];
 // el último campo (1) marca las que aún no funcionan en partida: se ven, pero no se pueden activar hasta su versión
 const AZG=[['en','Enemigos'],['ma','Mapa'],['ri','Ritmo y tropas'],['ec','Economía'],['je','Jefes']];
@@ -124,7 +124,7 @@ setInterval(()=>{try{let c=$('amzchip');const p=typeof apNetRun==='function'?apN
 const AZCH=new Set(['champ','dchamp','armored','centu','praet','brute','titan']);
 const AZTR=[['sh','Escudo frontal'],['fa','Paso rápido'],['rg','Regeneración'],['cc','Resistencia a control']];
 {const _se=spawnEnemy;spawnEnemy=function(t){const n=S&&S.enemies?S.enemies.length:0;const r=_se.apply(this,arguments);try{const R=azRank('sup');if(R&&S.enemies.length>n){const e=S.enemies[S.enemies.length-1];
-  if(AZCH.has(e.t)&&S.round>5){const pr=.1+.25*Math.max(0,Math.min(1,(S.round-6)/Math.max(1,ROUNDS-6)));if(Math.random()<pr){const tr=AZTR.map(x=>x[0]).sort(()=>Math.random()-.5).slice(0,R);e.sup=tr;
+  if(AZCH.has(e.t)&&S.round>5){const pr=.1+.25*Math.max(0,Math.min(1,(S.round-6)/Math.max(1,ROUNDS-6)));if(Math.random()<pr){const tr=AZTR.map(x=>x[0]).sort(()=>Math.random()-.5).slice(0,R>=3&&S.round>=12&&Math.random()<.5?3:Math.min(R,2));e.sup=tr;
    if(tr.includes('sh'))e.supSh=4;if(tr.includes('fa'))e.supFa=1;}}}}catch(x){}return r;};}
 {const _hm=eHurtMod;eHurtMod=function(e,a,src,ty){if(e&&e.supSh>0&&!DNK&&a>0){e.supSh--;S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.35*K,col:'#ffcf4a'});return 0;}return _hm.apply(this,arguments);};}
 {const _mv=move;move=function(e,dt){if(e&&(e.supFa||e.rage>0)){const h=e.fx.haste,m=(e.supFa?1.3:1)*(e.rage>0?1.5:1);if(!h||h.m<m)e.fx.haste={m,t:.3};if(e.rage>0)e.stopped=false;}return _mv.apply(this,arguments);};}
@@ -148,4 +148,4 @@ setInterval(()=>{try{if(!S||S.phase!=='wave')return;for(const e of S.enemies)if(
 {const _ud=unitDeath;unitDeath=function(t,s){const r=_ud.apply(this,arguments);try{const R=azRank('ref');if(R&&t&&!t.hero&&s&&!s.H){if(R>=3)s.rt=1e9;else if(s.rt>0)s.rt*=R===2?2:1.5;}}catch(e){}return r;};}
 {const _sw=startWave;startWave=function(){const r=_sw.apply(this,arguments);try{if(S&&S.phase==='wave')for(const t of unitTowers())for(const s of t.sd||[])if(s.rt>1e8)s.rt=.5;}catch(e){}return r;};}
 // ---- Saqueadores: cada enemigo que llega al núcleo roba 20 de oro ----
-{const _d2=achDeath;achDeath=function(e){const r=_d2.apply(this,arguments);try{if(e&&e.leak&&azOn('saq')&&S.gold>0){const g=Math.min(S.gold,20);S.gold-=g;S.fx.push({x:S.core.x,y:S.core.y,t:.6,m:.6,r:.8*K,col:'#ffcf4a'});if(S.st)S.st.gSaq=(S.st.gSaq||0)+g;}}catch(x){}return r;};}
+{const _d2=achDeath;achDeath=function(e){const r=_d2.apply(this,arguments);try{if(e&&e.leak&&azOn('saq')&&S.gold>0){const g=Math.min(S.gold,azRank('saq')>=2?40:20);S.gold-=g;S.fx.push({x:S.core.x,y:S.core.y,t:.6,m:.6,r:.8*K,col:'#ffcf4a'});if(S.st)S.st.gSaq=(S.st.gSaq||0)+g;}}catch(x){}return r;};}
