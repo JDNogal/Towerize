@@ -63,7 +63,7 @@ function eEliteDraw(g,lw){if(!S)return;
   if(E.adapt&&e.adTop&&e.res&&e.res[e.adTop]>0){g.strokeStyle=e.adTop==='phys'?'#8fb0d0':e.adTop==='magic'?'#a070ff':'#4fd6b8';g.lineWidth=lw(2+6*e.res[e.adTop]);g.beginPath();g.arc(px,py,r+lw(4),0,7);g.stroke();}}}
 // palabras clave y consejos
 {const _k=kwHtml0;kwHtml0=function(id,src){
- if(id==='regen')return '<b>Sangre de troll</b><small>Los trolls recuperan un 3 % de su vida máxima cada segundo. Recibir golpes no la frena: solo la cortan la quemadura, el veneno y el sangrado.</small>';
+ if(id==='regen')return '<b>Sangre de troll</b><small>Los trolls recuperan vida sin parar: el Troll, un 3 % de su vida máxima cada segundo. Recibir golpes no la frena: solo la cortan la quemadura, el veneno y el sangrado. Los trolls más grandes se curan mucho más y los estados solo se la bajan (cuantos más, más).</small>';
  if(id==='shield')return '<b>Escudo frontal</b><small>Su escudo para por completo los primeros golpes que recibe (6). Los estados (quemadura, veneno…) no lo gastan y le hacen daño igual.</small>';
  if(id==='banner')return '<b>Estandarte</b><small>Cada '+BANCD+' s planta un estandarte: los enemigos de tierra que pasen a '+f(BANR/K)+' casillas o menos van un 25 % más rápido. El estandarte se puede destruir como un enemigo más (no se mueve ni ataca) y se cae solo a los '+BANT+' s.</small>';
  if(id==='tele')return '<b>Teletransporte</b><small>Cada '+TELECD+' s brilla en violeta durante '+TELEW+' s y salta '+f(TELED/K)+' casillas hacia delante por el camino. Si lo aturdes, congelas, aterras o empujas mientras brilla, el salto se cancela.</small>';
