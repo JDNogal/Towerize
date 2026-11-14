@@ -29,7 +29,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  const g0=S.gold;let cost=0;for(const t of Object.values(T))for(const id of UAB[t.type])for(const rk of AB[id].ranks){cost+=rk.c;buyAb(t,id);}
  out.allAb=Object.values(T).every(t=>UAB[t.type].every(id=>(t.ab[id]||0)===AB[id].ranks.length));out.paid=g0-S.gold;out.cost=cost;
  out.icons=Object.keys(UAB).every(ty=>UAB[ty].every(id=>AB[id].ic&&AB[id].ic.length));
- out.sheets=Object.values(T).every(t=>{PR.pinned=false;const h=towerInfo(t);return h.includes('Habilidades')&&UAB[t.type].every(id=>h.includes(AB[id].n));});
+ out.sheets=Object.values(T).every(t=>{PR.pinned=false;const h=towerInfo(t);return UAB[t.type].every(id=>h.includes(AB[id].n))&&!h.includes('Comprar (');});/* v338: en la partida, solo nombre y rango (sin descripciones ni botones de compra) */
  out.comp=Object.keys(UAB).every(ty=>{const h=uniqInfo(null,ty,4);return UAB[ty].every(id=>h.includes(AB[id].n));})&&!uniqInfo(null,'glut',3).includes('Engullir');
  out.txt=Object.keys(UAB).every(ty=>UAB[ty].every(id=>AB[id].ranks.every(rk=>{const s=AB[id].txt(rk);return s.length>20&&!/undefined|NaN/.test(s);})));
  startWave();clear();path=path.filter(c=>S.field[c.y][c.x]<1e9&&S.field[c.y][c.x]>4);
@@ -69,7 +69,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  out.err=UABERR?String(UABERR.stack||UABERR):null;return out;});
 console.log(JSON.stringify(r));
 ck(r.noAbLv3,'un Mímico de Nv 3 no debe tener habilidades');ck(r.locked,'Estómago sin fondo debe pedir Engullir antes');ck(r.menu,'el menú de torre debe ofrecer las 3 habilidades');
-ck(r.allAb,'no se han podido comprar todas las habilidades');ck(r.paid>0,'comprar habilidades debe costar oro');ck(r.icons,'falta el icono de alguna habilidad');ck(r.sheets,'la ficha no lista las habilidades');ck(r.comp,'el compendio no lista las habilidades a Nv Máx');ck(r.txt,'algún texto de habilidad sale mal');
+ck(r.allAb,'no se han podido comprar todas las habilidades');ck(r.paid>0,'comprar habilidades debe costar oro');ck(r.icons,'falta el icono de alguna habilidad');ck(r.sheets,'la ficha de la partida debe listar las habilidades en corto');ck(r.comp,'el compendio no lista las habilidades a Nv Máx');ck(r.txt,'algún texto de habilidad sale mal');
 ck(r.conv===0.9&&r.conv0===0.6,'Haz convergente: el solape debe dar ×1,5 ('+r.conv+' / '+r.conv0+')');ck(r.flash,'Destello no desorienta');ck(r.mark,'Revelación no marca');
 ck(r.heavy,'Fardos pesados no da área');ck(r.hay,'Paja seca no deja paja');ck(r.hayFire===true,'la paja seca no arde: '+r.hayFire);ck(r.crows,'no salen cuervos');ck(r.crowBleed,'los cuervos no hacen sangrar');
 ck(r.logs,'Troncos gordos no sube daño y duración');ck(r.logBig,'los troncos no salen gordos y con astillas');ck(r.logBleed,'Astillas no hace sangrar');ck(r.spin,'no hay Hachazo giratorio');
