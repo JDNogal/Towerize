@@ -66,7 +66,7 @@ const PROMO={norm:[[6,'vet',.3],[9,'vet',.55],[11,'champ',.3],[13,'champ',.55]],
 function promote(t,r){const P=PROMO[t];if(!P||S.tut)return t;let out=t;for(const[r0,u,p]of P)if(r>=r0&&Math.random()<p)out=u;return out;}
 function promoF(t,r){const P=PROMO[t];if(!P)return 1;let v=1;for(const[r0,u,p]of P)if(r>=r0)v+=p*((ET[u].hf||0)/ET[t].hf-1)*.5;return v;}
 function waveSquads(r){
- const av0=Object.keys(SQUADS).filter(k=>SQUADS[k].min<=r&&!SQUADS[k].tut&&(SQUADS[k].era||1)===((S&&S.era)||1)),av=av0.filter(k=>!SQUADS[k].once),nt=Math.min(av.length,r<4?1:r<11?2:3),last=S.lastTh||[];
+ const av0=Object.keys(SQUADS).filter(k=>SQUADS[k].min<=r&&!SQUADS[k].tut&&(SQUADS[k].era||1)===((S&&S.era)||1)&&(typeof pzOk!=='function'||pzOk(SQUADS[k].pz))),av=av0.filter(k=>!SQUADS[k].once),nt=Math.min(av.length,r<4?1:r<11?2:3),last=S.lastTh||[];
  // las escuadras de una sola aparición van aparte: salen siempre en su ronda de estreno y luego a veces, sin ocupar hueco de escuadra
  const ext=av0.filter(k=>SQUADS[k].once&&(SQUADS[k].min===r||Math.random()<.3));
  const fresh=av.filter(k=>SQUADS[k].min===r&&r>1);let th=fresh.slice(0,nt);

@@ -98,6 +98,7 @@
     "casillas_nuevas.js",
     "elites.js",
     "jefes.js",
+    "enemigos_pz.js",
     "estados_unidades.js",
     "estados_nuevos.js",
     "vales_boton.js",

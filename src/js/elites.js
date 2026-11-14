@@ -11,7 +11,7 @@ const ESVG3={"troll": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6
  ET.mini.gen=1;ET.elite.gen=1;
  ET.banner={n:'Estandarte orco',gold:0,hp:3,hf:140,sp:0,r:ET.norm.r,col:'#c0392b',dmg:0,ap:0,am:0,ud:0,ac:9,need:1,rg:'melee',xp:0,gen:1,fac:'g',flag:1};EIC.banner='🚩';}
 const ELV={1:{mini:['troll','hknight'],elite:['warlord','wander']},2:{mini:['infil','mutant'],elite:['brood','carrier']}};
-{const _s=spawnEnemy;spawnEnemy=function(t,p,fo){if((t==='mini'||t==='elite')&&!S.tut){const L=ELV[S.era===2?2:1][t];t=L[Math.floor(Math.random()*L.length)];}return _s.call(this,t,p,fo);};}
+{const _s=spawnEnemy;spawnEnemy=function(t,p,fo){if((t==='mini'||t==='elite')&&!S.tut){const L0=ELV[S.era===2?2:1][t],L1=typeof pzOk==='function'?L0.filter(k=>pzOk(ET[k].pz)):L0,L=L1.length?L1:L0;t=L[Math.floor(Math.random()*L.length)];}return _s.call(this,t,p,fo);};}
 {const i=EFAM.findIndex(x=>x[0]==='Élites');if(i>=0)EFAM.splice(i,1,['Mini-élites',['troll','hknight']],['Élites',['warlord','wander']],['Mini-élites · Distópica',['infil','mutant']],['Élites · Distópica',['brood','carrier']]);}
 for(const k of['troll','hknight','warlord','wander','infil','mutant','brood','carrier'])DNIMP.add(k);
 const BANCD=12,BANT=12,BANR=1.5*K,TELECD=10,TELEW=1,TELED=3*K,CAMOR=1.5*K,CAMOREV=3,ADMAX=.3,LAUNCHCD=6;
