@@ -50,7 +50,15 @@ const ETMAUTO=35000;
 setInterval(()=>{try{const cv=document.querySelector('.lbcv.a');const bt=cv&&cv.querySelector('.etmbt'),vis=bt&&LB.open&&LB.cover&&getComputedStyle(bt).display!=='none'&&bt.getClientRects().length&&!document.hidden;
  if(!vis){ETM.since=0;ETM.pau=false;return;}
  const now=performance.now(),pau=cv.classList.contains('ing');if(!ETM.since)ETM.since=now;
- if(pau&&!ETM.pau){ETM.pau=true;if(OPT.eterm!==false&&Math.random()<.6)setTimeout(()=>{const c=document.querySelector('.lbcv.a.ing');if(c&&!c.classList.contains('etmon'))etmSay(true);},900);return;}
- if(!pau)ETM.pau=false;
- if(OPT.eterm===false||pau||cv.classList.contains('etmon'))return;
+ /* v334: en la pausa ÉTER solo habla una de cada ~9 veces que pausas (volver a la portada desde Opciones u otra página no cuenta),
+    y si te quedas un minuto entero en la pausa sin hacer nada */
+ const pmu=typeof PMU!=='undefined'&&PMU.open;if(pmu&&!ETM.pmu){ETM.pmu=true;ETM.pst=now;let n=0;try{n=+localStorage.getItem('rt-etmpc')||0;}catch(e){}n++;const say=n>=9;if(say)n=0;try{localStorage.setItem('rt-etmpc',String(n));}catch(e){}
+  if(say&&pau&&OPT.eterm!==false)setTimeout(()=>{const c=document.querySelector('.lbcv.a.ing');if(c&&!c.classList.contains('etmon'))etmSay(true);},900);}
+ if(!pmu)ETM.pmu=false;
+ if(pau){ETM.pau=true;if(OPT.eterm!==false&&!cv.classList.contains('etmon')&&now-Math.max(ETM.pst||now,ETM.at||0,ETM.act||0)>=60000)etmSay(true);return;}
+ ETM.pau=false;
+ if(OPT.eterm===false||cv.classList.contains('etmon'))return;
  if(now-Math.max(ETM.since,ETM.at||0)>=ETMAUTO)etmSay(true);}catch(e){}},1000);
+
+// cualquier pulsación o tecla cuenta como actividad (para el minuto de espera en la pausa)
+addEventListener('pointerdown',()=>{ETM.act=performance.now();},true);addEventListener('keydown',()=>{ETM.act=performance.now();},true);

@@ -23,9 +23,10 @@ setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.hero||S.tut||S.pvE||S.pvH
  if(NEAR.cur){const el=$('nearach'),p=nearProg(NEAR.cur);if(el&&p){const i=el.querySelector('.nbar i'),s=el.querySelector('.ntx small');if(i)i.style.width=Math.min(100,p[0]/p[1]*100)+'%';if(s)s.textContent=fi(Math.min(p[0],p[1]))+' / '+fi(p[1]);}}
  for(const id of Object.keys(ACH)){if(ACHS[id]||S.near[id]||NEARC[id]||NEAR.q.includes(id)||NEAR.cur===id)continue;
   try{if(typeof achVis==='function'&&!achVis(id))continue;if(typeof achFound==='function'&&!achFound(id))continue;if(typeof achSec==='function'&&achSec(id))continue;}catch(e){continue;}
+  /* v334: si ya no se puede conseguir en esta partida, no se avisa */try{if(typeof achState==='function'){const st=achState(id);if(st&&st[0]==='ko')continue;}}catch(e){}
   const p=nearProg(id);if(!p||!(p[1]>0))continue;const r=p[0]/p[1];
   if(r>=NEARP&&r<1){if(p[2]==='car'){NEARC[id]=1;try{localStorage.setItem('rt-near',JSON.stringify(NEARC));}catch(e){}}else S.near[id]=1;NEAR.q.push(id);}}
- if(!NEAR.cur&&NEAR.q.length)nearShow(NEAR.q.shift());
+ while(NEAR.q.length&&(()=>{try{const st=achState(NEAR.q[0]);return st&&st[0]==='ko';}catch(e){return false;}})())NEAR.q.shift();if(!NEAR.cur&&NEAR.q.length)nearShow(NEAR.q.shift());
  // si sale a la vez el de enemigo nuevo, este se pone encima
  const el=$('nearach'),ne=$('nenot');if(el)el.classList.toggle('up',!!(ne&&ne.classList.contains('on')));}catch(e){}},1000);
 // Borrar progreso: también los avisos ya dados

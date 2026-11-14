@@ -113,7 +113,7 @@ function draw(){
   /* galones de nivel en la esquina superior derecha: uno por nivel (Nv 1-3); Nv 4, tres dorados y estrella; con todo al máximo, estrella dorada */
   if(mt)drawCrown(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);
   if(!T.uniq||T.glut||T.omega)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
-  if(S.wish&&S.wish.some(w=>w.id===t.id)){{const im=wishImg(),z=BCS*.5;if(im&&im.complete&&im.naturalWidth)g.drawImage(im,t.x*CS+CS/2+BCS*.16,t.y*CS+CS/2-BCS*.62,z,z);}}
+  if(S.wish&&S.wish.some(w=>w.id===t.id)){{/* v334: colgado de la esquina de arriba a la derecha del icono de la torre (antes flotaba más arriba) */const im=wishImg(),z=BCS*.44;if(im&&im.complete&&im.naturalWidth)g.drawImage(im,t.x*CS+CS/2+BCS*.3-z/2,t.y*CS+CS/2-BCS*.44-z*4/48,z,z);}}
   if(t===S.selT){g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.strokeRect((t.x-1)*CS+lw(1),(t.y-1)*CS+lw(1),BCS-lw(2),BCS-lw(2));}
   if(t.rays&&S.phase==='wave'){g.lineWidth=lw(2);for(const r of t.rays)if(r.e.hp>0){g.strokeStyle=r.el.col;g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(r.e.x*CS+CS/2,r.e.y*CS+CS/2);g.stroke();}}
   else if(t.tgt&&S.phase==='wave'&&t.tgt.hp>0){g.strokeStyle=T.col;g.lineWidth=lw(2.5);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.tgt.x*CS+CS/2,t.tgt.y*CS+CS/2);g.stroke();}}

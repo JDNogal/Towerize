@@ -25,7 +25,10 @@ const MECUSE={burn:['tw:sala','tw:flame','tw:monk','hr:yrsa'],poison:['tw:poison
  sticky:['tw:cata'],flam:['tw:cata'],wet:['tw:augur'],cursed:['tw:orb'],poly:['tw:orb'],fear:['tw:orb'],mark:['tw:arrow'],prey:['hr:sylvana'],inf:['tw:nano'],lmk:['tw:bunker'],vc:['tw:laser'],
  chain:['tw:tesla'],beam:['tw:orb','tw:laser'],push:['tw:sonic','tw:cannon','tw:wood'],mag:['tw:bunker'],
  dodge:['en:raider'],steal:['en:raider'],pierce:['en:javelin'],curse:['en:warlock'],eheal:['en:shaman'],aura:['en:custodian'],fly:['en:bat','en:harpy','en:griffin'],bres:['en:boss','en:colossus']};
-const mecRefOk=r=>{const[t,k,sp]=r.split(':');if(t==='tw'&&sp){const i=Object.keys(SPECS[k]||{}).indexOf(sp);return seen('tw',k)&&i>=0&&tlvOk(k,4+i);}if(k==='*')return (typeof OPT!=='undefined'&&OPT.u_cp)||Object.keys((typeof SEEN!=='undefined'&&SEEN[t])||{}).length>0;return t==='hr'?(HEROES[k]&&seen('hr',k)):seen(t,k);};
+// v334: habilidades de las torres de evento que ya has comprado alguna vez (para «Lo usan»)
+let ABSEEN={};try{ABSEEN=JSON.parse(localStorage.getItem('rt-abseen'))||{};}catch(e){}
+const abSee=id=>{if(ABSEEN[id])return;ABSEEN[id]=1;try{localStorage.setItem('rt-abseen',JSON.stringify(ABSEEN));}catch(e){}};
+const mecRefOk=r=>{const[t,k,sp]=r.split(':');if(t==='tw'&&sp&&sp[0]==='@')return seen('tw',k)&&(UNLOCK_ALL||OPT.u_cp||!!ABSEEN[sp.slice(1)]);if(t==='hr'&&!(UNLOCK_ALL||OPT.u_cp))return !!(HEROES[k]&&seen('hr',k)&&hUnl(k)&&heroVis(k));if(t==='tw'&&sp){const i=Object.keys(SPECS[k]||{}).indexOf(sp);return seen('tw',k)&&i>=0&&tlvOk(k,4+i);}if(k==='*')return (typeof OPT!=='undefined'&&OPT.u_cp)||Object.keys((typeof SEEN!=='undefined'&&SEEN[t])||{}).length>0;return t==='hr'?(HEROES[k]&&seen('hr',k)):seen(t,k);};
 // v308: lo que no tiene dueño concreto se descubre al ver lo primero de su grupo (nada visto = nada en el compendio)
 const MECGRP={'Estados':['tw:*','hr:*'],'Tipos de daño':['tw:*','hr:*'],'Estadísticas de torres':['tw:*'],'Unidades y enemigos':['en:*'],'Héroes':['hr:*'],'Partida':['pc:*']};
 const MECFIX={tphys:['tw:arrow','tw:cata','tw:cannon','tw:bastion','tw:monk','hr:reinhart'],tmagic:['tw:orb','tw:augur','tw:altar','hr:radagast'],telem:['tw:frost','tw:poison','tw:sala','tw:flame','tw:tesla','hr:yrsa'],stk:['tw:*','hr:*']};
@@ -72,7 +75,7 @@ function mecDetail(id){id=MALIAS[id]||id;const M=MECI[id];if(!M)return'';
  let h='';try{h=kwHtml(id,MECCTX[id]||'')||'';}catch(e){h='';}
  h=h.replace(/^\s*<b[^>]*>[\s\S]*?<\/b>/,'').replace(/<div class="row[^"]*"><span>Cálculo<\/span>[\s\S]*?<\/div>/,'');
  let sub=M.g;{const m=h.match(/^\s*·\s*([^<]+)/);if(m){const x=m[1].trim();sub+=' · '+x.charAt(0).toUpperCase()+x.slice(1);h=h.slice(m[0].length);}}
- const uses=[...new Set((MECUSE[id]||[]).concat(...Object.keys(MALIAS).filter(a=>MALIAS[a]===id).map(a=>MECUSE[a]||[])))].filter(mecRefOk).map(r=>{const[t,k]=r.split(':');const n=t==='tw'?TW[k].n:t==='en'?ET[k].n:HEROES[k].n,ic=t==='tw'?`<i style="background:${TW[k].col}">${twIc(k)}</i>`:t==='en'?`<i style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</i>`:`<i style="background:${HEROES[k].col}">${HEROES[k].ic||'🦸'}</i>`;
+ const uses=[...new Set((MECUSE[id]||[]).concat(...Object.keys(MALIAS).filter(a=>MALIAS[a]===id).map(a=>MECUSE[a]||[])))].filter(mecRefOk).map(r=>{const[t,k,sp]=r.split(':');const D2=t==='tw'&&sp?(sp[0]==='@'?AB[sp.slice(1)]:SPECS[k]&&SPECS[k][sp]):null;const n=D2?`<span class="mecn">${D2.n}<small class="mecof">${TW[k].n}</small></span>`:t==='tw'?TW[k].n:t==='en'?ET[k].n:HEROES[k].n,ic=t==='tw'?`<i style="background:${TW[k].col}">${twIc(k)}</i>`:t==='en'?`<i style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</i>`:`<i style="background:${HEROES[k].col}">${HEROES[k].ic||'🦸'}</i>`;
   return `<button class="mecuse" data-a="cpgo" data-t="${t}" data-v="${k}">${ic}${n}</button>`;}).join('');
  return bkSheet(`<span class="bkbic mecbic">${M.ic}</span>`,`<div class="ttl"><b>${M.n}</b></div><small class="mecg">${sub}</small>`+h)+(uses?`<div class="esec" style="margin-top:12px">Lo usan</div><div class="mecuses">${uses}</div>`:'');}
 // subtítulo: «descubiertas» y flechas que empiezan fila (al hacer salto de línea) se ocultan

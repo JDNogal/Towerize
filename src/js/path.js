@@ -189,7 +189,7 @@ function posFocus(){
 }
 function makePortals(boss){
  if(S.tut)boss=null;const sqs=S.tut?(TUTW[S.round]||['patrol']):waveSquads(S.round),X=sqs.reduce((a,k)=>a+sqN(k),0);
- let k=S.ends.length;while(k>1&&X/k<MINP)k--;
+ let k=S.ends.length;while(k>1&&X/k<MINP)k--;/* v334: a partir del 40 % de la partida, si el camino tiene al menos dos extremos, salen por dos portales como mínimo */if(!S.tut&&S.round>=Math.ceil(ROUNDS*.4))k=Math.max(k,Math.min(2,S.ends.length));
  const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],split:e.split||null,si:0,ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0},q:[],t:0});
  /* los portales de tramo muerto siempre se abren (si no, ese tramo seguiría sin usarse) */const mids=S.ends.filter(e=>e.mid),rest=S.ends.filter(e=>!e.mid),ps=rest.slice(0,Math.max(1,k-mids.length)).concat(mids).map(mk);
  sqs.forEach((sq,i)=>{const q=ps[i%ps.length];(q.sq=q.sq||[]).push(sq);const tr=typeof sqTierOf==='function'?sqTierOf(i,sqs.length,S.round):0,m=typeof sqTierM==='function'?sqTierM(sq,tr,S.round):sqM(sq);(q.sqt=q.sqt||[]).push(tr);(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});

@@ -80,7 +80,7 @@ function heroInfo(id,quiet){
   (H?R('cf',kst('hxp','Experiencia',src),H.lvl>=HLMAX?'Nivel máximo':Math.floor(H.xp)+' / '+xpNeed(H.lvl+1)):quiet===1?R('cf',kst('hxp','Experiencia por nivel',src),xpNeed(2)+' → '+xpNeed(10)):'')+
   (H&&q&&q.hp<=0?`<small class="cr">Caído: vuelve en ${Math.ceil(q.rt)} s.</small>`:'')+
   (quiet?'':`<div class="tgt"><small>Pulsa su icono y luego una casilla del camino para recolocarlo.</small></div>`)+
-  (quiet===2?'':`<div style="margin-top:6px"><span class="cf">${kst('hrel','Reliquia inicial',src)}:</span> ${kw('rl_'+D.relic,R2.ic+' '+R2.n,src,'st')}</div>`)+
+  (quiet?'':`<div style="margin-top:6px"><span class="cf">${kst('hrel','Reliquia inicial',src)}:</span> ${kw('rl_'+D.relic,R2.ic+' '+R2.n,src,'st')}</div>`)+
   `<small>Nv ${HLMAX}: ${Math.round(x10.hp)} de vida, ${f(x10.dmg)} de daño, ${f(x10.ap)} de armadura.</small>`;
 }
 function enemyInfo(k){

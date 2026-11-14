@@ -5,6 +5,8 @@ const LBH={st:[],nav:0,on:false};
 const lbSnap=()=>{const tab=CP.tab,sel=CP.sel?CP.sel[tab]:null;return{area:LB.area,tab,sel:sel==null?null:sel,lv:sel!=null&&CP.lv?CP.lv[sel]||null:null,op:typeof OP!=='undefined'?OP.tab:null};};
 const lbSnapKey=s=>JSON.stringify(s);
 function lbHistBack(){if(LBH.st.length<2)return;LBH.st.pop();const s=LBH.st[LBH.st.length-1];
+ // v334: si había una previsualización abierta (torre, enemigo o héroe), se cierra para que la página derecha cambie también
+ CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;
  LB.area=s.area;CP.tab=s.tab;if(CP.sel&&s.sel!=null)CP.sel[s.tab]=s.sel;if(s.sel!=null&&CP.lv){if(s.lv==null)delete CP.lv[s.sel];else CP.lv[s.sel]=s.lv;}if(s.op!=null&&typeof OP!=='undefined')OP.tab=s.op;
  LBH.nav=1;try{lbRender();}finally{LBH.nav=0;}}
 {const _lbo=lbOpen;lbOpen=function(){LBH.st=[];LBH.on=false;return _lbo.apply(this,arguments);};

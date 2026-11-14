@@ -33,13 +33,15 @@
   "31_eter_cristal.css",
   "32_logros_sin_recuadro.css",
   "33_cofre.css",
-  "34_ayudas.css"
+  "34_ayudas.css",
+  "35_pergamino.css"
  ],
  "js": [
   "00_config.js",
   "emojifix.js",
   "data/map.js",
   "data/towers.js",
+  "data/torres_desc.js",
   "data/heroes.js",
   "data/portraits.js",
   "achievements.js",
@@ -162,6 +164,9 @@
   "amenazas_rangos.js",
   "vallas.js",
   "cofre_anim.js",
-  "ayudas_v330.js"
+  "ayudas_v330.js",
+  "paneles_centrados.js",
+  "pergamino_nuevo.js",
+  "jefe_aviso.js"
  ]
 }

@@ -270,3 +270,5 @@ body.inmenu.lbsetup canvas#c{filter:none}
 .bkmk.glow{box-shadow:0 0 0 2px #3fe8ff,0 0 14px #3fe8ff!important;animation:bkglow 1.2s ease-in-out infinite alternate}@keyframes bkglow{from{box-shadow:0 0 0 2px #3fe8ff,0 0 6px #3fe8ff}to{box-shadow:0 0 0 3px #8ff4ff,0 0 18px #3fe8ff}}
 
 
+/* v334 · filas largas del compendio (p. ej. «Efectos» de Yrsa): el valor pasa a varias líneas en vez de salirse con barra de scroll */
+#comp .bkp .bkg>.row.rw{align-items:flex-start}#comp .bkp .bkg>.row.rw>span:first-child{flex:none;white-space:nowrap}#comp .bkp .bkg>.row.rw>span:last-child{white-space:normal!important;min-width:0;flex:1 1 auto;text-align:right;overflow-wrap:anywhere}

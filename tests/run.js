@@ -110,6 +110,7 @@ const T=[
  ['ayudas_v330.js','Ayudas: alcances, oro sin gastar, avisos de la línea, ¿por qué he perdido?, Sabías que, fallos y carrera'],
  ['tutorial_elegir.js','Elegir tutorial: tocar solo elige, Empezar/Ver el repaso/Saltar funcionan y la historia sale siempre'],
  ['libro_cerrar_menu.js','Menú principal: cerrar cualquier página del libro (✕ o Esc), Novedades incluida, vuelve a la portada'],
+ ['ojo_tecla.js','La tecla del ojo deja ver el mapa al elegir pieza y en las ventanas (también cambiada)'],
  ['clasificacion.js','Clasificación: botón al final, aviso, nombre del piloto, subida y tabla'],
  ['logros_niveles.js','Logros por niveles (bronce, plata, oro, platino), bajas con cada torre y Estadísticas › Marcas'],
  ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],

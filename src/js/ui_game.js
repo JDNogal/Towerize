@@ -137,6 +137,8 @@ function rlBar(){const r=$('relic');if(!RL.open||RL.hpick||typeof S==='undefined
 setInterval(()=>{try{rlBar();}catch(e){}},150);
 try{new MutationObserver(()=>{try{rlBar();}catch(e){}}).observe($('relic'),{childList:true});}catch(e){}
 addEventListener('keydown',e=>{if(!kbIs('peek',e.key.toLowerCase())||!RL.open||RL.hpick||!$('relic').querySelector('.rlbar'))return;e.preventDefault();setPeek(!RL.peek);});
+/* v334: la misma tecla también funciona al elegir pieza (antes solo en las ventanas; con Tab, además, saltaba entre botones) */
+addEventListener('keydown',e=>{if(!kbIs('peek',e.key.toLowerCase())||RL.open||!S||S.phase!=='place'||S.pi!=null||(typeof LB!=='undefined'&&LB.open)||(typeof PMU!=='undefined'&&PMU.open))return;const t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'))return;e.preventDefault();e.stopPropagation();S.ppk=S.ppk?0:1;try{sfx('ui');}catch(_){}ui();},true);
 
 // ---- menú de pausa: es la portada del libro (ver libro.js) ----
 const PMU={open:false,ask:0,spd:1};

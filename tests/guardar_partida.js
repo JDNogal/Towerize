@@ -24,7 +24,7 @@ console.log('antes ',JSON.stringify(before));console.log('después',JSON.stringi
 await p.evaluate(()=>{HQ.q=[];if(HQ.cur)hintClose();startWave();});await p.waitForTimeout(1500);
 const mid=await p.evaluate(()=>[S.phase,S.enemies.length,SAV.meta&&SAV.meta.why]);console.log('en oleada',mid);
 await p.evaluate(()=>openPause());await p.waitForTimeout(300);await p.click('#comp [data-a="psave"]');await p.waitForTimeout(300);console.log('aviso primera pulsación',await p.evaluate(()=>[PMU.svask,document.body.classList.contains('inmenu')]));
-await p.click('#comp [data-a="psave"]');await p.waitForTimeout(900);console.log('tras guardar y salir',await p.evaluate(()=>[document.body.classList.contains('inmenu'),LB.cover,SAV.meta&&SAV.meta.why]));
+await p.click('#comp [data-a="psave"]');await p.waitForTimeout(2500);console.log('tras guardar y salir',await p.evaluate(()=>[document.body.classList.contains('inmenu'),LB.cover,SAV.meta&&SAV.meta.why]));
 await p.click('#comp [data-a="lbload"]');await p.waitForTimeout(900);console.log('reanudada al inicio de la oleada',await p.evaluate(()=>[S.phase,S.enemies.length,S.round,S.list.length]));
 // ganar/perder borra
 await p.evaluate(()=>{S.phase='lost';endGame();});await p.waitForTimeout(400);console.log('tras perder',await p.evaluate(()=>[!!SAV.meta,localStorage.getItem('rt-save')]));

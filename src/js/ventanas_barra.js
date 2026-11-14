@@ -23,7 +23,7 @@ setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.
 // ==================== v312 · Tarjetas de reliquias del cofre: todos los recuadros de una fila con la misma altura ====================
 // La altura es la del texto más largo de esa fila, con un máximo de 3 líneas (2 en móvil); lo que no quepa, con scroll.
 setInterval(()=>{try{const cs=[...document.querySelectorAll('#relic.open .cgrid .rcard')];if(!cs.length)return;const lines=document.body.classList.contains('mfs')?2:3;
- const sig=cs.map(c=>c.textContent.length).join()+'|'+innerWidth+'|'+innerHeight+'|'+lines;const g=cs[0].closest('.cgrid');if(g.dataset.eq===sig)return;g.dataset.eq=sig;
+ const rl=$('relic');/* v334: también la anchura real de cada tarjeta, el zoom y si ya ha terminado de entrar (antes podía medirse a mitad de la animación y quedarse corto) */const sig=cs.map(c=>c.textContent.length+':'+Math.round(c.querySelector('.rbd')?c.querySelector('.rbd').clientWidth:0)).join()+'|'+innerWidth+'|'+innerHeight+'|'+lines+'|'+(cs[0].style.zoom||getComputedStyle(cs[0].closest('.ppap')||cs[0]).zoom)+'|'+(rl&&rl.dataset.ready);const g=cs[0].closest('.cgrid');if(g.dataset.eq===sig)return;g.dataset.eq=sig;
  for(let i=0;i<2;i++){const bs=cs.map(c=>c.querySelectorAll('.rbd')[i]).filter(Boolean);bs.forEach(b=>b.style.height='');const lh=parseFloat(getComputedStyle(bs[0]).lineHeight)||18;
   const h=Math.min(lh*lines,Math.max(...bs.map(b=>b.scrollHeight)));bs.forEach(b=>b.style.height=Math.ceil(h)+'px');}}catch(e){}},250);
 // ==================== v314 · Pantallas grandes: el libro / la tablet (opciones, compendio, pausa, final, partidas…) crecen si caben ====================

@@ -40,6 +40,8 @@ function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
  else ic=`<span class="bic${t==='tw'?' bctw':''}"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
  return `<button class="bti${t==='lg'?' ach':''}${it.pin?' pin':''}${on?' on':''}${it.ok?'':' un'}${it.got?' got':''}${it.hid?' hid':''}${it.lk&&!it.ok?' lkd':''}" data-a="csel" data-v="${it.id}">${ic}<small>${it.ok?it.n:'???'}</small></button>`;}
 // ficha de la página derecha: icono y título en una fila; debajo, los datos en dos columnas con puntos («Daño ······ 6,5»)
+// v334: «Descripción» arriba y luego «Estadísticas», con el mismo título que las secciones de la lista
+function bkDescTop(h,ds){if(!ds)return h;return h.replace('<div class="ce bkce','<div class="bksec bkdsec">Descripción</div>'+ds+'<div class="bksec bkdsec">Estadísticas</div><div class="ce bkce');}
 function bkSheet(ic,inner,cls){let ttl='',rest=inner;const a='<div class="ttl">';
  if(inner.startsWith(a)){const j=inner.indexOf('</div>');ttl=inner.slice(a.length,j);rest=inner.slice(j+6);}
  const lv=(ttl.match(/<span class="lvtabs">[\s\S]*?<\/button><\/span>|<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(lv){ttl=ttl.replace(/<span class="lvtabs">[\s\S]*?<\/button><\/span>|<button class="stbtn lvbtn"[\s\S]*?<\/button>/g,'');ttl=ttl.includes('<br>')?ttl+lv:ttl+'<br>'+lv;}
@@ -57,9 +59,9 @@ function bkDetail(t,id){
   if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(icOf(T),`Aún no disponible.`)+achLink(a,'',1);}return sh(icOf(T),'Aún no descubierto.');}
   const cst=T.uniq?null:cpState(id),SX=cst&&cst.spec?SPECS[id][cst.spec]:null,TT=SX&&SX.icsvg?{...T,icsvg:SX.icsvg,col:SX.icbg||(SX.o&&SX.o.icbg)||T.col,icimg:null}:T;/* v308: con una especialización elegida, su dibujo */
   const bi=`<span class="bkbic bctw" style="background:${TT.col}">${icHtml(twIcO(TT))}</span>`;
-  if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
+  if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;let ug=uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'),ds='';const m=ug.match(/<small>((?:(?!<small>)[\s\S])*)<\/small>(<\/div>)\s*$/);if(m){ds=`<div class="twdesc">${m[1]}${UNDESC[id]?`<i>«${UNDESC[id]}»</i>`:''}</div>`;ug=ug.slice(0,m.index)+m[2];}return bkDescTop(bkSheet(bi,ug),ds)+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   LVT_NOSPEC=1;let si;try{si=shopInfo(id,1);}finally{LVT_NOSPEC=0;}
-  return bkSheet(bi,si.replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id)+bkSpecs(id);}
+  return bkDescTop(bkSheet(bi,si.replace(/<\/b> · [^<]*<br>/,'</b><br>')),twDescHtml(id))+bkPrevBtn('cprev',id)+bkSpecs(id);}
  if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;
   return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`,heroInfo(id,1).replace(/<b>[^<]*? /,'<b>'))+bkPrevBtn('chprev',id)+(D.d?'<div class="ddesc">'+D.d+'</div>':'')+`<div class="esec" style="margin-top:12px">Reliquia inicial</div><div class="ce bkce bkg">${relicInfo(D.relic,1)}</div><div class="ce bkce">${heroAbHtml(id)}</div>`;}
  if(t==='pc'){const i=+id,o=PIECES[i];if(!o)return'';if(!seen('pc',o.n))return sh(icU('m_c_pc','🧩'),'Aún no descubierta.');

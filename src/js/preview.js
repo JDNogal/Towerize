@@ -98,3 +98,7 @@ function hpkNew(id){const D=HEROES[id],rg=!!D.ranged;
  const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],tz:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:sx,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:1,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:null,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:null,selT:null,hover:null,core,speed:1,field:null,msg:'',espd:1,dn:[],pvE:1,pvH:1};
  const real=S;S=st;try{st.field=field();mkHero(id);const H=st.hero;H.pt.flag={x:hx,y:hy};H.s.x=hx;H.s.y=hy;}finally{S=real;}
  PHV={S:st,id,en:'norm',lv:1,rt:.3,pick:1,sx,vw,rg};}
+
+// v334 · En las previsualizaciones del libro no suenan el núcleo, las bajas ni el fin de oleada (se quedaban en bucle); sí suenan los ataques
+const PVMUTE=/^(core|lose|win|wclear|wave|rready|kill_|boss|roar)/;
+{const _sx=sfx;sfx=function(k){try{if(PVMUTE.test(k)&&S&&((PV&&S===PV.S)||(PE&&S===PE.S)||(PHV&&S===PHV.S)))return;}catch(e){}return _sx.apply(this,arguments);};}

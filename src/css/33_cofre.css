@@ -1,12 +1,12 @@
 /* v329 · Cofre y paquete de ayuda sin marco (cofre_anim.js) */
-#relic.cofre .pscr{filter:none;max-width:1100px}#relic.cofre .pscr i.prod,#relic.cofre .prod{display:none!important}#relic.cofre .pscr::before,:root[data-skin="holo"] #relic.cofre .pscr::before{display:none!important;content:none!important}
-#relic.cofre .ppap,:root[data-skin="holo"] #relic.cofre .ppap,:root[data-skin="holo"] #relic.cofre .pscr{background:none!important;box-shadow:none!important;border:0!important;padding:0 0 10px!important;margin:0!important;animation:none!important}
-#relic.cofre .cfhint{display:none!important}#relic.cofre .ppap{text-align:center!important}
-#relic.cofre .cgrid{position:relative;z-index:2;gap:32px!important;margin-top:18px!important;justify-content:center}
-#relic.cofre .rcard{position:relative;transform:rotate(var(--cfr,0deg));filter:drop-shadow(0 12px 20px rgba(0,0,0,.6));transition:scale .16s cubic-bezier(.3,1.6,.5,1),filter .16s}
-#relic.cofre .rcard:hover{scale:1.06;filter:drop-shadow(0 18px 26px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(255,214,110,.7))}
-#relic.cofre.cfe2 .rcard:hover{filter:drop-shadow(0 18px 26px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(63,232,255,.7))}
-#relic.cofre .rcard.cfwait{opacity:0}
+#relic.cofre:has(.cfsign) .pscr{filter:none;max-width:1100px}#relic.cofre:has(.cfsign) .pscr i.prod,#relic.cofre:has(.cfsign) .prod{display:none!important}#relic.cofre:has(.cfsign) .pscr::before,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr::before{display:none!important;content:none!important}
+#relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr{background:none!important;box-shadow:none!important;border:0!important;padding:0 0 10px!important;margin:0!important;animation:none!important}
+#relic.cofre:has(.cfsign) .cfhint{display:none!important}#relic.cofre:has(.cfsign) .ppap{text-align:center!important}
+#relic.cofre:has(.cfsign) .cgrid{position:relative;z-index:2;gap:32px!important;margin-top:18px!important;justify-content:center}
+#relic.cofre:has(.cfsign) .rcard{position:relative;transform:rotate(var(--cfr,0deg));filter:drop-shadow(0 12px 20px rgba(0,0,0,.6));transition:scale .16s cubic-bezier(.3,1.6,.5,1),filter .16s}
+#relic.cofre:has(.cfsign) .rcard:hover{scale:1.06;filter:drop-shadow(0 18px 26px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(255,214,110,.7))}
+#relic.cofre:has(.cfsign).cfe2 .rcard:hover{filter:drop-shadow(0 18px 26px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(63,232,255,.7))}
+#relic.cofre:has(.cfsign) .rcard.cfwait{opacity:0}
 .cfsign{position:relative;z-index:3;display:inline-block;margin:34px auto 0;text-align:center;white-space:nowrap}
 .cfsign.perg{color:#fff3d6;transform-origin:50% -40px}
 .cfsign.perg .pk{position:relative;border:3px solid #3a2210;border-radius:5px;box-shadow:0 4px 0 #2a180a,0 9px 16px rgba(0,0,0,.5);
@@ -40,3 +40,5 @@
  -webkit-mask-image:radial-gradient(ellipse 60% 100% at 50% 100%,#000 40%,transparent 100%);mask-image:radial-gradient(ellipse 60% 100% at 50% 100%,#000 40%,transparent 100%)}
 .hring{position:absolute;left:50%;top:var(--cy,400px);width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;border:3px solid rgba(63,232,255,.9);box-shadow:0 0 18px rgba(63,232,255,.8),inset 0 0 18px rgba(63,232,255,.6);opacity:0}
 .cofx svg{max-width:none!important;max-height:none!important;display:block}.cofx .crate svg{width:240px!important;height:380px!important}.cofx .chest svg{width:220px!important}
+/* v334 · el cartel cuelga del borde de arriba y las cartas suben: antes, en pantallas altas, todo quedaba centrado y las cartas tapaban la parte de abajo del mapa */
+#relic.cofre:has(.cfsign).open{justify-content:flex-start!important;padding-top:clamp(0px,2.5vh,30px)!important}

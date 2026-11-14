@@ -87,6 +87,8 @@ function whyLost(){const out=[];if(!S||!S.st)return out;const ek=S.st.ek||{};
   else if((E.sp||1)>=1.5)tip='Son muy rápidos: ralentizarlos da tiempo a tus torres.';
   else tip='Prueba a reforzar el tramo final del camino, cerca del núcleo.';
   out.push({h:`<b>${nm}</b>: te ${n===1?'quitó 1 de vida':'quitaron '+n+' de vida'}.`,s:tip});}
+ /* v334: muchas salidas abiertas = más portales y oleadas más repartidas */
+ {const np=(S.portals||[]).length;if(np>=4&&S.round<=Math.ceil(ROUNDS*.7))out.unshift({h:`Tenías <b>${np} portales</b> abiertos.`,s:'Cada salida que dejas abierta es un portal más: los enemigos llegan por más sitios a la vez. Elegir piezas con menos salidas (o cerrarlas) hace las oleadas más fáciles de defender.'});}
  const cheap=goldCheap();if(S.gold>=cheap&&S.gold>=50)out.push({h:`Te quedaron <b>${fi(Math.floor(S.gold))} 🪙</b> sin gastar.`,s:'Antes de cada oleada, mira si puedes construir o mejorar algo más.'});
  if(S.rc>0&&!S.tut)out.push({h:`Te ${S.rc===1?'quedaba 1 reintento':'quedaban '+S.rc+' reintentos'} de oleada.`,s:'Si una oleada se tuerce, desde la pausa puedes repetirla desde el principio.'});
  if(S.hero&&S.hero.lvl<=3&&S.round>=8)out.push({h:`Tu héroe acabó en <b>Nv ${S.hero.lvl}</b>.`,s:'Gana experiencia peleando: muévelo a donde haya más enemigos y usa sus habilidades.'});
@@ -102,7 +104,8 @@ const WHYPOS={v:'r'};/* 'r': arriba de la página derecha · 'l': debajo del res
 // ---------- «Sabías que…» ----------
 // Solo cosas que el jugador ya puede tener delante (sin destripar nada de lo que no ha visto).
 const TIPS=[
- ()=>'Pulsa <b>Tab</b> en un evento o una oferta para ver el mapa sin cerrar la ventana.',
+ ()=>'Abrir muchas salidas no siempre es buena idea: cada una es un <b>portal</b> más, y los enemigos llegan por más sitios a la vez.',
+ ()=>'Pulsa <b>'+(kbN?kbN('peek'):'Tab')+'</b> al elegir pieza, en un evento o en una oferta para ver el mapa sin cerrar la ventana.',
  ()=>'Con <b>Mayús + 1–9</b> usas las reliquias activas sin buscar el botón.',
  ()=>'Con el botón de la izquierda, debajo de «Reintentar» (o manteniendo <b>'+(kbN?kbN('rng').toUpperCase():'X')+'</b>), ves el alcance de todas tus torres a la vez.',
  ()=>'Las torres de unidades tienen <b>bandera</b>: pulsa la torre y luego la bandera para elegir dónde pelean.',

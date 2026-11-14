@@ -34,7 +34,7 @@ function chip(k){const[a,b]=k.split(':');
  if(a==='tower')return TW[b]?`<span class="gd">${twIc(b)} ${TW[b].n}</span>`:'';
  if(a==='wanted')return '📜 Élite de encargo en 2 rondas';
  if(a==='temper')return '⚒ torres de Nv 1 → 2';if(a==='bless')return '✨ las casillas especiales de la pieza dan el doble de bonus';if(a==='less')return '🕯 −'+b+'% enemigos en la próxima oleada';
- if(a==='sharpen')return '🗡 +25% de daño (o de stacks, en torres de veneno y fuego) a la torre que elijas';
+ if(a==='sharpen')return '🗡 La torre que elijas hace +25% de daño (las de veneno y fuego, +25% de stacks)';
  if(a==='half')return '🏷 próxima torre a mitad de precio';
  if(a==='cubs')return '🐺 Lobatos';if(a==='grey')return '🐺 Lobo gris';if(a==='wolf')return '🐺 El Lobo';
  if(a==='chest4')return '🎁 el próximo cofre ofrece 4 reliquias';if(a==='scout')return '🗺 un cofre nuevo en un hueco sin explorar';

@@ -16,9 +16,8 @@
 .bk .bkp.l:not(.one):has(>.novl){display:flex;flex-direction:column;overflow:hidden}
 .bk.hasft .bkp.l:not(.one):has(>.novl){padding-bottom:80px}
 .bkp.l:not(.one)>.novl{flex:1;min-height:0;overflow-y:auto;padding:3px 6px 18px 3px;margin-left:-3px;-webkit-mask-image:linear-gradient(#000 calc(100% - 26px),transparent);mask-image:linear-gradient(#000 calc(100% - 26px),transparent)}
-/* el pie del libro no tapa la sombra del lomo: su fondo se difumina antes de llegar al centro */
-.bk:not(:has(.bkp.one))>.lbft.l{-webkit-mask-image:linear-gradient(to left,transparent 0,#000 70px);mask-image:linear-gradient(to left,transparent 0,#000 70px)}
-.bk:not(:has(.bkp.one))>.lbft.r{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 70px);mask-image:linear-gradient(to right,transparent 0,#000 70px)}
+/* v334 · el pie del libro tapa lo que hay detrás en todo su ancho y lleva la misma sombra del lomo que la página (antes se difuminaba y dejaba ver el contenido junto al lomo) */
+.lbft.l{box-shadow:inset -18px 0 24px -14px var(--gut,rgba(90,60,20,.45))}.lbft.r{box-shadow:inset 18px 0 24px -14px var(--gut,rgba(90,60,20,.45))}
 /* v332 · el botón ↩ del libro solo aparece cuando se puede usar, y se dibuja al aparecer (antes salía apagado) */
 .bkx.bkhist.off{display:none!important}
 .bkx.bkhist.drawin{animation:bkhin .25s ease-out both}
