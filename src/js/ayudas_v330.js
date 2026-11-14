@@ -181,7 +181,6 @@ const BUGSVG='<svg viewBox="0 0 24 24" width="20" height="20" style="vertical-al
 // botones en la portada del libro (pausa y menú principal) y consejo «Sabías que…»
 {const _cv=lbCoverHTML;lbCoverHTML=function(){let h=_cv.apply(this,arguments);try{
   const bug=`<button data-a="bugrep" class="bugbtn" aria-label="Informar de un fallo">${BUGSVG}<span>Informar de un fallo</span></button>`;
-  h=h.replace('<div class="lbcvin">','<div class="lbcvin">'+bug);
   // puntuación: cinta bajo el retrato en lugar del texto suelto de arriba
   h=h.replace(/<div class="lbscore"><small>Puntuación<\/small><b>([^<]*)<\/b><\/div>(<div class="lbemb">[\s\S]*?<\/div>)/,(m,t,emb)=>`<div class="lbembw">${emb}<div class="lbscr"><b>${t}</b><small>puntos</small></div></div>`);
  }catch(e){}return h;};}
@@ -240,3 +239,13 @@ document.addEventListener('pointerdown',e=>{try{const b=document.querySelector('
  if(!b.contains(e.target)){clearTimeout(ETM.hide);b.classList.remove('on');cv.classList.remove('etmon','etmtalk');}}catch(_){}},true);
 document.addEventListener('click',e=>{try{if(ETMSKIP.on){ETMSKIP.on=0;e.preventDefault();e.stopPropagation();}}catch(_){}},true);
 const ETMSKIP={on:0};
+
+// v335 · «Informar de un fallo» en todas las pantallas: con el libro abierto (portada, compendio, opciones…), arriba a la izquierda de la pantalla, fuera del libro;
+// en la partida, un botón más en la columna de arriba a la izquierda
+function bugFab(){try{let f=$('bugfab');if(!f){f=document.createElement('button');f.id='bugfab';f.dataset.a='bugrep';f.setAttribute('aria-label','Informar de un fallo');f.innerHTML=BUGSVG+'<span>Informar de un fallo</span>';document.body.appendChild(f);}
+ const bk=typeof LB!=='undefined'&&LB.open,menu=document.body.classList.contains('inmenu'),bw=$('bugw'),busy=bw&&bw.classList.contains('open'),intro=typeof INTRO!=='undefined'&&INTRO.on;
+ const m=$('mtl');if(m&&S&&!S.tut&&!m.querySelector('[data-a="bugrep"]'))m.insertAdjacentHTML('beforeend',`<button data-a="bugrep" class="bugm" aria-label="Informar de un fallo">${BUGSVG}</button>`);
+ // si el de la partida no se ve o algo lo tapa (ventanas, elegir héroe, libro…), sale el de arriba a la izquierda
+ let mOk=false;const mb=m&&m.querySelector('.bugm');if(mb&&!bk&&!menu){const r=mb.getBoundingClientRect();if(r.width>0){const t=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);mOk=!!(t&&mb.contains(t));}}
+ f.classList.toggle('on',!mOk&&!busy&&!intro);f.classList.toggle('ingame',!bk&&!menu);}catch(e){}}
+setInterval(bugFab,250);

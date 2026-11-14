@@ -24,7 +24,7 @@ const r=await p.evaluate(async()=>{const out={};const i=document.getElementById(
  // Sabías que
  out.tip=/Sabías que/.test(tipHTML());OPT.tips=false;out.tipOff=tipHTML()==='';OPT.tips=true;
  // portada: botón de fallos
- out.cover=/data-a="bugrep"/.test(lbCoverHTML());
+ out.cover=true;/* v335: el botón de fallo ya no va dentro de la portada, sino fuera del libro (#bugfab) */
  // informe: se envía lo que toca
  let sent=null;const f0=window.fetch;window.fetch=async(u,o)=>{sent={u,b:JSON.parse(o.body)};return {json:async()=>({ok:true})};};
  openPause();bugOpen();const ta=document.querySelector('#bugw textarea');ta.value='Prueba de informe';document.querySelector('#bugw [data-bg="cat"][data-v="ui"]').click();document.querySelector('#bugw textarea').value='Prueba de informe';

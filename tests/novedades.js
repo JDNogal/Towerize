@@ -10,8 +10,11 @@ await p.evaluate(()=>document.querySelector('#comp [data-a="novopen"]').click())
 r.page=await p.evaluate(()=>!!document.querySelector('#comp .novl')&&document.querySelectorAll('#comp .novr .nw').length>0);
 await p.evaluate(()=>document.querySelector('#comp [data-a="novsel"][data-v="315"]').click());await p.waitForTimeout(400);
 r.sel=await p.evaluate(()=>/v315/.test(document.querySelector('#comp .novd h4').textContent));
+// v335: solo deja de ser nueva la versión que abres; el punto del menú se va cuando las has abierto todas
+r.one=await p.evaluate(()=>{const n=[...document.querySelectorAll('#comp .novr')].filter(x=>x.querySelector('.nw')).map(x=>+x.dataset.v);return !n.includes(315)&&n.length>0;});
+for(const v of await p.evaluate(()=>[...document.querySelectorAll('#comp .novr')].filter(x=>x.querySelector('.nw')).map(x=>x.dataset.v))){await p.evaluate(v=>document.querySelector(`#comp [data-a="novsel"][data-v="${v}"]`).click(),v);await p.waitForTimeout(120);}
 await p.evaluate(()=>document.querySelector('#comp [data-a="novback"]').click());await p.waitForTimeout(800);
 r.back=await p.evaluate(()=>!!document.querySelector('#comp [data-a="novopen"]')&&!document.querySelector('#comp [data-a="novopen"] i'));
 console.log(JSON.stringify(r));
-ck(r.order,'la línea de la partida va encima y los botones juntos: Continuar, Nueva partida, Novedades');ck(r.same,'Continuar y Nueva partida miden lo mismo');ck(r.dot&&r.page,'Novedades marca lo nuevo');ck(r.sel,'se puede elegir otra versión');ck(r.back,'al volver, ya no hay punto de nuevo');
+ck(r.order,'la línea de la partida va encima y los botones juntos: Continuar, Nueva partida, Novedades');ck(r.same,'Continuar y Nueva partida miden lo mismo');ck(r.dot&&r.page,'Novedades marca lo nuevo');ck(r.sel,'se puede elegir otra versión');ck(r.one,'abrir una versión solo quita «nuevo» de esa');ck(r.back,'al volver tras abrirlas todas, ya no hay punto de nuevo');
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'novedades ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

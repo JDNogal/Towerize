@@ -128,7 +128,7 @@ setInterval(()=>{try{wqTick();}catch(e){}},150);
 function peekLbl(){const r=$('relic');return r.querySelector('[data-a="relic"]')?'reliquias':r.querySelector('[data-a="towpick"]')?'oferta':r.querySelector('[data-a="evopt"],[data-a="evok"]')?'evento':'ventana';}
 function setPeek(on){RL.peek=!!on;$('relic').classList.toggle('peek',RL.peek);let b=$('peekb');
  if(!b){b=document.createElement('button');b.id='peekb';b.onclick=()=>setPeek(false);$('cw').appendChild(b);}
- const l=peekLbl();b.textContent='👁 Volver '+(l==='reliquias'?'a las reliquias':l==='oferta'?'a la oferta':l==='evento'?'al evento':'a la ventana');b.title='Volver (Tab)';b.classList.toggle('on',RL.peek);
+ const l=peekLbl();b.innerHTML=(typeof icU==='function'?icU('k_peek','👁'):'👁')+' Volver '+(l==='reliquias'?'a la selección de reliquias':l==='oferta'?'a la selección de torres':l==='evento'?'al evento':'a la ventana');b.title='Volver (Tab)';b.classList.toggle('on',RL.peek);
  if(RL.peek){closePrim();}ui();}
 function rlBar(){const r=$('relic');if(!RL.open||RL.hpick||typeof S==='undefined'||!S||!S.list){if(RL.peek)setPeek(false);return;}
  if(!r.querySelector('[data-a="relic"],[data-a="towpick"],[data-a="evopt"],[data-a="evok"]'))return;
@@ -383,6 +383,7 @@ function act(e){
  else if(a==='qend'||a==='qskip'){if(QS.on)quickSeen();if(a==='qend'){try{localStorage.setItem('rt-qdone','1');}catch(e){}}closeQuick();if(QS.after==='setup'){renderEra();}else renderHelp();}
  else if(a==='hreset'){HSEEN={};try{localStorage.removeItem('rt-hints');}catch(e){}LB.note='Pistas restablecidas ✓';lbRender();}
  else if(a==='begin')startGame();
+ else if(a==='herobk'){/* v335: desde elegir héroe se vuelve a la pantalla anterior (duración), no al menú */RL.hpick=false;showMenu();renderSetup();}
  else if(a==='tutskip'){try{localStorage.setItem('rt-tutchoice','skip');}catch(e){}OPT.hints=false;saveOpt();renderSkip();}
  else if(a==='skipok')renderEra();
  else if(a==='htog'){OPT.hints=!OPT.hints;saveOpt();lbRender();}

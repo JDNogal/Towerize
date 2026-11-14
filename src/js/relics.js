@@ -94,7 +94,7 @@ function castFreeze(c){
 
 // ---- Dado de la suerte (pasivo): volver a tirar una vez en cada elección (piezas, ofertas de torres y cofres) ----
 // v326: el apoyo «Tirada de la ronda» también da una tirada (una por ronda, para piezas, torres o reliquias)
-const diceRr=k=>{if(!(S&&S.relics))return '';const dice=rp('dice')&&!(S.drr||{})[k],tir=typeof apTirOk==='function'&&apTirOk();return dice||tir?`<button class="drr" data-a="dreroll" data-k="${k}">🎲 ${dice?'Volver a tirar':'Tirada de la ronda'}</button>`:'';};
+const diceRr=k=>{if(!(S&&S.relics))return '';const dice=rp('dice')&&!(S.drr||{})[k],tir=typeof apTirOk==='function'&&apTirOk();return dice||tir?`<button class="drr" data-a="dreroll" data-k="${k}"><span class="drric">${(()=>{try{return RELIC.dice&&typeof RELIC.dice.ic==='object'?icHtml(RELIC.dice.ic):'🎲';}catch(e){return '🎲';}})()}</span>${dice?'Volver a tirar':'Tirada de la ronda'}</button>`:'';};
 function diceReroll(k){const dice=rp('dice')&&!(S.drr||{})[k];if(!dice&&!(typeof apTirOk==='function'&&apTirOk()))return;if(!dice)S.tirR=S.round;
  if(k==='pc'){if(S.phase!=='place')return;S.pi=null;deal();(S.drr=S.drr||{}).pc=1;}
  else if(k==='tw'){if(!RL.towo)return;const p=tPool();if(!p.length)return;RL.towo=towPick3(p);(S.drr=S.drr||{}).tw=1;renderTowerOffer();}

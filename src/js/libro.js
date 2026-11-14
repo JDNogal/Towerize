@@ -138,7 +138,7 @@ function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
  const left=`<div class="lbhero${lk?' lk':''}" style="--hc:${D.col}"><span class="lbhart fr${hTier(id)}">${portrait(id,0,lk)}</span><div class="lbhn">${lk?'???':D.n}</div><div class="lbhc">${lk?'Héroe por desbloquear':D.role+' · '+(D.ranged?'A distancia':'Cuerpo a cuerpo')}</div></div>`;
  const right=`<div class="lbhpc" style="--hc:${D.col}">${heroSheet(id)}</div>`;
  return {marksHTML,left,right,key:'hero'+id,flip:LB.lastK!=='prep|hero'+id,hero:1,
-  footL:S.tut?'':`<button class="lbbk" data-a="menu" data-bk="1">‹ Menú</button>`,footR:`<button class="gbtn hok2" data-a="pickhero" data-id="${lk?'':id}"${lk?' disabled':''}>${lk?'Bloqueado':'Elegir a '+D.n+' ✓'}</button>`};
+  footL:S.tut?'':`<button class="lbbk" data-a="herobk">‹ Duración</button>`,footR:`<button class="gbtn hok2" data-a="pickhero" data-id="${lk?'':id}"${lk?' disabled':''}>${lk?'Bloqueado':'Elegir a '+D.n+' ✓'}</button>`};
 }
 // ---- final de partida: la crónica ----
 // página de mensaje: dos páginas con lo que haya en LB.msg (left/right pueden ser funciones), pie y sin cintas
