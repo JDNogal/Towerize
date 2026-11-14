@@ -2328,6 +2328,19 @@ body.dsk:not(.mfs) #nearach{zoom:var(--uiz,1)}
 .novr b.v{font-size:15px}.novr small{opacity:.7}.novr.sel{box-shadow:0 0 0 2px #e07a2a}.novr .nw{font:700 10px system-ui;color:#fff;background:#c0392b;border-radius:6px;padding:1px 6px}
 .novd h4{margin:0 0 2px}.novd .sec{margin-top:12px}.novd .sec b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a0522d;margin-bottom:4px}.novd ul{margin:0;padding-left:18px}.novd li{margin:3px 0;font-size:13.5px;line-height:1.4}
 :root[data-skin="holo"] .novr{border-color:rgba(63,232,255,.35);background:rgba(63,232,255,.05);color:#d8fbff}:root[data-skin="holo"] .novr.sel{box-shadow:0 0 0 2px #3fe8ff}:root[data-skin="holo"] .novr .nw{background:#ff4fd8}:root[data-skin="holo"] .novd .sec b{color:#3fe8ff}
+/* v332 · la lista de versiones tiene su propio scroll y acaba antes del botón «‹ Menú» (antes pasaba por debajo) */
+.bk .bkp.l:not(.one):has(>.novl){display:flex;flex-direction:column;overflow:hidden}
+.bk.hasft .bkp.l:not(.one):has(>.novl){padding-bottom:80px}
+.bkp.l:not(.one)>.novl{flex:1;min-height:0;overflow-y:auto;padding:3px 6px 18px 3px;margin-left:-3px;-webkit-mask-image:linear-gradient(#000 calc(100% - 26px),transparent);mask-image:linear-gradient(#000 calc(100% - 26px),transparent)}
+/* el pie del libro no tapa la sombra del lomo: su fondo se difumina antes de llegar al centro */
+.bk:not(:has(.bkp.one))>.lbft.l{-webkit-mask-image:linear-gradient(to left,transparent 0,#000 70px);mask-image:linear-gradient(to left,transparent 0,#000 70px)}
+.bk:not(:has(.bkp.one))>.lbft.r{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 70px);mask-image:linear-gradient(to right,transparent 0,#000 70px)}
+/* v332 · el botón ↩ del libro solo aparece cuando se puede usar, y se dibuja al aparecer (antes salía apagado) */
+.bkx.bkhist.off{display:none!important}
+.bkx.bkhist.drawin{animation:bkhin .25s ease-out both}
+.bkx.bkhist.drawin>svg path{stroke-dasharray:40;animation:bkhdraw .55s .1s ease-out both}
+@keyframes bkhin{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+@keyframes bkhdraw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
 /* v324 · Clasificación: botón al final, diálogos centrados con fondo oscurecido y tabla */
 .esum .lbupb{display:flex;align-items:center;gap:10px;text-align:left;border-radius:10px;border:2px solid #8a5a1a;background:linear-gradient(#f2cd62,#dba63a);color:#3a2617;font-weight:800;font-size:15px;padding:8px 12px;cursor:pointer;min-height:58px;font-family:inherit}
 .esum .lbupb small{display:block;font-weight:500;font-size:11px;opacity:.8}
@@ -2461,6 +2474,95 @@ html:root[data-skin="holo"] .bti.ach.got,html:root[data-skin="holo"] #comp .bti.
  -webkit-mask-image:radial-gradient(ellipse 60% 100% at 50% 100%,#000 40%,transparent 100%);mask-image:radial-gradient(ellipse 60% 100% at 50% 100%,#000 40%,transparent 100%)}
 .hring{position:absolute;left:50%;top:var(--cy,400px);width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;border:3px solid rgba(63,232,255,.9);box-shadow:0 0 18px rgba(63,232,255,.8),inset 0 0 18px rgba(63,232,255,.6);opacity:0}
 .cofx svg{max-width:none!important;max-height:none!important;display:block}.cofx .crate svg{width:240px!important;height:380px!important}.cofx .chest svg{width:220px!important}
+/* v330 · Ayudas de interfaz */
+/* ver todos los alcances: botón debajo de «Reintentar» */
+#mtl .rngb{position:relative;display:grid;place-items:center}
+#mtl .rngb svg{width:.95em;height:.95em;display:block}
+#mtl .rngb .kcap{top:auto;bottom:-16px}
+#mtl .rngb:has(.kcap){margin-bottom:12px}
+#mtl .rngb.on{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;box-shadow:inset 0 0 0 1px var(--lea2),0 3px 8px rgba(0,0,0,.45)!important}
+/* aviso de oro sin gastar */
+#goldw{position:fixed;z-index:40;transform:translate(-50%,-100%) scale(.9);opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;background:#2a1a0c;color:#f6e7c4;border:1.5px solid #f0b429;border-radius:10px;padding:7px 12px;text-align:center;box-shadow:0 4px 14px #000a;width:230px;box-sizing:border-box}
+#goldw.on{opacity:1;transform:translate(-50%,-100%) scale(1)}
+#goldw b{display:block;color:#ffd75a;font-size:14px}#goldw small{display:block;font-size:11.5px;opacity:.9;margin-top:2px;line-height:1.3}
+#goldw::after{content:'';position:absolute;left:var(--ax,50%);bottom:-7px;transform:translateX(-50%) rotate(45deg);width:11px;height:11px;background:#2a1a0c;border-right:1.5px solid #f0b429;border-bottom:1.5px solid #f0b429}
+/* avisos en la línea de rondas */
+#rtl .rtws{position:absolute;top:1px;right:-13px;display:flex;gap:1px;z-index:3}
+#rtl .rtw{width:14px;height:14px;border-radius:50%;display:grid;place-items:center;font-style:normal;box-shadow:0 0 0 1.5px #f5e6c8,0 1px 2px #0009;animation:rtwP 1.6s ease-in-out infinite}
+#rtl .rtw svg{width:11px;height:11px}
+#rtl .rtw.fly{background:#3a8fd0;color:#fff}#rtl .rtw.nw{background:#e0a020;color:#2a1a08}
+@keyframes rtwP{50%{transform:scale(1.18)}}
+.rtwt{display:block;margin-top:5px!important;padding-top:5px;border-top:1px solid #ffffff22}
+.rtwl{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;vertical-align:-3px;margin-right:3px}
+.rtwl svg{width:11px;height:11px}.rtwl.fly{background:#3a8fd0;color:#fff}.rtwl.nw{background:#e0a020;color:#2a1a08}
+/* ¿Por qué he perdido? */
+.whyl{margin:8px 0 10px;padding:8px 12px;border-radius:10px;background:rgba(160,60,40,.10);border:1px solid rgba(160,60,40,.35)}
+.whyh{display:flex;align-items:center;gap:7px;margin-bottom:2px;color:#a8432c}
+.whyh b{font-size:15px}
+.whyi{padding:5px 0 5px 27px;border-top:1px dashed rgba(120,60,30,.25)}
+.whyh+.whyi{border-top:0}
+.whyi small{display:block;opacity:.8;margin-top:1px;line-height:1.35}
+/* «Sabías que…» */
+.lbtip{display:flex;gap:8px;align-items:center;text-align:left;margin:8px auto 0;max-width:420px;padding:5px 10px;border-radius:10px;background:rgba(0,0,0,.2);border:1px solid color-mix(in srgb,var(--trim,#c9a052) 45%,transparent);color:var(--leatxt,#f2e6cc);cursor:pointer}
+.lbtip:hover{background:rgba(0,0,0,.3)}
+.lbtipi{color:#ffd75a;flex:none;margin-top:1px}
+.lbtip b{display:inline;font-size:12px;color:#ffd75a;margin-right:4px}.lbtip small{display:inline;font-size:12px;line-height:1.3;opacity:.92}
+.lbcv.b .lbtip{display:none}
+/* informar de un fallo */
+.lbcvin{position:relative}
+.lbcvin>.bugbtn{position:absolute;top:10px;left:12px;z-index:3;margin:0;display:flex;align-items:center;gap:5px;padding:5px 9px;border-radius:16px;font-size:12px;font-weight:600;border:1px solid color-mix(in srgb,var(--trim,#c9a052) 50%,transparent);background:rgba(0,0,0,.22);color:var(--leatxt,#f2e6cc);opacity:.8}
+.lbcvin>.bugbtn:hover{opacity:1;background:rgba(0,0,0,.35)}
+.lbcvin>.bugbtn svg{width:15px;height:15px}
+.lbcv.b .lbcvin>.bugbtn span{display:none}
+#bugw{position:fixed;inset:0;z-index:300;display:none;place-items:center;background:rgba(0,0,0,.6);padding:16px}
+#bugw.open{display:grid}
+#bugw .bugbox{position:relative;width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;background:#f6ecd3;color:#2a1a10;border:2px solid #8a5a2e;border-radius:14px;padding:16px 18px;box-shadow:0 10px 40px #000c}
+#bugw h3{margin:0 0 2px;font-size:19px}
+#bugw .bugsub{display:block;opacity:.75;margin-bottom:10px}
+#bugw .bkx{position:absolute;top:8px;right:10px}
+#bugw .bugcats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+#bugw textarea{width:100%;box-sizing:border-box;min-height:96px;resize:vertical;font:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid #b08a5a;background:#fffaf0;color:#2a1a10}
+#bugw .bugshot{margin-top:9px;display:flex;gap:10px;align-items:center}
+#bugw .bugshot img{width:150px;border-radius:6px;border:1px solid #8a5a2e;cursor:zoom-in;flex:none}
+#bugw .bugshot.off img{opacity:.35;filter:grayscale(1)}
+#bugw .bugshot label{font-size:13px;display:flex;gap:6px;align-items:center}
+#bugw .bugnos,#bugw .buginfo{display:block;font-size:11.5px;opacity:.7;margin-top:8px}
+#bugw .bugbot{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px}
+#bugw .bugmsg{margin-right:auto;color:#a8432c;font-size:13px}
+#bugw .bugzoom{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.85);cursor:zoom-out;z-index:2}
+#bugw .bugzoom.on{display:grid}#bugw .bugzoom img{max-width:94vw;max-height:90vh;border-radius:8px}
+#bugtoast{position:fixed;left:50%;bottom:40px;transform:translate(-50%,20px);opacity:0;z-index:310;background:#1e3a20;color:#d8ffd0;border:1px solid #6fd06a;border-radius:10px;padding:8px 16px;transition:.2s;pointer-events:none}
+#bugtoast.on{opacity:1;transform:translate(-50%,0)}
+/* Estadísticas › Carrera */
+.cargrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+.carb{padding:8px 10px;border-radius:9px;background:rgba(0,0,0,.06);border:1px solid rgba(120,80,40,.2)}
+.carb small{display:block;opacity:.7;font-size:11.5px}.carb b{font-size:20px;display:block}.carb em{font-style:normal;font-size:11.5px;opacity:.75}
+.carr .carf{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed rgba(120,80,40,.25)}
+.carr .carfi{width:38px;height:38px;flex:none;display:grid;place-items:center;font-size:24px}
+.carr .carfi .lbsvpor{width:36px;height:36px}
+.carr .carfi svg,.carr .carfi img{max-width:34px;max-height:34px}
+.carr small{display:block;opacity:.7;font-size:11.5px}.carr b{display:block;font-size:15px}.carr em{font-style:normal;font-size:12px;opacity:.75}
+
+/* puntuación en la pausa: cinta bajo el retrato */
+.lbembw{position:relative;display:flex;flex-direction:column;align-items:center;margin-bottom:6px}
+.lbscr{position:relative;z-index:2;margin-top:-16px;display:flex;align-items:baseline;gap:5px;padding:4px 22px 5px;color:#3a2410;
+ background:linear-gradient(180deg,#f6d77a,#d9a640);box-shadow:0 2px 6px #0007,inset 0 1px 0 #fff6;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%,10px 50%)}
+.lbscr b{font:800 19px Georgia,serif;line-height:1}
+.lbscr small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.8}
+body.era2g .lbscr{background:linear-gradient(180deg,#123a44,#0b2228);color:#3fe8ff;box-shadow:0 0 10px #3fe8ff66,inset 0 0 0 1px #3fe8ff88}
+body.era2g .lbscr b{font-family:'Chakra Petch',system-ui,sans-serif;text-shadow:0 0 8px rgba(63,232,255,.6)}
+
+/* consejo de ÉTER */
+.etmbub .ettip{display:flex;align-items:center;gap:4px;font-style:normal;font-size:11.5px;font-weight:800;color:#a8690a;margin:1px 0 3px}
+body.era2g .etmbub .ettip{color:#ffd75a}
+.etmbub .ettip svg{width:14px;height:14px}
+
+/* el bocadillo de ÉTER sale del cristal que cuelga del libro (no de la esquina de Esc) */
+:root:not([data-skin="holo"]) .lbcv.a .etmbub{left:calc(100% - 40px)!important;top:50px!important;z-index:30!important}
+:root:not([data-skin="holo"]) .lbcv.a .etmbub::after{left:-22px!important;top:34px!important}
+body.mfs #mtl .rngb svg{width:28px;height:28px}
+body.mfs #zm button[data-z="c"] svg{width:30px;height:30px}
+#pcback{display:inline-flex;align-items:center;gap:8px}#pcback svg{width:1.9em;height:1.9em;margin:-6px 0;display:block;flex:none}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2475,7 +2577,7 @@ html:root[data-skin="holo"] .bti.ach.got,html:root[data-skin="holo"] #comp .bti.
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v331</div>
+<div id="ver">Towerize v332</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -6988,7 +7090,7 @@ function enemyInst(e){const E=ET[e.t],ap=(e.apx!=null?e.apx:(E.ap||0))+(e.cb||0)
 function closePrim(){if(typeof S!=='undefined'&&S)S.selE=null;PR.auto=0;PR.open=false;PR.pinned=false;PR.key=null;PR.cell=null;PR.dead=0;closeKS();$('tip').style.display='none';$('side').innerHTML=PH;}
 function openPrim(tg){
  {const k=String(tg.key||'');if(k.startsWith('shop:'))curSeen(k.slice(5));else if(k.startsWith('tw:')){const t=S&&S.list&&S.list.find(o=>'tw:'+o.id===k);if(t)curSeen(t.type);}}
- closeKS();PR.open=true;PR.pinned=false;PR.key=tg.key;PR.html=tg.html;PR.rect=tg.rect;PR.dom=tg.dom;PR.cell=tg.cell||null;PR.dead=0;
+ closeKS();PR.open=true;PR.pinned=false;PR.key=tg.key;PR.html=tg.html;PR.rect=tg.rect;PR.dom=tg.dom;PR.below=!!tg.below;PR.cell=tg.cell||null;PR.dead=0;
  if(PMN())$('tip').innerHTML=tg.html();else $('side').innerHTML=tg.html();
 }
 function refreshPrim(){if(!PR.open)return;closeKS();const h=PR.html();if(PMN())$('tip').innerHTML=h;else $('side').innerHTML=h;}
@@ -7037,7 +7139,7 @@ function hoverTick(rdt){
  else if(tg&&!MFSQ()&&!(TM.t&&tg.key==='tw:'+TM.t.id&&tmVis())){
   if(HV.key!==tg.key){HV.key=tg.key;HV.t=0;}else HV.t=Math.min(1,HV.t+rdt/OPT.delay);
   if(HV.t>=1&&!(PR.open&&PR.key===tg.key))openPrim(tg);
-  if(PR.open&&PR.key===tg.key){PR.rect=tg.rect;PR.cell=tg.cell||null;}
+  if(PR.open&&PR.key===tg.key){PR.rect=tg.rect;PR.cell=tg.cell||null;PR.below=!!tg.below;}
  }else{HV.key=null;if(!PR.open)HV.t=Math.max(0,HV.t-rdt*3);}
  const onPin=PR.pinned&&(inPrim||!!kpEl||(tg&&tg.key===PR.key));
  if(PR.open&&!PR.pinned){
@@ -7066,6 +7168,8 @@ function hoverTick(rdt){
   for(const id of ['tmenu','bmenu']){const m=$(id);if(m&&m.classList.contains('on')&&m.offsetParent!==null){let u=null;m.querySelectorAll('button').forEach(b=>{const q=b.getBoundingClientRect();if(!q.width)return;u=u?{l:Math.min(u.l,q.left),t:Math.min(u.t,q.top),r:Math.max(u.r,q.right),b:Math.max(u.b,q.bottom)}:{l:q.left,t:q.top,r:q.right,b:q.bottom};});if(u)r={l:Math.min(r.l,u.l),t:r.t,r:Math.max(r.r,u.r),b:r.b};}}
   let l=r.r+8;if(l+wd>innerWidth-6)l=r.l-8-wd;if(l<6)l=6;
   let t=PR.dom?(r.t+r.b)/2-ht/2:r.t;if(t+ht>innerHeight-6)t=innerHeight-6-ht;if(t<6)t=6;
+  /* v332: algunos bocadillos salen justo debajo de lo que señalan (la línea de rondas) */
+  if(PR.below){l=Math.max(6,Math.min(innerWidth-6-wd,(r.l+r.r)/2-wd/2));t=r.b+8;if(t+ht>innerHeight-6)t=Math.max(6,r.t-8-ht);}
   tip.style.left=l+'px';tip.style.top=t+'px';
  }else tip.style.display='none';
  if(!S.hover&&PR.open&&PR.cell)S.hover=PR.cell;
@@ -7097,7 +7201,7 @@ function ui(){
  else h=(S.phase==='lost'&&S.snap&&S.rc>0?`<button class="go" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="go" data-a="results">Ver resultados</button><button data-a="reset">Jugar de nuevo</button><button data-a="menu">Menú principal</button>';
  $('ui').innerHTML=h;$('panel').classList.toggle('pempty',!h&&!S.msg);
  {/* elegir pieza: ventana centrada y grande, sin poder hacer nada más; 👁 para mirar el mapa */document.body.classList.toggle('revl',S.revAt>0&&S.phase==='place');const pk=S.phase==='place'&&S.pi==null&&!(S.revAt>0)&&!(S.tut&&HQ.cur&&HQ.cur.id==='tut_welcome'&&!HQ.cur.si)&&!(typeof LB!=='undefined'&&LB.open)&&!document.body.classList.contains('inmenu')&&!(typeof DLG!=='undefined'&&DLG.on);if(!pk)S.ppk=0;document.body.classList.toggle('pcpick',pk&&!S.ppk);document.body.classList.toggle('pcpeek',pk&&!!S.ppk);
-  let pb=$('pcback');if(pk&&S.ppk&&!pb){pb=document.createElement('button');pb.id='pcback';pb.innerHTML='🧩 Volver a las piezas';document.body.appendChild(pb);pb.addEventListener('click',e=>{e.stopPropagation();S.ppk=0;ui();});}if(pb&&!(pk&&S.ppk))pb.remove();}
+  let pb=$('pcback');if(pk&&S.ppk&&!pb){pb=document.createElement('button');pb.id='pcback';pb.innerHTML=(typeof icU==='function'?icU('m_c_pc','🧩'):'🧩')+' Volver a las piezas';document.body.appendChild(pb);pb.addEventListener('click',e=>{e.stopPropagation();S.ppk=0;ui();});}if(pb&&!(pk&&S.ppk))pb.remove();}
  {let ch=0;if(BARX.pc&&S.pi==null){BARX.pc=0;if(!HSEEN.barpc){HSEEN.barpc=1;ch=1;}}if(BARX.tw&&!S.tsel){BARX.tw=0;if(!HSEEN.bartw){HSEEN.bartw=1;ch=1;}}if(ch)try{localStorage.setItem('rt-hints',JSON.stringify(HSEEN));}catch(e){}}
  $('ui').querySelectorAll('canvas[data-i]').forEach(cn=>drawPat(cn.getContext('2d'),S.offers[+cn.dataset.i],14,0,0,1));
  markSpeed();
@@ -7659,8 +7763,8 @@ function act(e){
  else if(a==='achm'){APAN.open=false;apanTick();lbOpen('lg');}
  else if(a==='apan'){APAN.open=!APAN.open;apanTick();}
  else if(a==='apin'){const id=b.dataset.id;if(PINS.includes(id))PINS=PINS.filter(x=>x!==id);else if(PINS.length>=3){toast('📌 Ya tienes 3 logros fijados: quita uno para fijar este.');return;}else PINS.push(id);savePins();if(LB.open&&!LB.cover){const sc=$('comp').scrollTop;lbRender();$('comp').scrollTop=sc;}else if(RL.open&&RL.hpick&&typeof renderHeroPick==='function')renderHeroPick();apanTick(1);}
- else if((a==='tutfull'||a==='tutquick')&&LB.open&&LB.step==='learn'&&LB.tsel!==a){LB.tsel=a;lbRender();}/* v307: primer toque elige; el segundo (o «Empezar») confirma */
- else if(a==='tutgo'){const t=LB.tsel;LB.tsel=null;if(t){const q=document.createElement('button');q.dataset.a=t;q.style.display='none';document.body.appendChild(q);LB.step=null;q.click();q.remove();}}
+ else if((a==='tutfull'||a==='tutquick')&&LB.open&&LB.step==='learn'){if(LB.tsel!==a){LB.tsel=a;lbRender();}}/* v332: tocar un tutorial solo lo elige; se empieza con «Empezar el tutorial» / «Ver el repaso» *//* v307: primer toque elige; el segundo (o «Empezar») confirma */
+ else if(a==='tutgo'){const t=LB.tsel;LB.tsel=null;if(t){const q=document.createElement('button');q.dataset.a=t;q.style.display='none';LB.step=null;act({target:q,stopPropagation(){},preventDefault(){}});}}
  else if(a==='tutfull'){LB.tsel=null;try{localStorage.setItem('rt-tutchoice','full');}catch(e){}closeQuick();startTut();}
  else if(a==='tutquick'){const first=!tutChosen();try{localStorage.setItem('rt-tutchoice','quick');}catch(e){}openQuick(first?'setup':'help');}
  else if(a==='qprev'){if(QS.i>0){QS.i--;renderQuick();}}
@@ -10486,6 +10590,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:332,f:'14 nov 2026',t:'Ayudas',s:[['Ayudas',['¿Algo falla? Ahora puedes contárnoslo sin salir del juego. Busca un bichito en el libro.','Perder ya no es solo perder: el final de partida tiene algo que contarte.','Antes de empezar una oleada, alguien vigila tu bolsa.','La línea de rondas se ha vuelto más habladora.','Hay una forma nueva de verlo todo en redondo: busca el botón… o la tecla.','ÉTER tiene cosas que contarte en la pausa, si le dejas.','Tu puntuación luce ahora en la pausa.']],['Estadísticas',['Estadísticas estrena una pestaña con toda tu historia.']],['Opciones',['Todas las ayudas, juntas y con su interruptor, en Opciones › Juego.']],['Libro',['Novedades más ordenada, y algún botón que solo aparece cuando hace falta.']],['Arreglos',['Elegir tutorial: el botón para empezarlo no hacía nada. Ya funciona, y tocar un tutorial solo lo elige.','Móvil: algunos iconos se han puesto al día.']]]},
  {v:331,f:'14 nov 2026',t:'Arreglo en móvil',s:[['Arreglos',['Móvil: el ojo de arriba al elegir pieza no hacía nada. Ya deja ver el mapa.']]]},
  {v:330,f:'14 nov 2026',t:'Arreglo en iPhone',s:[['Arreglos',['iPhone: si abrías el juego desde la pantalla de inicio y girabas el móvil, el mapa podía verse estirado. Ya se ve bien.']]]},
  {v:329,f:'14 nov 2026',t:'Sorpresas',s:[['Reliquias',['Hay nuevas sorpresas al elegir reliquia. Descúbrelas en tu próxima partida y ya nos contarás.','Alguna reliquia de la era distópica ha cambiado. ¿Notarás cuál?']],['Piezas',['Los caminos ya no se unen por cualquier sitio: fíjate bien en los bordes.','Hay piezas nuevas esperando en la era distópica, y alguna puede llegar del revés.']],['Casillas especiales',['Las casillas especiales han cambiado: algunas se dejan ver antes que otras y hay una que aún nadie ha pisado.']],['Logros',['Los trofeos estrenan aspecto.']],['Apoyos y Amenazas',['Un apoyo que estaba en camino ya ha llegado.','Las amenazas esconden más rangos de los que crees.']]]},
@@ -10670,7 +10775,7 @@ function rtlTip(r){const{o}=rtlDot(r),d=r-S.round,w=d<=0?(S.phase==='wave'?'en c
  const L=[];if(o.boss)L.push('<b>Jefe</b>'+(r===ROUNDS?' final':''));if(o.el)L.push('Élite'+(o.el>1?' ×'+o.el:''));if(o.mi)L.push('Mini-élite'+(o.mi>1?' ×'+o.mi:''));
  for(const k of o.ex)L.push((typeof seen==='function'&&!seen('en',k))?'???':(ET[k]||{}).n||k);
  return `<div class="ttl"><b>Ronda ${r}</b> · ${w}</div><small style="margin:0">${L.length?L.join('<br>'):'Sin élites ni jefe.'}</small>`;}
-{const _rs=resolve;resolve=function(el){const d=el&&el.closest&&el.closest('[data-tip^="rtl:"]');if(d){const r=+d.dataset.tip.slice(4),b=d.getBoundingClientRect();return{key:'rtl:'+r+':'+RTL.sg,html:()=>rtlTip(r),rect:{l:b.left,t:b.top,r:b.right,b:b.bottom},dom:1};}return _rs.apply(this,arguments);};}
+{const _rs=resolve;resolve=function(el){const d=el&&el.closest&&el.closest('[data-tip^="rtl:"]');if(d){const r=+d.dataset.tip.slice(4),b=d.getBoundingClientRect();const bar=document.getElementById('rtl'),bb=bar?bar.getBoundingClientRect():b;return{key:'rtl:'+r+':'+RTL.sg,html:()=>rtlTip(r),rect:{l:b.left,t:b.top,r:b.right,b:Math.max(b.bottom,bb.bottom)},dom:1,below:1};}return _rs.apply(this,arguments);};}
 // ==================== v305 · Filtro por era en el compendio ====================
 // Las secciones ya no se parten por era («Guerreros · Distópica», «Torres de la Era Distópica»…): cada familia es una sola
 // y se filtra por era con un filtro más. El filtro solo sale si ya has visto cosas de las dos eras (sin spoilers).
@@ -11104,18 +11209,18 @@ try{const o=OPTS.find(x=>x.key==='eterm');if(o)delete o.show;}catch(e){}
 // ==================== v308 · Botón «Atrás» del libro ====================
 // Como el «atrás» del navegador: el libro apunta cada página que ves (área, sección, ficha y su Nv o especialización)
 // y el botón ↩ (junto a la ✕) o la tecla Retroceso te devuelven a la anterior.
-const LBH={st:[],nav:0};
+const LBH={st:[],nav:0,on:false};
 const lbSnap=()=>{const tab=CP.tab,sel=CP.sel?CP.sel[tab]:null;return{area:LB.area,tab,sel:sel==null?null:sel,lv:sel!=null&&CP.lv?CP.lv[sel]||null:null,op:typeof OP!=='undefined'?OP.tab:null};};
 const lbSnapKey=s=>JSON.stringify(s);
 function lbHistBack(){if(LBH.st.length<2)return;LBH.st.pop();const s=LBH.st[LBH.st.length-1];
  LB.area=s.area;CP.tab=s.tab;if(CP.sel&&s.sel!=null)CP.sel[s.tab]=s.sel;if(s.sel!=null&&CP.lv){if(s.lv==null)delete CP.lv[s.sel];else CP.lv[s.sel]=s.lv;}if(s.op!=null&&typeof OP!=='undefined')OP.tab=s.op;
  LBH.nav=1;try{lbRender();}finally{LBH.nav=0;}}
-{const _lbo=lbOpen;lbOpen=function(){LBH.st=[];return _lbo.apply(this,arguments);};
+{const _lbo=lbOpen;lbOpen=function(){LBH.st=[];LBH.on=false;return _lbo.apply(this,arguments);};
  const _lbr=lbRender;lbRender=function(){const r=_lbr.apply(this,arguments);try{
   if(!LB.open||LB.cover)return r;const s=lbSnap(),k=lbSnapKey(s),L=LBH.st;
   if(!LBH.nav&&(!L.length||lbSnapKey(L[L.length-1])!==k)){L.push(s);if(L.length>60)L.shift();}
   const el=$('comp'),x=el&&el.querySelector('.bkx');if(x&&!el.querySelector('.bkhist')){const b=document.createElement('button');b.className='bkx bkhist';b.dataset.a='lbhist';b.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M10 5L5 10l5 5M5 10h9a5 5 0 0 1 0 10h-4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';x.parentNode.insertBefore(b,x);}
-  const bb=el&&el.querySelector('.bkhist');if(bb){const on=typeof kcOn==='function'&&kcOn(),cap=bb.querySelector('.kcap');if(on&&!cap)bb.insertAdjacentHTML('beforeend','<span class="kcap kesc kbk"><svg viewBox="0 0 16 11" width="13" height="9" aria-hidden="true"><path d="M5 1h9.5v9H5L1 5.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 3.5l4 4M12 3.5l-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>');else if(!on&&cap)cap.remove();const ok=L.length>1;bb.disabled=!ok;bb.classList.toggle('off',!ok);bb.dataset.tip=ok?'Atrás':'';}
+  const bb=el&&el.querySelector('.bkhist');if(bb){const on=typeof kcOn==='function'&&kcOn(),cap=bb.querySelector('.kcap');if(on&&!cap)bb.insertAdjacentHTML('beforeend','<span class="kcap kesc kbk"><svg viewBox="0 0 16 11" width="13" height="9" aria-hidden="true"><path d="M5 1h9.5v9H5L1 5.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 3.5l4 4M12 3.5l-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>');else if(!on&&cap)cap.remove();const ok=L.length>1;bb.disabled=!ok;bb.classList.toggle('off',!ok);bb.classList.toggle('drawin',!!ok&&!LBH.on);LBH.on=!!ok;bb.dataset.tip=ok?'Atrás':'';}
  }catch(e){}return r;};}
 addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="lbhist"]');if(!b)return;e.preventDefault();e.stopPropagation();lbHistBack();},true);
 addEventListener('keydown',e=>{if(e.key!=='Backspace'||!LB.open||LB.cover)return;const t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;e.preventDefault();lbHistBack();});
@@ -12953,4 +13058,243 @@ function cfPlay(rl,cards,sign,e2,chest){let fx=rl.querySelector('.cofx');if(fx)f
   CFA(c,[{transform:`translateY(${-up}px) scale(1.7)`},{transform:'translateY(0) scale(1)'}],{duration:450,delay:1650,easing:'cubic-bezier(.4,0,.2,1)'});t0=1.6;}
  setTimeout(()=>{if(fx.isConnected)fx.classList.add('back');},T(t0));
  showSign(t0+.35);showCards(t0,from);}
+// ==================== v330 · Ayudas de interfaz ====================
+// Ideas aprobadas por Nogal (14-nov-2026): informar de fallos, «¿Por qué he perdido?», avisos en la línea de rondas,
+// ver todos los alcances, aviso de oro sin gastar, «Sabías que…», resumen de carrera e interruptores en Opciones › Juego › Ayudas.
+
+// ---------- Interruptores (Opciones › Juego › Ayudas) ----------
+const AYU=[
+ ['goldw','Aviso de oro sin gastar','Al empezar la oleada, si te sobra oro para construir o mejorar algo, te avisa y tienes que pulsar otra vez.'],
+ ['rtlw','Avisos en la línea de rondas','La siguiente ronda se marca si trae enemigos voladores o alguno que aún no conoces.'],
+ ['whyl','¿Por qué he perdido?','Al perder una partida, unas pistas sobre qué te hizo más daño y qué podrías probar.'],
+ ['tips','Consejos de ÉTER («¿Sabías que…?»)','ÉTER te da consejos en la pausa y en el menú, marcados con una bombilla. Desactivado, solo hace comentarios.']];
+for(const[k]of AYU)if(OPT[k]===undefined)OPT[k]=true;
+{let at=OPTS.findIndex(o=>o.key==='hints');if(at<0)at=OPTS.findIndex(o=>o.tab==='jg');
+ OPTS.splice(at+1,0,...AYU.map(([key,label,desc])=>({tab:'jg',type:'toggle',key,def:true,label,desc})));
+ for(const[k]of AYU)OSEC[k]='Ayudas';OSEC.autopause='Ayudas';OSEC.nearach='Ayudas';
+ Object.assign(OIC,{goldw:'🪙',rtlw:'⚠️',nearach:'🏆'});OIC.tips=OIC.hints||'💡';OIC.autopause='<svg viewBox="0 0 24 24" width="20" height="20"><rect x="5" y="4" width="5" height="16" rx="1.5" fill="#c8743a"/><rect x="14" y="4" width="5" height="16" rx="1.5" fill="#c8743a"/></svg>';
+ // las de Ayudas, juntas (mismo orden que options.js: Interfaz, Ayudas, Tiempo)
+ const ord=['Interfaz','Ayudas','Tiempo'],rk=o=>{const s=OSEC[oKey(o)];return s?ord.indexOf(s):-1;},pos=[],it=[];
+ OPTS.forEach((o,i)=>{if(o.tab==='jg'){pos.push(i);it.push([o,i]);}});it.sort((x,y)=>rk(x[0])-rk(y[0])||x[1]-y[1]);pos.forEach((p,j)=>OPTS[p]=it[j][0]);}
+
+// ---------- Ver todos los alcances (mantener X) ----------
+KBDEF.rng='x';if(!KB.rng)KB.rng='x';
+{const g0=KBL.find(x=>x[0]==='Partida');if(g0&&!g0[1].some(r=>r[0]==='rng'))g0[1].push(['rng','Ver el alcance de todas las torres (mantener)','⭕']);}
+const RNGA={on:false,tch:false};
+const rngaOn=()=>RNGA.on||RNGA.tch;
+addEventListener('keydown',e=>{try{if(e.ctrlKey||e.metaKey||e.altKey)return;const t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'))return;
+ if(typeof KBC!=='undefined'&&KBC.on)return;if(kbIs('rng',e.key.toLowerCase()))RNGA.on=true;}catch(_){}});
+addEventListener('keyup',e=>{try{if(kbIs('rng',e.key.toLowerCase()))RNGA.on=false;}catch(_){}});
+addEventListener('blur',()=>{RNGA.on=false;});
+function rngaDraw(){if(!rngaOn()||!S||!S.list||PREVIEWING)return;
+ for(const t of S.list){if(t.hero||t.summ||!TW[t.type])continue;let r=0;try{r=stats(t).range;}catch(e){}if(!(r>0))continue;
+  const X=t.x*CS+CS/2,Y=t.y*CS+CS/2,c=TW[t.type].col||'#6ebeff';
+  g.save();g.globalAlpha=.10;g.fillStyle=c;g.beginPath();g.arc(X,Y,r*CS,0,7);g.fill();g.globalAlpha=.85;g.strokeStyle=c;g.lineWidth=1.5/sc();g.setLineDash([6/sc(),4/sc()]);g.stroke();g.restore();}}
+{const _dw=e2DrawWorld;e2DrawWorld=function(lw){const r=_dw.apply(this,arguments);try{rngaDraw();}catch(e){}return r;};}
+// botón en la columna de la izquierda, debajo de «Reintentar» (PC y móvil): se enciende y se apaga
+const RNGSVG='<svg viewBox="0 0 24 24" width="1em" height="1em"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="3.2 2.4"/><circle cx="12" cy="12" r="2.8" fill="currentColor"/></svg>';
+{const _ui=ui;ui=function(){const r=_ui.apply(this,arguments);try{const m=$('mtl');if(m&&S&&!S.tut&&!m.querySelector('[data-a="rngall"]'))m.insertAdjacentHTML('beforeend',`<div class="gap"></div><button data-a="rngall" class="rngb${RNGA.tch?' on':''}" title="Ver el alcance de todas tus torres (${kbN('rng').toUpperCase()}; mantén pulsada la tecla para verlo un momento)">${RNGSVG}${kcap(kbN('rng'))}</button>`);}catch(e){}return r;};}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="rngall"]');if(!b)return;e.stopPropagation();e.preventDefault();RNGA.tch=!RNGA.tch;b.classList.toggle('on',RNGA.tch);try{sfx('ui');}catch(_){}},true);
+
+// ---------- Aviso de oro sin gastar ----------
+// lo más barato que puedes hacer ahora mismo: construir una torre del mazo en un solar libre o mejorar una torre
+function goldCheap(){if(!S||!S.list)return Infinity;let m=Infinity;
+ let free=false;for(let ky=0;ky<NC&&!free;ky++)for(let kx=0;kx<NC&&!free;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+1)+','+(ky*K+1)])free=true;
+ if(free)for(const k of S.deck||[]){const T=TW[k];if(T&&T.cost>0&&!T.uniq)m=Math.min(m,S.half?Math.ceil(T.cost/2):T.cost);}
+ for(const t of S.list){const T=TW[t.type];if(!T||t.hero||t.summ||(T.uniq&&!T.upc)||t.lvl>=(T.pig?4:3))continue;let c=Infinity;try{c=tCost(t,upCost(T,t.lvl+1));}catch(e){}if(c>0)m=Math.min(m,c);}
+ return m;}
+const goldWarnOn=()=>OPT.goldw!==false&&S&&!S.tut&&S.phase==='build'&&S.round>=2&&Math.floor(S.gold)>=goldCheap();
+const GW={r:-1};
+function goldWarnShow(){let el=document.getElementById('goldw');const b=document.querySelector('#mbr [data-a="wave"]');
+ if(!b){if(el)el.classList.remove('on');return;}
+ if(!el){el=document.createElement('div');el.id='goldw';document.body.appendChild(el);}
+ el.innerHTML=`<b>${fi(Math.floor(S.gold))} 🪙 sin gastar</b><small>Aún puedes construir o mejorar. Pulsa otra vez para empezar.</small>`;
+ const r=b.getBoundingClientRect(),cx=r.left+r.width*.22,w=230,lx=Math.max(w/2+8,Math.min(innerWidth-w/2-8,cx));el.style.left=Math.round(lx)+'px';el.style.top=Math.round(r.top-10)+'px';el.style.setProperty('--ax',Math.round(w/2+cx-lx)+'px');el.classList.add('on');}
+function goldWarnTick(){const el=document.getElementById('goldw');const show=typeof WARM!=='undefined'&&WARM&&S&&S.phase==='build'&&GW.r===S.round&&goldWarnOn();
+ if(show)goldWarnShow();else if(el)el.classList.remove('on');}
+setInterval(()=>{try{goldWarnTick();}catch(e){}},150);
+// ratón: el primer toque ya arma el botón; aquí solo se recuerda que el aviso salió en esta ronda
+document.addEventListener('click',e=>{try{const b=e.target.closest&&e.target.closest('#mbr [data-a="wave"]');if(b&&!WARM&&goldWarnOn())GW.r=S.round;}catch(_){}},true);
+// teclado: Intro empieza directamente; si sobra oro, la primera vez solo avisa
+addEventListener('keydown',e=>{try{if(e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;const k=e.key.toLowerCase();if(!kbIs('wave',k)||!S||S.phase!=='build')return;
+ if(RL.open||PMU.open||document.body.classList.contains('inmenu'))return;if(!goldWarnOn())return;
+ if(GW.r===S.round&&WARM&&performance.now()-WARM<3000)return;
+ GW.r=S.round;WARM=performance.now();e.preventDefault();e.stopImmediatePropagation();try{sfx('ui');}catch(_){}ui();
+ setTimeout(()=>{if(WARM&&performance.now()-WARM>=3000){WARM=0;ui();}},3050);}catch(_){}},true);
+
+// ---------- Avisos en la línea de rondas ----------
+// Solo la ronda que está por salir (lo que de verdad hay en los portales): voladores y enemigos que aún no conoces (sin decir cuál).
+function rtlWarn(r){const o={fly:0,nw:0};if(OPT.rtlw===false||!S||S.tut||r!==S.round||S.phase!=='build'||!S.portals)return o;
+ for(const p of S.portals)for(const t in p.plan||{}){const n=p.plan[t]||0;if(!n||!ET[t])continue;if(ET[t].fly)o.fly+=n;if(typeof seen==='function'&&!seen('en',t))o.nw++;}
+ return o;}
+const RTLWSVG={fly:'<svg viewBox="0 0 16 16"><path d="M1 9c3-1 4-4 7-4s4 3 7 4c-2 0-3 1-4 2-1-1-2-1.5-3-1.5S6 10 5 11C4 10 3 9 1 9z" fill="currentColor"/></svg>',
+ nw:'<svg viewBox="0 0 16 16"><text x="8" y="12.5" text-anchor="middle" font-size="12" font-weight="900" font-family="Georgia,serif" fill="currentColor">?</text></svg>'};
+{const _d=rtlDot;rtlDot=function(r){const d=_d.apply(this,arguments);try{const w=rtlWarn(r);let x='';if(w.fly)x+=`<i class="rtw fly">${RTLWSVG.fly}</i>`;if(w.nw)x+=`<i class="rtw nw">${RTLWSVG.nw}</i>`;
+  if(x){d.h+=`<span class="rtws">${x}</span>`;if(!d.c)d.c='w';}}catch(e){}return d;};}
+{const _t=rtlTip;rtlTip=function(r){let h=_t.apply(this,arguments);try{const w=rtlWarn(r),L=[];
+  if(w.fly)L.push(`<span class="rtwl fly">${RTLWSVG.fly}</span> Trae <b>voladores</b>`);if(w.nw)L.push(`<span class="rtwl nw">${RTLWSVG.nw}</span> Trae un enemigo que <b>aún no conoces</b>`);
+  if(L.length)h=h.replace('</small>','</small><small class="rtwt">'+L.join('<br>')+'</small>');}catch(e){}return h;};}
+
+// ---------- ¿Por qué he perdido? ----------
+function whyLost(){const out=[];if(!S||!S.st)return out;const ek=S.st.ek||{};
+ const L=Object.keys(ek).filter(k=>(ek[k].hpl||0)>0&&ET[k]).sort((a,b)=>ek[b].hpl-ek[a].hpl).slice(0,2);
+ const dts=S.list.filter(t=>TW[t.type]&&!t.hero).map(t=>TW[t.type].dt);const nMag=dts.filter(d=>d==='magic'||d==='elem').length,nPhy=dts.filter(d=>d==='phys'||d==='elem').length;
+ for(const k of L){const E=ET[k],n=ek[k].hpl,nm=E.n;let tip='';
+  if(isBoss({t:k}))tip='Era un jefe: guarda la definitiva del héroe para él y pon tus torres más fuertes cerca de su camino.';
+  else if((E.ap||0)>=30&&nMag<2)tip='Tienen mucha <span class="kw">armadura</span>: el daño mágico o elemental la ignora.';
+  else if((E.am||0)>=30&&nPhy<2)tip='Tienen mucha <span class="kw">resistencia mágica</span>: el daño físico o elemental no la sufre.';
+  else if(E.fly)tip='Vuelan: asegúrate de tener torres que les disparen a lo largo de todo su camino.';
+  else if((E.sp||1)>=1.5)tip='Son muy rápidos: ralentizarlos da tiempo a tus torres.';
+  else tip='Prueba a reforzar el tramo final del camino, cerca del núcleo.';
+  out.push({h:`<b>${nm}</b>: te ${n===1?'quitó 1 de vida':'quitaron '+n+' de vida'}.`,s:tip});}
+ const cheap=goldCheap();if(S.gold>=cheap&&S.gold>=50)out.push({h:`Te quedaron <b>${fi(Math.floor(S.gold))} 🪙</b> sin gastar.`,s:'Antes de cada oleada, mira si puedes construir o mejorar algo más.'});
+ if(S.rc>0&&!S.tut)out.push({h:`Te ${S.rc===1?'quedaba 1 reintento':'quedaban '+S.rc+' reintentos'} de oleada.`,s:'Si una oleada se tuerce, desde la pausa puedes repetirla desde el principio.'});
+ if(S.hero&&S.hero.lvl<=3&&S.round>=8)out.push({h:`Tu héroe acabó en <b>Nv ${S.hero.lvl}</b>.`,s:'Gana experiencia peleando: muévelo a donde haya más enemigos y usa sus habilidades.'});
+ return out.slice(0,3);}
+function whyHTML(){const L=whyLost();if(!L.length)return '';
+ return `<div class="whyl"><div class="whyh">${WHYSVG}<b>¿Por qué he perdido?</b></div>${L.map(x=>`<div class="whyi"><div>${x.h}</div><small>${x.s}</small></div>`).join('')}</div>`;}
+const WHYSVG='<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.2 9.3a2.9 2.9 0 1 1 4.3 2.5c-.9.5-1.5 1-1.5 2.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17.3" r="1.2" fill="currentColor"/></svg>';
+OIC.whyl='<span style="color:#a8432c;display:inline-grid">'+WHYSVG+'</span>';
+const WHYPOS={v:'r'};/* 'r': arriba de la página derecha · 'l': debajo del resumen */
+{const _eg=endGame;endGame=function(){const r=_eg.apply(this,arguments);try{if(S&&S.phase!=='won'&&!S.tut&&OPT.whyl!==false&&LB.end&&!LB.end.won){const w=whyHTML();if(w){
+ if(WHYPOS.v==='r')LB.end.right=w+LB.end.right;else LB.end.left+=w;if(typeof lbRender==='function')lbRender();}}}catch(e){}return r;};}
+
+// ---------- «Sabías que…» ----------
+// Solo cosas que el jugador ya puede tener delante (sin destripar nada de lo que no ha visto).
+const TIPS=[
+ ()=>'Pulsa <b>Tab</b> en un evento o una oferta para ver el mapa sin cerrar la ventana.',
+ ()=>'Con <b>Mayús + 1–9</b> usas las reliquias activas sin buscar el botón.',
+ ()=>'Con el botón de la izquierda, debajo de «Reintentar» (o manteniendo <b>'+(kbN?kbN('rng').toUpperCase():'X')+'</b>), ves el alcance de todas tus torres a la vez.',
+ ()=>'Las torres de unidades tienen <b>bandera</b>: pulsa la torre y luego la bandera para elegir dónde pelean.',
+ ()=>'El daño <span class="kw">mágico</span> ignora la armadura, pero no la resistencia mágica.',
+ ()=>'El daño <span class="kw">elemental</span> ignora tanto la armadura como la resistencia mágica.',
+ ()=>'Si una oleada sale mal, puedes <b>reintentarla</b> desde la pausa mientras te queden cargas.',
+ ()=>'Las <b>casillas especiales</b> mejoran la torre que construyas encima. Fíjate en ellas antes de colocar la pieza.',
+ ()=>'Puedes <b>girar la pieza</b> con R antes de colocarla.',
+ ()=>'Los enemigos de la ronda siguiente se ven en sus portales: pasa el ratón por encima.',
+ ()=>(TOUCH?'Mantén pulsada':'Haz clic derecho en')+' una mejora (o en una torre del anillo de construir) para marcarla: se comprará sola en cuanto tengas el oro.',
+ ()=>'Las habilidades del héroe pueden ir solas: actívalo en Opciones › Juego.',
+ ()=>'Desde la ronda 5, si no hay enemigos al alcance, el juego va solo a ×3.',
+ ()=>'En Estadísticas › Carrera tienes el resumen de todas tus partidas.',
+ ()=>'¿Algo no funciona como debería? Desde la pausa puedes <b>informar de un fallo</b> con una captura.',
+ ()=>'Abrir cofres pronto da más tiempo a que sus reliquias rindan.',
+ ()=>S0e2()?'Cada era tiene sus propias piezas, casillas y enemigos. Lo que descubres, se recuerda.':null];
+function S0e2(){return typeof era2Ok==='function'&&era2Ok();}
+const TIPW={i:-1};
+function tipPick(adv){const L=TIPS.map((f,i)=>[i,f()]).filter(x=>x[1]);if(!L.length)return null;
+ if(TIPW.i<0||adv){let j;do{j=Math.floor(Math.random()*L.length);}while(L.length>1&&L[j][0]===TIPW.i);TIPW.i=L[j][0];}
+ const f=L.find(x=>x[0]===TIPW.i)||L[0];return f[1];}
+function tipHTML(){if(OPT.tips===false)return '';const t=tipPick(false);if(!t)return '';
+ return `<div class="lbtip" data-a="tipnext" title=""><span class="lbtipi">${TIPSVG}</span><div><b>Sabías que…</b><small>${t}</small></div></div>`;}
+const TIPSVG='<svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.7.5 1.1 1.2 1.1 2V17h5.4v-.7c0-.8.4-1.5 1.1-2A6.5 6.5 0 0 0 12 2.5z" fill="currentColor" opacity=".9"/><rect x="9.3" y="18.2" width="5.4" height="1.6" rx=".6" fill="currentColor"/><rect x="10" y="20.6" width="4" height="1.4" rx=".6" fill="currentColor"/></svg>';
+// cada vez que se abre la pausa o el menú, un consejo nuevo
+{const _op=lbOpen;lbOpen=function(a){try{if(a==null)TIPW.i=-1;}catch(e){}return _op.apply(this,arguments);};}
+
+// ---------- Informar de un fallo ----------
+const BUGURL='https://towerize-ranking.towerize.workers.dev/bug';
+const BUG={shot:null,open:false,cat:'bug',sending:false,msg:''};
+const BUGCAT=[['bug','Fallo'],['ui','Interfaz'],['txt','Textos'],['bal','Equilibrio'],['idea','Idea']];
+// captura del mapa (lo que se ve en el lienzo), reducida a JPEG
+function bugShot(){try{const c=document.getElementById('c');if(!c||!c.width)return null;const W=Math.min(1100,c.width),H=Math.round(c.height*W/c.width);
+ const o=document.createElement('canvas');o.width=W;o.height=H;const x=o.getContext('2d');x.fillStyle='#000';x.fillRect(0,0,W,H);x.drawImage(c,0,0,W,H);return o.toDataURL('image/jpeg',.72);}catch(e){return null;}}
+// la captura se toma al pausar (antes de que el libro tape el mapa)
+{const _p=openPause;openPause=function(){try{BUG.shot=bugShot();}catch(e){}return _p.apply(this,arguments);};}
+function bugInfo(){const v=($('ver')&&$('ver').textContent)||'';const inG=typeof lbInGame==='function'&&lbInGame();
+ const L=['v'+((v.match(/\d+/)||[''])[0])];if(inG&&S){L.push('Era '+(S.era||1));L.push('Ronda '+Math.min(S.round,ROUNDS)+'/'+ROUNDS);if(S.hero)L.push(S.hero.def.n+' Nv '+S.hero.lvl);L.push(S.phase==='wave'?'en combate':'preparando');}else L.push('menú');
+ L.push(TOUCH?'táctil':'PC');L.push(innerWidth+'×'+innerHeight);return L.join(' · ');}
+function bugOpen(){const inG=typeof lbInGame==='function'&&lbInGame();if(!inG)BUG.shot=null;BUG.open=true;BUG.msg='';BUG.cat='bug';BUG.inc=!!BUG.shot;bugRender(true);}
+function bugClose(){BUG.open=false;const el=document.getElementById('bugw');if(el)el.classList.remove('open');}
+function bugRender(first){let el=document.getElementById('bugw');if(!el){el=document.createElement('div');el.id='bugw';document.body.appendChild(el);
+  el.addEventListener('click',bugClick);el.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Escape'){e.preventDefault();bugClose();}});}
+ const txt=first?'':((el.querySelector('textarea')||{}).value||'');
+ el.innerHTML=`<div class="bugbox"><button class="bkx" data-bg="x" aria-label="Cerrar">✕</button><h3>${BUGSVG} Informar de un fallo</h3>
+  <small class="bugsub">Cuéntanos qué ha pasado. Lo recibimos en el canal de feedback de Discord.</small>
+  <div class="bugcats">${BUGCAT.map(([k,l])=>`<button class="pill${BUG.cat===k?' on':''}" data-bg="cat" data-v="${k}">${l}</button>`).join('')}</div>
+  <textarea maxlength="1500" placeholder="¿Qué ha pasado? ¿Qué esperabas que pasara?"></textarea>
+  ${BUG.shot?`<div class="bugshot${BUG.inc?'':' off'}"><img src="${BUG.shot}" alt="" data-bg="zoom"><label><input type="checkbox" data-bg="inc"${BUG.inc?' checked':''}> Adjuntar esta captura del mapa</label></div>`:'<small class="bugnos">Sin captura: ábrelo desde la pausa de una partida para adjuntar el mapa.</small>'}
+  <small class="buginfo">Se envía también: ${bugInfo()}${typeof lbPilot==='function'&&lbPilot()?' · piloto '+lbPilot():''}</small>
+  <div class="bugbot"><span class="bugmsg">${BUG.msg}</span><button class="lbbk" data-bg="x">Cancelar</button><button class="gbtn" data-bg="send"${BUG.sending?' disabled':''}>${BUG.sending?'Enviando…':'Enviar'}</button></div></div>
+  <div class="bugzoom"><img alt=""></div>`;
+ const ta=el.querySelector('textarea');ta.value=txt;el.classList.add('open');if(first)setTimeout(()=>{try{ta.focus();}catch(e){}},50);}
+async function bugSend(el){const ta=el.querySelector('textarea'),txt=(ta.value||'').trim();
+ if(txt.length<3){BUG.msg='Escribe qué ha pasado.';bugRender();return;}
+ BUG.sending=true;BUG.msg='';bugRender();
+ const body={cat:BUG.cat,txt,nick:(typeof lbPilot==='function'&&lbPilot())||'',ver:((($('ver')&&$('ver').textContent)||'').match(/\d+/)||[''])[0],info:bugInfo(),img:BUG.inc&&BUG.shot?BUG.shot:null};
+ let ok=false,err='';try{const r=await fetch(BUGURL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json();ok=!!d.ok;err=d.err||'';}catch(e){err='red';}
+ BUG.sending=false;
+ if(ok){bugClose();try{sfx('ui');}catch(_){}bugToast('¡Gracias! Lo hemos recibido.');}
+ else{BUG.msg=err==='espera'?'Espera un minuto antes de enviar otro.':'No se ha podido enviar. Comprueba la conexión.';bugRender();const t2=document.querySelector('#bugw textarea');if(t2)t2.value=txt;}}
+function bugToast(t){let el=document.getElementById('bugtoast');if(!el){el=document.createElement('div');el.id='bugtoast';document.body.appendChild(el);}el.textContent=t;el.classList.add('on');clearTimeout(BUG.tt);BUG.tt=setTimeout(()=>el.classList.remove('on'),3000);}
+function bugClick(e){const el=document.getElementById('bugw'),b=e.target.closest('[data-bg]');
+ if(!b){if(e.target===el)bugClose();const z=e.target.closest('.bugzoom');if(z)z.classList.remove('on');return;}
+ const a=b.dataset.bg;e.stopPropagation();
+ if(a==='x')bugClose();
+ else if(a==='cat'){const v=el.querySelector('textarea').value;BUG.cat=b.dataset.v;bugRender();el.querySelector('textarea').value=v;}
+ else if(a==='inc'){BUG.inc=b.checked;b.closest('.bugshot').classList.toggle('off',!BUG.inc);}
+ else if(a==='zoom'){const z=el.querySelector('.bugzoom');z.querySelector('img').src=BUG.shot;z.classList.add('on');}
+ else if(a==='send'&&!BUG.sending)bugSend(el);}
+const BUGSVG='<svg viewBox="0 0 24 24" width="20" height="20" style="vertical-align:-4px"><ellipse cx="12" cy="13.5" rx="5" ry="6.5" fill="currentColor"/><circle cx="12" cy="6" r="2.6" fill="currentColor"/><path d="M7 10 3.5 8M7 14H3M7.5 18 4 20.5M17 10l3.5-2M17 14h4M16.5 18l3.5 2.5M10.5 4 9 2M13.5 4 15 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 8v12" stroke="#0006" stroke-width="1.2"/></svg>';
+
+// botones en la portada del libro (pausa y menú principal) y consejo «Sabías que…»
+{const _cv=lbCoverHTML;lbCoverHTML=function(){let h=_cv.apply(this,arguments);try{
+  const bug=`<button data-a="bugrep" class="bugbtn" aria-label="Informar de un fallo">${BUGSVG}<span>Informar de un fallo</span></button>`;
+  h=h.replace('<div class="lbcvin">','<div class="lbcvin">'+bug);
+  // puntuación: cinta bajo el retrato en lugar del texto suelto de arriba
+  h=h.replace(/<div class="lbscore"><small>Puntuación<\/small><b>([^<]*)<\/b><\/div>(<div class="lbemb">[\s\S]*?<\/div>)/,(m,t,emb)=>`<div class="lbembw">${emb}<div class="lbscr"><b>${t}</b><small>puntos</small></div></div>`);
+ }catch(e){}return h;};}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="bugrep"]');if(!b)return;e.stopPropagation();e.preventDefault();
+ if(b.dataset.a==='bugrep'){try{sfx('ui');}catch(_){}bugOpen();}
+ else{const t=tipPick(true);const s=b.querySelector('small');if(s&&t)s.innerHTML=t;try{sfx('page');}catch(_){}}},true);
+// mientras la ventana está abierta, el teclado es suyo
+addEventListener('keydown',e=>{if(BUG.open&&document.getElementById('bugw')&&document.getElementById('bugw').classList.contains('open')){if(e.key==='Escape'){e.preventDefault();bugClose();}e.stopImmediatePropagation();}},true);
+
+// ---------- Estadísticas › Carrera ----------
+function carStats(){const L=((typeof HIST!=='undefined'&&HIST.list)||[]).filter(r=>!r.tut);
+ const o={n:L.length,w:0,time:0,kills:0,gold:0,dmg:0,best:0,streak:0,cur:0,hero:{},tw:{},era:{},bestR:0};
+ const asc=L.slice().sort((a,b)=>a.t0-b.t0);
+ for(const r of asc){const w=r.res==='w';if(w){o.w++;o.cur++;o.streak=Math.max(o.streak,o.cur);}else o.cur=0;
+  o.time+=r.time||0;o.kills+=r.kills||0;o.gold+=r.gold||0;o.dmg+=r.dmg||0;o.bestR=Math.max(o.bestR,w?r.R:r.r||0);
+  o.hero[r.hero]=(o.hero[r.hero]||0)+1;o.era[r.era||1]=(o.era[r.era||1]||0)+1;
+  for(const t of r.tw||[]){const k=t[0];if(typeof k!=='string'||k.startsWith('hero:')||!TW[k])continue;const c=o.tw[k]||(o.tw[k]={n:0,d:0});c.n++;c.d+=t[3]||0;}}
+ o.last=L.slice().sort((a,b)=>b.t0-a.t0).find(r=>r.res==='w')||null;return o;}
+const top1=m=>{let b=null;for(const k in m){const v=typeof m[k]==='object'?m[k].n:m[k];if(!b||v>b[1])b=[k,v];}return b;};
+function carParts(){if(typeof hsLoad==='function')hsLoad();const o=carStats();
+ const big=(l,v,s)=>`<div class="carb"><small>${l}</small><b>${v}</b>${s?`<em>${s}</em>`:''}</div>`;
+ const hrs=o.time>=3600?Math.floor(o.time/3600)+' h '+Math.floor(o.time%3600/60)+' min':Math.floor(o.time/60)+' min';
+ let left=`<h3>Estadísticas</h3><div class="bksub">Carrera · todas tus partidas${o.n?'':' (todavía no has terminado ninguna)'}</div>
+  <div class="cargrid">${big('Partidas',fi(o.n))}${big('Victorias',fi(o.w),o.n?Math.round(o.w/o.n*100)+' %':'')}${big('Mejor racha',fi(o.streak),o.streak===1?'victoria':'victorias')}
+  ${big('Tiempo de combate',hrs)}${big('Enemigos eliminados',fi(o.kills))}${big('Oro conseguido',fi(o.gold)+' 🪙')}${big('Daño total',fi(o.dmg))}${big('Ronda más lejana',fi(o.bestR))}</div>`;
+ const fav=top1(o.hero),ftw=top1(o.tw),fera=top1(o.era);
+ const row=(ic,l,v,s)=>`<div class="carf"><span class="carfi">${ic}</span><div><small>${l}</small><b>${v}</b>${s?`<em>${s}</em>`:''}</div></div>`;
+ let right='<div class="lbdet carr">';
+ if(fav&&HEROES[fav[0]]){const H=HEROES[fav[0]];right+=row(`<i class="lbsvpor" style="background:${H.col||'#8a5a2e'}">${portrait(fav[0],1)}</i>`,'Héroe favorito',H.n,fav[1]+(fav[1]===1?' partida':' partidas'));}
+ if(ftw)right+=row(twIc(ftw[0]),'Torre más construida',TW[ftw[0]].n,'en '+ftw[1]+(ftw[1]===1?' partida':' partidas')+' · '+fi(o.tw[ftw[0]].d)+' de daño');
+ if(fera&&S0e2())right+=row(icU('dur','⏳'),'Era más jugada',(ERADEF[fera[0]]||ERADEF[1]).n,fera[1]+(fera[1]===1?' partida':' partidas'));
+ if(o.last){const H=HEROES[o.last.hero];right+=row(icU('m_c_ach','🏆'),'Última victoria',(H?H.n+' · ':'')+(ERADEF[o.last.era||1]||ERADEF[1]).n,typeof hsWhen==='function'?hsWhen(o.last.t0):'');}
+ if(!o.n)right+='<p>Cuando termines tu primera partida, aquí verás tu resumen.</p>';
+ right+='</div>';
+ return {marks:{list:STABS.map(([v,l,i])=>[v,l,i]),cur:'car',act:'stab'},left,right,key:'stcar'+o.n+'|'+((HIST&&HIST.list)||[]).length};}
+STABS.push(['car','Carrera','<svg viewBox="0 0 24 24" width="1em" height="1em"><path d="M4 20V10M10 20V5M16 20v-7M22 20H2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"/><circle cx="16" cy="6" r="2.4" fill="currentColor"/></svg>']);
+{const _sp=statParts;statParts=function(){if(STW.tab==='car')return carParts();return _sp.apply(this,arguments);};}
+{const _sh=statsHTML;statsHTML=function(t){if(t==='car')return '';return _sh.apply(this,arguments);};}
+// cuando acaba de cargar el registro, se repinta
+{const _hl=hsLoad;hsLoad=function(){const was=!!HIST.list;const r=_hl.apply(this,arguments);if(!was)setTimeout(()=>{try{if(LB.open&&STW.tab==='car')lbRender();}catch(e){}},400);return r;};}
+
+// ---------- «¿Sabías que…?» lo dice ÉTER ----------
+// Sus consejos (los de siempre y los nuevos) salen con una bombilla y «¿Sabías que…?» para que se distingan de sus comentarios.
+const ETTIPS=new Set();
+const tipTexts=()=>TIPS.map(f=>{try{return f();}catch(e){return null;}}).filter(Boolean).map(t=>t.replace(/<[^>]+>/g,''));
+{const _t=etmTips;etmTips=function(){if(OPT.tips===false)return [];const L=_t.apply(this,arguments).concat(tipTexts());for(const x of L)ETTIPS.add(etmName(x));return L;};}
+{const _p=etmPool;etmPool=function(){const base=_t0();let P=_p.apply(this,arguments);if(OPT.tips===false)P=P.filter(x=>!base.includes(x));else{const T=tipTexts();P=P.concat(T);}for(const x of base.concat(tipTexts()))ETTIPS.add(etmName(x));return P;};
+ function _t0(){const P=[];for(const t of ETMN.tip)if(typeof t==='string')P.push(t);else if(t[1]())P.push(t[0]);return P;}}
+{const _s=etmSay;etmSay=function(auto){const cv=document.querySelector('.lbcv.a');if(auto&&cv&&cv.classList.contains('ing')&&OPT.tips===false)return;
+ const r=_s.apply(this,arguments);try{const b=document.querySelector('.lbcv.a .etmbub');if(b&&ETTIPS.has(ETM.last)){const h=b.querySelector('b');if(h&&!b.querySelector('.ettip'))h.insertAdjacentHTML('afterend',`<em class="ettip">${TIPSVG}¿Sabías que…?</em>`);}}catch(e){}return r;};}
+// Bocadillo de ÉTER: el primer clic (dentro o fuera) termina de escribir; ya escrito, un clic fuera lo cierra y el clic sigue su camino
+document.addEventListener('pointerdown',e=>{try{const b=document.querySelector('.lbcv.a .etmbub.on');if(!b)return;const cv=b.closest('.lbcv'),sp=b.querySelector('.etmt');if(!sp)return;
+ const gr=cv.querySelector('.etmgr');
+ if(sp.textContent!==ETM.last){clearTimeout(ETM.type);sp.textContent=ETM.last;cv.classList.remove('etmtalk');if(gr){gr.style.animation='';gr.style.opacity='';}
+  clearTimeout(ETM.hide);ETM.hide=setTimeout(()=>{b.classList.remove('on');cv.classList.remove('etmon','etmtalk');},4000);ETMSKIP.on=1;setTimeout(()=>{ETMSKIP.on=0;},600);e.preventDefault();e.stopPropagation();return;}
+ if(!b.contains(e.target)){clearTimeout(ETM.hide);b.classList.remove('on');cv.classList.remove('etmon','etmtalk');}}catch(_){}},true);
+document.addEventListener('click',e=>{try{if(ETMSKIP.on){ETMSKIP.on=0;e.preventDefault();e.stopPropagation();}}catch(_){}},true);
+const ETMSKIP={on:0};
 </script></body></html>
