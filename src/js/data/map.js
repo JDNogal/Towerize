@@ -5,7 +5,6 @@ const PIECES=[
 {n:'Bifurcación',p:['#######','#######','#######','.......','###.###','###.###','###.###']},
 {n:'Cruce',p:['###.###','###.###','###.###','.......','###.###','###.###','###.###']},
 {n:'Arco',p:['#######','##...##','##.#.##','...#...','#######','#######','#######']},
-{n:'Valle',p:['#######','#######','#######','...#...','##.#.##','##...##','#######']},
 {n:'Serpiente',p:['###.###','#...###','#.#####','#.....#','#####.#','###...#','###.###']},
 {n:'Anillo',p:['###.###','#.....#','#.###.#','#.###.#','#.###.#','#.....#','###.###']},
 {n:'Abanico',p:['###.###','#.....#','#.#.#.#','#.#.#.#','#.#.#.#','#.....#','###.###']}];
@@ -44,8 +43,8 @@ function drawObs(c,ch,x,y,s){if('QNXVcYE'.includes(ch))return e2Obs(c,ch,x,y,s);
 function drawSolar(c,x,y,s){c.fillStyle='#4a4f5e';c.fillRect(x+s*.08,y+s*.08,s*.84,s*.84);c.strokeStyle='#c8b27a';c.lineWidth=Math.max(1,s*.06);c.strokeRect(x+s*.12,y+s*.12,s*.76,s*.76);}
 const BASE=['#######','#######','#####S#','###C...','#####S#','#######','#######'];
 // solares de cada pieza (columna, fila): dos variantes colocadas a mano en buenas posiciones
-// v328: solares revisados con Nogal (V1/V2 retocadas) y una 3.ª disposición (V3) en todas las piezas salvo el Valle
+// v328: solares revisados con Nogal (V1/V2 retocadas) y una 3.ª disposición (V3) en todas las piezas; fuera el Valle (era el Arco boca abajo, Nogal 14-nov)
 const SOLARES={'Recta': [[[5,2],[1,3],[5,4]],[[1,1],[1,3],[1,5]],[[1,1],[5,3],[1,5]]], 'Esquina': [[[1,1],[5,1],[5,5]],[[5,1],[4,2],[2,4]],[[5,0],[6,1],[1,5]]], 'Bifurcación': [[[2,1],[4,1],[2,5],[4,5]],[[1,1],[5,1],[1,5],[5,5]],[[0,1],[6,1],[0,5],[6,5]]], 'Cruce': [[[1,1],[5,1],[1,5],[5,5]],[[5,0],[0,1],[6,5],[1,6]],[[0,0],[6,0],[0,6],[6,6]]], 'Arco': [[[0,1],[3,2],[6,1],[3,5]],[[3,3],[5,1],[1,1],[3,0]],[[3,0],[3,2],[1,5],[5,5]]], 'Valle': [[[3,4],[5,5],[3,2],[1,5]],[[3,3],[5,4],[1,4],[3,6]]], 'Serpiente': [[[2,2],[5,1],[4,4],[1,5]],[[4,0],[2,2],[4,4],[2,6]],[[2,0],[5,2],[1,4],[4,6]]], 'Anillo': [[[0,0],[6,0],[0,6],[6,6]],[[4,4],[4,2],[2,4],[2,2]],[[2,0],[4,2],[2,4],[4,6]]], 'Abanico': [[[4,4],[4,2],[2,4],[2,2]],[[0,3],[2,3],[4,3],[6,3]],[[0,0],[2,3],[4,3],[6,6]]]};
 // cuántos solares trae cada pieza en partida (de su variante): más salidas = enemigos por más direcciones = más solares
-const SOLN={'Recta':2,'Esquina':2,'Arco':3,'Valle':3,'Serpiente':3,'Anillo':3,'Abanico':3,'Bifurcación':3,'Cruce':4};
+const SOLN={'Recta':2,'Esquina':2,'Arco':3,'Serpiente':3,'Anillo':3,'Abanico':3,'Bifurcación':3,'Cruce':4};
 function solarize(o,v,all){const L=SOLARES[o.n];if(!L)return;const g=o.p.map(r=>[...r]);let pts=[...L[v===undefined?Math.floor(Math.random()*L.length):v]];if(!all&&SOLN[o.n])pts=shuf(pts).slice(0,SOLN[o.n]);for(const[x,y]of pts)if(g[y][x]==='#')g[y][x]='S';o.p=g.map(r=>r.join(''));}

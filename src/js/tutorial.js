@@ -1,7 +1,7 @@
 // ==================== TUTORIAL COMPLETO ====================
 // Partida guionizada de 10 rondas: el guion controla lo que se ofrece (piezas, torres, oleadas) y el jugador siempre elige.
 let TUTON=false,TUTR=0,TUTHS={};
-const TUTP={1:['Recta','Esquina','Arco'],2:['Esquina','Arco','Recta'],3:['Bifurcación','Serpiente','Esquina'],4:['Cruce','Valle','Recta'],5:['Bifurcación','Anillo','Esquina'],6:['Bifurcación','Cruce','Abanico'],7:['Serpiente','Bifurcación','Arco'],8:['Cruce','Anillo','Esquina'],9:['Valle','Bifurcación','Abanico'],10:['Recta','Esquina','Cruce']};
+const TUTP={1:['Recta','Esquina','Arco'],2:['Esquina','Arco','Recta'],3:['Bifurcación','Serpiente','Esquina'],4:['Cruce','Arco','Recta'],5:['Bifurcación','Anillo','Esquina'],6:['Bifurcación','Cruce','Abanico'],7:['Serpiente','Bifurcación','Arco'],8:['Cruce','Anillo','Esquina'],9:['Anillo','Bifurcación','Abanico'],10:['Recta','Esquina','Cruce']};
 const TUTW={1:['patrol'],2:['patrol','patrol'],3:['patrol','squad'],4:['squad','squad'],5:['vanguard','vanguard'],6:['squad','vanguard','squad'],7:['tsling','patrol','tsling'],8:['vanguard','tsling','squad','tsling'],9:['vanguard','tsling','vanguard','tsling'],10:['vanguard','tsling','squad','vanguard','tsling']};
 const adjPath=(p,x,y)=>D.some(([a,b])=>p[y+b]&&p[y+b][x+a]==='.');
 function tutDeal(){const r=S.round,names=TUTP[r]||['Recta','Esquina'];let any=null,best=null;S.offers=[];

@@ -2556,7 +2556,6 @@ const PIECES=[
 {n:'Bifurcación',p:['#######','#######','#######','.......','###.###','###.###','###.###']},
 {n:'Cruce',p:['###.###','###.###','###.###','.......','###.###','###.###','###.###']},
 {n:'Arco',p:['#######','##...##','##.#.##','...#...','#######','#######','#######']},
-{n:'Valle',p:['#######','#######','#######','...#...','##.#.##','##...##','#######']},
 {n:'Serpiente',p:['###.###','#...###','#.#####','#.....#','#####.#','###...#','###.###']},
 {n:'Anillo',p:['###.###','#.....#','#.###.#','#.###.#','#.###.#','#.....#','###.###']},
 {n:'Abanico',p:['###.###','#.....#','#.#.#.#','#.#.#.#','#.#.#.#','#.....#','###.###']}];
@@ -2595,10 +2594,10 @@ function drawObs(c,ch,x,y,s){if('QNXVcYE'.includes(ch))return e2Obs(c,ch,x,y,s);
 function drawSolar(c,x,y,s){c.fillStyle='#4a4f5e';c.fillRect(x+s*.08,y+s*.08,s*.84,s*.84);c.strokeStyle='#c8b27a';c.lineWidth=Math.max(1,s*.06);c.strokeRect(x+s*.12,y+s*.12,s*.76,s*.76);}
 const BASE=['#######','#######','#####S#','###C...','#####S#','#######','#######'];
 // solares de cada pieza (columna, fila): dos variantes colocadas a mano en buenas posiciones
-// v328: solares revisados con Nogal (V1/V2 retocadas) y una 3.ª disposición (V3) en todas las piezas salvo el Valle
+// v328: solares revisados con Nogal (V1/V2 retocadas) y una 3.ª disposición (V3) en todas las piezas; fuera el Valle (era el Arco boca abajo, Nogal 14-nov)
 const SOLARES={'Recta': [[[5,2],[1,3],[5,4]],[[1,1],[1,3],[1,5]],[[1,1],[5,3],[1,5]]], 'Esquina': [[[1,1],[5,1],[5,5]],[[5,1],[4,2],[2,4]],[[5,0],[6,1],[1,5]]], 'Bifurcación': [[[2,1],[4,1],[2,5],[4,5]],[[1,1],[5,1],[1,5],[5,5]],[[0,1],[6,1],[0,5],[6,5]]], 'Cruce': [[[1,1],[5,1],[1,5],[5,5]],[[5,0],[0,1],[6,5],[1,6]],[[0,0],[6,0],[0,6],[6,6]]], 'Arco': [[[0,1],[3,2],[6,1],[3,5]],[[3,3],[5,1],[1,1],[3,0]],[[3,0],[3,2],[1,5],[5,5]]], 'Valle': [[[3,4],[5,5],[3,2],[1,5]],[[3,3],[5,4],[1,4],[3,6]]], 'Serpiente': [[[2,2],[5,1],[4,4],[1,5]],[[4,0],[2,2],[4,4],[2,6]],[[2,0],[5,2],[1,4],[4,6]]], 'Anillo': [[[0,0],[6,0],[0,6],[6,6]],[[4,4],[4,2],[2,4],[2,2]],[[2,0],[4,2],[2,4],[4,6]]], 'Abanico': [[[4,4],[4,2],[2,4],[2,2]],[[0,3],[2,3],[4,3],[6,3]],[[0,0],[2,3],[4,3],[6,6]]]};
 // cuántos solares trae cada pieza en partida (de su variante): más salidas = enemigos por más direcciones = más solares
-const SOLN={'Recta':2,'Esquina':2,'Arco':3,'Valle':3,'Serpiente':3,'Anillo':3,'Abanico':3,'Bifurcación':3,'Cruce':4};
+const SOLN={'Recta':2,'Esquina':2,'Arco':3,'Serpiente':3,'Anillo':3,'Abanico':3,'Bifurcación':3,'Cruce':4};
 function solarize(o,v,all){const L=SOLARES[o.n];if(!L)return;const g=o.p.map(r=>[...r]);let pts=[...L[v===undefined?Math.floor(Math.random()*L.length):v]];if(!all&&SOLN[o.n])pts=shuf(pts).slice(0,SOLN[o.n]);for(const[x,y]of pts)if(g[y][x]==='#')g[y][x]='S';o.p=g.map(r=>r.join(''));}
 // Bufos: d=daño, r=cadencia (1/enfriamiento), rg=rango, ar=área (multiplicadores); gold=oro extra por baja
 const BF={
@@ -4739,7 +4738,7 @@ if(IOS&&!navigator.webdriver){const iv=setInterval(()=>{if(typeof INTRO!=='undef
 // ==================== TUTORIAL COMPLETO ====================
 // Partida guionizada de 10 rondas: el guion controla lo que se ofrece (piezas, torres, oleadas) y el jugador siempre elige.
 let TUTON=false,TUTR=0,TUTHS={};
-const TUTP={1:['Recta','Esquina','Arco'],2:['Esquina','Arco','Recta'],3:['Bifurcación','Serpiente','Esquina'],4:['Cruce','Valle','Recta'],5:['Bifurcación','Anillo','Esquina'],6:['Bifurcación','Cruce','Abanico'],7:['Serpiente','Bifurcación','Arco'],8:['Cruce','Anillo','Esquina'],9:['Valle','Bifurcación','Abanico'],10:['Recta','Esquina','Cruce']};
+const TUTP={1:['Recta','Esquina','Arco'],2:['Esquina','Arco','Recta'],3:['Bifurcación','Serpiente','Esquina'],4:['Cruce','Arco','Recta'],5:['Bifurcación','Anillo','Esquina'],6:['Bifurcación','Cruce','Abanico'],7:['Serpiente','Bifurcación','Arco'],8:['Cruce','Anillo','Esquina'],9:['Anillo','Bifurcación','Abanico'],10:['Recta','Esquina','Cruce']};
 const TUTW={1:['patrol'],2:['patrol','patrol'],3:['patrol','squad'],4:['squad','squad'],5:['vanguard','vanguard'],6:['squad','vanguard','squad'],7:['tsling','patrol','tsling'],8:['vanguard','tsling','squad','tsling'],9:['vanguard','tsling','vanguard','tsling'],10:['vanguard','tsling','squad','vanguard','tsling']};
 const adjPath=(p,x,y)=>D.some(([a,b])=>p[y+b]&&p[y+b][x+a]==='.');
 function tutDeal(){const r=S.round,names=TUTP[r]||['Recta','Esquina'];let any=null,best=null;S.offers=[];
@@ -10402,7 +10401,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
- {v:328,f:'14 nov 2026',t:'ÉTER en el libro y solares nuevos',s:[['ÉTER',['En el libro (menú principal y pausa) ÉTER aparece como un cristal con la forma del núcleo, atado a una cinta arriba a la derecha. Brilla al hablar; púlsalo y te dirá algo.','Parpadea al ritmo de lo que escribe, como el altavoz de la tablet.']],['Piezas',['Solares revisados: algunas piezas cambian dónde están sus solares y casi todas estrenan una tercera disposición.']],['Enemigos',['Algunas mecánicas de enemigos cambian de nombre para explicarse mejor.']],['Equilibrio',['Pequeños ajustes internos de equilibrio.']]]},
+ {v:328,f:'14 nov 2026',t:'ÉTER en el libro y solares nuevos',s:[['ÉTER',['En el libro (menú principal y pausa) ÉTER aparece como un cristal con la forma del núcleo, atado a una cinta arriba a la derecha. Brilla al hablar; púlsalo y te dirá algo.','Parpadea al ritmo de lo que escribe, como el altavoz de la tablet.']],['Piezas',['Solares revisados: algunas piezas cambian dónde están sus solares y todas estrenan una tercera disposición.','Fuera el Valle: era la misma pieza que el Arco, girada.']],['Enemigos',['Algunas mecánicas de enemigos cambian de nombre para explicarse mejor.']],['Equilibrio',['Pequeños ajustes internos de equilibrio.']]]},
  {v:327,f:'14 nov 2026',t:'Enemigos poco a poco',s:[['Enemigos',['En las tres primeras partidas de cada era los enemigos van entrando poco a poco: la primera trae lo básico, la segunda los que piden más táctica y la tercera los más duros. Desde la tercera pieza, todo mezclado.']]]},
  {v:326,f:'14 nov 2026',t:'Apoyos',s:[['Apoyos',['Nuevo: los Apoyos, la otra cara de las Amenazas. Hacen la partida más llevadera a cambio de restar amenaza y puntuación.','Se abren poco a poco, a partir de ganar una partida con alguna amenaza.','El botón pasa a «Apoyos / Amenazas»: Apoyos a la izquierda y Amenazas a la derecha.']],['Puntuación',['Cada punto de amenaza suma un 10 % y cada punto de apoyo lo resta. Los rangos extremos (Niebla de guerra 4, Sin refuerzos 3) multiplican por 1,25 y los apoyos fuertes por 0,8. Nunca baja de ×0,5.','La clasificación usa la amenaza neta (amenazas − apoyos).']],['Opciones',['Pausa automática: si cambias de ventana en plena partida, el juego se pausa solo (Opciones › Juego).']]]},
  {v:325,f:'13 nov 2026',t:'Piezas corruptas',s:[['Amenazas',['Piezas corruptas: de vez en cuando las piezas traen una casilla maldita con sus propias reglas.']]]},
