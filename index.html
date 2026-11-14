@@ -620,7 +620,7 @@ body:not(.mfs) #lupa{display:none!important}
 body.mfs #panel:has(.pstrip){left:50%!important;transform:translateX(-50%)!important;max-width:calc(100vw - 2*230px)!important;padding:5px 8px}
 body.mfs #panel:has(.pstrip) #msg{display:none}
 .pstrip{display:flex;align-items:center;gap:6px;white-space:nowrap}.pstrip b{font-size:13px}.pstrip .gd{font-size:12px}
-.pstrip button{min-height:40px;margin:0;padding:0 10px;font-size:13px}.pstrip button[data-a="pexp"]{min-width:40px;padding:0}
+.pstrip button{min-height:40px;margin:0;padding:0 10px;font-size:13px}
 /* móvil: reliquias en columna a la izquierda; si hay más de 4, se desplazan */
 body.mfs #relics{left:6px!important;bottom:8px!important;top:auto!important;flex-direction:column-reverse;flex-wrap:nowrap;align-items:center;gap:6px;padding:5px!important;max-height:154px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y}
 body.mfs #relics .rl{width:44px;height:44px;flex:0 0 44px;font-size:24px}body.dsk:not(.mfs) #relics .rl{width:64px;height:64px;flex:0 0 64px;font-size:34px;border-radius:12px}body.dsk:not(.mfs) #relics .rl .bdg{font-size:13px;line-height:17px;padding:0 5px;border-radius:9px}body.dsk:not(.mfs) #relics{max-width:min(40vw,330px);gap:8px}@media (max-height:640px){body.dsk:not(.mfs) #relics .rl{width:52px;height:52px;flex:0 0 52px;font-size:28px}}
@@ -2610,6 +2610,21 @@ button.drr .drric{display:inline-grid;place-items:center;width:20px;height:20px}
 body.mfs #pcback,body.mfs #peekb.on{padding:9px 18px!important;font-size:14px!important;bottom:10px!important}
 /* v335 · los avisos de la ronda (voladores, enemigo nuevo) van debajo del número de la ronda, sin tapar la línea ni la ronda actual */
 #rtl .rtws{top:auto!important;right:auto!important;left:50%!important;bottom:-34px!important;transform:translateX(-50%)}
+/* v337 · clasificación a la izquierda del libro en el menú principal */
+#lbmside{position:fixed;z-index:61;width:230px;display:none;padding:12px 12px 10px;border-radius:12px;background:linear-gradient(180deg,#fbf1d8,#efe0bb);border:2px solid #8a5a2a;box-shadow:0 8px 22px rgba(0,0,0,.45);color:#2a1a0e;font:13px system-ui,sans-serif}
+#lbmside.on{display:block}#lbmside h4{margin:0 0 8px;text-align:center;font:700 19px Georgia,serif;color:#3a2410}#lbmside h4 small{display:block;font:600 11.5px system-ui,sans-serif;color:#7a5a3a}
+#lbmside ol{list-style:none;margin:0;padding:0}#lbmside li{display:flex;align-items:center;gap:8px;padding:5px 2px;border-bottom:1px dashed rgba(138,90,42,.35)}#lbmside li:last-child{border-bottom:0}
+#lbmside li b{width:18px;text-align:right;color:#8a5a2a}#lbmside li span{flex:1;min-width:0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#lbmside li small{display:block;font-weight:500;font-size:11px;color:#6a4a2a}
+#lbmside li em{font-style:normal;font-weight:800;color:#7a5208}#lbmside li.me{background:rgba(240,192,96,.3);border-radius:6px}#lbmside p{margin:6px 0;color:#6a4a2a;text-align:center}
+#lbmside .lbmall{display:block;width:100%;margin-top:8px;padding:7px;border-radius:8px;border:1px solid #8a5a2a;background:#f6e6c2;color:#3a2410;font-weight:700;cursor:pointer}#lbmside .lbmall:hover{background:#fff1cf}
+:root[data-skin="holo"] #lbmside{background:rgba(6,24,32,.92);border-color:#3fe8ff88;color:#d4f4ff}:root[data-skin="holo"] #lbmside h4{color:#7fdcf0}:root[data-skin="holo"] #lbmside :is(small,p,li small){color:#9ccfdc}
+/* v337 · anillo de construcción: solo el círculo de la torre, sin cuadrado detrás; coste en dorado vivo */
+#bmenu .tmb:not(.arm){background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+#bmenu .tmb .ic.tw{border-radius:50%!important;box-shadow:0 0 0 2.5px #1b1712,0 3px 6px rgba(0,0,0,.45)!important}
+#bmenu .tmb:hover .ic.tw,#bmenu .tmb.sel .ic.tw{box-shadow:0 0 0 2.5px #1b1712,0 0 0 5px #ffd23a,0 3px 8px rgba(0,0,0,.5)!important}
+#bmenu .tmb .p{color:#ffd23a!important;font-weight:800!important}
+/* v337 · vender: el «$» con contorno negro para que se lea sobre el botón */
+#tmenu .tmb.sell .ic{color:#ffd23a!important;font-weight:900!important;-webkit-text-stroke:1.6px #1b1712;paint-order:stroke fill;text-shadow:0 1px 0 #1b1712,0 0 3px rgba(0,0,0,.6)!important}
 /* ===== Pergamino nuevo (Era Fantástica): elegir pieza, nueva torre y eventos. Papel, rodillos y bordes a pluma los dibuja pergamino_nuevo.js en un SVG (.pgsvg); aquí, el título en cinta, colores y medidas ===== */
 /* título: cinta roja con la letra grabada en la tela */
 :root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .ptt,:root:not([data-skin="holo"]) body.pcpick #panel .pctt{position:relative;display:inline-block!important;margin:0 auto 6px!important;padding:5px 34px 6px!important;background:linear-gradient(180deg,#c43a2a,#9a1e16 55%,#6a100c)!important;border:1.5px solid #4a0a06;border-radius:3px;
@@ -2692,6 +2707,11 @@ body.pcpick #panel.pgf .pcinfo,body.pcpick #panel.pgf .pcinfo small{color:#3a241
 :root:not([data-skin="holo"]) :is(#relic .ppap .ptt,body.pcpick #panel .pctt,#relic .ppap.pgf .evhead b)::before{left:-26px!important;width:26px!important;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,38% 50%)!important;background:linear-gradient(to top left,transparent 50%,#2a0402 50%) right bottom/9px 8px no-repeat,linear-gradient(90deg,#7a140e 60%,#4a0a06)!important}
 :root:not([data-skin="holo"]) :is(#relic .ppap .ptt,body.pcpick #panel .pctt,#relic .ppap.pgf .evhead b)::after{right:-26px!important;width:26px!important;clip-path:polygon(0 0,100% 0,62% 50%,100% 100%,0 100%)!important;background:linear-gradient(to top right,transparent 50%,#2a0402 50%) left bottom/9px 8px no-repeat,linear-gradient(270deg,#7a140e 60%,#4a0a06)!important}
 :root:not([data-skin="holo"]) body.mfs #relic .ppap.evp.pgf .evrc{contain:size!important;overflow-y:auto!important}:root:not([data-skin="holo"]) body.mfs #relic .ppap.evp.pgf .evimg svg{max-height:46vh!important;width:auto!important;max-width:100%!important;margin:0 auto}:root:not([data-skin="holo"]) body.mfs #relic .ppap.evp.pgf{padding-top:40px!important;padding-bottom:36px!important}
+
+/* v336b · la cinta del título: las puntas pasan de verdad por DETRÁS de la cinta (capas de fondo: delante la cinta, detrás las puntas) y el doblez asoma bajo cada esquina */
+:root:not([data-skin="holo"]):not(#z1):not(#z2) :is(#relic .pscr .ppap .ptt,body.pcpick #panel .pctt,#relic .ppap.pgf .evhead b):not(#z3){background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23c43a2a'/%3E%3Cstop offset='.55' stop-color='%239a1e16'/%3E%3Cstop offset='1' stop-color='%236a100c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='0' width='100' height='40' fill='url%28%23g%29'/%3E%3Crect x='0' y='0' width='100' height='40' fill='none' stroke='%234a0a06' stroke-width='3' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M0 4H100' stroke='%23ff9c86' stroke-opacity='.5' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center top/calc(100% - 44px) calc(100% - 8px) no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M0 0H8V8Z' fill='%232a0402'/%3E%3C/svg%3E") left 22px bottom 0/8px 8px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M0 0H8L0 8Z' fill='%232a0402'/%3E%3C/svg%3E") right 22px bottom 0/8px 8px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 40' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%238a1a12'/%3E%3Cstop offset='1' stop-color='%235a0c08'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0 0H30V40H0L11 20Z' fill='url%28%23t%29' stroke='%233a0604' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") left bottom/30px calc(100% - 8px) no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 40' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='1' y1='0' x2='0' y2='0'%3E%3Cstop offset='0' stop-color='%238a1a12'/%3E%3Cstop offset='1' stop-color='%235a0c08'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M30 0H0V40H30L19 20Z' fill='url%28%23t%29' stroke='%233a0604' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") right bottom/30px calc(100% - 8px) no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:6px 58px 14px!important;filter:drop-shadow(0 3px 3px rgba(0,0,0,.28))}
+:root:not([data-skin="holo"]):not(#z1):not(#z2) :is(#relic .pscr .ppap .ptt,body.pcpick #panel .pctt,#relic .ppap.pgf .evhead b):not(#z3)::before,:root:not([data-skin="holo"]):not(#z1):not(#z2) :is(#relic .pscr .ppap .ptt,body.pcpick #panel .pctt,#relic .ppap.pgf .evhead b):not(#z3)::after{display:none!important;content:none!important}
+body.pcpick #panel.pgf>.pgsvg{zoom:1!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2706,7 +2726,7 @@ body.pcpick #panel.pgf .pcinfo,body.pcpick #panel.pgf .pcinfo small{color:#3a241
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v336</div>
+<div id="ver">Towerize v337</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -2782,8 +2802,6 @@ addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(!keyOK(e)||e.ctrlK
  else if(kbIs('zin',k)||k==='+'||k==='='){zoomSmooth(1.25,VIEW/2,VH/2);e.preventDefault();}else if(kbIs('zout',k)||k==='-'){zoomSmooth(1/1.25,VIEW/2,VH/2);e.preventDefault();}});
 addEventListener('keyup',e=>{const k=e.key.toLowerCase();for(const a of ['up','left','down','right'])if(kbIs(a,k))KEYS.delete(a);});addEventListener('blur',()=>KEYS.clear());
 {let last=0;const tick=t=>{const dt=Math.min(.05,(t-(last||t))/1000);last=t;if(KEYS.size&&typeof S!=='undefined'&&S){const sp=VIEW*.9*dt/sc();if(KEYS.has('left'))CAM.x-=sp;if(KEYS.has('right'))CAM.x+=sp;if(KEYS.has('up'))CAM.y-=sp;if(KEYS.has('down'))CAM.y+=sp;clampCam();}requestAnimationFrame(tick);};requestAnimationFrame(tick);}
-document.addEventListener('mouseover',e=>{if(TOUCH||!S||S.phase!=='place'||S.pi==null||S.pexp)return;if(e.target.closest&&e.target.closest('.pstrip')&&!e.target.closest('button')){S.pexp=true;ui();}});
-document.addEventListener('mouseout',e=>{if(TOUCH||!S||S.phase!=='place'||S.pi==null||!S.pexp)return;const p=$('panel');if(p&&p.contains(e.target)&&!(e.relatedTarget&&p.contains(e.relatedTarget))){S.pexp=false;ui();}});
 function zoomAt(f,px,py){const a=sc(),wx=px/a+CAM.x,wy=py/a+CAM.y;CAM.z=Math.max(ZMIN,Math.min(ZMAX,CAM.z*f));const b=sc();CAM.x=wx-px/b;CAM.y=wy-py/b;clampCam();}
 function camCenter(x,y){const w=VIEW/sc(),h=VH/sc();CAM.x=x*CS+CS/2-w/2;CAM.y=y*CS+CS/2-h/2;clampCam();}
 // escritorio: el lienzo ocupa toda la ventana y se dibuja a su resolución real
@@ -4147,7 +4165,7 @@ const CFILTERS={tw:[{key:'dt',label:'Tipo de daño',kw:'dtype',opts:Object.keys(
 const fbarHtml=fl=>fl.map(f=>`<div class="fbar">${kst(f.kw,f.label,'')}: <button class="${CP.flt[f.key]?'':'on'}" data-a="cflt" data-f="${f.key}" data-v="">Todos</button>`+f.opts.map(([v,l,c])=>`<button class="${c} ${CP.flt[f.key]===v?'on':''}" data-a="cflt" data-f="${f.key}" data-v="${v}">${l}</button>`).join('')+'</div>').join('');
 const csec=(t,s)=>`<div class="esec" style="margin-top:14px">${t}</div><small>${s}</small>`;
 // ---- compendio: vistazo general con barras (lo demás, con números, en la vista de detalle) ----
-const GCOL={cd:'#ff6b5e',ccl:'#f3e7a1',cg:'#5ab4ff',chp:'#9be15d',cph:'#c9ced8',cmg:'#8f9bff',cvl:'#ffe14d',burn:'#ff9a4a',poison:'#5fdc7a'};
+const GCOL={cd:'#ff6b5e',ccl:'#e0a52a',cg:'#5ab4ff',chp:'#9be15d',cph:'#c9ced8',cmg:'#8f9bff',cvl:'#ffe14d',burn:'#ff9a4a',poison:'#5fdc7a'};
 const GICO={burn:'🔥',poison:'🧪',slow:'🐌',ez:'⚡',chain:'🔗',bwall:'🧱',logk:'🪵',mheal:'<svg viewBox="0 0 28 24" width="19" height="16" fill="#9be15d" aria-hidden="true"><path d="M6.7 7.5h4.6v5.2h5.2v4.6h-5.2v5.2h-4.6v-5.2h-5.2v-4.6h5.2z"/><path d="M17.5 1.9h3v3.1h3.1v3h-3.1v3.1h-3v-3.1h-3.1v-3h3.1z"/><path d="M22.9 10.1h2.2v2.3h2.3v2.2h-2.3v2.3h-2.2v-2.3h-2.3v-2.2h2.3z"/></svg>',drunk:'🍺',freeze:'🧊',chill:'❄️',bleed:'🩸',stun:'💫',wet:'💧',root:'🌿',sticky:'🫗'};
 // tipo de daño: color (los de cada tipo) e icono delante de «Daño». Físico 🗡️, mágico báculo azul, elemental llama, rayo, veneno y hielo en cuadro
 GCOL.cel='#4fd6b8';
@@ -5833,12 +5851,16 @@ function anyPlace(o){
  return false;
 }
 const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+Math.round((BF[b.k].free?0:BF[b.k].sup?BFCS:BFC)*(typeof apOn==='function'&&apOn('cb')?.5:1)),0);
+// tipo de pieza según por dónde sale el camino: recta (dos lados opuestos), curva (dos lados contiguos), bifurcación (tres) o cruce (cuatro)
+const PCCAT={};function pcCat(o){if(PCCAT[o.n])return PCCAT[o.n];const p=o.p,n=p.length,m=p[0].length,top=[...p[0]].includes('.'),bot=[...p[n-1]].includes('.'),lef=p.some(r=>r[0]==='.'),rig=p.some(r=>r[m-1]==='.');
+ const k=top+bot+lef+rig;return PCCAT[o.n]=k>=4?'cruce':k===3?'bif':(top&&bot)||(lef&&rig)?'recta':'curva';}
 function dealTry(){
  // rescate: si solo queda un extremo libre, salen sí o sí la Bifurcación y el Cruce, gratis
  const E1=!S.tut&&S.round<ROUNDS?collectEnds():[],resc=E1.length===1,RN=['Bifurcación','Cruce'];
  for(let t=0;t<40;t++){
   const PZ=PIECES.filter(o=>typeof pieceOk!=='function'||pieceOk(o.n));let pool=shuf([...PZ]).slice(0,rp('square')?4:3);
   if(resc){const rest=shuf(PZ.filter(x=>!RN.includes(x.n)));pool=shuf([...PIECES.filter(x=>RN.includes(x.n)),...rest.slice(0,pool.length-2)]);}
+  /* v337: nunca más de dos piezas del mismo tipo (rectas, curvas, bifurcaciones o cruces) */if(t<36&&pool.length>=3){const c={};for(const o of pool){const k=pcCat(o);c[k]=(c[k]||0)+1;}if(Object.values(c).some(n=>n>2))continue;}
   S.offers=pool.map(o=>{const of={n:o.n,p:o.p,b:[]};solarize(of);decorate(of);
    if(S.round>=BUFFS_FROM&&Math.random()<.6){const cs=[];of.p.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));
     shuf(cs);
@@ -6331,7 +6353,7 @@ function laneDir(e,F){const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K);let best
 const laneOf=(x,y,fd)=>{const ox=x-Math.floor(x/K)*K-1,oy=y-Math.floor(y/K)*K-1;return ox*fd[1]-oy*fd[0];};
 function laneStep(e,F){if(e.nolane)return null;const fd=laneDir(e,F);if(!fd)return null;e.fd=fd;if(e.fln==null)e.fln=laneOf(e.tx,e.ty,fd);
  const cur=laneOf(e.tx,e.ty,fd),ok=(x,y)=>inb(x,y)&&S.cells[y][x]===2&&F[y][x]!=null&&isFinite(F[y][x])&&F[y][x]>=0;
- if(cur!==e.fln){const dir=e.fln>cur?1:-1,lx=fd[1]*dir,ly=-fd[0]*dir,nx=e.tx+lx,ny=e.ty+ly;if(ok(nx,ny)&&Math.floor(nx/K)===Math.floor(e.tx/K)&&Math.floor(ny/K)===Math.floor(e.ty/K))return[nx,ny];}
+ /* v337: el cambio de carril se hace en diagonal y siempre avanzando (antes daban un paso de lado, sin avanzar, y se les veía andar en horizontal) */if(cur!==e.fln){const dir=e.fln>cur?1:-1,lx=fd[1]*dir,ly=-fd[0]*dir,sx=e.tx+lx,sy=e.ty+ly,fx=e.tx+fd[0],fy=e.ty+fd[1],dx=fx+lx,dy=fy+ly;if(ok(sx,sy)&&ok(fx,fy)&&ok(dx,dy)&&F[dy][dx]<F[e.ty][e.tx]&&Math.floor(sx/K)===Math.floor(e.tx/K)&&Math.floor(sy/K)===Math.floor(e.ty/K))return[dx,dy];}
  const nx=e.tx+fd[0],ny=e.ty+fd[1];if(ok(nx,ny)&&F[ny][nx]<F[e.ty][e.tx]+K)return[nx,ny];return null;}
 function move(e,dt){if(isBoss(e))e.blk=e.stopped?(e.blk||0)+dt:Math.max(0,(e.blk||0)-2*dt);if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
  /* v305: una ralentización ya no saca al enemigo del paso de su escuadra (antes, al pasársele, corría a su velocidad propia, más rápida que la de la formación: ralentizar acababa acelerando la oleada) */if(e.fsp&&(e.fx.stun||e.fx.freeze||e.fx.root||e.fx.poly||e.fx.haste||e.stopped))e.fsp=0;
@@ -7378,7 +7400,7 @@ function ui(){
  $('mtl').innerHTML=`<button data-a="pause" title="Menú de pausa (Esc)">☰</button><div class="gap"></div>`+
   `<button data-a="retry" class="${S.rask?'warn':''}"${rcOk?'':' disabled'} title="${S.rask?'Pulsa otra vez para reintentar la oleada (gasta 1 carga)':'Reintentar la oleada desde el principio'}">↺<span class="bdg">${S.tut?'∞':S.rc||0}</span></button>`;
  $('mbr').innerHTML=xPanel()+heroPanel()+(S.phase==='build'?`<button class="go${WARM?' arm':''}" data-a="wave" style="position:relative">${WARM?'✓ Pulsa otra vez':'Empezar oleada'}${kcap(kbN('wave'))}</button>`:'');
- if(S.phase==='place'&&(MF||!TOUCH)&&S.pi!=null&&!S.pexp&&S.offers[S.pi]){const o=S.offers[S.pi];h=`<div class="pstrip"><b>${o.n}</b>${payOn()&&pcost(o)?`<span class="gd">${pcost(o)} 🪙</span>`:''}<button data-a="prot" data-i="${S.pi}">⟳ Girar</button><button data-a="pick" data-i="${S.pi}">✕ Cancelar</button><button data-a="pexp" title="Ver las piezas">▲</button></div>`;}
+ if(S.phase==='place'&&(MF||!TOUCH)&&S.pi!=null&&S.offers[S.pi]){const o=S.offers[S.pi];h=`<div class="pstrip"><b>${o.n}</b>${payOn()&&pcost(o)?`<span class="gd">${pcost(o)} 🪙</span>`:''}<button data-a="prot" data-i="${S.pi}">⟳ Girar</button><button data-a="pick" data-i="${S.pi}">✕ Cancelar</button></div>`;}
  else if(S.phase==='place'){
   h=(S.pi==null?'<div class="pctt">Elige una pieza</div><button class="pcpeek" data-a="ppeek" title="Ver el mapa">👁</button>'+diceRr('pc'):'')+'<small style="display:block;margin-bottom:12px">'+(S.pi==null?(S.tut?'Puedes girarla antes de colocarla.':'Puedes girarla antes de colocarla. Después podrás cancelar y volver aquí.'):(BARX.pc=1,'Pulsa un hueco marcado que conecte con el camino.'+(HSEEN.barpc?'':' Vuelve a pulsar la pieza para dejar de elegirla.')))+'</small><div class="prow">'+
   S.offers.map((o,i)=>`<div class="cardw"><button class="card ${i===S.pi?'on':''}" data-a="pick" data-i="${i}" data-tip="piece:${i}"><canvas width="98" height="98" data-i="${i}"></canvas>${o.n}${!payOn()?'':pcost(o)?`<span class="pcst gd">${pcost(o)} 🪙</span>`:'<span class="pcst pfree">Gratis</span>'}</button><button class="rbtn${TOUCH?'':' wide'}" data-a="prot" data-i="${i}" title="Girar la pieza${TOUCH?'':' ('+kbN('rot')+')'}"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13.2 8.4A5.2 5.2 0 1 1 11.6 4.3"/><path d="M12.6 1.8v3.4H9.2"/></svg>${TOUCH?'':'R'}</button></div>`).join('')+'</div>';}
@@ -9565,6 +9587,8 @@ document.addEventListener('click',e=>{const n=e.target.closest&&e.target.closest
  if(NEC.open&&e.target.id==='necard'){e.stopPropagation();necClose();}},true);
 addEventListener('keydown',e=>{if(!NEC.open)return;if(e.key==='Escape'||e.key==='Enter'||e.key===' '){e.preventDefault();e.stopImmediatePropagation();necClose();}},true);
 setInterval(()=>{try{if(!S||S.phase!=='wave'||S.tut){if(NEC.cur&&(!S||S.phase!=='wave'))necHide();if(!S||S.phase!=='wave')NEC.q=[];return;}if(!NEC.cur&&!NEC.open&&!LB.open&&NEC.q.length)necShow(NEC.q.shift());}catch(e){}},250);
+// v337 · la ficha del héroe en la partida lleva siempre su acceso rápido al compendio
+{const _hi=heroInfo;heroInfo=function(id,quiet){const h=_hi.apply(this,arguments);try{if(!quiet&&compOk()&&S&&S.hero&&S.hero.id===id&&!/class="cpgo"/.test(h))return cpBtn('hr',id)+h;}catch(e){}return h;};}
 // ==================== Casillas especiales nuevas: Precisión, Perforación, Eco, Persistencia, Taller y Cuartel ====================
 // valor de una casilla bajo la torre (con el Yunque ×1,5 y la Bendición ×2, como las demás)
 function tileV(t,key,def){if(!t||!t.cells||!S||!S.buff)return def;let v=null;const K0=typeof rp==='function'&&rp('anvil')?1.5:1;
@@ -10781,6 +10805,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:337,f:'15 nov 2026',t:'Clasificación en el menú',s:[['Novedades',['La clasificación se ve en el menú principal, junto al libro (en móvil, con su botón), y se abre entera desde ahí.']],['Arreglos',['Pantallas grandes: los bordes a pluma de las cartas de piezas ya caen justo encima de cada carta.','Títulos en cinta: las puntas pasan por detrás de la cinta, con su doblez.','Anillo de construcción: solo el círculo de cada torre, sin cuadrado detrás, y el coste en dorado vivo.','La barra de enfriamiento de las fichas se ve bien sobre el pergamino.','Los enemigos ya no se ponen a andar de lado: cambian de carril en diagonal y siempre avanzando.','El poste de los eventos, sin clavo.','Al colocar una pieza ya no se despliega el menú antiguo de piezas al pasar el ratón: «Cancelar» te devuelve a la selección.','Vender: el «$» se lee bien.','La ficha del héroe en la partida tiene su acceso rápido al compendio.','Al elegir pieza nunca salen tres del mismo tipo (rectas, curvas, bifurcaciones o cruces).']]]},
  {v:336,f:'14 nov 2026',t:'Cofres, eventos y el pergamino',s:[['Novedades',['Los cofres y los eventos del mapa tienen nuevo aspecto… y de vez en cuando te llaman.','El pergamino de elegir pieza, de nueva torre y de los eventos llega cerrado y se desenrolla.','Lo que trae cada pieza se lee debajo de su carta.']],['Arreglos',['Eventos: ventana más alta, sin barra de desplazamiento en las opciones.','El cofre abierto queda en el centro de la pantalla.','Brújula rota: el desvío dura como mucho 6 s (los jefes, 3 s) y la descripción lo dice.','Títulos en cinta con letra dorada, que se lee mejor sobre el rojo.']]]},
  {v:335,f:'14 nov 2026',t:'Arreglos rápidos',s:[['Arreglos',['El botón de informar de un fallo ya se ve en todas las pantallas (libro, compendio, elegir héroe, ventanas…) y no se monta con el borde del libro. En la partida está en la columna de arriba a la izquierda.','Novedades: al abrir una versión, solo deja de ser «nueva» esa, no todas.','Compendio: el círculo de la torre en su ficha vuelve a tener su color.','Nueva torre: con paletas oscuras, las letras salían claras sobre el pergamino y no se leían. Ya se leen.','Con la reliquia de la cuarta pieza, las cartas ya caben en el pergamino.','El pie del libro ya no hace un corte raro junto al lomo.','Ojo: el botón para volver sale siempre abajo en el centro, más grande, y dice a qué selección vuelves (piezas, torres, reliquias o evento).','Elegir héroe: el botón de abajo a la izquierda vuelve a la duración, no al menú.','«Volver a tirar» lleva el dado dibujado y está más separado de las cartas.','Los puntos de la pausa se leen con cualquier paleta.','Los avisos de la siguiente ronda (voladores, enemigo nuevo) van debajo de su número y ya no tapan la línea.','El tiempo real y el de combate ya no se salen de la barra de arriba.']]]},
  {v:334,f:'14 nov 2026',t:'Arreglos de ventanas',s:[['Novedades',['Las páginas de elegir pieza y torre tienen nuevo aspecto.','Cuando sale un jefe, ya no pasa desapercibido.']],['Arreglos',['Después de abrir un cofre, la siguiente ventana (nueva torre, evento…) salía sin su fondo y casi no se leía. Ya sale bien.','Cofre abierto: en pantallas grandes, el cartel quedaba muy separado de arriba y las cartas tapaban el mapa. Ahora todo sube.','Cofre abierto: algunas descripciones salían con barra de scroll aunque cupieran.','Los paneles del mazo y del cofre quedan centrados entre el borde de la pantalla y la ventana.','Al elegir pieza, la tecla del ojo (Tab, o la que tengas puesta) no hacía nada. Ya deja ver el mapa.','Eventos: lo que obtienes ya se lee seguido, sin cortarse en columnas.','Torres de apoyo: su ficha ya no muestra estadísticas que no tienen (como «Enfriamiento Infinity s»).','Compendio: los efectos largos de un héroe (como los de Yrsa) ya no se salen con barra; la reliquia inicial sale solo en su recuadro.','El aviso de logro cercano ya no sale si ese logro ya no se puede conseguir en la partida.','El pie del libro ya no deja ver a medias lo que hay detrás junto al lomo.','La marca de compra en cola cuelga de la esquina de la torre, en vez de flotar encima.','A partir de media partida, si el camino tiene dos o más finales, los enemigos salen como mínimo por dos portales.','Previsualización del libro: ya no suena el núcleo ni las bajas en bucle.','Botón ↩ del libro: si estabas viendo una torre en acción, la página de la derecha ya vuelve también.','Compendio · Eventos: todas las opciones tienen el mismo tamaño y su letra se lee con cualquier paleta.','Compendio · Mecánicas: «Lo usan» solo enseña lo que ya has visto, y con el nombre de la especialización o habilidad que lo usa.','Compendio: todas las torres tienen ya su descripción.']],['Ayudas',['ÉTER ya no habla cada vez que pausas: solo de vez en cuando, o si te quedas un buen rato en la pausa.','Un consejo nuevo sobre abrir muchas salidas, y un aviso al perder si tenías muchos portales abiertos.']]]},
@@ -12947,8 +12972,8 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="reset"],[data-a="menu"]');if(!b||!LB.open||LB.area!=='end'||b.dataset.lbok)return;
  if(!LBR.cur||(LBR.up&&LBR.up.ok)||LBR.busy||LBR.asked||OPT.lbup!=='ask')return;
  e.stopPropagation();e.preventDefault();lbAskDlg(()=>{b.dataset.lbok=1;b.click();delete b.dataset.lbok;});},true);
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="lbup"],[data-a="lbrank"],[data-a="lbrkera"],[data-a="lbrkamz"],[data-a="lbrkback"],[data-a="lbrkname"]');if(!b)return;e.stopPropagation();e.preventDefault();const a=b.dataset.a;
- if(a==='lbup')lbUpload();else if(a==='lbrank')lbRankOpen();else if(a==='lbrkback'){LB.msg=null;lbOpen('end');}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="lbrkmenu"],[data-a="lbup"],[data-a="lbrank"],[data-a="lbrkera"],[data-a="lbrkamz"],[data-a="lbrkback"],[data-a="lbrkname"]');if(!b)return;e.stopPropagation();e.preventDefault();const a=b.dataset.a;
+ if(a==='lbrkmenu'){LB.msg=null;lbOpen(null,true);return;}if(a==='lbup')lbUpload();else if(a==='lbrank')lbRankOpen();else if(a==='lbrkback'){LB.msg=null;lbOpen('end');}
  else if(a==='lbrkname')lbNameDlg(null);
  else{if(a==='lbrkera'){LBR.era=+b.dataset.v;LBR.sel=null;}else LBR.sel=+b.dataset.v;try{sfx('page');}catch(_){}lbRankLoad();lbRender();}},true);
 // ---- la tabla ----
@@ -12969,10 +12994,31 @@ function lbRankParts(){const era=LBR.era,open=lbAmzOpen(era),T=(LBR.tiers[era]||
  else right=`<table class="lbrkt"><tr><th>#</th><th>Piloto</th><th>Héroe</th><th>Ronda</th><th class="s">Puntos</th></tr>${L.map((r,i)=>`<tr class="${r.nick.toLowerCase()===me?'me':''}"><td class="n">${i+1}</td><td>${r.nick}</td><td>${hn(r.hero)}</td><td>${r.round}${r.won?' ✓':''}</td><td class="s">${fi(r.score)}</td></tr>`).join('')}</table>`;
  return {left,right};}
 function lbRankOpen(){LBR.err=0;LBR.era=LBR.era||(LBR.cur?LBR.cur.era:(S&&S.era)||ERA||1);
- LB.msg={key:'rank',left:()=>lbRankParts().left,right:()=>lbRankParts().right,footL:`<button class="lbbk" data-a="${LB.end?'lbrkback':'menu'}">‹ Volver</button>`,footR:'',onBack:()=>{if(LB.end)lbOpen('end');}};
+ LB.msg={key:'rank',left:()=>lbRankParts().left,right:()=>lbRankParts().right,footL:`<button class="lbbk" data-a="${LB.end?'lbrkback':'lbrkmenu'}">‹ ${LB.end?'Volver':'Menú'}</button>`,footR:'',onBack:()=>{if(LB.end)lbOpen('end');else lbOpen(null,true);}};
  lbOpen('msg');lbRankLoad();}
 // cinta «Clasificación» en el final de partida
 {const _ep=endParts;endParts=function(){const p=_ep.apply(this,arguments);try{if(LBR.cur&&p.ribs)p.ribs=p.ribs.replace(/<\/div>\s*$/,`<button class="bkrib" data-a="lbrank" title="Clasificación"><svg width="24" height="22" viewBox="0 0 24 22" fill="#f2cd62" stroke="#1b1712" stroke-width="1.4"><rect x="8.5" y="6" width="7" height="15"/><rect x="1.5" y="11" width="7" height="10" fill="#d9d2c2"/><rect x="15.5" y="14" width="7" height="7" fill="#d08a4a"/><path d="M12 1l1 2 2 .3-1.5 1.4.4 2.1L12 5.8l-1.9 1 .4-2.1L9 3.3l2-.3z"/></svg><span>Clasificación</span></button></div>`);}catch(e){}return p;};}
+// ==================== v337 · Clasificación en el menú principal ====================
+// A la izquierda del libro, en la portada del menú principal, se ve siempre el top de la clasificación de la era
+// (con «Ver toda la clasificación»); en móvil, donde no cabe, una cinta más en la portada. Desde ahí, «‹ Menú» vuelve a la portada.
+const LBM={t:0,sig:''};
+function lbmTick(){try{const on=document.body.classList.contains('inmenu')&&LB.open&&LB.cover&&!document.body.classList.contains('mfs')&&innerWidth>=1100;let el=$('lbmside');
+ if(!on){if(el)el.classList.remove('on');return;}
+ if(!el){el=document.createElement('div');el.id='lbmside';document.body.appendChild(el);el.addEventListener('click',e=>{if(e.target.closest('[data-a="lbrank"]')){e.stopPropagation();try{sfx('page');}catch(_){}lbRankOpen();}});}
+ if(!LBR.era)LBR.era=ERA||1;const era=LBR.era;
+ if(performance.now()-LBM.t>60000||!LBR.tiers[era]){LBM.t=performance.now();lbRankLoad();}
+ const L=LBR.data[era+'|'+LBR.sel],me=lbPilot().toLowerCase(),hn=id=>(HEROES[id]&&HEROES[id].n)||id;
+ const rows=LBR.err?'<p>No se ha podido cargar.</p>':!L?'<p>Cargando…</p>':!L.length?'<p>Aún no hay partidas. ¡Sé el primero!</p>':
+  `<ol>${L.slice(0,8).map((r,i)=>`<li class="${r.nick.toLowerCase()===me?'me':''}"><b>${i+1}</b><span>${r.nick}<small>${hn(r.hero)} · Ronda ${r.round}${r.won?' ✓':''}</small></span><em>${fi(r.score)}</em></li>`).join('')}</ol>`;
+ const h=`<h4>Clasificación<small>${ERADEF[era]&&(ERADEF[era].esc||'Era '+ERADEF[era].n)||''}${lbAmzOpen(era)&&LBR.sel?' · Amenaza '+LBR.sel:''}</small></h4>${rows}<button class="lbmall" data-a="lbrank">Ver toda la clasificación ›</button>`;
+ if(h!==LBM.sig){LBM.sig=h;el.innerHTML=h;}
+ el.classList.add('on');
+ // centrado entre el borde izquierdo y el libro
+ const bk=document.querySelector('#comp .lbcv')||document.querySelector('#comp .bkw');if(bk){const r=bk.getBoundingClientRect(),w=el.offsetWidth;el.style.left=Math.max(8,(r.left-w)/2)+'px';el.style.top=Math.max(60,r.top+r.height/2-el.offsetHeight/2)+'px';}else{el.style.left='40px';el.style.top=Math.max(60,innerHeight/2-el.offsetHeight/2)+'px';}
+ el.classList.add('on');}catch(e){}}
+setInterval(lbmTick,300);
+// móvil: cinta «Clasificación» en la portada del menú
+{const _r=lbRender;lbRender=function(){const r=_r.apply(this,arguments);try{if(document.body.classList.contains('inmenu')&&LB.open&&LB.cover){const rb=document.querySelector('#comp .bkribs');const nv=document.querySelector('#comp .lbnov');if(nv&&document.body.classList.contains('mfs')&&!document.querySelector('#comp .lbnov+.lbnov.rk'))nv.insertAdjacentHTML('afterend','<button class="lbnov rk" data-a="lbrank">🏆 Clasificación</button>');if(rb&&!rb.querySelector('[data-a="lbrank"]'))rb.insertAdjacentHTML('beforeend',`<button class="bkrib" data-a="lbrank" title="Clasificación"><svg width="24" height="22" viewBox="0 0 24 22" fill="#f2cd62" stroke="#1b1712" stroke-width="1.4"><rect x="8.5" y="6" width="7" height="15"/><rect x="1.5" y="11" width="7" height="10" fill="#d9d2c2"/><rect x="15.5" y="14" width="7" height="7" fill="#d08a4a"/><path d="M12 1l1 2 2 .3-1.5 1.4.4 2.1L12 5.8l-1.9 1 .4-2.1L9 3.3l2-.3z"/></svg><span>Clasificación</span></button>`);}}catch(e){}return r;};}
 // ==================== v319 · Aviso de «¡Cerca de un logro!» ====================
 // Idea de Nogal (13-nov-2026): cuando un logro que se mide en partida llega al 80 %, el juego te avisa (abajo en el centro), con su trofeo,
 // su barra y un botón para fijarlo. Una vez por logro y partida; los de progreso entre partidas (bajas con cada torre, cofres…), una vez por nivel.
@@ -13313,7 +13359,7 @@ function mapEvtDraw(key,cx,cy,BCS,lw){const G=MIC.ctx||g,now=MIC.now!=null?MIC.n
   G.strokeStyle='rgba(74,38,14,.55)';G.lineWidth=lw(1.2);G.beginPath();G.moveTo(x0+w*.08,y0+h*.33);G.lineTo(x0+w*.78,y0+h*.33);G.moveTo(x0+w*.08,y0+h*.68);G.lineTo(x0+w*.74,y0+h*.68);G.stroke();
   // «?» tallado: oscuro con un filo claro debajo
   G.font=`900 ${Math.round(BCS*.82)}px Georgia,serif`;G.textAlign='center';G.textBaseline='middle';G.fillStyle='rgba(255,220,170,.35)';G.fillText('?',x0+w*.42,h*.06+lw(1.2));G.fillStyle='#3a1e0a';G.fillText('?',x0+w*.42,h*.06);
-  G.fillStyle='#d8c08a';G.strokeStyle='#2e1708';G.lineWidth=lw(1);G.beginPath();G.arc(0,0,BCS*.07,0,7);G.fill();G.stroke();G.restore();return;}
+  G.restore();return;}
  // holograma
  const gl=u<.7?(Math.random()<.5?1:0):0,jx=gl?(Math.random()-.5)*BCS*.35:0,fl=.85+.15*Math.sin(now*7)+(gl?-.35*Math.random():0),bob=Math.sin(now*1.6)*BCS*.08;
  const base=cy+BCS*.95,qy=cy-BCS*.55+bob;
