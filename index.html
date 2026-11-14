@@ -945,6 +945,8 @@ body.inmenu.lbsetup canvas#c{filter:none}
 .bkmk.glow{box-shadow:0 0 0 2px #3fe8ff,0 0 14px #3fe8ff!important;animation:bkglow 1.2s ease-in-out infinite alternate}@keyframes bkglow{from{box-shadow:0 0 0 2px #3fe8ff,0 0 6px #3fe8ff}to{box-shadow:0 0 0 3px #8ff4ff,0 0 18px #3fe8ff}}
 
 
+/* v334 · filas largas del compendio (p. ej. «Efectos» de Yrsa): el valor pasa a varias líneas en vez de salirse con barra de scroll */
+#comp .bkp .bkg>.row.rw{align-items:flex-start}#comp .bkp .bkg>.row.rw>span:first-child{flex:none;white-space:nowrap}#comp .bkp .bkg>.row.rw>span:last-child{white-space:normal!important;min-width:0;flex:1 1 auto;text-align:right;overflow-wrap:anywhere}
 /* ---- bocadillo de pergamino (sustituye a la etiqueta del navegador) ---- */
 #ttb{position:fixed;left:0;top:0;z-index:200;pointer-events:none;max-width:260px;padding:5px 11px;border-radius:9px;background:var(--paper);border:1.5px solid var(--trim);color:var(--ink);font:600 12.5px/1.35 Inter,system-ui,sans-serif;box-shadow:0 6px 16px rgba(30,15,5,.4);opacity:0;transform:translateY(3px);transition:opacity .1s,transform .1s;white-space:normal;text-align:center}
 #ttb.on{opacity:1;transform:none}
@@ -1312,6 +1314,9 @@ body.mfs #relic .evp .esec{font-size:11.5px;padding-bottom:2px}body.mfs #relic .
 #relic .evp.evb .evrc::-webkit-scrollbar{width:6px}#relic .evp.evb .evrc::-webkit-scrollbar-thumb{background:var(--pline3);border-radius:3px}
 #relic .evp.evb .evopts{margin-bottom:0}
 #relic .evp.evb .evopts button.evo{flex:0 0 auto}
+
+/* v334 · «Obtienes»: el texto va seguido (antes cada palabra clave rompía la línea en columnas) */
+#relic .evrsl .evchip{display:block!important;text-align:left}#relic .evrsl .evchip>*{vertical-align:middle}
 /* ---- era 2: iconos vectoriales, tickets (cartuchos de datos) y paquete de suministros ---- */
 .icsvg svg{width:1.15em;height:1.15em;vertical-align:-.2em;background:#0c1622;border-radius:50%;padding:.05em;box-sizing:border-box}
 #tickets{display:none;gap:8px;align-items:flex-end;padding:4px 6px}#tickets.on{display:flex}
@@ -1408,6 +1413,12 @@ body.mfs .tk{width:26px;height:38px}body.mfs .tk .tki{font-size:12px;top:3px}bod
 .evmini{display:inline-block;width:1.55em;height:1.05em;border-radius:3px;overflow:hidden;vertical-align:-.18em;box-shadow:0 0 0 1px rgba(0,0,0,.45)}.evmini svg{width:100%;height:100%;display:block}
 
 .hsmi{width:100%;height:100%;display:flex;align-items:center;justify-content:center;line-height:0}.hsmi>*{max-width:100%;max-height:100%}.hsmi svg{width:100%;height:100%}
+/* v334 · opciones del evento: todas las cajas iguales y letra oscura siempre (con algunos temas salía blanca sobre pergamino) */
+.evdet .evol{display:grid;grid-auto-rows:1fr;gap:8px}.evdet .evol>.evoi{margin:0!important;height:100%;box-sizing:border-box}
+.evdet .evoi,.evdet .evoi b,.evdet .evoi .res{color:#2a2016!important}.evdet .evoi .cst{color:#8a2a1a!important}.evdet .evoi.no .res{color:#7a6a50!important}.evdet .evoi .ver{color:#8a5a2e!important}
+/* v334 · descripción de las torres en el compendio */
+.twdesc{display:block!important;width:100%;flex:0 0 100%;grid-column:1/-1;box-sizing:border-box;margin:0 0 4px;font-size:13px;line-height:1.35}.twdesc i{display:block!important;width:auto!important;white-space:normal!important;margin-top:4px;font-family:Georgia,"Times New Roman",serif;opacity:.8}
+.bkdsec{grid-column:1/-1;width:100%}
 /* v298 · vales y tickets en el botón de mejorar */
 #tmenu .tmb .tvch{position:absolute;top:-8px;left:-8px;min-width:17px;height:17px;border-radius:9px;background:#2a2014;border:1.5px solid #ffd75a;color:#ffd75a;font:800 11px system-ui,sans-serif;display:grid;place-items:center;pointer-events:none;line-height:1}
 #tmenu .tmb.vch{border-color:#ffd75a;box-shadow:0 0 0 2px rgba(255,215,90,.35)}
@@ -2332,9 +2343,8 @@ body.dsk:not(.mfs) #nearach{zoom:var(--uiz,1)}
 .bk .bkp.l:not(.one):has(>.novl){display:flex;flex-direction:column;overflow:hidden}
 .bk.hasft .bkp.l:not(.one):has(>.novl){padding-bottom:80px}
 .bkp.l:not(.one)>.novl{flex:1;min-height:0;overflow-y:auto;padding:3px 6px 18px 3px;margin-left:-3px;-webkit-mask-image:linear-gradient(#000 calc(100% - 26px),transparent);mask-image:linear-gradient(#000 calc(100% - 26px),transparent)}
-/* el pie del libro no tapa la sombra del lomo: su fondo se difumina antes de llegar al centro */
-.bk:not(:has(.bkp.one))>.lbft.l{-webkit-mask-image:linear-gradient(to left,transparent 0,#000 70px);mask-image:linear-gradient(to left,transparent 0,#000 70px)}
-.bk:not(:has(.bkp.one))>.lbft.r{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 70px);mask-image:linear-gradient(to right,transparent 0,#000 70px)}
+/* v334 · el pie del libro tapa lo que hay detrás en todo su ancho y lleva la misma sombra del lomo que la página (antes se difuminaba y dejaba ver el contenido junto al lomo) */
+.lbft.l{box-shadow:inset -18px 0 24px -14px var(--gut,rgba(90,60,20,.45))}.lbft.r{box-shadow:inset 18px 0 24px -14px var(--gut,rgba(90,60,20,.45))}
 /* v332 · el botón ↩ del libro solo aparece cuando se puede usar, y se dibuja al aparecer (antes salía apagado) */
 .bkx.bkhist.off{display:none!important}
 .bkx.bkhist.drawin{animation:bkhin .25s ease-out both}
@@ -2433,14 +2443,14 @@ table.lbrkt{margin-top:34px}
 html:root[data-skin="holo"] .bti.ach.got,html:root[data-skin="holo"] #comp .bti.ach.got{background:linear-gradient(180deg,rgba(63,232,150,.2),rgba(63,232,150,.07))!important;box-shadow:inset 0 0 0 1px rgba(63,232,150,.45)!important}
 .lbdet .bkbic,.bksh .bkbic{background:none!important;box-shadow:none!important}
 /* v329 · Cofre y paquete de ayuda sin marco (cofre_anim.js) */
-#relic.cofre .pscr{filter:none;max-width:1100px}#relic.cofre .pscr i.prod,#relic.cofre .prod{display:none!important}#relic.cofre .pscr::before,:root[data-skin="holo"] #relic.cofre .pscr::before{display:none!important;content:none!important}
-#relic.cofre .ppap,:root[data-skin="holo"] #relic.cofre .ppap,:root[data-skin="holo"] #relic.cofre .pscr{background:none!important;box-shadow:none!important;border:0!important;padding:0 0 10px!important;margin:0!important;animation:none!important}
-#relic.cofre .cfhint{display:none!important}#relic.cofre .ppap{text-align:center!important}
-#relic.cofre .cgrid{position:relative;z-index:2;gap:32px!important;margin-top:18px!important;justify-content:center}
-#relic.cofre .rcard{position:relative;transform:rotate(var(--cfr,0deg));filter:drop-shadow(0 12px 20px rgba(0,0,0,.6));transition:scale .16s cubic-bezier(.3,1.6,.5,1),filter .16s}
-#relic.cofre .rcard:hover{scale:1.06;filter:drop-shadow(0 18px 26px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(255,214,110,.7))}
-#relic.cofre.cfe2 .rcard:hover{filter:drop-shadow(0 18px 26px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(63,232,255,.7))}
-#relic.cofre .rcard.cfwait{opacity:0}
+#relic.cofre:has(.cfsign) .pscr{filter:none;max-width:1100px}#relic.cofre:has(.cfsign) .pscr i.prod,#relic.cofre:has(.cfsign) .prod{display:none!important}#relic.cofre:has(.cfsign) .pscr::before,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr::before{display:none!important;content:none!important}
+#relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr{background:none!important;box-shadow:none!important;border:0!important;padding:0 0 10px!important;margin:0!important;animation:none!important}
+#relic.cofre:has(.cfsign) .cfhint{display:none!important}#relic.cofre:has(.cfsign) .ppap{text-align:center!important}
+#relic.cofre:has(.cfsign) .cgrid{position:relative;z-index:2;gap:32px!important;margin-top:18px!important;justify-content:center}
+#relic.cofre:has(.cfsign) .rcard{position:relative;transform:rotate(var(--cfr,0deg));filter:drop-shadow(0 12px 20px rgba(0,0,0,.6));transition:scale .16s cubic-bezier(.3,1.6,.5,1),filter .16s}
+#relic.cofre:has(.cfsign) .rcard:hover{scale:1.06;filter:drop-shadow(0 18px 26px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(255,214,110,.7))}
+#relic.cofre:has(.cfsign).cfe2 .rcard:hover{filter:drop-shadow(0 18px 26px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(63,232,255,.7))}
+#relic.cofre:has(.cfsign) .rcard.cfwait{opacity:0}
 .cfsign{position:relative;z-index:3;display:inline-block;margin:34px auto 0;text-align:center;white-space:nowrap}
 .cfsign.perg{color:#fff3d6;transform-origin:50% -40px}
 .cfsign.perg .pk{position:relative;border:3px solid #3a2210;border-radius:5px;box-shadow:0 4px 0 #2a180a,0 9px 16px rgba(0,0,0,.5);
@@ -2474,6 +2484,8 @@ html:root[data-skin="holo"] .bti.ach.got,html:root[data-skin="holo"] #comp .bti.
  -webkit-mask-image:radial-gradient(ellipse 60% 100% at 50% 100%,#000 40%,transparent 100%);mask-image:radial-gradient(ellipse 60% 100% at 50% 100%,#000 40%,transparent 100%)}
 .hring{position:absolute;left:50%;top:var(--cy,400px);width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;border:3px solid rgba(63,232,255,.9);box-shadow:0 0 18px rgba(63,232,255,.8),inset 0 0 18px rgba(63,232,255,.6);opacity:0}
 .cofx svg{max-width:none!important;max-height:none!important;display:block}.cofx .crate svg{width:240px!important;height:380px!important}.cofx .chest svg{width:220px!important}
+/* v334 · el cartel cuelga del borde de arriba y las cartas suben: antes, en pantallas altas, todo quedaba centrado y las cartas tapaban la parte de abajo del mapa */
+#relic.cofre:has(.cfsign).open{justify-content:flex-start!important;padding-top:clamp(0px,2.5vh,30px)!important}
 /* v330 · Ayudas de interfaz */
 /* ver todos los alcances: botón debajo de «Reintentar» */
 #mtl .rngb{position:relative;display:grid;place-items:center}
@@ -2563,6 +2575,54 @@ body.era2g .etmbub .ettip{color:#ffd75a}
 body.mfs #mtl .rngb svg{width:28px;height:28px}
 body.mfs #zm button[data-z="c"] svg{width:30px;height:30px}
 #pcback{display:inline-flex;align-items:center;gap:8px}#pcback svg{width:1.9em;height:1.9em;margin:-6px 0;display:block;flex:none}
+/* v334 · cartel de jefe */
+#bossban{position:fixed;left:50%;top:100px;z-index:90;display:flex;align-items:center;gap:10px;padding:8px 18px 8px 10px;border-radius:12px;background:linear-gradient(180deg,#7a1a14,#4a0a08);border:2px solid #ffb43a;color:#fff3d6;font:600 14px system-ui,sans-serif;box-shadow:0 0 22px rgba(255,80,50,.6);transform:translate(-50%,-30px);opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.3,1.4,.5,1),opacity .3s}
+#bossban.on{transform:translate(-50%,0);opacity:1}#bossban small{display:block;font-size:11px;color:#ffcf8a;text-transform:uppercase;letter-spacing:.08em}#bossban b{font:700 17px Georgia,serif;margin-right:4px}
+#bossban .bbic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:2px solid #1b1712;overflow:hidden;font-size:22px}#bossban .bbic svg{width:100%;height:100%}
+:root[data-skin="holo"] #bossban{background:rgba(40,8,30,.92);border-color:#ff4fd8;box-shadow:0 0 22px rgba(255,79,216,.6)}
+/* ===== v334 · Pergamino nuevo (Era Fantástica): papel envejecido, rodillos de papel enrollado, cinta de título, cartas a pluma, destello y lacre ===== */
+:root:not([data-skin="holo"]){--pgnoise:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .38 0 0 0 0 .18 0 0 0 -1.6 .75'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"),url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .3 0 0 0 0 .15 0 0 0 -1.1 .62'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23m)' opacity='.5'/%3E%3C/svg%3E")}
+/* papel con manchas y grano */
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap,:root:not([data-skin="holo"]) body.pcpick #panel:has(.prow){background-image:var(--pgnoise),radial-gradient(ellipse at 50% 45%,#f8eed6,#ecdcb4 70%,#c9a970)!important;background-size:440px 440px,240px 240px,100% 100%!important}
+/* rodillos: el papel enrollado alrededor del palo; de la madera solo asoman el disco y el mango */
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .prod{width:34px!important;border-radius:6px!important;top:-4px!important;bottom:-4px!important;background:linear-gradient(90deg,#b89660,#f6ead0 45%,#a88450)!important;border:1.2px solid #8a6a3a!important;box-shadow:inset 3px 0 0 rgba(255,248,228,.35),0 4px 10px rgba(0,0,0,.4)!important}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .prod::before,:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .prod::after{width:42px!important;height:28px!important;margin-left:-21px!important;border-radius:0!important;box-shadow:none!important;background:radial-gradient(ellipse 11px 9px at 50% 6px,#d89a58,#7a4420 60%,#3a1f0c 64%,transparent 68%) top/100% 100% no-repeat,linear-gradient(90deg,transparent 40%,#7a4520 40% 60%,transparent 60%) 0 0/100% 100% no-repeat,linear-gradient(90deg,#3a1f0c,#c88a4c 50%,#2e1808) 0 100%/100% 9px no-repeat!important}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .prod::before{top:-28px!important}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .prod::after{bottom:-28px!important;transform:scaleY(-1)}
+:root:not([data-skin="holo"]) body.dsk.pcpick #panel:has(.prow)::before,:root:not([data-skin="holo"]) body.dsk.pcpick #panel:has(.prow)::after{width:34px!important;border-radius:6px!important;top:-4px!important;bottom:-4px!important;
+ background:radial-gradient(ellipse 11px 9px at 50% -14px,#d89a58,#7a4420 60%,#3a1f0c 64%,transparent 68%),linear-gradient(90deg,#b89660,#f6ead0 45%,#a88450)!important;border:1.2px solid #8a6a3a!important;box-shadow:inset 3px 0 0 rgba(255,248,228,.35),0 4px 10px rgba(0,0,0,.4)!important}
+:root:not([data-skin="holo"]) body.dsk.pcpick #panel:has(.prow)::before{left:-20px!important}:root:not([data-skin="holo"]) body.dsk.pcpick #panel:has(.prow)::after{right:-20px!important}
+/* título: cinta roja con la letra grabada en la tela */
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .ptt,:root:not([data-skin="holo"]) body.pcpick #panel .pctt{position:relative;display:inline-block!important;margin:0 auto 6px!important;padding:5px 34px 6px!important;background:linear-gradient(180deg,#c43a2a,#9a1e16 55%,#6a100c)!important;border:1.5px solid #4a0a06;border-radius:3px;
+ font:700 21px/1.15 Georgia,"Times New Roman",serif!important;color:#4a0604!important;text-shadow:0 1.3px 0 rgba(255,150,120,.75),0 -1px 0 rgba(30,2,1,.8)!important;letter-spacing:1px;box-shadow:inset 0 1px 0 rgba(255,156,134,.45),0 3px 5px rgba(0,0,0,.25)}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .ptt::before,:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .ptt::after,:root:not([data-skin="holo"]) body.pcpick #panel .pctt::before,:root:not([data-skin="holo"]) body.pcpick #panel .pctt::after{content:'';position:absolute;top:7px;bottom:-7px;width:30px;z-index:-1;background:#7a140e;border:1.2px solid #3a0604}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .ptt::before,:root:not([data-skin="holo"]) body.pcpick #panel .pctt::before{left:-22px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,38% 50%)}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .ptt::after,:root:not([data-skin="holo"]) body.pcpick #panel .pctt::after{right:-22px;clip-path:polygon(0 0,100% 0,62% 50%,100% 100%,0 100%)}
+:root:not([data-skin="holo"]) body.pcpick #panel:has(.prow){text-align:center}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .pst,:root:not([data-skin="holo"]) body.pcpick #panel:has(.prow)>#ui>small,:root:not([data-skin="holo"]) body.pcpick #panel:has(.prow) small{font-family:Georgia,"Times New Roman",serif;font-style:italic}
+/* destello al pasar el ratón: cruza la carta y se repite cada 3,6 s */
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .tof,:root:not([data-skin="holo"]) body.pcpick #panel .prow .card{position:relative;overflow:hidden}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .tof::after,:root:not([data-skin="holo"]) body.pcpick #panel .prow .card::after{content:'';position:absolute;top:-30%;bottom:-30%;left:0;width:46px;z-index:3;pointer-events:none;opacity:0;background:linear-gradient(90deg,transparent,rgba(255,246,208,.75),transparent);transform:translateX(-80px) skewX(-18deg)}
+:root:not([data-skin="holo"]) #relic .pscr:has(.toff) .tof:hover::after,:root:not([data-skin="holo"]) body.pcpick #panel .prow .card:hover::after{animation:pgshine 3.6s ease-in-out infinite}
+@keyframes pgshine{0%{opacity:1;transform:translateX(-80px) skewX(-18deg)}25%{opacity:1;transform:translateX(420px) skewX(-18deg)}26%,100%{opacity:0;transform:translateX(420px) skewX(-18deg)}}
+/* apertura: primero se suelta la cinta (en JS) y después se desenrolla, más suave que antes; las cartas se dibujan a pluma una a una */
+.pgseal{position:fixed;z-index:70;pointer-events:none}.pgseal svg{width:100%;height:100%;display:block}
+/* mientras se abre, los rodillos de verdad se esconden (los dibuja el JS) y no corre la animación antigua */
+:root:not([data-skin="holo"]) #relic .pscr.pgopen .prod,:root:not([data-skin="holo"]) body.pcpick #panel.pgopen::before,:root:not([data-skin="holo"]) body.pcpick #panel.pgopen::after{visibility:hidden!important}
+:root:not([data-skin="holo"]) #relic .pscr.pgopen .ppap,:root:not([data-skin="holo"]) #relic .pscr.pgopen .prod{animation:none!important}
+/* el borde se traza a pluma (capa aparte, .pgpenl) y lo de dentro aparece después; retrasos por posición */
+.pgpenl{position:fixed;inset:0;z-index:69;pointer-events:none;transition:opacity .3s}.pgpenl svg{width:100%;height:100%;display:block}.pgpenl rect{fill:none;stroke:#6a4a2a;stroke-width:1.6;animation:pgpen .7s linear both}
+@keyframes pgpen{from{stroke-dashoffset:var(--pgL)}to{stroke-dashoffset:0}}
+:root:not([data-skin="holo"]) .pgpen .tof,:root:not([data-skin="holo"]) .pgpen .prow .card{border-color:transparent!important;transition:border-color .3s}
+:root:not([data-skin="holo"]) .pgpen .tof>*,:root:not([data-skin="holo"]) .pgpen .prow .card>*{animation:pgink .45s both}
+:root:not([data-skin="holo"]) .pgpen :is(.tof:nth-child(1),.cardw:nth-child(1) .card)>*{animation-delay:2.2s}
+:root:not([data-skin="holo"]) .pgpen :is(.tof:nth-child(2),.cardw:nth-child(2) .card)>*{animation-delay:2.4s}
+:root:not([data-skin="holo"]) .pgpen :is(.tof:nth-child(3),.cardw:nth-child(3) .card)>*{animation-delay:2.6s}
+@keyframes pgink{from{opacity:0}to{opacity:1}}
+/* lacre al elegir */
+.pgstamp{position:fixed;z-index:400;pointer-events:none;transition:opacity .3s}.pgstamp svg{width:100%;height:100%;overflow:visible}
+.pgchosen{box-shadow:0 0 0 2px #e0a83a,0 0 14px rgba(255,214,110,.6)!important}
+@media (prefers-reduced-motion:reduce){.pgopen *,.pgopen{animation:none!important}}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2577,7 +2637,7 @@ body.mfs #zm button[data-z="c"] svg{width:30px;height:30px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v333</div>
+<div id="ver">Towerize v334</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3090,6 +3150,55 @@ const PIGU={brick:{n:'Cerdito albañil',ic:'🐖',col:'#c0563a',hp:290,ap:40,dmg
  straw:{n:'Cerdito espantapájaros',ic:'🐽',col:'#e8cf6a',hp:120,ap:0,dmg:10,rate:1,rng:1,range:3,spd:2.2,slow:.3,slowt:2,d:'Lanza paja desde lejos: daña en un área pequeña y ralentiza un 30%. Si le alcanzan, bloquea y pega a mitad de daño.'},
  mech:{n:'Mecha Cerdito',ic:'🤖',col:'#d08a5a',hp:700,ap:50,dmg:20,rate:.8,st:30,spd:1.4}};
 const tinfo=t=>{const X=tinfo0(t);return typeof evIcX==='function'?evIcX(t,X):X;},tinfo0=t=>t.tinf?t.tinf:t.type==='omega'&&typeof omegaT==='function'?omegaT(t):t.pigU?{...TW.bastion,...PIGU[t.pigU]}:t.beast?{...TW.bastion,...(BEASTS[t.beast]||SPECT[t.beast])}:t.hero?t.hero.def:TW[t.type]&&TW[t.type].dragon?{...TW[t.type],...DRAG[t.stage||0]}:t.spec?SPECS[t.type][t.spec]:TW[t.type];
+// v334 · Descripción y frase de ambiente de cada torre normal (solo en el compendio)
+const TWDESC={
+ arrow:['Disparan flechas rápidas a un solo enemigo. Baratos y fiables.','Si se mueve, tiene una flecha esperándole.'],
+ cata:['Lanza rocas que estallan al caer y dañan a todo el grupo. No alcanza a los voladores.','Puntería, poca. Entusiasmo, mucho.'],
+ frost:['Su hielo daña y ralentiza a los enemigos.','Nunca ha tenido prisa. Y no piensa dejar que nadie la tenga.'],
+ orb:['Lanza un orbe mágico lento y muy potente que atraviesa la armadura.','Nadie sabe quién lo encendió. Nadie se atreve a apagarlo.'],
+ poison:['Su veneno se acumula: cuanto más tiempo sigue el enemigo a tiro, más daño le hace.','Una gota no mata a nadie. Diez, ya veremos.'],
+ sala:['Escupe fuego en cono y deja quemaduras en todo lo que toca.','Duerme sobre brasas y desayuna carbón.'],
+ augur:['Llama a un rayo del cielo que cae sobre el objetivo y alcanza a los de alrededor.','Ve la tormenta antes de que llegue. Y a veces la trae él.'],
+ bastion:['Saca soldados al camino que bloquean y pelean cuerpo a cuerpo.','Por aquí no pasa nadie. Ese es todo el plan.'],
+ monk:['Sus monjes luchan en el camino y se curan entre ellos.','Meditan por la mañana. Reparten por la tarde.'],
+ altar:['No ataca: da mejoras temporales a las torres de alrededor.','Las piedras antiguas todavía recuerdan cómo ayudar.'],
+ cannon:['Disparan proyectiles pesados que estallan y dañan en área.','El silencio después del disparo es lo que más asusta.'],
+ laser:['Un arco eléctrico continuo que no deja de quemar mientras el enemigo esté a tiro.','Zumba. Siempre zumba.'],
+ bunker:['Cuanto más rato dispara sin parar, más rápido lo hace, hasta que recarga.','Nadie sabe cuántos hay dentro. Ellos tampoco.'],
+ robots:['Unidades de metal que bloquean el camino y aguantan golpes.','No sienten miedo. Ni dolor. Ni muchas cosas, la verdad.'],
+ nano:['Un enjambre que persigue a los enemigos y los muerde poco a poco.','Pequeños. Muchos. Hambrientos.'],
+ dron:['No ataca: afina la puntería de las torres cercanas.','Aprieta un tornillo aquí, ajusta una mira allá.'],
+ flame:['Rocía fuego en cono y deja quemaduras.','Ilumina la noche. Y todo lo demás.'],
+ acid:['Envenena y rompe la armadura de los enemigos.','El metal también se derrite, solo hay que tener paciencia.'],
+ sonic:['Lanza ondas que dañan y empujan a los enemigos hacia atrás.','Subid el volumen.'],
+ alien:['Criaturas que salen a pelear al camino y se hacen más fuertes juntas.','No son de aquí. Pero luchan por ti.']};
+// frase de ambiente de cada especialización (la descripción ya la tienen en SPECS[k][s].d)
+const SPDESC={
+ arrow:{rapid:'Más flechas que segundos tiene el día.',xbow:'Una sola flecha. Bien puesta.'},
+ cata:{treb:'Si no cabe en la catapulta, cabe en el trebuchet.',ogre:'¿Para qué cargar la roca si se puede lanzar a mano?'},
+ frost:{hel:'Donde mira, cae escarcha.',vent:'El invierno no dispara: llega.'},
+ augur:{lord:'Donde planta su bandera, nunca deja de llover.',herald:'Espera. Cuenta. Y entonces, juicio.'},
+ orb:{foco:'Un buen hechizo, bien concentrado, convierte a cualquiera en rana.',reap:'Ningún enemigo se va del todo.'},
+ laser:{red:'Juntas zumban más fuerte.',volt:'Carga, carga, carga… ¡zas!'},
+ bunker:{sup:'Si no los ves, dispara igual.',nido:'Un disparo. Una baja. Y a recargar.'},
+ robots:{mecha:'Tres robots entraron en el taller. Salió uno muy grande.',kami:'Su último gesto siempre es explosivo.'},
+ nano:{hack:'Un mordisco y ya no eres el mismo.',devour:'Cuanto más come, más hambre tiene.'},
+ altar:{altar:'Las runas viejas brillan más lejos.',senda:'Mira dónde pisas.'},
+ dron:{dron:'Un dron no da abasto. Dos, tampoco, pero lo intentan.',petro:'Pringoso, apestoso e inflamable.'},
+ poison:{alch:'Un poco de esto, un poco de aquello… y a ver qué pasa.',pest:'Poco veneno, pero del bueno.'},
+ monk:{fist:'La paz interior también se entrena a puñetazos.',drunk:'Nadie sabe qué llevan en la calabaza. Mejor así.'},
+ bastion:{pal:'Su fe es su armadura. Y su armadura, también.',ass:'No los verás venir. Los verás irse.'},
+ sala:{volc:'Cuanto más dispara, más se calienta. Y no le importa.',forge:'Funde el acero como si fuera mantequilla.'},
+ flame:{detn:'Primero arde. Luego, ¡bum!',muro:'Una raya en el suelo. No la cruces.'},
+ acid:{corr:'Lo que toca, se deshace.',cloud:'Una nube verde que camina sola. Nada bueno puede salir de ahí.'},
+ sonic:{spk:'La música amansa a las fieras. Esta, no.',giant:'Tan alto que tiembla el suelo.'},
+ alien:{hive:'Una se convierte en dos. Dos, en muchas.',pred:'Solo sobreviven las más fuertes.'}};
+// con una especialización elegida en el compendio sale la suya; si no, la de la torre
+const twDescHtml=k=>{let st=null;try{st=cpState(k);}catch(e){}const sp=st&&st.spec,X=sp&&SPECS[k]&&SPECS[k][sp];
+ if(X){const fl=SPDESC[k]&&SPDESC[k][sp];return `<div class="twdesc">${X.d||''}${fl?`<i>«${fl}»</i>`:''}</div>`;}
+ const d=TWDESC[k];return d?`<div class="twdesc">${d[0]}<i>«${d[1]}»</i></div>`:'';};
+const UNDESC={faro:'Hasta en ruinas, sigue guiando a quien se acerca.',dragon:'Todo gran dragón empezó siendo un huevo con mucha paciencia.',guild:'Se cobra por adelantado. Los héroes no son baratos.',
+ straw:'Soplaron y soplaron… y esta vez no se cayó.',wood:'Más sólida que la de paja. Más rodante, también.',brick:'El lobo nunca pudo con ella. Tus enemigos, tampoco.',glut:'No era un cofre. Nunca lo fue.'};
 // ---- héroes ----
 // base: estadísticas de Nv 1 (rango en casillas). Por nivel: +12% vida, +10% daño y +apLv de armadura. w = unidades que cuenta al bloquear (cuerpo a cuerpo 2, a distancia 1).
 const HLMAX=10,HMELEE=.5,QR=5*K,HREZ=10;
@@ -3956,7 +4065,7 @@ function heroInfo(id,quiet){
   (H?R('cf',kst('hxp','Experiencia',src),H.lvl>=HLMAX?'Nivel máximo':Math.floor(H.xp)+' / '+xpNeed(H.lvl+1)):quiet===1?R('cf',kst('hxp','Experiencia por nivel',src),xpNeed(2)+' → '+xpNeed(10)):'')+
   (H&&q&&q.hp<=0?`<small class="cr">Caído: vuelve en ${Math.ceil(q.rt)} s.</small>`:'')+
   (quiet?'':`<div class="tgt"><small>Pulsa su icono y luego una casilla del camino para recolocarlo.</small></div>`)+
-  (quiet===2?'':`<div style="margin-top:6px"><span class="cf">${kst('hrel','Reliquia inicial',src)}:</span> ${kw('rl_'+D.relic,R2.ic+' '+R2.n,src,'st')}</div>`)+
+  (quiet?'':`<div style="margin-top:6px"><span class="cf">${kst('hrel','Reliquia inicial',src)}:</span> ${kw('rl_'+D.relic,R2.ic+' '+R2.n,src,'st')}</div>`)+
   `<small>Nv ${HLMAX}: ${Math.round(x10.hp)} de vida, ${f(x10.dmg)} de daño, ${f(x10.ap)} de armadura.</small>`;
 }
 function enemyInfo(k){
@@ -3993,11 +4102,13 @@ function twGlance(k){const st=cpState(k),a=twAt(k,st.lv,st.spec),M=twMax(st.lv),
 // tarjeta de vistazo rápido de una torre de evento (barras comparadas con las torres normales del mismo nivel, donde se puede)
 const uPrevOk=(k,cur)=>{const T=TW[k];return !T.faro&&!(T.dragon&&cur<=1);};
 function uniqGlance(k,cur){const T=TW[k],src='shop:'+k,full=uniqInfo(null,k,cur),head=full.slice(0,full.indexOf('</div>')+6),M=twMax(Math.min(3,cur));let b='';
- const D=(v,l)=>gRow(dtLab(dtOf(T),kst('dmg',l||'Daño',src)),dtCls(dtOf(T)),v,M.dmg,f(v)),C=r=>gRow(kst('cool','Enfriamiento',src),'ccl',r,M.rate,f(1/r)+' s'),G=v=>'',U=v=>gRow(kst('uhp','Vida de unidades',src),'chp',v,M.uhp,Math.round(v)),I=ids=>gTxt(kst('eff','Efectos',src),'cf',ids.map(id=>`<span class="kw gico" data-kw="${id}" data-src="${src}">${GICO[id]||'✦'}</span>`).join('')).replace('class="gv2"','class="gv2 gleft"');
+ const D=(v,l)=>gRow(dtLab(dtOf(T),kst('dmg',l||'Daño',src)),dtCls(dtOf(T)),v,M.dmg,f(v)),C=r=>gRow(kst('cool','Enfriamiento',src),'ccl',r,M.rate,f(1/r)+' s'),G=v=>'',U=v=>gRow(kst('uhp','Vida de unidades',src),'chp',v,M.uhp,Math.round(v)),I=ids=>!ids.length?'':gTxt(kst('eff','Efectos',src),'cf',ids.map(id=>`<span class="kw gico" data-kw="${id}" data-src="${src}">${GICO[id]||'✦'}</span>`).join('')).replace('class="gv2"','class="gv2 gleft"');
  if(T.faro){const L=FARO[cur-1];b=gTxt('Alcance a torres iluminadas','cg','+'+Math.round(L.rg*100)+'%')+(L.d?gTxt('Daño a torres iluminadas','cd','+'+Math.round(L.d*100)+'%'):'')+(L.c?gTxt('Enfriamiento de torres iluminadas','ccl','−'+Math.round(L.c*100)+'%'):'')+'<small>No ataca: proyecta una zona de luz movible que mejora las torres de dentro.</small>';}
  else if(T.dragon){const sg=cur-1;b=gTxt('Forma','',DRAG[sg].n)+(sg===0?'<small>Todavía no hace nada: espera a que eclosione.</small>':sg===1?D(8,'Daño (fuego)')+G(2.5*K)+U(60):sg===2?D(18,'Daño (bola de fuego)')+G(3.5*K):D(22,'Daño (bola de fuego)')+G(3.5*K)+I(['burn']));}
  else if(T.guild){const L=lvMods(k,cur,null);b=D(T.dmg*L.dmg,'Daño (cada uno)')+C(T.rate/L.cd)+G(T.range*L.range)+U(T.unit.hp*L.hp)+gTxt('Aventureros','',PARTY[cur].length);}
  else{const L=lvMods(k,cur,null),dm=T.dmg*L.dmg;b=(dm>0?D(dm):'')+C(T.rate/L.cd)+G(T.range*L.range)+(T.pig&&cur>=4&&PIGU[k]?U(PIGU[k].hp):'')+I(T.slow?['slow']:T.log?['logk']:T.wall?['bwall']:[]);}
+ /* v334: la descripción de la ficha de compra también en el compendio */
+ const ds=full.match(/<small>(?:(?!<small>)[\s\S])*<\/small>\s*$/);if(ds&&!b.includes('<small>'))b+=ds[0];else if(T.guild&&!b.includes('<small>'))b+='<small>Un gremio que manda a su grupo de aventureros al camino: luchan cuerpo a cuerpo, cobran una recompensa cada ronda y te dan más oro por baja.</small>';
  return head+'<div class="gbody">'+b+'</div>';}
 function heroGlance(id){const D=HEROES[id],x=hsAt(id,1),src='hero:'+id,R2=RELIC[D.relic],hs=Object.keys(HEROES).map(h=>hsAt(h,1)),mx=k=>Math.max(...hs.map(o=>o[k]));
  const mr=Math.max(...Object.keys(HEROES).map(h=>HEROES[h].ranged?HEROES[h].base.range:0)),mrate=Math.max(...hs.map(o=>1/o.cd));
@@ -4156,6 +4267,8 @@ function bkTile(it,t){const on=CP.sel[t]===it.id;let ic;
  else ic=`<span class="bic${t==='tw'?' bctw':''}"${it.col&&it.ok?` style="background:${it.col}"`:''}><i>${it.ic}</i></span>`;
  return `<button class="bti${t==='lg'?' ach':''}${it.pin?' pin':''}${on?' on':''}${it.ok?'':' un'}${it.got?' got':''}${it.hid?' hid':''}${it.lk&&!it.ok?' lkd':''}" data-a="csel" data-v="${it.id}">${ic}<small>${it.ok?it.n:'???'}</small></button>`;}
 // ficha de la página derecha: icono y título en una fila; debajo, los datos en dos columnas con puntos («Daño ······ 6,5»)
+// v334: «Descripción» arriba y luego «Estadísticas», con el mismo título que las secciones de la lista
+function bkDescTop(h,ds){if(!ds)return h;return h.replace('<div class="ce bkce','<div class="bksec bkdsec">Descripción</div>'+ds+'<div class="bksec bkdsec">Estadísticas</div><div class="ce bkce');}
 function bkSheet(ic,inner,cls){let ttl='',rest=inner;const a='<div class="ttl">';
  if(inner.startsWith(a)){const j=inner.indexOf('</div>');ttl=inner.slice(a.length,j);rest=inner.slice(j+6);}
  const lv=(ttl.match(/<span class="lvtabs">[\s\S]*?<\/button><\/span>|<button class="stbtn lvbtn"[\s\S]*?<\/button>/g)||[]).join('');if(lv){ttl=ttl.replace(/<span class="lvtabs">[\s\S]*?<\/button><\/span>|<button class="stbtn lvbtn"[\s\S]*?<\/button>/g,'');ttl=ttl.includes('<br>')?ttl+lv:ttl+'<br>'+lv;}
@@ -4173,9 +4286,9 @@ function bkDetail(t,id){
   if(!seen('tw',id)){if(!T.uniq&&!tunl(id)&&TLOCK[id]){const a=TLOCK[id],fn=achFound(a);return sh(icOf(T),`Aún no disponible.`)+achLink(a,'',1);}return sh(icOf(T),'Aún no descubierto.');}
   const cst=T.uniq?null:cpState(id),SX=cst&&cst.spec?SPECS[id][cst.spec]:null,TT=SX&&SX.icsvg?{...T,icsvg:SX.icsvg,col:SX.icbg||(SX.o&&SX.o.icbg)||T.col,icimg:null}:T;/* v308: con una especialización elegida, su dibujo */
   const bi=`<span class="bkbic bctw" style="background:${TT.col}">${icHtml(twIcO(TT))}</span>`;
-  if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;return bkSheet(bi,uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'))+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
+  if(T.uniq){const cur=(CP.ulv&&CP.ulv[id])||1;let ug=uniqGlance(id,cur).replace(/<b>[^<]*? /,'<b>'),ds='';const m=ug.match(/<small>((?:(?!<small>)[\s\S])*)<\/small>(<\/div>)\s*$/);if(m){ds=`<div class="twdesc">${m[1]}${UNDESC[id]?`<i>«${UNDESC[id]}»</i>`:''}</div>`;ug=ug.slice(0,m.index)+m[2];}return bkDescTop(bkSheet(bi,ug),ds)+(uPrevOk(id,cur)?bkPrevBtn('cprev',id):'');}
   LVT_NOSPEC=1;let si;try{si=shopInfo(id,1);}finally{LVT_NOSPEC=0;}
-  return bkSheet(bi,si.replace(/<\/b> · [^<]*<br>/,'</b><br>'))+bkPrevBtn('cprev',id)+bkSpecs(id);}
+  return bkDescTop(bkSheet(bi,si.replace(/<\/b> · [^<]*<br>/,'</b><br>')),twDescHtml(id))+bkPrevBtn('cprev',id)+bkSpecs(id);}
  if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;
   return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`,heroInfo(id,1).replace(/<b>[^<]*? /,'<b>'))+bkPrevBtn('chprev',id)+(D.d?'<div class="ddesc">'+D.d+'</div>':'')+`<div class="esec" style="margin-top:12px">Reliquia inicial</div><div class="ce bkce bkg">${relicInfo(D.relic,1)}</div><div class="ce bkce">${heroAbHtml(id)}</div>`;}
  if(t==='pc'){const i=+id,o=PIECES[i];if(!o)return'';if(!seen('pc',o.n))return sh(icU('m_c_pc','🧩'),'Aún no descubierta.');
@@ -4347,6 +4460,10 @@ function hpkNew(id){const D=HEROES[id],rg=!!D.ranged;
  const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],tz:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:sx,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:1,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:null,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:null,selT:null,hover:null,core,speed:1,field:null,msg:'',espd:1,dn:[],pvE:1,pvH:1};
  const real=S;S=st;try{st.field=field();mkHero(id);const H=st.hero;H.pt.flag={x:hx,y:hy};H.s.x=hx;H.s.y=hy;}finally{S=real;}
  PHV={S:st,id,en:'norm',lv:1,rt:.3,pick:1,sx,vw,rg};}
+
+// v334 · En las previsualizaciones del libro no suenan el núcleo, las bajas ni el fin de oleada (se quedaban en bucle); sí suenan los ataques
+const PVMUTE=/^(core|lose|win|wclear|wave|rready|kill_|boss|roar)/;
+{const _sx=sfx;sfx=function(k){try{if(PVMUTE.test(k)&&S&&((PV&&S===PV.S)||(PE&&S===PE.S)||(PHV&&S===PHV.S)))return;}catch(e){}return _sx.apply(this,arguments);};}
 // vista previa del héroe en la pantalla de selección (Guerreros y algún Tanque)
 function hpkPrevStep(rdt){
  if(!(RL.open&&RL.hpick&&PHV&&PHV.id===RL.hsel&&PHV.pick)||!document.getElementById('pvc'))return;
@@ -5259,7 +5376,7 @@ function chip(k){const[a,b]=k.split(':');
  if(a==='tower')return TW[b]?`<span class="gd">${twIc(b)} ${TW[b].n}</span>`:'';
  if(a==='wanted')return '📜 Élite de encargo en 2 rondas';
  if(a==='temper')return '⚒ torres de Nv 1 → 2';if(a==='bless')return '✨ las casillas especiales de la pieza dan el doble de bonus';if(a==='less')return '🕯 −'+b+'% enemigos en la próxima oleada';
- if(a==='sharpen')return '🗡 +25% de daño (o de stacks, en torres de veneno y fuego) a la torre que elijas';
+ if(a==='sharpen')return '🗡 La torre que elijas hace +25% de daño (las de veneno y fuego, +25% de stacks)';
  if(a==='half')return '🏷 próxima torre a mitad de precio';
  if(a==='cubs')return '🐺 Lobatos';if(a==='grey')return '🐺 Lobo gris';if(a==='wolf')return '🐺 El Lobo';
  if(a==='chest4')return '🎁 el próximo cofre ofrece 4 reliquias';if(a==='scout')return '🗺 un cofre nuevo en un hueco sin explorar';
@@ -5794,7 +5911,7 @@ function posFocus(){
 }
 function makePortals(boss){
  if(S.tut)boss=null;const sqs=S.tut?(TUTW[S.round]||['patrol']):waveSquads(S.round),X=sqs.reduce((a,k)=>a+sqN(k),0);
- let k=S.ends.length;while(k>1&&X/k<MINP)k--;
+ let k=S.ends.length;while(k>1&&X/k<MINP)k--;/* v334: a partir del 40 % de la partida, si el camino tiene al menos dos extremos, salen por dos portales como mínimo */if(!S.tut&&S.round>=Math.ceil(ROUNDS*.4))k=Math.max(k,Math.min(2,S.ends.length));
  const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],split:e.split||null,si:0,ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0},q:[],t:0});
  /* los portales de tramo muerto siempre se abren (si no, ese tramo seguiría sin usarse) */const mids=S.ends.filter(e=>e.mid),rest=S.ends.filter(e=>!e.mid),ps=rest.slice(0,Math.max(1,k-mids.length)).concat(mids).map(mk);
  sqs.forEach((sq,i)=>{const q=ps[i%ps.length];(q.sq=q.sq||[]).push(sq);const tr=typeof sqTierOf==='function'?sqTierOf(i,sqs.length,S.round):0,m=typeof sqTierM==='function'?sqTierM(sq,tr,S.round):sqM(sq);(q.sqt=q.sqt||[]).push(tr);(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});
@@ -6705,7 +6822,7 @@ function draw(){
   /* galones de nivel en la esquina superior derecha: uno por nivel (Nv 1-3); Nv 4, tres dorados y estrella; con todo al máximo, estrella dorada */
   if(mt)drawCrown(g,t.x*CS+CS/2,t.y*CS+CS/2,BCS);
   if(!T.uniq||T.glut||T.omega)drawGal(g,t.x*CS+CS/2+BCS*.4,t.y*CS+CS/2-BCS*.5,BCS,t.lvl,twFull(t),lw);
-  if(S.wish&&S.wish.some(w=>w.id===t.id)){{const im=wishImg(),z=BCS*.5;if(im&&im.complete&&im.naturalWidth)g.drawImage(im,t.x*CS+CS/2+BCS*.16,t.y*CS+CS/2-BCS*.62,z,z);}}
+  if(S.wish&&S.wish.some(w=>w.id===t.id)){{/* v334: colgado de la esquina de arriba a la derecha del icono de la torre (antes flotaba más arriba) */const im=wishImg(),z=BCS*.44;if(im&&im.complete&&im.naturalWidth)g.drawImage(im,t.x*CS+CS/2+BCS*.3-z/2,t.y*CS+CS/2-BCS*.44-z*4/48,z,z);}}
   if(t===S.selT){g.strokeStyle='#fff';g.lineWidth=lw(1.5);g.strokeRect((t.x-1)*CS+lw(1),(t.y-1)*CS+lw(1),BCS-lw(2),BCS-lw(2));}
   if(t.rays&&S.phase==='wave'){g.lineWidth=lw(2);for(const r of t.rays)if(r.e.hp>0){g.strokeStyle=r.el.col;g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(r.e.x*CS+CS/2,r.e.y*CS+CS/2);g.stroke();}}
   else if(t.tgt&&S.phase==='wave'&&t.tgt.hp>0){g.strokeStyle=T.col;g.lineWidth=lw(2.5);g.beginPath();g.moveTo(t.x*CS+CS/2,t.y*CS+CS/2);g.lineTo(t.tgt.x*CS+CS/2,t.tgt.y*CS+CS/2);g.stroke();}}
@@ -7528,6 +7645,8 @@ function rlBar(){const r=$('relic');if(!RL.open||RL.hpick||typeof S==='undefined
 setInterval(()=>{try{rlBar();}catch(e){}},150);
 try{new MutationObserver(()=>{try{rlBar();}catch(e){}}).observe($('relic'),{childList:true});}catch(e){}
 addEventListener('keydown',e=>{if(!kbIs('peek',e.key.toLowerCase())||!RL.open||RL.hpick||!$('relic').querySelector('.rlbar'))return;e.preventDefault();setPeek(!RL.peek);});
+/* v334: la misma tecla también funciona al elegir pieza (antes solo en las ventanas; con Tab, además, saltaba entre botones) */
+addEventListener('keydown',e=>{if(!kbIs('peek',e.key.toLowerCase())||RL.open||!S||S.phase!=='place'||S.pi!=null||(typeof LB!=='undefined'&&LB.open)||(typeof PMU!=='undefined'&&PMU.open))return;const t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'))return;e.preventDefault();e.stopPropagation();S.ppk=S.ppk?0:1;try{sfx('ui');}catch(_){}ui();},true);
 
 // ---- menú de pausa: es la portada del libro (ver libro.js) ----
 const PMU={open:false,ask:0,spd:1};
@@ -9275,7 +9394,10 @@ const MECUSE={burn:['tw:sala','tw:flame','tw:monk','hr:yrsa'],poison:['tw:poison
  sticky:['tw:cata'],flam:['tw:cata'],wet:['tw:augur'],cursed:['tw:orb'],poly:['tw:orb'],fear:['tw:orb'],mark:['tw:arrow'],prey:['hr:sylvana'],inf:['tw:nano'],lmk:['tw:bunker'],vc:['tw:laser'],
  chain:['tw:tesla'],beam:['tw:orb','tw:laser'],push:['tw:sonic','tw:cannon','tw:wood'],mag:['tw:bunker'],
  dodge:['en:raider'],steal:['en:raider'],pierce:['en:javelin'],curse:['en:warlock'],eheal:['en:shaman'],aura:['en:custodian'],fly:['en:bat','en:harpy','en:griffin'],bres:['en:boss','en:colossus']};
-const mecRefOk=r=>{const[t,k,sp]=r.split(':');if(t==='tw'&&sp){const i=Object.keys(SPECS[k]||{}).indexOf(sp);return seen('tw',k)&&i>=0&&tlvOk(k,4+i);}if(k==='*')return (typeof OPT!=='undefined'&&OPT.u_cp)||Object.keys((typeof SEEN!=='undefined'&&SEEN[t])||{}).length>0;return t==='hr'?(HEROES[k]&&seen('hr',k)):seen(t,k);};
+// v334: habilidades de las torres de evento que ya has comprado alguna vez (para «Lo usan»)
+let ABSEEN={};try{ABSEEN=JSON.parse(localStorage.getItem('rt-abseen'))||{};}catch(e){}
+const abSee=id=>{if(ABSEEN[id])return;ABSEEN[id]=1;try{localStorage.setItem('rt-abseen',JSON.stringify(ABSEEN));}catch(e){}};
+const mecRefOk=r=>{const[t,k,sp]=r.split(':');if(t==='tw'&&sp&&sp[0]==='@')return seen('tw',k)&&(UNLOCK_ALL||OPT.u_cp||!!ABSEEN[sp.slice(1)]);if(t==='hr'&&!(UNLOCK_ALL||OPT.u_cp))return !!(HEROES[k]&&seen('hr',k)&&hUnl(k)&&heroVis(k));if(t==='tw'&&sp){const i=Object.keys(SPECS[k]||{}).indexOf(sp);return seen('tw',k)&&i>=0&&tlvOk(k,4+i);}if(k==='*')return (typeof OPT!=='undefined'&&OPT.u_cp)||Object.keys((typeof SEEN!=='undefined'&&SEEN[t])||{}).length>0;return t==='hr'?(HEROES[k]&&seen('hr',k)):seen(t,k);};
 // v308: lo que no tiene dueño concreto se descubre al ver lo primero de su grupo (nada visto = nada en el compendio)
 const MECGRP={'Estados':['tw:*','hr:*'],'Tipos de daño':['tw:*','hr:*'],'Estadísticas de torres':['tw:*'],'Unidades y enemigos':['en:*'],'Héroes':['hr:*'],'Partida':['pc:*']};
 const MECFIX={tphys:['tw:arrow','tw:cata','tw:cannon','tw:bastion','tw:monk','hr:reinhart'],tmagic:['tw:orb','tw:augur','tw:altar','hr:radagast'],telem:['tw:frost','tw:poison','tw:sala','tw:flame','tw:tesla','hr:yrsa'],stk:['tw:*','hr:*']};
@@ -9322,7 +9444,7 @@ function mecDetail(id){id=MALIAS[id]||id;const M=MECI[id];if(!M)return'';
  let h='';try{h=kwHtml(id,MECCTX[id]||'')||'';}catch(e){h='';}
  h=h.replace(/^\s*<b[^>]*>[\s\S]*?<\/b>/,'').replace(/<div class="row[^"]*"><span>Cálculo<\/span>[\s\S]*?<\/div>/,'');
  let sub=M.g;{const m=h.match(/^\s*·\s*([^<]+)/);if(m){const x=m[1].trim();sub+=' · '+x.charAt(0).toUpperCase()+x.slice(1);h=h.slice(m[0].length);}}
- const uses=[...new Set((MECUSE[id]||[]).concat(...Object.keys(MALIAS).filter(a=>MALIAS[a]===id).map(a=>MECUSE[a]||[])))].filter(mecRefOk).map(r=>{const[t,k]=r.split(':');const n=t==='tw'?TW[k].n:t==='en'?ET[k].n:HEROES[k].n,ic=t==='tw'?`<i style="background:${TW[k].col}">${twIc(k)}</i>`:t==='en'?`<i style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</i>`:`<i style="background:${HEROES[k].col}">${HEROES[k].ic||'🦸'}</i>`;
+ const uses=[...new Set((MECUSE[id]||[]).concat(...Object.keys(MALIAS).filter(a=>MALIAS[a]===id).map(a=>MECUSE[a]||[])))].filter(mecRefOk).map(r=>{const[t,k,sp]=r.split(':');const D2=t==='tw'&&sp?(sp[0]==='@'?AB[sp.slice(1)]:SPECS[k]&&SPECS[k][sp]):null;const n=D2?`<span class="mecn">${D2.n}<small class="mecof">${TW[k].n}</small></span>`:t==='tw'?TW[k].n:t==='en'?ET[k].n:HEROES[k].n,ic=t==='tw'?`<i style="background:${TW[k].col}">${twIc(k)}</i>`:t==='en'?`<i style="background:${ET[k].col}">${enIc(k)?icHtml(enIc(k)):''}</i>`:`<i style="background:${HEROES[k].col}">${HEROES[k].ic||'🦸'}</i>`;
   return `<button class="mecuse" data-a="cpgo" data-t="${t}" data-v="${k}">${ic}${n}</button>`;}).join('');
  return bkSheet(`<span class="bkbic mecbic">${M.ic}</span>`,`<div class="ttl"><b>${M.n}</b></div><small class="mecg">${sub}</small>`+h)+(uses?`<div class="esec" style="margin-top:12px">Lo usan</div><div class="mecuses">${uses}</div>`:'');}
 // subtítulo: «descubiertas» y flechas que empiezan fila (al hacer salto de línea) se ocultan
@@ -10572,7 +10694,7 @@ setInterval(()=>{try{const c=$('comp');if(!LB.open&&document.body.classList.cont
 H2D.push((g,lw)=>{const X=v=>v*CS+CS/2,dt=1/60;for(const e of S.enemies){if(!(e.exc>0)||e.hp<=0)continue;e.exc-=dt;const a=Math.min(1,e.exc/.3),y=X(e.y)-CS*1.15-Math.sin((1.2-e.exc)*9)*1.5;
  g.save();g.globalAlpha=a;g.font='900 '+Math.round(CS*1.1)+'px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.lineWidth=lw(3);g.strokeStyle='#1b1712';g.strokeText('!',X(e.x),y);g.fillStyle='#ffd23a';g.fillText('!',X(e.x),y);g.restore();}});
 // ---- lo que tienes en la partida queda descubierto en el compendio al momento (reliquias de evento, torres del mazo, tu héroe…) ----
-setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.round||!SEEOK||PREVIEWING||S.pvE)return;for(const r of S.relics||[])if(RELIC[r])see('rl',r);for(const k of S.deck||[])if(TW[k])see('tw',k);for(const t of S.list||[])if(TW[t.type])see('tw',t.type);if(S.hero&&S.hero.id)see('hr',S.hero.id);}catch(e){}},1000);
+setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.round||!SEEOK||PREVIEWING||S.pvE)return;for(const r of S.relics||[])if(RELIC[r])see('rl',r);for(const k of S.deck||[])if(TW[k])see('tw',k);for(const t of S.list||[])if(TW[t.type])see('tw',t.type);if(S.hero&&S.hero.id)see('hr',S.hero.id);if(typeof abSee==='function')for(const t of S.list||[])for(const id in t.ab||{})if(t.ab[id]>0&&AB[id])abSee(id);}catch(e){}},1000);
 // v305 · al continuar una partida guardada también se descubren cosas (antes solo al empezar una nueva: el Martillo del herrero no aparecía en el compendio)
 {const _l=loadRun;loadRun=function(){const r=_l.apply(this,arguments);try{if(r)SEEOK=true;}catch(e){}return r;};}
 // ---- colocar la pieza con el teclado (Intro o Espacio) donde está el ratón, solo mientras colocas una pieza ----
@@ -10590,6 +10712,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:334,f:'14 nov 2026',t:'Arreglos de ventanas',s:[['Novedades',['Las páginas de elegir pieza y torre tienen nuevo aspecto.','Cuando sale un jefe, ya no pasa desapercibido.']],['Arreglos',['Después de abrir un cofre, la siguiente ventana (nueva torre, evento…) salía sin su fondo y casi no se leía. Ya sale bien.','Cofre abierto: en pantallas grandes, el cartel quedaba muy separado de arriba y las cartas tapaban el mapa. Ahora todo sube.','Cofre abierto: algunas descripciones salían con barra de scroll aunque cupieran.','Los paneles del mazo y del cofre quedan centrados entre el borde de la pantalla y la ventana.','Al elegir pieza, la tecla del ojo (Tab, o la que tengas puesta) no hacía nada. Ya deja ver el mapa.','Eventos: lo que obtienes ya se lee seguido, sin cortarse en columnas.','Torres de apoyo: su ficha ya no muestra estadísticas que no tienen (como «Enfriamiento Infinity s»).','Compendio: los efectos largos de un héroe (como los de Yrsa) ya no se salen con barra; la reliquia inicial sale solo en su recuadro.','El aviso de logro cercano ya no sale si ese logro ya no se puede conseguir en la partida.','El pie del libro ya no deja ver a medias lo que hay detrás junto al lomo.','La marca de compra en cola cuelga de la esquina de la torre, en vez de flotar encima.','A partir de media partida, si el camino tiene dos o más finales, los enemigos salen como mínimo por dos portales.','Previsualización del libro: ya no suena el núcleo ni las bajas en bucle.','Botón ↩ del libro: si estabas viendo una torre en acción, la página de la derecha ya vuelve también.','Compendio · Eventos: todas las opciones tienen el mismo tamaño y su letra se lee con cualquier paleta.','Compendio · Mecánicas: «Lo usan» solo enseña lo que ya has visto, y con el nombre de la especialización o habilidad que lo usa.','Compendio: todas las torres tienen ya su descripción.']],['Ayudas',['ÉTER ya no habla cada vez que pausas: solo de vez en cuando, o si te quedas un buen rato en la pausa.','Un consejo nuevo sobre abrir muchas salidas, y un aviso al perder si tenías muchos portales abiertos.']]]},
  {v:333,f:'14 nov 2026',t:'Arreglo del libro',s:[['Arreglos',['Novedades: al cerrarla con la ✕ o con Esc desde el menú principal, el libro desaparecía y no se podía hacer nada. Ahora vuelve a la portada.']]]},
  {v:332,f:'14 nov 2026',t:'Ayudas',s:[['Ayudas',['¿Algo falla? Ahora puedes contárnoslo sin salir del juego. Busca un bichito en el libro.','Perder ya no es solo perder: el final de partida tiene algo que contarte.','Antes de empezar una oleada, alguien vigila tu bolsa.','La línea de rondas se ha vuelto más habladora.','Hay una forma nueva de verlo todo en redondo: busca el botón… o la tecla.','ÉTER tiene cosas que contarte en la pausa, si le dejas.','Tu puntuación luce ahora en la pausa.']],['Estadísticas',['Estadísticas estrena una pestaña con toda tu historia.']],['Opciones',['Todas las ayudas, juntas y con su interruptor, en Opciones › Juego.']],['Libro',['Novedades más ordenada, y algún botón que solo aparece cuando hace falta.']],['Arreglos',['Elegir tutorial: el botón para empezarlo no hacía nada. Ya funciona, y tocar un tutorial solo lo elige.','Móvil: algunos iconos se han puesto al día.']]]},
  {v:331,f:'14 nov 2026',t:'Arreglo en móvil',s:[['Arreglos',['Móvil: el ojo de arriba al elegir pieza no hacía nada. Ya deja ver el mapa.']]]},
@@ -11187,10 +11310,18 @@ const ETMAUTO=35000;
 setInterval(()=>{try{const cv=document.querySelector('.lbcv.a');const bt=cv&&cv.querySelector('.etmbt'),vis=bt&&LB.open&&LB.cover&&getComputedStyle(bt).display!=='none'&&bt.getClientRects().length&&!document.hidden;
  if(!vis){ETM.since=0;ETM.pau=false;return;}
  const now=performance.now(),pau=cv.classList.contains('ing');if(!ETM.since)ETM.since=now;
- if(pau&&!ETM.pau){ETM.pau=true;if(OPT.eterm!==false&&Math.random()<.6)setTimeout(()=>{const c=document.querySelector('.lbcv.a.ing');if(c&&!c.classList.contains('etmon'))etmSay(true);},900);return;}
- if(!pau)ETM.pau=false;
- if(OPT.eterm===false||pau||cv.classList.contains('etmon'))return;
+ /* v334: en la pausa ÉTER solo habla una de cada ~9 veces que pausas (volver a la portada desde Opciones u otra página no cuenta),
+    y si te quedas un minuto entero en la pausa sin hacer nada */
+ const pmu=typeof PMU!=='undefined'&&PMU.open;if(pmu&&!ETM.pmu){ETM.pmu=true;ETM.pst=now;let n=0;try{n=+localStorage.getItem('rt-etmpc')||0;}catch(e){}n++;const say=n>=9;if(say)n=0;try{localStorage.setItem('rt-etmpc',String(n));}catch(e){}
+  if(say&&pau&&OPT.eterm!==false)setTimeout(()=>{const c=document.querySelector('.lbcv.a.ing');if(c&&!c.classList.contains('etmon'))etmSay(true);},900);}
+ if(!pmu)ETM.pmu=false;
+ if(pau){ETM.pau=true;if(OPT.eterm!==false&&!cv.classList.contains('etmon')&&now-Math.max(ETM.pst||now,ETM.at||0,ETM.act||0)>=60000)etmSay(true);return;}
+ ETM.pau=false;
+ if(OPT.eterm===false||cv.classList.contains('etmon'))return;
  if(now-Math.max(ETM.since,ETM.at||0)>=ETMAUTO)etmSay(true);}catch(e){}},1000);
+
+// cualquier pulsación o tecla cuenta como actividad (para el minuto de espera en la pausa)
+addEventListener('pointerdown',()=>{ETM.act=performance.now();},true);addEventListener('keydown',()=>{ETM.act=performance.now();},true);
 // ==================== v328 · ÉTER en la era fantástica: el cristal atado a la cinta del libro ====================
 // Nogal (14-nov-2026), maqueta «eter_cristal3», versión C: una cinta sale por el borde superior derecho del libro y de ella cuelga,
 // con un cordel y una anilla de bronce, un cristal con la forma del núcleo en miniatura (ÉTER es el corazón del núcleo).
@@ -11214,6 +11345,8 @@ const LBH={st:[],nav:0,on:false};
 const lbSnap=()=>{const tab=CP.tab,sel=CP.sel?CP.sel[tab]:null;return{area:LB.area,tab,sel:sel==null?null:sel,lv:sel!=null&&CP.lv?CP.lv[sel]||null:null,op:typeof OP!=='undefined'?OP.tab:null};};
 const lbSnapKey=s=>JSON.stringify(s);
 function lbHistBack(){if(LBH.st.length<2)return;LBH.st.pop();const s=LBH.st[LBH.st.length-1];
+ // v334: si había una previsualización abierta (torre, enemigo o héroe), se cierra para que la página derecha cambie también
+ CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;
  LB.area=s.area;CP.tab=s.tab;if(CP.sel&&s.sel!=null)CP.sel[s.tab]=s.sel;if(s.sel!=null&&CP.lv){if(s.lv==null)delete CP.lv[s.sel];else CP.lv[s.sel]=s.lv;}if(s.op!=null&&typeof OP!=='undefined')OP.tab=s.op;
  LBH.nav=1;try{lbRender();}finally{LBH.nav=0;}}
 {const _lbo=lbOpen;lbOpen=function(){LBH.st=[];LBH.on=false;return _lbo.apply(this,arguments);};
@@ -11441,7 +11574,7 @@ function uabDraw(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000,BCS=K*CS;
 {const _d=e2DrawWorld;e2DrawWorld=function(lw){const r=_d.apply(this,arguments);try{uabDraw(lw);}catch(e){if(!UABERR){UABERR=e;console.error(e);}}return r;};}
 // palabras clave
 E2KW.daze=()=>'<b>Desorientado</b>'+R('','Duración','0,4 – 0,5 s')+'<small>El enemigo queda aturdido un instante, y el siguiente golpe directo que reciba hará un 50% más de daño. Lo provocan la onda de la Torre sónica gigante y el Destello del Faro arcano.</small>';
-try{MECUSE.daze=(MECUSE.daze||[]).concat(['tw:faro']);MECUSE.flam=(MECUSE.flam||[]).concat(['tw:straw']);MECUSE.brk=(MECUSE.brk||[]).concat(['tw:brick']);MECUSE.bleed=(MECUSE.bleed||[]).concat(['tw:wood','tw:straw']);MECUSE.fear=(MECUSE.fear||[]).concat(['tw:dragon']);MECUSE.mark=(MECUSE.mark||[]).concat(['tw:faro']);}catch(e){}
+try{MECUSE.daze=(MECUSE.daze||[]).concat(['tw:faro']);MECUSE.flam=(MECUSE.flam||[]).concat(['tw:straw:@sdry']);MECUSE.brk=(MECUSE.brk||[]).concat(['tw:brick:@bthrow']);MECUSE.bleed=(MECUSE.bleed||[]).concat(['tw:wood:@wsplint','tw:straw:@scrows']);MECUSE.fear=(MECUSE.fear||[]).concat(['tw:dragon']);MECUSE.mark=(MECUSE.mark||[]).concat(['tw:faro']);}catch(e){}
 // ---- v311 · Especializaciones nuevas ----
 // Altar de runas → Senda rúnica · Dron de mantenimiento → Dron petrolero · Cañoneros (era 2) → Cañón de riel y Drones bombarderos
 // Sus datos (SPECS y AB) están en data/towers.js; aquí vive lo que hacen.
@@ -11659,7 +11792,7 @@ setInterval(()=>{try{const B=document.body.classList,on=B.contains('pcpick')&&B.
 // ==================== v312 · Tarjetas de reliquias del cofre: todos los recuadros de una fila con la misma altura ====================
 // La altura es la del texto más largo de esa fila, con un máximo de 3 líneas (2 en móvil); lo que no quepa, con scroll.
 setInterval(()=>{try{const cs=[...document.querySelectorAll('#relic.open .cgrid .rcard')];if(!cs.length)return;const lines=document.body.classList.contains('mfs')?2:3;
- const sig=cs.map(c=>c.textContent.length).join()+'|'+innerWidth+'|'+innerHeight+'|'+lines;const g=cs[0].closest('.cgrid');if(g.dataset.eq===sig)return;g.dataset.eq=sig;
+ const rl=$('relic');/* v334: también la anchura real de cada tarjeta, el zoom y si ya ha terminado de entrar (antes podía medirse a mitad de la animación y quedarse corto) */const sig=cs.map(c=>c.textContent.length+':'+Math.round(c.querySelector('.rbd')?c.querySelector('.rbd').clientWidth:0)).join()+'|'+innerWidth+'|'+innerHeight+'|'+lines+'|'+(cs[0].style.zoom||getComputedStyle(cs[0].closest('.ppap')||cs[0]).zoom)+'|'+(rl&&rl.dataset.ready);const g=cs[0].closest('.cgrid');if(g.dataset.eq===sig)return;g.dataset.eq=sig;
  for(let i=0;i<2;i++){const bs=cs.map(c=>c.querySelectorAll('.rbd')[i]).filter(Boolean);bs.forEach(b=>b.style.height='');const lh=parseFloat(getComputedStyle(bs[0]).lineHeight)||18;
   const h=Math.min(lh*lines,Math.max(...bs.map(b=>b.scrollHeight)));bs.forEach(b=>b.style.height=Math.ceil(h)+'px');}}catch(e){}},250);
 // ==================== v314 · Pantallas grandes: el libro / la tablet (opciones, compendio, pausa, final, partidas…) crecen si caben ====================
@@ -12790,9 +12923,10 @@ setInterval(()=>{try{if(typeof S==='undefined'||!S||!S.hero||S.tut||S.pvE||S.pvH
  if(NEAR.cur){const el=$('nearach'),p=nearProg(NEAR.cur);if(el&&p){const i=el.querySelector('.nbar i'),s=el.querySelector('.ntx small');if(i)i.style.width=Math.min(100,p[0]/p[1]*100)+'%';if(s)s.textContent=fi(Math.min(p[0],p[1]))+' / '+fi(p[1]);}}
  for(const id of Object.keys(ACH)){if(ACHS[id]||S.near[id]||NEARC[id]||NEAR.q.includes(id)||NEAR.cur===id)continue;
   try{if(typeof achVis==='function'&&!achVis(id))continue;if(typeof achFound==='function'&&!achFound(id))continue;if(typeof achSec==='function'&&achSec(id))continue;}catch(e){continue;}
+  /* v334: si ya no se puede conseguir en esta partida, no se avisa */try{if(typeof achState==='function'){const st=achState(id);if(st&&st[0]==='ko')continue;}}catch(e){}
   const p=nearProg(id);if(!p||!(p[1]>0))continue;const r=p[0]/p[1];
   if(r>=NEARP&&r<1){if(p[2]==='car'){NEARC[id]=1;try{localStorage.setItem('rt-near',JSON.stringify(NEARC));}catch(e){}}else S.near[id]=1;NEAR.q.push(id);}}
- if(!NEAR.cur&&NEAR.q.length)nearShow(NEAR.q.shift());
+ while(NEAR.q.length&&(()=>{try{const st=achState(NEAR.q[0]);return st&&st[0]==='ko';}catch(e){return false;}})())NEAR.q.shift();if(!NEAR.cur&&NEAR.q.length)nearShow(NEAR.q.shift());
  // si sale a la vez el de enemigo nuevo, este se pone encima
  const el=$('nearach'),ne=$('nenot');if(el)el.classList.toggle('up',!!(ne&&ne.classList.contains('on')));}catch(e){}},1000);
 // Borrar progreso: también los avisos ya dados
@@ -13148,6 +13282,8 @@ function whyLost(){const out=[];if(!S||!S.st)return out;const ek=S.st.ek||{};
   else if((E.sp||1)>=1.5)tip='Son muy rápidos: ralentizarlos da tiempo a tus torres.';
   else tip='Prueba a reforzar el tramo final del camino, cerca del núcleo.';
   out.push({h:`<b>${nm}</b>: te ${n===1?'quitó 1 de vida':'quitaron '+n+' de vida'}.`,s:tip});}
+ /* v334: muchas salidas abiertas = más portales y oleadas más repartidas */
+ {const np=(S.portals||[]).length;if(np>=4&&S.round<=Math.ceil(ROUNDS*.7))out.unshift({h:`Tenías <b>${np} portales</b> abiertos.`,s:'Cada salida que dejas abierta es un portal más: los enemigos llegan por más sitios a la vez. Elegir piezas con menos salidas (o cerrarlas) hace las oleadas más fáciles de defender.'});}
  const cheap=goldCheap();if(S.gold>=cheap&&S.gold>=50)out.push({h:`Te quedaron <b>${fi(Math.floor(S.gold))} 🪙</b> sin gastar.`,s:'Antes de cada oleada, mira si puedes construir o mejorar algo más.'});
  if(S.rc>0&&!S.tut)out.push({h:`Te ${S.rc===1?'quedaba 1 reintento':'quedaban '+S.rc+' reintentos'} de oleada.`,s:'Si una oleada se tuerce, desde la pausa puedes repetirla desde el principio.'});
  if(S.hero&&S.hero.lvl<=3&&S.round>=8)out.push({h:`Tu héroe acabó en <b>Nv ${S.hero.lvl}</b>.`,s:'Gana experiencia peleando: muévelo a donde haya más enemigos y usa sus habilidades.'});
@@ -13163,7 +13299,8 @@ const WHYPOS={v:'r'};/* 'r': arriba de la página derecha · 'l': debajo del res
 // ---------- «Sabías que…» ----------
 // Solo cosas que el jugador ya puede tener delante (sin destripar nada de lo que no ha visto).
 const TIPS=[
- ()=>'Pulsa <b>Tab</b> en un evento o una oferta para ver el mapa sin cerrar la ventana.',
+ ()=>'Abrir muchas salidas no siempre es buena idea: cada una es un <b>portal</b> más, y los enemigos llegan por más sitios a la vez.',
+ ()=>'Pulsa <b>'+(kbN?kbN('peek'):'Tab')+'</b> al elegir pieza, en un evento o en una oferta para ver el mapa sin cerrar la ventana.',
  ()=>'Con <b>Mayús + 1–9</b> usas las reliquias activas sin buscar el botón.',
  ()=>'Con el botón de la izquierda, debajo de «Reintentar» (o manteniendo <b>'+(kbN?kbN('rng').toUpperCase():'X')+'</b>), ves el alcance de todas tus torres a la vez.',
  ()=>'Las torres de unidades tienen <b>bandera</b>: pulsa la torre y luego la bandera para elegir dónde pelean.',
@@ -13298,4 +13435,114 @@ document.addEventListener('pointerdown',e=>{try{const b=document.querySelector('
  if(!b.contains(e.target)){clearTimeout(ETM.hide);b.classList.remove('on');cv.classList.remove('etmon','etmtalk');}}catch(_){}},true);
 document.addEventListener('click',e=>{try{if(ETMSKIP.on){ETMSKIP.on=0;e.preventDefault();e.stopPropagation();}}catch(_){}},true);
 const ETMSKIP={on:0};
+// ==================== v334 · Paneles del mazo y del cofre centrados en su hueco ====================
+// Con una ventana abierta (oferta de torres, cofre, evento…), cada panel lateral queda a la misma distancia
+// del borde de la pantalla que de la ventana. Sin ventana, vuelven a su sitio de siempre. Vale para las dos eras.
+setInterval(()=>{try{const sd=$('mzside');if(!sd)return;const L=sd.querySelector('.mzd'),R=sd.querySelector('.mzr');if(!L&&!R)return;
+ const rl=$('relic');let w=null;
+ if(rl&&rl.classList.contains('open')&&!document.body.classList.contains('mfs'))w=rl.querySelector('.cgrid')&&rl.querySelector('.cfsign')?rl.querySelector('.cgrid'):(rl.querySelector('.hdwin')||rl.querySelector('.ppap')||rl.querySelector('.pscr'));
+ const put=(el,side)=>{if(!el)return;if(!w||!el.offsetWidth){el.style[side]='';return;}const b=w.getBoundingClientRect();if(!b.width)return;
+  const gap=side==='left'?b.left:innerWidth-b.right,pw=el.getBoundingClientRect().width,z=el.offsetWidth?pw/el.offsetWidth:1;const v=Math.max(10,(gap-pw)/2);el.style.setProperty(side,(v/z).toFixed(1)+'px','important');};
+ put(L,'left');put(R,'right');}catch(e){}},200);
+// ==================== v334 · Fichas de torre: sin estadísticas que no aplican ====================
+// Las torres de apoyo (p. ej. el Altar de runas) no disparan: no se enseñan Daño 0, Enfriamiento «Infinity s», DPS ≈ 0 ni Objetivos vacíos.
+{const _si=shopInfo;shopInfo=function(id){let h=_si.apply(this,arguments);try{if(typeof h!=='string')return h;
+ h=h.replace(/<div class="row[^"]*"><span>(?:(?!<\/div>)[\s\S])*?<\/span><span>(?:0|0 s|Infinity s|∞ s|NaN s|≈ 0|≈ 0,0)<\/span><\/div>/g,'');
+ const T=TW[id];if(T&&T.support)h=h.replace(/<div class="row[^"]*"><span><span class="kw st" data-kw="tgts"[\s\S]*?<\/div>/,'');}catch(e){}return h;};}
+// ==================== v334 · Pergamino nuevo (elegir pieza y nueva torre, Era Fantástica) ====================
+// Aprobado en la Mesa (probador pg10, 14-nov): llega cerrado con una cinta de tela roja y un lacre con corona; el lacre se parte,
+// la cinta se afloja y resbala por los rodillos; el pergamino se abre (más suave que antes), las cartas se dibujan a pluma una a una,
+// al pasar el ratón sale un destello de vez en cuando y al elegir cae un lacre con el emblema de lo que eliges (pieza o torre),
+// con un par de gotas de cera antes y salpicaduras al caer. En la Era Distópica sigue el dron.
+const PGN={round:-1,busy:false};
+const pgE2=()=>{try{return document.documentElement.dataset.skin==='holo';}catch(e){return false;}};
+const pgRM=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}};
+const pgcl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),pgseg=(t,a,b)=>pgcl((t-a)/(b-a)),pgeo=x=>1-Math.pow(1-x,3);
+const PGDEFS='<defs><radialGradient id="pgwax" cx=".4" cy=".35"><stop offset="0" stop-color="#e2463a"/><stop offset=".7" stop-color="#9e1c16"/><stop offset="1" stop-color="#6a0e0a"/></radialGradient><linearGradient id="pgrib" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c43a2a"/><stop offset=".5" stop-color="#9a1e16"/><stop offset="1" stop-color="#6a100c"/></linearGradient></defs>';
+const PGWAX='<path d="M0 -26 Q10 -27 16 -20 Q27 -15 25 -4 Q30 7 21 15 Q17 26 5 25 Q-5 31 -14 22 Q-26 20 -24 7 Q-31 -4 -21 -12 Q-16 -25 0 -26Z" fill="url(#pgwax)" stroke="#5a0a06" stroke-width="1.2"/><circle r="16" fill="none" stroke="#5a0a06" stroke-width="1.5" opacity=".55"/>';
+const PGEMB={corona:'<path d="M-10 6l-2-12 6 5 6-9 6 9 6-5-2 12z" fill="#7a120c" stroke="#4a0806" stroke-width="1" stroke-linejoin="round"/><path d="M-10 9h20" stroke="#4a0806" stroke-width="2"/>',
+ pieza:'<rect x="-9" y="-9" width="18" height="18" fill="none" stroke="#5a0a06" stroke-width="1.8"/><path d="M-9 0H9M0 -9V9" stroke="#7a120c" stroke-width="4"/>',
+ torre:'<path d="M-8 9v-14h4v4h3v-4h3v4h3v-4h4v14z" fill="#7a120c" stroke="#4a0806" stroke-width="1"/>'};
+const pgWaxB=e=>PGWAX+PGEMB[e];
+// cinta + lacre del pergamino cerrado, centrados en (0,0); k: 0 entero → 1 suelto y caído («resbala»)
+function pgClosed(k,half){const H=22,yT=-H/2,yB=H/2,X0=-half,X1=half,f=pgeo(k),g=k*k*130;
+ const tail=(d,rot,dy)=>`<g transform="translate(0 ${dy}) rotate(${rot} ${d*6} 6)"><path d="M${d*2} 6L${d*14} 6L${d*24} 62L${d*16} 54L${d*10} 66Z" fill="url(#pgrib)" stroke="#4a0806" stroke-width="1.2"/></g>`;
+ const band=(wave,sx,dy,o)=>{const p=`M${X0} ${yT+2}Q${X0/2} ${yT-8+wave} 0 ${yT+wave*.5}Q${X1/2} ${yT-8-wave} ${X1} ${yT+2}L${X1} ${yB+2}Q${X1/2} ${yB-8-wave} 0 ${yB+wave*.5}Q${X0/2} ${yB-8+wave} ${X0} ${yB+2}Z`;
+  return `<g opacity="${o}" transform="translate(0 ${dy}) scale(${sx} 1)"><path d="${p}" fill="url(#pgrib)" stroke="#4a0806" stroke-width="1.2"/><path d="M${X0} ${yT+5}Q${X0/2} ${yT-5+wave} 0 ${yT+3+wave*.5}Q${X1/2} ${yT-5-wave} ${X1} ${yT+5}" stroke="#ff9c86" stroke-width="1" fill="none" opacity=".55"/></g>`;};
+ const body=pgWaxB('corona');
+ if(k<=0)return tail(-1,0,0)+tail(1,0,0)+band(0,1,0,1)+`<g>${body}</g>`;
+ const lo=pgeo(pgseg(k,0,.35)),fall=pgseg(k,.25,1),sx=1-.35*pgeo(pgseg(k,.3,1)),o=1-pgseg(k,.55,1);
+ return `<g opacity="${o}"><g opacity="${1-pgseg(k,.6,.95)}">${tail(-1,-20*lo,fall*fall*150)}${tail(1,20*lo,fall*fall*150)}</g>${band(lo*6,sx,fall*fall*140,1-pgseg(k,.75,1))}`+
+  `<g transform="translate(${-6-40*f},${g}) rotate(${-50*k})"><clipPath id="pghl"><rect x="-40" y="-40" width="40" height="80"/></clipPath><g clip-path="url(#pghl)" transform="translate(6,0)">${body}</g></g>`+
+  `<g transform="translate(${6+40*f},${g*1.1}) rotate(${60*k})"><clipPath id="pghr"><rect x="0" y="-40" width="40" height="80"/></clipPath><g clip-path="url(#pghr)" transform="translate(-6,0)">${body}</g></g></g>`;}
+// lacre al elegir: dos gotas escurren, cae el sello y salpican otras dos (pt en segundos)
+const PGDROP='M0 -7C3 -3 4.5 0 4.5 2.5a4.5 4.5 0 0 1-9 0C-4.5 0-3 -3 0-7z';
+function pgPick(pt,emb){let s='';const fall=(t0,dur,tx,ty)=>{const u=pgseg(pt,t0,t0+dur);if(u<=0)return '';const yy=ty-(1-u*u)*(ty+120),ld=u>=1;return `<g transform="translate(${tx},${yy}) scale(${ld?1.25:1},${ld?.6:1})"><path d="${PGDROP}" fill="url(#pgwax)" stroke="#5a0a06" stroke-width=".6"/></g>`;};
+ s+=fall(0,.28,-40,26)+fall(.1,.28,36,-30);
+ const k=pgseg(pt,.22,.52),q=pt>.52?1+.08*Math.sin(pgseg(pt,.52,.78)*Math.PI):1;
+ if(k>0)s+=`<g transform="scale(${(3-2*pgeo(k))*q*1.1}) rotate(-10)" opacity="${pgeo(k)}">${pgWaxB(emb)}</g>`;
+ const sp=pgeo(pgseg(pt,.52,.72));if(pt>=.52)for(const [ax,ay,r] of [[-50,6,3.6],[44,30,3]])s+=`<g transform="translate(${ax*sp},${ay*sp}) scale(1.1,.65)" opacity="${pgseg(pt,.52,.56)}"><circle r="${r}" fill="url(#pgwax)" stroke="#5a0a06" stroke-width=".5"/></g>`;
+ return s;}
+// ---------- apertura ----------
+// todo en JS: el papel se recorta desde el centro y los rodillos (dibujados encima mientras dura) se separan con él
+const pgBack=x=>{const c1=.55,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+function pgRoll(cx,top,h,R){return `<rect x="${cx-R}" y="${top}" width="${2*R}" height="${h}" rx="5" fill="url(#pgpr)" stroke="#8a6a3a" stroke-width="1.2"/><path d="M${cx-R+3} ${top+4}V${top+h-4}" stroke="#fff8e4" stroke-width="2" opacity=".35"/>`+
+ [[top,-1],[top+h,1]].map(([y,d])=>`<rect x="${cx-R-3}" y="${d<0?y-8:y}" width="${2*R+6}" height="8" rx="2" fill="url(#pgwd)" stroke="#2a1608" stroke-width="1.2"/><rect x="${cx-4}" y="${d<0?y-16:y+8}" width="8" height="8" fill="url(#pgwd)"/><ellipse cx="${cx}" cy="${y+d*22}" rx="9" ry="7" fill="url(#pgkn)" stroke="#2a1608" stroke-width="1.3"/>`).join('');}
+const PGDEFS2='<linearGradient id="pgpr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b89660"/><stop offset=".45" stop-color="#f6ead0"/><stop offset="1" stop-color="#a88450"/></linearGradient><linearGradient id="pgwd" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a1f0c"/><stop offset=".5" stop-color="#c88a4c"/><stop offset="1" stop-color="#2e1808"/></linearGradient><radialGradient id="pgkn" cx=".38" cy=".35"><stop offset="0" stop-color="#d89a58"/><stop offset=".6" stop-color="#7a4420"/><stop offset="1" stop-color="#3a1f0c"/></radialGradient>';
+function pgOpen(host,paper){if(!host||!paper||pgE2()||pgRM())return;const old=document.querySelector('.pgseal');if(old)old.remove();
+ host.classList.add('pgopen');paper.style.clipPath='inset(0 50%)';
+ const ov=document.createElement('div');ov.className='pgseal';document.body.appendChild(ov);let t0=0;const tA=performance.now(),T1=1.05,T2=2.0,R=15;
+ const fin=()=>{ov.remove();host.classList.remove('pgopen');paper.style.clipPath='';};
+ const step=now=>{const r=paper.getBoundingClientRect();if(!paper.isConnected||now-tA>6000){fin();return;}/* espera a que la ventana tenga tamaño (puede salir un poco después) */if(!r.width||!r.height){requestAnimationFrame(step);return;}if(!t0){t0=now;pgPen(host,paper);}const t=(now-t0)/1000;
+  const p=t<T1?0:t>=T2?1:Math.max(0,Math.min(1.03,pgBack(pgseg(t,T1,T2))));const half=Math.min(1,p)*50;paper.style.clipPath=p>=1&&t>=T2?'':`inset(0 ${Math.max(0,50-p*50).toFixed(2)}%)`;
+  const cx=r.left+r.width/2,cy=r.top+r.height/2,w=r.width*p,top=r.top-4,h=r.height+8;
+  ov.style.cssText=`left:0;top:0;width:${innerWidth}px;height:${innerHeight}px`;
+  ov.innerHTML=`<svg viewBox="0 0 ${innerWidth} ${innerHeight}"><defs>${PGDEFS.slice(6,-7)}${PGDEFS2}</defs>${pgRoll(cx-w/2-R+2,top,h,R)}${pgRoll(cx+w/2+R-2,top,h,R)}<g transform="translate(${cx} ${cy})">${pgClosed(pgseg(t,.3,1.15),2*R+4)}</g></svg>`;
+  // las cartas: cada una se dibuja a pluma y después aparece lo de dentro
+  if(t<T2+.05)requestAnimationFrame(step);else fin();};
+ setTimeout(()=>{if(ov.isConnected||paper.style.clipPath)fin();},7000);
+ requestAnimationFrame(step);
+}
+ // las cartas: cada una se dibuja a pluma (en una capa aparte: no se toca el HTML de la ventana, que el juego redibuja) y después aparece lo de dentro
+function pgPen(host,paper){host.classList.add('pgpen');setTimeout(()=>{const cards=[...paper.querySelectorAll('.tof,.prow .card')].map(c=>c.getBoundingClientRect()).filter(r=>r.width&&r.height);if(!cards.length){host.classList.remove('pgpen');return;}
+  const pv=document.createElement('div');pv.className='pgpenl';pv.innerHTML=`<svg viewBox="0 0 ${innerWidth} ${innerHeight}">`+cards.map((r,i)=>{const L=2*(r.width+r.height);return `<rect x="${r.left+1}" y="${r.top+1}" width="${r.width-2}" height="${r.height-2}" rx="10" stroke-dasharray="${L}" style="--pgL:${L};stroke-dashoffset:${L};animation-delay:${(.75+i*.2).toFixed(2)}s"/>`;}).join('')+'</svg>';document.body.appendChild(pv);
+  setTimeout(()=>{host.classList.remove('pgpen');pv.style.opacity='0';setTimeout(()=>pv.remove(),300);},(1.5+cards.length*.2)*1000);},1000);}
+// nueva torre: cada vez que se abre la oferta
+{const _r=renderTowerOffer;renderTowerOffer=function(){const was=RL.open&&$('relic').querySelector('.toff');const r=_r.apply(this,arguments);try{if(!was){const ps=$('relic').querySelector('.pscr');if(ps)pgOpen(ps,ps.querySelector('.ppap'));}}catch(e){}return r;};}
+// elegir pieza: la primera vez que sale en cada ronda (volver desde el mapa no lo repite)
+{const _u=ui;ui=function(){const r=_u.apply(this,arguments);try{const pk=S&&S.phase==='place'&&S.pi==null&&document.body.classList.contains('pcpick');
+  if(pk&&PGN.round!==S.round){PGN.round=S.round;const p=$('panel');if(p&&p.querySelector('.prow'))pgOpen(p,p);}}catch(e){}return r;};}
+// ---------- al elegir: lacre con el emblema ----------
+function pgStamp(card,emb,done){if(pgE2()||pgRM()){done();return;}PGN.busy=true;const r=card.getBoundingClientRect(),s=Math.max(56,Math.min(r.width,r.height)*.45);
+ const ov=document.createElement('div');ov.className='pgstamp';ov.style.cssText=`left:${r.right-s*.62}px;top:${r.top-s*.12}px;width:${s*1.6}px;height:${s*1.6}px;margin:${-s*.3}px 0 0 ${-s*.3}px`;
+ ov.innerHTML=`<svg viewBox="-60 -60 120 120">${PGDEFS}<g></g></svg>`;document.body.appendChild(ov);const g=ov.querySelector('g:last-child'),t0=performance.now();card.classList.add('pgchosen');
+ try{sfx('ui');}catch(e){}
+ const step=now=>{const t=(now-t0)/1000;g.innerHTML=pgPick(t,emb);if(t<.82)requestAnimationFrame(step);else{PGN.busy=false;done();setTimeout(()=>ov.remove(),350);ov.style.opacity='0';}};requestAnimationFrame(step);}
+document.addEventListener('click',e=>{if(PGN.busy){const b=e.target.closest&&e.target.closest('[data-a="pick"],[data-a="towpick"]');if(b){e.stopPropagation();e.preventDefault();}return;}
+ const b=e.target.closest&&e.target.closest('[data-a="pick"],[data-a="towpick"]');if(!b||b.dataset.pgok||pgE2()||pgRM())return;
+ if(b.dataset.a==='pick'){if(!(S&&S.pi==null&&document.body.classList.contains('pcpick')))return;}
+ e.stopPropagation();e.preventDefault();const card=b.dataset.a==='pick'?b:(b.closest('.tof')||b);
+ const sel=b.dataset.a==='pick'?`[data-a="pick"][data-i="${b.dataset.i}"]`:`[data-a="towpick"][data-k="${b.dataset.k}"]`;
+ pgStamp(card,b.dataset.a==='pick'?'pieza':'torre',()=>{card.classList.remove('pgchosen');const nb=document.querySelector(sel)||b;nb.dataset.pgok=1;nb.click();delete nb.dataset.pgok;});},true);
+// ==================== v334 · Aviso de jefe ====================
+// Cuando sale un jefe: onda que se expande desde él, cartel arriba con su nombre, y si el juego va acelerado, vuelve un momento a ×1.
+// Mientras está en el mapa se dibuja por encima del resto de enemigos y lleva un aro rojo que late, para saber siempre dónde está.
+const BOSSA={list:[],slow:null};
+{const _se=spawnEnemy;spawnEnemy=function(t){const n0=S&&S.enemies?S.enemies.length:0;const r=_se.apply(this,arguments);try{
+ if(S&&!S.tut&&!(PV&&S===PV.S)&&!(PE&&S===PE.S)&&!(PHV&&S===PHV.S)&&S.enemies&&S.enemies.length>n0){const e=S.enemies.slice(n0).find(isBoss);if(e)bossAnnounce(e);}}catch(err){}return r;};}
+function bossAnnounce(e){BOSSA.list.push({e,t0:performance.now()});
+ try{sfx('boss');}catch(_){try{sfx('page');}catch(__){}}
+ let b=$('bossban');if(!b){b=document.createElement('div');b.id='bossban';document.body.appendChild(b);}
+ const E=ET[e.t]||{},ic=enIc(e.t)?icHtml(enIc(e.t)):"";b.innerHTML=`<span class="bbic" style="background:${E.col||'#7a1a14'}">${ic||'☠'}</span><span><small>¡Atención!</small><b>${E.n||'Jefe'}</b> ha salido</span>`;
+ b.classList.remove('on');void b.offsetWidth;b.classList.add('on');clearTimeout(BOSSA.bt);BOSSA.bt=setTimeout(()=>b.classList.remove('on'),3200);
+ // a ×1 un momento (solo si iba más rápido) y luego vuelve a la velocidad que tenías, salvo que la hayas cambiado tú
+ if(S.speed>1){if(!BOSSA.slow)BOSSA.slow={prev:S.speed};S.speed=1;try{ui();}catch(_){}clearTimeout(BOSSA.st);BOSSA.st=setTimeout(()=>{const s=BOSSA.slow;BOSSA.slow=null;if(s&&S&&S.speed===1)S.speed=s.prev;try{ui();}catch(_){}},3000);}}
+// los jefes se dibujan los últimos (encima de todo lo demás)
+{const _d=draw;draw=function(){if(!S||!S.enemies||!S.enemies.some(isBoss))return _d.apply(this,arguments);const E=S.enemies;S.enemies=E.filter(x=>!isBoss(x)).concat(E.filter(isBoss));try{return _d.apply(this,arguments);}finally{S.enemies=E;}};}
+{const _dw=e2DrawWorld;e2DrawWorld=function(lw){const r=_dw.apply(this,arguments);try{if(!S||!S.enemies)return r;const X=v=>v*CS+CS/2,now=performance.now();
+ for(const e of S.enemies){if(!isBoss(e)||e.sw||e.hp<=0)continue;const R=((ET[e.t]||{}).r||.5)*CS*(typeof EVS!=='undefined'?EVS:1),p=.5+.5*Math.sin(now/260);
+  g.save();g.strokeStyle=`rgba(255,70,50,${.45+.35*p})`;g.lineWidth=lw(3);g.beginPath();g.arc(X(e.x),X(e.y),R*1.35+p*R*.15,0,Math.PI*2);g.stroke();g.restore();}
+ BOSSA.list=BOSSA.list.filter(a=>now-a.t0<2600&&S.enemies.includes(a.e));
+ for(const a of BOSSA.list){const u=(now-a.t0)/2600;for(let k=0;k<3;k++){const v=u*1.6-k*.22;if(v<=0||v>=1)continue;g.save();g.globalAlpha=(1-v)*.85;g.strokeStyle='#ff5a3a';g.lineWidth=lw(4*(1-v)+1);g.beginPath();g.arc(X(a.e.x),X(a.e.y),CS*(.6+v*4.5),0,Math.PI*2);g.stroke();g.restore();}}
+}catch(e){}return r;};}
 </script></body></html>
