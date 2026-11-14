@@ -93,7 +93,7 @@ function compassStep(e){
  const prev=e.ck?e.ck.split(',').map(Number):null;e.ck=key;
  if(!rp('compass')&&!e.away)return;
  const v0=S.cf[cy][cx];
- const aw=D.map(([a,b])=>[cx+a,cy+b]).filter(q=>inbc(q[0],q[1])&&S.cc[q[1]][q[0]]===2&&S.cf[q[1]][q[0]]>v0&&S.cf[q[1]][q[0]]<1e9&&!(prev&&q[0]===prev[0]&&q[1]===prev[1]));
+ const aw=D.map(([a,b])=>[cx+a,cy+b]).filter(q=>inbc(q[0],q[1])&&S.cc[q[1]][q[0]]===2&&!cutC(cx,cy,q[0],q[1])&&S.cf[q[1]][q[0]]>v0&&S.cf[q[1]][q[0]]<1e9&&!(prev&&q[0]===prev[0]&&q[1]===prev[1]));
  if(e.away){if(e.aw&&e.aw[0]===cx&&e.aw[1]===cy){if(aw.length)e.aw=aw[Math.floor(Math.random()*aw.length)];else{e.away=false;e.aw=null;}}}
  else if(rp('compass')&&!e.awayUsed&&aw.length&&Math.random()<.5){e.awayUsed=true;RS('compass').n++;e.away=true;e.aw=aw[Math.floor(Math.random()*aw.length)];}
 }
@@ -103,9 +103,9 @@ const FORKTOL=6;
 function forkRoutes(cx,cy){const key=cx+','+cy;S.forks=S.forks||{};if(S.forks[key])return S.forks[key];
  const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2,c0=[Math.floor(S.core.x/K),Math.floor(S.core.y/K)];
  const d=Array.from({length:NC},()=>Array(NC).fill(1e9)),q=[c0];d[c0[1]][c0[0]]=0;
- for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(nx===cx&&ny===cy)continue;if(isP(nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
- const out=[];for(const[a,b]of D){const nx=cx+a,ny=cy+b;if(!isP(nx,ny)||!(d[ny][nx]<1e9))continue;
-  const path=[[nx,ny]];let x=nx,y=ny,g=0;while(d[y][x]>0&&g++<4000){let nb=null;for(const[a2,b2]of D){const px=x+a2,py=y+b2;if(isP(px,py)&&d[py][px]<d[y][x]&&!(px===cx&&py===cy)){nb=[px,py];break;}}if(!nb)break;path.push(nb);x=nb[0];y=nb[1];}
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(nx===cx&&ny===cy)continue;if(isP(nx,ny)&&!cutC(x,y,nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
+ const out=[];for(const[a,b]of D){const nx=cx+a,ny=cy+b;if(!isP(nx,ny)||cutC(cx,cy,nx,ny)||!(d[ny][nx]<1e9))continue;
+  const path=[[nx,ny]];let x=nx,y=ny,g=0;while(d[y][x]>0&&g++<4000){let nb=null;for(const[a2,b2]of D){const px=x+a2,py=y+b2;if(isP(px,py)&&!cutC(x,y,px,py)&&d[py][px]<d[y][x]&&!(px===cx&&py===cy)){nb=[px,py];break;}}if(!nb)break;path.push(nb);x=nb[0];y=nb[1];}
   out.push({n:[nx,ny],len:1+d[ny][nx],path});}
  return S.forks[key]=out;}
 function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!S.cc[cy]||!S.cf||ra("compass"))return;
@@ -124,7 +124,7 @@ function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!
 function sqFollow(e){const F=S.field,f0=F[e.ty]&&F[e.ty][e.tx];let sp=99;if(f0==null)return sp;for(const o of S.enemies){if(o===e||o.hp<=0||o.sqid===e.sqid||isFly(o)!==isFly(e))continue;const d=Math.hypot(o.x-e.x,o.y-e.y);if(d>1.4)continue;const f1=F[o.ty]&&F[o.ty][o.tx];if(f1==null||f1>=f0)continue;
   const os=o.fx.stun||o.fx.freeze||o.fx.root||o.stopped?0:(o.fsp||ET[o.t].sp)*(o.fx.slow?o.fx.slow.m:1);sp=Math.min(sp,Math.max(.15,os));}return sp;}
 function laneDir(e,F){const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K);let best=null,bv=Infinity;
- for(const[a,b]of D){const mx=(cx+a)*K+1,my=(cy+b)*K+1;if(!inb(mx,my))continue;const v=F[my][mx];if(v==null||v<0||!isFinite(v))continue;if(S.cells[my][mx]!==2)continue;if(v<bv||(v===bv&&e.fd&&e.fd[0]===a&&e.fd[1]===b)){bv=v;best=[a,b];}}
+ for(const[a,b]of D){const mx=(cx+a)*K+1,my=(cy+b)*K+1;if(!inb(mx,my)||cutC(cx,cy,cx+a,cy+b))continue;const v=F[my][mx];if(v==null||v<0||!isFinite(v))continue;if(S.cells[my][mx]!==2)continue;if(v<bv||(v===bv&&e.fd&&e.fd[0]===a&&e.fd[1]===b)){bv=v;best=[a,b];}}
  const v0=F[cy*K+1]&&F[cy*K+1][cx*K+1];if(best&&v0!=null&&bv>=v0)return null;return best;}
 const laneOf=(x,y,fd)=>{const ox=x-Math.floor(x/K)*K-1,oy=y-Math.floor(y/K)*K-1;return ox*fd[1]-oy*fd[0];};
 function laneStep(e,F){if(e.nolane)return null;const fd=laneDir(e,F);if(!fd)return null;e.fd=fd;if(e.fln==null)e.fln=laneOf(e.tx,e.ty,fd);
@@ -148,7 +148,7 @@ function move(e,dt){if(isBoss(e))e.blk=e.stopped?(e.blk||0)+dt:Math.max(0,(e.blk
    // solo se consideran vecinos que acercan al objetivo; entre varios igual de buenos se prefiere seguir recto (mantiene el carril) y, si no, se reparte con una bolsa barajada por casilla
    let bd=F[e.ty][e.tx],cs=[];
    {const ln=laneStep(e,F);if(ln){go(ln);continue;}}
-   for(const[a,b]of D){const nx=e.tx+a,ny=e.ty+b;if(!inb(nx,ny))continue;const v=F[ny][nx];
+   for(const[a,b]of D){const nx=e.tx+a,ny=e.ty+b;if(!inb(nx,ny)||cutF(e.tx,e.ty,nx,ny))continue;const v=F[ny][nx];
     if(v>=bd)continue;if(cs.length&&v<F[cs[0][1]][cs[0][0]])cs=[];
     if(!cs.length||v===F[cs[0][1]][cs[0][0]])cs.push([nx,ny]);}
    if(!cs.length)return false;

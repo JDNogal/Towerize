@@ -3985,7 +3985,7 @@ function bkItems(t){const L=[];
   if(e2.length){L.push({sec:'Torres de la Era Distópica'});for(const k of e2)row(k);}
   L.push({sec:'Torres de evento'});for(const k of Object.keys(TW).filter(k=>TW[k].uniq))L.push({id:k,ic:twIc(k),col:TW[k].col,n:TW[k].n,ok:seen('tw',k)});}
  else if(t==='hr'){for(const id of Object.keys(HEROES).filter(h=>UNLOCK_ALL||heroVis(h)))L.push({id,por:1,col:HEROES[id].col,n:HEROES[id].n,ok:UNLOCK_ALL||!HEROES[id].lockTxt,lk:!UNLOCK_ALL&&!!HEROES[id].lockTxt});}
- else if(t==='pc'){PIECES.forEach((o,i)=>L.push({id:String(i),pc:i,n:o.n,ok:seen('pc',o.n)}));}
+ else if(t==='pc'){PIECES.forEach((o,i)=>{if(typeof pieceEraOk==='function'&&!pieceEraOk(o.n))return;L.push({id:String(i),pc:i,n:o.n,ok:seen('pc',o.n)});});}
  else if(t==='bf'){for(const k of BK.filter(k=>typeof bfEraOk!=='function'||bfEraOk(k)))L.push({id:k,bf:k,n:bname?bname(k):BF[k].n,ok:seen('bf',k)});}
  else if(t==='rl'){L.push({sec:'Reliquias normales'});for(const r of RELICS.filter(r=>!r.evr&&relSeeEra(r)))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});
   L.push({sec:'Reliquias de evento'});for(const r of RELICS.filter(r=>r.evr&&relSeeEra(r)))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});}
@@ -5329,7 +5329,7 @@ function drawFaros(){for(const f of S.list){if(!TW[f.type].faro)continue;const L
 const logDur=lv=>2+.5*((lv||1)-1);
 function logShot(t,tg,s,dm){const sq0=sqOf(Math.round(tg.tx),Math.round(tg.ty)),fv=(kx,ky)=>{const v=S.field&&S.field[ky*K+1]?S.field[ky*K+1][kx*K+1]:1e9;return v<1e9?v:-1;};
  // recorrido por los centros de casilla del camino, en sentido contrario al de los enemigos (hacia más lejos del núcleo)
- const pts=[[sq0.x,sq0.y]];let kx=sq0.kx,ky=sq0.ky;for(let n=0;n<12;n++){const f0=fv(kx,ky);let b=null;for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2)continue;const f1=fv(nx,ny);if(f1>f0&&(!b||f1>b.f))b={x:nx,y:ny,f:f1};}if(!b)break;kx=b.x;ky=b.y;pts.push([kx*K+1,ky*K+1]);}
+ const pts=[[sq0.x,sq0.y]];let kx=sq0.kx,ky=sq0.ky;for(let n=0;n<12;n++){const f0=fv(kx,ky);let b=null;for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||cutC(kx,ky,nx,ny))continue;const f1=fv(nx,ny);if(f1>f0&&(!b||f1>b.f))b={x:nx,y:ny,f:f1};}if(!b)break;kx=b.x;ky=b.y;pts.push([kx*K+1,ky*K+1]);}
  if(pts.length<2){pts.push([pts[0][0]+(tg.x-t.x>0?K:-K),pts[0][1]]);}
  (S.logs=S.logs||[]).push({pts,d:0,t:s.ldur||logDur(t.lvl),sp:2*K,dm,src:t,pen:s.pen,hit:[]});}
 function logTick(dt){if(!S.logs||!S.logs.length)return;
@@ -5446,7 +5446,7 @@ function stamp(bx,by,p,bs){
 }
 function conns(bx,by,p){
  let c=0;
- for(let y=0;y<P;y++)for(let x=0;x<P;x++){if(cellOf(p[y][x])!==2)continue;
+ for(let y=0;y<P;y++)for(let x=0;x<P;x++){if(cellOf(p[y][x])!==2||!exitL(x,y))continue;
   for(const[a,b]of D){const lx=x+a,ly=y+b;if(lx>=0&&ly>=0&&lx<P&&ly<P)continue;
    const gx=bx*P+lx,gy=by*P+ly;if(inbc(gx,gy)&&S.cc[gy][gx]===2)c++;}}
  return c;
@@ -5455,7 +5455,7 @@ function conns(bx,by,p){
 function collectEnds(first){
  const out=[],seen={};
  for(const k in S.blocks){const[bx,by]=k.split(',').map(Number);
-  for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;if(S.cc[gy][gx]!==2)continue;
+  for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;if(S.cc[gy][gx]!==2||!exitL(x,y))continue;
    for(const[a,b]of D){const lx=x+a,ly=y+b;if(lx>=0&&ly>=0&&lx<P&&ly<P)continue;
     const nx=bx+(lx<0?-1:lx>=P?1:0),ny=by+(ly<0?-1:ly>=P?1:0);
     if(nx>=0&&ny>=0&&nx<BN&&ny<BN&&!S.blocks[nx+','+ny]){
@@ -5466,7 +5466,7 @@ function collectEnds(first){
 // salidas del camino al borde de la cuadrícula: no sirven para poner piezas, pero sí pueden abrir portales
 function borderEnds(){const out=[];
  for(const k in S.blocks){const[bx,by]=k.split(',').map(Number);
-  for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;if(S.cc[gy][gx]!==2)continue;
+  for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;if(S.cc[gy][gx]!==2||!exitL(x,y))continue;
    for(const[a,b]of D){const lx=x+a,ly=y+b;if(lx>=0&&ly>=0&&lx<P&&ly<P)continue;
     const nx=bx+(lx<0?-1:lx>=P?1:0),ny=by+(ly<0?-1:ly>=P?1:0);
     if(nx<0||ny<0||nx>=BN||ny>=BN)out.push({x:gx*K+1+a,y:gy*K+1+b,bx,by,dir:[a,b],bd:1});}}}
@@ -5499,8 +5499,8 @@ function dealTry(){
  // rescate: si solo queda un extremo libre, salen sí o sí la Bifurcación y el Cruce, gratis
  const E1=!S.tut&&S.round<ROUNDS?collectEnds():[],resc=E1.length===1,RN=['Bifurcación','Cruce'];
  for(let t=0;t<40;t++){
-  let pool=shuf([...PIECES]).slice(0,rp('square')?4:3);
-  if(resc){const rest=shuf(PIECES.filter(x=>!RN.includes(x.n)));pool=shuf([...PIECES.filter(x=>RN.includes(x.n)),...rest.slice(0,pool.length-2)]);}
+  const PZ=PIECES.filter(o=>typeof pieceOk!=='function'||pieceOk(o.n));let pool=shuf([...PZ]).slice(0,rp('square')?4:3);
+  if(resc){const rest=shuf(PZ.filter(x=>!RN.includes(x.n)));pool=shuf([...PIECES.filter(x=>RN.includes(x.n)),...rest.slice(0,pool.length-2)]);}
   S.offers=pool.map(o=>{const of={n:o.n,p:o.p,b:[]};solarize(of);decorate(of);
    if(S.round>=BUFFS_FROM&&Math.random()<.6){const cs=[];of.p.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));
     shuf(cs);
@@ -5525,18 +5525,18 @@ function nextRound(){
 function field(){
  const d=Array.from({length:N},()=>Array(N).fill(1e9)),q=[[S.core.x,S.core.y]];d[S.core.y][S.core.x]=0;
  for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;
-  if(inb(nx,ny)&&S.cells[ny][nx]===2&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
+  if(inb(nx,ny)&&S.cells[ny][nx]===2&&!cutF(x,y,nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
  return d;
 }
 function cfield(){
  const d=Array.from({length:NC},()=>Array(NC).fill(1e9)),c0=[Math.floor(S.core.x/K),Math.floor(S.core.y/K)],q=[c0];d[c0[1]][c0[0]]=0;
- for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(inbc(nx,ny)&&S.cc[ny][nx]===2&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(inbc(nx,ny)&&S.cc[ny][nx]===2&&!cutC(x,y,nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
  return d;
 }
 function afield(c){
  const k=c[0]+','+c[1];if(S.af[k])return S.af[k];
  const d=Array.from({length:N},()=>Array(N).fill(1e9)),sx=c[0]*K+1,sy=c[1]*K+1,q=[[sx,sy]];d[sy][sx]=0;
- for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(inb(nx,ny)&&S.cells[ny][nx]===2&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(inb(nx,ny)&&S.cells[ny][nx]===2&&!cutF(x,y,nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
  return S.af[k]=d;
 }
 function placePiece(bx,by){
@@ -5566,7 +5566,7 @@ function placePiece(bx,by){
 // Ronda sin pieza: los portales salen de los extremos sin salida del camino (los más lejanos del núcleo primero)
 function skipPlace(){
  const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2,d=field(),cx=Math.floor(S.core.x/K),cy=Math.floor(S.core.y/K),ends=[];
- for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!isP(x,y)||(x===cx&&y===cy))continue;const nb=D.filter(([a,b])=>isP(x+a,y+b));
+ for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!isP(x,y)||(x===cx&&y===cy))continue;const nb=D.filter(([a,b])=>isP(x+a,y+b)&&!cutC(x,y,x+a,y+b));
   if(nb.length===1){const fx=x*K+1,fy=y*K+1;if(d[fy][fx]<1e9)ends.push({x:fx,y:fy,dir:[-nb[0][0],-nb[0][1]],d:d[fy][fx],nw:false});}}
  if(!ends.length){let any=null,ad=-1;for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===2&&d[y][x]<1e9&&d[y][x]>ad){ad=d[y][x];any={x,y,d:ad,dir:[0,0],nw:false};}ends.push(any);}
  ends.sort((a,b)=>b.d-a.d);S.ends=addMids(ends);const boss=bossRound(S.round)?ends[0]:null;
@@ -5581,21 +5581,21 @@ const DEADMIN=7;
 // piezas que han unido dos o más extremos del camino al colocarlas: ahí puede abrirse un portal en medio
 const inJoin=c=>!!(S.joins&&S.joins.includes(Math.floor(c[0]/P)+','+Math.floor(c[1]/P)));
 function joinsAt(bx,by){let n=0;const x0=bx*P,y0=by*P,isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2;
- for(let i=0;i<P;i++){if(isP(x0+i,y0)&&isP(x0+i,y0-1))n++;if(isP(x0+i,y0+P-1)&&isP(x0+i,y0+P))n++;if(isP(x0,y0+i)&&isP(x0-1,y0+i))n++;if(isP(x0+P-1,y0+i)&&isP(x0+P,y0+i))n++;}return n;}
+ for(let i=0;i<P;i++){if(!exitL(i,0))continue;/* v329: solo las salidas unen piezas */if(isP(x0+i,y0)&&isP(x0+i,y0-1))n++;if(isP(x0+i,y0+P-1)&&isP(x0+i,y0+P))n++;if(isP(x0,y0+i)&&isP(x0-1,y0+i))n++;if(isP(x0+P-1,y0+i)&&isP(x0+P,y0+i))n++;}return n;}
 function deadMids(ends){const cf=cfield(),isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2&&cf[y][x]<1e9,used=new Set(),q=[];
  const c0=[Math.floor(S.core.x/K),Math.floor(S.core.y/K)];used.add(c0[0]+','+c0[1]);
  for(const e of ends){const cx=Math.floor(e.x/K),cy=Math.floor(e.y/K);if(isP(cx,cy)&&!used.has(cx+','+cy)){used.add(cx+','+cy);q.push([cx,cy]);}}
- for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(isP(nx,ny)&&cf[ny][nx]<cf[y][x]&&!used.has(nx+','+ny)){used.add(nx+','+ny);q.push([nx,ny]);}}}
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(isP(nx,ny)&&!cutC(x,y,nx,ny)&&cf[ny][nx]<cf[y][x]&&!used.has(nx+','+ny)){used.add(nx+','+ny);q.push([nx,ny]);}}}
  const seen=new Set(),out=[];
  for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){const k=x+','+y;if(!isP(x,y)||used.has(k)||seen.has(k))continue;
   const comp=[[x,y]],J=[];seen.add(k);
-  for(let i=0;i<comp.length;i++){const[cx,cy]=comp[i];for(const[a,b]of D){const nx=cx+a,ny=cy+b,nk=nx+','+ny;if(!isP(nx,ny))continue;
+  for(let i=0;i<comp.length;i++){const[cx,cy]=comp[i];for(const[a,b]of D){const nx=cx+a,ny=cy+b,nk=nx+','+ny;if(!isP(nx,ny)||cutC(cx,cy,nx,ny))continue;
    if(used.has(nk)){if(!J.some(j=>j[0]===nx&&j[1]===ny))J.push([nx,ny]);}else if(!seen.has(nk)){seen.add(nk);comp.push([nx,ny]);}}}
   if(comp.length<DEADMIN||!J.length)continue;
   /* solo cuentan los tramos muertos que aparecen al unir dos extremos con una pieza (no los bucles que ya trae una pieza) */if(!comp.concat(J).some(inJoin))continue;
   // casilla del medio: la que queda más lejos de las uniones (por dentro del tramo)
-  const dist=new Map(),bq=[];for(const[cx,cy]of comp)for(const[jx,jy]of J)if(Math.abs(cx-jx)+Math.abs(cy-jy)===1&&!dist.has(cx+','+cy)){dist.set(cx+','+cy,0);bq.push([cx,cy]);}
-  for(let i=0;i<bq.length;i++){const[cx,cy]=bq[i],d0=dist.get(cx+','+cy);for(const[a,b]of D){const nk=(cx+a)+','+(cy+b);if(seen.has(nk)&&!used.has(nk)&&!dist.has(nk)&&comp.some(c=>c[0]===cx+a&&c[1]===cy+b)){dist.set(nk,d0+1);bq.push([cx+a,cy+b]);}}}
+  const dist=new Map(),bq=[];for(const[cx,cy]of comp)for(const[jx,jy]of J)if(Math.abs(cx-jx)+Math.abs(cy-jy)===1&&!cutC(cx,cy,jx,jy)&&!dist.has(cx+','+cy)){dist.set(cx+','+cy,0);bq.push([cx,cy]);}
+  for(let i=0;i<bq.length;i++){const[cx,cy]=bq[i],d0=dist.get(cx+','+cy);for(const[a,b]of D){const nk=(cx+a)+','+(cy+b);if(!cutC(cx,cy,cx+a,cy+b)&&seen.has(nk)&&!used.has(nk)&&!dist.has(nk)&&comp.some(c=>c[0]===cx+a&&c[1]===cy+b)){dist.set(nk,d0+1);bq.push([cx+a,cy+b]);}}}
   let m=comp[0],md=-1;const jc=comp.filter(inJoin),cand=jc.length?jc:comp;for(const c of cand){const v=dist.get(c[0]+','+c[1])||0;if(v>md){md=v;m=c;}}
   // las dos uniones más alejadas entre sí (si solo hay una, los enemigos salen todos hacia ella)
   const sp=J.length>1?J.slice(0,2):[J[0]];
@@ -5953,7 +5953,7 @@ function compassStep(e){
  const prev=e.ck?e.ck.split(',').map(Number):null;e.ck=key;
  if(!rp('compass')&&!e.away)return;
  const v0=S.cf[cy][cx];
- const aw=D.map(([a,b])=>[cx+a,cy+b]).filter(q=>inbc(q[0],q[1])&&S.cc[q[1]][q[0]]===2&&S.cf[q[1]][q[0]]>v0&&S.cf[q[1]][q[0]]<1e9&&!(prev&&q[0]===prev[0]&&q[1]===prev[1]));
+ const aw=D.map(([a,b])=>[cx+a,cy+b]).filter(q=>inbc(q[0],q[1])&&S.cc[q[1]][q[0]]===2&&!cutC(cx,cy,q[0],q[1])&&S.cf[q[1]][q[0]]>v0&&S.cf[q[1]][q[0]]<1e9&&!(prev&&q[0]===prev[0]&&q[1]===prev[1]));
  if(e.away){if(e.aw&&e.aw[0]===cx&&e.aw[1]===cy){if(aw.length)e.aw=aw[Math.floor(Math.random()*aw.length)];else{e.away=false;e.aw=null;}}}
  else if(rp('compass')&&!e.awayUsed&&aw.length&&Math.random()<.5){e.awayUsed=true;RS('compass').n++;e.away=true;e.aw=aw[Math.floor(Math.random()*aw.length)];}
 }
@@ -5963,9 +5963,9 @@ const FORKTOL=6;
 function forkRoutes(cx,cy){const key=cx+','+cy;S.forks=S.forks||{};if(S.forks[key])return S.forks[key];
  const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2,c0=[Math.floor(S.core.x/K),Math.floor(S.core.y/K)];
  const d=Array.from({length:NC},()=>Array(NC).fill(1e9)),q=[c0];d[c0[1]][c0[0]]=0;
- for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(nx===cx&&ny===cy)continue;if(isP(nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
- const out=[];for(const[a,b]of D){const nx=cx+a,ny=cy+b;if(!isP(nx,ny)||!(d[ny][nx]<1e9))continue;
-  const path=[[nx,ny]];let x=nx,y=ny,g=0;while(d[y][x]>0&&g++<4000){let nb=null;for(const[a2,b2]of D){const px=x+a2,py=y+b2;if(isP(px,py)&&d[py][px]<d[y][x]&&!(px===cx&&py===cy)){nb=[px,py];break;}}if(!nb)break;path.push(nb);x=nb[0];y=nb[1];}
+ for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(nx===cx&&ny===cy)continue;if(isP(nx,ny)&&!cutC(x,y,nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
+ const out=[];for(const[a,b]of D){const nx=cx+a,ny=cy+b;if(!isP(nx,ny)||cutC(cx,cy,nx,ny)||!(d[ny][nx]<1e9))continue;
+  const path=[[nx,ny]];let x=nx,y=ny,g=0;while(d[y][x]>0&&g++<4000){let nb=null;for(const[a2,b2]of D){const px=x+a2,py=y+b2;if(isP(px,py)&&!cutC(x,y,px,py)&&d[py][px]<d[y][x]&&!(px===cx&&py===cy)){nb=[px,py];break;}}if(!nb)break;path.push(nb);x=nb[0];y=nb[1];}
   out.push({n:[nx,ny],len:1+d[ny][nx],path});}
  return S.forks[key]=out;}
 function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!S.cc[cy]||!S.cf||ra("compass"))return;
@@ -5984,7 +5984,7 @@ function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!
 function sqFollow(e){const F=S.field,f0=F[e.ty]&&F[e.ty][e.tx];let sp=99;if(f0==null)return sp;for(const o of S.enemies){if(o===e||o.hp<=0||o.sqid===e.sqid||isFly(o)!==isFly(e))continue;const d=Math.hypot(o.x-e.x,o.y-e.y);if(d>1.4)continue;const f1=F[o.ty]&&F[o.ty][o.tx];if(f1==null||f1>=f0)continue;
   const os=o.fx.stun||o.fx.freeze||o.fx.root||o.stopped?0:(o.fsp||ET[o.t].sp)*(o.fx.slow?o.fx.slow.m:1);sp=Math.min(sp,Math.max(.15,os));}return sp;}
 function laneDir(e,F){const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K);let best=null,bv=Infinity;
- for(const[a,b]of D){const mx=(cx+a)*K+1,my=(cy+b)*K+1;if(!inb(mx,my))continue;const v=F[my][mx];if(v==null||v<0||!isFinite(v))continue;if(S.cells[my][mx]!==2)continue;if(v<bv||(v===bv&&e.fd&&e.fd[0]===a&&e.fd[1]===b)){bv=v;best=[a,b];}}
+ for(const[a,b]of D){const mx=(cx+a)*K+1,my=(cy+b)*K+1;if(!inb(mx,my)||cutC(cx,cy,cx+a,cy+b))continue;const v=F[my][mx];if(v==null||v<0||!isFinite(v))continue;if(S.cells[my][mx]!==2)continue;if(v<bv||(v===bv&&e.fd&&e.fd[0]===a&&e.fd[1]===b)){bv=v;best=[a,b];}}
  const v0=F[cy*K+1]&&F[cy*K+1][cx*K+1];if(best&&v0!=null&&bv>=v0)return null;return best;}
 const laneOf=(x,y,fd)=>{const ox=x-Math.floor(x/K)*K-1,oy=y-Math.floor(y/K)*K-1;return ox*fd[1]-oy*fd[0];};
 function laneStep(e,F){if(e.nolane)return null;const fd=laneDir(e,F);if(!fd)return null;e.fd=fd;if(e.fln==null)e.fln=laneOf(e.tx,e.ty,fd);
@@ -6008,7 +6008,7 @@ function move(e,dt){if(isBoss(e))e.blk=e.stopped?(e.blk||0)+dt:Math.max(0,(e.blk
    // solo se consideran vecinos que acercan al objetivo; entre varios igual de buenos se prefiere seguir recto (mantiene el carril) y, si no, se reparte con una bolsa barajada por casilla
    let bd=F[e.ty][e.tx],cs=[];
    {const ln=laneStep(e,F);if(ln){go(ln);continue;}}
-   for(const[a,b]of D){const nx=e.tx+a,ny=e.ty+b;if(!inb(nx,ny))continue;const v=F[ny][nx];
+   for(const[a,b]of D){const nx=e.tx+a,ny=e.ty+b;if(!inb(nx,ny)||cutF(e.tx,e.ty,nx,ny))continue;const v=F[ny][nx];
     if(v>=bd)continue;if(cs.length&&v<F[cs[0][1]][cs[0][0]])cs=[];
     if(!cs.length||v===F[cs[0][1]][cs[0][0]])cs.push([nx,ny]);}
    if(!cs.length)return false;
@@ -6260,7 +6260,7 @@ function cataHit(p){const t=p.src;if(!S.list.includes(t))return;S.cz=S.cz||[];
  else if(p.ammo==='hive'&&ar){const dps=p.bd*ar.bee;S.cz.push({k:'bee',x:p.x,y:p.y,r:1.1*K,t:3,tk:0,dps,pen:p.pen,src:t});if(rs)S.cz.push({k:'hive',x:p.x,y:p.y,t:rs.t,dps,pen:p.pen,src:t});}}
 function rollStart(t,x,y,cx,cy,big){const s=stats(t),rr=abRank(t,'roll'),av=abRank(t,'aval'),d=big?av.d:(rr?rr.d:3);
  S.rolls=S.rolls||[];S.rolls.push({src:t,x,y,cx,cy,left:d*K,dm:s.dmg*(big?av.m:ROLLM),r:(big?.8:.45)*K,hit:new Set(),big,fire:0,pen:s.pen});}
-function rollNext(x,y){if(!S.field||!S.field[y])return null;const f0=S.field[y][x];let b=null;for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2)continue;const g=S.field[ny][nx];if(g<1e9&&g>f0&&(!b||g<b.g))b={x:nx,y:ny,g};}return b?[b.x,b.y]:null;}
+function rollNext(x,y){if(!S.field||!S.field[y])return null;const f0=S.field[y][x];let b=null;for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2||cutF(x,y,nx,ny))continue;const g=S.field[ny][nx];if(g<1e9&&g>f0&&(!b||g<b.g))b={x:nx,y:ny,g};}return b?[b.x,b.y]:null;}
 function rollTick(dt){if(!S.rolls||!S.rolls.length)return;
  S.rolls=S.rolls.filter(r=>{if(!S.list.includes(r.src))return false;let mv=ROLLSP*dt;
   while(mv>1e-6&&r.left>0){const dx=r.cx-r.x,dy=r.cy-r.y,dd=Math.hypot(dx,dy);
@@ -8507,7 +8507,7 @@ function e2Path(g,X,Y,gx,gy,B,a){const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2,cf=e
  const es=[];if(!isP(gx,gy-1))es.push([X,Y+L,X+B,Y+L]);if(!isP(gx,gy+1))es.push([X,Y+B-L,X+B,Y+B-L]);if(!isP(gx-1,gy))es.push([X+L,Y,X+L,Y+B]);if(!isP(gx+1,gy))es.push([X+B-L,Y,X+B-L,Y+B]);
  for(const e of es)edge(...e);g.lineWidth=L;g.strokeStyle=col(.95);for(const e of es)edge(...e);
  // flecha hacia el núcleo
- if(cf&&cf[gy]&&cf[gy][gx]<1e9){let d=null,v=cf[gy][gx];const v0=v;let dn=0,up=[];for(const[dx,dy]of D){const nx=gx+dx,ny=gy+dy;if(!isP(nx,ny))continue;if(cf[ny][nx]<v0)dn++;else if(cf[ny][nx]>v0&&cf[ny][nx]<1e9)up.push([dx,dy]);if(cf[ny][nx]<v){v=cf[ny][nx];d=[dx,dy];}}
+ if(cf&&cf[gy]&&cf[gy][gx]<1e9){let d=null,v=cf[gy][gx];const v0=v;let dn=0,up=[];for(const[dx,dy]of D){const nx=gx+dx,ny=gy+dy;if(!isP(nx,ny)||cutC(gx,gy,nx,ny))continue;if(cf[ny][nx]<v0)dn++;else if(cf[ny][nx]>v0&&cf[ny][nx]<1e9)up.push([dx,dy]);if(cf[ny][nx]<v){v=cf[ny][nx];d=[dx,dy];}}
   /* v305: en un cruce que se abre en dos (o más) ramas, la flecha del centro sigue recta, en la dirección por la que llegan; ya se dividen al empezar cada rama */
   if(dn>=2&&up.length===1)d=[-up[0][0],-up[0][1]];
   if(d){const cx=X+B/2,cy=Y+B/2,s=B*.16;g.strokeStyle=`rgba(${Math.round(180+(255-180)*a)},${Math.round(250-(250-150)*a)},255,.55)`;g.lineWidth=L;g.beginPath();g.moveTo(cx-d[0]*s-d[1]*s*.8,cy-d[1]*s-d[0]*s*.8);g.lineTo(cx,cy);g.lineTo(cx-d[0]*s+d[1]*s*.8,cy-d[1]*s+d[0]*s*.8);g.stroke();}}}
@@ -8705,7 +8705,7 @@ function kamiBoom(t,s,mul){const st=stats(t),dm=st.dmg*3*(mul||1),r=1*K;let n=0;
 // reaparición más rápida de los kamikazes: la reparación la lleva unitWalk con s.rt = U.rez; ajustamos el rez de la torre al elegir la habilidad
 {const _b=buyAb;buyAb=function(t,id){const r=_b.apply(this,arguments);try{if(id==='reens'&&t&&t.ab&&t.ab.reens)t.uov={...(t.uov||TW.robots.unit),n:4,rez:abRank(t,'reens').t,hp:TW.robots.unit.hp,ap:TW.robots.unit.ap,spd:TW.robots.unit.spd};if(id==='infect'&&t)nanoSetup(t);try{chapaCheck(t);}catch(e){}}catch(e){}return r;};}
 // camino hacia los portales desde una casilla: sigue las casillas de camino cuyo campo (distancia al núcleo) crece; en los cruces devuelve las ramas
-function awayNext(x,y){const f0=S.field[y]&&S.field[y][x];if(f0==null||f0<0)return[];const out=[];for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2)continue;const f=S.field[ny][nx];if(f!=null&&f>f0)out.push({x:nx,y:ny});}return out;}
+function awayNext(x,y){const f0=S.field[y]&&S.field[y][x];if(f0==null||f0<0)return[];const out=[];for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2||cutF(x,y,nx,ny))continue;const f=S.field[ny][nx];if(f!=null&&f>f0)out.push({x:nx,y:ny});}return out;}
 function awayRoute(x,y,n){const r=[{x,y}];let cx=x,cy=y;for(let i=0;i<n;i++){const nx=awayNext(cx,cy);if(!nx.length)break;const q=nx[Math.floor(Math.random()*nx.length)];r.push(q);cx=q.x;cy=q.y;}return r;}
 function mechaTickE2(dt){for(const t of S.list){if(t.type!=='robots'||!t.sd)continue;const st=stats(t);
   // blindaje reactivo: si un robot ha perdido vida desde el último fotograma, puede rebotar el golpe
@@ -9610,7 +9610,7 @@ UHM.push((s,d,e)=>{const H=S.hero,pre=d;
 {const _s=stats;stats=function(t){const r=_s.apply(this,arguments);if(t&&t.hero&&t.hero.dmM&&t.hero.dmM!==1)return Object.assign({},r,{dmg:r.dmg*t.hero.dmM});return r;};}
 // ---- charcos en franja: un tramo del camino a todo lo ancho, hacia los portales, siguiendo las curvas ----
 function stripCells(x,y,L){const p=pathNear(x,y);if(!p||!S.field||!S.field[p.y])return[];const f0=S.field[p.y][p.x];if(f0==null||f0<0)return[];const seen=new Set([p.x+','+p.y]),q=[[p.x,p.y]],out=[];
- while(q.length){const[cx,cy]=q.shift();out.push({x:cx,y:cy});for(const[dx,dy]of D){const nx=cx+dx,ny=cy+dy,k=nx+','+ny;if(seen.has(k)||!inb(nx,ny)||S.cells[ny][nx]!==2)continue;const f=S.field[ny][nx];if(f==null||f<f0||f>f0+L)continue;seen.add(k);q.push([nx,ny]);}}
+ while(q.length){const[cx,cy]=q.shift();out.push({x:cx,y:cy});for(const[dx,dy]of D){const nx=cx+dx,ny=cy+dy,k=nx+','+ny;if(seen.has(k)||!inb(nx,ny)||S.cells[ny][nx]!==2||cutF(cx,cy,nx,ny))continue;const f=S.field[ny][nx];if(f==null||f<f0||f>f0+L)continue;seen.add(k);q.push([nx,ny]);}}
  return out;}
 function addStrip(o){const z=Object.assign({tk:0,m:o.t},o);z.set=new Set(z.cells.map(c=>c.x+','+c.y));(S.strips=S.strips||[]).push(z);return z;}
 function stripTick(dt){if(!S.strips||!S.strips.length)return;for(const z of S.strips){z.t-=dt;z.tk-=dt;if(z.tk<=0){z.tk+=1;for(const e of S.enemies){if(e.hp<=0||isFly(e)||!z.set.has(Math.round(e.x)+','+Math.round(e.y)))continue;if(z.pois)addPois(e,z.pois,z.src);if(z.brk)brkAdd(e,z.brk,z.brkMax||15);if(z.burn)addBurn(e,z.src,z.burn);if(z.chill)addChill(e,z.src,z.chill);}}}
@@ -10424,7 +10424,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
- {v:329,f:'14 nov 2026',t:'Logros y casillas',s:[['Logros',['Los trofeos van sin recuadro y más grandes; los conseguidos se marcan con un fondo verde.','Trofeos renovados en la era distópica.']],['Casillas especiales',['Ahora entran poco a poco en cada era, como los enemigos: primero las más sencillas.','Hay una casilla especial nueva por descubrir.','Algunas casillas cambian de color y de nombre para distinguirse mejor.']],['Apoyos y Amenazas',['Un apoyo que estaba en camino ya funciona.','Algunas cosas de las amenazas se descubren jugando y quedan apuntadas.']]]},
+ {v:329,f:'14 nov 2026',t:'Logros y casillas',s:[['Logros',['Los trofeos van sin recuadro y más grandes; los conseguidos se marcan con un fondo verde.','Trofeos renovados en la era distópica.']],['Casillas especiales',['Ahora entran poco a poco en cada era, como los enemigos: primero las más sencillas.','Hay una casilla especial nueva por descubrir.','Algunas casillas cambian de color y de nombre para distinguirse mejor.']],['Piezas',['Las piezas solo se unen por el centro de cada lado. Si dos caminos se tocan por otro sitio, no se unen: se levanta una valla.','Una pieza nueva para la era distópica.']],['Apoyos y Amenazas',['Un apoyo que estaba en camino ya funciona.','Algunas cosas de las amenazas se descubren jugando y quedan apuntadas.']]]},
  {v:328,f:'14 nov 2026',t:'ÉTER en el libro y solares nuevos',s:[['ÉTER',['En el libro (menú principal y pausa) ÉTER aparece como un cristal con la forma del núcleo, atado a una cinta arriba a la derecha. Brilla al hablar; púlsalo y te dirá algo.','Parpadea al ritmo de lo que escribe, como el altavoz de la tablet.']],['Piezas',['Solares revisados: algunas piezas cambian dónde están sus solares y todas estrenan una tercera disposición.','Fuera el Valle: era la misma pieza que el Arco, girada.']],['Enemigos',['Algunas mecánicas de enemigos cambian de nombre para explicarse mejor.']],['Equilibrio',['Pequeños ajustes internos de equilibrio.']]]},
  {v:327,f:'14 nov 2026',t:'Enemigos poco a poco',s:[['Enemigos',['En las tres primeras partidas de cada era los enemigos van entrando poco a poco: la primera trae lo básico, la segunda los que piden más táctica y la tercera los más duros. Desde la tercera pieza, todo mezclado.']]]},
  {v:326,f:'14 nov 2026',t:'Apoyos',s:[['Apoyos',['Nuevo: los Apoyos, la otra cara de las Amenazas. Hacen la partida más llevadera a cambio de restar amenaza y puntuación.','Se abren poco a poco, a partir de ganar una partida con alguna amenaza.','El botón pasa a «Apoyos / Amenazas»: Apoyos a la izquierda y Amenazas a la derecha.']],['Puntuación',['Cada punto de amenaza suma un 10 % y cada punto de apoyo lo resta. Los rangos extremos (Niebla de guerra 4, Sin refuerzos 3) multiplican por 1,25 y los apoyos fuertes por 0,8. Nunca baja de ×0,5.','La clasificación usa la amenaza neta (amenazas − apoyos).']],['Opciones',['Pausa automática: si cambias de ventana en plena partida, el juego se pausa solo (Opciones › Juego).']]]},
@@ -11202,7 +11202,7 @@ const dragonUp=t=>{const s=t.sd&&t.sd[0];return !(s&&s.air)||s.hp>0;};
 // En un cruce toma una de las ramas al azar y sigue por ella.
 function dragonRoute(tg,n){const fv=(kx,ky)=>{const v=S.field&&S.field[ky*K+1]?S.field[ky*K+1][kx*K+1]:null;return v==null||!isFinite(v)||v>=1e9?-1:v;};const q0=sqOf(Math.round(tg.tx??tg.x),Math.round(tg.ty??tg.y));let kx=q0.kx,ky=q0.ky;
  if(!inbc(kx,ky)||S.cc[ky][kx]!==2){const p=pathNear(tg.x,tg.y);if(!p)return[];const q=sqOf(p.x,p.y);kx=q.kx;ky=q.ky;}
- const out=[[kx,ky]];while(out.length<n){const f0=fv(kx,ky),op=[];for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||out.some(o=>o[0]===nx&&o[1]===ny))continue;if(fv(nx,ny)>f0)op.push([nx,ny]);}if(!op.length)break;const nx=op[Math.floor(Math.random()*op.length)];kx=nx[0];ky=nx[1];out.push(nx);}
+ const out=[[kx,ky]];while(out.length<n){const f0=fv(kx,ky),op=[];for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||cutC(kx,ky,nx,ny)||out.some(o=>o[0]===nx&&o[1]===ny))continue;if(fv(nx,ny)>f0)op.push([nx,ny]);}if(!op.length)break;const nx=op[Math.floor(Math.random()*op.length)];kx=nx[0];ky=nx[1];out.push(nx);}
  return out;}
 function dragonBreath(t,fx,fy,tg){const br=abRank(t,'dbreath'),n=Math.round(DBRL+(br?br.L:0)),rt=dragonRoute(tg,n);if(!rt.length)return;
  const bm=1+(br?br.b:0),all=[];rt.forEach(([kx,ky],i)=>{const cs=[];for(let j=0;j<K;j++)for(let q=0;q<K;q++){const x=kx*K+q,y=ky*K+j;if(S.cells[y]&&S.cells[y][x]===2)cs.push({x,y});}
@@ -12665,6 +12665,16 @@ function rebBeam(t,tg,dm,dt,pen){if(!t||!t.cells||t.hero)return;const n=Math.flo
 {const _d=e2DrawWorld;e2DrawWorld=function(lw){const r=_d.apply(this,arguments);try{if(S&&S.phase==='wave'&&S.list){const X=v=>v*CS+CS/2;
  for(const t of S.list){const b=t.rbB;if(!b||!(b.u>(S.wt||0))||!(b.a&&b.a.hp>0))continue;const T=TW[t.type]||{};g.save();g.strokeStyle=T.col||'#a6d84a';g.globalAlpha=.75;g.lineWidth=lw(1.8);
   for(const e of b.L){if(!(e.hp>0))continue;g.beginPath();g.moveTo(X(b.a.x),X(b.a.y));g.lineTo(X(e.x),X(e.y));g.stroke();}g.restore();}}}catch(e){}return r;};}
+// ==================== v329 · Piezas por era (Nogal, 14-nov-2026) ====================
+// Cada era trae 4 piezas nuevas: 2 en la 1.ª partida de la era, 1 en la 2.ª y 1 en la 3.ª. Descubiertas, salen en cualquier era.
+// Se diseñan en el «Taller de piezas» (artefacto). Las de una era no alcanzada no salen en el compendio.
+// Recoveco: diseño de Nogal (camino pegado al borde: si toca otra pieza fuera de una salida, valla). Solares provisionales
+// hasta que Nogal los ponga en el Taller.
+PIECES.push({n:'Recoveco',p:['#...###','#.#####','#..####','##.###.','##...#.','####...','#######']});
+SOLARES.Recoveco=[[[0,1],[1,5],[4,0],[5,4]]];SOLN.Recoveco=3;
+function pzeOf(n){return ({Recoveco:[2,1]})[n];}/* función (no const): se consulta antes de cargar este archivo */
+function pieceOk(n){const z=pzeOf(n);if(!z)return true;if(typeof S!=='undefined'&&S&&S.tut)return false;return (typeof bfzLv==='function'?bfzLv(z[0]):0)>=z[1];}
+function pieceEraOk(n){const z=pzeOf(n);return !z||z[0]===1||(typeof era2Ok==='function'&&era2Ok());}
 // ==================== v329 · Logros: trofeo en su metal también para los logros que se definen después de logros_niveles.js ====================
 // (p. ej. «Era Fantástica/Distópica completada», de amenazas.js, salían con el trofeo genérico)
 for(const id in ACH){const A=ACH[id],d=Object.getOwnPropertyDescriptor(A,'ic');if(!d)Object.defineProperty(A,'ic',{get:()=>trofIcL(achLv(id)),configurable:true});}
@@ -12732,4 +12742,28 @@ if(typeof window!=='undefined')setInterval(()=>{try{vigAuto();}catch(e){}},250);
 {const _mv=move;move=function(e,dt){try{if(e&&azRank('aba')>=2&&typeof azFlagOn==='function'&&azFlagOn(e)){const h=e.fx.haste;if(!h||h.m<1.15)e.fx.haste={m:1.15,t:.3};}}catch(x){}return _mv.apply(this,arguments);};}
 // Inflación R2: las mejoras de una torre cuestan un 15 % más por cada otra torre igual que tengas
 {const _tc=tCost;tCost=function(t,c){const v=_tc.apply(this,arguments);try{if(v>0&&t&&!t.hero&&azRank('inf')>=2&&S&&S.list){const n=S.list.filter(o=>o!==t&&o.type===t.type&&!o.hero&&!o.summ).length;if(n)return Math.round(v*(1+.15*n));}}catch(e){}return v;};}
+// ==================== v329 · Vallas entre piezas (Nogal, 14-nov-2026) ====================
+// Las piezas solo se unen por sus salidas (el centro de cada lado: D1, A4, G4, D7). Un camino puede tocar el borde por
+// cualquier otro sitio; si toca el camino de la pieza de al lado, NO se unen: entre los dos se levanta una valla
+// (empalizada en la Fantástica, barrera metálica en la Distópica). Regla geométrica, sin estado:
+// cutC / cutF dicen si un paso entre dos casillas (gruesas / finas) cruza el borde de dos piezas fuera de una salida.
+function exitL(x,y){return (x===3&&(y===0||y===P-1))||(y===3&&(x===0||x===P-1));}
+function cutC(cx,cy,nx,ny){const bx=Math.floor(cx/P),by=Math.floor(cy/P),nbx=Math.floor(nx/P),nby=Math.floor(ny/P);if(bx===nbx&&by===nby)return false;
+ return bx!==nbx?((cy%P+P)%P)!==3:((cx%P+P)%P)!==3;}
+function cutF(x,y,nx,ny){const cx=Math.floor(x/K),cy=Math.floor(y/K),ncx=Math.floor(nx/K),ncy=Math.floor(ny/K);return (cx!==ncx||cy!==ncy)&&cutC(cx,cy,ncx,ncy);}
+// dónde hay valla: pares de casillas de camino de piezas distintas que se tocan fuera de una salida
+function fences(){const out=[];if(!S||!S.cc)return out;const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2;
+ for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!isP(x,y))continue;for(const[a,b]of[[1,0],[0,1]]){const nx=x+a,ny=y+b;if(isP(nx,ny)&&cutC(x,y,nx,ny))out.push([x,y,nx,ny]);}}
+ return out;}
+// dibujo: una valla corta sobre el borde compartido, de lado a lado del camino
+{const _d=e2DrawWorld;e2DrawWorld=function(lw){const r=_d.apply(this,arguments);try{const F=fences();if(!F.length)return r;const e2=(S.era||1)===2,C=K*CS;
+ g.save();for(const[x,y,nx,ny]of F){const vert=nx!==x,mx=(vert?nx:x)*C,my=(vert?y:ny)*C;/* línea del borde */
+  const x0=vert?mx:mx+C*.12,y0=vert?my+C*.12:my,x1=vert?mx:mx+C*.88,y1=vert?my+C*.88:my;
+  if(e2){g.strokeStyle='#1b2228';g.lineWidth=lw(7);g.lineCap='round';g.beginPath();g.moveTo(x0,y0);g.lineTo(x1,y1);g.stroke();
+   g.strokeStyle='#ff4fd8';g.lineWidth=lw(2.4);g.shadowColor='#ff4fd8';g.shadowBlur=lw(8);g.setLineDash([lw(6),lw(4)]);g.beginPath();g.moveTo(x0,y0);g.lineTo(x1,y1);g.stroke();g.setLineDash([]);g.shadowBlur=0;
+   g.fillStyle='#9aa4ae';for(const t of[0,.5,1]){const px=x0+(x1-x0)*t,py=y0+(y1-y0)*t;g.beginPath();g.arc(px,py,lw(3.4),0,7);g.fill();}}
+  else{g.lineCap='round';/* dos travesaños y estacas */const n=5;g.strokeStyle='#8a5a2c';g.lineWidth=lw(3);for(const sh of[-1,1]){const dx=vert?sh*C*.07:0,dy=vert?0:sh*C*.07;g.beginPath();g.moveTo(x0+dx,y0+dy);g.lineTo(x1+dx,y1+dy);g.stroke();}
+   for(let i=0;i<n;i++){const t=i/(n-1),px=x0+(x1-x0)*t,py=y0+(y1-y0)*t,L=C*.16;g.strokeStyle='#3a2210';g.lineWidth=lw(5.5);g.beginPath();g.moveTo(px-(vert?L:0),py-(vert?0:L));g.lineTo(px+(vert?L:0),py+(vert?0:L));g.stroke();
+    g.strokeStyle='#b07a42';g.lineWidth=lw(3);g.beginPath();g.moveTo(px-(vert?L:0),py-(vert?0:L));g.lineTo(px+(vert?L:0),py+(vert?0:L));g.stroke();}}}
+ g.restore();}catch(e){}return r;};}
 </script></body></html>

@@ -46,7 +46,7 @@ UHM.push((s,d,e)=>{const H=S.hero,pre=d;
 {const _s=stats;stats=function(t){const r=_s.apply(this,arguments);if(t&&t.hero&&t.hero.dmM&&t.hero.dmM!==1)return Object.assign({},r,{dmg:r.dmg*t.hero.dmM});return r;};}
 // ---- charcos en franja: un tramo del camino a todo lo ancho, hacia los portales, siguiendo las curvas ----
 function stripCells(x,y,L){const p=pathNear(x,y);if(!p||!S.field||!S.field[p.y])return[];const f0=S.field[p.y][p.x];if(f0==null||f0<0)return[];const seen=new Set([p.x+','+p.y]),q=[[p.x,p.y]],out=[];
- while(q.length){const[cx,cy]=q.shift();out.push({x:cx,y:cy});for(const[dx,dy]of D){const nx=cx+dx,ny=cy+dy,k=nx+','+ny;if(seen.has(k)||!inb(nx,ny)||S.cells[ny][nx]!==2)continue;const f=S.field[ny][nx];if(f==null||f<f0||f>f0+L)continue;seen.add(k);q.push([nx,ny]);}}
+ while(q.length){const[cx,cy]=q.shift();out.push({x:cx,y:cy});for(const[dx,dy]of D){const nx=cx+dx,ny=cy+dy,k=nx+','+ny;if(seen.has(k)||!inb(nx,ny)||S.cells[ny][nx]!==2||cutF(cx,cy,nx,ny))continue;const f=S.field[ny][nx];if(f==null||f<f0||f>f0+L)continue;seen.add(k);q.push([nx,ny]);}}
  return out;}
 function addStrip(o){const z=Object.assign({tk:0,m:o.t},o);z.set=new Set(z.cells.map(c=>c.x+','+c.y));(S.strips=S.strips||[]).push(z);return z;}
 function stripTick(dt){if(!S.strips||!S.strips.length)return;for(const z of S.strips){z.t-=dt;z.tk-=dt;if(z.tk<=0){z.tk+=1;for(const e of S.enemies){if(e.hp<=0||isFly(e)||!z.set.has(Math.round(e.x)+','+Math.round(e.y)))continue;if(z.pois)addPois(e,z.pois,z.src);if(z.brk)brkAdd(e,z.brk,z.brkMax||15);if(z.burn)addBurn(e,z.src,z.burn);if(z.chill)addChill(e,z.src,z.chill);}}}

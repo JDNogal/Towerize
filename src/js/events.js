@@ -256,7 +256,7 @@ function drawFaros(){for(const f of S.list){if(!TW[f.type].faro)continue;const L
 const logDur=lv=>2+.5*((lv||1)-1);
 function logShot(t,tg,s,dm){const sq0=sqOf(Math.round(tg.tx),Math.round(tg.ty)),fv=(kx,ky)=>{const v=S.field&&S.field[ky*K+1]?S.field[ky*K+1][kx*K+1]:1e9;return v<1e9?v:-1;};
  // recorrido por los centros de casilla del camino, en sentido contrario al de los enemigos (hacia más lejos del núcleo)
- const pts=[[sq0.x,sq0.y]];let kx=sq0.kx,ky=sq0.ky;for(let n=0;n<12;n++){const f0=fv(kx,ky);let b=null;for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2)continue;const f1=fv(nx,ny);if(f1>f0&&(!b||f1>b.f))b={x:nx,y:ny,f:f1};}if(!b)break;kx=b.x;ky=b.y;pts.push([kx*K+1,ky*K+1]);}
+ const pts=[[sq0.x,sq0.y]];let kx=sq0.kx,ky=sq0.ky;for(let n=0;n<12;n++){const f0=fv(kx,ky);let b=null;for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||cutC(kx,ky,nx,ny))continue;const f1=fv(nx,ny);if(f1>f0&&(!b||f1>b.f))b={x:nx,y:ny,f:f1};}if(!b)break;kx=b.x;ky=b.y;pts.push([kx*K+1,ky*K+1]);}
  if(pts.length<2){pts.push([pts[0][0]+(tg.x-t.x>0?K:-K),pts[0][1]]);}
  (S.logs=S.logs||[]).push({pts,d:0,t:s.ldur||logDur(t.lvl),sp:2*K,dm,src:t,pen:s.pen,hit:[]});}
 function logTick(dt){if(!S.logs||!S.logs.length)return;

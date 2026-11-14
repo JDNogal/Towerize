@@ -38,7 +38,7 @@ function stamp(bx,by,p,bs){
 }
 function conns(bx,by,p){
  let c=0;
- for(let y=0;y<P;y++)for(let x=0;x<P;x++){if(cellOf(p[y][x])!==2)continue;
+ for(let y=0;y<P;y++)for(let x=0;x<P;x++){if(cellOf(p[y][x])!==2||!exitL(x,y))continue;
   for(const[a,b]of D){const lx=x+a,ly=y+b;if(lx>=0&&ly>=0&&lx<P&&ly<P)continue;
    const gx=bx*P+lx,gy=by*P+ly;if(inbc(gx,gy)&&S.cc[gy][gx]===2)c++;}}
  return c;

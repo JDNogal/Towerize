@@ -153,9 +153,11 @@
   "clasificacion.js",
   "logros_cerca.js",
   "casillas_era.js",
+  "piezas_era.js",
   "logros_v329.js",
   "supercampeones_rasgos.js",
   "vigia.js",
-  "amenazas_rangos.js"
+  "amenazas_rangos.js",
+  "vallas.js"
  ]
 }

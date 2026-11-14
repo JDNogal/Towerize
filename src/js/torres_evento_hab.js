@@ -123,7 +123,7 @@ const dragonUp=t=>{const s=t.sd&&t.sd[0];return !(s&&s.air)||s.hp>0;};
 // En un cruce toma una de las ramas al azar y sigue por ella.
 function dragonRoute(tg,n){const fv=(kx,ky)=>{const v=S.field&&S.field[ky*K+1]?S.field[ky*K+1][kx*K+1]:null;return v==null||!isFinite(v)||v>=1e9?-1:v;};const q0=sqOf(Math.round(tg.tx??tg.x),Math.round(tg.ty??tg.y));let kx=q0.kx,ky=q0.ky;
  if(!inbc(kx,ky)||S.cc[ky][kx]!==2){const p=pathNear(tg.x,tg.y);if(!p)return[];const q=sqOf(p.x,p.y);kx=q.kx;ky=q.ky;}
- const out=[[kx,ky]];while(out.length<n){const f0=fv(kx,ky),op=[];for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||out.some(o=>o[0]===nx&&o[1]===ny))continue;if(fv(nx,ny)>f0)op.push([nx,ny]);}if(!op.length)break;const nx=op[Math.floor(Math.random()*op.length)];kx=nx[0];ky=nx[1];out.push(nx);}
+ const out=[[kx,ky]];while(out.length<n){const f0=fv(kx,ky),op=[];for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||cutC(kx,ky,nx,ny)||out.some(o=>o[0]===nx&&o[1]===ny))continue;if(fv(nx,ny)>f0)op.push([nx,ny]);}if(!op.length)break;const nx=op[Math.floor(Math.random()*op.length)];kx=nx[0];ky=nx[1];out.push(nx);}
  return out;}
 function dragonBreath(t,fx,fy,tg){const br=abRank(t,'dbreath'),n=Math.round(DBRL+(br?br.L:0)),rt=dragonRoute(tg,n);if(!rt.length)return;
  const bm=1+(br?br.b:0),all=[];rt.forEach(([kx,ky],i)=>{const cs=[];for(let j=0;j<K;j++)for(let q=0;q<K;q++){const x=kx*K+q,y=ky*K+j;if(S.cells[y]&&S.cells[y][x]===2)cs.push({x,y});}

@@ -13,7 +13,7 @@ function bkItems(t){const L=[];
   if(e2.length){L.push({sec:'Torres de la Era Distópica'});for(const k of e2)row(k);}
   L.push({sec:'Torres de evento'});for(const k of Object.keys(TW).filter(k=>TW[k].uniq))L.push({id:k,ic:twIc(k),col:TW[k].col,n:TW[k].n,ok:seen('tw',k)});}
  else if(t==='hr'){for(const id of Object.keys(HEROES).filter(h=>UNLOCK_ALL||heroVis(h)))L.push({id,por:1,col:HEROES[id].col,n:HEROES[id].n,ok:UNLOCK_ALL||!HEROES[id].lockTxt,lk:!UNLOCK_ALL&&!!HEROES[id].lockTxt});}
- else if(t==='pc'){PIECES.forEach((o,i)=>L.push({id:String(i),pc:i,n:o.n,ok:seen('pc',o.n)}));}
+ else if(t==='pc'){PIECES.forEach((o,i)=>{if(typeof pieceEraOk==='function'&&!pieceEraOk(o.n))return;L.push({id:String(i),pc:i,n:o.n,ok:seen('pc',o.n)});});}
  else if(t==='bf'){for(const k of BK.filter(k=>typeof bfEraOk!=='function'||bfEraOk(k)))L.push({id:k,bf:k,n:bname?bname(k):BF[k].n,ok:seen('bf',k)});}
  else if(t==='rl'){L.push({sec:'Reliquias normales'});for(const r of RELICS.filter(r=>!r.evr&&relSeeEra(r)))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});
   L.push({sec:'Reliquias de evento'});for(const r of RELICS.filter(r=>r.evr&&relSeeEra(r)))L.push({id:r.id,ic:r.ic,col:r.col,n:r.n,ok:seen('rl',r.id)});}
