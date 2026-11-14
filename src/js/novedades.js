@@ -3,6 +3,7 @@
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:333,f:'14 nov 2026',t:'Arreglo del libro',s:[['Arreglos',['Novedades: al cerrarla con la ✕ o con Esc desde el menú principal, el libro desaparecía y no se podía hacer nada. Ahora vuelve a la portada.']]]},
  {v:332,f:'14 nov 2026',t:'Ayudas',s:[['Ayudas',['¿Algo falla? Ahora puedes contárnoslo sin salir del juego. Busca un bichito en el libro.','Perder ya no es solo perder: el final de partida tiene algo que contarte.','Antes de empezar una oleada, alguien vigila tu bolsa.','La línea de rondas se ha vuelto más habladora.','Hay una forma nueva de verlo todo en redondo: busca el botón… o la tecla.','ÉTER tiene cosas que contarte en la pausa, si le dejas.','Tu puntuación luce ahora en la pausa.']],['Estadísticas',['Estadísticas estrena una pestaña con toda tu historia.']],['Opciones',['Todas las ayudas, juntas y con su interruptor, en Opciones › Juego.']],['Libro',['Novedades más ordenada, y algún botón que solo aparece cuando hace falta.']],['Arreglos',['Elegir tutorial: el botón para empezarlo no hacía nada. Ya funciona, y tocar un tutorial solo lo elige.','Móvil: algunos iconos se han puesto al día.']]]},
  {v:331,f:'14 nov 2026',t:'Arreglo en móvil',s:[['Arreglos',['Móvil: el ojo de arriba al elegir pieza no hacía nada. Ya deja ver el mapa.']]]},
  {v:330,f:'14 nov 2026',t:'Arreglo en iPhone',s:[['Arreglos',['iPhone: si abrías el juego desde la pantalla de inicio y girabas el móvil, el mapa podía verse estirado. Ya se ve bien.']]]},
@@ -27,7 +28,7 @@ function novParts(){const cur=NOVV(),L=NOVL.filter(x=>x.v<=cur);if(!L.some(x=>x.
  const left=`<h3>Novedades</h3><div class="bksub">Lo que cambia en cada versión · estás jugando la v${cur}</div><div class="novl">${L.map(x=>`<div class="novr${x.v===NOV.sel?' sel':''}" data-a="novsel" data-v="${x.v}"><b class="v">v${x.v}</b><span>${x.t}<br><small>${x.f}</small></span>${novNew(x.v)?'<span class="nw">NUEVO</span>':''}</div>`).join('')}</div>`;
  const right=`<div class="lbdet novd"><h4>v${v.v} · ${v.t}</h4><small>${v.f}</small>${v.s.map(([h,I])=>`<div class="sec"><b>${h}</b><ul>${I.map(l=>`<li>${l}</li>`).join('')}</ul></div>`).join('')}</div>`;
  return {marks:null,left,right,key:'nov'+NOV.sel,footL:`<button class="lbbk" data-a="lbcover">‹ Menú</button>`,footR:''};}
-function novOpen(){LB.msg={key:'nov',left:()=>novParts().left,right:()=>novParts().right,footL:`<button class="lbbk" data-a="novback">‹ Menú</button>`,footR:''};NOV.sel=null;
+function novOpen(){LB.msg={key:'nov',onBack:()=>{NOVSEEN=Math.max(NOVSEEN,NOVV());try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(_){}lbOpen(null,true);},left:()=>novParts().left,right:()=>novParts().right,footL:`<button class="lbbk" data-a="novback">‹ Menú</button>`,footR:''};NOV.sel=null;
  lbOpen('msg');setTimeout(()=>{NOVSEEN=Math.max(NOVSEEN,NOVV());try{localStorage.setItem('rt-novseen',String(NOVSEEN));}catch(e){}},400);}
 document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
  if(a==='novopen'){ev.stopPropagation();ev.preventDefault();try{sfx('page');}catch(_){}novOpen();}
