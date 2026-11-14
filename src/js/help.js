@@ -101,6 +101,6 @@ function endGame(){
  const rtw=!won&&S.snap&&S.rc>0;
  // el final de partida es el libro abierto: cifras a la izquierda, desglose a la derecha; volver abajo a la izquierda, seguir abajo a la derecha
  const i=h.indexOf('<div class="esec">');LB.end={won,left:h.slice(0,i),right:h.slice(i),
-  footL:'<button class="lbbk" data-a="menu">‹ Menú principal</button><button class="lbbk" data-a="hideend">🗺️ Ver el mapa</button>',
-  footR:(rtw?`<button class="lbbk" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="gbtn" data-a="reset">Jugar de nuevo ›</button>'};lbOpen('end');
+  footL:'<button class="lbbk" data-a="hideend">🗺️ Ver el mapa</button>',
+  footR:(rtw?`<button class="lbbk" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="gbtn" data-a="menu">Menú principal ›</button>'};/* v339: al acabar, la única salida es el menú principal */lbOpen('end');
 }

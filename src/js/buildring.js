@@ -1,3 +1,5 @@
+// v339 · las fichas de comprar torre y del menú de torre crecen con la pantalla (en pantallas grandes la letra era enana)
+function cardZ(c){const z=Math.max(1,Math.min(1.6,Math.min(innerWidth/1280,innerHeight/720)))*(document.body.classList.contains('mfs')?1:1.06);c.style.transformOrigin='0 0';c.style.transform=z>1.01?`scale(${z.toFixed(3)})`:'';return z>1.01?z:1;}
 // ---- construir en un solar: al pulsar un solar libre salen alrededor las torres del mazo (1.º toque: tarjeta · 2.º: construir) ----
 const BM={s:null,arm:null,hov:null,sig:''};
 const bmDeck=()=>Object.keys(TW).filter(k=>!TW[k].uniq&&(!S.deck||S.deck.includes(k)));
@@ -39,7 +41,7 @@ function bmCard(){const c=$('bmcard');if(!c||!BM.s)return;const k=BM.arm||BM.hov
  let h=bmInfo(k)+(BM.arm===k?`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':'Pulsa otra vez para construir'}</div>`:`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':(TOUCH?'Toca':'Pulsa')+' otra vez para construir'}</div>`);
  if(no)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla ${WISHI} y construirla sola cuando tengas oro.</div>`;
  if(c._h!==h){c.innerHTML=h;c._h=h;}c.classList.add('on');bmCardPos();}
-function bmCardPos(){const c=$('bmcard'),m=$('bmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,w=c.offsetWidth,hh=c.offsetHeight,T0=58,g=P.R+30;
+function bmCardPos(){const c=$('bmcard'),m=$('bmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,Z=cardZ(c),w=c.offsetWidth*Z,hh=c.offsetHeight*Z,T0=58,g=P.R+30;
  const fit=(x,y)=>x>=6&&y>=T0&&x+w<=P.W-6&&y+hh<=P.H-6;
  const cand=[[P.px+g,P.py-hh/2],[P.px-g-w,P.py-hh/2],[P.px-w/2,P.py-g-hh],[P.px-w/2,P.py+g]];
  let [x,y]=cand.find(([x,y])=>fit(x,y))||cand[0];x=Math.max(6,Math.min(P.W-w-6,x));y=Math.max(T0,Math.min(P.H-hh-6,y));c.style.left=x+'px';c.style.top=y+'px';}

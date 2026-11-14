@@ -356,7 +356,7 @@ function act(e){
  else if(a==='hconf'){if(b.dataset.id){RL.hconf=b.dataset.id;renderHeroPick();}}
  else if(a==='hcancel'){RL.hconf=null;renderHeroPick();}
  else if(a==='relic'){if(RL.fromChest){(S.chestRel=S.chestRel||[]).push(b.dataset.id);RL.fromChest=false;}S.relics.push(b.dataset.id);S.rs[b.dataset.id]={cd:0,t:0};relicHints(b.dataset.id);RL.open=false;$('relic').classList.remove('open');renderRelics();ui();}
- else if(a==='reset'){LB.end=null;lbClose(false,true);init();}
+ else if(a==='reset'){/* v339: «Jugar de nuevo» ya no existe: init() dejaba una partida a medias en la ronda 1 y sin héroe. Se vuelve al menú */LB.end=null;showMenu();}
  else if(a==='focusok'){closeFocus();ui();}
  else if(a==='evopt')chooseEvent(+b.dataset.i);
  else if(a==='evok')closeEvent();

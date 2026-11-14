@@ -55,7 +55,7 @@ function tmCard(){const c=$('tmcard'),t=TM.t;if(!c||!t)return;const k=TM.arm||TM
  if(I.w)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla ${WISHI} y comprarla sola cuando tengas oro.</div>`;
  if(c._h!==h){c.innerHTML=h;c._h=h;}c.classList.add('on');c.dataset.k=k;tmCardPos();}
 function tmCardPos(){const c=$('tmcard'),m=$('tmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,k=c.dataset.k;
- const w=c.offsetWidth,h=c.offsetHeight,T0=58,L=P.px-P.R-74,Rr=P.px+P.R+(m._o&&m._o.side?82:74),top=P.ty-34,bot=P.by+40;
+ const Z=cardZ(c),w=c.offsetWidth*Z,h=c.offsetHeight*Z,T0=58,L=P.px-P.R-74,Rr=P.px+P.R+(m._o&&m._o.side?82:74),top=P.ty-34,bot=P.by+40;
  const fit=(x,y)=>x>=6&&y>=T0&&x+w<=P.W-6&&y+h<=P.H-6;const below=['lupa','sell'].includes(k.split(':')[0]);
  const cand=below?[[P.px-w/2,bot],[Rr,P.py-h/2],[L-w,P.py-h/2],[P.px-w/2,top-h]]:[[P.px-w/2,top-h],[Rr,P.py-h/2],[L-w,P.py-h/2],[P.px-w/2,bot]];
  let [x,y]=cand.find(([x,y])=>fit(x,y))||cand[0];x=Math.max(6,Math.min(P.W-w-6,x));y=Math.max(T0,Math.min(P.H-h-6,y));c.style.left=x+'px';c.style.top=y+'px';}

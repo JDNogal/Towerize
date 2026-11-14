@@ -10,5 +10,5 @@ await p.waitForTimeout(500);console.log('final',await p.evaluate(()=>[LB.open,LB
 await p.click('#comp [data-a="hideend"]');await p.waitForTimeout(600);console.log('ver mapa',await p.evaluate(()=>[LB.open]));await p.screenshot({path:OUT+'/b6_'+sfx+'map.png'});
 await p.evaluate(()=>act({target:document.querySelector('[data-a="results"]')||Object.assign(document.createElement('button'),{dataset:{a:'results'}})}));await p.evaluate(()=>{if(!LB.open)lbOpen('end');});await p.waitForTimeout(300);console.log('resumen otra vez',await p.evaluate(()=>[LB.open,LB.area]));
 if(!mob){await p.click('#comp [data-a="lbarea"][data-v="lg"]');await p.waitForTimeout(300);console.log('logros desde el final',await p.evaluate(()=>LB.area));await p.keyboard.press('Escape');await p.waitForTimeout(200);console.log('Esc vuelve al resumen',await p.evaluate(()=>LB.area));}
-await p.click('#comp [data-a="reset"]');await p.waitForTimeout(500);console.log('jugar de nuevo → héroe',await p.evaluate(()=>[LB.open,LB.area,LB.step,S.round]));
+await p.click('#comp .lbft [data-a="menu"]');await p.waitForTimeout(500);console.log('menú principal (única salida)',await p.evaluate(()=>[LB.open,LB.area,LB.step,S.round]));
 console.log(JSON.stringify(errs));await b.close();})();

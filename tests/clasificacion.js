@@ -16,7 +16,7 @@ const r={};r.btn=await p.evaluate(()=>!!document.querySelector('#comp .lbupb'));
 r.noAmz=await p.evaluate(()=>!/Amenaza/.test(document.querySelector('#comp .lbupb').textContent));
 await p.screenshot({path:'tests/out/clasif_fin.png'});
 // seguir sin subir → aviso
-await p.evaluate(()=>document.querySelector('#comp [data-a="reset"]').click());await p.waitForTimeout(400);
+await p.evaluate(()=>document.querySelector('#comp [data-a="menu"]').click());await p.waitForTimeout(400);
 r.ask=await p.evaluate(()=>$('lbdlg').classList.contains('on')&&/Aún no has subido/.test($('lbdlg').textContent)&&!/amenaza/i.test($('lbdlg').textContent));
 await p.screenshot({path:'tests/out/clasif_aviso.png'});
 await p.evaluate(()=>document.querySelector('[data-lbd="once"]').click());await p.waitForTimeout(400);
