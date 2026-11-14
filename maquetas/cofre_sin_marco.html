@@ -16,14 +16,18 @@ body{margin:0;background:#0d0b09;color:#eee;font:14px system-ui}
 .chest .wrap{position:absolute;left:-110px;top:-40px;width:220px;height:130px;transform-origin:50% 60%}
 .chest .body{position:absolute;left:0;top:0}
 .chest .lid{position:absolute;left:0;top:-72px;transform-origin:50% 0%}
-.chest .lidin{position:absolute;left:0;top:-88px;transform-origin:50% 100%;transform:scaleY(0)}
+.chest .lidin{position:absolute;left:0;top:-94px;transform-origin:50% 100%;transform:scaleY(0)}
 .crate{position:absolute;left:640px;top:640px;width:0;height:0}.crate svg{position:absolute;left:-120px;top:-260px}
-.ttl{position:absolute;left:50%;top:84px;transform:translateX(-50%);text-align:center;opacity:0;white-space:nowrap;z-index:5}
-.ttl.perg{background:linear-gradient(#a8743c,#7a4e24);border:3px solid #3a2210;border-radius:8px;padding:6px 26px 7px;box-shadow:0 4px 0 #2a180a,0 8px 18px rgba(0,0,0,.5);color:#fff3d6}
-.ttl.perg h3{margin:0;font:700 24px Georgia;text-shadow:0 2px 0 #3a2210}.ttl.perg small{display:block;font-size:12px;opacity:.9}
-.ttl.perg:before,.ttl.perg:after{content:"";position:absolute;top:-40px;width:3px;height:40px;background:#3a2210}.ttl.perg:before{left:30px}.ttl.perg:after{right:30px}
-.ttl.holo{color:#bff8ff;padding:4px 24px;border-top:2px solid rgba(63,232,255,.7);border-bottom:2px solid rgba(63,232,255,.7);background:linear-gradient(90deg,transparent,rgba(63,232,255,.16),transparent);text-shadow:0 0 8px #3fe8ff}
-.ttl.holo h3{margin:0;font:700 22px system-ui;letter-spacing:2px;text-transform:uppercase}.ttl.holo small{display:block;font-size:12px;opacity:.85;letter-spacing:.5px}
+.ttl{position:absolute;left:50%;top:58px;transform:translateX(-50%);text-align:center;opacity:0;white-space:nowrap;z-index:1}.card{z-index:2}
+.ttl.perg{padding:8px 34px 9px;color:#fff3d6;border-radius:5px;border:3px solid #3a2210;box-shadow:0 5px 0 #2a180a,0 10px 20px rgba(0,0,0,.55);
+ background:linear-gradient(180deg,transparent 48%,#3a2210 48%,#3a2210 52%,transparent 52%),repeating-linear-gradient(93deg,rgba(60,30,10,.0) 0 18px,rgba(60,30,10,.22) 18px 20px,rgba(60,30,10,0) 20px 37px),repeating-linear-gradient(0deg,rgba(255,220,160,.06) 0 2px,rgba(0,0,0,.05) 2px 5px),linear-gradient(180deg,#b07a42,#8a5a2c 48%,#9a6834 52%,#7a4c22)}
+.ttl.perg h3{margin:0;font:700 25px Georgia;text-shadow:0 2px 0 #3a2210,0 0 1px #2a180a}.ttl.perg small{display:block;font-size:12px;opacity:.92;margin-top:6px;text-shadow:0 1px 0 #3a2210}
+.ttl.perg:before,.ttl.perg:after{content:"";position:absolute;top:-34px;width:4px;height:36px;background:repeating-linear-gradient(180deg,#c9a46a 0 4px,#8a6a3a 4px 7px);border-radius:2px}.ttl.perg:before{left:26px}.ttl.perg:after{right:26px}
+.ttl.perg i.nl{position:absolute;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#e8d0a0,#6a4a20);box-shadow:0 1px 0 #2a180a}
+.ttl.holo{color:#bff8ff;padding:9px 28px 10px;border-radius:10px;border:3px solid #1c2a33;background:repeating-linear-gradient(0deg,rgba(63,232,255,.06) 0 2px,transparent 2px 4px),radial-gradient(ellipse at 50% 40%,#0f3a46,#071a20 70%);box-shadow:inset 0 0 0 2px #2c4654,inset 0 0 18px rgba(63,232,255,.35),0 0 18px rgba(63,232,255,.35),0 8px 18px rgba(0,0,0,.6);text-shadow:0 0 6px #3fe8ff,0 0 14px #3fe8ff}
+.ttl.holo h3{margin:0;font:800 23px system-ui;letter-spacing:3px;text-transform:uppercase}.ttl.holo small{display:block;font-size:12px;opacity:.85;letter-spacing:.6px;margin-top:2px}
+.ttl.holo:before{content:"";position:absolute;left:50%;top:-40px;width:3px;height:30px;margin-left:-1.5px;background:linear-gradient(#0a0f14,#2c3a44)}
+.ttl.holo:after{content:"";position:absolute;left:50%;top:-14px;width:30px;height:11px;margin-left:-15px;border-radius:4px 4px 2px 2px;background:linear-gradient(#4a5a66,#26323a);border:2px solid #0a0f14;box-shadow:0 0 6px rgba(63,232,255,.4)}
 .hint{position:absolute;left:0;right:0;top:546px;text-align:center;font-size:12px;color:#e8dcc4;opacity:0}
 .skip{position:absolute;right:16px;bottom:12px;font-size:12px;opacity:.6;color:#fff}
 .note{position:absolute;left:8px;top:440px;width:170px;font-size:11px;color:#ff6a5a;opacity:0;transition:opacity .3s}#st.done .note{opacity:1}
@@ -47,13 +51,20 @@ const CB=`<svg viewBox="0 0 220 130" width="220" height="130"><defs>
 <rect x="34" y="6" width="22" height="118" fill="url(#ir)" stroke="#2e1708" stroke-width="3"/><rect x="164" y="6" width="22" height="118" fill="url(#ir)" stroke="#2e1708" stroke-width="3"/>
 <g fill="#5a3a12"><circle cx="45" cy="18" r="2.6"/><circle cx="45" cy="48" r="2.6"/><circle cx="45" cy="78" r="2.6"/><circle cx="45" cy="108" r="2.6"/><circle cx="175" cy="18" r="2.6"/><circle cx="175" cy="48" r="2.6"/><circle cx="175" cy="78" r="2.6"/><circle cx="175" cy="108" r="2.6"/></g>
 <path d="M10 6 h18 v18 M210 6 h-18 v18 M10 124 h18 v-18 M210 124 h-18 v-18" fill="none" stroke="#c8923a" stroke-width="6"/>
-<g class="lock"><path d="M92 4 H128 V44 Q128 58 110 62 Q92 58 92 44Z" fill="url(#ir)" stroke="#2e1708" stroke-width="3.5"/><circle cx="110" cy="26" r="6.5" fill="#1b0e05"/><path d="M106.5 28 L104 44 H116 L113.5 28Z" fill="#1b0e05"/><circle cx="98" cy="12" r="2" fill="#5a3a12"/><circle cx="122" cy="12" r="2" fill="#5a3a12"/><path class="glint" d="M110 15 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#fff" opacity="0"/></g></svg>`,CL=`<svg viewBox="0 0 220 80" width="220" height="80"><defs><linearGradient id="wd2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8783a"/><stop offset="1" stop-color="#7a4820"/></linearGradient>
-<linearGradient id="ir2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d080"/><stop offset="1" stop-color="#a87428"/></linearGradient></defs>
-<path d="M6 78 V40 Q6 6 110 4 Q214 6 214 40 V78Z" fill="url(#wd2)" stroke="#2e1708" stroke-width="5"/>
-<path d="M8 60 H212" stroke="#4a260e" stroke-width="2.5" opacity=".7"/>
-<path d="M34 78 V22 Q36 12 56 9 V78Z M186 78 V22 Q184 12 164 9 V78Z" fill="url(#ir2)" stroke="#2e1708" stroke-width="3"/>
-<path d="M94 78 V64 H126 V78Z" fill="url(#ir2)" stroke="#2e1708" stroke-width="3"/><rect x="104" y="66" width="12" height="8" rx="2" fill="#1b0e05"/></svg>`,CLI=`<svg viewBox="0 0 220 90" width="220" height="90"><defs><linearGradient id="li" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#3a1e0c"/><stop offset="1" stop-color="#6a3c18"/></linearGradient></defs>
-<path d="M8 88 L18 6 Q110 -8 202 6 L212 88Z" fill="url(#li)" stroke="#2e1708" stroke-width="5"/><path d="M40 88 L46 4 M180 88 L174 4" stroke="#a87428" stroke-width="10"/><path d="M20 88 H200" stroke="#ffd25a" stroke-width="4" opacity=".7"/></svg>`,CR=`<svg viewBox="-120 -260 240 340" width="240" height="340" style="overflow:visible"><defs>
+<g class="lock"><path d="M92 4 H128 V44 Q128 58 110 62 Q92 58 92 44Z" fill="url(#ir)" stroke="#2e1708" stroke-width="3.5"/><circle cx="110" cy="26" r="6.5" fill="#1b0e05"/><path d="M106.5 28 L104 44 H116 L113.5 28Z" fill="#1b0e05"/><circle cx="98" cy="12" r="2" fill="#5a3a12"/><circle cx="122" cy="12" r="2" fill="#5a3a12"/><path class="glint" d="M110 15 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#fff" opacity="0"/></g></svg>`,CL=`<svg viewBox="0 0 220 80" width="220" height="80"><defs><linearGradient id="wd2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8783a"/><stop offset=".55" stop-color="#94592a"/><stop offset="1" stop-color="#6e3f1a"/></linearGradient>
+<linearGradient id="ir2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9c46a"/><stop offset=".5" stop-color="#c8923a"/><stop offset="1" stop-color="#8a5e1e"/></linearGradient></defs>
+<path d="M10 78 V44 Q10 8 110 6 Q210 8 210 44 V78Z" fill="url(#wd2)" stroke="#2e1708" stroke-width="5"/>
+<g fill="none" stroke="#4a260e" stroke-width="2" opacity=".55"><path d="M12 62 H208"/><path d="M14 46 Q110 40 206 46"/><path d="M24 28 Q110 14 196 28"/></g>
+<g fill="none" stroke="#2e1708" stroke-width="1.1" opacity=".3"><path d="M60 70 q14 -4 28 0 M140 54 q16 -4 30 0 M70 36 q12 -3 26 0"/></g>
+<path d="M34 78 V20 Q38 12 56 9 V78Z" fill="url(#ir2)" stroke="#2e1708" stroke-width="3"/><path d="M186 78 V20 Q182 12 164 9 V78Z" fill="url(#ir2)" stroke="#2e1708" stroke-width="3"/>
+<g fill="#5a3a12"><circle cx="45" cy="26" r="2.4"/><circle cx="45" cy="50" r="2.4"/><circle cx="45" cy="70" r="2.4"/><circle cx="175" cy="26" r="2.4"/><circle cx="175" cy="50" r="2.4"/><circle cx="175" cy="70" r="2.4"/></g>
+<path d="M10 78 h18 v-16 M210 78 h-18 v-16" fill="none" stroke="#c8923a" stroke-width="6"/>
+<path d="M100 60 H120 V84 Q120 92 110 94 Q100 92 100 84Z" fill="url(#ir2)" stroke="#2e1708" stroke-width="3"/><rect x="105" y="74" width="10" height="12" rx="3" fill="none" stroke="#2e1708" stroke-width="2.5"/></svg>`,CLI=`<svg viewBox="0 0 220 96" width="220" height="96"><defs><linearGradient id="li" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#c8843e"/><stop offset=".35" stop-color="#7a4520"/><stop offset="1" stop-color="#4a2810"/></linearGradient>
+<linearGradient id="lb" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7a5418"/><stop offset="1" stop-color="#3e2a0c"/></linearGradient></defs>
+<path d="M10 94 L4 40 Q6 4 110 2 Q214 4 216 40 L210 94Z" fill="url(#li)" stroke="#2e1708" stroke-width="5"/>
+<g fill="none" stroke="#2e1708" stroke-width="1.6" opacity=".45"><path d="M8 72 H212"/><path d="M6 52 Q110 44 214 52"/><path d="M10 30 Q110 16 210 30"/></g>
+<path d="M36 94 L32 18 Q36 10 54 8 L56 94Z" fill="url(#lb)" stroke="#2e1708" stroke-width="2.5"/><path d="M184 94 L188 18 Q184 10 166 8 L164 94Z" fill="url(#lb)" stroke="#2e1708" stroke-width="2.5"/>
+<path d="M12 94 Q110 70 208 94Z" fill="#ffd27a" opacity=".35"/></svg>`,CR=`<svg viewBox="-120 -260 240 340" width="240" height="340" style="overflow:visible"><defs>
 <linearGradient id="cg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3e4c30"/><stop offset=".5" stop-color="#5a6a44"/><stop offset="1" stop-color="#3a4630"/></linearGradient>
 <linearGradient id="cn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9e2c8"/><stop offset="1" stop-color="#b8b090"/></linearGradient></defs>
 <g class="chute" style="transform-origin:0px -50px">
@@ -64,9 +75,9 @@ const CB=`<svg viewBox="0 0 220 130" width="220" height="130"><defs>
 <ellipse class="dustc" cx="0" cy="64" rx="110" ry="18" fill="#9a9a90" opacity="0"/>
 <g class="beam" style="opacity:0;transform-origin:0 -40px"><path d="M-46 -40 L-150 -330 L150 -330 L46 -40Z" fill="#3fe8ff" opacity=".32"/><path d="M-20 -40 L-60 -330 L60 -330 L20 -40Z" fill="#bff8ff" opacity=".35"/></g>
 <rect x="-56" y="-44" width="112" height="108" rx="6" fill="url(#cg)" stroke="#1c2416" stroke-width="5"/>
-<path d="M-56 -26 H56 M-56 46 H56" stroke="#2a3420" stroke-width="4"/><path d="M-50 -38 L50 40 M50 -38 L-50 40" stroke="#2a3420" stroke-width="3" opacity=".35"/>
-<rect x="-30" y="-4" width="60" height="22" rx="2" fill="#d8d0b0" stroke="#1c2416" stroke-width="2"/><text x="0" y="12" font-size="13" font-family="monospace" text-anchor="middle" fill="#2a3420" font-weight="700">AYUDA</text>
-<path d="M0 -24 l4 8 9 1.2 -6.5 6 1.6 9 -8 -4.4 -8 4.4 1.6 -9 -6.5 -6 9 -1.2z" fill="#e8e0c8" transform="translate(0 -6) scale(.8)"/>
+<path d="M-56 -26 H56 M-56 50 H56" stroke="#2a3420" stroke-width="4"/><path d="M-50 -38 L50 40 M50 -38 L-50 40" stroke="#2a3420" stroke-width="3" opacity=".35"/>
+<rect x="-26" y="16" width="52" height="24" rx="2" fill="#d8d0b0" stroke="#1c2416" stroke-width="2"/><text x="0" y="33.5" font-size="16" font-family="monospace" text-anchor="middle" fill="#a8261c" font-weight="900" letter-spacing="2">SOS</text>
+<path d="M0 -24 l4 8 9 1.2 -6.5 6 1.6 9 -8 -4.4 -8 4.4 1.6 -9 -6.5 -6 9 -1.2z" fill="#e8e0c8" transform="translate(0 2) scale(.9)"/>
 <g class="pnl" style="transform-origin:-56px 64px"><rect x="-56" y="-44" width="12" height="108" fill="#5a6a46" stroke="#1c2416" stroke-width="2.5"/></g>
 <g class="pnr" style="transform-origin:56px 64px"><rect x="44" y="-44" width="12" height="108" fill="#5a6a46" stroke="#1c2416" stroke-width="2.5"/></g></svg>`;
 let era='perg',slow=1;
@@ -77,7 +88,7 @@ const A=(el,kf,o)=>el.animate(kf,Object.assign({fill:'forwards',easing:'ease-out
 function play(){const st=document.getElementById('st'),d=D[era],pr=document.getElementById('prop'),tt=document.getElementById('ttl'),hn=document.getElementById('hint'),ry=document.getElementById('rays'),fl=document.getElementById('flash'),T=t=>t*slow*1000;
  st.style.backgroundImage='url('+d.bg+')';st.querySelectorAll('.card').forEach(c=>c.remove());st.classList.remove('go','done');void st.offsetWidth;st.classList.add('go');document.getElementById('cdesc').innerHTML=DESC[era];
  [tt,hn,ry,fl].forEach(e=>e.getAnimations().forEach(a=>a.cancel()));
- tt.className='ttl '+era;tt.innerHTML=era==='perg'?'<h3>¡Cofre abierto!</h3><small>Elige una reliquia para esta partida. El juego está en pausa.</small>':'<h3>Ayuda recibida</h3><small>Elige una reliquia para esta partida · juego en pausa</small>';
+ tt.className='ttl '+era;tt.innerHTML=era==='perg'?'<i class="nl" style="left:8px;top:8px"></i><i class="nl" style="right:8px;top:8px"></i><i class="nl" style="left:8px;bottom:8px"></i><i class="nl" style="right:8px;bottom:8px"></i><h3>¡Cofre abierto!</h3><small>Elige una reliquia para esta partida. El juego está en pausa.</small>':'<h3>Ayuda recibida</h3><small>Elige una reliquia para esta partida · juego en pausa</small>';
  let t0;
  ry.style.top='400px';if(era==='perg'){pr.innerHTML=`<div class="chest"><div class="wrap"><div class="lidin">${CLI}</div><div class="body">${CB}</div><div class="lid">${CL}</div></div></div>`;
   const ch=pr.querySelector('.chest'),w=pr.querySelector('.wrap'),lid=pr.querySelector('.lid'),li=pr.querySelector('.lidin'),inn=pr.querySelector('.inner'),gl=pr.querySelector('.glint');
