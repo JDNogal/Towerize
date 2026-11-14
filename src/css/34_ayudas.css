@@ -118,3 +118,18 @@ button.drr .drric{display:inline-grid;place-items:center;width:20px;height:20px}
 body.mfs #pcback,body.mfs #peekb.on{padding:9px 18px!important;font-size:14px!important;bottom:10px!important}
 /* v335 · los avisos de la ronda (voladores, enemigo nuevo) van debajo del número de la ronda, sin tapar la línea ni la ronda actual */
 #rtl .rtws{top:auto!important;right:auto!important;left:50%!important;bottom:-34px!important;transform:translateX(-50%)}
+/* v337 · clasificación a la izquierda del libro en el menú principal */
+#lbmside{position:fixed;z-index:61;width:230px;display:none;padding:12px 12px 10px;border-radius:12px;background:linear-gradient(180deg,#fbf1d8,#efe0bb);border:2px solid #8a5a2a;box-shadow:0 8px 22px rgba(0,0,0,.45);color:#2a1a0e;font:13px system-ui,sans-serif}
+#lbmside.on{display:block}#lbmside h4{margin:0 0 8px;text-align:center;font:700 19px Georgia,serif;color:#3a2410}#lbmside h4 small{display:block;font:600 11.5px system-ui,sans-serif;color:#7a5a3a}
+#lbmside ol{list-style:none;margin:0;padding:0}#lbmside li{display:flex;align-items:center;gap:8px;padding:5px 2px;border-bottom:1px dashed rgba(138,90,42,.35)}#lbmside li:last-child{border-bottom:0}
+#lbmside li b{width:18px;text-align:right;color:#8a5a2a}#lbmside li span{flex:1;min-width:0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#lbmside li small{display:block;font-weight:500;font-size:11px;color:#6a4a2a}
+#lbmside li em{font-style:normal;font-weight:800;color:#7a5208}#lbmside li.me{background:rgba(240,192,96,.3);border-radius:6px}#lbmside p{margin:6px 0;color:#6a4a2a;text-align:center}
+#lbmside .lbmall{display:block;width:100%;margin-top:8px;padding:7px;border-radius:8px;border:1px solid #8a5a2a;background:#f6e6c2;color:#3a2410;font-weight:700;cursor:pointer}#lbmside .lbmall:hover{background:#fff1cf}
+:root[data-skin="holo"] #lbmside{background:rgba(6,24,32,.92);border-color:#3fe8ff88;color:#d4f4ff}:root[data-skin="holo"] #lbmside h4{color:#7fdcf0}:root[data-skin="holo"] #lbmside :is(small,p,li small){color:#9ccfdc}
+/* v337 · anillo de construcción: solo el círculo de la torre, sin cuadrado detrás; coste en dorado vivo */
+#bmenu .tmb:not(.arm){background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+#bmenu .tmb .ic.tw{border-radius:50%!important;box-shadow:0 0 0 2.5px #1b1712,0 3px 6px rgba(0,0,0,.45)!important}
+#bmenu .tmb:hover .ic.tw,#bmenu .tmb.sel .ic.tw{box-shadow:0 0 0 2.5px #1b1712,0 0 0 5px #ffd23a,0 3px 8px rgba(0,0,0,.5)!important}
+#bmenu .tmb .p{color:#ffd23a!important;font-weight:800!important}
+/* v337 · vender: el «$» con contorno negro para que se lea sobre el botón */
+#tmenu .tmb.sell .ic{color:#ffd23a!important;font-weight:900!important;-webkit-text-stroke:1.6px #1b1712;paint-order:stroke fill;text-shadow:0 1px 0 #1b1712,0 0 3px rgba(0,0,0,.6)!important}

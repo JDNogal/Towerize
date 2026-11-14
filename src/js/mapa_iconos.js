@@ -43,7 +43,7 @@ function mapEvtDraw(key,cx,cy,BCS,lw){const G=MIC.ctx||g,now=MIC.now!=null?MIC.n
   G.strokeStyle='rgba(74,38,14,.55)';G.lineWidth=lw(1.2);G.beginPath();G.moveTo(x0+w*.08,y0+h*.33);G.lineTo(x0+w*.78,y0+h*.33);G.moveTo(x0+w*.08,y0+h*.68);G.lineTo(x0+w*.74,y0+h*.68);G.stroke();
   // «?» tallado: oscuro con un filo claro debajo
   G.font=`900 ${Math.round(BCS*.82)}px Georgia,serif`;G.textAlign='center';G.textBaseline='middle';G.fillStyle='rgba(255,220,170,.35)';G.fillText('?',x0+w*.42,h*.06+lw(1.2));G.fillStyle='#3a1e0a';G.fillText('?',x0+w*.42,h*.06);
-  G.fillStyle='#d8c08a';G.strokeStyle='#2e1708';G.lineWidth=lw(1);G.beginPath();G.arc(0,0,BCS*.07,0,7);G.fill();G.stroke();G.restore();return;}
+  G.restore();return;}
  // holograma
  const gl=u<.7?(Math.random()<.5?1:0):0,jx=gl?(Math.random()-.5)*BCS*.35:0,fl=.85+.15*Math.sin(now*7)+(gl?-.35*Math.random():0),bob=Math.sin(now*1.6)*BCS*.08;
  const base=cy+BCS*.95,qy=cy-BCS*.55+bob;

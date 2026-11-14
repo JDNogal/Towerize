@@ -60,8 +60,8 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="reset"],[data-a="menu"]');if(!b||!LB.open||LB.area!=='end'||b.dataset.lbok)return;
  if(!LBR.cur||(LBR.up&&LBR.up.ok)||LBR.busy||LBR.asked||OPT.lbup!=='ask')return;
  e.stopPropagation();e.preventDefault();lbAskDlg(()=>{b.dataset.lbok=1;b.click();delete b.dataset.lbok;});},true);
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="lbup"],[data-a="lbrank"],[data-a="lbrkera"],[data-a="lbrkamz"],[data-a="lbrkback"],[data-a="lbrkname"]');if(!b)return;e.stopPropagation();e.preventDefault();const a=b.dataset.a;
- if(a==='lbup')lbUpload();else if(a==='lbrank')lbRankOpen();else if(a==='lbrkback'){LB.msg=null;lbOpen('end');}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="lbrkmenu"],[data-a="lbup"],[data-a="lbrank"],[data-a="lbrkera"],[data-a="lbrkamz"],[data-a="lbrkback"],[data-a="lbrkname"]');if(!b)return;e.stopPropagation();e.preventDefault();const a=b.dataset.a;
+ if(a==='lbrkmenu'){LB.msg=null;lbOpen(null,true);return;}if(a==='lbup')lbUpload();else if(a==='lbrank')lbRankOpen();else if(a==='lbrkback'){LB.msg=null;lbOpen('end');}
  else if(a==='lbrkname')lbNameDlg(null);
  else{if(a==='lbrkera'){LBR.era=+b.dataset.v;LBR.sel=null;}else LBR.sel=+b.dataset.v;try{sfx('page');}catch(_){}lbRankLoad();lbRender();}},true);
 // ---- la tabla ----
@@ -82,7 +82,7 @@ function lbRankParts(){const era=LBR.era,open=lbAmzOpen(era),T=(LBR.tiers[era]||
  else right=`<table class="lbrkt"><tr><th>#</th><th>Piloto</th><th>Héroe</th><th>Ronda</th><th class="s">Puntos</th></tr>${L.map((r,i)=>`<tr class="${r.nick.toLowerCase()===me?'me':''}"><td class="n">${i+1}</td><td>${r.nick}</td><td>${hn(r.hero)}</td><td>${r.round}${r.won?' ✓':''}</td><td class="s">${fi(r.score)}</td></tr>`).join('')}</table>`;
  return {left,right};}
 function lbRankOpen(){LBR.err=0;LBR.era=LBR.era||(LBR.cur?LBR.cur.era:(S&&S.era)||ERA||1);
- LB.msg={key:'rank',left:()=>lbRankParts().left,right:()=>lbRankParts().right,footL:`<button class="lbbk" data-a="${LB.end?'lbrkback':'menu'}">‹ Volver</button>`,footR:'',onBack:()=>{if(LB.end)lbOpen('end');}};
+ LB.msg={key:'rank',left:()=>lbRankParts().left,right:()=>lbRankParts().right,footL:`<button class="lbbk" data-a="${LB.end?'lbrkback':'lbrkmenu'}">‹ ${LB.end?'Volver':'Menú'}</button>`,footR:'',onBack:()=>{if(LB.end)lbOpen('end');else lbOpen(null,true);}};
  lbOpen('msg');lbRankLoad();}
 // cinta «Clasificación» en el final de partida
 {const _ep=endParts;endParts=function(){const p=_ep.apply(this,arguments);try{if(LBR.cur&&p.ribs)p.ribs=p.ribs.replace(/<\/div>\s*$/,`<button class="bkrib" data-a="lbrank" title="Clasificación"><svg width="24" height="22" viewBox="0 0 24 22" fill="#f2cd62" stroke="#1b1712" stroke-width="1.4"><rect x="8.5" y="6" width="7" height="15"/><rect x="1.5" y="11" width="7" height="10" fill="#d9d2c2"/><rect x="15.5" y="14" width="7" height="7" fill="#d08a4a"/><path d="M12 1l1 2 2 .3-1.5 1.4.4 2.1L12 5.8l-1.9 1 .4-2.1L9 3.3l2-.3z"/></svg><span>Clasificación</span></button></div>`);}catch(e){}return p;};}

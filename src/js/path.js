@@ -42,12 +42,16 @@ function anyPlace(o){
  return false;
 }
 const payOn=()=>S&&!(S.tut&&S.round<2),BFC=25,BFCS=50,DSUP=.35,pcost=o=>(o&&o.b?o.b:[]).reduce((a,b)=>a+Math.round((BF[b.k].free?0:BF[b.k].sup?BFCS:BFC)*(typeof apOn==='function'&&apOn('cb')?.5:1)),0);
+// tipo de pieza según por dónde sale el camino: recta (dos lados opuestos), curva (dos lados contiguos), bifurcación (tres) o cruce (cuatro)
+const PCCAT={};function pcCat(o){if(PCCAT[o.n])return PCCAT[o.n];const p=o.p,n=p.length,m=p[0].length,top=[...p[0]].includes('.'),bot=[...p[n-1]].includes('.'),lef=p.some(r=>r[0]==='.'),rig=p.some(r=>r[m-1]==='.');
+ const k=top+bot+lef+rig;return PCCAT[o.n]=k>=4?'cruce':k===3?'bif':(top&&bot)||(lef&&rig)?'recta':'curva';}
 function dealTry(){
  // rescate: si solo queda un extremo libre, salen sí o sí la Bifurcación y el Cruce, gratis
  const E1=!S.tut&&S.round<ROUNDS?collectEnds():[],resc=E1.length===1,RN=['Bifurcación','Cruce'];
  for(let t=0;t<40;t++){
   const PZ=PIECES.filter(o=>typeof pieceOk!=='function'||pieceOk(o.n));let pool=shuf([...PZ]).slice(0,rp('square')?4:3);
   if(resc){const rest=shuf(PZ.filter(x=>!RN.includes(x.n)));pool=shuf([...PIECES.filter(x=>RN.includes(x.n)),...rest.slice(0,pool.length-2)]);}
+  /* v337: nunca más de dos piezas del mismo tipo (rectas, curvas, bifurcaciones o cruces) */if(t<36&&pool.length>=3){const c={};for(const o of pool){const k=pcCat(o);c[k]=(c[k]||0)+1;}if(Object.values(c).some(n=>n>2))continue;}
   S.offers=pool.map(o=>{const of={n:o.n,p:o.p,b:[]};solarize(of);decorate(of);
    if(S.round>=BUFFS_FROM&&Math.random()<.6){const cs=[];of.p.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='S')cs.push([x,y]);}));
     shuf(cs);

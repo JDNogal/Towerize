@@ -4,7 +4,7 @@ const CFILTERS={tw:[{key:'dt',label:'Tipo de daño',kw:'dtype',opts:Object.keys(
 const fbarHtml=fl=>fl.map(f=>`<div class="fbar">${kst(f.kw,f.label,'')}: <button class="${CP.flt[f.key]?'':'on'}" data-a="cflt" data-f="${f.key}" data-v="">Todos</button>`+f.opts.map(([v,l,c])=>`<button class="${c} ${CP.flt[f.key]===v?'on':''}" data-a="cflt" data-f="${f.key}" data-v="${v}">${l}</button>`).join('')+'</div>').join('');
 const csec=(t,s)=>`<div class="esec" style="margin-top:14px">${t}</div><small>${s}</small>`;
 // ---- compendio: vistazo general con barras (lo demás, con números, en la vista de detalle) ----
-const GCOL={cd:'#ff6b5e',ccl:'#f3e7a1',cg:'#5ab4ff',chp:'#9be15d',cph:'#c9ced8',cmg:'#8f9bff',cvl:'#ffe14d',burn:'#ff9a4a',poison:'#5fdc7a'};
+const GCOL={cd:'#ff6b5e',ccl:'#e0a52a',cg:'#5ab4ff',chp:'#9be15d',cph:'#c9ced8',cmg:'#8f9bff',cvl:'#ffe14d',burn:'#ff9a4a',poison:'#5fdc7a'};
 const GICO={burn:'🔥',poison:'🧪',slow:'🐌',ez:'⚡',chain:'🔗',bwall:'🧱',logk:'🪵',mheal:'<svg viewBox="0 0 28 24" width="19" height="16" fill="#9be15d" aria-hidden="true"><path d="M6.7 7.5h4.6v5.2h5.2v4.6h-5.2v5.2h-4.6v-5.2h-5.2v-4.6h5.2z"/><path d="M17.5 1.9h3v3.1h3.1v3h-3.1v3.1h-3v-3.1h-3.1v-3h3.1z"/><path d="M22.9 10.1h2.2v2.3h2.3v2.2h-2.3v2.3h-2.2v-2.3h-2.3v-2.2h2.3z"/></svg>',drunk:'🍺',freeze:'🧊',chill:'❄️',bleed:'🩸',stun:'💫',wet:'💧',root:'🌿',sticky:'🫗'};
 // tipo de daño: color (los de cada tipo) e icono delante de «Daño». Físico 🗡️, mágico báculo azul, elemental llama, rayo, veneno y hielo en cuadro
 GCOL.cel='#4fd6b8';

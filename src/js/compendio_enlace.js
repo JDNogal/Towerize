@@ -127,3 +127,5 @@ document.addEventListener('click',e=>{const n=e.target.closest&&e.target.closest
  if(NEC.open&&e.target.id==='necard'){e.stopPropagation();necClose();}},true);
 addEventListener('keydown',e=>{if(!NEC.open)return;if(e.key==='Escape'||e.key==='Enter'||e.key===' '){e.preventDefault();e.stopImmediatePropagation();necClose();}},true);
 setInterval(()=>{try{if(!S||S.phase!=='wave'||S.tut){if(NEC.cur&&(!S||S.phase!=='wave'))necHide();if(!S||S.phase!=='wave')NEC.q=[];return;}if(!NEC.cur&&!NEC.open&&!LB.open&&NEC.q.length)necShow(NEC.q.shift());}catch(e){}},250);
+// v337 · la ficha del héroe en la partida lleva siempre su acceso rápido al compendio
+{const _hi=heroInfo;heroInfo=function(id,quiet){const h=_hi.apply(this,arguments);try{if(!quiet&&compOk()&&S&&S.hero&&S.hero.id===id&&!/class="cpgo"/.test(h))return cpBtn('hr',id)+h;}catch(e){}return h;};}

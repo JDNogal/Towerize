@@ -15,4 +15,11 @@ await p.evaluate(()=>{const x=document.querySelector('#relic [data-a="evopt"]');
 // iconos del mapa: se dibujan en las dos eras sin errores
 const er=await p.evaluate(()=>{const c=document.createElement('canvas');c.width=400;c.height=200;const x=c.getContext('2d');try{for(const e2 of [false,true]){MIC.e2=e2;MIC.ctx=x;for(const t of [0,.4,1,2]){MIC.now=1000+t;mapChestDraw('1,1',100,100,40,v=>v);mapEvtDraw('2,1',300,100,40,v=>v);}}return '';}catch(e){return e.message;}finally{MIC.e2=null;MIC.ctx=null;MIC.now=null;}});
 ck(!er,'iconos del mapa: '+er);
+// pantalla grande (el juego amplía las ventanas): los bordes a pluma tienen que caer encima de las cartas
+{const p2=await b.newPage({viewport:{width:1920,height:1080}});await p2.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');}catch(e){}});
+ await p2.goto('file://'+process.argv[2]);await p2.waitForTimeout(800);
+ await p2.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;OPT.eter=false;startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();try{lbClose(true);}catch(e){}});
+ await p2.waitForTimeout(6000);
+ const off=await p2.evaluate(()=>{const sv=document.querySelector('#panel .pgsvg'),rs=[...sv.querySelectorAll('rect[stroke-dasharray]')],cs=[...document.querySelectorAll('#panel .prow .card')];if(!rs.length)return 99;let m=0;cs.forEach((c,i)=>{const a=c.getBoundingClientRect(),b=rs[i].getBoundingClientRect();m=Math.max(m,Math.abs(a.left-b.left),Math.abs(a.right-b.right),Math.abs(a.top-b.top));});return Math.round(m);});
+ ck(off<=4,'pantalla grande: los bordes de las cartas no caen encima de las cartas (desfase '+off+' px)');await p2.close();}
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'pergamino_v336 ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

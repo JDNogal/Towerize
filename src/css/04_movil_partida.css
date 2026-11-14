@@ -88,7 +88,7 @@ body:not(.mfs) #lupa{display:none!important}
 body.mfs #panel:has(.pstrip){left:50%!important;transform:translateX(-50%)!important;max-width:calc(100vw - 2*230px)!important;padding:5px 8px}
 body.mfs #panel:has(.pstrip) #msg{display:none}
 .pstrip{display:flex;align-items:center;gap:6px;white-space:nowrap}.pstrip b{font-size:13px}.pstrip .gd{font-size:12px}
-.pstrip button{min-height:40px;margin:0;padding:0 10px;font-size:13px}.pstrip button[data-a="pexp"]{min-width:40px;padding:0}
+.pstrip button{min-height:40px;margin:0;padding:0 10px;font-size:13px}
 /* móvil: reliquias en columna a la izquierda; si hay más de 4, se desplazan */
 body.mfs #relics{left:6px!important;bottom:8px!important;top:auto!important;flex-direction:column-reverse;flex-wrap:nowrap;align-items:center;gap:6px;padding:5px!important;max-height:154px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y}
 body.mfs #relics .rl{width:44px;height:44px;flex:0 0 44px;font-size:24px}body.dsk:not(.mfs) #relics .rl{width:64px;height:64px;flex:0 0 64px;font-size:34px;border-radius:12px}body.dsk:not(.mfs) #relics .rl .bdg{font-size:13px;line-height:17px;padding:0 5px;border-radius:9px}body.dsk:not(.mfs) #relics{max-width:min(40vw,330px);gap:8px}@media (max-height:640px){body.dsk:not(.mfs) #relics .rl{width:52px;height:52px;flex:0 0 52px;font-size:28px}}
