@@ -90,7 +90,7 @@ function update(dt){
    if(T.puddle){const px=tg.tx,py=tg.ty,pz=abRank(t,'ponz');
     if(!S.pools.some(p=>p.src===t&&Math.hypot(p.x-px,p.y-py)<.8*K))S.pools.push({x:px,y:py,t:T.dur,n:dm*(pz?pz.m:1)*rateF(t,s),tk:0,src:t,r:s.area});
     break;}
-   if(T.beam){sfx('beam',{r:T.orb?1:1.3});const ov=abRank(t,'overl'),mm=ov?1+Math.min(ov.max,ov.g*t.ovT):1;hurt(tg,dm*mm*(1+(T.orb?soulB(t):0))*(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1),t,T.dt,s.pen);onHit(tg,t);if(T.orb&&tg.hp>0)orbHit(t,tg,s,dm);if(crit)critMark(tg);if(tg.hp<=0)break;continue;}
+   if(T.beam){sfx('beam',{r:T.orb?1:1.3});const ov=abRank(t,'overl'),mm=ov?1+Math.min(ov.max,ov.g*t.ovT):1;hurt(tg,dm*mm*(1+(T.orb?soulB(t):0))*(S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1),t,T.dt,s.pen);onHit(tg,t);if(typeof rebBeam==='function')rebBeam(t,tg,dm*mm,T.dt,s.pen);if(T.orb&&tg.hp>0)orbHit(t,tg,s,dm);if(crit)critMark(tg);if(tg.hp<=0)break;continue;}
    if(T.mag!=null){bunkerFire(t,tg,s,dm,crit);if(tg.hp<=0)break;continue;}
    if(T.augur){augurShot(t,tg,s,dm,crit,S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1);continue;}
    if(T.cata){cataShot(t,tg,s,dm,crit,S.dbl.some(b=>Math.hypot(t.x-b.x,t.y-b.y)<=b.r)?2:1);continue;}
