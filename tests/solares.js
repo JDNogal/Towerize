@@ -5,6 +5,6 @@ const r=await p.evaluate(()=>{if(PIECES.some(x=>x.n==='Valle')||SOLARES.Valle||S
  bad:L.flat().filter(([x,y])=>P0.p[y][x]!=='#').length,dup:L.some(v=>new Set(v.map(a=>a+'')).size!==v.length),
  placed:L.map((v,i)=>{const o={n:P0.n,p:P0.p,b:[]};solarize(o,i,1);return o.p.join('').split('S').length-1===v.length;}).every(Boolean)});}
  return {out,rec:JSON.stringify(SOLARES['Recta'][0]),ser:JSON.stringify(SOLARES['Serpiente'][0])};});
-for(const o of r.out){ck(o.nv===(o.n==='Recoveco'?1:3),o.n+': '+o.nv+' disposiciones');ck(!o.bad,o.n+': solar fuera de la hierba');ck(!o.dup,o.n+': solar repetido');ck(o.placed,o.n+': no se colocan todos');}
+for(const o of r.out){ck(o.nv===3,o.n+': '+o.nv+' disposiciones');ck(!o.bad,o.n+': solar fuera de la hierba');ck(!o.dup,o.n+': solar repetido');ck(o.placed,o.n+': no se colocan todos');}
 ck(r.rec==='[[5,2],[1,3],[5,4]]','Recta V1 con los cambios de Nogal');ck(r.ser==='[[2,2],[5,1],[4,4],[1,5]]','Serpiente V1 con los cambios de Nogal');
 await b.close();if(errs.length)console.log('ERRS',errs);if(fails.length||errs.length){console.log(fails.join("\n"));process.exit(1);}console.log("ok");})();

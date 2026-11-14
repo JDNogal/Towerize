@@ -103,6 +103,7 @@ const T=[
  ['vigia.js','Apoyo Vigía: las 2 rondas siguientes en la línea de rondas'],
  ['amenazas_rangos.js','Rangos nuevos de amenazas'],
  ['vallas.js','Vallas: las piezas solo se unen por sus salidas'],
+ ['piezas_era.js','Piezas por era: 2/1/1 en la era 2'],
  ['clasificacion.js','Clasificación: botón al final, aviso, nombre del piloto, subida y tabla'],
  ['logros_niveles.js','Logros por niveles (bronce, plata, oro, platino), bajas con cada torre y Estadísticas › Marcas'],
  ['torres_evento_hab.js','Habilidades de las torres de evento: Faro, cerditos, Gremio, Mímico y Dragón anciano',null,2],
