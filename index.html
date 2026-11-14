@@ -2378,6 +2378,24 @@ table.lbrkt{margin-top:34px}
 :root[data-skin="holo"] .amzr.apr.on{border-color:#5dff9a;background:rgba(93,255,154,.12)}
 :root[data-skin="holo"] .apdet{background:rgba(10,30,36,.7)}:root[data-skin="holo"] .apdet p{color:#cfefff}
 :root[data-skin="holo"] .aph.az,:root[data-skin="holo"] .apdet.az{color:#ff5fb0}
+/* v328 · ÉTER en el libro: cinta con el cristal (núcleo en miniatura) arriba a la derecha; bocadillo arriba a la derecha, fuera del libro */
+:root:not([data-skin="holo"]) .lbcv.a .etmbt{display:block;position:absolute;right:46px;top:-3px;width:60px;height:140px;margin:0;padding:0;border:0;background:none;box-shadow:none;cursor:pointer;z-index:7}
+:root:not([data-skin="holo"]) .lbcv.a .etmbt:focus-visible{outline:2px solid #3fe8ff;outline-offset:2px;border-radius:6px}
+:root[data-skin="holo"] .etcr{display:none}
+.etcr{display:block;overflow:visible}
+.etcr .etsw{transform-origin:30px 54px;animation:etsw 4s ease-in-out infinite}
+@keyframes etsw{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+.etcr .etglow{opacity:.15;transition:opacity .35s}.etcr .etgem{filter:saturate(.35) brightness(.8);transition:filter .35s}
+.lbcv.a.etmon .etcr .etglow,.lbcv.a .etmbt:hover .etcr .etglow{opacity:1}.lbcv.a.etmon .etcr .etgem,.lbcv.a .etmbt:hover .etcr .etgem{filter:none}
+.lbcv.a.etmtalk .etcr .etgem{animation:etpulse .5s ease-in-out infinite alternate}
+@keyframes etpulse{from{filter:brightness(1)}to{filter:brightness(1.25)}}
+:root:not([data-skin="holo"]) .lbcv.a .etmbub{display:block;position:absolute;left:calc(100% + 34px);top:-58px;width:300px;box-sizing:border-box;padding:10px 14px 11px;z-index:8;pointer-events:none;
+ background:#f6ecd6;border:2px solid #6b4426;border-radius:12px;box-shadow:0 8px 24px #0008;color:#3a2617;font:14px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:left;
+ opacity:0;transform:translate(-8px,6px) scale(.96);transform-origin:0 50%;transition:opacity .2s,transform .2s}
+:root:not([data-skin="holo"]) .lbcv.a .etmbub.on{opacity:1;transform:none}
+:root:not([data-skin="holo"]) .lbcv.a .etmbub b{display:block;color:#2a7fa8;font-size:11px;letter-spacing:.14em;margin-bottom:3px}
+:root:not([data-skin="holo"]) .lbcv.a .etmbub::after{content:"";position:absolute;left:-26px;top:34px;width:30px;height:20px;background:#f6ecd6;clip-path:polygon(100% 0,100% 70%,0 100%)}
+@media (prefers-reduced-motion:reduce){.etcr .etsw,.lbcv.a.etmtalk .etcr .etgem{animation:none}}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2392,7 +2410,7 @@ table.lbrkt{margin-top:34px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v327</div>
+<div id="ver">Towerize v328</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -10369,6 +10387,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:328,f:'14 nov 2026',t:'ÉTER en el libro',s:[['ÉTER',['En el libro (menú principal y pausa) ÉTER aparece como un cristal con la forma del núcleo, atado a una cinta arriba a la derecha. Brilla al hablar; púlsalo y te dirá algo.']]]},
  {v:327,f:'14 nov 2026',t:'Enemigos poco a poco',s:[['Enemigos',['En las tres primeras partidas de cada era los enemigos van entrando poco a poco: la primera trae lo básico, la segunda los que piden más táctica y la tercera los más duros. Desde la tercera pieza, todo mezclado.']]]},
  {v:326,f:'14 nov 2026',t:'Apoyos',s:[['Apoyos',['Nuevo: los Apoyos, la otra cara de las Amenazas. Hacen la partida más llevadera (oro al empezar, casillas baratas, una torre gratis por ronda, tirada gratis por ronda…) a cambio de restar amenaza y puntuación.','Se abren poco a poco: el primer grupo al ganar una partida con alguna amenaza, y el resto ganando con más amenaza.','El botón pasa a «Apoyos / Amenazas»: Apoyos a la izquierda y Amenazas a la derecha.']],['Puntuación',['Cada punto de amenaza suma un 10 % y cada punto de apoyo lo resta. Los rangos extremos (Niebla de guerra 4, Sin refuerzos 3) multiplican por 1,25 y los apoyos fuertes por 0,8. Nunca baja de ×0,5.','La clasificación usa la amenaza neta (amenazas − apoyos).']],['Opciones',['Pausa automática: si cambias de ventana en plena partida, el juego se pausa solo (Opciones › Juego).']]]},
  {v:325,f:'13 nov 2026',t:'Piezas corruptas',s:[['Amenazas',['Piezas corruptas: cada pocas elecciones, las piezas traen una casilla maldita (aspa roja). Hay que construir en ella antes que en ningún otro sitio, su torre no se puede vender y sus mejoras cuestan más.']]]},
@@ -10964,6 +10983,19 @@ setInterval(()=>{try{const cv=document.querySelector('.lbcv.a');const bt=cv&&cv.
  if(!pau)ETM.pau=false;
  if(OPT.eterm===false||pau||cv.classList.contains('etmon'))return;
  if(now-Math.max(ETM.since,ETM.at||0)>=ETMAUTO)etmSay(true);}catch(e){}},1000);
+// ==================== v328 · ÉTER en la era fantástica: el cristal atado a la cinta del libro ====================
+// Nogal (14-nov-2026), maqueta «eter_cristal3», versión C: una cinta sale por el borde superior derecho del libro y de ella cuelga,
+// con un cordel y una anilla de bronce, un cristal con la forma del núcleo en miniatura (ÉTER es el corazón del núcleo).
+// En silencio está apagado; al hablar brilla. Se pulsa para que hable. Funciona en el menú principal y en la pausa (la tablet tiene su pantalla).
+const ETCRSVG='<svg class="etcr" viewBox="0 0 60 140" width="60" height="140" aria-hidden="true"><defs><linearGradient id="etkc" x1="0" x2="1"><stop offset="0" stop-color="#1aa8c4"/><stop offset=".5" stop-color="#bff8ff"/><stop offset="1" stop-color="#1aa8c4"/></linearGradient><radialGradient id="etgg"><stop offset="0" stop-color="rgb(63,232,255)" stop-opacity=".75"/><stop offset="1" stop-color="rgb(63,232,255)" stop-opacity="0"/></radialGradient><linearGradient id="etrb" x1="0" x2="1"><stop offset="0" stop-color="#5e1a1a"/><stop offset=".5" stop-color="#8e2a2a"/><stop offset="1" stop-color="#5e1a1a"/></linearGradient><linearGradient id="etrp" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#e8cf96"/><stop offset="1" stop-color="#b08a4e"/></linearGradient></defs>'
+ +'<path d="M19 0 H41 V54 L30 47 L19 54 Z" fill="url(#etrb)" stroke="#3a0e0e" stroke-width="1.2"/><path d="M22 2 V51 M38 2 V51" stroke="#c46a4a" stroke-opacity=".5" stroke-dasharray="3 3"/>'
+ +'<g class="etsw"><path d="M26 51 Q30 60 34 51 M30 56 V67" fill="none" stroke="#5a3e18" stroke-width="3.6" stroke-linecap="round"/><path d="M26 51 Q30 60 34 51 M30 56 V67" fill="none" stroke="url(#etrp)" stroke-width="2.2" stroke-linecap="round"/>'
+ +'<circle cx="30" cy="54" r="3.4" fill="#d8b878" stroke="#5a3e18" stroke-width="1.2"/><circle cx="30" cy="71" r="4.6" fill="none" stroke="#7a5a26" stroke-width="3"/><circle cx="30" cy="71" r="4.6" fill="none" stroke="#d8a84a" stroke-width="1.6"/>'
+ +'<ellipse class="etglow" cx="30" cy="102" rx="30" ry="37" fill="url(#etgg)"/>'
+ +'<g class="etgem"><path d="M30 75 L46.2 109.8 L30 133 L13.8 109.8 Z" fill="url(#etkc)" stroke="#0a4a5a" stroke-width="2.4" stroke-linejoin="round"/><path class="etglow" d="M30 79 V129" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".9"/><path d="M30 75 L24.8 109.8 L30 133" fill="#fff" opacity=".18"/></g></g></svg>';
+{const _lr=lbRender;lbRender=function(){const r=_lr.apply(this,arguments);try{const b=document.querySelector('.lbcv.a .etmbt');if(b&&!b.querySelector('.etcr'))b.insertAdjacentHTML('beforeend',ETCRSVG);}catch(e){}return r;};}
+// la opción «ÉTER habla solo» también vale en la era fantástica
+try{const o=OPTS.find(x=>x.key==='eterm');if(o)delete o.show;}catch(e){}
 // ==================== v308 · Botón «Atrás» del libro ====================
 // Como el «atrás» del navegador: el libro apunta cada página que ves (área, sección, ficha y su Nv o especialización)
 // y el botón ↩ (junto a la ✕) o la tecla Retroceso te devuelven a la anterior.

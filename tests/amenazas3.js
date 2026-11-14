@@ -18,7 +18,7 @@ const r=await p.evaluate(()=>{try{lbClose(true);}catch(e){}RL.open=false;$('reli
  const b1=mk(0,'sq1'),m1=mk(0,'sq1');S.flagSq={sq1:b1};b1.flag=1;
  slowE(m1,.5,2);o.noSlow=!m1.fx.slow;b1.hp=0;S.enemies.splice(S.enemies.indexOf(b1),1);slowE(m1,.5,2);o.slowAfter=!!m1.fx.slow;
  o.ready=['sab','aba'].every(id=>!AZT.find(x=>x[0]===id)[5]);
- try{draw();o.draw=true;}catch(e){o.draw=String(e);}return o;});
+ try{draw();o.draw=true;}catch(e){o.draw=String(e);}S.enemies.length=0;S.phase='build';return o;});
 console.log(JSON.stringify(r));
 ck(r.jam&&r.done,'Sabotaje: al llegar cerca, la torre se apaga y el saboteador deja de estar marcado');
 ck(r.far,'Sabotaje: lejos de la torre no pasa nada');

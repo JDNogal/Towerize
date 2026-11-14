@@ -29,7 +29,8 @@
     "27_logros_cerca.css",
     "28_novedades.css",
     "29_clasificacion.css",
-    "30_apoyos.css"
+    "30_apoyos.css",
+    "31_eter_cristal.css"
   ],
   "js": [
     "00_config.js",
@@ -131,6 +132,7 @@
     "bufadores_tope.js",
     "escuadras_linea.js",
     "eter_menu.js",
+    "eter_cristal.js",
     "libro_atras.js",
     "compendio_eventos.js",
     "torres_evento_hab.js",
