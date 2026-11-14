@@ -31,7 +31,7 @@ function droneTick(dt){if(!r3On('drone')){DRN.p=null;return;}DRN.a+=dt*1.4;const
 // ---- Implante cibernético ----
 nrAdd({id:'implant',n:'Implante cibernético',ic:'🦾',col:'#4a3a5a',era:2,cd:3,
  pas:()=>'Tu héroe: <span class="chp">+20% de vida</span> y <span class="cd">+10% de daño</span>.',
- act:()=>'Durante <b>8 s</b>, las habilidades de tu héroe se recargan el <span class="cr">doble de rápido</span>.'},{dur:8,use:()=>{if(!S.hero){S.msg='Implante cibernético: no tienes héroe.';return false;}S.fx.push({x:S.hero.s.x,y:S.hero.s.y,t:.5,m:.5,r:K,col:'#c070ff'});return true;}});
+ act:()=>'Durante <b>20 s</b>, las habilidades de tu héroe se recargan el <span class="cr">doble de rápido</span>.'},{dur:20,use:()=>{if(!S.hero){S.msg='Implante cibernético: no tienes héroe.';return false;}S.fx.push({x:S.hero.s.x,y:S.hero.s.y,t:.5,m:.5,r:K,col:'#c070ff'});return true;}});
 // ---- Bidón radiactivo ----
 nrAdd({id:'barrel',n:'Bidón radiactivo',ic:'☢️',col:'#5a5a1a',era:2,cd:3,
  pas:()=>'Los enemigos que mueren dejan <b>3 s</b> una mancha radiactiva que hace un poco de daño y <b>corta toda curación</b> de los enemigos que la pisan.',

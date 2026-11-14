@@ -31,7 +31,8 @@
   "29_clasificacion.css",
   "30_apoyos.css",
   "31_eter_cristal.css",
-  "32_logros_sin_recuadro.css"
+  "32_logros_sin_recuadro.css",
+  "33_cofre.css"
  ],
  "js": [
   "00_config.js",
@@ -158,6 +159,7 @@
   "supercampeones_rasgos.js",
   "vigia.js",
   "amenazas_rangos.js",
-  "vallas.js"
+  "vallas.js",
+  "cofre_anim.js"
  ]
 }
