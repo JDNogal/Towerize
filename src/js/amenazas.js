@@ -21,7 +21,7 @@ const AZIC={
 // desbloqueo: 'ini' (de salida), número N (gana con N puntos de amenaza), 'e2' (gana con amenazas en la Era Distópica), 'fut' (aún no existe)
 const AZT=[
  ['sup','Supercampeones','en',[[2,'Desde la ronda 6, algunos campeones ascienden a supercampeón con <b>1 rasgo</b> al azar: escudo frontal, paso rápido, regeneración o resistencia a control. Cada vez más a menudo en las rondas altas. Dan el doble de oro.'],[2,'Los supercampeones llevan <b>2 rasgos</b>.'],[2,'Desde la ronda 12, algunos supercampeones llevan <b>3 rasgos</b>.']],'ini'],
- ['ven','Venganza','en',[[3,'Cuando muere un élite o un jefe, los enemigos a 2 casillas se enfurecen <b>4 s</b>: corren un 50 % más y no se les puede retener.']],3],
+ ['ven','Venganza','en',[[3,'Cuando muere un mini-élite o un jefe, los enemigos a 2 casillas se enfurecen <b>4 s</b>: corren un 50 % más y no se les puede retener.'],[2,'También cuando muere un élite, a <b>3</b> casillas y durante <b>6 s</b>.']],3],
  ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.'],[2,'La torre se apaga <b>10 s</b> y sale un saboteador más.']],6],
  ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.'],[2,'Además, su escuadra corre un <b>15 %</b> más mientras él vive.']],7],
  ['cor','Piezas corruptas','ma',[[2,'Cada <b>4</b> elecciones de pieza, las piezas vienen corruptas. Su casilla defectuosa se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>3</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf'],
@@ -136,7 +136,8 @@ const AZTR=[['sh','Escudo frontal'],['fa','Paso rápido'],['rg','Regeneración']
 // oro doble y Venganza al morir
 {const _d=achDeath;achDeath=function(e){const r=_d.apply(this,arguments);try{if(!e.leak){
   if(e.sup){const g=rndG(killGoldF(e.t));S.gold+=g;if(S.st)S.st.gKill+=g;}
-  if(azOn('ven')&&(isBoss(e)||(ET[e.t]&&ET[e.t].el))){for(const q of S.enemies)if(q!==e&&q.hp>0&&Math.hypot(q.x-e.x,q.y-e.y)<=2*K){q.rage=4;}S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:2*K,col:'#ff5a3c'});}}}catch(x){}return r;};}
+  if(azOn('ven')){/* v329: R1 mini-élites y jefes; R2 además élites, a 3 casillas y 6 s (Nogal, 14-nov) */const R=azRank('ven'),mi=e.t==='mini'||ELV[1].mini.includes(e.t)||ELV[2].mini.includes(e.t),el=!mi&&(e.t==='elite'||ELV[1].elite.includes(e.t)||ELV[2].elite.includes(e.t)||(ET[e.t]&&ET[e.t].el));
+   if(isBoss(e)||mi||(R>=2&&el)){const rr=(R>=2?3:2)*K,dur=R>=2?6:4;for(const q of S.enemies)if(q!==e&&q.hp>0&&Math.hypot(q.x-e.x,q.y-e.y)<=rr){q.rage=Math.max(q.rage||0,dur);}S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:rr,col:'#ff5a3c'});}}}}catch(x){}return r;};}
 setInterval(()=>{try{if(!S||S.phase!=='wave')return;for(const e of S.enemies)if(e.rage>0)e.rage-=.1*(S.espd||1);}catch(e){}},100);
 // en el mapa: corona del supercampeón y aura roja del enfurecido
 {const _dw=e2DrawWorld;e2DrawWorld=function(lw){const r=_dw.apply(this,arguments);try{const X=v=>v*CS+CS/2,es=typeof EVS!=='undefined'?EVS:1;

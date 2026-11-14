@@ -19,7 +19,7 @@ const r3=await p.evaluate(()=>{const o={amz:JSON.stringify(S.amz)};for(let i=0;i
  S.round=12;S.phase='wave';const rnd=Math.random;Math.random=()=>0.01;const n=S.enemies.length;spawnEnemy('champ',(S.portals&&S.portals[0])||{x:S.core.x,y:S.core.y,dir:[0,1]});Math.random=rnd;const e=S.enemies[S.enemies.length-1];o.sup=!!(e&&e.sup&&e.sup.length===1);
  if(e){e.supSh=2;const h=e.hp;hurt(e,5,null,'phys');o.shield=e.hp===h;}
  const mk=t=>{const hp=ehpOf(t,S.round),q={t,x:S.core.x,y:S.core.y,tx:S.core.x,ty:S.core.y,hp,max:hp,fx:{},src:null,pv:[S.core.x,S.core.y]};S.enemies.push(q);return q;};
- S.amz.ven=1;const el=mk('elite'),nb=mk('norm');el.hp=0;achDeath(el);o.rage=nb.rage>0;delete S.amz.ven;
+ S.amz.ven=1;const el=mk('mini'),nb=mk('norm');el.hp=0;achDeath(el);o.rage=nb.rage>0;/* v329: R1 = mini-élites y jefes */delete S.amz.ven;
  const sc=scoreCalc();o.score=sc.rows.some(x=>x[0]==='amz');o.chip=!!document.getElementById('amzchip');
  S.phase='won';S.round=ROUNDS;endGame();o.unlock=!!AZ.un.ven&&!AZ.un.nie&&AZ.rk&&AZ.rk.sup===2&&AZ.rk.ref===2;return o;});
 await p.waitForTimeout(800);r3.chipShown=await p.evaluate(()=>{const c=document.getElementById('amzchip');return !!c;});
