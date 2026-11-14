@@ -303,7 +303,7 @@ function enemyInst(e){const E=ET[e.t],ap=(e.apx!=null?e.apx:(E.ap||0))+(e.cb||0)
 function closePrim(){if(typeof S!=='undefined'&&S)S.selE=null;PR.auto=0;PR.open=false;PR.pinned=false;PR.key=null;PR.cell=null;PR.dead=0;closeKS();$('tip').style.display='none';$('side').innerHTML=PH;}
 function openPrim(tg){
  {const k=String(tg.key||'');if(k.startsWith('shop:'))curSeen(k.slice(5));else if(k.startsWith('tw:')){const t=S&&S.list&&S.list.find(o=>'tw:'+o.id===k);if(t)curSeen(t.type);}}
- closeKS();PR.open=true;PR.pinned=false;PR.key=tg.key;PR.html=tg.html;PR.rect=tg.rect;PR.dom=tg.dom;PR.cell=tg.cell||null;PR.dead=0;
+ closeKS();PR.open=true;PR.pinned=false;PR.key=tg.key;PR.html=tg.html;PR.rect=tg.rect;PR.dom=tg.dom;PR.below=!!tg.below;PR.cell=tg.cell||null;PR.dead=0;
  if(PMN())$('tip').innerHTML=tg.html();else $('side').innerHTML=tg.html();
 }
 function refreshPrim(){if(!PR.open)return;closeKS();const h=PR.html();if(PMN())$('tip').innerHTML=h;else $('side').innerHTML=h;}
@@ -352,7 +352,7 @@ function hoverTick(rdt){
  else if(tg&&!MFSQ()&&!(TM.t&&tg.key==='tw:'+TM.t.id&&tmVis())){
   if(HV.key!==tg.key){HV.key=tg.key;HV.t=0;}else HV.t=Math.min(1,HV.t+rdt/OPT.delay);
   if(HV.t>=1&&!(PR.open&&PR.key===tg.key))openPrim(tg);
-  if(PR.open&&PR.key===tg.key){PR.rect=tg.rect;PR.cell=tg.cell||null;}
+  if(PR.open&&PR.key===tg.key){PR.rect=tg.rect;PR.cell=tg.cell||null;PR.below=!!tg.below;}
  }else{HV.key=null;if(!PR.open)HV.t=Math.max(0,HV.t-rdt*3);}
  const onPin=PR.pinned&&(inPrim||!!kpEl||(tg&&tg.key===PR.key));
  if(PR.open&&!PR.pinned){
@@ -381,6 +381,8 @@ function hoverTick(rdt){
   for(const id of ['tmenu','bmenu']){const m=$(id);if(m&&m.classList.contains('on')&&m.offsetParent!==null){let u=null;m.querySelectorAll('button').forEach(b=>{const q=b.getBoundingClientRect();if(!q.width)return;u=u?{l:Math.min(u.l,q.left),t:Math.min(u.t,q.top),r:Math.max(u.r,q.right),b:Math.max(u.b,q.bottom)}:{l:q.left,t:q.top,r:q.right,b:q.bottom};});if(u)r={l:Math.min(r.l,u.l),t:r.t,r:Math.max(r.r,u.r),b:r.b};}}
   let l=r.r+8;if(l+wd>innerWidth-6)l=r.l-8-wd;if(l<6)l=6;
   let t=PR.dom?(r.t+r.b)/2-ht/2:r.t;if(t+ht>innerHeight-6)t=innerHeight-6-ht;if(t<6)t=6;
+  /* v332: algunos bocadillos salen justo debajo de lo que señalan (la línea de rondas) */
+  if(PR.below){l=Math.max(6,Math.min(innerWidth-6-wd,(r.l+r.r)/2-wd/2));t=r.b+8;if(t+ht>innerHeight-6)t=Math.max(6,r.t-8-ht);}
   tip.style.left=l+'px';tip.style.top=t+'px';
  }else tip.style.display='none';
  if(!S.hover&&PR.open&&PR.cell)S.hover=PR.cell;

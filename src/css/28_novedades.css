@@ -12,3 +12,16 @@
 .novr b.v{font-size:15px}.novr small{opacity:.7}.novr.sel{box-shadow:0 0 0 2px #e07a2a}.novr .nw{font:700 10px system-ui;color:#fff;background:#c0392b;border-radius:6px;padding:1px 6px}
 .novd h4{margin:0 0 2px}.novd .sec{margin-top:12px}.novd .sec b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a0522d;margin-bottom:4px}.novd ul{margin:0;padding-left:18px}.novd li{margin:3px 0;font-size:13.5px;line-height:1.4}
 :root[data-skin="holo"] .novr{border-color:rgba(63,232,255,.35);background:rgba(63,232,255,.05);color:#d8fbff}:root[data-skin="holo"] .novr.sel{box-shadow:0 0 0 2px #3fe8ff}:root[data-skin="holo"] .novr .nw{background:#ff4fd8}:root[data-skin="holo"] .novd .sec b{color:#3fe8ff}
+/* v332 · la lista de versiones tiene su propio scroll y acaba antes del botón «‹ Menú» (antes pasaba por debajo) */
+.bk .bkp.l:not(.one):has(>.novl){display:flex;flex-direction:column;overflow:hidden}
+.bk.hasft .bkp.l:not(.one):has(>.novl){padding-bottom:80px}
+.bkp.l:not(.one)>.novl{flex:1;min-height:0;overflow-y:auto;padding:3px 6px 18px 3px;margin-left:-3px;-webkit-mask-image:linear-gradient(#000 calc(100% - 26px),transparent);mask-image:linear-gradient(#000 calc(100% - 26px),transparent)}
+/* el pie del libro no tapa la sombra del lomo: su fondo se difumina antes de llegar al centro */
+.bk:not(:has(.bkp.one))>.lbft.l{-webkit-mask-image:linear-gradient(to left,transparent 0,#000 70px);mask-image:linear-gradient(to left,transparent 0,#000 70px)}
+.bk:not(:has(.bkp.one))>.lbft.r{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 70px);mask-image:linear-gradient(to right,transparent 0,#000 70px)}
+/* v332 · el botón ↩ del libro solo aparece cuando se puede usar, y se dibuja al aparecer (antes salía apagado) */
+.bkx.bkhist.off{display:none!important}
+.bkx.bkhist.drawin{animation:bkhin .25s ease-out both}
+.bkx.bkhist.drawin>svg path{stroke-dasharray:40;animation:bkhdraw .55s .1s ease-out both}
+@keyframes bkhin{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+@keyframes bkhdraw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}

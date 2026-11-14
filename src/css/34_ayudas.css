@@ -1,0 +1,89 @@
+/* v330 · Ayudas de interfaz */
+/* ver todos los alcances: botón debajo de «Reintentar» */
+#mtl .rngb{position:relative;display:grid;place-items:center}
+#mtl .rngb svg{width:.95em;height:.95em;display:block}
+#mtl .rngb .kcap{top:auto;bottom:-16px}
+#mtl .rngb:has(.kcap){margin-bottom:12px}
+#mtl .rngb.on{background:linear-gradient(180deg,color-mix(in srgb,var(--gbtn) 94%,#fff),color-mix(in srgb,var(--gbtn) 90%,#000))!important;color:var(--gbtnf)!important;box-shadow:inset 0 0 0 1px var(--lea2),0 3px 8px rgba(0,0,0,.45)!important}
+/* aviso de oro sin gastar */
+#goldw{position:fixed;z-index:40;transform:translate(-50%,-100%) scale(.9);opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;background:#2a1a0c;color:#f6e7c4;border:1.5px solid #f0b429;border-radius:10px;padding:7px 12px;text-align:center;box-shadow:0 4px 14px #000a;width:230px;box-sizing:border-box}
+#goldw.on{opacity:1;transform:translate(-50%,-100%) scale(1)}
+#goldw b{display:block;color:#ffd75a;font-size:14px}#goldw small{display:block;font-size:11.5px;opacity:.9;margin-top:2px;line-height:1.3}
+#goldw::after{content:'';position:absolute;left:var(--ax,50%);bottom:-7px;transform:translateX(-50%) rotate(45deg);width:11px;height:11px;background:#2a1a0c;border-right:1.5px solid #f0b429;border-bottom:1.5px solid #f0b429}
+/* avisos en la línea de rondas */
+#rtl .rtws{position:absolute;top:1px;right:-13px;display:flex;gap:1px;z-index:3}
+#rtl .rtw{width:14px;height:14px;border-radius:50%;display:grid;place-items:center;font-style:normal;box-shadow:0 0 0 1.5px #f5e6c8,0 1px 2px #0009;animation:rtwP 1.6s ease-in-out infinite}
+#rtl .rtw svg{width:11px;height:11px}
+#rtl .rtw.fly{background:#3a8fd0;color:#fff}#rtl .rtw.nw{background:#e0a020;color:#2a1a08}
+@keyframes rtwP{50%{transform:scale(1.18)}}
+.rtwt{display:block;margin-top:5px!important;padding-top:5px;border-top:1px solid #ffffff22}
+.rtwl{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;vertical-align:-3px;margin-right:3px}
+.rtwl svg{width:11px;height:11px}.rtwl.fly{background:#3a8fd0;color:#fff}.rtwl.nw{background:#e0a020;color:#2a1a08}
+/* ¿Por qué he perdido? */
+.whyl{margin:8px 0 10px;padding:8px 12px;border-radius:10px;background:rgba(160,60,40,.10);border:1px solid rgba(160,60,40,.35)}
+.whyh{display:flex;align-items:center;gap:7px;margin-bottom:2px;color:#a8432c}
+.whyh b{font-size:15px}
+.whyi{padding:5px 0 5px 27px;border-top:1px dashed rgba(120,60,30,.25)}
+.whyh+.whyi{border-top:0}
+.whyi small{display:block;opacity:.8;margin-top:1px;line-height:1.35}
+/* «Sabías que…» */
+.lbtip{display:flex;gap:8px;align-items:center;text-align:left;margin:8px auto 0;max-width:420px;padding:5px 10px;border-radius:10px;background:rgba(0,0,0,.2);border:1px solid color-mix(in srgb,var(--trim,#c9a052) 45%,transparent);color:var(--leatxt,#f2e6cc);cursor:pointer}
+.lbtip:hover{background:rgba(0,0,0,.3)}
+.lbtipi{color:#ffd75a;flex:none;margin-top:1px}
+.lbtip b{display:inline;font-size:12px;color:#ffd75a;margin-right:4px}.lbtip small{display:inline;font-size:12px;line-height:1.3;opacity:.92}
+.lbcv.b .lbtip{display:none}
+/* informar de un fallo */
+.lbcvin{position:relative}
+.lbcvin>.bugbtn{position:absolute;top:10px;left:12px;z-index:3;margin:0;display:flex;align-items:center;gap:5px;padding:5px 9px;border-radius:16px;font-size:12px;font-weight:600;border:1px solid color-mix(in srgb,var(--trim,#c9a052) 50%,transparent);background:rgba(0,0,0,.22);color:var(--leatxt,#f2e6cc);opacity:.8}
+.lbcvin>.bugbtn:hover{opacity:1;background:rgba(0,0,0,.35)}
+.lbcvin>.bugbtn svg{width:15px;height:15px}
+.lbcv.b .lbcvin>.bugbtn span{display:none}
+#bugw{position:fixed;inset:0;z-index:300;display:none;place-items:center;background:rgba(0,0,0,.6);padding:16px}
+#bugw.open{display:grid}
+#bugw .bugbox{position:relative;width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;background:#f6ecd3;color:#2a1a10;border:2px solid #8a5a2e;border-radius:14px;padding:16px 18px;box-shadow:0 10px 40px #000c}
+#bugw h3{margin:0 0 2px;font-size:19px}
+#bugw .bugsub{display:block;opacity:.75;margin-bottom:10px}
+#bugw .bkx{position:absolute;top:8px;right:10px}
+#bugw .bugcats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+#bugw textarea{width:100%;box-sizing:border-box;min-height:96px;resize:vertical;font:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid #b08a5a;background:#fffaf0;color:#2a1a10}
+#bugw .bugshot{margin-top:9px;display:flex;gap:10px;align-items:center}
+#bugw .bugshot img{width:150px;border-radius:6px;border:1px solid #8a5a2e;cursor:zoom-in;flex:none}
+#bugw .bugshot.off img{opacity:.35;filter:grayscale(1)}
+#bugw .bugshot label{font-size:13px;display:flex;gap:6px;align-items:center}
+#bugw .bugnos,#bugw .buginfo{display:block;font-size:11.5px;opacity:.7;margin-top:8px}
+#bugw .bugbot{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px}
+#bugw .bugmsg{margin-right:auto;color:#a8432c;font-size:13px}
+#bugw .bugzoom{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.85);cursor:zoom-out;z-index:2}
+#bugw .bugzoom.on{display:grid}#bugw .bugzoom img{max-width:94vw;max-height:90vh;border-radius:8px}
+#bugtoast{position:fixed;left:50%;bottom:40px;transform:translate(-50%,20px);opacity:0;z-index:310;background:#1e3a20;color:#d8ffd0;border:1px solid #6fd06a;border-radius:10px;padding:8px 16px;transition:.2s;pointer-events:none}
+#bugtoast.on{opacity:1;transform:translate(-50%,0)}
+/* Estadísticas › Carrera */
+.cargrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+.carb{padding:8px 10px;border-radius:9px;background:rgba(0,0,0,.06);border:1px solid rgba(120,80,40,.2)}
+.carb small{display:block;opacity:.7;font-size:11.5px}.carb b{font-size:20px;display:block}.carb em{font-style:normal;font-size:11.5px;opacity:.75}
+.carr .carf{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed rgba(120,80,40,.25)}
+.carr .carfi{width:38px;height:38px;flex:none;display:grid;place-items:center;font-size:24px}
+.carr .carfi .lbsvpor{width:36px;height:36px}
+.carr .carfi svg,.carr .carfi img{max-width:34px;max-height:34px}
+.carr small{display:block;opacity:.7;font-size:11.5px}.carr b{display:block;font-size:15px}.carr em{font-style:normal;font-size:12px;opacity:.75}
+
+/* puntuación en la pausa: cinta bajo el retrato */
+.lbembw{position:relative;display:flex;flex-direction:column;align-items:center;margin-bottom:6px}
+.lbscr{position:relative;z-index:2;margin-top:-16px;display:flex;align-items:baseline;gap:5px;padding:4px 22px 5px;color:#3a2410;
+ background:linear-gradient(180deg,#f6d77a,#d9a640);box-shadow:0 2px 6px #0007,inset 0 1px 0 #fff6;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%,10px 50%)}
+.lbscr b{font:800 19px Georgia,serif;line-height:1}
+.lbscr small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.8}
+body.era2g .lbscr{background:linear-gradient(180deg,#123a44,#0b2228);color:#3fe8ff;box-shadow:0 0 10px #3fe8ff66,inset 0 0 0 1px #3fe8ff88}
+body.era2g .lbscr b{font-family:'Chakra Petch',system-ui,sans-serif;text-shadow:0 0 8px rgba(63,232,255,.6)}
+
+/* consejo de ÉTER */
+.etmbub .ettip{display:flex;align-items:center;gap:4px;font-style:normal;font-size:11.5px;font-weight:800;color:#a8690a;margin:1px 0 3px}
+body.era2g .etmbub .ettip{color:#ffd75a}
+.etmbub .ettip svg{width:14px;height:14px}
+
+/* el bocadillo de ÉTER sale del cristal que cuelga del libro (no de la esquina de Esc) */
+:root:not([data-skin="holo"]) .lbcv.a .etmbub{left:calc(100% - 40px)!important;top:50px!important;z-index:30!important}
+:root:not([data-skin="holo"]) .lbcv.a .etmbub::after{left:-22px!important;top:34px!important}
+body.mfs #mtl .rngb svg{width:28px;height:28px}
+body.mfs #zm button[data-z="c"] svg{width:30px;height:30px}
+#pcback{display:inline-flex;align-items:center;gap:8px}#pcback svg{width:1.9em;height:1.9em;margin:-6px 0;display:block;flex:none}

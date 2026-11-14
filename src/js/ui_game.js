@@ -372,8 +372,8 @@ function act(e){
  else if(a==='achm'){APAN.open=false;apanTick();lbOpen('lg');}
  else if(a==='apan'){APAN.open=!APAN.open;apanTick();}
  else if(a==='apin'){const id=b.dataset.id;if(PINS.includes(id))PINS=PINS.filter(x=>x!==id);else if(PINS.length>=3){toast('📌 Ya tienes 3 logros fijados: quita uno para fijar este.');return;}else PINS.push(id);savePins();if(LB.open&&!LB.cover){const sc=$('comp').scrollTop;lbRender();$('comp').scrollTop=sc;}else if(RL.open&&RL.hpick&&typeof renderHeroPick==='function')renderHeroPick();apanTick(1);}
- else if((a==='tutfull'||a==='tutquick')&&LB.open&&LB.step==='learn'&&LB.tsel!==a){LB.tsel=a;lbRender();}/* v307: primer toque elige; el segundo (o «Empezar») confirma */
- else if(a==='tutgo'){const t=LB.tsel;LB.tsel=null;if(t){const q=document.createElement('button');q.dataset.a=t;q.style.display='none';document.body.appendChild(q);LB.step=null;q.click();q.remove();}}
+ else if((a==='tutfull'||a==='tutquick')&&LB.open&&LB.step==='learn'){if(LB.tsel!==a){LB.tsel=a;lbRender();}}/* v332: tocar un tutorial solo lo elige; se empieza con «Empezar el tutorial» / «Ver el repaso» *//* v307: primer toque elige; el segundo (o «Empezar») confirma */
+ else if(a==='tutgo'){const t=LB.tsel;LB.tsel=null;if(t){const q=document.createElement('button');q.dataset.a=t;q.style.display='none';LB.step=null;act({target:q,stopPropagation(){},preventDefault(){}});}}
  else if(a==='tutfull'){LB.tsel=null;try{localStorage.setItem('rt-tutchoice','full');}catch(e){}closeQuick();startTut();}
  else if(a==='tutquick'){const first=!tutChosen();try{localStorage.setItem('rt-tutchoice','quick');}catch(e){}openQuick(first?'setup':'help');}
  else if(a==='qprev'){if(QS.i>0){QS.i--;renderQuick();}}

@@ -5,7 +5,7 @@ await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tut
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
 const r=await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;
  startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();HQ.q=[];RL.open=false;$('relic').classList.remove('open');const o={};
- S.round=6;o.mid=scoreCalc().t;STW.tab='sc';lbOpen('st');o.tab=!!document.querySelector('.sctab');lbOpen(null,true);o.pause=!!document.querySelector('.lbscore');lbClose(true);
+ S.round=6;o.mid=scoreCalc().t;STW.tab='sc';lbOpen('st');o.tab=!!document.querySelector('.sctab');lbOpen(null,true);o.pause=!!document.querySelector('.lbscore,.lbscr');lbClose(true);
  S.round=15;S.hp=S.hp||20;S.phase='won';endGame();o.fin=/scend/.test(String(LB.end.left));o.rib=!!document.querySelector('[data-a="endv"][data-v="sc"]');o.won=S.scF&&S.scF.t>o.mid;
  const rows=(S.scF&&S.scF.rows||[]).map(x=>x[0]);o.rows=['rnd','win','nol','hp'].every(k=>rows.includes(k));
  return o;});

@@ -32,7 +32,8 @@
   "30_apoyos.css",
   "31_eter_cristal.css",
   "32_logros_sin_recuadro.css",
-  "33_cofre.css"
+  "33_cofre.css",
+  "34_ayudas.css"
  ],
  "js": [
   "00_config.js",
@@ -160,6 +161,7 @@
   "vigia.js",
   "amenazas_rangos.js",
   "vallas.js",
-  "cofre_anim.js"
+  "cofre_anim.js",
+  "ayudas_v330.js"
  ]
 }

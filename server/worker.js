@@ -2,7 +2,8 @@
 // POST /run          → guarda una partida terminada
 // GET  /top?era=1&amz=3 → las 50 mejores de esa era y ese nivel de amenaza
 // GET  /tiers?era=1  → niveles de amenaza con partidas en esa era
-// Sin secretos aquí: el enlace con KV se hace al desplegar (binding RUNS).
+// POST /bug          → informe de un jugador (texto + captura) que se publica en el foro de feedback de Discord
+// Sin secretos aquí: el enlace con KV se hace al desplegar (binding RUNS) y el webhook de feedback es un secreto (FEEDBACK_WH).
 const TOPN = 50;
 const CORS = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type' };
 const J = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { 'Content-Type': 'application/json; charset=utf-8', ...CORS } });
@@ -27,11 +28,38 @@ async function addRun(req, env) {
   return J({ ok: true, pos: pos < 0 ? null : pos + 1, n: out.length });
 }
 
+// etiquetas del foro de feedback
+const BUGTAG = { bug: ['1570843388410863676', 'Fallo'], ui: ['1570843360535781537', 'Interfaz'], txt: ['1570843427996962846', 'Textos'], bal: ['1570843482229051402', 'Equilibrio'], idea: ['1570843544422318160', 'Idea'] };
+async function addBug(req, env) {
+  if (!env.FEEDBACK_WH) return J({ ok: false, err: 'cfg' }, 500);
+  const ip = req.headers.get('CF-Connecting-IP') || 'x', rk = 'bugip:' + ip;
+  if (await env.RUNS.get(rk)) return J({ ok: false, err: 'espera' }, 429);
+  let b; try { b = await req.json(); } catch (e) { return J({ ok: false, err: 'json' }, 400); }
+  const txt = String(b.txt || '').replace(/[\u0000-\u0008\u000b-\u001f]/g, '').replace(/@/g, '@\u200b').trim().slice(0, 1500);
+  if (txt.length < 3) return J({ ok: false, err: 'texto' }, 400);
+  const cat = BUGTAG[b.cat] ? b.cat : 'bug', nick = clean(b.nick, 16) || 'Anónimo', ver = clean(b.ver, 8), info = clean(b.info, 300);
+  let img = null;
+  if (typeof b.img === 'string' && b.img.startsWith('data:image/jpeg;base64,') && b.img.length < 1.6e6) {
+    try { const bin = atob(b.img.slice(23)); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); img = u; } catch (e) { img = null; }
+  }
+  const title = (BUGTAG[cat][1] + ' · ' + (ver ? 'v' + ver + ' · ' : '') + nick + ' · ' + txt.replace(/\s+/g, ' ')).slice(0, 95);
+  const payload = { thread_name: title, applied_tags: [BUGTAG[cat][0]], username: 'Towerize · informes', allowed_mentions: { parse: [] },
+    content: ('**' + BUGTAG[cat][1] + '** de **' + nick + '**\n' + txt + (info ? '\n-# ' + info : '')).slice(0, 1990) };
+  const fd = new FormData();
+  if (img) { payload.attachments = [{ id: 0, filename: 'captura.jpg' }]; fd.append('files[0]', new Blob([img], { type: 'image/jpeg' }), 'captura.jpg'); }
+  fd.append('payload_json', JSON.stringify(payload));
+  const r = await fetch(env.FEEDBACK_WH + '?wait=true', { method: 'POST', body: fd });
+  if (!r.ok) return J({ ok: false, err: 'discord', st: r.status }, 502);
+  await env.RUNS.put(rk, '1', { expirationTtl: 60 });
+  return J({ ok: true });
+}
+
 export default {
   async fetch(req, env) {
     const u = new URL(req.url);
     if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
     if (req.method === 'POST' && u.pathname === '/run') return addRun(req, env);
+    if (req.method === 'POST' && u.pathname === '/bug') return addBug(req, env);
     if (req.method === 'GET' && u.pathname === '/top') {
       const era = int(u.searchParams.get('era'), 1, 9), amz = int(u.searchParams.get('amz'), 0, 99);
       if (era == null || amz == null) return J({ ok: false, err: 'datos' }, 400);
@@ -42,6 +70,6 @@ export default {
       const l = await env.RUNS.list({ prefix: `top:${era}:` });
       return J({ ok: true, era, tiers: l.keys.map(k => +k.name.split(':')[2]).sort((a, b) => a - b) });
     }
-    return J({ ok: true, juego: 'Towerize', rutas: ['POST /run', 'GET /top?era=&amz=', 'GET /tiers?era='] });
+    return J({ ok: true, juego: 'Towerize', rutas: ['POST /run', 'POST /bug', 'GET /top?era=&amz=', 'GET /tiers?era='] });
   }
 };
