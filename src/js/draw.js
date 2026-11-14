@@ -49,13 +49,9 @@ function draw(){
    const bk=S.buff[gy*K][gx*K];if(bk)mark(g,bk,gx*BCS,gy*BCS,BCS);}}
  const RVO=revOrder();
  for(const key in S.evts||{}){if(S.blocks[key])continue;const rf=revF(RVO,key);if(rf<=0)continue;const[bx,by]=key.split(',').map(Number),cx=(bx*P+P/2)*BCS,cy=(by*P+P/2)*BCS;g.save();g.translate(cx,cy);g.scale(rf,rf);g.translate(-cx,-cy);g.globalAlpha=Math.min(1,rf);
-  g.fillStyle='rgba(160,120,255,.14)';g.beginPath();g.arc(cx,cy,BCS*2.2,0,7);g.fill();g.fillStyle='#5a3f9e';g.strokeStyle='#c9b8ff';g.lineWidth=lw(2.5);g.beginPath();g.arc(cx,cy,BCS*1.05,0,7);g.fill();g.stroke();
-  g.fillStyle='#fff';g.font='bold '+Math.round(BCS*1.4)+'px Georgia,serif';g.textAlign='center';g.textBaseline='middle';g.fillText('?',cx,cy+BCS*.06);g.restore();}
+  mapEvtDraw(key,cx,cy,BCS,lw);g.restore();}
  for(const key in S.chests){if(S.blocks[key])continue;const rf=revF(RVO,key);if(rf<=0)continue;const[bx,by]=key.split(',').map(Number),cx=(bx*P+P/2)*BCS,cy=(by*P+P/2)*BCS,w=BCS*2.4,hh=BCS*1.7,y0=cy-hh/2;g.save();g.translate(cx,cy);g.scale(rf,rf);g.translate(-cx,-cy);g.globalAlpha=Math.min(1,rf);
-  g.fillStyle='rgba(240,180,41,.12)';g.beginPath();g.arc(cx,cy,BCS*2.2,0,7);g.fill();
-  g.fillStyle='#7a4b22';g.fillRect(cx-w/2,y0+hh*.35,w,hh*.65);g.fillStyle='#9a6330';g.fillRect(cx-w/2,y0,w,hh*.4);
-  g.fillStyle='#f0b429';g.fillRect(cx-w/2,y0+hh*.34,w,hh*.1);g.fillRect(cx-BCS*.22,y0+hh*.15,BCS*.44,hh*.55);
-  g.fillStyle='#14161c';g.fillRect(cx-BCS*.08,y0+hh*.42,BCS*.16,BCS*.3);g.restore();}
+  mapChestDraw(key,cx,cy,BCS,lw);g.restore();}
  const h=S.hover,ht=h&&!MFSQ()&&S.occ[h.x+','+h.y];
  for(const t of new Set([S.selT,ht]))if(t)rangeCircle(t.x,t.y,stats(t).range);
  if(BM.s&&(BM.arm||BM.hov)&&TW[BM.arm||BM.hov]){const q=BM.s,b=BF[S.buff[q.y][q.x]];rangeCircle(q.x,q.y,TW[BM.arm||BM.hov].range*(b&&b.rg||1));}

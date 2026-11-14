@@ -87,7 +87,7 @@ function cfPlay(rl,cards,sign,e2,chest){let fx=rl.querySelector('.cofx');if(fx)f
  if(!chest||red){showSign(0);showCards(0,null);return;}
  rl.insertAdjacentHTML('beforeend',`<div class="cofx${e2?' e2':''}"><div class="cfflash"></div><div class="cfrays"></div><div class="hfx"><div class="hcone"></div><div class="hring"></div><div class="hring"></div><div class="hring"></div></div><div class="cfprop"></div></div>`);
  fx=rl.querySelector('.cofx');const pr=fx.querySelector('.cfprop'),fl=fx.querySelector('.cfflash'),ry=fx.querySelector('.cfrays');
- const W=fx.clientWidth,H=fx.clientHeight,cx=W/2,cy=H*.56,by=H-70;pr.style.left=cx+'px';pr.style.top=by+'px';ry.style.left=cx+'px';ry.style.top=cy+'px';
+ const W=fx.clientWidth,H=fx.clientHeight,cx=W/2,cy=H*.56,by=H-70;/* v336: centrado con 50% (el ancho al empezar podía no ser aún el final y el cofre quedaba a un lado) */pr.style.left='50%';pr.style.top=by+'px';ry.style.left='50%';ry.style.top=cy+'px';
  const fb=fx.getBoundingClientRect(),from={x:fb.left+cx,y:fb.top+by-30};const up=by-cy;let t0;
  const skip=()=>{for(const e of [fx,...fx.querySelectorAll('*'),...cards,sign])e.getAnimations().forEach(a=>{if(a.effect&&a.effect.getComputedTiming().iterations!==Infinity)a.finish();});done();};
  rl.addEventListener('pointerdown',skip,{once:true});

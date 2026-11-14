@@ -86,6 +86,7 @@ function spawnEnemy(t,p,fo){
  S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest,fsp:fo?fo.sp:0,sqid:fo?(p.sqn=(p.sqn||0),p.x+'.'+p.y+'.'+S.round+'.'+fo.sid):null,pv:[x+da,y+db]});
  if(fo&&fo.lead){const e=S.enemies[S.enemies.length-1];e.sqlead=1;(S.sqL=S.sqL||{})[e.sqid]=e;}
 }
+const COMPT=6;
 function compassStep(e){
  // Brújula (pasivo), a nivel de pieza: al entrar en una casilla de pieza nueva puede desviarse por una rama que se aleja del núcleo y seguirla mientras la distancia siga creciendo
  const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K),key=cx+','+cy;
@@ -94,8 +95,10 @@ function compassStep(e){
  if(!rp('compass')&&!e.away)return;
  const v0=S.cf[cy][cx];
  const aw=D.map(([a,b])=>[cx+a,cy+b]).filter(q=>inbc(q[0],q[1])&&S.cc[q[1]][q[0]]===2&&!cutC(cx,cy,q[0],q[1])&&S.cf[q[1]][q[0]]>v0&&S.cf[q[1]][q[0]]<1e9&&!(prev&&q[0]===prev[0]&&q[1]===prev[1]));
+ // v336: el desvío dura como mucho COMPT s (los jefes, la mitad); después vuelve hacia el núcleo
+ if(e.away&&e.awEnd!=null&&S.wt>e.awEnd){e.away=false;e.aw=null;return;}
  if(e.away){if(e.aw&&e.aw[0]===cx&&e.aw[1]===cy){if(aw.length)e.aw=aw[Math.floor(Math.random()*aw.length)];else{e.away=false;e.aw=null;}}}
- else if(rp('compass')&&!e.awayUsed&&aw.length&&Math.random()<.5){e.awayUsed=true;RS('compass').n++;e.away=true;e.aw=aw[Math.floor(Math.random()*aw.length)];}
+ else if(rp('compass')&&!e.awayUsed&&aw.length&&Math.random()<.5){e.awayUsed=true;RS('compass').n++;e.away=true;e.awEnd=S.wt+(isBoss(e)?COMPT/2:COMPT);e.aw=aw[Math.floor(Math.random()*aw.length)];}
 }
 // ---- cruces: en cada cruce, los enemigos se reparten entre las ramas que llegan al núcleo con poco rodeo (hasta FORKTOL casillas más largas),
 // no solo por la más corta. La ruta alternativa se sigue casilla a casilla (e.wps) ----
