@@ -2355,6 +2355,12 @@ body.dsk:not(.mfs) #nearach{zoom:var(--uiz,1)}
 .lbft.l,.lbft.r{background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 90%,var(--pedge,var(--trim))),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--pedge,var(--trim))))!important;-webkit-mask-image:linear-gradient(transparent,#000 34px);mask-image:linear-gradient(transparent,#000 34px)}
 .lbft.r{background:linear-gradient(270deg,color-mix(in srgb,var(--paper) 90%,var(--pedge,var(--trim))),var(--paper) 70%,color-mix(in srgb,var(--paper) 82%,var(--pedge,var(--trim))))!important}
 .bk.hasft .lbft.r:empty{display:block!important;height:44px;padding:0!important;pointer-events:none}
+/* v339 · cada página mide justo la mitad del libro (antes la derecha era 28 px más ancha por su relleno, el lomo no caía en el centro
+   y el pie de cada página se montaba 14 px sobre la otra: de ahí el corte raro junto al lomo) */
+#comp:not(.narrow) .bk>.bkp{flex:0 0 50%!important;max-width:50%!important;box-sizing:border-box!important}
+/* v339 · las cintas del menú principal salen de debajo de la tapa (antes quedaban flotando a ~15 px) */
+:root:not([data-skin="holo"]) .lbcv.a>.lbribs{right:auto!important;left:calc(100% - 24px)!important;z-index:0!important}:root:not([data-skin="holo"]) .lbcv.a>.lbcvin{position:relative;z-index:1}
+:root:not([data-skin="holo"]) .lbcv.a>.lbribs .bkrib{width:calc(64px + 18px)!important;padding-left:calc(6px + 18px)!important}
 /* v324 · Clasificación: botón al final, diálogos centrados con fondo oscurecido y tabla */
 .esum .lbupb{display:flex;align-items:center;gap:10px;text-align:left;border-radius:10px;border:2px solid #8a5a1a;background:linear-gradient(#f2cd62,#dba63a);color:#3a2617;font-weight:800;font-size:15px;padding:8px 12px;cursor:pointer;min-height:58px;font-family:inherit}
 .esum .lbupb small{display:block;font-weight:500;font-size:11px;opacity:.8}
@@ -2726,7 +2732,7 @@ body.pcpick #panel.pgf>.pgsvg{zoom:1!important}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v338</div>
+<div id="ver">Towerize v339</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -5424,8 +5430,8 @@ function endGame(){
  const rtw=!won&&S.snap&&S.rc>0;
  // el final de partida es el libro abierto: cifras a la izquierda, desglose a la derecha; volver abajo a la izquierda, seguir abajo a la derecha
  const i=h.indexOf('<div class="esec">');LB.end={won,left:h.slice(0,i),right:h.slice(i),
-  footL:'<button class="lbbk" data-a="menu">‹ Menú principal</button><button class="lbbk" data-a="hideend">🗺️ Ver el mapa</button>',
-  footR:(rtw?`<button class="lbbk" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="gbtn" data-a="reset">Jugar de nuevo ›</button>'};lbOpen('end');
+  footL:'<button class="lbbk" data-a="hideend">🗺️ Ver el mapa</button>',
+  footR:(rtw?`<button class="lbbk" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="gbtn" data-a="menu">Menú principal ›</button>'};/* v339: al acabar, la única salida es el menú principal */lbOpen('end');
 }
 // =============== EVENTOS ===============
 // Casillas "?" en el mapa: al colocar una pieza encima se abre un evento único (2-4 opciones). Lo que da cada opción oculta se recuerda entre partidas.
@@ -7409,7 +7415,7 @@ function ui(){
   h=(S.pi==null?'<div class="pctt">Elige una pieza</div><button class="pcpeek" data-a="ppeek" title="Ver el mapa">👁</button>'+diceRr('pc'):'')+'<small style="display:block;margin-bottom:12px">'+(S.pi==null?(S.tut?'Puedes girarla antes de colocarla.':'Puedes girarla antes de colocarla. Después podrás cancelar y volver aquí.'):(BARX.pc=1,'Pulsa un hueco marcado que conecte con el camino.'+(HSEEN.barpc?'':' Vuelve a pulsar la pieza para dejar de elegirla.')))+'</small><div class="prow">'+
   S.offers.map((o,i)=>`<div class="cardw"><button class="card ${i===S.pi?'on':''}" data-a="pick" data-i="${i}" data-tip="piece:${i}"><canvas width="98" height="98" data-i="${i}"></canvas>${o.n}${!payOn()?'':pcost(o)?`<span class="pcst gd">${pcost(o)} 🪙</span>`:'<span class="pcst pfree">Gratis</span>'}</button><button class="rbtn${TOUCH?'':' wide'}" data-a="prot" data-i="${i}" title="Girar la pieza${TOUCH?'':' ('+kbN('rot')+')'}"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13.2 8.4A5.2 5.2 0 1 1 11.6 4.3"/><path d="M12.6 1.8v3.4H9.2"/></svg>${TOUCH?'':'R'}</button></div>`).join('')+'</div>';}
  else if(S.phase==='build'||S.phase==='wave'||S.phase==='reward'){h='';}
- else h=(S.phase==='lost'&&S.snap&&S.rc>0?`<button class="go" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="go" data-a="results">Ver resultados</button><button data-a="reset">Jugar de nuevo</button><button data-a="menu">Menú principal</button>';
+ else h=(S.phase==='lost'&&S.snap&&S.rc>0?`<button class="go" data-a="retry" data-now="1">↺ Reintentar oleada (${S.rc})</button>`:'')+'<button class="go" data-a="results">Ver resultados</button><button data-a="menu">Menú principal</button>';
  $('ui').innerHTML=h;$('panel').classList.toggle('pempty',!h&&!S.msg);
  {/* elegir pieza: ventana centrada y grande, sin poder hacer nada más; 👁 para mirar el mapa */document.body.classList.toggle('revl',S.revAt>0&&S.phase==='place');const pk=S.phase==='place'&&S.pi==null&&!(S.revAt>0)&&!(S.tut&&HQ.cur&&HQ.cur.id==='tut_welcome'&&!HQ.cur.si)&&!(typeof LB!=='undefined'&&LB.open)&&!document.body.classList.contains('inmenu')&&!(typeof DLG!=='undefined'&&DLG.on);if(!pk)S.ppk=0;document.body.classList.toggle('pcpick',pk&&!S.ppk);document.body.classList.toggle('pcpeek',pk&&!!S.ppk);
   let pb=$('pcback');if(pk&&S.ppk&&!pb){pb=document.createElement('button');pb.id='pcback';pb.innerHTML=(typeof icU==='function'?icU('m_c_pc','🧩'):'🧩')+' Volver a la selección de piezas';document.body.appendChild(pb);pb.addEventListener('click',e=>{e.stopPropagation();S.ppk=0;ui();});}if(pb&&!(pk&&S.ppk))pb.remove();}
@@ -7466,6 +7472,8 @@ setInterval(()=>{try{for(const el of document.querySelectorAll(SMSEL)){const on=
  if(!b||b.disabled)return;const inM=document.body.classList.contains('inmenu')||(RL.open&&RL.hpick);if(!inM||(typeof DLG!=='undefined'&&DLG.on)||(typeof INTRO!=='undefined'&&INTRO.on))return;try{sfx('uih');}catch(er){}},true);}
 
 
+// v339 · las fichas de comprar torre y del menú de torre crecen con la pantalla (en pantallas grandes la letra era enana)
+function cardZ(c){const z=Math.max(1,Math.min(1.6,Math.min(innerWidth/1280,innerHeight/720)))*(document.body.classList.contains('mfs')?1:1.06);c.style.transformOrigin='0 0';c.style.transform=z>1.01?`scale(${z.toFixed(3)})`:'';return z>1.01?z:1;}
 // ---- construir en un solar: al pulsar un solar libre salen alrededor las torres del mazo (1.º toque: tarjeta · 2.º: construir) ----
 const BM={s:null,arm:null,hov:null,sig:''};
 const bmDeck=()=>Object.keys(TW).filter(k=>!TW[k].uniq&&(!S.deck||S.deck.includes(k)));
@@ -7507,7 +7515,7 @@ function bmCard(){const c=$('bmcard');if(!c||!BM.s)return;const k=BM.arm||BM.hov
  let h=bmInfo(k)+(BM.arm===k?`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':'Pulsa otra vez para construir'}</div>`:`<div class="cf${no?' no':''}">${no?'Te faltan '+(cost-S.gold)+' 🪙':(TOUCH?'Toca':'Pulsa')+' otra vez para construir'}</div>`);
  if(no)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla ${WISHI} y construirla sola cuando tengas oro.</div>`;
  if(c._h!==h){c.innerHTML=h;c._h=h;}c.classList.add('on');bmCardPos();}
-function bmCardPos(){const c=$('bmcard'),m=$('bmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,w=c.offsetWidth,hh=c.offsetHeight,T0=58,g=P.R+30;
+function bmCardPos(){const c=$('bmcard'),m=$('bmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,Z=cardZ(c),w=c.offsetWidth*Z,hh=c.offsetHeight*Z,T0=58,g=P.R+30;
  const fit=(x,y)=>x>=6&&y>=T0&&x+w<=P.W-6&&y+hh<=P.H-6;
  const cand=[[P.px+g,P.py-hh/2],[P.px-g-w,P.py-hh/2],[P.px-w/2,P.py-g-hh],[P.px-w/2,P.py+g]];
  let [x,y]=cand.find(([x,y])=>fit(x,y))||cand[0];x=Math.max(6,Math.min(P.W-w-6,x));y=Math.max(T0,Math.min(P.H-hh-6,y));c.style.left=x+'px';c.style.top=y+'px';}
@@ -7580,7 +7588,7 @@ function tmCard(){const c=$('tmcard'),t=TM.t;if(!c||!t)return;const k=TM.arm||TM
  if(I.w)h+=`<div class="hn">${TOUCH?'Mantén pulsado':'Clic derecho'} para marcarla ${WISHI} y comprarla sola cuando tengas oro.</div>`;
  if(c._h!==h){c.innerHTML=h;c._h=h;}c.classList.add('on');c.dataset.k=k;tmCardPos();}
 function tmCardPos(){const c=$('tmcard'),m=$('tmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const P=m._p,k=c.dataset.k;
- const w=c.offsetWidth,h=c.offsetHeight,T0=58,L=P.px-P.R-74,Rr=P.px+P.R+(m._o&&m._o.side?82:74),top=P.ty-34,bot=P.by+40;
+ const Z=cardZ(c),w=c.offsetWidth*Z,h=c.offsetHeight*Z,T0=58,L=P.px-P.R-74,Rr=P.px+P.R+(m._o&&m._o.side?82:74),top=P.ty-34,bot=P.by+40;
  const fit=(x,y)=>x>=6&&y>=T0&&x+w<=P.W-6&&y+h<=P.H-6;const below=['lupa','sell'].includes(k.split(':')[0]);
  const cand=below?[[P.px-w/2,bot],[Rr,P.py-h/2],[L-w,P.py-h/2],[P.px-w/2,top-h]]:[[P.px-w/2,top-h],[Rr,P.py-h/2],[L-w,P.py-h/2],[P.px-w/2,bot]];
  let [x,y]=cand.find(([x,y])=>fit(x,y))||cand[0];x=Math.max(6,Math.min(P.W-w-6,x));y=Math.max(T0,Math.min(P.H-h-6,y));c.style.left=x+'px';c.style.top=y+'px';}
@@ -7958,7 +7966,7 @@ function act(e){
  else if(a==='hconf'){if(b.dataset.id){RL.hconf=b.dataset.id;renderHeroPick();}}
  else if(a==='hcancel'){RL.hconf=null;renderHeroPick();}
  else if(a==='relic'){if(RL.fromChest){(S.chestRel=S.chestRel||[]).push(b.dataset.id);RL.fromChest=false;}S.relics.push(b.dataset.id);S.rs[b.dataset.id]={cd:0,t:0};relicHints(b.dataset.id);RL.open=false;$('relic').classList.remove('open');renderRelics();ui();}
- else if(a==='reset'){LB.end=null;lbClose(false,true);init();}
+ else if(a==='reset'){/* v339: «Jugar de nuevo» ya no existe: init() dejaba una partida a medias en la ronda 1 y sin héroe. Se vuelve al menú */LB.end=null;showMenu();}
  else if(a==='focusok'){closeFocus();ui();}
  else if(a==='evopt')chooseEvent(+b.dataset.i);
  else if(a==='evok')closeEvent();
@@ -10809,6 +10817,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:339,f:'15 nov 2026',t:'Libro y fichas',s:[['Arreglos',['Libro: el lomo cae justo en el centro y el pie de las páginas ya no hace un corte raro junto a él.','Las fichas de comprar torre y las del menú de la torre (también las habilidades de Nv 4) crecen en pantallas grandes: ya se leen bien.','Las cintas del menú principal salen de debajo de la tapa del libro, sin quedarse flotando.','Al terminar una partida, la única salida es el menú principal (antes «Jugar de nuevo» podía dejar una partida rara en la ronda 1 sin héroe).']]]},
  {v:338,f:'15 nov 2026',t:'Fichas más cortas',s:[['Arreglos',['Torres únicas en la partida: la ficha ya no es kilométrica: las habilidades salen en corto (nombre y rango) y cada una abre su ficha.','Los cerditos de Nv 4 tienen su propia ficha: pulsa su nombre en la de su casa.','Al mover a los cerditos se marca el camino y la casilla a la que van, como con el héroe.']]]},
  {v:337,f:'15 nov 2026',t:'Clasificación en el menú',s:[['Novedades',['La clasificación se ve en el menú principal, junto al libro (en móvil, con su botón), y se abre entera desde ahí.']],['Arreglos',['Pantallas grandes: los bordes a pluma de las cartas de piezas ya caen justo encima de cada carta.','Títulos en cinta: las puntas pasan por detrás de la cinta, con su doblez.','Anillo de construcción: solo el círculo de cada torre, sin cuadrado detrás, y el coste en dorado vivo.','La barra de enfriamiento de las fichas se ve bien sobre el pergamino.','Los enemigos ya no se ponen a andar de lado: cambian de carril en diagonal y siempre avanzando.','El poste de los eventos, sin clavo.','Al colocar una pieza ya no se despliega el menú antiguo de piezas al pasar el ratón: «Cancelar» te devuelve a la selección.','Vender: el «$» se lee bien.','La ficha del héroe en la partida tiene su acceso rápido al compendio.','Al elegir pieza nunca salen tres del mismo tipo (rectas, curvas, bifurcaciones o cruces).']]]},
  {v:336,f:'14 nov 2026',t:'Cofres, eventos y el pergamino',s:[['Novedades',['Los cofres y los eventos del mapa tienen nuevo aspecto… y de vez en cuando te llaman.','El pergamino de elegir pieza, de nueva torre y de los eventos llega cerrado y se desenrolla.','Lo que trae cada pieza se lee debajo de su carta.']],['Arreglos',['Eventos: ventana más alta, sin barra de desplazamiento en las opciones.','El cofre abierto queda en el centro de la pantalla.','Brújula rota: el desvío dura como mucho 6 s (los jefes, 3 s) y la descripción lo dice.','Títulos en cinta con letra dorada, que se lee mejor sobre el rojo.']]]},
