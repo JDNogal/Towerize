@@ -64,3 +64,8 @@ function evDedupe(){if(!S||!S.evts)return;const seen=new Set(Object.keys(S.evPla
 {const _ch=chooseHero;chooseHero=function(){const r=_ch.apply(this,arguments);try{evDedupe();}catch(e){}return r;};}
 // Ofertas de torres: botón 📖 en cada carta para abrir esa torre en el compendio (Nogal), como en las fichas.
 {const _r=renderTowerOffer;renderTowerOffer=function(){const r=_r.apply(this,arguments);try{if(compOk()){const ks=RL.towo||[];document.querySelectorAll('#relic .toff>.tof').forEach((el,i)=>{const k=ks[i];if(k&&TW[k]&&!el.querySelector(':scope>.cpgo'))el.insertAdjacentHTML('afterbegin',cpBtn('tw',k));});}}catch(e){}return r;};}
+// ---- Cofre y paquete de ayuda (animación al abrir un cofre del mapa) ----
+// Los degradados del paquete se llamaban igual que el contenedor del juego (#cw): partes del paquete salían invisibles.
+// Ahora todos los dibujos del cofre usan nombres propios.
+for(const k in CFX){if(typeof CFX[k]!=='string')continue;const ids=[...CFX[k].matchAll(/id="([^"]+)"/g)].map(m=>m[1]);let s=CFX[k];
+ for(const id of ids){s=s.split('id="'+id+'"').join('id="cfx'+k+'-'+id+'"').split('url(#'+id+')').join('url(#cfx'+k+'-'+id+')').split('href="#'+id+'"').join('href="#cfx'+k+'-'+id+'"');}CFX[k]=s;}

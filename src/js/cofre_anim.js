@@ -99,11 +99,11 @@ function cfPlay(rl,cards,sign,e2,chest){let fx=rl.querySelector('.cofx');if(fx)f
   CFA(lid,[{transform:'rotateX(0deg)'},{transform:'rotateX(-4deg)',offset:.12},{transform:'rotateX(120deg)',offset:.8},{transform:'rotateX(108deg)'}],{duration:420,delay:860,easing:'cubic-bezier(.45,0,.3,1)'});
   CFA(fl,[{opacity:0},{opacity:1,offset:.25},{opacity:0}],{duration:700,delay:1000});
   CFA(ry,[{opacity:0,transform:'rotate(0) scale(.25)'},{opacity:1,transform:'rotate(25deg) scale(1)',offset:.35},{opacity:0,transform:'rotate(70deg) scale(1.15)'}],{duration:1300,delay:1000});
-  CFA(ch,[{transform:`translateY(${-up}px) scale(1.7)`},{transform:'translateY(0) scale(.62)'}],{duration:450,delay:1350,easing:'cubic-bezier(.4,0,.2,1)'});t0=1.3;}
+  CFA(ch,[{transform:`translateY(${-up}px) scale(1.7)`},{transform:'translateY(0) scale(.62)'}],{duration:450,delay:1350,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'/* v351: con «both» tapaba la caída */});t0=1.3;}
  else{pr.innerHTML=`<div class="crate">${CFX.CR}</div>`;const c=pr.querySelector('.crate'),s=c.querySelector('svg'),ch=s.querySelector('.chute');s.querySelector('.beam').style.display='none';
   CFA(c,[{transform:`translateY(${-up-760}px) scale(1.7)`},{transform:`translateY(${-up}px) scale(1.7)`,offset:.78},{transform:`translateY(${-up-12}px) scale(1.7)`,offset:.88},{transform:`translateY(${-up}px) scale(1.7)`}],{duration:850,easing:'cubic-bezier(.3,.6,.4,1)'});
   CFA(ch,[{transform:'rotate(-7deg)'},{transform:'rotate(6deg)'},{transform:'rotate(-3deg)'},{transform:'rotate(0)'}],{duration:850,easing:'ease-in-out'});
-  CFA(ch,[{transform:'rotate(0) scale(1,1)'},{transform:'translate(30px,40px) rotate(18deg) scale(1.1,.55)',opacity:1,offset:.45},{transform:'translate(240px,10px) rotate(40deg) scale(.9,.35)',opacity:0}],{duration:800,delay:870,easing:'ease-in'});
+  CFA(ch,[{transform:'rotate(0) scale(1,1)'},{transform:'translate(30px,40px) rotate(18deg) scale(1.1,.55)',opacity:1,offset:.45},{transform:'translate(240px,10px) rotate(40deg) scale(.9,.35)',opacity:0}],{duration:800,delay:870,easing:'ease-in',fill:'forwards'});
   CFA(s.querySelector('.dustc'),[{transform:'scale(.3)',opacity:.85},{transform:'scale(1.7)',opacity:0}],{duration:550,delay:670});
   CFA(s.querySelector('.pnl'),[{transform:'rotate(0)'},{transform:'rotate(-85deg)',opacity:0}],{duration:300,delay:1300,easing:'ease-in'});
   CFA(s.querySelector('.pnr'),[{transform:'rotate(0)'},{transform:'rotate(85deg)',opacity:0}],{duration:300,delay:1300,easing:'ease-in'});
@@ -112,6 +112,6 @@ function cfPlay(rl,cards,sign,e2,chest){let fx=rl.querySelector('.cofx');if(fx)f
   CFA(hc,[{transform:'scaleX(.15) scaleY(.2)'},{transform:'scaleX(1) scaleY(1)',offset:.3},{transform:'scaleX(1.08) scaleY(1.05)'}],{duration:1500,delay:1300,easing:'cubic-bezier(.2,.8,.3,1)'});
   hf.querySelectorAll('.hring').forEach((r,i)=>CFA(r,[{opacity:.95,transform:'scale(.3)'},{opacity:0,transform:'scale('+(6+i*2)+')'}],{duration:1100,delay:1320+i*180,easing:'ease-out'}));
   fl.style.background='radial-gradient(circle at 50% 56%,rgba(191,248,255,.7),rgba(63,232,255,0) 60%)';CFA(fl,[{opacity:0},{opacity:1,offset:.25},{opacity:0}],{duration:700,delay:1300});
-  CFA(c,[{transform:`translateY(${-up}px) scale(1.7)`},{transform:'translateY(0) scale(1)'}],{duration:450,delay:1650,easing:'cubic-bezier(.4,0,.2,1)'});t0=1.6;}
+  CFA(c,[{transform:`translateY(${-up}px) scale(1.7)`},{transform:'translateY(0) scale(1)'}],{duration:450,delay:1650,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});t0=1.6;}
  setTimeout(()=>{if(fx.isConnected)fx.classList.add('back');},T(t0));
  showSign(t0+.35);showCards(t0,from);}
