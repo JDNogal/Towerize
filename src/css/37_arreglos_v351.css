@@ -7,3 +7,6 @@ body.mfs #relic .evp.evrsl .evget .evchip{padding-top:4px;padding-bottom:4px;min
    Donde se escribe o se copia (cajas de texto: código de guardado, informe de fallo, nombre…) sí se puede. */
 html,body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input,textarea,[contenteditable="true"],[contenteditable=""]{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+/* v351 · Tablet (era 2): al cerrar el compendio, la pantalla se recoge a la vez que se juntan la consola y el emisor.
+   La animación no tenía punto de partida (pasaba de «sin recorte» a «recortada» de golpe a mitad, y la pantalla desaparecía de repente). */
+@keyframes hcP{from{clip-path:inset(0 0)}to{clip-path:inset(0 50%)}}
