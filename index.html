@@ -1940,6 +1940,7 @@ html:root[data-skin="holo"] .rbx.rhb.rult{border-color:#ffd75a!important;backgro
 :root[data-skin="holo"] .lbcv.a.ing .etmbub{right:auto;left:calc(100% + 118px);width:300px;border-radius:10px 10px 10px 2px;transform:translate(-8px,6px) scale(.96);transform-origin:0 100%}
 :root[data-skin="holo"] .lbcv.a.ing .etmbub.on{transform:none}
 :root[data-skin="holo"] .lbcv.a.ing .etmbub::after{right:auto;left:-22px;clip-path:polygon(50% 0,100% 0,0 100%)}
+.etmbub{pointer-events:none!important}
 /* v307 · Compendio: las torres como en el mapa, un círculo de su color con borde negro y el icono encima (sin cuadrado ni disco oscuro) */
 .bic.bctw[style*="background"],.bkbic.bctw{border-radius:50%!important;box-shadow:0 0 0 2.5px #1b1712,0 2px 0 3px rgba(0,0,0,.18)!important}
 .bic.bctw[style*="background"] .icsvg svg,.bkbic.bctw .icsvg svg{background:none!important;width:1.45em!important;height:1.45em!important}
@@ -2445,6 +2446,13 @@ table.lbrkt{margin-top:34px}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub b{display:block;color:#2a7fa8;font-size:11px;letter-spacing:.14em;margin-bottom:3px}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub::after{content:"";position:absolute;left:-26px;top:34px;width:30px;height:20px;background:#f6ecd6;clip-path:polygon(100% 0,100% 70%,0 100%)}
 @media (prefers-reduced-motion:reduce){.etcr .etsw{animation:none}}
+/* v340 · solo el cristal responde a los clics (antes toda la caja del botón, que tapaba en parte la ✕/Esc del libro), y la ✕ queda siempre por encima */
+:root:not([data-skin="holo"]) .lbcv.a .etmbt{pointer-events:none!important}
+:root:not([data-skin="holo"]) .lbcv.a .etmbt .etgem{pointer-events:auto!important;cursor:pointer}
+.lbcv .bkx.lbcx{z-index:30!important}
+/* v340 · la ✕ (Esc) de la portada se separa del borde de la tapa, y ÉTER se corre a la izquierda para dejarle sitio */
+:root:not([data-skin="holo"]) .lbcv.a .lbcx{top:26px!important;right:30px!important}
+:root:not([data-skin="holo"]) .lbcv.a .etmbt{right:84px!important}
 /* v329 · Logros sin recuadro (Nogal, 14-nov): el trofeo sin caja y más grande; los conseguidos, con fondo verde suave */
 .bti.ach .bic{background:none!important;box-shadow:none!important;border:0!important;width:54px!important;height:54px!important;font-size:40px!important}
 .bti.ach.got .bic{filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
@@ -2718,6 +2726,10 @@ body.pcpick #panel.pgf .pcinfo,body.pcpick #panel.pgf .pcinfo small{color:#3a241
 :root:not([data-skin="holo"]):not(#z1):not(#z2) :is(#relic .pscr .ppap .ptt,body.pcpick #panel .pctt,#relic .ppap.pgf .evhead b):not(#z3){background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23c43a2a'/%3E%3Cstop offset='.55' stop-color='%239a1e16'/%3E%3Cstop offset='1' stop-color='%236a100c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='0' width='100' height='40' fill='url%28%23g%29'/%3E%3Crect x='0' y='0' width='100' height='40' fill='none' stroke='%234a0a06' stroke-width='3' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M0 4H100' stroke='%23ff9c86' stroke-opacity='.5' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center top/calc(100% - 44px) calc(100% - 8px) no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M0 0H8V8Z' fill='%232a0402'/%3E%3C/svg%3E") left 22px bottom 0/8px 8px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M0 0H8L0 8Z' fill='%232a0402'/%3E%3C/svg%3E") right 22px bottom 0/8px 8px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 40' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%238a1a12'/%3E%3Cstop offset='1' stop-color='%235a0c08'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0 0H30V40H0L11 20Z' fill='url%28%23t%29' stroke='%233a0604' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") left bottom/30px calc(100% - 8px) no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 40' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='1' y1='0' x2='0' y2='0'%3E%3Cstop offset='0' stop-color='%238a1a12'/%3E%3Cstop offset='1' stop-color='%235a0c08'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M30 0H0V40H30L19 20Z' fill='url%28%23t%29' stroke='%233a0604' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") right bottom/30px calc(100% - 8px) no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:6px 58px 14px!important;filter:drop-shadow(0 3px 3px rgba(0,0,0,.28))}
 :root:not([data-skin="holo"]):not(#z1):not(#z2) :is(#relic .pscr .ppap .ptt,body.pcpick #panel .pctt,#relic .ppap.pgf .evhead b):not(#z3)::before,:root:not([data-skin="holo"]):not(#z1):not(#z2) :is(#relic .pscr .ppap .ptt,body.pcpick #panel .pctt,#relic .ppap.pgf .evhead b):not(#z3)::after{display:none!important;content:none!important}
 body.pcpick #panel.pgf>.pgsvg{zoom:1!important}
+/* v340 · casillas especiales debajo de la carta: su dibujo y el texto seguido (antes se partía en columnas) */
+body.pcpick #panel .pcinfo div{display:block!important;margin-top:4px}
+body.pcpick #panel .pcinfo .pcbf .bbf2{display:inline-block;width:18px;height:18px;vertical-align:-4px;margin-right:4px;line-height:0}
+body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2732,7 +2744,7 @@ body.pcpick #panel.pgf>.pgsvg{zoom:1!important}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v339</div>
+<div id="ver">Towerize v340</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -7239,9 +7251,8 @@ const bfkw=k=>`<span class="kw" data-kw="bf_${k}" data-src="" style="color:color
 function pieceInfo(o){
  return `<b>${o.n}</b> · pieza ${P}×${P}`+(o.b.length?'<small>Casillas especiales'+(payOn()&&S.offers&&S.offers.includes(o)?' · cuestan <span class="gd">'+pcost(o)+' 🪙</span> al colocar la pieza':'')+':</small>'+o.b.map(b=>`<div><i style="background:${BF[b.k].col}"></i>${bfkw(b.k)}: ${bfT(b.k)}</div>`).join(''):'<small>Sin casillas especiales.'+(payOn()&&S.offers&&S.offers.includes(o)?' Colocarla es gratis.':'')+'</small>');
 }
-function portalInfo(p){
- if(!p)return '<b>Extremo inactivo</b><small>Esta ronda no saldrán enemigos por aquí. Se usan primero los extremos de la pieza nueva y luego los más lejanos a la base.</small>';
- return '<b>Portal enemigo</b>'+Object.keys(p.plan).filter(t=>p.plan[t]&&(ET[t]||t==='wanted')).map(t=>R('',t==='wanted'?'Élite (encargo)':ET[t].n,p.plan[t])).join('')+'<small>Enemigos que saldrán por este portal en la oleada.</small>';
+function portalInfo(){
+ return '<b>Extremo inactivo</b><small>Esta ronda no saldrán enemigos por aquí. Se usan primero los extremos de la pieza nueva y luego los más lejanos a la base.</small>';
 }
 const PH='<small style="margin:0">Pasa el ratón por un elemento del juego para ver su información.</small>';
 // ---- hover: rueda de carga, ralentización y panel de información ----
@@ -7264,7 +7275,7 @@ function resolve(el){
   const c=cell({clientX:M.x,clientY:M.y});S.hover=c;if(!inb(c.x,c.y))return null;
   const rect=cellRect(c.x,c.y);
   const at=q=>Math.abs(q.x-c.x)<=1&&Math.abs(q.y-c.y)<=1,pt=S.portals.find(at),po=pt||S.ends.find(at);
-  if(po)return{key:'pt:'+po.x+','+po.y+(pt?'a':'i'),html:()=>portalInfo(pt),rect:cellRect(po.x-1,po.y-1,3)};
+  /* v340: los portales activos ya no abren panel (el bocadillo de encima del portal ya dice qué sale); los extremos inactivos sí */if(po)return pt?null:{key:'pt:'+po.x+','+po.y+'i',html:()=>portalInfo(null),rect:cellRect(po.x-1,po.y-1,3)};
   const t=S.occ[c.x+','+c.y];
   if(t)return{key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:c};
   const k=S.buff[c.y][c.x];
@@ -8335,8 +8346,7 @@ function hintPos(){const el=$('hint');if(!el||!HQ.cur)return;const ring=el.first
 const HGAP=10,BARX={pc:0,tw:0};
 function hintPace(){const k=S.phase+S.round;if(HQ.pk!==k){if(HQ.pph==='wave')HQ.q=HQ.q.filter(h=>h.ph!=='wave');HQ.pk=k;HQ.pph=S.phase;HQ.pn=0;HQ.nt=2.5;}
  const h=HQ.q[0];if(!h)return false;const tut=h.id.startsWith('tut_')||!!HPRIO[h.id];if(!tut&&HQ.pn>=2)return false;if(S.phase==='wave'&&!tut&&(S.wt||0)<HQ.nt)return false;return true;}
-function portAuto(){if(!S||S.phase!=='build'||S.round>2||S.portAuto===S.round||PR.open||RL.open||HQ.cur||HQ.q.length||FO.open||LB.open||!realG())return;const pt=S.portals&&S.portals[0];if(!pt)return;S.portAuto=S.round;
- const tg={key:'pt:'+pt.x+','+pt.y+'a',html:()=>portalInfo(pt),rect:cellRect(pt.x-1,pt.y-1,3)};if(MFSQ()){LUPA.tg=tg;LUPA.sticky=true;placeLupa(tg.rect);}else{openPrim(tg);PR.pinned=true;PR.auto=1;}}
+function portAuto(){/* v340: ya no se abre el panel del portal (el bocadillo de encima lo cuenta todo) */}
 function hintTick(rdt){
  if(HQ.cur&&HQ.cur.menu){const el=$('hint');if(el){el.classList.remove('hid');el.classList.add('block','dim');}hintPos();return;}
  portAuto();
@@ -10817,6 +10827,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:340,f:'15 nov 2026',t:'Casillas, portales y ÉTER',s:[['Arreglos',['Debajo de cada pieza, las casillas especiales salen con su dibujo y el texto seguido, sin amontonarse.','Portales: al pasar el ratón solo sale el bocadillo de encima, que ya lo dice todo (adiós al panel repetido).','ÉTER ya no se come los clics: pulsar fuera de su bocadillo lo cierra al momento y el clic sigue su camino (también la ✕ / Esc del libro).','La ✕ de la portada se separa del borde de la tapa y ÉTER se corre un poco a la izquierda.']]]},
  {v:339,f:'15 nov 2026',t:'Libro y fichas',s:[['Arreglos',['Libro: el lomo cae justo en el centro y el pie de las páginas ya no hace un corte raro junto a él.','Las fichas de comprar torre y las del menú de la torre (también las habilidades de Nv 4) crecen en pantallas grandes: ya se leen bien.','Las cintas del menú principal salen de debajo de la tapa del libro, sin quedarse flotando.','Al terminar una partida, la única salida es el menú principal (antes «Jugar de nuevo» podía dejar una partida rara en la ronda 1 sin héroe).']]]},
  {v:338,f:'15 nov 2026',t:'Fichas más cortas',s:[['Arreglos',['Torres únicas en la partida: la ficha ya no es kilométrica: las habilidades salen en corto (nombre y rango) y cada una abre su ficha.','Los cerditos de Nv 4 tienen su propia ficha: pulsa su nombre en la de su casa.','Al mover a los cerditos se marca el camino y la casilla a la que van, como con el héroe.']]]},
  {v:337,f:'15 nov 2026',t:'Clasificación en el menú',s:[['Novedades',['La clasificación se ve en el menú principal, junto al libro (en móvil, con su botón), y se abre entera desde ahí.']],['Arreglos',['Pantallas grandes: los bordes a pluma de las cartas de piezas ya caen justo encima de cada carta.','Títulos en cinta: las puntas pasan por detrás de la cinta, con su doblez.','Anillo de construcción: solo el círculo de cada torre, sin cuadrado detrás, y el coste en dorado vivo.','La barra de enfriamiento de las fichas se ve bien sobre el pergamino.','Los enemigos ya no se ponen a andar de lado: cambian de carril en diagonal y siempre avanzando.','El poste de los eventos, sin clavo.','Al colocar una pieza ya no se despliega el menú antiguo de piezas al pasar el ratón: «Cancelar» te devuelve a la selección.','Vender: el «$» se lee bien.','La ficha del héroe en la partida tiene su acceso rápido al compendio.','Al elegir pieza nunca salen tres del mismo tipo (rectas, curvas, bifurcaciones o cruces).']]]},
@@ -12737,7 +12748,6 @@ setInterval(()=>{try{azFogTick();}catch(e){}},100);
 {const _rd=rtlDot;rtlDot=function(r){const d=_rd.apply(this,arguments);if(azNie()>=1&&r>(S.phase==='wave'?S.round+1:S.round))return Object.assign({},d,{c:'',h:''});return d;};}
 
 // Niebla R3: los portales no dicen qué va a salir
-{const _pi=portalInfo;portalInfo=function(p){if(p&&azNie()>=3)return '<b>Portal enemigo</b><small>Sin información sobre la siguiente oleada.</small>';return _pi.apply(this,arguments);};}
 {const _pr=portalRows;portalRows=function(p,lim){if(azNie()>=3)return lim?'':'<div class="pbh">Sin información sobre la oleada</div>';return _pr.apply(this,arguments);};}
 // Niebla R4: no se ve dónde están los portales (ni los extremos del camino); tampoco se pueden señalar
 {const _d=draw;draw=function(){if(azNie()<4||!S||!S.portals)return _d.apply(this,arguments);const P=S.portals,E=S.ends;S.portals=[];S.ends=[];try{return _d.apply(this,arguments);}finally{S.portals=P;S.ends=E;}};}
@@ -13620,14 +13630,11 @@ const tipTexts=()=>TIPS.map(f=>{try{return f();}catch(e){return null;}}).filter(
  function _t0(){const P=[];for(const t of ETMN.tip)if(typeof t==='string')P.push(t);else if(t[1]())P.push(t[0]);return P;}}
 {const _s=etmSay;etmSay=function(auto){const cv=document.querySelector('.lbcv.a');if(auto&&cv&&cv.classList.contains('ing')&&OPT.tips===false)return;
  const r=_s.apply(this,arguments);try{const b=document.querySelector('.lbcv.a .etmbub');if(b&&ETTIPS.has(ETM.last)){const h=b.querySelector('b');if(h&&!b.querySelector('.ettip'))h.insertAdjacentHTML('afterend',`<em class="ettip">${TIPSVG}¿Sabías que…?</em>`);}}catch(e){}return r;};}
-// Bocadillo de ÉTER: el primer clic (dentro o fuera) termina de escribir; ya escrito, un clic fuera lo cierra y el clic sigue su camino
-document.addEventListener('pointerdown',e=>{try{const b=document.querySelector('.lbcv.a .etmbub.on');if(!b)return;const cv=b.closest('.lbcv'),sp=b.querySelector('.etmt');if(!sp)return;
- const gr=cv.querySelector('.etmgr');
- if(sp.textContent!==ETM.last){clearTimeout(ETM.type);sp.textContent=ETM.last;cv.classList.remove('etmtalk');if(gr){gr.style.animation='';gr.style.opacity='';}
-  clearTimeout(ETM.hide);ETM.hide=setTimeout(()=>{b.classList.remove('on');cv.classList.remove('etmon','etmtalk');},4000);ETMSKIP.on=1;setTimeout(()=>{ETMSKIP.on=0;},600);e.preventDefault();e.stopPropagation();return;}
- if(!b.contains(e.target)){clearTimeout(ETM.hide);b.classList.remove('on');cv.classList.remove('etmon','etmtalk');}}catch(_){}},true);
-document.addEventListener('click',e=>{try{if(ETMSKIP.on){ETMSKIP.on=0;e.preventDefault();e.stopPropagation();}}catch(_){}},true);
-const ETMSKIP={on:0};
+// Bocadillo de ÉTER (v340): pulsar en cualquier sitio fuera de ÉTER cierra el bocadillo al momento —aunque esté escribiendo— y el clic sigue su camino
+// (antes el primer clic solo terminaba de escribir y se «comía» el clic, p. ej. el de la ✕/Esc del libro). El bocadillo no captura clics.
+function etmClose(){try{const b=document.querySelector('.lbcv.a .etmbub.on');if(!b)return false;const cv=b.closest('.lbcv'),gr=cv.querySelector('.etmgr');clearTimeout(ETM.type);clearTimeout(ETM.hide);b.classList.remove('on');cv.classList.remove('etmon','etmtalk');if(gr){gr.style.animation='';gr.style.opacity='';}return true;}catch(_){return false;}}
+document.addEventListener('pointerdown',e=>{try{if(e.target.closest&&e.target.closest('.etmbt'))return;etmClose();}catch(_){}},true);
+addEventListener('keydown',e=>{if(e.key==='Escape')etmClose();},true);
 
 // v335 · «Informar de un fallo» en todas las pantallas: con el libro abierto (portada, compendio, opciones…), arriba a la izquierda de la pantalla, fuera del libro;
 // en la partida, un botón más en la columna de arriba a la izquierda
@@ -13763,7 +13770,7 @@ document.addEventListener('click',e=>{if(PGN.busy){const b=e.target.closest&&e.t
  pgStamp(card,b.dataset.a==='pick'?'pieza':'torre',()=>{card.classList.remove('pgchosen');const nb=document.querySelector(sel)||b;nb.dataset.pgok=1;nb.click();delete nb.dataset.pgok;});},true);
 // v336 · lo que dice cada pieza (casillas especiales, coste) va debajo de su carta, no en un bocadillo junto al ratón
 {const _u2=ui;ui=function(){const r=_u2.apply(this,arguments);try{if(document.body.classList.contains('pcpick')&&S&&S.offers){document.querySelectorAll('#panel .prow .cardw').forEach((w,i)=>{const o=S.offers[i];if(!o)return;const c=w.querySelector('.card');if(c&&c.dataset.tip)c.removeAttribute('data-tip');
-  const h=pieceInfo(o).replace(/^<b>[\s\S]*?<\/b>[^<]*/,'');if(w._pci===h)return;w._pci=h;let d=w.querySelector('.pcinfo');if(!d){d=document.createElement('div');d.className='pcinfo';w.appendChild(d);}d.innerHTML=h;});}}catch(e){}return r;};}
+  let h=pieceInfo(o).replace(/^<b>[\s\S]*?<\/b>[^<]*/,'');/* v340: cada casilla con su dibujo propio y el texto seguido */try{h=h.replace(/<div><i style="background:[^"]*"><\/i>/g,'<div>');const B=o.b||[];let n=0;h=h.replace(/<div>/g,m=>{const b=B[n++];return b&&typeof bfIcon==='function'?'<div class="pcbf">'+bfIcon(b.k,18):m;});}catch(e){}if(w._pci===h)return;w._pci=h;let d=w.querySelector('.pcinfo');if(!d){d=document.createElement('div');d.className='pcinfo';w.appendChild(d);}d.innerHTML=h;});}}catch(e){}return r;};}
 // ==================== v334 · Aviso de jefe ====================
 // Cuando sale un jefe: onda que se expande desde él, cartel arriba con su nombre, y si el juego va acelerado, vuelve un momento a ×1.
 // Mientras está en el mapa se dibuja por encima del resto de enemigos y lleva un aro rojo que late, para saber siempre dónde está.
