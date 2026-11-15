@@ -2805,6 +2805,11 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 #fabw .fabwin.fabm canvas{width:360px;height:360px}#fabw .fabwin.fabm .fabstp{padding:5px 8px}#fabw .fabwin.fabm .fabg{margin-top:8px;padding:7px 10px}
 #fabw .fabwin.fabm .fabside{gap:7px}#fabw .fabwin.fabm .fabside p{font-size:13px}#fabw .fabwin.fabm .fabopt{padding:7px 10px}
 #fabw .fabg{gap:10px}
+/* v351 · Holo en PC: el pergamino del evento puede crecer un poco más, para que la tercera opción se vea entera a 720 de alto */
+:root[data-skin="holo"] body.dsk:not(.mfs) #relic .ppap.evp .evrc{max-height:calc(100vh - 230px)!important}
+/* v351 · Móvil: en el resultado de un evento, «Continuar» siempre a la vista (antes, en Holo, quedaba cortado bajo las recompensas) */
+body.mfs #relic .evp.evrsl .evrc>button.go{position:sticky;bottom:0;z-index:2;flex:none}
+body.mfs #relic .evp.evrsl .evget .evchip{padding-top:4px;padding-bottom:4px;min-height:0}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2819,7 +2824,7 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v350</div>
+<div id="ver">Towerize v351</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -5533,7 +5538,9 @@ function placeEvents(c,A){const pool=shuf(Object.keys(EVENTS).filter(k=>evEraOk(
  shuf(cand);for(let i=0;i<n&&i<cand.length;i++)S.evts[cand[i]]=pool[i];}
 const relEra=r=>!(r.era===2&&!(typeof S!=='undefined'&&S&&S.era===2)),relSeeEra=r=>r.era!==2||(typeof era2Ok==='function'&&era2Ok());
 const rndRelic=()=>{const p=RELICS.filter(r=>!r.ini&&!r.evr&&relEra(r)&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id));return p.length?p[Math.floor(Math.random()*p.length)].id:null;};
-function gainRelic(id){S.relics.push(id);S.rs[id]={cd:0,t:0};if(id==='mimic')setTimeout(mimPlace,0);see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
+// v351 · si ya la tienes (evento repetido), 100 🪙 en su lugar, como en la era 2
+const relOr=id=>{if(S.relics.includes(id)){goldEv(100);return['gold:100'];}gainRelic(id);return['relic:'+id];};
+function gainRelic(id){if(S.relics.includes(id))return;S.relics.push(id);S.rs[id]={cd:0,t:0};if(id==='mimic')setTimeout(mimPlace,0);see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
 function goldEv(v){S.gold+=v;if(S.st&&v>0)S.st.gEv+=v;}
 function addNow(k,v){const p=S.portals[0];if(p)p.plan[k]=(p.plan[k]||0)+v;}
 function blockBuffs(bk){if(!bk)return false;const[bx,by]=bk.split(',').map(Number),NB=N/BN;for(let y=by*NB;y<(by+1)*NB;y++)for(let x=bx*NB;x<(bx+1)*NB;x++)if(S.buff[y]&&BF[S.buff[y][x]])return true;return false;}
@@ -5567,19 +5574,19 @@ const EVENTS={
  merchant:{n:'Mercader ambulante',ic:'🧳',txt:'Un mercader con un carro lleno de objetos raros te corta el paso. «¿Te interesa algo, viajero?»',opts:[
   {l:'Comprar una reliquia',c:'Pagas 150 🪙',req:()=>S.gold<150?'Necesitas 150 🪙':'',run:()=>{const id=rndRelic();S.gold-=150;if(!id){goldEv(150);return['gold:0'];}gainRelic(id);return['relic:'+id];}},
   {l:'Robarle',c:'La próxima oleada trae una Élite extra',run:()=>{const id=rndRelic();addNow('elite',1);if(id)gainRelic(id);return[id?'relic:'+id:'gold:0'];}},
-  {l:'Regatear',c:'El próximo cofre que abras estará vacío',run:()=>{S.noChest=1;gainRelic('scale');return['relic:scale'];}}]},
+  {l:'Regatear',c:'El próximo cofre que abras estará vacío',run:()=>{S.noChest=1;return relOr('scale');}}]},
  shrine:{n:'Santuario olvidado',ic:'⛩️',txt:'Entre la maleza aparece un pequeño santuario. Una inscripción promete favores a cambio de sacrificios.',opts:[
   {l:'Sacrificar la mitad de tu vida',c:'Pierdes la mitad de tu vida actual',req:()=>!S.hero||S.hero.lvl>=HLMAX?'Tu héroe ya está al nivel máximo':S.hp<2?'Necesitas al menos 2 de vida':'',run:()=>{hpLoss(Math.floor(S.hp/2));heroUp();return['lvl'];}},
   {l:'Hacer una ofrenda',c:'Pagas 100 🪙',req:()=>S.gold<100?'Necesitas 100 🪙':!blockBuffs(EVK)?'La ofrenda bendice las casillas especiales de esta pieza, y no tiene ninguna':'',run:()=>{S.gold-=100;(S.bless=S.bless||{})[EVK]=1;return['bless'];}},
-  {l:'Llevarte el ídolo',c:'Pierdes 3 de vida (la maldición del santuario)',req:()=>S.hp<=3?'Necesitas más de 3 de vida':'',run:()=>{hpLoss(3);gainRelic('idol');return['relic:idol'];}},
-  {l:'Rezar',run:()=>{S.hp=Math.min(20,S.hp+8);return['hp:+8'];}}]},
+  {l:'Llevarte el ídolo',c:'Pierdes 3 de vida (la maldición del santuario)',req:()=>S.hp<=3?'Necesitas más de 3 de vida':'',run:()=>{hpLoss(3);return relOr('idol');}},
+  {l:'Rezar',run:()=>{S.hp=Math.min(20,S.hp+8);return['hp:8'];}}]},
  smith:{n:'Herrero errante',ic:'🔨',txt:'Un herrero ambulante ha montado su yunque junto al camino. «Puedo mejorar tus defensas… por un precio.»',opts:[
   {l:'Encargo',c:'Pagas 100 🪙',req:()=>S.gold<100?'Necesitas 100 🪙':!S.list.some(t=>t.lvl===1&&!TW[t.type].uniq)?'No tienes torres de Nv 1':'',run:()=>{S.gold-=100;for(const t of S.list)if(t.lvl===1&&!TW[t.type].uniq)lvUp(t);return['temper'];}},
   {l:'Afilar',c:'Pagas 100 🪙',req:()=>S.gold<100?'Necesitas 100 🪙':!S.list.some(sharpOk)?'No tienes torres que hagan daño':'',run:()=>{S.gold-=100;S.sharp=1;return['sharpen'];}},
-  {l:'Ayudar en la forja',c:'Durante esta oleada tus torres hacen un 20% menos de daño',run:()=>{S.forgeR=S.round;if(!S.relics.includes('hammer'))gainRelic('hammer');return['relic:hammer'];}}]},
+  {l:'Ayudar en la forja',c:'Durante esta oleada tus torres hacen un 20% menos de daño',run:()=>{S.forgeR=S.round;return relOr('hammer');}}]},
  chest:{n:'Cofre sospechoso',ic:'📦',txt:'Un cofre abandonado en mitad del camino. Parece demasiado fácil.',opts:[
   {l:'Abrirlo',run:()=>{if(Math.random()<.5){setTimeout(()=>openRelic(),0);return['relicx'];}moreEnemies(.3);return['more:30'];}},
-  {l:'Alimentar al cofre',c:'Pagas 50 🪙',req:()=>S.gold<50?'Necesitas 50 🪙':'',run:()=>{S.gold-=50;gainRelic('mimic');return['relic:mimic'];}},
+  {l:'Alimentar al cofre',c:'Pagas 50 🪙',req:()=>S.gold<50?'Necesitas 50 🪙':'',run:()=>{S.gold-=50;return relOr('mimic');}},
   {l:'Encerrarlo en una jaula',c:'Pierdes 2 de vida (te muerde al cogerlo)',req:()=>S.hp<=2?'Necesitas más de 2 de vida':'',run:()=>{hpLoss(2);S.uq.push({type:'glut',bk:EVK});return['tower:glut'];}}]},
  lighthouse:{n:'Faro en ruinas',ic:'🏚️',txt:'Un viejo faro de piedra, cubierto de hiedra. En lo alto aún brilla débilmente un cristal arcano.',opts:[
   {l:'Restaurar el faro',c:'Desmantelas 2 torres de Nv 1 (o pagas 50 🪙 por cada una que te falte)',req:()=>{const k=Math.min(2,lv1Count());return S.gold<(2-k)*50?'Necesitas '+((2-k)*50)+' 🪙':'';},run:()=>{const k=Math.min(2,lv1Count());S.gold-=(2-k)*50;S.dneed=k;S.dsel=[];S.uq.push({type:'faro',bk:EVK});return['tower:faro'];}},
@@ -5588,11 +5595,11 @@ const EVENTS={
  nest:{n:'Nido abandonado',ic:'🪺',txt:'En un hueco entre las rocas descansa un huevo enorme, todavía caliente, sobre un lecho de brasas.',opts:[
   {l:'Llevarte el huevo',run:()=>{S.uq.push({type:'dragon',bk:EVK});return['tower:dragon'];}},
   {l:'Vender el huevo',c:'Dentro de 2 oleadas te ataca una Mamá dragona',run:()=>{goldEv(250);S.sched.push({r:S.round+2,add:{momdrg:1}});return['gold:250'];}},
-  {l:'Recoger una brasa del nido',c:'Pierdes 3 de vida (te quemas al cogerla)',req:()=>S.hp<=3?'Necesitas más de 3 de vida':'',run:()=>{hpLoss(3);gainRelic('ember');return['relic:ember'];}}]},
+  {l:'Recoger una brasa del nido',c:'Pierdes 3 de vida (te quemas al cogerla)',req:()=>S.hp<=3?'Necesitas más de 3 de vida':'',run:()=>{hpLoss(3);return relOr('ember');}}]},
  guild:{n:'Gremio de Aventureros',ic:'📋',txt:'Un grupo de aventureros busca dónde instalar su sede, y su tablón de encargos está lleno.',opts:[
   {l:'Fundar una sede',c:'Pagas 150 🪙',req:()=>S.gold<150?'Necesitas 150 🪙':'',run:()=>{S.gold-=150;S.uq.push({type:'guild',bk:EVK});return['tower:guild'];}},
   {l:'Aceptar un encargo',c:'Dentro de 2 rondas llega una Élite extra',run:()=>{S.sched.push({r:S.round+2,add:{wanted:1}});return['wanted'];}},
-  {l:'Reclutar un mercenario',c:'Pagas 80 🪙',req:()=>S.gold<80?'Necesitas 80 🪙':'',run:()=>{S.gold-=80;gainRelic('badge');return['relic:badge'];}}]},
+  {l:'Reclutar un mercenario',c:'Pagas 80 🪙',req:()=>S.gold<80?'Necesitas 80 🪙':'',run:()=>{S.gold-=80;return relOr('badge');}}]},
  pigs:{n:'Los tres cerditos',ic:'🐷',txt:'Tres cerditos corren hacia ti: «¡El lobo viene a por nuestras casas!» Cada uno te ruega que defiendas la suya.',opts:[
   {l:'Defender la casa de ladrillo',c:'Fácil: la próxima oleada trae una manada de Lobatos',run:()=>{addNow('cub',8);S.pend.push({r:S.round,bk:EVK,towers:['brick']});return['tower:brick'];}},
   {l:'Defender la casa de madera',c:'Media: la próxima oleada trae un Lobo gris',run:()=>{addNow('greyw',1);S.pend.push({r:S.round,bk:EVK,towers:['wood']});return['tower:wood'];}},
@@ -5734,7 +5741,7 @@ function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC
   const sc=sol*2-tw*4+(edge===0?4:edge===1?1:0)+Math.random()*.5;if(sol>=1&&sc>bs){bs=sc;best=[x,y];}}
  if(!best)return;S.mim={x:best[0]*K+1,y:best[1]*K+1,food:0,need:MIM0,rdy:0,n:0,t0:performance.now()};
  S.fx.push({x:S.mim.x,y:S.mim.y,r:2*K,t:.8,m:.8,col:'#c9a24a'});
- if(!S.tut)setTimeout(()=>hint('mimic','El mímico','El mímico ha caído en el mapa, junto al camino. Cada enemigo que muere cerca lo <b>alimenta</b>; cuando se llena, <b>escupe un cofre</b> al colocar la siguiente pieza. Construye cerca para llenarlo antes.',tgCell(S.mim.x,S.mim.y,1.6)),0);}
+ {const m=S.mim,s0=S;if(!S.tut)setTimeout(()=>{if(S!==s0||!m)return;hint('mimic','El mímico','El mímico ha caído en el mapa, junto al camino. Cada enemigo que muere cerca lo <b>alimenta</b>; cuando se llena, <b>escupe un cofre</b> al colocar la siguiente pieza. Construye cerca para llenarlo antes.',tgCell(m.x,m.y,1.6));},0);}}
 function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||m.rdy>0/* v345: lleno no come más hasta soltar el cofre */||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
  if(m.food>=m.need){m.food=0;m.rdy++;m.n++;m.need=MIM0+MIMUP*m.n;S.fx.push({x:m.x,y:m.y,r:1.6*K,t:.7,m:.7,col:'#ffd84a'});S.msg='¡El mímico está lleno! Escupirá un cofre al colocar la próxima pieza.';}}
 function mimSpit(){const m=S.mim;if(!m||!(m.rdy>0)||RL.open)return false;m.rdy--;RS('mimic').n2=(RS('mimic').n2||0)+1;openRelic();return true;}
@@ -8912,9 +8919,11 @@ function hsMini(r,W){const g=hsUnmap(r.map),n=r.N||g.length,MC=HSMC[r.era||1]||H
  for(const t of r.tw)if(t[5]>=0&&!t[7]){const T=TW[t[0]],c=t[5]+.5,d=t[6]+.5,z=u*.42;h+=`<rect x="${X(c-z)}" y="${Y(d-z)}" width="${(2*z*s).toFixed(1)}" height="${(2*z*s).toFixed(1)}" rx="${(z*s*.35).toFixed(1)}" fill="${T?T.col:'#ccc'}" stroke="#14161c" stroke-width="${Math.max(.8,s*.2).toFixed(1)}"/><foreignObject x="${X(c-z)}" y="${Y(d-z)}" width="${(2*z*s).toFixed(1)}" height="${(2*z*s).toFixed(1)}"><div xmlns="http://www.w3.org/1999/xhtml" class="hsmi">${hsMapIc(t)}</div></foreignObject>`;}
  for(const p of r.pt)h+=`<circle cx="${X(p[0]+.5)}" cy="${Y(p[1]+.5)}" r="${Math.max(3,s*1.1).toFixed(1)}" fill="#e8344a" stroke="#fff" stroke-width="${Math.max(.8,s*.25).toFixed(1)}"/>`;
  h+=`<circle cx="${X(r.core[0]+.5)}" cy="${Y(r.core[1]+.5)}" r="${Math.max(3.5,s*1.3).toFixed(1)}" fill="#3fe8ff" stroke="#0a4a5a" stroke-width="${Math.max(.8,s*.25).toFixed(1)}"/>`;return h+'</svg>';}
+// v351 · La versión del juego en la que se jugó cada partida (Nogal): en la lista y en el detalle.
+function hsVer(r){const m=String((r&&r.ver)||'').match(/v\s*(\d+)/i);return m?'v'+m[1]:'';}
 function histParts(){hsLoad();const L=hsFiltered(),all=HIST.list||[],won=all.filter(r=>r.res==='w').length;if(HIST.sel>=L.length)HIST.sel=0;const r=L[HIST.sel];
  const fl=[['all','Todas'],['w','Ganadas'],['l','Perdidas'],['s',icU('m_save','⭐')+' Guardadas']].map(([k,l])=>`<button class="pill${HIST.flt===k?' on':''}" data-a="hsflt" data-v="${k}">${l}</button>`).join('');
- const rows=L.map((x,i)=>{const H=HEROES[x.hero],[rt,rc]=hsRes(x);return `<button class="hsrun${i===HIST.sel?' on':''}" data-a="hssel" data-v="${i}">${hsEraIc(x)}${hsPor(x.hero)}<span class="hsrt"><b>${H?H.n:x.hero} · Nv ${x.hlv}${x.star?' ⭐':''}</b><small>${hsWhen(x.t0)} · ${x.tut?'Tutorial':(ERADEF[x.era||1]||ERADEF[1]).n} · ${x.res==='w'?x.R+' rondas · '+hsDur(x.time):'ronda '+x.r+'/'+x.R}</small></span><span class="hsres ${rc}">${rt}</span></button>`;}).join('');
+ const rows=L.map((x,i)=>{const H=HEROES[x.hero],[rt,rc]=hsRes(x);return `<button class="hsrun${i===HIST.sel?' on':''}" data-a="hssel" data-v="${i}">${hsEraIc(x)}${hsPor(x.hero)}<span class="hsrt"><b>${H?H.n:x.hero} · Nv ${x.hlv}${x.star?' ⭐':''}</b><small>${hsWhen(x.t0)}${hsVer(x)?' · '+hsVer(x):''} · ${x.tut?'Tutorial':(ERADEF[x.era||1]||ERADEF[1]).n} · ${x.res==='w'?x.R+' rondas · '+hsDur(x.time):'ronda '+x.r+'/'+x.R}</small></span><span class="hsres ${rc}">${rt}</span></button>`;}).join('');
  const left=`<h3>Partidas</h3><div class="bksub">${all.length?`Tus partidas · ${all.length} jugada${all.length===1?'':'s'}, ${won} ganada${won===1?'':'s'}`:'Aquí aparecerán tus partidas'}</div><div class="hsflt">${fl}</div>${rows||'<p class="hsempty">'+(all.length?'Ninguna partida con este filtro.':'Todavía no hay partidas registradas. A partir de esta versión, cada partida queda apuntada aquí.')+'</p>'}`;
  let right='<div class="lbdet"><span class="lbdic">📚</span><h4>Registro de partidas</h4><p>Elige una partida para ver cómo fue: el mapa, las torres, el daño y dónde perdiste vida.</p></div>';
  if(r){const H=HEROES[r.hero],[rt]=hsRes(r),tot=r.tw.reduce((a,t)=>a+t[3],0)||1,tws=r.tw.filter(t=>t[3]>0||t[0].startsWith('hero:')).sort((a,b)=>b[3]-a[3]),mx=tws.length?tws[0][3]:1;
@@ -8922,7 +8931,7 @@ function histParts(){hsLoad();const L=hsFiltered(),all=HIST.list||[],won=all.fil
   const twr=tws.slice(0,8).map(t=>{const T=TW[t[0]],hero=t[0].startsWith('hero:');return `<div class="hstw"><span class="hsic" style="background:${hero?(H?H.col:'#888'):T?T.col:'#ccc'}">${hsIc(t)}</span><span>${t[9]}${hero?' (héroe)':' · Nv '+t[2]}${t[7]?' <small>(vendida)</small>':''}</span><span class="hsbar"><i style="width:${Math.round(100*t[3]/mx)}%"></i></span><span>${Math.round(100*t[3]/tot)}%</span></div>`;}).join('');
   const ch=Array.from({length:r.R},(_,i)=>{const v=hl[i]||0;return `<i class="${v>0?'h':''}" style="height:${v>0?Math.max(8,Math.round(100*v/hmx)):4}%" title="Ronda ${i+1}: ${v} de vida"></i>`;}).join('');
   const W=r.worst&&ET[r.worst.t];
-  right=`<div class="hshd">${hsPor(r.hero,1)}<div><h3>${rt}${r.res==='w'?' · '+r.R+' rondas':' · ronda '+r.r+'/'+r.R}</h3><div class="bksub" style="margin:0">${H?H.n:''} Nv ${r.hlv} · ${r.tut?'Tutorial':(ERADEF[r.era||1]||ERADEF[1]).n} · ${hsDur(r.time)} · ${hsWhen(r.t0)}</div></div></div>
+  right=`<div class="hshd">${hsPor(r.hero,1)}<div><h3>${rt}${r.res==='w'?' · '+r.R+' rondas':' · ronda '+r.r+'/'+r.R}</h3><div class="bksub" style="margin:0">${H?H.n:''} Nv ${r.hlv} · ${r.tut?'Tutorial':(ERADEF[r.era||1]||ERADEF[1]).n} · ${hsDur(r.time)} · ${hsWhen(r.t0)}${hsVer(r)?' · '+hsVer(r):''}</div></div></div>
   <div class="hsg2"><button class="hsmini" data-a="hsbig" title="Ver mapa grande">${hsMini(r,150)}</button><div class="hskv"><span>Vida al final</span><b>${r.hp} / ${r.hp0}</b><span>Bajas</span><b>${fi(r.kills)}</b><span>Oro ganado</span><b>${fi(r.gold)} 🪙</b><span>Daño total</span><b>${fi(r.dmg)}</b><span>Reintentos</span><b>${r.rc}</b><span>Piezas</span><b>${r.pcs}</b></div></div>
   <div class="hssec">Torres · daño en la partida</div>${twr||'<small>Sin daño registrado.</small>'}
   <div class="hssec">Vida perdida por ronda</div><div class="hschart">${ch}</div>
@@ -10929,6 +10938,10 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:351,f:'15 nov 2026',t:'Revisión',s:[['Novedades',['En el registro de partidas aparece la versión del juego en la que jugaste cada una.','Las reliquias y habilidades de héroe que se sueltan en un área dejan una marca en el mapa donde cayeron, que se desvanece en unos segundos.']],
+  ['Reliquias',['Yunque rúnico: la casilla enseña el valor que da de verdad en todas las casillas especiales (Penetración, Persistencia, Taller, Eco y Rebote incluidas). El Eco repite más a menudo y el Rebote hace más daño, en lugar de no ganar nada o ganar un rebote de más.','Moneda antigua: la ficha del enemigo enseña el oro por baja con el +50%.','Implante cibernético: la vida de tu héroe sube nada más conseguirlo.']],
+  ['Héroes',['Reinhart · Provocación (Nv 4): el −15% de daño recibido también vale contra los ataques especiales de los enemigos.']],
+  ['Eventos',['Si un evento se repite en la partida, no te da otra vez una reliquia que ya tienes: te da 100 de oro.','«Rezar» ya no pone «++8».','Los avisos de logros que saltan al entrar en un evento esperan a que lo cierres, para no tapar el título.','Holo: el pergamino del evento se ve entero a 720 de alto, y en móvil «Continuar» queda siempre a la vista.','El mímico, si al conseguirlo no había hueco junto al camino, vuelve a buscar sitio al colocar pieza.']]]},
  {v:350,f:'15 nov 2026',t:'Arreglo',s:[['Arreglos',['El panel de la clasificación del menú ya no se queda un instante encima del compendio al abrirlo.']]]},
  {v:349,f:'15 nov 2026',t:'Fichas que se leen y más alcance a Nv 4',s:[['Equilibrio',['Al especializar (Nv 4), las torres que no ganaban alcance ahora ganan, a medida de cada una: los Ballesteros, un 40% (francotiradores); las lentas, de un solo objetivo o que trabajan dentro de su alcance (Foco Arcano, Alquimista, Electrocutor, Altar mayor, Helipuerto…), entre un 15 y un 20%; la mayoría, un 10%; y las muy rápidas o con muchísimo daño (Raudos, Ogros, Supresión, Asesinos, Volcán, Detonador), un 5%. Solo el alcance de la torre (hasta dónde dispara o hasta dónde llega su bandera, su dron o sus runas): no cambia el área de los efectos ni las unidades.']],['Mejoras',['Las fichas del anillo de construir y del menú de torre son más grandes y con letra más clara: se leen de un vistazo a cualquier zoom.','La tecla F3 va debajo del botón de informar de un fallo.']]]},
  {v:348,f:'15 nov 2026',t:'Informar con F3',s:[['Mejoras',['Informar de un fallo: ahora con la tecla F3 desde cualquier sitio (se puede cambiar en Opciones › Atajos), y siempre va con una captura de la pantalla, abras el informe desde donde lo abras.']],['Equilibrio',['Salamandra: menos daño (a Nv 1, de 8,1 a 4,3 de DPS, como la Envenenadora). Se estaba comiendo caminos enteros ella sola.']],['Arreglos',['La tecla de la bandera (B) va debajo de su botón: arriba tapaba el precio y el nombre de la habilidad de al lado.','El ojo para ver el mapa va en la esquina de arriba a la derecha del pergamino.','Ayuda › Cómo se juega: volvía a verse solo media página. Arreglado.','Móvil: el menú principal, la pausa, la ventana de duración, el final de partida, el informe de fallos y el Fabricador ya caben enteros (había botones cortados o tapados).','Tablet: los eventos ya muestran todas las opciones sin bajar, y en pantallas estrechas la oferta de torres ya no se sale de su ventana.','Encuadernaciones Noche y Ámbar: lo que va sobre el dorado (pestañas, filtros, opciones elegidas) ya se lee.','Pantallas grandes: el informe de fallos y el panel de la clasificación crecen como el resto.']]]},
@@ -14162,4 +14175,61 @@ const RNG4={
  bunker:{sup:.05}, laser:{red:.15,volt:.10}, robots:{mecha:.10,kami:.10}, nano:{hack:.10,devour:.10},
  dron:{dron:.20,petro:.15}, flame:{detn:.05}, acid:{corr:.10}, sonic:{spk:.10}, alien:{hive:.10,pred:.10}};
 {const R3=LV[3].range;for(const k in RNG4)for(const sp in RNG4[k]){const X=SPECS[k]&&SPECS[k][sp];if(!X)continue;X.lv=X.lv||{...LV[3],pen:0};X.lv.range=Math.max(X.lv.range||R3,R3*(1+RNG4[k][sp]));}}
+// ==================== v351 · Arreglos de la revisión de eventos, reliquias y héroes ====================
+// Mímico: si al conseguirlo no había hueco junto al camino, lo vuelve a intentar al colocar cada pieza.
+{const _pp=placePiece;placePiece=function(){const r=_pp.apply(this,arguments);try{if(S&&S.relics&&S.relics.includes('mimic')&&!S.mim)mimPlace();}catch(e){}return r;};}
+// Avisos (logros, «sube a Nv 2»…) que saltan con un evento abierto: esperan a que lo cierres, para no tapar el título ni las opciones.
+const TQ=[];let TQON=false;
+{const _t=toast;toast=function(h){try{if(TQON){TQ.push(h);return;}}catch(e){}return _t.apply(this,arguments);};}
+{const _o=openEvent;openEvent=function(){TQON=true;try{return _o.apply(this,arguments);}finally{if(!RL.open)TQON=false;}};}
+{const _sg=startGame;startGame=function(){TQON=false;TQ.length=0;return _sg.apply(this,arguments);};}
+{const _c=closeEvent;closeEvent=function(){const r=_c.apply(this,arguments);try{if(!RL.open){TQON=false;const q=TQ.splice(0);q.forEach((h,i)=>setTimeout(()=>toast(h),i*250));}}catch(e){}return r;};}
+// ---- Yunque rúnico (+50% al bonus de las casillas especiales): todas lo notan y la casilla enseña el valor de verdad ----
+// Eco: con el Yunque repite más a menudo (1 de cada 5 → 1 de cada 3; ★ 1 de cada 3 → 1 de cada 2).
+// Rebote: rebota al mismo número de enemigos, pero con más daño (40% → 60%); antes ★ pasaba de 2 a 3 rebotes y la normal no ganaba nada.
+tileV=function(t,key,def){if(!t||!t.cells||!S||!S.buff)return def;let v=null;const K0=typeof rp==='function'&&rp('anvil')?1.5:1;
+ for(const[x,y]of t.cells){const b=BF[S.buff[y]&&S.buff[y][x]];if(!b||b[key]==null)continue;const Kc=K0*(S.bless&&S.bless[Math.floor(x/(N/BN))+','+Math.floor(y/(N/BN))]?2:1);
+  const val=key==='tal'?Math.max(0,1-(1-b[key])*Kc):key==='eco'?Math.max(2,Math.round(b[key]/Kc)):key==='reb'?b[key]:key==='per'||key==='uhp'?1+(b[key]-1)*Kc:b[key]*Kc;v=v==null?val:(key==='tal'||key==='eco'?Math.min(v,val):Math.max(v,val));}
+ return v==null?def:v;};
+function rebK(t){let m=0;if(!t||!t.cells||!S||!S.buff)return 1;const K0=rp('anvil')?1.5:1;for(const[x,y]of t.cells){const b=BF[S.buff[y]&&S.buff[y][x]];if(!b||b.reb==null)continue;m=Math.max(m,K0*(S.bless&&S.bless[Math.floor(x/(N/BN))+','+Math.floor(y/(N/BN))]?2:1));}return m||1;}
+rebShot=function(p){const t=p.src;if(!t||p.rb||!t.cells||t.hero)return;const n=Math.floor(tileV(t,'reb',0));if(!n)return;const km=rebK(t);
+ const c=S.enemies.filter(e=>e!==p.e&&e.hp>0&&!(p.cata&&isFly(e))&&Math.hypot(e.x-p.x,e.y-p.y)<=REBR*K).sort((a,b)=>Math.hypot(a.x-p.x,a.y-p.y)-Math.hypot(b.x-p.x,b.y-p.y));
+ for(let i=0;i<n&&i<c.length;i++)(S.rbq=S.rbq||[]).push({x:p.x,y:p.y,e:c[i],tx:c[i].x,ty:c[i].y,vx:0,vy:0,dm:p.dm*REBM*km,dt:p.dt,src:t,sp:Math.max(8,(p.sp||12)*.8),area:p.area||0,slow:p.slow||0,slowt:p.slowt,pen:p.pen,col:p.col||'#a6d84a',rb:1});};
+rebBeam=function(t,tg,dm,dt,pen){if(!t||!t.cells||t.hero)return;const n=Math.floor(tileV(t,'reb',0));if(!n)return;const L=rebNear(t,tg,n),km=rebK(t);
+ for(const e of L)hurt(e,dm*REBM*km,t,dt,pen);t.rbB={a:tg,L,u:(S.wt||0)+.15};};
+// el texto de la casilla, con los números que dan de verdad (antes Penetración, Persistencia, Taller y Rebote no cambiaban, y la Maldición decía «Yunque»)
+bfT=function(k,kx,ky){const B=BF[k],{m,why}=bfMul(kx,ky);if(m===1)return B.t;const b=k.replace('+','');if(b==='cur'||B.free&&!B.per&&!B.tal&&!B.reb&&!B.eco&&!B.pen)return B.t;
+ const pc=v=>bfFmt(Math.round(v*1000)/10);let t=B.t;
+ if(B.pen!=null)t=t.replace(/\+(\d+) de penetración/,'+'+bfFmt(B.pen*m)+' de penetración');
+ else if(B.per!=null)t='Lo que deja la torre dura un <span class="cr">'+pc((B.per-1)*m)+'%</span> más';
+ else if(B.tal!=null)t=t.replace(/(\d+)%/,pc(Math.min(1,(1-B.tal)*m))+'%');
+ else if(B.eco!=null){const n=Math.max(2,Math.round(B.eco/m));t=t.replace(/(<b>)?\d+(<\/b>)? disparos/,'<b>'+n+'</b> disparos');}
+ else if(B.reb!=null)t=t.replace(/(\d+)%/,(x,n)=>pc(n/100*m)+'%');
+ else t=t.replace(/([+−-])(\d+(?:[.,]\d+)?)%/g,(x,sg,n)=>sg+bfFmt(parseFloat(n.replace(',','.'))*m)+'%');
+ return t+` <small class="cf">(${why.join(', ')})</small>`;};
+// Reinhart · Provocación (Nv 4): el −15% de daño recibido ahora también vale contra los ataques especiales de los enemigos (a distancia, en área…), no solo cuerpo a cuerpo.
+{const _h=hitUnit;hitUnit=function(s,d,e){try{if(s&&s.H&&s.H.id==='reinhart'&&s.H.lvl>=4)d*=.85;}catch(x){}return _h.call(this,s,d,e);};}
+// Moneda antigua: la ficha del enemigo enseña el oro por baja que cobras de verdad (+50%).
+{const _e=enemyInfo;enemyInfo=function(k){let h=_e.apply(this,arguments);try{const E=ET[k];if(E&&typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('coin')&&rp('coin')&&E.gold>0)h=h.replace('>'+E.gold+' 🪙<','>'+Math.round(E.gold*1.5)+' 🪙 <small class="cf">(+50%, Moneda antigua)</small><');}catch(x){}return h;};}
+// Implante cibernético (y cualquier reliquia que cambie la vida del héroe): la vida máxima se actualiza al conseguirla, no a la siguiente oleada.
+{const _g=gainRelic;gainRelic=function(id){const r=_g.apply(this,arguments);try{heroSync();}catch(x){}return r;};}
+// ---- Huella de las habilidades de área (Nogal): al soltar un activo de reliquia o una habilidad del héroe sobre el mapa,
+// queda marcado dónde cayó (anillo discontinuo que se desvanece). Antes solo se veía el círculo al apuntar y, en las instantáneas, nada después.
+function amkAdd(x,y,r,col,dur){if(!S||x==null)return;(S.amk=S.amk||[]).push({x,y,r:Math.max(.6*K,r||K),col:col||'255,230,150',t:dur||4,m:dur||4});}
+{const _u=update;update=function(dt){const r=_u.apply(this,arguments);try{if(S&&S.amk&&S.amk.length)S.amk=S.amk.filter(m=>(m.t-=dt)>0);}catch(e){}return r;};}
+{const _dw=e2DrawWorld;e2DrawWorld=function(lw){const r=_dw.apply(this,arguments);try{if(S&&S.amk&&S.amk.length){const X=v=>v*CS+CS/2;
+ for(const m of S.amk){const a=Math.min(1,m.t/Math.min(1.2,m.m)),R=m.r*CS;g.save();g.globalAlpha=a;g.fillStyle='rgba('+m.col+',.10)';g.strokeStyle='rgba('+m.col+',.95)';g.lineWidth=lw(2);g.setLineDash([lw(6),lw(4)]);
+  g.beginPath();g.arc(X(m.x),X(m.y),R,0,7);g.fill();g.stroke();g.setLineDash([]);g.lineWidth=lw(1.5);g.beginPath();g.moveTo(X(m.x)-CS*.22,X(m.y));g.lineTo(X(m.x)+CS*.22,X(m.y));g.moveTo(X(m.x),X(m.y)-CS*.22);g.lineTo(X(m.x),X(m.y)+CS*.22);g.stroke();g.restore();}}}catch(e){}return r;};}
+{const _c=startGame;startGame=function(){const r=_c.apply(this,arguments);try{if(S)S.amk=[];}catch(e){}return r;};}
+// reliquias de la era 1 con área instantánea
+{const _f=castFreeze;castFreeze=function(c){const r=_f.apply(this,arguments);try{amkAdd(c.x,c.y,FRZR,'159,220,255',4);}catch(e){}return r;};}
+{const _h=castHarpoon;castHarpoon=function(c){const r=_h.apply(this,arguments);try{amkAdd(c.x,c.y,HARPR,'127,184,224',8);}catch(e){}return r;};}
+// reliquias nuevas (era 2 y de héroe) que se apuntan: al usarlas con éxito
+for(const id in NR){const Dn=NR[id];if(!Dn||typeof Dn.use!=='function'||!Dn.aim)continue;const _use=Dn.use;
+ Dn.use=function(c){const ok=_use.apply(this,arguments);try{if(c&&ok!==false){const t=S.occ&&S.occ[c.x+','+c.y];amkAdd(c.x,c.y,Dn.r||(t?.75*K:.9*K),Dn.col||'255,230,150',Dn.dur&&Dn.dur>3?Math.min(Dn.dur,8):4);}}catch(e){}return ok;};}
+// habilidades del héroe que se apuntan (activa y definitiva)
+const habR=(H,k)=>{const id=H.id;if(id==='vega')return (k==='b'?(H.lvl>=8?.75:.5):.8)*K;return (k==='b'?(id==='sylvana'?1.5:id==='radagast'?(H.lvl>=8?2.4:1.2):id==='yrsa'?1.2:.8):(id==='reinhart'||id==='yrsa'?1.5:id==='radagast'?3:.8))*K;};
+{const _c=castHab;castHab=function(c,k){const H=S.hero,b0=H?H.bcd||0:0,u0=H?H.ucd||0:0;const r=_c.apply(this,arguments);
+ try{if(H&&c&&((k==='u'?H.ucd||0:H.bcd||0)>(k==='u'?u0:b0)+.5)){const p=H.id==='vega'&&k==='b'?{x:c.fx!=null?c.fx-.5:c.x,y:c.fy!=null?c.fy-.5:c.y}:(pathNear(c.x,c.y)||c);amkAdd(p.x,p.y,habR(H,k),H.def&&H.def.col?hexRgb(H.def.col):'255,215,90',4);}}catch(e){}return r;};}
+function hexRgb(h){const m=String(h).replace('#','');if(m.length<6)return '255,215,90';return [0,2,4].map(i=>parseInt(m.slice(i,i+2),16)).join(',');}
 </script></body></html>

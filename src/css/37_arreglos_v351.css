@@ -1,0 +1,5 @@
+/* v351 · Holo en PC: el pergamino del evento puede crecer un poco más, para que la tercera opción se vea entera a 720 de alto */
+:root[data-skin="holo"] body.dsk:not(.mfs) #relic .ppap.evp .evrc{max-height:calc(100vh - 230px)!important}
+/* v351 · Móvil: en el resultado de un evento, «Continuar» siempre a la vista (antes, en Holo, quedaba cortado bajo las recompensas) */
+body.mfs #relic .evp.evrsl .evrc>button.go{position:sticky;bottom:0;z-index:2;flex:none}
+body.mfs #relic .evp.evrsl .evget .evchip{padding-top:4px;padding-bottom:4px;min-height:0}

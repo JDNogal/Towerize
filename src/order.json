@@ -35,7 +35,8 @@
   "33_cofre.css",
   "34_ayudas.css",
   "35_pergamino.css",
-  "36_fabricador.css"
+  "36_fabricador.css",
+  "37_arreglos_v351.css"
  ],
  "js": [
   "00_config.js",
@@ -179,6 +180,7 @@
   "moneda_oro.js",
   "fabricador.js",
   "ojo_pergamino.js",
-  "data/rango_nv4.js"
+  "data/rango_nv4.js",
+  "arreglos_v351.js"
  ]
 }

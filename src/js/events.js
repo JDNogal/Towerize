@@ -11,7 +11,9 @@ function placeEvents(c,A){const pool=shuf(Object.keys(EVENTS).filter(k=>evEraOk(
  shuf(cand);for(let i=0;i<n&&i<cand.length;i++)S.evts[cand[i]]=pool[i];}
 const relEra=r=>!(r.era===2&&!(typeof S!=='undefined'&&S&&S.era===2)),relSeeEra=r=>r.era!==2||(typeof era2Ok==='function'&&era2Ok());
 const rndRelic=()=>{const p=RELICS.filter(r=>!r.ini&&!r.evr&&relEra(r)&&!(r.ach&&!ACHS[r.ach]&&!OPT.u_rl)&&!S.relics.includes(r.id));return p.length?p[Math.floor(Math.random()*p.length)].id:null;};
-function gainRelic(id){S.relics.push(id);S.rs[id]={cd:0,t:0};if(id==='mimic')setTimeout(mimPlace,0);see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
+// v351 · si ya la tienes (evento repetido), 100 🪙 en su lugar, como en la era 2
+const relOr=id=>{if(S.relics.includes(id)){goldEv(100);return['gold:100'];}gainRelic(id);return['relic:'+id];};
+function gainRelic(id){if(S.relics.includes(id))return;S.relics.push(id);S.rs[id]={cd:0,t:0};if(id==='mimic')setTimeout(mimPlace,0);see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
 function goldEv(v){S.gold+=v;if(S.st&&v>0)S.st.gEv+=v;}
 function addNow(k,v){const p=S.portals[0];if(p)p.plan[k]=(p.plan[k]||0)+v;}
 function blockBuffs(bk){if(!bk)return false;const[bx,by]=bk.split(',').map(Number),NB=N/BN;for(let y=by*NB;y<(by+1)*NB;y++)for(let x=bx*NB;x<(bx+1)*NB;x++)if(S.buff[y]&&BF[S.buff[y][x]])return true;return false;}
@@ -45,19 +47,19 @@ const EVENTS={
  merchant:{n:'Mercader ambulante',ic:'🧳',txt:'Un mercader con un carro lleno de objetos raros te corta el paso. «¿Te interesa algo, viajero?»',opts:[
   {l:'Comprar una reliquia',c:'Pagas 150 🪙',req:()=>S.gold<150?'Necesitas 150 🪙':'',run:()=>{const id=rndRelic();S.gold-=150;if(!id){goldEv(150);return['gold:0'];}gainRelic(id);return['relic:'+id];}},
   {l:'Robarle',c:'La próxima oleada trae una Élite extra',run:()=>{const id=rndRelic();addNow('elite',1);if(id)gainRelic(id);return[id?'relic:'+id:'gold:0'];}},
-  {l:'Regatear',c:'El próximo cofre que abras estará vacío',run:()=>{S.noChest=1;gainRelic('scale');return['relic:scale'];}}]},
+  {l:'Regatear',c:'El próximo cofre que abras estará vacío',run:()=>{S.noChest=1;return relOr('scale');}}]},
  shrine:{n:'Santuario olvidado',ic:'⛩️',txt:'Entre la maleza aparece un pequeño santuario. Una inscripción promete favores a cambio de sacrificios.',opts:[
   {l:'Sacrificar la mitad de tu vida',c:'Pierdes la mitad de tu vida actual',req:()=>!S.hero||S.hero.lvl>=HLMAX?'Tu héroe ya está al nivel máximo':S.hp<2?'Necesitas al menos 2 de vida':'',run:()=>{hpLoss(Math.floor(S.hp/2));heroUp();return['lvl'];}},
   {l:'Hacer una ofrenda',c:'Pagas 100 🪙',req:()=>S.gold<100?'Necesitas 100 🪙':!blockBuffs(EVK)?'La ofrenda bendice las casillas especiales de esta pieza, y no tiene ninguna':'',run:()=>{S.gold-=100;(S.bless=S.bless||{})[EVK]=1;return['bless'];}},
-  {l:'Llevarte el ídolo',c:'Pierdes 3 de vida (la maldición del santuario)',req:()=>S.hp<=3?'Necesitas más de 3 de vida':'',run:()=>{hpLoss(3);gainRelic('idol');return['relic:idol'];}},
-  {l:'Rezar',run:()=>{S.hp=Math.min(20,S.hp+8);return['hp:+8'];}}]},
+  {l:'Llevarte el ídolo',c:'Pierdes 3 de vida (la maldición del santuario)',req:()=>S.hp<=3?'Necesitas más de 3 de vida':'',run:()=>{hpLoss(3);return relOr('idol');}},
+  {l:'Rezar',run:()=>{S.hp=Math.min(20,S.hp+8);return['hp:8'];}}]},
  smith:{n:'Herrero errante',ic:'🔨',txt:'Un herrero ambulante ha montado su yunque junto al camino. «Puedo mejorar tus defensas… por un precio.»',opts:[
   {l:'Encargo',c:'Pagas 100 🪙',req:()=>S.gold<100?'Necesitas 100 🪙':!S.list.some(t=>t.lvl===1&&!TW[t.type].uniq)?'No tienes torres de Nv 1':'',run:()=>{S.gold-=100;for(const t of S.list)if(t.lvl===1&&!TW[t.type].uniq)lvUp(t);return['temper'];}},
   {l:'Afilar',c:'Pagas 100 🪙',req:()=>S.gold<100?'Necesitas 100 🪙':!S.list.some(sharpOk)?'No tienes torres que hagan daño':'',run:()=>{S.gold-=100;S.sharp=1;return['sharpen'];}},
-  {l:'Ayudar en la forja',c:'Durante esta oleada tus torres hacen un 20% menos de daño',run:()=>{S.forgeR=S.round;if(!S.relics.includes('hammer'))gainRelic('hammer');return['relic:hammer'];}}]},
+  {l:'Ayudar en la forja',c:'Durante esta oleada tus torres hacen un 20% menos de daño',run:()=>{S.forgeR=S.round;return relOr('hammer');}}]},
  chest:{n:'Cofre sospechoso',ic:'📦',txt:'Un cofre abandonado en mitad del camino. Parece demasiado fácil.',opts:[
   {l:'Abrirlo',run:()=>{if(Math.random()<.5){setTimeout(()=>openRelic(),0);return['relicx'];}moreEnemies(.3);return['more:30'];}},
-  {l:'Alimentar al cofre',c:'Pagas 50 🪙',req:()=>S.gold<50?'Necesitas 50 🪙':'',run:()=>{S.gold-=50;gainRelic('mimic');return['relic:mimic'];}},
+  {l:'Alimentar al cofre',c:'Pagas 50 🪙',req:()=>S.gold<50?'Necesitas 50 🪙':'',run:()=>{S.gold-=50;return relOr('mimic');}},
   {l:'Encerrarlo en una jaula',c:'Pierdes 2 de vida (te muerde al cogerlo)',req:()=>S.hp<=2?'Necesitas más de 2 de vida':'',run:()=>{hpLoss(2);S.uq.push({type:'glut',bk:EVK});return['tower:glut'];}}]},
  lighthouse:{n:'Faro en ruinas',ic:'🏚️',txt:'Un viejo faro de piedra, cubierto de hiedra. En lo alto aún brilla débilmente un cristal arcano.',opts:[
   {l:'Restaurar el faro',c:'Desmantelas 2 torres de Nv 1 (o pagas 50 🪙 por cada una que te falte)',req:()=>{const k=Math.min(2,lv1Count());return S.gold<(2-k)*50?'Necesitas '+((2-k)*50)+' 🪙':'';},run:()=>{const k=Math.min(2,lv1Count());S.gold-=(2-k)*50;S.dneed=k;S.dsel=[];S.uq.push({type:'faro',bk:EVK});return['tower:faro'];}},
@@ -66,11 +68,11 @@ const EVENTS={
  nest:{n:'Nido abandonado',ic:'🪺',txt:'En un hueco entre las rocas descansa un huevo enorme, todavía caliente, sobre un lecho de brasas.',opts:[
   {l:'Llevarte el huevo',run:()=>{S.uq.push({type:'dragon',bk:EVK});return['tower:dragon'];}},
   {l:'Vender el huevo',c:'Dentro de 2 oleadas te ataca una Mamá dragona',run:()=>{goldEv(250);S.sched.push({r:S.round+2,add:{momdrg:1}});return['gold:250'];}},
-  {l:'Recoger una brasa del nido',c:'Pierdes 3 de vida (te quemas al cogerla)',req:()=>S.hp<=3?'Necesitas más de 3 de vida':'',run:()=>{hpLoss(3);gainRelic('ember');return['relic:ember'];}}]},
+  {l:'Recoger una brasa del nido',c:'Pierdes 3 de vida (te quemas al cogerla)',req:()=>S.hp<=3?'Necesitas más de 3 de vida':'',run:()=>{hpLoss(3);return relOr('ember');}}]},
  guild:{n:'Gremio de Aventureros',ic:'📋',txt:'Un grupo de aventureros busca dónde instalar su sede, y su tablón de encargos está lleno.',opts:[
   {l:'Fundar una sede',c:'Pagas 150 🪙',req:()=>S.gold<150?'Necesitas 150 🪙':'',run:()=>{S.gold-=150;S.uq.push({type:'guild',bk:EVK});return['tower:guild'];}},
   {l:'Aceptar un encargo',c:'Dentro de 2 rondas llega una Élite extra',run:()=>{S.sched.push({r:S.round+2,add:{wanted:1}});return['wanted'];}},
-  {l:'Reclutar un mercenario',c:'Pagas 80 🪙',req:()=>S.gold<80?'Necesitas 80 🪙':'',run:()=>{S.gold-=80;gainRelic('badge');return['relic:badge'];}}]},
+  {l:'Reclutar un mercenario',c:'Pagas 80 🪙',req:()=>S.gold<80?'Necesitas 80 🪙':'',run:()=>{S.gold-=80;return relOr('badge');}}]},
  pigs:{n:'Los tres cerditos',ic:'🐷',txt:'Tres cerditos corren hacia ti: «¡El lobo viene a por nuestras casas!» Cada uno te ruega que defiendas la suya.',opts:[
   {l:'Defender la casa de ladrillo',c:'Fácil: la próxima oleada trae una manada de Lobatos',run:()=>{addNow('cub',8);S.pend.push({r:S.round,bk:EVK,towers:['brick']});return['tower:brick'];}},
   {l:'Defender la casa de madera',c:'Media: la próxima oleada trae un Lobo gris',run:()=>{addNow('greyw',1);S.pend.push({r:S.round,bk:EVK,towers:['wood']});return['tower:wood'];}},
@@ -212,7 +214,7 @@ function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC
   const sc=sol*2-tw*4+(edge===0?4:edge===1?1:0)+Math.random()*.5;if(sol>=1&&sc>bs){bs=sc;best=[x,y];}}
  if(!best)return;S.mim={x:best[0]*K+1,y:best[1]*K+1,food:0,need:MIM0,rdy:0,n:0,t0:performance.now()};
  S.fx.push({x:S.mim.x,y:S.mim.y,r:2*K,t:.8,m:.8,col:'#c9a24a'});
- if(!S.tut)setTimeout(()=>hint('mimic','El mímico','El mímico ha caído en el mapa, junto al camino. Cada enemigo que muere cerca lo <b>alimenta</b>; cuando se llena, <b>escupe un cofre</b> al colocar la siguiente pieza. Construye cerca para llenarlo antes.',tgCell(S.mim.x,S.mim.y,1.6)),0);}
+ {const m=S.mim,s0=S;if(!S.tut)setTimeout(()=>{if(S!==s0||!m)return;hint('mimic','El mímico','El mímico ha caído en el mapa, junto al camino. Cada enemigo que muere cerca lo <b>alimenta</b>; cuando se llena, <b>escupe un cofre</b> al colocar la siguiente pieza. Construye cerca para llenarlo antes.',tgCell(m.x,m.y,1.6));},0);}}
 function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||m.rdy>0/* v345: lleno no come más hasta soltar el cofre */||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
  if(m.food>=m.need){m.food=0;m.rdy++;m.n++;m.need=MIM0+MIMUP*m.n;S.fx.push({x:m.x,y:m.y,r:1.6*K,t:.7,m:.7,col:'#ffd84a'});S.msg='¡El mímico está lleno! Escupirá un cofre al colocar la próxima pieza.';}}
 function mimSpit(){const m=S.mim;if(!m||!(m.rdy>0)||RL.open)return false;m.rdy--;RS('mimic').n2=(RS('mimic').n2||0)+1;openRelic();return true;}
