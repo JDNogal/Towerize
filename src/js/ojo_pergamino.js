@@ -3,11 +3,18 @@
 // Se calcula con el tamaño real del pergamino (también con la ventana ampliada), dentro del papel y junto al rodillo.
 function eyeAim(b,host){const hr=host.getBoundingClientRect();if(!hr.width)return false;const z=hr.width/(host.offsetWidth||hr.width)||1,br=b.getBoundingClientRect();
  const tx=hr.right-(PGIX+20)*z-br.width,ty=hr.top+(PGIY+16)*z;return {dx:tx-br.left,dy:ty-br.top,z};}
+// v351: el panel se vuelve a dibujar al girar la pieza (y el ojo nacía en su sitio antiguo hasta la siguiente corrección): ahora se coloca al momento,
+// antes de que se pinte, con la última posición buena y afinando en el acto.
+let EYEP=null;
+function eyeFixPick(){const pk=document.querySelector('body.pcpick:not(.pcpeek) #panel.pgf .pcpeek'),pn=$('panel');if(!pk||!pn||!pk.offsetParent)return;
+ if(EYEP&&!pk.style.top){pk.style.setProperty('right',EYEP.r+'px','important');pk.style.setProperty('top',EYEP.t+'px','important');}
+ for(let i=0;i<3;i++){const a=eyeAim(pk,pn);if(!a||Math.abs(a.dx)<=1&&Math.abs(a.dy)<=1)break;const cs=getComputedStyle(pk),zz=(pk.getBoundingClientRect().width/(pk.offsetWidth||1))||1;
+  pk.style.setProperty('right',(parseFloat(cs.right)-a.dx/zz)+'px','important');pk.style.setProperty('top',(parseFloat(cs.top)+a.dy/zz)+'px','important');}
+ EYEP={r:parseFloat(pk.style.right),t:parseFloat(pk.style.top)};}
+try{new MutationObserver(()=>{try{eyeFixPick();}catch(e){}}).observe(document.getElementById('panel'),{childList:true,subtree:true});}catch(e){}
 setInterval(()=>{try{if(typeof S==='undefined'||!S)return;
  // elegir pieza: el ojo vive dentro del panel (con su zoom): se corrige su top/right hasta que cae en la esquina
- const pk=document.querySelector('body.pcpick:not(.pcpeek) #panel.pgf .pcpeek'),pn=$('panel');
- if(pk&&pn&&pk.offsetParent){const a=eyeAim(pk,pn);if(a&&(Math.abs(a.dx)>1||Math.abs(a.dy)>1)){const cs=getComputedStyle(pk),zz=(pk.getBoundingClientRect().width/(pk.offsetWidth||1))||1;
-  pk.style.setProperty('right',(parseFloat(cs.right)-a.dx/zz)+'px','important');pk.style.setProperty('top',(parseFloat(cs.top)+a.dy/zz)+'px','important');}}
+ eyeFixPick();
  // ventanas del pergamino (torres, eventos): el ojo de la barra pasa a la esquina del papel
  const rl=$('relic'),pp=rl&&rl.classList.contains('open')&&!rl.classList.contains('peek')?rl.querySelector('.pscr .ppap.pgf'):null,eb=rl&&rl.querySelector('.rlbar [data-a="peek"]');
  if(eb){if(pp){const hr=pp.getBoundingClientRect(),z=hr.width/(pp.offsetWidth||hr.width)||1,w=eb.offsetWidth;eb.classList.add('eyepg');
