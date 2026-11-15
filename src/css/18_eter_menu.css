@@ -23,3 +23,4 @@
 :root[data-skin="holo"] .lbcv.a.ing .etmbub{right:auto;left:calc(100% + 118px);width:300px;border-radius:10px 10px 10px 2px;transform:translate(-8px,6px) scale(.96);transform-origin:0 100%}
 :root[data-skin="holo"] .lbcv.a.ing .etmbub.on{transform:none}
 :root[data-skin="holo"] .lbcv.a.ing .etmbub::after{right:auto;left:-22px;clip-path:polygon(50% 0,100% 0,0 100%)}
+.etmbub{pointer-events:none!important}

@@ -16,3 +16,10 @@
 :root:not([data-skin="holo"]) .lbcv.a .etmbub b{display:block;color:#2a7fa8;font-size:11px;letter-spacing:.14em;margin-bottom:3px}
 :root:not([data-skin="holo"]) .lbcv.a .etmbub::after{content:"";position:absolute;left:-26px;top:34px;width:30px;height:20px;background:#f6ecd6;clip-path:polygon(100% 0,100% 70%,0 100%)}
 @media (prefers-reduced-motion:reduce){.etcr .etsw{animation:none}}
+/* v340 · solo el cristal responde a los clics (antes toda la caja del botón, que tapaba en parte la ✕/Esc del libro), y la ✕ queda siempre por encima */
+:root:not([data-skin="holo"]) .lbcv.a .etmbt{pointer-events:none!important}
+:root:not([data-skin="holo"]) .lbcv.a .etmbt .etgem{pointer-events:auto!important;cursor:pointer}
+.lbcv .bkx.lbcx{z-index:30!important}
+/* v340 · la ✕ (Esc) de la portada se separa del borde de la tapa, y ÉTER se corre a la izquierda para dejarle sitio */
+:root:not([data-skin="holo"]) .lbcv.a .lbcx{top:26px!important;right:30px!important}
+:root:not([data-skin="holo"]) .lbcv.a .etmbt{right:84px!important}

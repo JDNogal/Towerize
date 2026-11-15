@@ -235,9 +235,8 @@ const bfkw=k=>`<span class="kw" data-kw="bf_${k}" data-src="" style="color:color
 function pieceInfo(o){
  return `<b>${o.n}</b> · pieza ${P}×${P}`+(o.b.length?'<small>Casillas especiales'+(payOn()&&S.offers&&S.offers.includes(o)?' · cuestan <span class="gd">'+pcost(o)+' 🪙</span> al colocar la pieza':'')+':</small>'+o.b.map(b=>`<div><i style="background:${BF[b.k].col}"></i>${bfkw(b.k)}: ${bfT(b.k)}</div>`).join(''):'<small>Sin casillas especiales.'+(payOn()&&S.offers&&S.offers.includes(o)?' Colocarla es gratis.':'')+'</small>');
 }
-function portalInfo(p){
- if(!p)return '<b>Extremo inactivo</b><small>Esta ronda no saldrán enemigos por aquí. Se usan primero los extremos de la pieza nueva y luego los más lejanos a la base.</small>';
- return '<b>Portal enemigo</b>'+Object.keys(p.plan).filter(t=>p.plan[t]&&(ET[t]||t==='wanted')).map(t=>R('',t==='wanted'?'Élite (encargo)':ET[t].n,p.plan[t])).join('')+'<small>Enemigos que saldrán por este portal en la oleada.</small>';
+function portalInfo(){
+ return '<b>Extremo inactivo</b><small>Esta ronda no saldrán enemigos por aquí. Se usan primero los extremos de la pieza nueva y luego los más lejanos a la base.</small>';
 }
 const PH='<small style="margin:0">Pasa el ratón por un elemento del juego para ver su información.</small>';
 // ---- hover: rueda de carga, ralentización y panel de información ----
@@ -260,7 +259,7 @@ function resolve(el){
   const c=cell({clientX:M.x,clientY:M.y});S.hover=c;if(!inb(c.x,c.y))return null;
   const rect=cellRect(c.x,c.y);
   const at=q=>Math.abs(q.x-c.x)<=1&&Math.abs(q.y-c.y)<=1,pt=S.portals.find(at),po=pt||S.ends.find(at);
-  if(po)return{key:'pt:'+po.x+','+po.y+(pt?'a':'i'),html:()=>portalInfo(pt),rect:cellRect(po.x-1,po.y-1,3)};
+  /* v340: los portales activos ya no abren panel (el bocadillo de encima del portal ya dice qué sale); los extremos inactivos sí */if(po)return pt?null:{key:'pt:'+po.x+','+po.y+'i',html:()=>portalInfo(null),rect:cellRect(po.x-1,po.y-1,3)};
   const t=S.occ[c.x+','+c.y];
   if(t)return{key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:c};
   const k=S.buff[c.y][c.x];

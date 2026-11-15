@@ -231,14 +231,11 @@ const tipTexts=()=>TIPS.map(f=>{try{return f();}catch(e){return null;}}).filter(
  function _t0(){const P=[];for(const t of ETMN.tip)if(typeof t==='string')P.push(t);else if(t[1]())P.push(t[0]);return P;}}
 {const _s=etmSay;etmSay=function(auto){const cv=document.querySelector('.lbcv.a');if(auto&&cv&&cv.classList.contains('ing')&&OPT.tips===false)return;
  const r=_s.apply(this,arguments);try{const b=document.querySelector('.lbcv.a .etmbub');if(b&&ETTIPS.has(ETM.last)){const h=b.querySelector('b');if(h&&!b.querySelector('.ettip'))h.insertAdjacentHTML('afterend',`<em class="ettip">${TIPSVG}¿Sabías que…?</em>`);}}catch(e){}return r;};}
-// Bocadillo de ÉTER: el primer clic (dentro o fuera) termina de escribir; ya escrito, un clic fuera lo cierra y el clic sigue su camino
-document.addEventListener('pointerdown',e=>{try{const b=document.querySelector('.lbcv.a .etmbub.on');if(!b)return;const cv=b.closest('.lbcv'),sp=b.querySelector('.etmt');if(!sp)return;
- const gr=cv.querySelector('.etmgr');
- if(sp.textContent!==ETM.last){clearTimeout(ETM.type);sp.textContent=ETM.last;cv.classList.remove('etmtalk');if(gr){gr.style.animation='';gr.style.opacity='';}
-  clearTimeout(ETM.hide);ETM.hide=setTimeout(()=>{b.classList.remove('on');cv.classList.remove('etmon','etmtalk');},4000);ETMSKIP.on=1;setTimeout(()=>{ETMSKIP.on=0;},600);e.preventDefault();e.stopPropagation();return;}
- if(!b.contains(e.target)){clearTimeout(ETM.hide);b.classList.remove('on');cv.classList.remove('etmon','etmtalk');}}catch(_){}},true);
-document.addEventListener('click',e=>{try{if(ETMSKIP.on){ETMSKIP.on=0;e.preventDefault();e.stopPropagation();}}catch(_){}},true);
-const ETMSKIP={on:0};
+// Bocadillo de ÉTER (v340): pulsar en cualquier sitio fuera de ÉTER cierra el bocadillo al momento —aunque esté escribiendo— y el clic sigue su camino
+// (antes el primer clic solo terminaba de escribir y se «comía» el clic, p. ej. el de la ✕/Esc del libro). El bocadillo no captura clics.
+function etmClose(){try{const b=document.querySelector('.lbcv.a .etmbub.on');if(!b)return false;const cv=b.closest('.lbcv'),gr=cv.querySelector('.etmgr');clearTimeout(ETM.type);clearTimeout(ETM.hide);b.classList.remove('on');cv.classList.remove('etmon','etmtalk');if(gr){gr.style.animation='';gr.style.opacity='';}return true;}catch(_){return false;}}
+document.addEventListener('pointerdown',e=>{try{if(e.target.closest&&e.target.closest('.etmbt'))return;etmClose();}catch(_){}},true);
+addEventListener('keydown',e=>{if(e.key==='Escape')etmClose();},true);
 
 // v335 · «Informar de un fallo» en todas las pantallas: con el libro abierto (portada, compendio, opciones…), arriba a la izquierda de la pantalla, fuera del libro;
 // en la partida, un botón más en la columna de arriba a la izquierda
