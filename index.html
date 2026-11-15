@@ -2776,7 +2776,7 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v346</div>
+<div id="ver">Towerize v347</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -6219,7 +6219,7 @@ function monkTick(dt){for(const t of S.list){const T=TW[t.type];if(!T||!T.monk||
    if(lo){lo.hp=Math.min(lo.max,lo.hp+lo.max*T.mheal.p);S.fx.push({x:lo.x,y:lo.y,t:.5,m:.5,r:.7*K,col:'#9ff0b0'});}}}
   if(gd&&s.hp<s.max*.5&&!(s.gc>0)){s.gc=8;s.drunk=5;s.hp=Math.min(s.max,s.hp+s.max*gd.h);S.fx.push({x:s.x,y:s.y,t:.5,m:.5,r:.7*K,col:'#c99ae0'});
    if(fb){const tg=s.en&&s.en.hp>0?s.en:S.enemies.find(e=>e.hp>0&&Math.hypot(e.x-s.x,e.y-s.y)<=1.5*K);if(tg){const a=Math.atan2(tg.y-s.y,tg.x-s.x),n=stats(t).dmg*1.2*fb.m;
-     const fm=tileArm(t);for(const e of S.enemies){if(e.hp<=0)continue;const dx=e.x-s.x,dy=e.y-s.y;if(Math.hypot(dx,dy)>1.5*K*fm)continue;let da=Math.abs(Math.atan2(dy,dx)-a);if(da>Math.PI)da=2*Math.PI-da;if(da<=Math.min(Math.PI/2,Math.PI/4*fm)||e===tg)addBurn(e,t,n);}
+     const fm=tileArm(t);for(const e of S.enemies){if(e.hp<=0)continue;const dx=e.x-s.x,dy=e.y-s.y;if(Math.hypot(dx,dy)>1.5*K*fm)continue;let da=Math.abs(Math.atan2(dy,dx)-a);if(da>Math.PI)da=2*Math.PI-da;if(da<=Math.PI/4*fm||e===tg)addBurn(e,t,n);}
      S.fx.push({x:s.x+Math.cos(a)*.6*K,y:s.y+Math.sin(a)*.6*K,t:.45,m:.45,r:.8*K,col:'#ff8a3c'});}}}}}}
 function unitCombat(dt){
  const SL=[];for(const t of unitTowers())for(const s of t.sd)if(s.hp>0&&!(s.H&&s.H.camo>0))SL.push(s);
@@ -6552,7 +6552,7 @@ function volcHeat(t,has,dt){if(t.spec!=='volc')return;const eb=abRank(t,'embr');
  t.erT=Math.max(0,(t.erT||0)-dt);const er=abRank(t,'erupt');if(er&&t.heat>=1&&t.erT<=0){t.erT=er.cd;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=er.r*K)addBurn(e,t,er.b);S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:er.r*K,col:'#ff6a2e'});}}
 function flameTick(t,tg,s,cm,TT){
  const ht=t.spec==='volc'?(t.heat||0):0,fr=ht&&abRank(t,'flare');if(ht){TT={...TT,cone:60+50*ht};cm*=1+.5*ht;if(fr)s={...s,range:s.range+fr.g*K*ht};}
- const one=!TT.cone,ang=Math.atan2(tg.y-t.y,tg.x-t.x),half=Math.min(Math.PI/2,(TT.cone||0)*(s.arm||1)*Math.PI/360)/* v346: el cono crece con el área (Expansión…), hasta 180° */,
+ const one=!TT.cone,ang=Math.atan2(tg.y-t.y,tg.x-t.x),half=Math.min(Math.PI,(TT.cone||0)*(s.arm||1)*Math.PI/360)/* v346: el cono crece con el área (Expansión…), sin tope: a 360° ya es un círculo entero */,
   it=abRank(t,'intens'),fo=abRank(t,'focus'),nap=abRank(t,'napalm'),det=abRank(t,'deton'),
   n=s.dmg*cm*(1+(it?it.p:0))*(fo?1+Math.min(fo.max,fo.g*(t.foT||0)):1);
  t.fl={a:ang,h:one?.07:half,len:s.range,one,ttl:1/s.rate+.08};
@@ -7224,7 +7224,7 @@ function rows(s,T,src,extra){
   return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+(extra.title||'Estadísticas de unidades')+'</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
    (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+cr+(ef?R('cf',kst('eff','Efectos',src),ef):'')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`+'</div>'+extra.tail;}
  return dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+(T.puddle?R('ccl',kst('cool','Enfriamiento',src)+' ('+kst('pstk','Acumulación',src)+')',f(1/s.rate)+' s ('+f(PTICK)+' s)'):R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s'))+(du?R('cr',kst('dur','Duración',src),du):'')+R('cg',kst('rng','Rango',src),cas(s.range/K))+objRow(!!T.ground,src)+
-  (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(T.burn&&T.cone?R('ca',kst('area','Área',src),'Cono de '+Math.round(Math.min(180,T.cone*(s.arm||1)))+'°'):'')+
+  (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(T.burn&&T.cone?R('ca',kst('area','Área',src),'Cono de '+Math.round(Math.min(360,T.cone*(s.arm||1)))+'°'):'')+
   (s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+(s.dmg>0||T.dot||T.burn?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'')+
   (T.log?R('',kst('push','Empuje',src),'0,5 casillas'):'')+(extra||'')+(ef?R('cf',kst('eff','Efectos',src),ef):'');
 }
@@ -10886,7 +10886,8 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
- {v:346,f:'15 nov 2026',t:'El área, en todas partes',s:[['Arreglos',['La casilla Expansión (y todo lo que agranda el área: su ★, la bendición de la casilla, el Yunque) ya agranda el cono de la Salamandra y del Lanzallamas (hasta 180°) y el área del Mecha. Antes no les hacía nada.','También crecen con el área los radios y largos de las habilidades: Lluvia de flechas, Témpanos, Nova, Erupción, Bombardeo, Minas, Fragilidad, Racimo, Epidemia, Plaga, Llamarada etílica, Hachazo giratorio, Rodar, Avalancha, ¡Giga Taladro!, Cañón de hombro, Señuelo, Virus, Toma de tierra, Serenata, Cadena rúnica y más.']]]},
+ {v:347,f:'15 nov 2026',t:'Conos sin tope',s:[['Arreglos',['Los conos de la Salamandra y del Lanzallamas ya no tienen tope de 180°: crecen todo lo que dé el área, hasta el círculo entero.']]]},
+ {v:346,f:'15 nov 2026',t:'El área, en todas partes',s:[['Arreglos',['La casilla Expansión (y todo lo que agranda el área: su ★, la bendición de la casilla, el Yunque) ya agranda el cono de la Salamandra y del Lanzallamas (sin tope: si llega a 360°, es un círculo entero) y el área del Mecha. Antes no les hacía nada.','También crecen con el área los radios y largos de las habilidades: Lluvia de flechas, Témpanos, Nova, Erupción, Bombardeo, Minas, Fragilidad, Racimo, Epidemia, Plaga, Llamarada etílica, Hachazo giratorio, Rodar, Avalancha, ¡Giga Taladro!, Cañón de hombro, Señuelo, Virus, Toma de tierra, Serenata, Cadena rúnica y más.']]]},
  {v:345,f:'15 nov 2026',t:'Fabricador de sectores',s:[['Eventos',['Era Distópica: nuevo evento, el Fabricador de sectores. Diseña tu propia pieza (salidas, camino, solares y casilla especial) y colócala donde quieras… o guárdala para la próxima elección.']],['Equilibrio',['Mímico: pide 50 bajas para el primer cofre y 100 más por cada uno siguiente. Lleno, no come más hasta soltar el cofre.','Maleficio (Foco Arcano) y Rompemurallas (Trebuchet) costaban como si fueran de otra época: ahora valen como las demás habilidades de su torre.']],['Mejoras',['Mímico: al pasar el ratón por encima se ve su alcance, como el de las torres.']]]},
  {v:344,f:'15 nov 2026',t:'Fichas que aguantan',s:[['Arreglos',['Las fichas del anillo de construir y del menú de torre ya no se cierran nada más sacar el ratón del botón: aguantan un momento para que puedas llegar a ellas y mirar sus palabras clave.']]]},
  {v:343,f:'15 nov 2026',t:'Mímico más glotón',s:[['Equilibrio',['Mímico: ahora come las bajas a 4 casillas o menos (antes 2,5).']]]},
