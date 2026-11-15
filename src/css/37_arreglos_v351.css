@@ -32,3 +32,17 @@ body.mfs .hpb.hpport .hrsp{font-size:17px}
 :root[data-skin="holo"] .esum .lbupb.err b{color:#ff9aa8}
 :root[data-skin="holo"] .esum .lbupb small{color:#a8d8e4;opacity:1}
 .esum .lbupb{grid-column:1/-1}
+/* v351 · Clasificación: filas pulsables, detalle de una partida y aspecto de la tablet (antes con colores del pergamino: la fila propia, amarilla con letra blanca) */
+table.lbrkt tr[data-a="lbrkrow"]{cursor:pointer}table.lbrkt tr[data-a="lbrkrow"]:hover td{background:rgba(192,57,43,.08)}
+table.lbrkt tr.pk td{background:#e9c46a!important;font-weight:800}
+.lbrkpts{display:flex;justify-content:space-between;align-items:baseline;margin:10px 0 6px;padding:8px 12px;border-radius:10px;background:var(--paper2,#fbf4e4);border:1px solid #c9b48c}.lbrkpts b{font-size:22px}
+.lbrkbd{}.lbrkpkf{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.lbrkhint{margin-top:14px}
+:root[data-skin="holo"] .lbrkeras button,:root[data-skin="holo"] .lbrktabs button{background:#0e2430;border-color:#2a6a7a;color:#cfeff6}
+:root[data-skin="holo"] .lbrkeras button.on{background:#3fe8ff;border-color:#3fe8ff;color:#06141a}
+:root[data-skin="holo"] .lbrktabs button.on{background:#ff5a6e;border-color:#ff5a6e;color:#fff}
+:root[data-skin="holo"] table.lbrkt td,:root[data-skin="holo"] table.lbrkt th{border-bottom-color:#1f4a58;color:#d6f4fb}
+:root[data-skin="holo"] table.lbrkt th{color:#7fc8d8;opacity:1}
+:root[data-skin="holo"] table.lbrkt tr.me td{background:rgba(63,232,255,.16);color:#fff}
+:root[data-skin="holo"] table.lbrkt tr[data-a="lbrkrow"]:hover td{background:rgba(63,232,255,.08)}
+:root[data-skin="holo"] table.lbrkt tr.pk td{background:rgba(255,215,90,.22)!important;color:#ffe9a8}
+:root[data-skin="holo"] .lbrkpts{background:#0e2430;border-color:#2a6a7a;color:#d6f4fb}:root[data-skin="holo"] .lbrkpts b{color:#7ff0ff}

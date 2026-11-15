@@ -20,7 +20,8 @@ function lbRun(){if(!S||!S.hero||S.tut||S.pvE||S.pvH||(typeof PREVIEWING!=='unde
  const sc=S.scF||(typeof scoreCalc==='function'?scoreCalc():{t:0});if(!(sc.t>0))return null;
  const era=(S.era||ERA||1),amz=typeof apNetRun==='function'?apNetRun():(S.amz&&typeof azPtsOf==='function')?azPtsOf(S.amz):0;
  const sel={};for(const k in S.amz||{})if(S.amz[k]>0)sel[k]=S.amz[k];
- return {hero:S.hero.id,era,amz,score:Math.round(sc.t),round:Math.min(S.round,ROUNDS),won:S.phase==='won',sel,ver:String(NOVV())};}
+ /* v351: también el desglose de la puntuación, para que los demás vean de dónde salen los puntos */const bd=(sc.rows||[]).slice(0,30).map(([k,n,d,p])=>[String(k).slice(0,8),String(n).slice(0,40),String(d||'').replace(/<[^>]+>/g,'').slice(0,90),Math.round(p)]);
+ return {hero:S.hero.id,era,amz,score:Math.round(sc.t),round:Math.min(S.round,ROUNDS),won:S.phase==='won',sel,ver:String(NOVV()),bd};}
 function lbBtnHTML(){const R=LBR.cur;if(!R)return '';const st=LBR.up,amzT=lbAmzOpen(R.era)?'Amenaza '+R.amz+' · ':'';
  const ic='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17V5M7 10l5-5 5 5"/></svg>';
  if(st&&st.ok)return `<button class="lbupb ok" data-a="lbrank">${st.pos?`<b>¡Subida! Puesto ${st.pos}</b><small>de ${st.n}${lbAmzOpen(R.era)?' en Amenaza '+R.amz:''} · ${ERADEF[R.era].esc||'Era '+ERADEF[R.era].n}</small>`:'<b>¡Subida!</b><small>Tu mejor marca con este héroe sigue siendo otra</small>'}</button>`;
@@ -60,10 +61,13 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="reset"],[data-a="menu"]');if(!b||!LB.open||LB.area!=='end'||b.dataset.lbok)return;
  if(!LBR.cur||(LBR.up&&LBR.up.ok)||LBR.busy||LBR.asked||OPT.lbup!=='ask')return;
  e.stopPropagation();e.preventDefault();lbAskDlg(()=>{b.dataset.lbok=1;b.click();delete b.dataset.lbok;});},true);
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="lbrkmenu"],[data-a="lbup"],[data-a="lbrank"],[data-a="lbrkera"],[data-a="lbrkamz"],[data-a="lbrkback"],[data-a="lbrkname"]');if(!b)return;e.stopPropagation();e.preventDefault();const a=b.dataset.a;
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="lbrkrow"],[data-a="lbrkpkx"],[data-a="lbrkmine"],[data-a="lbrkmenu"],[data-a="lbup"],[data-a="lbrank"],[data-a="lbrkera"],[data-a="lbrkamz"],[data-a="lbrkback"],[data-a="lbrkname"]');if(!b)return;e.stopPropagation();e.preventDefault();const a=b.dataset.a;
  if(a==='lbrkmenu'){LB.msg=null;lbOpen(null,true);return;}if(a==='lbup')lbUpload();else if(a==='lbrank')lbRankOpen();else if(a==='lbrkback'){LB.msg=null;lbOpen('end');}
  else if(a==='lbrkname')lbNameDlg(null);
- else{if(a==='lbrkera'){LBR.era=+b.dataset.v;LBR.sel=null;}else LBR.sel=+b.dataset.v;try{sfx('page');}catch(_){}lbRankLoad();lbRender();}},true);
+ else if(a==='lbrkrow'){const i=+b.dataset.v;LBR.pick=LBR.pick===i?null:i;try{sfx('page');}catch(_){}CP.pageR=false;lbRender();}
+ else if(a==='lbrkpkx'){LBR.pick=null;lbRender();}
+ else if(a==='lbrkmine')lbRankMine(b.dataset.h,+b.dataset.e,+b.dataset.s);
+ else{LBR.pick=null;if(a==='lbrkera'){LBR.era=+b.dataset.v;LBR.sel=null;}else LBR.sel=+b.dataset.v;try{sfx('page');}catch(_){}lbRankLoad();lbRender();}},true);
 // ---- la tabla ----
 async function lbRankLoad(){const era=LBR.era;try{if(!LBR.tiers[era]){const d=await (await fetch(LBURL+'/tiers?era='+era)).json();LBR.tiers[era]=d.ok?d.tiers:[];}
  const T=lbAmzOpen(era)?LBR.tiers[era]:LBR.tiers[era].filter(x=>x===0);if(LBR.sel==null||!T.includes(LBR.sel))LBR.sel=T.includes(LBR.cur&&LBR.cur.era===era?LBR.cur.amz:-1)?LBR.cur.amz:(T[0]??0);
@@ -76,13 +80,26 @@ function lbRankParts(){const era=LBR.era,open=lbAmzOpen(era),T=(LBR.tiers[era]||
   ${eras.length>1?`<div class="lbrkeras">${eras.map(e=>`<button data-a="lbrkera" data-v="${e}" class="${e===era?'on':''}">${ERADEF[e].esc||'Era '+ERADEF[e].n}</button>`).join('')}</div>`:''}
   ${open&&T.length?`<div class="lbrktabs">${T.map(n=>`<button data-a="lbrkamz" data-v="${n}" class="${n===LBR.sel?'on':''}">${n?'Amenaza '+n:'Sin amenazas'}</button>`).join('')}</div><p class="note">Cada nivel de amenaza tiene su propia tabla, y cada era las suyas.</p>`:''}
   <p class="note">Piloto: <b>${lbPilot()||'sin nombre'}</b> · <button class="lbbk sm" data-a="lbrkname">Cambiar nombre</button></p>`;
+ const pk=L&&LBR.pick!=null?L[LBR.pick]:null;const leftF=pk?lbRankDetail(pk,LBR.pick,me):left+(L&&L.length?'<p class="note lbrkhint">Pulsa una partida de la tabla para ver de dónde salen sus puntos.</p>':'');
  let right;if(LBR.err)right='<p class="note">No se ha podido cargar la clasificación. Comprueba la conexión.</p>';
  else if(!L)right='<p class="note">Cargando…</p>';
  else if(!L.length)right='<p class="note">Aún no hay partidas aquí. ¡Sé el primero!</p>';
- else right=`<table class="lbrkt"><tr><th>#</th><th>Piloto</th><th>Héroe</th><th>Ronda</th><th class="s">Puntos</th></tr>${L.map((r,i)=>`<tr class="${r.nick.toLowerCase()===me?'me':''}"><td class="n">${i+1}</td><td>${r.nick}</td><td>${hn(r.hero)}</td><td>${r.round}${r.won?' ✓':''}</td><td class="s">${fi(r.score)}</td></tr>`).join('')}</table>`;
- return {left,right};}
+ else right=`<table class="lbrkt"><tr><th>#</th><th>Piloto</th><th>Héroe</th><th>Ronda</th><th class="s">Puntos</th></tr>${L.map((r,i)=>`<tr class="${r.nick.toLowerCase()===me?'me':''}${LBR.pick===i?' pk':''}" data-a="lbrkrow" data-v="${i}"><td class="n">${i+1}</td><td>${r.nick}</td><td>${hn(r.hero)}</td><td>${r.round}${r.won?' ✓':''}</td><td class="s">${fi(r.score)}</td></tr>`).join('')}</table>`;
+ return {left:leftF,right};}
 function lbRankOpen(){LBR.err=0;LBR.era=LBR.era||(LBR.cur?LBR.cur.era:(S&&S.era)||ERA||1);
- LB.msg={key:'rank',left:()=>lbRankParts().left,right:()=>lbRankParts().right,footL:`<button class="lbbk" data-a="${LB.end?'lbrkback':'lbrkmenu'}">‹ ${LB.end?'Volver':'Menú'}</button>`,footR:'',onBack:()=>{if(LB.end)lbOpen('end');else lbOpen(null,true);}};
+ /* v351: «Volver» al resumen solo si vienes del resumen de una partida que sigue abierta; desde el menú (aunque hayas jugado antes) vuelve a la portada (antes la ✕ te llevaba al resumen viejo y el libro se cerraba) */const fromEnd=!!LB.end&&!document.body.classList.contains('inmenu')&&S&&(S.phase==='won'||S.phase==='lost');
+ LB.msg={key:'rank',left:()=>lbRankParts().left,right:()=>lbRankParts().right,footL:`<button class="lbbk" data-a="${fromEnd?'lbrkback':'lbrkmenu'}">‹ ${fromEnd?'Volver':'Menú'}</button>`,footR:'',onBack:()=>{if(fromEnd)lbOpen('end');else lbOpen(null,true);}};
  lbOpen('msg');lbRankLoad();}
 // cinta «Clasificación» en el final de partida
 {const _ep=endParts;endParts=function(){const p=_ep.apply(this,arguments);try{if(LBR.cur&&p.ribs)p.ribs=p.ribs.replace(/<\/div>\s*$/,`<button class="bkrib" data-a="lbrank" title="Clasificación"><svg width="24" height="22" viewBox="0 0 24 22" fill="#f2cd62" stroke="#1b1712" stroke-width="1.4"><rect x="8.5" y="6" width="7" height="15"/><rect x="1.5" y="11" width="7" height="10" fill="#d9d2c2"/><rect x="15.5" y="14" width="7" height="7" fill="#d08a4a"/><path d="M12 1l1 2 2 .3-1.5 1.4.4 2.1L12 5.8l-1.9 1 .4-2.1L9 3.3l2-.3z"/></svg><span>Clasificación</span></button></div>`);}catch(e){}return p;};}
+
+// v351 · el detalle de una partida de la tabla: su desglose de puntos (si se subió con él) y, si es tuya, ir a ella en Partidas
+function lbRankDetail(r,i,me){const H=HEROES[r.hero],mine=r.nick.toLowerCase()===me;
+ const bd=Array.isArray(r.bd)&&r.bd.length?`<div class="lbrkbd">${typeof scRows==='function'?scRows({t:r.score,rows:r.bd}):''}</div>`:`<p class="note">Esta partida se subió antes de que se guardara el desglose: solo se sabe su total.</p>`;
+ return `<h3>#${i+1} · ${r.nick}</h3><div class="bksub">${H?H.n:r.hero} · Ronda ${r.round}${r.won?' · Victoria':''}${r.amz?' · Amenaza '+r.amz:''}${r.ver?' · v'+r.ver:''}</div>
+  <div class="lbrkpts"><small>Puntuación</small><b>${fi(r.score)}</b></div>${bd}
+  <div class="lbrkpkf">${mine?`<button class="lbbk" data-a="lbrkmine" data-h="${r.hero}" data-e="${r.era||LBR.era}" data-s="${r.score}">Ver en mis Partidas ›</button>`:''}<button class="lbbk sm" data-a="lbrkpkx">‹ Volver a la tabla</button></div>`;}
+async function lbRankMine(hero,era,score){let L=[];try{L=(HIST.list&&HIST.list.length)?HIST.list:(await hsAll()).sort((a,b)=>b.t0-a.t0);HIST.list=L;}catch(e){}
+ let i=L.findIndex(x=>x.hero===hero&&(x.era||1)===era&&Math.round(x.sc||0)===score);if(i<0){const c=L.filter(x=>x.hero===hero&&(x.era||1)===era&&x.sc!=null).sort((a,b)=>Math.abs(a.sc-score)-Math.abs(b.sc-score))[0];i=c?L.indexOf(c):-1;}
+ if(i<0){toast('No encuentro esa partida en este navegador: se jugó en otro sitio o se borró el registro.');return;}
+ HIST.flt='all';HIST.sel=i;HIST.v='sc';LB.msg=null;try{sfx('page');}catch(_){}lbOpen('pt');}

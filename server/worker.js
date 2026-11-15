@@ -16,7 +16,9 @@ async function addRun(req, env) {
   const era = int(b.era, 1, 9), amz = int(b.amz, 0, 99), score = int(b.score, 0, 1e9), round = int(b.round, 0, 99);
   if (nick.length < 2 || !hero || era == null || amz == null || score == null) return J({ ok: false, err: 'datos' }, 400);
   const sel = {}; if (b.sel && typeof b.sel === 'object') for (const [k, v] of Object.entries(b.sel).slice(0, 30)) { const r = int(v, 0, 9); if (r) sel[clean(k, 6)] = r; }
-  const run = { nick, hero, ver, era, amz, score, round, won: !!b.won, sel, t: Date.now() };
+  // v351: el desglose de la puntuación (hasta 30 filas: clave, nombre, detalle y puntos), para enseñarlo en la tabla
+  const bd = Array.isArray(b.bd) ? b.bd.slice(0, 30).map(x => Array.isArray(x) ? [clean(x[0], 8), clean(x[1], 40), clean(x[2], 90), int(x[3], -1e9, 1e9) || 0] : null).filter(x => x && x[1]) : [];
+  const run = { nick, hero, ver, era, amz, score, round, won: !!b.won, sel, bd, t: Date.now() };
   const key = `top:${era}:${amz}`;
   const top = (await env.RUNS.get(key, 'json')) || [];
   top.push(run); top.sort((a, c) => c.score - a.score);
