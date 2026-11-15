@@ -22,3 +22,13 @@ body.mfs #relic .tof .chips .tgmob:empty{display:none!important}
 .hpb.hpport .hrsp small{font-size:12px;font-weight:800;margin-top:6px}
 .hpb.hpport .hrsp .icsv{width:14px;height:14px;margin-right:2px;opacity:.9}
 body.mfs .hpb.hpport .hrsp{font-size:17px}
+/* v351 · Resumen final: el botón de la clasificación se lee en todas las encuadernaciones (en la tablet salía blanco con letra clara) */
+.esum .lbupb.ok{color:#24361a}.esum .lbupb.err{color:#4a1a10}
+:root[data-skin="holo"] .esum .lbupb{background:linear-gradient(180deg,#123040,#0b1f2a)!important;border:1.5px solid #3fe8ff!important;color:#dff8ff!important;box-shadow:0 0 12px #3fe8ff44 inset}
+:root[data-skin="holo"] .esum .lbupb b{color:#7ff0ff}
+:root[data-skin="holo"] .esum .lbupb.ok{background:linear-gradient(180deg,#123a2a,#0b2a1e)!important;border-color:#5fe08a!important}
+:root[data-skin="holo"] .esum .lbupb.ok b{color:#8affb0}
+:root[data-skin="holo"] .esum .lbupb.err{background:linear-gradient(180deg,#3a1418,#2a0c10)!important;border-color:#ff5a6e!important}
+:root[data-skin="holo"] .esum .lbupb.err b{color:#ff9aa8}
+:root[data-skin="holo"] .esum .lbupb small{color:#a8d8e4;opacity:1}
+.esum .lbupb{grid-column:1/-1}
