@@ -1,5 +1,5 @@
 // v339 · las fichas de comprar torre y del menú de torre crecen con la pantalla (en pantallas grandes la letra era enana)
-function cardZ(c){const z=Math.max(1,Math.min(1.6,Math.min(innerWidth/1280,innerHeight/720)))*(document.body.classList.contains('mfs')?1:1.06);c.style.transformOrigin='0 0';c.style.transform=z>1.01?`scale(${z.toFixed(3)})`:'';return z>1.01?z:1;}
+function cardZ(c){/* v349: la ficha ya es más grande de base: crece con la pantalla hasta ×1,45 */const z=document.body.classList.contains('mfs')?1:Math.max(1,Math.min(1.45,Math.min(innerWidth/1280,innerHeight/720)));c.style.transformOrigin='0 0';c.style.transform=z>1.01?`scale(${z.toFixed(3)})`:'';return z>1.01?z:1;}
 // ---- construir en un solar: al pulsar un solar libre salen alrededor las torres del mazo (1.º toque: tarjeta · 2.º: construir) ----
 const BM={s:null,arm:null,hov:null,sig:''};
 const bmDeck=()=>Object.keys(TW).filter(k=>!TW[k].uniq&&(!S.deck||S.deck.includes(k)));

@@ -147,3 +147,13 @@ body.mfs #comp .bk.hasft>.bkp{height:calc(100% - 66px)!important;max-height:calc
 body.dsk:not(.mfs) #bugw .bugbox{zoom:var(--uiz,1)}body.dsk:not(.mfs) #lbmside{zoom:var(--uiz,1)}
 body.mfs #bugw{padding:6px}body.mfs #bugw .bugbox{padding:10px 14px;max-height:calc(100vh - 12px)}body.mfs #bugw .bugsub{margin-bottom:6px}
 body.mfs #bugw textarea{min-height:52px;height:52px}body.mfs #bugw .bugshot img{max-height:56px;width:auto}
+/* v349: las fichas del anillo de construir y del menú de torre, más grandes y con letra que se lea de un vistazo (PC, a cualquier zoom: no dependen del zoom del mapa) */
+body.dsk:not(.mfs) #tmcard,body.dsk:not(.mfs) #bmcard{width:300px!important;font-size:14.5px!important;line-height:1.45!important;padding:11px 14px!important}
+body.dsk:not(.mfs) #tmcard>b:first-child,body.dsk:not(.mfs) #bmcard .bmh b{font-size:16.5px}
+body.dsk:not(.mfs) #tmcard small{font-size:14px!important;line-height:1.45;color:color-mix(in srgb,var(--ink,#2a1a10) 90%,transparent)!important}
+body.dsk:not(.mfs) #tmcard .hn,body.dsk:not(.mfs) #bmcard .hn{font-size:12.5px!important;color:color-mix(in srgb,var(--ink,#2a1a10) 72%,transparent)!important}
+body.dsk:not(.mfs) #tmcard .tmc span:first-child{color:color-mix(in srgb,var(--ink,#2a1a10) 80%,transparent)!important}
+body.dsk:not(.mfs) #bmcard .grow{grid-template-columns:104px 1fr 58px!important;font-size:13.5px}body.dsk:not(.mfs) #bmcard .bmt em{font-size:12px}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) :is(#tmcard,#bmcard) .cf:not(.no):not(.vch){color:#1f7a3a!important}
+/* v349: la tecla F3 va debajo del botón de informar (arriba quedaba pegada al borde) */
+[data-a="bugrep"]>.kcap.bugk{top:auto!important;bottom:-12px!important}

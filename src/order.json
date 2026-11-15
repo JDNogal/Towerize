@@ -178,6 +178,7 @@
   "jefe_aviso.js",
   "moneda_oro.js",
   "fabricador.js",
-  "ojo_pergamino.js"
+  "ojo_pergamino.js",
+  "data/rango_nv4.js"
  ]
 }
