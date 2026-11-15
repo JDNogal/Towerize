@@ -72,6 +72,7 @@ const T=[
   ['boton_fallo.js','Informar de un fallo: se puede pulsar en todas las pantallas (PC y móvil)'],
   ['novedades.js','Novedades del compendio por ficha y marcar todos como vistos'],
  ['construir_anillo.js','Construir con el anillo y el ratón (dos clics en la torre)'],
+ ['fabricador.js','Fabricador de sectores: el evento, los 5 pasos, cobrar, colocar y guardar para la próxima elección'],
  ['tarjeta_gracia.js','Fichas del anillo y del menú de torre: aguantan al salir y dejan mirar sus palabras clave'],
  ['historia_kai.js','Historia de Kai: aparece con Vega en la ronda de jefe y se une si la oleada sale perfecta'],
  ['cruces_reparto.js','Cruces: los enemigos se reparten entre ramas igual de largas; cada escuadra va entera por una'],

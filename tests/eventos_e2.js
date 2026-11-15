@@ -4,7 +4,7 @@ const p=await b.newPage({viewport:{width:1280,height:720}});p.on('pageerror',e=>
 await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');localStorage.setItem('rt-story',JSON.stringify({p:3,name:'Test',intro:1,e2n:1,e2a:1,e2v:1}));}catch(e){}});
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
 const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;OPT.eter=false;OPT.u_era=false;OPT.u_hr=false;
- const E2=['capsule','lab','sos','cryocam','omega'];
+ const E2=['capsule','lab','sos','cryocam','omega','fabric'];
  out.defs=E2.concat(['omega2']).every(id=>EVENTS[id]&&EVENTS[id].era===2&&EVENTS[id].opts.length===3&&EVRES[id].length===3)&&EVENTS.omega2.sub===1;
  const game=(era,h)=>{ERA=era;startGame(15);chooseHero(h);if(DLG.on)dlgEnd();S.revAt=0;S.chests={};RL.open=false;HQ.q=[];if(HQ.cur)hintClose();};
  // cada era, sus eventos

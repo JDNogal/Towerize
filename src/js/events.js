@@ -204,7 +204,7 @@ function roundRewards(){
 
 // ---- Mímico: al conseguirlo cae en el mapa, en una zona con solares libres y pocas torres (mejor por dentro del mapa que en el borde).
 // Las bajas a 4 casillas o menos lo alimentan; lleno, escupe un cofre al colocar la siguiente pieza y la próxima vez pide más ----
-const MIMR=4,/* v343: antes 2,5 */MIM0=30,MIMUP=20;
+const MIMR=4,/* v343: antes 2,5 */MIM0=50,MIMUP=100;/* v345: antes 30 y 20 */
 function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC(x,y)?S.cc[y][x]:-1,NB=P;let best=null,bs=-1e9;
  for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!S.blocks[Math.floor(x/NB)+','+Math.floor(y/NB)])continue;const v0=cc(x,y);if(v0!==0&&v0!==3)continue;if(!D.some(([a,b])=>cc(x+a,y+b)===2))continue;
   let sol=0,tw=0;for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){if(i*i+j*j>10)continue;const v=cc(x+i,y+j);if(v===1){if(S.occ[((x+i)*K+1)+','+((y+j)*K+1)])tw++;else sol++;}}
@@ -213,7 +213,7 @@ function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC
  if(!best)return;S.mim={x:best[0]*K+1,y:best[1]*K+1,food:0,need:MIM0,rdy:0,n:0,t0:performance.now()};
  S.fx.push({x:S.mim.x,y:S.mim.y,r:2*K,t:.8,m:.8,col:'#c9a24a'});
  if(!S.tut)setTimeout(()=>hint('mimic','El mímico','El mímico ha caído en el mapa, junto al camino. Cada enemigo que muere cerca lo <b>alimenta</b>; cuando se llena, <b>escupe un cofre</b> al colocar la siguiente pieza. Construye cerca para llenarlo antes.',tgCell(S.mim.x,S.mim.y,1.6)),0);}
-function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
+function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||m.rdy>0/* v345: lleno no come más hasta soltar el cofre */||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
  if(m.food>=m.need){m.food=0;m.rdy++;m.n++;m.need=MIM0+MIMUP*m.n;S.fx.push({x:m.x,y:m.y,r:1.6*K,t:.7,m:.7,col:'#ffd84a'});S.msg='¡El mímico está lleno! Escupirá un cofre al colocar la próxima pieza.';}}
 function mimSpit(){const m=S.mim;if(!m||!(m.rdy>0)||RL.open)return false;m.rdy--;RS('mimic').n2=(RS('mimic').n2||0)+1;openRelic();return true;}
 function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y*CS+CS/2,B=K*CS,now=performance.now(),ch=m.ch&&now>=m.ch&&now-m.ch<350?1-(now-m.ch)/350:0,/* v342: con una partida cargada, m.ch venía de la sesión anterior (mayor que el reloj actual) y la boca se estiraba hasta el borde del mapa */bob=Math.sin(now/600)*B*.03,op=.12+.25*ch+(m.rdy?.25:0);

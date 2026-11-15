@@ -31,7 +31,7 @@ function rgTick(dt){for(const e of S.enemies){if(!(e.hp>0)){e.rgV=0;continue;}
 
 // ---- quién rompe la resistencia mágica ----
 // Maleficio (Foco Arcano): ya no da un % de daño mágico; cada orbe quita −5 de resistencia mágica (hasta −10 / −15)
-AB.hex.ranks=[{c:45,a:5,max:10,m:0},{c:55,a:5,max:15,m:0}];
+AB.hex.ranks=[{c:310,a:5,max:10,m:0},{c:210,a:5,max:15,m:0}];
 AB.hex.txt=r=>`Cada orbe deja ${kw('mrbrk','resistencia mágica rota','')} a su objetivo: <span class="cmg">−${r.a}</span> por orbe, hasta <span class="cmg">−${r.max}</span>.`;
 SPECS.orb.foco.d='Orbes que rompen la resistencia mágica, cargan novas y pueden convertir a los enemigos en ranas.';
 {const _oh=orbHit;orbHit=function(t,tg,s,dmg){const r=_oh.apply(this,arguments);try{const hx=abRank(t,'hex');if(hx&&tg){if(tg.fx)delete tg.fx.hex;mbrkAdd(tg,hx.a||5,hx.max||10);}}catch(e){}return r;};}
@@ -73,7 +73,7 @@ E2KW.rgn=()=>'<b>Regeneración</b>'+R('chp','Campeones · mini-élites',rgPct(.0
 E2KW.mrbrk=()=>'<b>Resistencia mágica rota</b>'+R('cr','Duración de cada golpe',MBRKT+' s')+'<small>Reduce la resistencia mágica del enemigo. Cada golpe suma su reducción y caduca por separado, hasta el máximo de cada fuente. Puede quedar por debajo de 0: entonces recibe más daño mágico (como mucho, el doble). Beneficia a todo el daño mágico, venga de la torre que venga.</small>';
 MECUSE.rgn=Object.keys(RGEN).map(k=>'en:'+k);MECUSE.mrbrk=['tw:orb','tw:nano','hr:radagast','hr:korr'];MECUSE.cursed=[];
 // Trebuchet › Rompemurallas: menos disparos para llegar al tope (Nogal, 13-nov: es de área y lenta, raro que dé muchas veces al mismo)
-AB.breach.ranks=[{c:40,a:5,max:10},{c:50,a:10,max:20}];
+AB.breach.ranks=[{c:250,a:5,max:10},{c:170,a:10,max:20}];
 // Colmena › Corrosión del enjambre: ya quitaba resistencia mágica a quien muerden (mientras sigan encima); ahora se llama por su nombre
 AB.swcor.n='Mordisco ácido';{AB.swcor.txt=r=>`Cada criatura que muerde al mismo enemigo le deja ${kw('mrbrk','resistencia mágica rota','')}: <span class="cmg">−${r.a}</span> mientras siga encima (puede quedar negativa).`;}
 MECUSE.mrbrk.push('tw:alien');

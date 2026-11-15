@@ -34,7 +34,8 @@
   "32_logros_sin_recuadro.css",
   "33_cofre.css",
   "34_ayudas.css",
-  "35_pergamino.css"
+  "35_pergamino.css",
+  "36_fabricador.css"
  ],
  "js": [
   "00_config.js",
@@ -81,6 +82,7 @@
   "buildring.js",
   "towermenu.js",
   "tarjeta_gracia.js",
+  "mimico_rango.js",
   "ui_game.js",
   "libro.js",
   "tooltip.js",
@@ -171,6 +173,7 @@
   "paneles_centrados.js",
   "pergamino_nuevo.js",
   "jefe_aviso.js",
-  "moneda_oro.js"
+  "moneda_oro.js",
+  "fabricador.js"
  ]
 }

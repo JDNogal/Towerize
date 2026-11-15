@@ -1,0 +1,33 @@
+/* v345 · Fabricador de sectores (evento de la era 2): ventana holográfica de 1000×580 que se escala para caber */
+#fabw{position:fixed;inset:0;z-index:60;display:none;background:rgba(4,8,14,.72);backdrop-filter:blur(2px);font-family:'Chakra Petch',Inter,Arial,sans-serif}
+#fabw.on{display:block}
+#fabw .fabwin{--cy:#3fe8ff;--ln:#24344e;--ink:#d8f6ff;--ink2:#8fb0c8;position:absolute;left:50%;top:50%;width:1000px;height:580px;box-sizing:border-box;transform-origin:50% 50%;
+ border:1.5px solid var(--cy);border-radius:14px;background:rgba(10,16,28,.96);box-shadow:0 0 24px #3fe8ff33,inset 0 0 40px #3fe8ff10;display:grid;grid-template-columns:230px 448px 1fr;gap:18px;padding:18px 20px;color:var(--ink);font-size:14px;line-height:1.4}
+#fabw .fabh1{font-weight:700;margin:0;font-size:21px;letter-spacing:.06em;color:var(--cy);text-shadow:0 0 10px #3fe8ff88;line-height:1.15}
+#fabw .fabsub{color:var(--ink2);font-size:13px;margin:6px 0 14px}
+#fabw .fabsteps{display:flex;flex-direction:column;gap:6px}
+#fabw .fabstp{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:8px;border:1px solid var(--ln);color:var(--ink2)}
+#fabw .fabstp i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:12px;border:1.5px solid var(--ln);flex:none}
+#fabw .fabstp.on{border-color:var(--cy);color:var(--ink);background:#3fe8ff14}#fabw .fabstp.on i{border-color:var(--cy);color:var(--cy)}
+#fabw .fabstp.done{color:#6fe0a0}#fabw .fabstp.done i{border-color:#6fe0a0;color:#6fe0a0}
+#fabw .fabg{margin-top:12px;padding:9px 12px;border-radius:8px;border:1px solid var(--ln);display:flex;justify-content:space-between;font-weight:700}
+#fabw .gd,#fabw .fabg b{color:#ffd75a}
+#fabw .fabc{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+#fabw canvas{width:448px;height:448px;border-radius:10px;box-shadow:0 0 0 1.5px var(--ln);touch-action:none;cursor:pointer}
+#fabw .fabmsg{min-height:20px;font-size:13px;color:var(--ink2);text-align:center}#fabw .fabmsg.bad{color:#ff8a7a}#fabw .fabmsg.ok{color:#6fe0a0}
+#fabw .fabside{display:flex;flex-direction:column;gap:9px;min-width:0}
+#fabw .fabside h2{margin:0;font-size:16px;color:var(--cy);letter-spacing:.04em}#fabw .fabside h2 small{color:var(--ink2);font-size:12px;letter-spacing:0}
+#fabw .fabside p{margin:0;color:var(--ink2);font-size:13px}#fabw .fabink{color:var(--ink)}#fabw .fabbad{color:#ff8a7a}
+#fabw .fabopt{all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;border:1.5px solid var(--ln);background:#16213a;color:var(--ink);font-size:14px}
+#fabw .fabopt:hover{border-color:#3fe8ff99}#fabw .fabopt.on{border-color:var(--cy);background:#3fe8ff1c;box-shadow:0 0 12px #3fe8ff33}#fabw .fabopt[disabled]{opacity:.4;cursor:default}
+#fabw .fabopt small{display:block;color:var(--ink2);font-size:12px}
+#fabw .fabchs{display:flex;flex-direction:column;gap:6px}
+#fabw .fabbf{justify-content:flex-start}#fabw .fabbf .bbf2{flex:none;display:inline-flex}
+#fabw .fabunk{width:26px;height:26px;border-radius:6px;display:inline-grid;place-items:center;font-weight:800;background:#2a3448;color:#8fb0c8;flex:none}
+#fabw .fabchk{font-size:13px;display:flex;flex-direction:column;gap:3px}#fabw .fabchk span::before{content:'✗ ';color:#ff6a5a}#fabw .fabchk span.y::before{content:'✓ ';color:#6fe0a0}
+#fabw .fabrow{display:flex;gap:8px;margin-top:auto}
+#fabw .fabbtn{all:unset;cursor:pointer;flex:1;text-align:center;padding:10px;border-radius:9px;font-weight:800;border:1.5px solid var(--ln);color:var(--ink)}
+#fabw .fabbtn:hover{border-color:#3fe8ff99}#fabw .fabbtn.go{background:var(--cy);color:#06202a;border-color:var(--cy);box-shadow:0 0 14px #3fe8ff66}#fabw .fabbtn[disabled]{opacity:.35;cursor:default;box-shadow:none}
+#fabw kbd{font:700 11px Inter,Arial;border:1px solid var(--ln);border-radius:4px;padding:0 4px;color:var(--ink2)}
+#fabtip{position:fixed;z-index:61;max-width:270px;padding:8px 10px;border-radius:8px;background:#0b111c;border:1.5px solid #3fe8ff;box-shadow:0 4px 16px #000a;font-size:13px;color:#d8f6ff;pointer-events:none;display:none}
+#fabtip b{display:block;margin-bottom:2px}#fabtip small{display:block;color:#8fb0c8;margin-top:3px;font-size:12px}
