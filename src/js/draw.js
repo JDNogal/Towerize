@@ -138,7 +138,7 @@ function draw(){
  try{dnDraw(lw);}catch(e){}
  // portales encima de los enemigos: salen «de debajo» y el portal siempre se ve y se puede pulsar
  for(const p of S.portals){const px=p.x*CS+CS/2,py=p.y*CS+CS/2,R=CS*1.35;{const dk=portalDisc(p);g.fillStyle=dk[0];g.beginPath();g.arc(px,py,R,0,7);g.fill();g.strokeStyle=dk[1];g.lineWidth=lw(2.5);g.stroke();}
-  /* v351: el icono del portal es el de la línea de rondas: portal normal, mini-élite(s), élite(s), grupo o jefe */{const im=portalIcImg(p);if(im&&im.complete&&im.naturalWidth){const z=R*1.5;g.drawImage(im,px-z/2,py-z/2,z,z);}}}
+  /* v351: el icono del portal es el de la línea de rondas: portal normal, mini-élite(s), élite(s), grupo o jefe */{const im=portalIcImg(p);if(im&&im.complete&&im.naturalWidth){/* v352: centrado por su dibujo real, no por el viewBox (la base quedaba baja) */const bb=im._bb,z=bb?R*1.25/bb.s:R*1.5;g.drawImage(im,px-z*(bb?bb.cx:.5),py-z*(bb?bb.cy:.5),z,z);}}}
  if(S.aim==='flag'&&S.aimT&&S.list.includes(S.aimT)){const t=S.aimT,R2=stats(t).range;g.fillStyle='rgba(90,180,255,.12)';g.strokeStyle='rgba(110,190,255,.9)';g.lineWidth=lw(1.5);g.beginPath();g.arc(t.x*CS+CS/2,t.y*CS+CS/2,R2*CS,0,7);g.fill();g.stroke();
   const r=Math.ceil(R2);for(let y=Math.max(0,t.y-r);y<=Math.min(N-1,t.y+r);y++)for(let x=Math.max(0,t.x-r);x<=Math.min(N-1,t.x+r);x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=R2){g.fillStyle='rgba(91,141,239,.45)';g.fillRect(x*CS,y*CS,CS,CS);if(h&&h.x===x&&h.y===y){g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.arc(x*CS+CS/2,y*CS+CS/2,CS*.48,0,7);g.fill();}}}
  if(S.selE&&PR.pinned&&PR.key&&PR.key.startsWith('ei:')&&S.enemies.includes(S.selE)){const q=S.selE,A=ET[q.t].aura,px=q.x*CS+CS/2,py=q.y*CS+CS/2;

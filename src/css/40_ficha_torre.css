@@ -1,0 +1,37 @@
+/* v352 · Ficha de torre nueva (ficha_torre.js) */
+.ftsub{margin:-2px 0 4px;font-size:12px;opacity:.75}
+.ftc .ftanc{display:none}
+.ftc [data-ftanc]{display:none}
+.ftdesc{margin:4px 0 6px;font-size:13.5px;line-height:1.45}
+.ftmech{margin:4px 0 8px;padding:7px 9px 6px;border-radius:9px;background:color-mix(in srgb,currentColor 6%,transparent);border:1px solid color-mix(in srgb,var(--acc,#c2560e) 45%,transparent);font-size:13px;line-height:1.4}
+.ftmt b{color:var(--acc,#c2560e)}
+.ftbar{position:relative;height:8px;border-radius:5px;background:color-mix(in srgb,currentColor 14%,transparent);overflow:hidden;margin-top:5px}
+.ftbar i{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,#f0a040,#e0453a);transition:width .25s linear}
+.ftml{text-align:right;font-size:12px;opacity:.8;margin-top:2px;font-variant-numeric:tabular-nums}
+.ftchips{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:8px 0 4px}
+.ftchips.n3{grid-template-columns:repeat(3,1fr)}.ftchips.n2{grid-template-columns:repeat(2,1fr)}.ftchips.n1{grid-template-columns:1fr}
+.ftchip{border-radius:9px;padding:5px 3px 4px;text-align:center;background:color-mix(in srgb,currentColor 5%,transparent);border:1px solid color-mix(in srgb,currentColor 20%,transparent);min-width:0}
+.ftchip>span{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.85}
+.ftchip>span .kw{font-weight:600}
+.ftchip>b{display:block;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ftdps{margin:2px 0 6px;padding:6px 9px 6px;border-radius:9px;background:color-mix(in srgb,currentColor 5%,transparent);border:1px solid color-mix(in srgb,currentColor 20%,transparent)}
+.ftdl{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px}
+.ftdv{font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
+.ftdps .ftbar i{background:linear-gradient(90deg,#e8a33a,#d8452f)}
+.ftdps.over .ftbar i{background:linear-gradient(90deg,#e8a33a,#ffd24a);box-shadow:0 0 6px #ffd24a}
+.ftdn{font-size:11.5px;opacity:.75;margin-top:2px;min-height:1em}
+.ftdps.frozen{opacity:.7;filter:grayscale(1)}
+.ftfx{display:flex;align-items:center;gap:8px;margin:0 0 4px;padding:5px 8px;border-radius:9px;background:color-mix(in srgb,currentColor 5%,transparent);border:1px solid color-mix(in srgb,currentColor 20%,transparent)}
+.ftfxi{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;background:color-mix(in srgb,#fff 70%,transparent);border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 55%,transparent);cursor:help}
+.ftfxi:hover{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc,#c2560e) 40%,transparent)}
+.ftfx small{font-weight:700}
+.ftfold{border-top:1px solid color-mix(in srgb,currentColor 18%,transparent);margin-top:4px}
+.ftfold>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:6px 2px;font-weight:700}
+.ftfold>summary::-webkit-details-marker{display:none}
+.ftfold>summary::after{content:'▸';transition:transform .2s;opacity:.8}
+.ftfold[open]>summary::after{transform:rotate(90deg)}
+.ftfold>summary em{font-style:normal;font-weight:500;opacity:.75;font-size:13px}
+.ftin{padding:0 2px 6px}
+.ftab .ftpip{display:flex;gap:3px;align-items:center}
+.ftab .ftpip i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,currentColor 18%,transparent)}
+.ftab .ftpip i.on{background:var(--acc,#c9893a)}

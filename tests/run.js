@@ -91,6 +91,7 @@ const T=[
  ['eventos_imagenes.js','Eventos en pergamino: dibujo de cada evento y de cada opción'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
  ['sonidos_andres.js','Sonidos de Andres: conjunto Andres/Claude, eras, bolsa barajada'],
+ ['ficha_torre.js','Ficha de torre nueva: mecánica con barra, 4 números, DPS real en directo y pliegues'],
  ['fichas_zoom.js','Fichas del mapa: pegadas a su torre, crecen con el zoom, compendio con L, sin «casillas»'],
  ['especializaciones_nuevas.js','Especializaciones nuevas: Senda rúnica, Dron petrolero, Cañón de riel y Drones bombarderos',null,2],
  ['compendio_eventos.js','Compendio de eventos: imagen de cada evento, opciones y página de cada opción'],

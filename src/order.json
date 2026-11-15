@@ -38,7 +38,8 @@
   "36_fabricador.css",
   "37_arreglos_v351.css",
   "38_ficha_enemigo.css",
-  "39_puntuacion_libro.css"
+  "39_puntuacion_libro.css",
+  "40_ficha_torre.css"
  ],
  "js": [
   "00_config.js",
@@ -190,6 +191,7 @@
   "puntuacion_libro.js",
   "fichas_zoom.js",
   "descripciones_rango.js",
-  "cofre_salida.js"
+  "cofre_salida.js",
+  "ficha_torre.js"
  ]
 }

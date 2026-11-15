@@ -205,10 +205,7 @@ function unitExtra(r,k,sp,t,s,hpm,uap,uspd,src){try{
  }catch(e){}return r;}
 function towerInfo(t){
  if(TW[t.type].uniq)return uniqInfo(t,t.type);
- const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
- const X=tinfo(t),usp=X.uspd||(!t.tinf&&t.uspdx)||0,UA=T.unit?uxAdj(t.type,t.spec,s,lvMods(t.type,t.lvl,t.spec).hp,X.uap):null;
- return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(UA?UA.s:s,uxT(t.type,t.spec),src,T.unit?unitExtra(unitRows(T,src,t,PR.pinned&&PR.key===src,UA.hpm,UA.uap,usp),t.type,t.spec,t,UA.s,UA.hpm,UA.uap,usp,src):tgtRow(t,src,PR.pinned&&PR.key===src))+
-  (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area&&!T.cone&&!(t.type==='robots'&&t.spec==='mecha')?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
+ return fichaTorre(t);/* v352: ficha nueva (ficha_torre.js) */
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
 let LVT_NOSPEC=0;/* v308: en el compendio las especializaciones van en su propia sección, debajo */
