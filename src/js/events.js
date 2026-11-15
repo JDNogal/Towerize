@@ -203,8 +203,8 @@ function roundRewards(){
  if(due.length)S.msg='¡Has defendido las casas! Coloca tu recompensa.';}
 
 // ---- Mímico: al conseguirlo cae en el mapa, en una zona con solares libres y pocas torres (mejor por dentro del mapa que en el borde).
-// Las bajas a 2,5 casillas o menos lo alimentan; lleno, escupe un cofre al colocar la siguiente pieza y la próxima vez pide más ----
-const MIMR=2.5,MIM0=30,MIMUP=20;
+// Las bajas a 4 casillas o menos lo alimentan; lleno, escupe un cofre al colocar la siguiente pieza y la próxima vez pide más ----
+const MIMR=4,/* v343: antes 2,5 */MIM0=30,MIMUP=20;
 function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC(x,y)?S.cc[y][x]:-1,NB=P;let best=null,bs=-1e9;
  for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!S.blocks[Math.floor(x/NB)+','+Math.floor(y/NB)])continue;const v0=cc(x,y);if(v0!==0&&v0!==3)continue;if(!D.some(([a,b])=>cc(x+a,y+b)===2))continue;
   let sol=0,tw=0;for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){if(i*i+j*j>10)continue;const v=cc(x+i,y+j);if(v===1){if(S.occ[((x+i)*K+1)+','+((y+j)*K+1)])tw++;else sol++;}}
