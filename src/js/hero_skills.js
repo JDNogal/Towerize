@@ -2,22 +2,22 @@
 // b = activa básica (desde el inicio), p4 = pasiva de Nv 4, p8 = pasiva de Nv 8 (mejora la básica), u = ultimate (Nv 10). Las activas solo en combate y con el héroe vivo.
 const HBCD=20,HUCD=90,HDUR={yrsa:{b:'1,5 s (congelación)',p8:'3 s (charco)',u:'1,5 s (congelación)'},reinhart:{b:'15 s',u:'2 s (aturdimiento)'},sylvana:{b:'4 s',p4:'4 s (presa)',u:'25 s'},radagast:{b:'1,5 s hasta explotar',u:'6 s'}};
 const HAB={
- reinhart:{b:{n:'Llamada a las armas',ic:'📯',t:()=>'Eliges un punto del camino: 2 soldados bloquean y luchan <b>15 s</b>.'},
+ reinhart:{b:{n:'Llamada a las armas',ic:'📯',t:()=>'Eliges un punto del camino: 2 soldados bloquean y luchan <span class="nd">15 s</span>.'},
   p4:{n:'Provocación',ic:'🛡️',t:()=>'<span class="kw" data-kw="eblk" data-src="">Corpulencia 3</span> (bloquea hasta 3 enemigos) y <span class="chp">−15% de daño recibido</span>.'},
   p8:{n:'Veteranos',ic:'⚜️',t:()=>'Llamada a las armas invoca soldados pesados: más vida, daño y armadura.'},
-  u:{n:'Carga Heroica',ic:'⚔️',t:()=>'Carga hasta un punto sin recibir daño: <span class="cd">300% de su daño</span> a lo que atraviesa y a 1,5 casillas, los empuja y los <span class="kw" data-kw="stun" data-src="">aturde</span> <b>2 s</b> (jefes, 1 s).'}},
- sylvana:{b:{n:'Hiedra enredadora',ic:'🌿',t:()=>`Una zona de hiedra (1,5 casillas) deja ${kw('root','inmovilizados','')} <b>4 s</b> a los enemigos: no se mueven, pero atacan.`},
-  p4:{n:'Halcón de caza',ic:'🦅',t:()=>`Cada 6 s, un halcón golpea al enemigo con más vida cerca de Sylvana y lo marca como ${kw('prey','presa','')} <b>4 s</b>.`},
+  u:{n:'Carga Heroica',ic:'⚔️',t:()=>'Carga hasta un punto sin recibir daño: <span class="cd">300% de su daño</span> a lo que atraviesa y a 1,5 casillas, los empuja y los <span class="kw" data-kw="stun" data-src="">aturde</span> <span class="nd">2 s</span> (jefes, 1 s).'}},
+ sylvana:{b:{n:'Hiedra enredadora',ic:'🌿',t:()=>`Una zona de hiedra (1,5 casillas) deja ${kw('root','inmovilizados','')} <span class="nd">4 s</span> a los enemigos: no se mueven, pero atacan.`},
+  p4:{n:'Halcón de caza',ic:'🦅',t:()=>`Cada 6 s, un halcón golpea al enemigo con más vida cerca de Sylvana y lo marca como ${kw('prey','presa','')} <span class="nd">4 s</span>.`},
   p8:{n:'Hiedra venenosa',ic:'☘️',t:()=>`La hiedra además ${kw('poison','envenena','')} cada segundo.`},
-  u:{n:'Llamada salvaje',ic:'🐾',t:()=>'Invoca <b>25 s</b> una bestia al azar: 🐻 oso (aguanta y bloquea a 3), 🐺 huargo (rápido) o 🐆 pantera (caza la retaguardia).'}},
- yrsa:{b:{n:'Prisión de hielo',ic:'🥶',t:()=>`${kw('freeze','Congela','')} <b>1,5 s</b> a los enemigos a 1,2 casillas (a los jefes los ${kw('slow','ralentiza','')} 50%).`},
+  u:{n:'Llamada salvaje',ic:'🐾',t:()=>'Invoca <span class="nd">25 s</span> una bestia al azar: 🐻 oso (aguanta y bloquea a 3), 🐺 huargo (rápido) o 🐆 pantera (caza la retaguardia).'}},
+ yrsa:{b:{n:'Prisión de hielo',ic:'🥶',t:()=>`${kw('freeze','Congela','')} <span class="nd">1,5 s</span> a los enemigos a 1,2 casillas (a los jefes los ${kw('slow','ralentiza','')} 50%).`},
   p4:{n:'Combustión lenta',ic:'🌡️',t:()=>`Los enemigos ralentizados o parados reciben <span class="cbu">+50% de stacks</span> de ${kw('burn','quemadura','')}.`},
-  p8:{n:'Piroescarcha',ic:'♨️',t:()=>`Al romperse la prisión, deja fuego <b>3 s</b> (1,2 casillas) que aplica ${kw('burn','quemadura','')}.`},
-  u:{n:'Cataclismo',ic:'🌠',t:()=>`Meteoro: <span class="cd">300% de su daño</span> a 1,5 casillas, 10 de ${kw('burn','quemadura','')} y fuego <b>4 s</b>. Luego, onda de hielo: ${kw('freeze','congela','')} <b>1,5 s</b> y 5 de ${kw('chill','hipotermia','')}.`}},
- radagast:{b:{n:'Runa arcana',ic:'🔯',t:()=>'Una runa explota a los <b>1,5 s</b> con <span class="cmg">daño mágico</span> en área (1,2 casillas).'},
+  p8:{n:'Piroescarcha',ic:'♨️',t:()=>`Al romperse la prisión, deja fuego <span class="nd">3 s</span> (1,2 casillas) que aplica ${kw('burn','quemadura','')}.`},
+  u:{n:'Cataclismo',ic:'🌠',t:()=>`Meteoro: <span class="cd">300% de su daño</span> a 1,5 casillas, 10 de ${kw('burn','quemadura','')} y fuego <span class="nd">4 s</span>. Luego, onda de hielo: ${kw('freeze','congela','')} <span class="nd">1,5 s</span> y 5 de ${kw('chill','hipotermia','')}.`}},
+ radagast:{b:{n:'Runa arcana',ic:'🔯',t:()=>'Una runa explota a los <span class="nd">1,5 s</span> con <span class="cmg">daño mágico</span> en área (1,2 casillas).'},
   p4:{n:'Orbe sobrecargado',ic:'🔮',t:()=>'Cada 4.º orbe va sobrecargado: <span class="cd">doble de daño</span> y doble de área.'},
   p8:{n:'Pulso arcano',ic:'🌀',t:()=>'Antes de explotar, la runa atrae a los enemigos (2,4 casillas) hacia su centro (los jefes, la mitad).'},
-  u:{n:'Tormenta arcana',ic:'⛈️',t:()=>'Tormenta de <b>6 s</b> (3 casillas) que lanza rayos de <span class="cmg">daño mágico</span> con un poco de área sobre los enemigos de dentro.'}}};
+  u:{n:'Tormenta arcana',ic:'⛈️',t:()=>'Tormenta de <span class="nd">6 s</span> (3 casillas) que lanza rayos de <span class="cmg">daño mágico</span> con un poco de área sobre los enemigos de dentro.'}}};
 const BEASTS={bear:{n:'Oso pardo',ic:'🐻',col:'#8a5a3a',hp:2.6,d:1.2,r:1,w:3,ap:25,sp:.9},wolf:{n:'Huargo plateado',ic:'🐺',col:'#b8c0cc',hp:1.4,d:1,r:1.7,w:1,ap:10,sp:1.6,al:3.2},panther:{n:'Pantera de sombra',ic:'🐆',col:'#3a3448',hp:1.1,d:2.4,r:1,w:1,ap:5,sp:1.7,al:4.2,pref:1}};
 const hdm=()=>stats(S.hero.pt).dmg;
 const habOk=k=>{const H=S.hero;if(!H)return 'Sin héroe';if(k==='u'&&H.lvl<10)return 'Se desbloquea a Nv 10';if(S.phase!=='wave')return 'Solo durante la oleada';if(H.s.hp<=0)return 'Tu héroe está caído';const cd=k==='u'?H.ucd:H.bcd;if(cd>0)return 'Enfriamiento: '+fmtT(cd);return '';};
@@ -116,7 +116,7 @@ function hpanTick(){if(S&&S.list){const xs=xPanel().replace(/<span class="hcdv"[
  const H=S&&S.hero;if(!H)return;for(const el of document.querySelectorAll('.hcdv')){const k=el.dataset.k;if(k==='m'){const cd=S.mecha&&!S.mecha.on?S.mecha.cd||0:0;el.style.setProperty('--p',(cd>0?cd/MECHCD*360:0)+'deg');el.textContent=cd>0?Math.ceil(cd):'';continue;}const cd=k==='u'?H.ucd||0:H.bcd||0,M=k==='u'?HUCD:HBCD;el.style.setProperty('--p',(cd>0?cd/M*360:0)+'deg');el.textContent=cd>0?fmtT(cd,1):'';}
  const sg=(pigsOn()?'P':'')+(habOk('b')?1:0)+''+(habOk('u')?1:0)+(OPT.autoB?'A':'')+(OPT.autoU?'U':'')+S.aim+H.lvl+(H.s.hp>0)+(H.s.hp<=0?Math.ceil(H.s.rt):'');if(sg!==hpanTick.sg){hpanTick.sg=sg;const p=document.querySelector('#mbr .hpan');if(p)p.outerHTML=heroPanel();}}
 function habInfo(k){const H=S.hero;if(!H)return '';const A=HAB[H.id][k],w=habOk(k);return `<div class="ttl"><b>${A.ic} ${A.n}</b> · ${k==='u'?'Definitiva (Nv 10)':'Activa básica'}</div><small style="margin:0">${A.t()}</small>`+R('ccl','Enfriamiento',fmtT(k==='u'?HUCD:HBCD))+((HDUR[H.id]||{})[k]?R('cr',kst('dur','Duración',''),HDUR[H.id][k]):'')+(w?`<small class="cr" style="margin-top:4px">${w}</small>`:'');}
-function heroAbHtml(id,lvl){const A=HAB[id];if(!A)return '';const box=(a,tp,dk,act,need)=>lvl!=null&&lvl<need?'':`<div class="rbx rhb ${act?'rac':'rps'}${dk==='u'?' rult':''}"><div class="rbt">${act?'⚡':INF} ${tp}<small>${(HDUR[id]||{})[dk]?'⏱ '+HDUR[id][dk]:''}${act?' · ⌛ '+fmtT(dk==='u'?HUCD:HBCD):''}</small></div><b>${a.ic} ${a.n}</b> · ${a.t()}</div>`;
+function heroAbHtml(id,lvl){const A=HAB[id];if(!A)return '';const box=(a,tp,dk,act,need)=>lvl!=null&&lvl<need?'':`<div class="rbx rhb ${act?'rac':'rps'}${dk==='u'?' rult':''}"><div class="rbt">${act?'⚡':INF} ${tp}<small>${(HDUR[id]||{})[dk]?icU('dur','⌛')+' '+HDUR[id][dk]:''}${act?' · '+icU('cool','⏱')+' '+fmtT(dk==='u'?HUCD:HBCD):''}</small></div><b>${a.ic} ${a.n}</b> · ${a.t()}</div>`;
  return `<div class="esec" style="margin-top:12px">Habilidades</div>`+box(A.b,'Activa','b',1,1)+box(A.p4,'Pasiva · Nv 4','p4',0,4)+box(A.p8,'Pasiva · Nv 8','p8',0,8)+box(A.u,'Definitiva · Nv 10','u',1,10)+(lvl==null?'<small>Las activas solo se usan durante la oleada y con el héroe vivo.</small>':'');}
 function startTut(){SEEOK=true;saveClear();TUTON=true;TUTR=0;TUTHS={};ROUNDS=10;CHESTS=2;setSize(5);$('menu').classList.remove('setup');
  if(TOUCH&&OPT.fs)enterFS();lbClose(false);document.body.classList.remove('inmenu');$('endscr').classList.remove('open');init();}

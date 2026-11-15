@@ -17,18 +17,18 @@ function h2Locks(){for(const id in H2){if(h2Has(id))delete HEROES[id].lockTxt;el
 function h2Unlock(id,why){if(h2Has(id))return;STO['h_'+id]=1;try{saveSto();}catch(e){}h2Locks();try{newU('hr',HEROES[id].ic,HEROES[id].n,why,id);toast(`🦸 <b>Nuevo héroe: ${HEROES[id].n}</b><br><small>${why}</small>`);}catch(e){}}
 h2Locks();if(typeof window!=='undefined')setInterval(()=>{try{h2Locks();}catch(e){}},1500);
 // ---- textos de habilidades ----
-HAB.korr={b:{n:'Llamada de la colmena',ic:'📢',t:()=>S&&S.hero&&S.hero.id==='korr'&&S.hero.form>0?`<b>Embestida</b> (en Forma primigenia): carga 3 casillas por el camino atravesando enemigos, con <span class="cd">200% de su daño</span> como <span class="cmg">daño mágico</span>, y los empuja hacia atrás.`:`Provoca <b>4 s</b> a los enemigos a 2,5 casillas: van a por él (los voladores bajan). Mientras dura, recibe un <span class="chp">75% menos de daño</span> y devuelve parte de cada golpe como <span class="cmg">daño mágico</span>.`},
+HAB.korr={b:{n:'Llamada de la colmena',ic:'📢',t:()=>S&&S.hero&&S.hero.id==='korr'&&S.hero.form>0?`<b>Embestida</b> (en Forma primigenia): carga 3 casillas por el camino atravesando enemigos, con <span class="cd">200% de su daño</span> como <span class="cmg">daño mágico</span>, y los empuja hacia atrás.`:`Provoca <span class="nd">4 s</span> a los enemigos a 2,5 casillas: van a por él (los voladores bajan). Mientras dura, recibe un <span class="chp">75% menos de daño</span> y devuelve parte de cada golpe como <span class="cmg">daño mágico</span>.`},
  p4:{n:'Égida psiónica',ic:'🔮',t:()=>`Tus unidades a 2,5 casillas de Korr ganan <span class="cmg">+25 de resistencia mágica</span>.`},
  p8:{n:'Clamor de la colmena',ic:'💥',t:()=>`El daño devuelto se acumula y, al acabar la provocación, estalla a 2 casillas. Korr se cura un 6% por cada enemigo provocado que muera.`},
- u:{n:'Forma primigenia',ic:'🦖',t:()=>`Grito que deja ${kw('fear','aterrados','')} a los enemigos cercanos y transforma a Korr <b>25 s</b>: <span class="cd">+50% de daño</span>, sus garras golpean a todos los que tiene pegados, recibe un <span class="chp">40% menos de daño</span> y su básica pasa a ser <b>Embestida</b>.`}};
-HAB.ferro={b:{n:'Vertido corrosivo',ic:'🧪',t:()=>`Escupe ácido hacia los portales: una franja que cubre el ancho del camino, de 3 casillas de largo, <b>6 s</b>. ${kw('poison','Envenena','')} y deja la ${kw('brk','armadura rota','')}.`},
+ u:{n:'Forma primigenia',ic:'🦖',t:()=>`Grito que deja ${kw('fear','aterrados','')} a los enemigos cercanos y transforma a Korr <span class="nd">25 s</span>: <span class="cd">+50% de daño</span>, sus garras golpean a todos los que tiene pegados, recibe un <span class="chp">40% menos de daño</span> y su básica pasa a ser <b>Embestida</b>.`}};
+HAB.ferro={b:{n:'Vertido corrosivo',ic:'🧪',t:()=>`Escupe ácido hacia los portales: una franja que cubre el ancho del camino, de 3 casillas de largo, <span class="nd">6 s</span>. ${kw('poison','Envenena','')} y deja la ${kw('brk','armadura rota','')}.`},
  p4:{n:'Arco voltaico',ic:'⚡',t:()=>`Sus disparos dejan ${kw('ez','electrizado','')} al objetivo y saltan a un enemigo más.`},
- p8:{n:'Ácido inflamable',ic:'🔥',t:()=>`La franja mide 5 casillas, dura <b>9 s</b> y además aplica ${kw('burn','quemadura','')}.`},
- u:{n:'Protocolo de purga',ic:'☢️',t:()=>`Onda sobre los enemigos de su alcance que consume sus estados: el ${kw('poison','veneno','')} hace de golpe el doble de lo que le quedaba; la ${kw('burn','quemadura','')} estalla alrededor; el ${kw('ez','electrizado','')} ${kw('stun','aturde','')} <b>1,5 s</b>. Con los tres: además, armadura y resistencia mágica a 0 durante <b>5 s</b>.`}};
+ p8:{n:'Ácido inflamable',ic:'🔥',t:()=>`La franja mide 5 casillas, dura <span class="nd">9 s</span> y además aplica ${kw('burn','quemadura','')}.`},
+ u:{n:'Protocolo de purga',ic:'☢️',t:()=>`Onda sobre los enemigos de su alcance que consume sus estados: el ${kw('poison','veneno','')} hace de golpe el doble de lo que le quedaba; la ${kw('burn','quemadura','')} estalla alrededor; el ${kw('ez','electrizado','')} ${kw('stun','aturde','')} <span class="nd">1,5 s</span>. Con los tres: además, armadura y resistencia mágica a 0 durante <span class="nd">5 s</span>.`}};
 HAB.kai={b:{n:'Ejecución',ic:'🗡️',t:()=>`Salta sobre el enemigo con menos vida a 3 casillas: <span class="cd">300% de su daño</span>. Si está por debajo del 25% de vida, lo mata en el acto (jefes no).`},
  p4:{n:'Camuflaje óptico',ic:'👤',t:()=>`Cada 45 s, al bajar del 50% de vida, se camufla: deja de pelear, no la atacan y se cura hasta el 75%. La Ejecución la saca antes.`},
  p8:{n:'Cadena de ejecuciones',ic:'⛓️',t:()=>`Si la Ejecución mata, salta a otro enemigo, hasta 3 veces más.`},
- u:{n:'Danza de cuchillas',ic:'🌪️',t:()=>`<b>3 s</b> sin poder recibir daño, golpeando a todo lo que la rodea y dejándolo ${kw('mark','marcado','')} <b>8 s</b>. Cada vez que mata, salta al siguiente grupo por el camino (hasta 3 veces).`}};
+ u:{n:'Danza de cuchillas',ic:'🌪️',t:()=>`<span class="nd">3 s</span> sin poder recibir daño, golpeando a todo lo que la rodea y dejándolo ${kw('mark','marcado','')} <span class="nd">8 s</span>. Cada vez que mata, salta al siguiente grupo por el camino (hasta 3 veces).`}};
 HDUR.korr={b:'4 s',u:'25 s'};HDUR.ferro={b:'6 s (9 s con Ácido inflamable)',u:'5 s (fusión)'};HDUR.kai={u:'3 s'};
 HFX.korr=src=>'Golpea con '+kw('tmagic','daño mágico',src)+' y tiene '+kw('umr','resistencia mágica',src);
 HFX.ferro=src=>'Dispara '+kw('telem','daño elemental',src);
@@ -151,7 +151,7 @@ if(typeof document!=='undefined'){const cw=document.getElementById('cw');if(cw)c
 // ---- Sello psiónico (Korr) ----
 nrAdd({id:'seal',n:'Sello psiónico',ic:'🧿',col:'#3a3a7a',ini:1,cd:2,
  pas:()=>'Los enemigos que golpean a tus unidades o a tu héroe reciben el <span class="cmg">10% del golpe</span> como <span class="cmg">daño mágico</span>.',
- act:()=>`Los enemigos de un área se juntan en el centro y quedan ${kw('slow','ralentizados','')} un 50% durante <b>4 s</b>.`},
+ act:()=>`Los enemigos de un área se juntan en el centro y quedan ${kw('slow','ralentizados','')} un 50% durante <span class="nd">4 s</span>.`},
  {aim:'Elige el centro del tirón psíquico.',r:2.5*K,col:'192,112,255',use:c=>{let n=0;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d>2.5*K)continue;n++;
    if(d>.5){const mv=Math.min(d,2.5*K*(isBoss(e)?.5:1)),q=pathNear(e.x+(c.x-e.x)/d*mv,e.y+(c.y-e.y)/d*mv);if(q){e.x=e.tx=q.x;e.y=e.ty=q.y;}}slowE(e,.5,4);}
   RS('seal').n+=n;S.fx.push({x:c.x,y:c.y,t:.6,m:.6,r:2.5*K,col:'#c070ff'});return true;}});
@@ -168,7 +168,7 @@ nrAdd({id:'cell',n:'Célula de la Forja',ic:'🔋',col:'#2a5a4a',ini:1,cd:2,
 // ---- Tablón de recompensas (Kai) ----
 nrAdd({id:'board',n:'Tablón de recompensas',ic:'📌',col:'#6a3a1a',ini:1,cd:2,
  pas:()=>'En cada oleada, un enemigo fuerte sale como <b>«Se busca»</b>: al matarlo cobras <span class="gd">oro extra</span>.',
- act:()=>`El enemigo más fuerte del mapa queda ${kw('mark','marcado','')} <b>20 s</b>. Si muere en ese tiempo, da el <span class="gd">triple de oro</span>.`},
+ act:()=>`El enemigo más fuerte del mapa queda ${kw('mark','marcado','')} <span class="nd">20 s</span>. Si muere en ese tiempo, da el <span class="gd">triple de oro</span>.`},
  {use:()=>{let b=null;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;if(!b||e.max>b.max)b=e;}if(!b){S.msg='Tablón de recompensas: no hay enemigos en el mapa.';return false;}
   b.ctr=20;b.mk={t:20,cr:Math.max(.25,b.mk&&b.mk.t>0?b.mk.cr:0)};RS('board').n++;
   try{const el=document.querySelector('#relics [data-id="board"]'),r=cv.getBoundingClientRect(),q=el.getBoundingClientRect(),k=sc(),px=(q.left+q.width/2-r.left)/r.width*VIEW,py=(q.top+q.height/2-r.top)/r.height*VH;HX.beam={x:(px/k+CAM.x)/CS-.5,y:(py/k+CAM.y)/CS-.5,e:b,t:.7};}catch(x){HX.beam={x:b.x,y:b.y-6*K,e:b,t:.7};}

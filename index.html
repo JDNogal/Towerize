@@ -2821,6 +2821,8 @@ input,textarea,[contenteditable="true"],[contenteditable=""]{-webkit-user-select
 #relic .toff>.tof{position:relative}
 #relic .toff>.tof>button.cpgo{grid-area:1/1/-1/-1!important;position:absolute!important;top:8px!important;right:8px!important;left:auto!important;bottom:auto!important;width:28px!important;height:28px!important;min-width:0!important;margin:0!important;padding:0!important;order:0!important;font-size:15px!important;display:grid!important;place-items:center!important;z-index:3}
 body.mfs #relic .toff>.tof>button.cpgo{grid-area:1/1/-1/-1!important;top:auto!important;bottom:54px!important;right:8px!important;width:24px!important;height:24px!important;font-size:13px!important}
+/* v351 · móvil: las torres de apoyo (sin objetivos) ya no enseñan un «·» suelto antes de sus etiquetas */
+body.mfs #relic .tof .chips .tgmob:empty{display:none!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -4094,29 +4096,29 @@ const RELICS=[
 const mapN=()=>Math.max(0,Object.keys(S.blocks).length-1),mapDmg=()=>Math.min(75,5*Math.floor(mapN()/2)),mapCool=()=>Math.min(30,5*Math.floor(mapN()/4));
 const RDEF={
  coin:{cd:4,pas:()=>'Recibes <span class="gd">+50% de oro</span> de todo: enemigos, eventos, reliquias…',act:()=>'<span class="gd">+200 de oro</span> al instante.'},
- lens:{cd:3,dur:20,pas:()=>'Torres: <span class="cc">+10% de crítico</span>.',act:()=>'<b>20 s</b>: <span class="cc">+20% de crítico</span> y críticos <span class="cc">×3</span>.'},
- anvil:{cd:3,dur:20,pas:()=>'Las casillas especiales dan <span class="cf">+50% de su bonus</span>.',act:()=>'<b>20 s</b>: torres sobre casillas especiales con <span class="cr">−50% de enfriamiento</span> y <span class="cd">+50% de daño</span>.'},
- frost:{cd:3,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de <span class="kw" data-kw="slow">ralentizar</span>.',act:()=>'<span class="kw" data-kw="freeze">Congela</span> <b>10 s</b> a los enemigos de un área.'},
- dice:{cd:3,dur:10,pas:()=>'Puedes <span class="cf">volver a tirar</span> una vez en cada elección.',act:()=>'Tiras el dado; dura <b>10 s</b>:<br>⚀ Torres <span class="cd">−25% de daño</span>.<br>⚁⚂ Torres <span class="cd">+25% de daño</span>.<br>⚃⚄ Torres <span class="cd">+50% de daño</span> y <span class="cr">−25% de enfriamiento</span>.<br>⚅ Torres <span class="cd">+100% de daño</span> y <span class="cr">−50% de enfriamiento</span> (recarga de 80 s).'},
- horn:{cd:3,dur:10,pas:()=>'Tras 30 s de oleada: torres <span class="cd">+20% de daño</span>.',act:()=>'<b>10 s</b>: torres <span class="cd">+100% de daño</span>.'},
- compass:{cd:5,dur:10,pas:()=>'En cada cruce, un enemigo tiene un <span class="cf">50%</span> de tomar la rama que se aleja del núcleo y seguirla hasta <span class="cr">6 s</span> (los jefes, <span class="cr">3 s</span>); una vez por enemigo.',act:()=>'<b>10 s</b>: los enemigos retroceden por donde han venido.'},
+ lens:{cd:3,dur:20,pas:()=>'Torres: <span class="cc">+10% de crítico</span>.',act:()=>'<span class="nd">20 s</span>: <span class="cc">+20% de crítico</span> y críticos <span class="cc">×3</span>.'},
+ anvil:{cd:3,dur:20,pas:()=>'Las casillas especiales dan <span class="cf">+50% de su bonus</span>.',act:()=>'<span class="nd">20 s</span>: torres sobre casillas especiales con <span class="cr">−50% de enfriamiento</span> y <span class="cd">+50% de daño</span>.'},
+ frost:{cd:3,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de <span class="kw" data-kw="slow">ralentizar</span>.',act:()=>'<span class="kw" data-kw="freeze">Congela</span> <span class="nd">10 s</span> a los enemigos de un área.'},
+ dice:{cd:3,dur:10,pas:()=>'Puedes <span class="cf">volver a tirar</span> una vez en cada elección.',act:()=>'Tiras el dado; dura <span class="nd">10 s</span>:<br>⚀ Torres <span class="cd">−25% de daño</span>.<br>⚁⚂ Torres <span class="cd">+25% de daño</span>.<br>⚃⚄ Torres <span class="cd">+50% de daño</span> y <span class="cr">−25% de enfriamiento</span>.<br>⚅ Torres <span class="cd">+100% de daño</span> y <span class="cr">−50% de enfriamiento</span> (recarga de 80 s).'},
+ horn:{cd:3,dur:10,pas:()=>'Tras 30 s de oleada: torres <span class="cd">+20% de daño</span>.',act:()=>'<span class="nd">10 s</span>: torres <span class="cd">+100% de daño</span>.'},
+ compass:{cd:5,dur:10,pas:()=>'En cada cruce, un enemigo tiene un <span class="cf">50%</span> de tomar la rama que se aleja del núcleo y seguirla hasta <span class="cr">6 s</span> (los jefes, <span class="cr">3 s</span>); una vez por enemigo.',act:()=>'<span class="nd">10 s</span>: los enemigos retroceden por donde han venido.'},
  venom:{cd:4,pas:()=>`Cada impacto de torre: <span class="cc">20%</span> de aplicar 1 de ${kw('poison','veneno','')}.`,act:()=>`Todo el ${kw('poison','veneno','')} explota de golpe; si mata, salta al enemigo más cercano.`},
- barricade:{cd:2,dur:5,pas:()=>'Tus unidades y tu héroe: <span class="cph">+10 de armadura</span>.',act:()=>'Cortas un tramo del camino: los enemigos se detienen <b>5 s</b> (no en cruces).'},
- quiver:{cd:3,dur:10,pas:()=>'Torres: <span class="cr">−15% de enfriamiento</span>.',act:()=>'<b>10 s</b>: las torres de un área disparan <span class="cd">doble</span> (los rayos, doble daño).'},
+ barricade:{cd:2,dur:5,pas:()=>'Tus unidades y tu héroe: <span class="cph">+10 de armadura</span>.',act:()=>'Cortas un tramo del camino: los enemigos se detienen <span class="nd">5 s</span> (no en cruces).'},
+ quiver:{cd:3,dur:10,pas:()=>'Torres: <span class="cr">−15% de enfriamiento</span>.',act:()=>'<span class="nd">10 s</span>: las torres de un área disparan <span class="cd">doble</span> (los rayos, doble daño).'},
  hammer:{cd:4,pas:()=>'Mejorar torres cuesta un <span class="gd">15% menos</span>.',act:()=>'Una torre de Nv 1 o 2 sube un nivel gratis.'},
  scale:{cd:3,pas:()=>'Al final de cada ronda, <span class="gd">+10% de interés</span> sobre tu oro (máx. '+INTMAX+').'+(typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('scale')?' Ahora: <span class="gd">+'+interest()+' 🪙</span>.':''),act:()=>'Cobras ya el interés de 3 rondas.'},
- idol:{cd:3,dur:15,pas:()=>`Torres: <span class="cd">+5% de daño</span> por cada vida perdida en la partida (máx. +50%; ahora: <span class="cd">+${idolPct()}%</span>).`,act:()=>'Pierdes 2 de vida: <b>15 s</b> con <span class="cr">−50% de enfriamiento</span>.'},
+ idol:{cd:3,dur:15,pas:()=>`Torres: <span class="cd">+5% de daño</span> por cada vida perdida en la partida (máx. +50%; ahora: <span class="cd">+${idolPct()}%</span>).`,act:()=>'Pierdes 2 de vida: <span class="nd">15 s</span> con <span class="cr">−50% de enfriamiento</span>.'},
  mimic:{cd:4,pas:()=>'Cae en el mapa, junto al camino, donde haya solares libres y pocas torres. Cada enemigo que muere a '+String(MIMR).replace('.',',')+' casillas o menos lo <span class="cf">alimenta</span>; lleno ('+MIM0+', y '+MIMUP+' más cada vez), <span class="gd">escupe un cofre</span> al colocar la siguiente pieza. Lleno, no come más hasta soltarlo.',act:()=>'Usa el activo de otra reliquia tuya, aunque esté recargando.'},
- ember:{cd:3,dur:8,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de aplicar <span class="kw" data-kw="burn">quemadura</span>.',act:()=>'<b>8 s</b>: lluvia de fuego en un área (<span class="kw" data-kw="burn">quemadura</span> cada segundo).'},
+ ember:{cd:3,dur:8,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de aplicar <span class="kw" data-kw="burn">quemadura</span>.',act:()=>'<span class="nd">8 s</span>: lluvia de fuego en un área (<span class="kw" data-kw="burn">quemadura</span> cada segundo).'},
  badge:{cd:4,pas:()=>'Tu héroe: <span class="cd">+15% de daño</span> y <span class="chp">+15% de vida</span>.',act:()=>'Un Espadachín y un Sanador del gremio luchan contigo esta oleada.'},
  notebook:{cd:3,pas:()=>`Cada oleada sin perder vida: torres <span class="cd">+2% de daño</span> permanente (máx. +20%; ahora: <span class="cd">+${Math.min(20,2*((typeof S!=='undefined'&&S&&S.nbN)||0))}%</span>).`,act:()=>'Esta oleada, cada baja da <span class="cf">+1 de experiencia</span> a tu héroe.'},
- balance:{cd:3,dur:8,pas:()=>`Enemigos con ${kw('burn','quemadura','')} e ${kw('chill','hipotermia','')} a la vez: <span class="cd">+25% de stacks</span>.`,act:()=>`<b>8 s</b>, en un área: ${kw('slow','ralentiza','')} un 30% y aplica 3 de ${kw('burn','quemadura','')} y 1 de ${kw('chill','hipotermia','')} por segundo.`},
- tome:{cd:3,dur:8,pas:()=>'Lo que hace daño mágico: <span class="cmg">+10 de penetración mágica</span>.',act:()=>'<b>8 s</b>: los enemigos de un área reciben <span class="cd">+25% de daño</span> de todo (como <span class="cmg">daño mágico</span>).'},
+ balance:{cd:3,dur:8,pas:()=>`Enemigos con ${kw('burn','quemadura','')} e ${kw('chill','hipotermia','')} a la vez: <span class="cd">+25% de stacks</span>.`,act:()=>`<span class="nd">8 s</span>, en un área: ${kw('slow','ralentiza','')} un 30% y aplica 3 de ${kw('burn','quemadura','')} y 1 de ${kw('chill','hipotermia','')} por segundo.`},
+ tome:{cd:3,dur:8,pas:()=>'Lo que hace daño mágico: <span class="cmg">+10 de penetración mágica</span>.',act:()=>'<span class="nd">8 s</span>: los enemigos de un área reciben <span class="cd">+25% de daño</span> de todo (como <span class="cmg">daño mágico</span>).'},
  square:{cd:3,pas:()=>'Te ofrecen <span class="cf">4 piezas</span> en vez de 3.',act:()=>'Esta ronda colocas <span class="cf">dos piezas</span> de las que te ofrecen.'},
- harpoon:{cd:3,dur:8,pas:()=>`<span class="cd">+25% de daño</span> contra ${kw('fly','voladores','')}.`,act:()=>`<b>8 s</b>: los ${kw('fly','voladores','')} de un área caen al suelo y se pueden bloquear.`},
- banner:{cd:3,dur:10,pas:()=>'Tus soldados reaparecen un <span class="cr">30% más rápido</span>.',act:()=>'<b>10 s</b>: tus soldados <span class="cf">no pueden morir</span>.'},
+ harpoon:{cd:3,dur:8,pas:()=>`<span class="cd">+25% de daño</span> contra ${kw('fly','voladores','')}.`,act:()=>`<span class="nd">8 s</span>: los ${kw('fly','voladores','')} de un área caen al suelo y se pueden bloquear.`},
+ banner:{cd:3,dur:10,pas:()=>'Tus soldados reaparecen un <span class="cr">30% más rápido</span>.',act:()=>'<span class="nd">10 s</span>: tus soldados <span class="cf">no pueden morir</span>.'},
  crystal:{cd:5,pas:()=>'El primer enemigo que llega al núcleo cada oleada <span class="cf">no quita vida</span> (salvo jefes).',act:()=>'Recuperas <span class="chp">3 de vida</span>.'},
- trophy:{cd:3,dur:10,pas:()=>`Cada élite eliminada: <span class="cg">+5% de rango</span> para tus torres el resto de la partida (máx. +25%; ahora: <span class="cg">+${5*((typeof S!=='undefined'&&S&&S.troN)||0)}%</span>).`,act:()=>'<b>10 s</b>: torres <span class="cg">+50% de rango</span>.'},
+ trophy:{cd:3,dur:10,pas:()=>`Cada élite eliminada: <span class="cg">+5% de rango</span> para tus torres el resto de la partida (máx. +25%; ahora: <span class="cg">+${5*((typeof S!=='undefined'&&S&&S.troN)||0)}%</span>).`,act:()=>'<span class="nd">10 s</span>: torres <span class="cg">+50% de rango</span>.'},
  map:{cd:5,pas:()=>`Torres: <span class="cd">+5% de daño</span> cada 2 piezas colocadas (máx. +75%) y <span class="cr">−5% de enfriamiento</span> cada 4 (máx. −30%) (ahora: <span class="cd">+${mapDmg()}%</span>, <span class="cr">−${mapCool()}%</span>).`,act:()=>'Crea un cofre en un hueco sin explorar.'}};
 // la recarga de las reliquias es en segundos de oleada (el reloj se para fuera de la oleada); RDEF la da en «rondas» y aquí se convierte
 const RCDS={1:40,2:80,3:120,4:150,5:180};
@@ -4125,9 +4127,9 @@ const RELIC=Object.fromEntries(RELICS.map(r=>[r.id,r]));
 const RL={open:false,choices:[]};
 // pasivo y activo en dos recuadros, con título grande; el activo lleva su recarga
 // st: estado en partida (si la tienes). Lista / en curso / recargando va como etiqueta en la cabecera del activo, no como frase suelta
-const rdesc=(id,st)=>{const r=RELIC[id],tag=!st?`<small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`:st.t>0?`<small class="rstag ron">⚡ En curso · ${f(st.t)} s</small>`:st.cd>0?`<small class="rstag rrec">⏳ ${fmtT(st.cd)}</small>`:`<small class="rstag rok">✓ Lista</small><small>${kw('rcd','⌛ '+fmtT(r.cd),'','st')}</small>`;
+const rdesc=(id,st)=>{const r=RELIC[id],tag=!st?`<small>${kw('rcd',icU('cool','⏱')+' '+fmtT(r.cd),'','st')}</small>`:st.t>0?`<small class="rstag ron">⚡ En curso · ${f(st.t)} s</small>`:st.cd>0?`<small class="rstag rrec">${icU('cool','⏱')} ${fmtT(st.cd)}</small>`:`<small class="rstag rok">✓ Lista</small><small>${kw('rcd',icU('cool','⏱')+' '+fmtT(r.cd),'','st')}</small>`;
  return `<div class="rbx rrel rps${st&&st.cd>0&&!(st.t>0)?' roff':''}"><div class="rbt"><span class="rbtt">${INF} Pasivo</span>${st&&st.cd>0&&!(st.t>0)?'<small class="rstag rrec">Desactivado</small>':''}</div><div class="rbd">${r.pas()}</div></div><div class="rbx rrel rac"><div class="rbt"><span class="rbtt">${ACTI} Activo</span>${tag}</div><div class="rbd">${r.act()}</div></div>`;};
-const rcdTag=id=>`<span class="rcdt">${kw('rcd','⏳ '+RELIC[id].cd,'','st')}</span>`;
+const rcdTag=id=>`<span class="rcdt">${kw('rcd',icU('cool','⏱')+' '+RELIC[id].cd,'','st')}</span>`;
 const relicInfo=(id,quiet)=>{const r=RELIC[id],st=!quiet&&S.relics&&S.relics.includes(id)&&S.rs[id];
  return `<div class="ttl">${r.evr?`<small style="display:block;margin:0 0 2px">Reliquia de evento · «${EVENTS[r.ev]?EVENTS[r.ev].n:''}»</small>`:''}<b class="rttl"><i style="background:${r.col}">${r.ic}</i>${r.n}</b></div>`+rdesc(id,st||null);};
 const rp=id=>S.relics.includes(id)&&S.rs[id].cd===0,ra=id=>S.relics.includes(id)&&S.rs[id].t>0;
@@ -5251,22 +5253,22 @@ function tutDeal(){const r=S.round,names=TUTP[r]||['Recta','Esquina'];let any=nu
 // b = activa básica (desde el inicio), p4 = pasiva de Nv 4, p8 = pasiva de Nv 8 (mejora la básica), u = ultimate (Nv 10). Las activas solo en combate y con el héroe vivo.
 const HBCD=20,HUCD=90,HDUR={yrsa:{b:'1,5 s (congelación)',p8:'3 s (charco)',u:'1,5 s (congelación)'},reinhart:{b:'15 s',u:'2 s (aturdimiento)'},sylvana:{b:'4 s',p4:'4 s (presa)',u:'25 s'},radagast:{b:'1,5 s hasta explotar',u:'6 s'}};
 const HAB={
- reinhart:{b:{n:'Llamada a las armas',ic:'📯',t:()=>'Eliges un punto del camino: 2 soldados bloquean y luchan <b>15 s</b>.'},
+ reinhart:{b:{n:'Llamada a las armas',ic:'📯',t:()=>'Eliges un punto del camino: 2 soldados bloquean y luchan <span class="nd">15 s</span>.'},
   p4:{n:'Provocación',ic:'🛡️',t:()=>'<span class="kw" data-kw="eblk" data-src="">Corpulencia 3</span> (bloquea hasta 3 enemigos) y <span class="chp">−15% de daño recibido</span>.'},
   p8:{n:'Veteranos',ic:'⚜️',t:()=>'Llamada a las armas invoca soldados pesados: más vida, daño y armadura.'},
-  u:{n:'Carga Heroica',ic:'⚔️',t:()=>'Carga hasta un punto sin recibir daño: <span class="cd">300% de su daño</span> a lo que atraviesa y a 1,5 casillas, los empuja y los <span class="kw" data-kw="stun" data-src="">aturde</span> <b>2 s</b> (jefes, 1 s).'}},
- sylvana:{b:{n:'Hiedra enredadora',ic:'🌿',t:()=>`Una zona de hiedra (1,5 casillas) deja ${kw('root','inmovilizados','')} <b>4 s</b> a los enemigos: no se mueven, pero atacan.`},
-  p4:{n:'Halcón de caza',ic:'🦅',t:()=>`Cada 6 s, un halcón golpea al enemigo con más vida cerca de Sylvana y lo marca como ${kw('prey','presa','')} <b>4 s</b>.`},
+  u:{n:'Carga Heroica',ic:'⚔️',t:()=>'Carga hasta un punto sin recibir daño: <span class="cd">300% de su daño</span> a lo que atraviesa y a 1,5 casillas, los empuja y los <span class="kw" data-kw="stun" data-src="">aturde</span> <span class="nd">2 s</span> (jefes, 1 s).'}},
+ sylvana:{b:{n:'Hiedra enredadora',ic:'🌿',t:()=>`Una zona de hiedra (1,5 casillas) deja ${kw('root','inmovilizados','')} <span class="nd">4 s</span> a los enemigos: no se mueven, pero atacan.`},
+  p4:{n:'Halcón de caza',ic:'🦅',t:()=>`Cada 6 s, un halcón golpea al enemigo con más vida cerca de Sylvana y lo marca como ${kw('prey','presa','')} <span class="nd">4 s</span>.`},
   p8:{n:'Hiedra venenosa',ic:'☘️',t:()=>`La hiedra además ${kw('poison','envenena','')} cada segundo.`},
-  u:{n:'Llamada salvaje',ic:'🐾',t:()=>'Invoca <b>25 s</b> una bestia al azar: 🐻 oso (aguanta y bloquea a 3), 🐺 huargo (rápido) o 🐆 pantera (caza la retaguardia).'}},
- yrsa:{b:{n:'Prisión de hielo',ic:'🥶',t:()=>`${kw('freeze','Congela','')} <b>1,5 s</b> a los enemigos a 1,2 casillas (a los jefes los ${kw('slow','ralentiza','')} 50%).`},
+  u:{n:'Llamada salvaje',ic:'🐾',t:()=>'Invoca <span class="nd">25 s</span> una bestia al azar: 🐻 oso (aguanta y bloquea a 3), 🐺 huargo (rápido) o 🐆 pantera (caza la retaguardia).'}},
+ yrsa:{b:{n:'Prisión de hielo',ic:'🥶',t:()=>`${kw('freeze','Congela','')} <span class="nd">1,5 s</span> a los enemigos a 1,2 casillas (a los jefes los ${kw('slow','ralentiza','')} 50%).`},
   p4:{n:'Combustión lenta',ic:'🌡️',t:()=>`Los enemigos ralentizados o parados reciben <span class="cbu">+50% de stacks</span> de ${kw('burn','quemadura','')}.`},
-  p8:{n:'Piroescarcha',ic:'♨️',t:()=>`Al romperse la prisión, deja fuego <b>3 s</b> (1,2 casillas) que aplica ${kw('burn','quemadura','')}.`},
-  u:{n:'Cataclismo',ic:'🌠',t:()=>`Meteoro: <span class="cd">300% de su daño</span> a 1,5 casillas, 10 de ${kw('burn','quemadura','')} y fuego <b>4 s</b>. Luego, onda de hielo: ${kw('freeze','congela','')} <b>1,5 s</b> y 5 de ${kw('chill','hipotermia','')}.`}},
- radagast:{b:{n:'Runa arcana',ic:'🔯',t:()=>'Una runa explota a los <b>1,5 s</b> con <span class="cmg">daño mágico</span> en área (1,2 casillas).'},
+  p8:{n:'Piroescarcha',ic:'♨️',t:()=>`Al romperse la prisión, deja fuego <span class="nd">3 s</span> (1,2 casillas) que aplica ${kw('burn','quemadura','')}.`},
+  u:{n:'Cataclismo',ic:'🌠',t:()=>`Meteoro: <span class="cd">300% de su daño</span> a 1,5 casillas, 10 de ${kw('burn','quemadura','')} y fuego <span class="nd">4 s</span>. Luego, onda de hielo: ${kw('freeze','congela','')} <span class="nd">1,5 s</span> y 5 de ${kw('chill','hipotermia','')}.`}},
+ radagast:{b:{n:'Runa arcana',ic:'🔯',t:()=>'Una runa explota a los <span class="nd">1,5 s</span> con <span class="cmg">daño mágico</span> en área (1,2 casillas).'},
   p4:{n:'Orbe sobrecargado',ic:'🔮',t:()=>'Cada 4.º orbe va sobrecargado: <span class="cd">doble de daño</span> y doble de área.'},
   p8:{n:'Pulso arcano',ic:'🌀',t:()=>'Antes de explotar, la runa atrae a los enemigos (2,4 casillas) hacia su centro (los jefes, la mitad).'},
-  u:{n:'Tormenta arcana',ic:'⛈️',t:()=>'Tormenta de <b>6 s</b> (3 casillas) que lanza rayos de <span class="cmg">daño mágico</span> con un poco de área sobre los enemigos de dentro.'}}};
+  u:{n:'Tormenta arcana',ic:'⛈️',t:()=>'Tormenta de <span class="nd">6 s</span> (3 casillas) que lanza rayos de <span class="cmg">daño mágico</span> con un poco de área sobre los enemigos de dentro.'}}};
 const BEASTS={bear:{n:'Oso pardo',ic:'🐻',col:'#8a5a3a',hp:2.6,d:1.2,r:1,w:3,ap:25,sp:.9},wolf:{n:'Huargo plateado',ic:'🐺',col:'#b8c0cc',hp:1.4,d:1,r:1.7,w:1,ap:10,sp:1.6,al:3.2},panther:{n:'Pantera de sombra',ic:'🐆',col:'#3a3448',hp:1.1,d:2.4,r:1,w:1,ap:5,sp:1.7,al:4.2,pref:1}};
 const hdm=()=>stats(S.hero.pt).dmg;
 const habOk=k=>{const H=S.hero;if(!H)return 'Sin héroe';if(k==='u'&&H.lvl<10)return 'Se desbloquea a Nv 10';if(S.phase!=='wave')return 'Solo durante la oleada';if(H.s.hp<=0)return 'Tu héroe está caído';const cd=k==='u'?H.ucd:H.bcd;if(cd>0)return 'Enfriamiento: '+fmtT(cd);return '';};
@@ -5365,7 +5367,7 @@ function hpanTick(){if(S&&S.list){const xs=xPanel().replace(/<span class="hcdv"[
  const H=S&&S.hero;if(!H)return;for(const el of document.querySelectorAll('.hcdv')){const k=el.dataset.k;if(k==='m'){const cd=S.mecha&&!S.mecha.on?S.mecha.cd||0:0;el.style.setProperty('--p',(cd>0?cd/MECHCD*360:0)+'deg');el.textContent=cd>0?Math.ceil(cd):'';continue;}const cd=k==='u'?H.ucd||0:H.bcd||0,M=k==='u'?HUCD:HBCD;el.style.setProperty('--p',(cd>0?cd/M*360:0)+'deg');el.textContent=cd>0?fmtT(cd,1):'';}
  const sg=(pigsOn()?'P':'')+(habOk('b')?1:0)+''+(habOk('u')?1:0)+(OPT.autoB?'A':'')+(OPT.autoU?'U':'')+S.aim+H.lvl+(H.s.hp>0)+(H.s.hp<=0?Math.ceil(H.s.rt):'');if(sg!==hpanTick.sg){hpanTick.sg=sg;const p=document.querySelector('#mbr .hpan');if(p)p.outerHTML=heroPanel();}}
 function habInfo(k){const H=S.hero;if(!H)return '';const A=HAB[H.id][k],w=habOk(k);return `<div class="ttl"><b>${A.ic} ${A.n}</b> · ${k==='u'?'Definitiva (Nv 10)':'Activa básica'}</div><small style="margin:0">${A.t()}</small>`+R('ccl','Enfriamiento',fmtT(k==='u'?HUCD:HBCD))+((HDUR[H.id]||{})[k]?R('cr',kst('dur','Duración',''),HDUR[H.id][k]):'')+(w?`<small class="cr" style="margin-top:4px">${w}</small>`:'');}
-function heroAbHtml(id,lvl){const A=HAB[id];if(!A)return '';const box=(a,tp,dk,act,need)=>lvl!=null&&lvl<need?'':`<div class="rbx rhb ${act?'rac':'rps'}${dk==='u'?' rult':''}"><div class="rbt">${act?'⚡':INF} ${tp}<small>${(HDUR[id]||{})[dk]?'⏱ '+HDUR[id][dk]:''}${act?' · ⌛ '+fmtT(dk==='u'?HUCD:HBCD):''}</small></div><b>${a.ic} ${a.n}</b> · ${a.t()}</div>`;
+function heroAbHtml(id,lvl){const A=HAB[id];if(!A)return '';const box=(a,tp,dk,act,need)=>lvl!=null&&lvl<need?'':`<div class="rbx rhb ${act?'rac':'rps'}${dk==='u'?' rult':''}"><div class="rbt">${act?'⚡':INF} ${tp}<small>${(HDUR[id]||{})[dk]?icU('dur','⌛')+' '+HDUR[id][dk]:''}${act?' · '+icU('cool','⏱')+' '+fmtT(dk==='u'?HUCD:HBCD):''}</small></div><b>${a.ic} ${a.n}</b> · ${a.t()}</div>`;
  return `<div class="esec" style="margin-top:12px">Habilidades</div>`+box(A.b,'Activa','b',1,1)+box(A.p4,'Pasiva · Nv 4','p4',0,4)+box(A.p8,'Pasiva · Nv 8','p8',0,8)+box(A.u,'Definitiva · Nv 10','u',1,10)+(lvl==null?'<small>Las activas solo se usan durante la oleada y con el héroe vivo.</small>':'');}
 function startTut(){SEEOK=true;saveClear();TUTON=true;TUTR=0;TUTHS={};ROUNDS=10;CHESTS=2;setSize(5);$('menu').classList.remove('setup');
  if(TOUCH&&OPT.fs)enterFS();lbClose(false);document.body.classList.remove('inmenu');$('endscr').classList.remove('open');init();}
@@ -9399,9 +9401,9 @@ PORT.vega='<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3ED
 HEROES.vega={n:'Vega',ic:'🎯',col:'#ff4fd8',ranged:true,w:1,spd:2.1,apLv:.5,era:2,base:{hp:55,ap:5,dmg:8,cd:.6,range:3.8},relic:'radio',role:'Tiradora de la Resistencia',tags:['A distancia','Marcar','Físico'],deck:['bunker','robots'],d:'Superviviente de la Resistencia, con un rifle y un dron de reconocimiento. Marca zonas con bengalas para que tus torres hagan más daño y pide ataques aéreos sobre el camino.'};
 // solo aparece con la era 2 desbloqueada; al preparar partida, solo si la era elegida es la 2
 HVIS.vega=()=>{if(typeof era2Ok!=='function'||!era2Ok())return false;if(typeof S!=='undefined'&&S&&S.hero)return true;const picking=(typeof RL!=='undefined'&&RL.hpick)||(typeof LB!=='undefined'&&LB.open&&LB.area==='prep');return !picking||ERA===2;};
-HAB.vega={b:{n:'Bengala',ic:'🧨',t:()=>`Lanza una bengala donde quieras (área de 1 casilla, <b>8 s</b>): los enemigos dentro reciben un <span class="cd">+25% de daño</span> de tus torres y unidades.`},
+HAB.vega={b:{n:'Bengala',ic:'🧨',t:()=>`Lanza una bengala donde quieras (área de 1 casilla, <span class="nd">8 s</span>): los enemigos dentro reciben un <span class="cd">+25% de daño</span> de tus torres y unidades.`},
  p4:{n:'Machete',ic:'🔪',t:()=>`Si un enemigo la alcanza, Vega lo acuchilla: sus golpes cuerpo a cuerpo hacen el daño completo y aplican 1 stack de ${kw('bleed','sangrado','')} la mitad de las veces.`},
- p8:{n:'Fósforo blanco',ic:'🎇',t:()=>`La bengala es más grande (1,5 casillas), dura <b>12 s</b> y el bonus sube al <span class="cd">+40%</span>.`},
+ p8:{n:'Fósforo blanco',ic:'🎇',t:()=>`La bengala es más grande (1,5 casillas), dura <span class="nd">12 s</span> y el bonus sube al <span class="cd">+40%</span>.`},
  u:{n:'Ataque aéreo',ic:'✈️',t:()=>`Eliges un punto del camino: <b>3 aviones</b> lo recorren hacia los portales siguiendo los giros (en los cruces se reparten) y bombardean todo lo que pasan: <span class="cd">250% de su daño</span> por avión.`}};
 HDUR.vega={b:'8 s (12 s con Fósforo blanco)',u:'hasta llegar a los portales'};
 const flareM=e=>{let m=1;for(const z of S.flares||[])if(Math.hypot(e.x-z.x,e.y-z.y)<=z.r)m=Math.max(m,1+z.m);return m;};
@@ -9615,7 +9617,7 @@ const MECG=[
  ['Estadísticas de torres',[['dmg','Daño','🎯'],['cool','Enfriamiento','⏱️'],['rng','Rango','📡'],['dps','DPS','📈'],['dur','Duración','⌛'],['tgt','Objetivo','🧭'],['tgts','Objetivos','🥾'],['eff','Efectos','🧪'],['mag','Cargador','🔫'],['lvl','Nivel','⭐'],['cost','Coste','🪙'],['upc','Mejora','⬆️']]],
  ['Unidades y enemigos',[['ehp','Vida','❤️'],['espd','Velocidad','👟'],['edmg','Daño al núcleo','💔'],['egold','Oro por baja','💰'],['eud','Daño a unidades','🗡️'],['eac','Enfriamiento enemigo','⏱️'],['erg','Rango enemigo','🏹'],['eblk','Corpulencia','🧱'],['aphys','Armadura','🛡️'],['amagic','Resistencia mágica','🔮'],['umr','Resistencia mágica de unidades','🔮'],['bres','Resistencia a control','👑'],['fly','Volador','🪽'],['tgnd','Terrestre','🥾'],['aura','Aura','🌟'],['dodge','Escurridizo','💨'],['steal','Saqueo','💸'],['pierce','Perforante','📌'],['curse','Maldición','🕯️'],['eheal','Curación tribal','🌿'],['usol','Soldados','💂'],['uhp','Vida del soldado','❤️'],['urez','Reaparición','🔄']]],
  ['Héroes',[['hlv','Nivel de héroe','⭐'],['hxp','Experiencia','✨'],['hrez','Reaparición del héroe','🔄'],['hrel','Reliquia inicial','💎'],['hmel','Daño en melee',''],['g_hab','Habilidad del héroe','🌀']]],
- ['Partida',[['g_core','Núcleo','💠'],['g_piece','Pieza','🧩'],['g_portal','Portal','🌀'],['g_solar','Solar','⬜'],['g_tile','Casilla especial','✨'],['vch','Vale de mejora','🎟️'],['rcd','Recarga de reliquia','⏳']]]];
+ ['Partida',[['g_core','Núcleo','💠'],['g_piece','Pieza','🧩'],['g_portal','Portal','🌀'],['g_solar','Solar','⬜'],['g_tile','Casilla especial','✨'],['vch','Vale de mejora','🎟️'],['rcd','Recarga de reliquia','⏱️']]]];
 // una sola estadística para torres, unidades, enemigos y héroes: los duplicados se quedan como alias del principal
 const MALIAS={uhp:'ehp',umr:'amagic',eud:'dmg',eac:'cool',erg:'rng',hlv:'lvl',hrez:'urez'};
 for(const g of MECG)g[1]=g[1].filter(([id])=>!MALIAS[id]);
@@ -10105,18 +10107,18 @@ function h2Locks(){for(const id in H2){if(h2Has(id))delete HEROES[id].lockTxt;el
 function h2Unlock(id,why){if(h2Has(id))return;STO['h_'+id]=1;try{saveSto();}catch(e){}h2Locks();try{newU('hr',HEROES[id].ic,HEROES[id].n,why,id);toast(`🦸 <b>Nuevo héroe: ${HEROES[id].n}</b><br><small>${why}</small>`);}catch(e){}}
 h2Locks();if(typeof window!=='undefined')setInterval(()=>{try{h2Locks();}catch(e){}},1500);
 // ---- textos de habilidades ----
-HAB.korr={b:{n:'Llamada de la colmena',ic:'📢',t:()=>S&&S.hero&&S.hero.id==='korr'&&S.hero.form>0?`<b>Embestida</b> (en Forma primigenia): carga 3 casillas por el camino atravesando enemigos, con <span class="cd">200% de su daño</span> como <span class="cmg">daño mágico</span>, y los empuja hacia atrás.`:`Provoca <b>4 s</b> a los enemigos a 2,5 casillas: van a por él (los voladores bajan). Mientras dura, recibe un <span class="chp">75% menos de daño</span> y devuelve parte de cada golpe como <span class="cmg">daño mágico</span>.`},
+HAB.korr={b:{n:'Llamada de la colmena',ic:'📢',t:()=>S&&S.hero&&S.hero.id==='korr'&&S.hero.form>0?`<b>Embestida</b> (en Forma primigenia): carga 3 casillas por el camino atravesando enemigos, con <span class="cd">200% de su daño</span> como <span class="cmg">daño mágico</span>, y los empuja hacia atrás.`:`Provoca <span class="nd">4 s</span> a los enemigos a 2,5 casillas: van a por él (los voladores bajan). Mientras dura, recibe un <span class="chp">75% menos de daño</span> y devuelve parte de cada golpe como <span class="cmg">daño mágico</span>.`},
  p4:{n:'Égida psiónica',ic:'🔮',t:()=>`Tus unidades a 2,5 casillas de Korr ganan <span class="cmg">+25 de resistencia mágica</span>.`},
  p8:{n:'Clamor de la colmena',ic:'💥',t:()=>`El daño devuelto se acumula y, al acabar la provocación, estalla a 2 casillas. Korr se cura un 6% por cada enemigo provocado que muera.`},
- u:{n:'Forma primigenia',ic:'🦖',t:()=>`Grito que deja ${kw('fear','aterrados','')} a los enemigos cercanos y transforma a Korr <b>25 s</b>: <span class="cd">+50% de daño</span>, sus garras golpean a todos los que tiene pegados, recibe un <span class="chp">40% menos de daño</span> y su básica pasa a ser <b>Embestida</b>.`}};
-HAB.ferro={b:{n:'Vertido corrosivo',ic:'🧪',t:()=>`Escupe ácido hacia los portales: una franja que cubre el ancho del camino, de 3 casillas de largo, <b>6 s</b>. ${kw('poison','Envenena','')} y deja la ${kw('brk','armadura rota','')}.`},
+ u:{n:'Forma primigenia',ic:'🦖',t:()=>`Grito que deja ${kw('fear','aterrados','')} a los enemigos cercanos y transforma a Korr <span class="nd">25 s</span>: <span class="cd">+50% de daño</span>, sus garras golpean a todos los que tiene pegados, recibe un <span class="chp">40% menos de daño</span> y su básica pasa a ser <b>Embestida</b>.`}};
+HAB.ferro={b:{n:'Vertido corrosivo',ic:'🧪',t:()=>`Escupe ácido hacia los portales: una franja que cubre el ancho del camino, de 3 casillas de largo, <span class="nd">6 s</span>. ${kw('poison','Envenena','')} y deja la ${kw('brk','armadura rota','')}.`},
  p4:{n:'Arco voltaico',ic:'⚡',t:()=>`Sus disparos dejan ${kw('ez','electrizado','')} al objetivo y saltan a un enemigo más.`},
- p8:{n:'Ácido inflamable',ic:'🔥',t:()=>`La franja mide 5 casillas, dura <b>9 s</b> y además aplica ${kw('burn','quemadura','')}.`},
- u:{n:'Protocolo de purga',ic:'☢️',t:()=>`Onda sobre los enemigos de su alcance que consume sus estados: el ${kw('poison','veneno','')} hace de golpe el doble de lo que le quedaba; la ${kw('burn','quemadura','')} estalla alrededor; el ${kw('ez','electrizado','')} ${kw('stun','aturde','')} <b>1,5 s</b>. Con los tres: además, armadura y resistencia mágica a 0 durante <b>5 s</b>.`}};
+ p8:{n:'Ácido inflamable',ic:'🔥',t:()=>`La franja mide 5 casillas, dura <span class="nd">9 s</span> y además aplica ${kw('burn','quemadura','')}.`},
+ u:{n:'Protocolo de purga',ic:'☢️',t:()=>`Onda sobre los enemigos de su alcance que consume sus estados: el ${kw('poison','veneno','')} hace de golpe el doble de lo que le quedaba; la ${kw('burn','quemadura','')} estalla alrededor; el ${kw('ez','electrizado','')} ${kw('stun','aturde','')} <span class="nd">1,5 s</span>. Con los tres: además, armadura y resistencia mágica a 0 durante <span class="nd">5 s</span>.`}};
 HAB.kai={b:{n:'Ejecución',ic:'🗡️',t:()=>`Salta sobre el enemigo con menos vida a 3 casillas: <span class="cd">300% de su daño</span>. Si está por debajo del 25% de vida, lo mata en el acto (jefes no).`},
  p4:{n:'Camuflaje óptico',ic:'👤',t:()=>`Cada 45 s, al bajar del 50% de vida, se camufla: deja de pelear, no la atacan y se cura hasta el 75%. La Ejecución la saca antes.`},
  p8:{n:'Cadena de ejecuciones',ic:'⛓️',t:()=>`Si la Ejecución mata, salta a otro enemigo, hasta 3 veces más.`},
- u:{n:'Danza de cuchillas',ic:'🌪️',t:()=>`<b>3 s</b> sin poder recibir daño, golpeando a todo lo que la rodea y dejándolo ${kw('mark','marcado','')} <b>8 s</b>. Cada vez que mata, salta al siguiente grupo por el camino (hasta 3 veces).`}};
+ u:{n:'Danza de cuchillas',ic:'🌪️',t:()=>`<span class="nd">3 s</span> sin poder recibir daño, golpeando a todo lo que la rodea y dejándolo ${kw('mark','marcado','')} <span class="nd">8 s</span>. Cada vez que mata, salta al siguiente grupo por el camino (hasta 3 veces).`}};
 HDUR.korr={b:'4 s',u:'25 s'};HDUR.ferro={b:'6 s (9 s con Ácido inflamable)',u:'5 s (fusión)'};HDUR.kai={u:'3 s'};
 HFX.korr=src=>'Golpea con '+kw('tmagic','daño mágico',src)+' y tiene '+kw('umr','resistencia mágica',src);
 HFX.ferro=src=>'Dispara '+kw('telem','daño elemental',src);
@@ -10239,7 +10241,7 @@ if(typeof document!=='undefined'){const cw=document.getElementById('cw');if(cw)c
 // ---- Sello psiónico (Korr) ----
 nrAdd({id:'seal',n:'Sello psiónico',ic:'🧿',col:'#3a3a7a',ini:1,cd:2,
  pas:()=>'Los enemigos que golpean a tus unidades o a tu héroe reciben el <span class="cmg">10% del golpe</span> como <span class="cmg">daño mágico</span>.',
- act:()=>`Los enemigos de un área se juntan en el centro y quedan ${kw('slow','ralentizados','')} un 50% durante <b>4 s</b>.`},
+ act:()=>`Los enemigos de un área se juntan en el centro y quedan ${kw('slow','ralentizados','')} un 50% durante <span class="nd">4 s</span>.`},
  {aim:'Elige el centro del tirón psíquico.',r:2.5*K,col:'192,112,255',use:c=>{let n=0;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d>2.5*K)continue;n++;
    if(d>.5){const mv=Math.min(d,2.5*K*(isBoss(e)?.5:1)),q=pathNear(e.x+(c.x-e.x)/d*mv,e.y+(c.y-e.y)/d*mv);if(q){e.x=e.tx=q.x;e.y=e.ty=q.y;}}slowE(e,.5,4);}
   RS('seal').n+=n;S.fx.push({x:c.x,y:c.y,t:.6,m:.6,r:2.5*K,col:'#c070ff'});return true;}});
@@ -10256,7 +10258,7 @@ nrAdd({id:'cell',n:'Célula de la Forja',ic:'🔋',col:'#2a5a4a',ini:1,cd:2,
 // ---- Tablón de recompensas (Kai) ----
 nrAdd({id:'board',n:'Tablón de recompensas',ic:'📌',col:'#6a3a1a',ini:1,cd:2,
  pas:()=>'En cada oleada, un enemigo fuerte sale como <b>«Se busca»</b>: al matarlo cobras <span class="gd">oro extra</span>.',
- act:()=>`El enemigo más fuerte del mapa queda ${kw('mark','marcado','')} <b>20 s</b>. Si muere en ese tiempo, da el <span class="gd">triple de oro</span>.`},
+ act:()=>`El enemigo más fuerte del mapa queda ${kw('mark','marcado','')} <span class="nd">20 s</span>. Si muere en ese tiempo, da el <span class="gd">triple de oro</span>.`},
  {use:()=>{let b=null;for(const e of S.enemies){if(e.hp<=0||e.leak)continue;if(!b||e.max>b.max)b=e;}if(!b){S.msg='Tablón de recompensas: no hay enemigos en el mapa.';return false;}
   b.ctr=20;b.mk={t:20,cr:Math.max(.25,b.mk&&b.mk.t>0?b.mk.cr:0)};RS('board').n++;
   try{const el=document.querySelector('#relics [data-id="board"]'),r=cv.getBoundingClientRect(),q=el.getBoundingClientRect(),k=sc(),px=(q.left+q.width/2-r.left)/r.width*VIEW,py=(q.top+q.height/2-r.top)/r.height*VH;HX.beam={x:(px/k+CAM.x)/CS-.5,y:(py/k+CAM.y)/CS-.5,e:b,t:.7};}catch(x){HX.beam={x:b.x,y:b.y-6*K,e:b,t:.7};}
@@ -10290,13 +10292,13 @@ const R2={};
 // ---- Pulso electromagnético ----
 nrAdd({id:'emp',n:'Pulso electromagnético',ic:'🧲',col:'#3a4a8a',era:2,cd:3,
  pas:()=>`Cada impacto de torre: <span class="cf">10%</span> de dejar ${kw('ez','electrizado','')} al enemigo.`,
- act:()=>`Todos los enemigos ${kw('ez','electrizados','')} del mapa reciben un golpe eléctrico y quedan ${kw('stun','aturdidos','')} <b>2 s</b> (jefes, 1 s).`},
+ act:()=>`Todos los enemigos ${kw('ez','electrizados','')} del mapa reciben un golpe eléctrico y quedan ${kw('stun','aturdidos','')} <span class="nd">2 s</span> (jefes, 1 s).`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.ez&&e.ez.n>0);if(!L.length){S.msg='Pulso electromagnético: no hay enemigos electrizados.';return false;}const dm=20+S.round*8;
   for(const e of L){hurt(e,dm*(1+EZAMP*e.ez.n),null,'elem');stunE(e,2);S.fx.push({bolt:[[e.x+(Math.random()-.5),e.y-4*K],[e.x,e.y]],t:.2,m:.2});S.fx.push({x:e.x,y:e.y,t:.35,m:.35,r:.6*K,col:'#ffe14d'});}RS('emp').n+=L.length;return true;}});
 // ---- Generador de escudo ----
 nrAdd({id:'shgen',n:'Generador de escudo',ic:'💠',col:'#2a5a7a',era:2,cd:3,
  pas:()=>'Tus unidades y tu héroe empiezan cada oleada con un <span class="chp">escudo del 20%</span> de su vida.',
- act:()=>'Durante <b>6 s</b>, tus unidades dentro del área no reciben daño.'},
+ act:()=>'Durante <span class="nd">6 s</span>, tus unidades dentro del área no reciben daño.'},
  {aim:'Elige dónde levantar la cúpula.',r:2*K,col:'90,200,255',dur:6,use:c=>{S.dome={x:c.x,y:c.y,r:2*K,t:6};S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:2*K,col:'#7ad8ff'});return true;}});
 UHM.unshift((s,d,e)=>{if(S.dome&&S.dome.t>0&&h2R(s,S.dome,S.dome.r)){RS('shgen').n++;return 0;}if(s.shd>0){const a=Math.min(s.shd,d);s.shd-=a;d-=a;RS('shgen').dmg+=a;}return d;});
 function r2Shields(){for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)s.shd=s.max*.2;}
@@ -10323,7 +10325,7 @@ function prCopy(src,cx,cy){const g0=S.gold,sp0=S.st?S.st.spent:0,ts=S.tsel,n0=S.
 function prRemove(t){t.sold=1;S.list=S.list.filter(o=>o!==t);for(const[a,b]of t.sq||[])if(S.occ[a+','+b]===t)delete S.occ[a+','+b];if(S.selT===t){S.selT=null;try{tmClose();}catch(e){}}try{if(PR.pinned&&PR.key==='tw:'+t.id)closePrim();}catch(e){}S.fx.push({x:t.x,y:t.y,t:.5,m:.5,r:1.2*K,col:'#3fe8ff'});}
 nrAdd({id:'printer',n:'Impresora 3D',ic:'🖨️',col:'#4a5a6a',era:2,cd:3,
  pas:()=>'Al empezar cada oleada, una torre tuya de <b>Nv 1</b> al azar sube a <b>Nv 2</b> <span class="gd">gratis</span>.',
- act:()=>'Copias una torre tuya, con su nivel y sus habilidades, en un solar vacío. Es un holograma: dura <b>40 s</b> si es de Nv 1, 35 s de Nv 2, 30 s de Nv 3 y 25 s de Nv 4.'},
+ act:()=>'Copias una torre tuya, con su nivel y sus habilidades, en un solar vacío. Es un holograma: dura <span class="nd">40 s</span> si es de Nv 1, 35 s de Nv 2, 30 s de Nv 3 y 25 s de Nv 4.'},
  {aim:'Elige la torre que quieres copiar.',start:()=>{S.prSrc=null;},use:c=>{const t=S.occ[c.x+','+c.y];
   if(!S.prSrc){if(!t||t.holo||TW[t.type].uniq||TW[t.type].guild){S.msg='Impresora 3D: elige una de tus torres (las únicas no se pueden copiar).';return false;}S.prSrc=t.id;S.msg='Ahora elige un solar vacío para la copia.';return false;}
   const src=S.list.find(o=>o.id===S.prSrc);if(!src){S.prSrc=null;S.msg='Elige la torre que quieres copiar.';return false;}
@@ -10332,20 +10334,20 @@ nrAdd({id:'printer',n:'Impresora 3D',ic:'🖨️',col:'#4a5a6a',era:2,cd:3,
 {const _nr=nextRound;nextRound=function(){try{for(const t of S.list.filter(o=>o.holo))prRemove(t);S.dome=null;S.prSrc=null;for(const t of S.list)t.asim=null;for(const u of unitTowers())for(const s of u.sd)s.shd=0;}catch(e){}return _nr.apply(this,arguments);};}
 // ---- Adrenalina sintética ----
 nrAdd({id:'adren',n:'Adrenalina sintética',ic:'💉',col:'#7a2a3a',era:2,cd:3,
- pas:()=>'La primera vez en cada oleada que tu héroe baja del 30% de vida: <span class="cr">+30% de velocidad de ataque</span> durante <b>5 s</b>.',
- act:()=>'Durante <b>8 s</b>, tu héroe y tus unidades atacan y se mueven un <span class="cr">50% más rápido</span>.'},
+ pas:()=>'La primera vez en cada oleada que tu héroe baja del 30% de vida: <span class="cr">+30% de velocidad de ataque</span> durante <span class="nd">5 s</span>.',
+ act:()=>'Durante <span class="nd">8 s</span>, tu héroe y tus unidades atacan y se mueven un <span class="cr">50% más rápido</span>.'},
  {dur:8,use:()=>{for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)S.fx.push({x:s.x,y:s.y,t:.4,m:.4,r:.6*K,col:'#ff6a7a'});return true;}});
 function uSpdM(t){return S.relics&&S.relics.includes('adren')&&ra('adren')?1.5:1;}
 // ---- Criocápsula ----
 nrAdd({id:'cryo',n:'Criocápsula',ic:'🧊',col:'#2a6a8a',era:2,evr:1,ev:'cryocam',cd:3,
  pas:()=>`Cada <b>5 impactos</b> que recibe un enemigo le dan 1 de ${kw('chill','hipotermia','')}. Los que mueren con hipotermia estallan en esquirlas que dan 1 de hipotermia alrededor.`,
- act:()=>`${kw('freeze','Congela','')} <b>3 s</b> a todos los enemigos del mapa con ${kw('chill','hipotermia','')} (jefes, la mitad).`},
+ act:()=>`${kw('freeze','Congela','')} <span class="nd">3 s</span> a todos los enemigos del mapa con ${kw('chill','hipotermia','')} (jefes, la mitad).`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.cs&&e.cs.length);if(!L.length){S.msg='Criocápsula: no hay enemigos con hipotermia.';return false;}let n=0;for(const e of L){if(freezeE(e,3))n++;S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:.7*K,col:'#9fe4ff'});}RS('cryo').n2+=n;return true;}});
 H2K.push(e=>{if(S.relics.includes('cryo')&&rp('cryo')&&e.cs&&e.cs.length){for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=1.2*K)addChill(o,null,1);S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:1.2*K,col:'#bfeeff'});RS('cryo').n++;}});
 // ---- Inhibidor de señal ----
 nrAdd({id:'jammer',n:'Inhibidor de señal',ic:'📡',col:'#5a3a6a',era:2,evr:1,ev:'sos',cd:3,
- pas:()=>`Cuando muere el líder de una escuadra, los suyos quedan ${kw('fear','aterrados','')} <b>2 s</b>.`,
- act:()=>`Todos los líderes del mapa quedan ${kw('stun','aturdidos','')} <b>4 s</b> y sus escuadras se desperdigan por los carriles.`},
+ pas:()=>`Cuando muere el líder de una escuadra, los suyos quedan ${kw('fear','aterrados','')} <span class="nd">2 s</span>.`,
+ act:()=>`Todos los líderes del mapa quedan ${kw('stun','aturdidos','')} <span class="nd">4 s</span> y sus escuadras se desperdigan por los carriles.`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.sqlead);if(!L.length){S.msg='Inhibidor de señal: no hay líderes de escuadra en el mapa.';return false;}
   for(const l of L){stunE(l,4);S.fx.push({x:l.x,y:l.y,t:.5,m:.5,r:K,col:'#c89aff'});for(const e of S.enemies)if(e!==l&&e.hp>0&&e.sqid===l.sqid&&!e.sqlead){e.loose=1;e.fsp=0;e.scat=1;try{setLane(e,Math.floor(Math.random()*3)-1);}catch(x){}}}RS('jammer').n+=L.length;return true;}});
 H2K.push(e=>{if(e.sqlead&&S.relics.includes('jammer')&&rp('jammer')){let n=0;for(const o of S.enemies)if(o!==e&&o.hp>0&&o.sqid===e.sqid){const d=isBoss(o)?1:2;o.fx.fear={t:Math.max(d,o.fx.fear?o.fx.fear.t:0)};n++;}RS('jammer').n2+=n;}});
@@ -10356,13 +10358,13 @@ function vacDraw(g,px,py,r,lw){const R=r*1.15,a=performance.now()/260;g.fillStyl
  g.strokeStyle='#5a6474';g.lineWidth=Math.max(1,r*.1);for(const sd of[-1,1]){const bx=px+sd*R*.8,by=py-R*.75;g.beginPath();for(let i=0;i<3;i++){const an=a*2*sd+i*2.094;g.moveTo(bx,by);g.lineTo(bx+Math.cos(an)*R*.3,by+Math.sin(an)*R*.3);}g.stroke();}}
 const r2Poly=(e,t)=>{if(e.hp<=0||isBoss(e)||e.fx.poly)return false;e.fx.poly={t:ET[e.t].el?t/2:t,vac:1};return true;};
 nrAdd({id:'repro',n:'Rayo de reprogramación',ic:'🔫',col:'#3a6a6a',era:2,evr:1,ev:'lab',cd:3,
- pas:()=>`Cada impacto de torre: <span class="cf">3%</span> de dejar al enemigo ${kw('poly','transformado','')} <b>2 s</b> en un robot aspiradora (jefes no).`,
- act:()=>`Los enemigos de un área quedan ${kw('poly','transformados','')} <b>6 s</b> en robots aspiradora: van despacio, no atacan y pierden su armadura (jefes no).`},
+ pas:()=>`Cada impacto de torre: <span class="cf">3%</span> de dejar al enemigo ${kw('poly','transformado','')} <span class="nd">2 s</span> en un robot aspiradora (jefes no).`,
+ act:()=>`Los enemigos de un área quedan ${kw('poly','transformados','')} <span class="nd">6 s</span> en robots aspiradora: van despacio, no atacan y pierden su armadura (jefes no).`},
  {aim:'Elige dónde disparar el rayo.',r:2*K,col:'63,232,255',use:c=>{let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-c.x,e.y-c.y)<=2*K&&r2Poly(e,6))n++;RS('repro').n+=n;S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:2*K,col:'#3fe8ff'});return true;}});
 // ---- Muestra viva ----
 nrAdd({id:'sample',n:'Muestra viva',ic:'🧫',col:'#5a2a6a',era:2,evr:1,ev:'capsule',cd:3,
  pas:()=>'Tus unidades y tu héroe <span class="chp">recuperan vida</span> poco a poco, también en combate.',
- act:()=>'Durante <b>10 s</b>, tus unidades y tu héroe hacen un <span class="cd">+30% de daño</span> y se curan un <span class="chp">20% del daño</span> que hacen.'},
+ act:()=>'Durante <span class="nd">10 s</span>, tus unidades y tu héroe hacen un <span class="cd">+30% de daño</span> y se curan un <span class="chp">20% del daño</span> que hacen.'},
  {dur:10,use:()=>{for(const t of unitTowers())for(const s of t.sd)if(s.hp>0)S.fx.push({x:s.x,y:s.y,t:.4,m:.4,r:.6*K,col:'#c070ff'});return true;}});
 function onDmg(e,dl,src,ty){if(!S.relics||!S.relics.includes('sample')||!ra('sample'))return;let s=null;if(src.hero)s=src.hero.s;else if(src.sd){for(const q of src.sd)if(q.hp>0&&(!s||q.hp/q.max<s.hp/s.max))s=q;}if(s&&s.hp>0&&s.hp<s.max){const h=Math.min(s.max-s.hp,dl*.2);s.hp+=h;RS('sample').dmg+=h;}}
 // ---- Núcleo adaptativo ----
@@ -10373,7 +10375,7 @@ function r2Fx(t){const T=TW[t.type],o=[];if(T.burn)o.push('burn');if(T.dot)o.pus
 const R2FXN={burn:'quemadura',pois:'veneno',slow:'ralentización',ez:'electrizado',chill:'hipotermia',bleed:'sangrado'};
 nrAdd({id:'core2',n:'Núcleo adaptativo',ic:'⚛️',col:'#2a4a6a',era:2,evr:1,ev:'omega',cd:3,
  pas:()=>'Por cada <b>tipo distinto</b> de torre en el mapa: torres <span class="cd">+5% de daño</span> y <span class="cbu">+5% de stacks</span> en los estados (máx. +35%'+(typeof S!=='undefined'&&S&&S.list&&S.relics&&S.relics.includes('core2')?'; ahora: <span class="cd">+'+Math.round(coreP()*100)+'%</span>':'')+').',
- act:()=>'Durante <b>15 s</b>, una torre que elijas aplica también los estados de las torres que tiene al lado (quemadura, veneno, ralentización, electrizado…).'},
+ act:()=>'Durante <span class="nd">15 s</span>, una torre que elijas aplica también los estados de las torres que tiene al lado (quemadura, veneno, ralentización, electrizado…).'},
  {aim:'Elige la torre que va a asimilar a sus vecinas.',use:c=>{const t=S.occ[c.x+','+c.y];if(!t||t.holo){S.msg='Núcleo adaptativo: elige una de tus torres.';return false;}const me=r2Fx(t),fx=new Set();
   for(const o of S.list)if(o!==t&&Math.hypot(o.x-t.x,o.y-t.y)<=1.6*K)for(const k of r2Fx(o))if(!me.includes(k))fx.add(k);
   if(!fx.size){S.msg='Núcleo adaptativo: esa torre no tiene al lado ninguna torre con estados que copiar.';return false;}t.asim={t:15,fx:[...fx]};S.msg=tinfo(t).n+' asimila: '+[...fx].map(k=>R2FXN[k]).join(', ')+'.';S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:1.6*K,col:'#7ad8ff'});return 'msg';}});
@@ -10584,7 +10586,7 @@ const r3Path=c=>inb(c.x,c.y)&&S.cells[c.y][c.x]===2?c:pathNear(c.x,c.y);
 // ---- Virus troyano ----
 nrAdd({id:'trojan',n:'Virus troyano',ic:'🦠',col:'#2a5a2a',era:2,cd:3,
  pas:()=>'Todas las habilidades de los enemigos tardan un <span class="cr">30% más</span> en recargarse.',
- act:()=>'Un enemigo (no jefe) se pasa a tu bando <b>10 s</b>: camina hacia su portal y ataca a los enemigos que encuentra. Nadie le ataca mientras tanto.'},
+ act:()=>'Un enemigo (no jefe) se pasa a tu bando <span class="nd">10 s</span>: camina hacia su portal y ataca a los enemigos que encuentra. Nadie le ataca mientras tanto.'},
  {aim:'Elige el enemigo que vas a hackear.',r:1.2*K,col:'120,255,120',use:c=>{const e=r3Near(c,1.5*K,e=>!isBoss(e)&&!(e.hk>0));if(!e){S.msg='Virus troyano: elige un enemigo que no sea jefe.';return false;}
   e.hk=10;e.hkc=0;e.fx.fear={t:10};e.tgt=null;for(const t of S.list)if(t.tgt===e)t.tgt=null;RS('trojan').n++;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:.9*K,col:'#7aff7a'});return true;}});
 {const T=.77,w=f=>function(){const a=[...arguments];if(r3On('trojan')){const i=a.findIndex(v=>typeof v==='number');if(i>=0)a[i]*=T;}return f.apply(this,a);};
@@ -10594,7 +10596,7 @@ function hackTick(dt){for(const e of S.enemies){if(!(e.hk>0)||e.sw)continue;e.hk
 // ---- Dron de reconocimiento ----
 nrAdd({id:'drone',n:'Dron de reconocimiento',ic:'🛸',col:'#3a4a5a',era:2,cd:3,
  pas:()=>`Un dron da vueltas al núcleo y dispara al enemigo más adelantado a su alcance. Descubre a los ${kw('camo','camuflados','')} que pisan la casilla del núcleo o las 8 de alrededor.`,
- act:()=>`El dron suelta una bomba en un área: daño y ${kw('stun','aturde','')} <b>1 s</b>.`},
+ act:()=>`El dron suelta una bomba en un área: daño y ${kw('stun','aturde','')} <span class="nd">1 s</span>.`},
  {aim:'Elige dónde soltar la bomba.',r:1.5*K,col:'255,180,90',use:c=>{let n=0;const dm=r3Hp()*.6;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-c.x,e.y-c.y)<=1.5*K){hurt(e,dm,null,'phys');stunE(e,1);n++;}
   RS('drone').n2+=n;S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:1.5*K,col:'#ffb45a'});return true;}});
 const DRN={a:0,cd:0};
@@ -10605,11 +10607,11 @@ function droneTick(dt){if(!r3On('drone')){DRN.p=null;return;}DRN.a+=dt*1.4;const
 // ---- Implante cibernético ----
 nrAdd({id:'implant',n:'Implante cibernético',ic:'🦾',col:'#4a3a5a',era:2,cd:3,
  pas:()=>'Tu héroe: <span class="chp">+20% de vida</span> y <span class="cd">+10% de daño</span>.',
- act:()=>'Durante <b>20 s</b>, las habilidades de tu héroe se recargan el <span class="cr">doble de rápido</span>.'},{dur:20,use:()=>{if(!S.hero){S.msg='Implante cibernético: no tienes héroe.';return false;}S.fx.push({x:S.hero.s.x,y:S.hero.s.y,t:.5,m:.5,r:K,col:'#c070ff'});return true;}});
+ act:()=>'Durante <span class="nd">20 s</span>, las habilidades de tu héroe se recargan el <span class="cr">doble de rápido</span>.'},{dur:20,use:()=>{if(!S.hero){S.msg='Implante cibernético: no tienes héroe.';return false;}S.fx.push({x:S.hero.s.x,y:S.hero.s.y,t:.5,m:.5,r:K,col:'#c070ff'});return true;}});
 // ---- Bidón radiactivo ----
 nrAdd({id:'barrel',n:'Bidón radiactivo',ic:'☢️',col:'#5a5a1a',era:2,cd:3,
- pas:()=>'Los enemigos que mueren dejan <b>3 s</b> una mancha radiactiva que hace un poco de daño y <b>corta toda curación</b> de los enemigos que la pisan.',
- act:()=>'Una zona radiactiva grande durante <b>8 s</b>: daño constante y, dentro, ningún enemigo se cura ni se regenera.'},
+ pas:()=>'Los enemigos que mueren dejan <span class="nd">3 s</span> una mancha radiactiva que hace un poco de daño y <b>corta toda curación</b> de los enemigos que la pisan.',
+ act:()=>'Una zona radiactiva grande durante <span class="nd">8 s</span>: daño constante y, dentro, ningún enemigo se cura ni se regenera.'},
  {aim:'Elige dónde volcar el bidón.',r:2*K,col:'190,240,60',use:c=>{(S.rads=S.rads||[]).push({x:c.x,y:c.y,r:2*K,t:8,m:8,big:1,tk:0});return true;}});
 H2K.push(e=>{if(r3On('barrel')&&!e.hk)(S.rads=S.rads||[]).push({x:e.x,y:e.y,r:.8*K,t:3,m:3,tk:0});});
 function radTick(dt){for(const e of S.enemies){if(e.nh>0){if(e._nhp!=null&&e.hp>e._nhp&&e.hp>0){RS('barrel').gold+=e.hp-e._nhp;e.hp=e._nhp;}e.nh-=dt;}e._nhp=e.hp;}
@@ -10617,14 +10619,14 @@ function radTick(dt){for(const e of S.enemies){if(e.nh>0){if(e._nhp!=null&&e.hp>
 // ---- Mapa estelar ----
 nrAdd({id:'starmap',n:'Mapa estelar',ic:'🌌',col:'#1a2a5a',era:2,cd:3,
  pas:()=>'En los cofres eliges entre <b>4 reliquias</b> en vez de 3.',
- act:()=>'Eliges un punto y, a los <b>3 s</b>, cae un meteorito: mucho daño en un área grande y deja '+kw('burn','quemadura','')+'.'},
+ act:()=>'Eliges un punto y, a los <span class="nd">3 s</span>, cae un meteorito: mucho daño en un área grande y deja '+kw('burn','quemadura','')+'.'},
  {aim:'Elige dónde caerá el meteorito.',r:1.8*K,col:'255,140,60',use:c=>{(S.mets=S.mets||[]).push({x:c.x,y:c.y,t:3});return true;}});
 function metTick(dt){if(r3On('starmap'))S.chest4=1;if(!S.mets||!S.mets.length)return;for(const m of S.mets){m.t-=dt;if(m.t<=0){const dm=r3Hp()*2.2;let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-m.x,e.y-m.y)<=1.8*K){const d=Math.hypot(e.x-m.x,e.y-m.y);hurt(e,dm*(d<=.8*K?1:.55),null,'elem');addBurn(e,null,4);n++;}
   RS('starmap').n+=n;S.fx.push({x:m.x,y:m.y,t:.8,m:.8,r:1.8*K,col:'#ff8a3c'});S.fx.push({x:m.x,y:m.y,t:.5,m:.5,r:.9*K,col:'#fff0b0'});try{sfx('boom',{force:1});}catch(x){}}}S.mets=S.mets.filter(m=>m.t>0);}
 // ---- Mochila cohete ----
 nrAdd({id:'jetpack',n:'Mochila cohete',ic:'🚀',col:'#6a3a2a',era:2,cd:3,
  pas:()=>'Tu héroe reaparece un <span class="cr">30% antes</span> y se mueve un <span class="cr">30% más rápido</span>.',
- act:()=>`Tu héroe vuela hasta el punto elegido del camino y cae haciendo daño en área y ${kw('stun','aturdiendo','')} <b>1 s</b>.`},
+ act:()=>`Tu héroe vuela hasta el punto elegido del camino y cae haciendo daño en área y ${kw('stun','aturdiendo','')} <span class="nd">1 s</span>.`},
  {aim:'Elige dónde aterriza tu héroe.',r:1.3*K,col:'255,150,80',use:c=>{const H=S.hero;if(!H||H.s.hp<=0){S.msg='Mochila cohete: tu héroe tiene que estar vivo.';return false;}const q=r3Path(c);if(!q){S.msg='Mochila cohete: elige un punto del camino.';return false;}
   (S.kfx=S.kfx||[]).push({x0:H.s.x,y0:H.s.y,x1:q.x,y1:q.y,t:.35});H.s.x=q.x;H.s.y=q.y;H.pt.flag={x:q.x,y:q.y};H.s.lock=false;H.s.en=null;H.s.fight=false;
   const dm=Math.max(hdm()*2.5,r3Hp()*.5);let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-q.x,e.y-q.y)<=1.3*K){hurt(e,dm,H.pt,'phys');stunE(e,1);n++;}RS('jetpack').n+=n;S.fx.push({x:q.x,y:q.y,t:.5,m:.5,r:1.3*K,col:'#ffa060'});return true;}});
@@ -10639,7 +10641,7 @@ nrAdd({id:'scouter',n:'Rastreador de combate',ic:'🥽',col:'#2a6a3a',era:2,cd:3
   S.fx.push({x:c.x,y:c.y,t:.7,m:.7,r:1.5*K,col:top>8000?'#ff4f4f':'#7aff8a'});S.msg=top>8000?'¡Lectura máxima: '+top.toLocaleString('es-ES')+'!':'Rastreador de combate: lectura de '+top.toLocaleString('es-ES')+'.';return 'msg';}});
 // ---- Satélite láser ----
 nrAdd({id:'satlaser',n:'Satélite láser',ic:'🛰️',col:'#3a2a5a',era:2,cd:3,
- pas:()=>'Cada <b>20 s</b> de oleada, un impacto orbital cae sobre el enemigo con más vida: mucho daño en el centro y algo menos alrededor (2 casillas).',
+ pas:()=>'Cada <span class="nd">20 s</span> de oleada, un impacto orbital cae sobre el enemigo con más vida: mucho daño en el centro y algo menos alrededor (2 casillas).',
  act:()=>`El láser recorre <b>6 casillas</b> de camino desde el punto elegido hacia el portal, haciendo daño y dejando ${kw('burn','quemadura','')}.`},
  {aim:'Elige dónde empieza el barrido.',r:.8*K,col:'255,80,220',use:c=>{const q=r3Path(c);if(!q){S.msg='Satélite láser: elige un punto del camino.';return false;}S.sweep={pts:h2Route(q.x,q.y,6*K),i:0,tk:0,hit:new Set()};return true;}});
 function satTick(dt){if(S.phase==='wave'&&r3On('satlaser')){S.satT=(S.satT||0)+dt;if(S.satT>=20&&!S.satX){let b=null;for(const e of S.enemies)if(e.hp>0&&!e.leak&&!(e.hk>0)&&(!b||e.hp>b.hp))b=e;if(b){S.satT=0;S.satX={e:b,t:1,x:b.x,y:b.y};}}}
@@ -10649,7 +10651,7 @@ function satTick(dt){if(S.phase==='wave'&&r3On('satlaser')){S.satT=(S.satT||0)+d
 // ---- Generador de gravedad ----
 nrAdd({id:'gravity',n:'Generador de gravedad',ic:'🌀',col:'#2a2a4a',era:2,cd:3,
  pas:()=>`Los enemigos ${kw('slow','ralentizados','')} reciben un <span class="cd">+15% de daño</span>.`,
- act:()=>'Un campo de gravedad triple en un área durante <b>6 s</b>: los enemigos van un <b>60% más lentos</b>, no pueden teletransportarse ni esquivar a tus unidades (que ahora sí los bloquean). Los voladores siguen volando.'},
+ act:()=>'Un campo de gravedad triple en un área durante <span class="nd">6 s</span>: los enemigos van un <b>60% más lentos</b>, no pueden teletransportarse ni esquivar a tus unidades (que ahora sí los bloquean). Los voladores siguen volando.'},
  {aim:'Elige dónde activar el campo de gravedad.',r:2*K,col:'150,120,255',use:c=>{S.grav={x:c.x,y:c.y,r:2*K,t:6};return true;}});
 function gravTick(dt){for(const e of S.enemies)if(e.gpin>0)e.gpin-=dt;if(!S.grav)return;const G=S.grav;G.t-=dt;if(G.t<=0){S.grav=null;return;}
  for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-G.x,e.y-G.y)>G.r)continue;e.gpin=.25;if(!isFly(e))slowE(e,.4,.3);e.fsp=0;}}
@@ -10657,7 +10659,7 @@ function gravTick(dt){for(const e of S.enemies)if(e.gpin>0)e.gpin-=dt;if(!S.grav
 // ---- Cápsula de clonación ----
 nrAdd({id:'clone',n:'Cápsula de clonación',ic:'🧬',col:'#2a5a6a',era:2,cd:3,
  pas:()=>'Cuando cae una de tus unidades o tu héroe, hay un <span class="cf">25%</span> de que reaparezca al instante.',
- act:()=>'Durante <b>10 s</b>, un clon de tu héroe, con la mitad de vida y de daño, pelea a su lado.'},
+ act:()=>'Durante <span class="nd">10 s</span>, un clon de tu héroe, con la mitad de vida y de daño, pelea a su lado.'},
  {dur:10,use:()=>{const H=S.hero;if(!H||H.s.hp<=0){S.msg='Cápsula de clonación: tu héroe tiene que estar vivo.';return false;}const s=H.s,st=stats(H.pt),hp=s.max*.5;
   const t={type:'bastion',lvl:2,summ:1,ttl:10,x:s.x,y:s.y,cells:[],flag:{x:Math.round(s.x),y:Math.round(s.y)},ab:{},acd:{},sd:[],uspdx:(H.def.spd||2)/2,tinf:{n:'Clon de '+H.def.n,ic:H.def.ic,col:'#3fe8ff',dt:H.def.dt||'phys',range:st.range/K,dmg:st.dmg*.5,rate:st.rate,unit:{n:1,hp,ap:5,rez:99,spd:(H.def.spd||2)*K}},ovr:{dmg:st.dmg*.5,rate:st.rate,range:Math.max(2.5*K,st.range),crit:.05,critm:2,area:0,gold:0,pen:0}};
   t.sd=[{i:0,x:s.x,y:s.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,clone:H.id,rng:H.def.ranged?1:0}];(S.summ=S.summ||[]).push(t);RS('clone').n2++;S.fx.push({x:s.x,y:s.y,t:.6,m:.6,r:K,col:'#3fe8ff'});return true;}});
@@ -10665,7 +10667,7 @@ nrAdd({id:'clone',n:'Cápsula de clonación',ic:'🧬',col:'#2a5a6a',era:2,cd:3,
 // ---- Chip de IA táctica ----
 nrAdd({id:'aichip',n:'Chip de IA táctica',ic:'💾',col:'#1a4a4a',era:2,cd:3,
  pas:()=>'Tus torres eligen solas el mejor objetivo: las de área, el grupo más grande; las demás, el enemigo con más vida. Si cambias a mano el objetivo de una torre, se queda con tu elección.',
- act:()=>'Durante <b>10 s</b>, cada torre que mata a un enemigo <span class="cr">vuelve a disparar al instante</span>.'},{dur:10,use:()=>true});
+ act:()=>'Durante <span class="nd">10 s</span>, cada torre que mata a un enemigo <span class="cr">vuelve a disparar al instante</span>.'},{dur:10,use:()=>true});
 const AIT={area:{n:'IA táctica',score:e=>e._dn||0},one:{n:'IA táctica',score:e=>e.hp}};
 function tgtAI(t,s){if(t.mman||!r3On('aichip'))return null;return (s&&s.area>0)?AIT.area:AIT.one;}
 function denseTick(){if(!r3On('aichip'))return;const L=S.enemies;for(const e of L){let n=0;for(const o of L)if(o.hp>0&&Math.abs(o.x-e.x)<=1.2*K&&Math.abs(o.y-e.y)<=1.2*K)n++;e._dn=n;}}
@@ -10673,7 +10675,7 @@ function denseTick(){if(!r3On('aichip'))return;const L=S.enemies;for(const e of 
 // ---- Baliza de teletransporte ----
 nrAdd({id:'beacon',n:'Baliza de teletransporte',ic:'📍',col:'#5a2a5a',era:2,cd:3,
  pas:()=>'En cada oleada, el primer enemigo que iba a llegar al núcleo vuelve a su portal (jefes no).',
- act:()=>'Mueves una torre que hayas construido tú a otro solar libre, con su nivel, especialización y habilidades. Al llegar, durante <b>8 s</b> dispara un <span class="cr">50% más rápido</span> y hace un <span class="cd">25% más de daño</span>.'},
+ act:()=>'Mueves una torre que hayas construido tú a otro solar libre, con su nivel, especialización y habilidades. Al llegar, durante <span class="nd">8 s</span> dispara un <span class="cr">50% más rápido</span> y hace un <span class="cd">25% más de daño</span>.'},
  {aim:'Elige la torre que quieres mover.',any:1,start:()=>{S.bcSrc=null;},use:c=>{const t=S.occ[c.x+','+c.y];
   if(!S.bcSrc){if(!t||t.holo||TW[t.type].uniq||TW[t.type].guild||t.summ){S.msg='Baliza: elige una torre que hayas construido tú.';return false;}S.bcSrc=t.id;S.msg='Ahora elige un solar libre para llevarla.';return false;}
   const src=S.list.find(o=>o.id===S.bcSrc);if(!src){S.bcSrc=null;S.msg='Elige la torre que quieres mover.';return false;}
@@ -10949,7 +10951,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
- {v:351,f:'15 nov 2026',t:'Revisión',s:[['Novedades',['En el registro de partidas aparece la versión del juego en la que jugaste cada una.','Ya no se selecciona texto sin querer al hacer clic, arrastrar o mantener pulsado (se quedaba todo en azul). En las cajas de texto sí se puede.','Las reliquias y habilidades de héroe que se sueltan en un área dejan una marca en el mapa donde cayeron, que se desvanece en unos segundos.']],
+ {v:351,f:'15 nov 2026',t:'Revisión',s:[['Novedades',['En el registro de partidas aparece la versión del juego en la que jugaste cada una.','Descripciones: las duraciones llevan el icono de duración (⌛) y van del tamaño del texto, en lugar de en negrita grande. El enfriamiento de habilidades y reliquias lleva siempre el cronómetro (⏱); en la ficha de las habilidades del héroe estaban al revés.','Ya no se selecciona texto sin querer al hacer clic, arrastrar o mantener pulsado (se quedaba todo en azul). En las cajas de texto sí se puede.','Las reliquias y habilidades de héroe que se sueltan en un área dejan una marca en el mapa donde cayeron, que se desvanece en unos segundos.']],
   ['Reliquias',['Yunque rúnico: la casilla enseña el valor que da de verdad en todas las casillas especiales (Penetración, Persistencia, Taller, Eco y Rebote incluidas). El Eco repite más a menudo y el Rebote hace más daño, en lugar de no ganar nada o ganar un rebote de más.','Moneda antigua: la ficha del enemigo enseña el oro por baja con el +50%.','Implante cibernético: la vida de tu héroe sube nada más conseguirlo.']],
   ['Héroes',['Reinhart · Provocación (Nv 4): el −15% de daño recibido también vale contra los ataques especiales de los enemigos.']],
   ['Eventos',['Cada evento sale como mucho una vez por partida: nunca se repite.','«Rezar» ya no pone «++8».','Los avisos de logros que saltan al entrar en un evento esperan a que lo cierres, para no tapar el título.','Holo: el pergamino del evento se ve entero a 720 de alto, y en móvil «Continuar» queda siempre a la vista.','Altar de runas y Dron de mantenimiento llevan la etiqueta «Apoyo» en vez de un tipo de daño (no hacen daño). El compendio tiene el filtro «Apoyo».','En la oferta de torres, cada carta tiene su botón 📖 para abrirla en el compendio.','Cofre y paquete de ayuda: vuelven a caer desde arriba (el paquete con su paracaídas) y se ven enteros; partes del paquete salían invisibles.','Tablet (era 2): al cerrar el compendio, la pantalla se recoge a la vez que se juntan los dos lados, en vez de desaparecer de golpe.','Al girar una pieza, el ojo del pergamino ya no salta un instante a su sitio antiguo.','El mímico, si al conseguirlo no había hueco junto al camino, vuelve a buscar sitio al colocar pieza.']]]},
@@ -12115,7 +12117,7 @@ HFX.radagast=src=>'Sus golpes dejan '+kw('mrbrk','resistencia mágica rota',src)
 // ---- Grimorio quebrado (era 1) ----
 nrAdd({id:'grim',n:'Grimorio quebrado',ic:'📕',col:'#5a2a7a',era:1,cd:1.5,
  pas:()=>`Todo tu daño mágico deja ${kw('mrbrk','resistencia mágica rota','')}: <span class="cmg">−5</span> por golpe, hasta <span class="cmg">−10</span>.`,
- act:()=>`<b>Transmutación</b>: durante <b>8 s</b>, el daño físico que reciben los enemigos con ${kw('mrbrk','resistencia mágica rota','')} pasa a ser <span class="cmg">daño mágico</span>.`},
+ act:()=>`<b>Transmutación</b>: durante <span class="nd">8 s</span>, el daño físico que reciben los enemigos con ${kw('mrbrk','resistencia mágica rota','')} pasa a ser <span class="cmg">daño mágico</span>.`},
  {dur:8,use:()=>{for(const e of S.enemies)if(e.hp>0&&mbrkOf(e)>0)S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:.7*K,col:'#b48aff'});return true;}});
 // Transmutación: el golpe físico cuenta con la resistencia mágica en lugar de la armadura
 {const _m=e2DmgM;e2DmgM=function(e,src,ty){let m=_m.apply(this,arguments);try{if(ty==='phys'&&S.relics.includes('grim')&&ra('grim')&&mbrkOf(e)>0){
@@ -12723,14 +12725,14 @@ const AZIC={
 // desbloqueo: 'ini' (de salida), número N (gana con N puntos de amenaza), 'e2' (gana con amenazas en la Era Distópica), 'fut' (aún no existe)
 const AZT=[
  ['sup','Supercampeones','en',[[2,'Desde la ronda 6, algunos campeones ascienden a supercampeón con <b>1 rasgo</b> al azar: escudo frontal, paso rápido, regeneración o resistencia a control. Cada vez más a menudo en las rondas altas. Dan el doble de oro.'],[2,'Los supercampeones llevan <b>2 rasgos</b>.'],[2,'Desde la ronda 12, algunos supercampeones llevan <b>3 rasgos</b>.']],'ini'],
- ['ven','Venganza','en',[[3,'Cuando muere un mini-élite o un jefe, los enemigos a 2 casillas se enfurecen <b>4 s</b>: corren un 50 % más y no se les puede retener.'],[2,'También cuando muere un élite, a <b>3</b> casillas y durante <b>6 s</b>.']],3],
- ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <b>6 s</b>.'],[2,'La torre se apaga <b>10 s</b> y sale un saboteador más.']],6],
+ ['ven','Venganza','en',[[3,'Cuando muere un mini-élite o un jefe, los enemigos a 2 casillas se enfurecen <span class="nd">4 s</span>: corren un 50 % más y no se les puede retener.'],[2,'También cuando muere un élite, a <b>3</b> casillas y durante <span class="nd">6 s</span>.']],3],
+ ['sab','Sabotaje','en',[[2,'A veces aparece un saboteador que va a por una torre. Él y la torre salen marcados; si llega, la torre se apaga <span class="nd">6 s</span>.'],[2,'La torre se apaga <span class="nd">10 s</span> y sale un saboteador más.']],6],
  ['aba','Abanderados','en',[[2,'Algunas escuadras llevan un abanderado: mientras vive, su escuadra no se puede ralentizar ni empujar.'],[2,'Además, su escuadra corre un <b>15 %</b> más mientras él vive.']],7],
  ['cor','Piezas corruptas','ma',[[2,'Cada <b>4</b> elecciones de pieza, las piezas vienen corruptas. Su casilla defectuosa se construye primero, su torre no se puede vender y sus mejoras cuestan un <b>25 %</b> más.'],[2,'Cada <b>3</b> elecciones; mejoras un <b>50 %</b> más caras.']],'bf'],
  ['nie','Niebla de guerra','ma',[[1,'La línea de rondas solo enseña la <b>ronda siguiente</b>.'],[2,'Además, los enemigos no se ven hasta que los detecta una torre, tu héroe o una unidad; desde entonces se ven siempre.'],[2,'Además, los portales no informan de la siguiente oleada.'],[2,'Además, no sabes <b>dónde están</b> los portales enemigos.']],5],
  ['gri','Grietas espaciotemporales','ma',[[3,'A veces se abre un portal especial por el que llegan escuadras extra de una era que ya has visto (con su oro).']],'e2',1],
  ['ref','Sin refuerzos','ri',[[1,'Tus soldados tardan un <b>50 %</b> más en reaparecer.'],[1,'Tardan un <b>100 %</b> más.'],[3,'Los que caen <b>no reaparecen</b> hasta la siguiente oleada.']],'ini'],
- ['ase','Asedio sin tregua','ri',[[2,'Desde que pones la pieza tienes <b>30 s</b> para construir; después la oleada empieza sola.'],[1,'Solo <b>20 s</b>.'],[2,'Solo <b>15 s</b>.']],'fast'],
+ ['ase','Asedio sin tregua','ri',[[2,'Desde que pones la pieza tienes <span class="nd">30 s</span> para construir; después la oleada empieza sola.'],[1,'Solo <span class="nd">20 s</span>.'],[2,'Solo <span class="nd">15 s</span>.']],'fast'],
  ['saq','Saqueadores','ec',[[2,'Cada enemigo que llega al núcleo, además de vida, te roba <b>20</b> de oro.'],[1,'Te roba <b>40</b> de oro.']],'ini'],
  ['inf','Inflación','ec',[[2,'Cada torre del mismo tipo que construyes cuesta un <b>10 %</b> más que la anterior.'],[2,'Un <b>15 %</b> más por cada torre igual, y sus mejoras también se encarecen.']],8],
  ['jp','Jefes preparados','je',[],'fut'],['js','Jefe supremo','je',[],'fut']];
@@ -14264,4 +14266,11 @@ function evDedupe(){if(!S||!S.evts)return;const seen=new Set(Object.keys(S.evPla
 // Ahora todos los dibujos del cofre usan nombres propios.
 for(const k in CFX){if(typeof CFX[k]!=='string')continue;const ids=[...CFX[k].matchAll(/id="([^"]+)"/g)].map(m=>m[1]);let s=CFX[k];
  for(const id of ids){s=s.split('id="'+id+'"').join('id="cfx'+k+'-'+id+'"').split('url(#'+id+')').join('url(#cfx'+k+'-'+id+')').split('href="#'+id+'"').join('href="#cfx'+k+'-'+id+'"');}CFX[k]=s;}
+// ---- Descripciones: las duraciones van con su icono (⌛, el mismo de «Duración» en el compendio), del tamaño del texto y sin negrita gorda ----
+{try{const svg=k=>'url("data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 56 56">'+ICUIS[k]+'</svg>')+'")';
+ const st=document.createElement('style');st.textContent=`.nd{white-space:nowrap;font-weight:600;color:var(--t7fb4d9,#7fb4d9)}
+.nd::before{content:"";display:inline-block;width:1.05em;height:1.05em;margin-right:.18em;vertical-align:-.17em;background:${svg('dur')} center/contain no-repeat}
+:root:not([data-skin="holo"]) :is(.pa,#comp,#tip,#relic,#bmcard,#tmcard,.ce,.rbx,#side) .nd{color:#5a3fa0}`;document.head.appendChild(st);}catch(e){}}
+// Bengala de Vega: desde Nv 8 (Fósforo blanco) la ficha dice directamente cuánto dura.
+try{Object.defineProperty(HDUR.vega,'b',{get(){try{if(S&&S.hero&&S.hero.id==='vega'&&S.hero.lvl>=8)return '12 s';}catch(e){}return '8 s (12 s con Fósforo blanco)';},configurable:true});}catch(e){}
 </script></body></html>

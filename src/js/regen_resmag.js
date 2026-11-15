@@ -47,7 +47,7 @@ HFX.radagast=src=>'Sus golpes dejan '+kw('mrbrk','resistencia mágica rota',src)
 // ---- Grimorio quebrado (era 1) ----
 nrAdd({id:'grim',n:'Grimorio quebrado',ic:'📕',col:'#5a2a7a',era:1,cd:1.5,
  pas:()=>`Todo tu daño mágico deja ${kw('mrbrk','resistencia mágica rota','')}: <span class="cmg">−5</span> por golpe, hasta <span class="cmg">−10</span>.`,
- act:()=>`<b>Transmutación</b>: durante <b>8 s</b>, el daño físico que reciben los enemigos con ${kw('mrbrk','resistencia mágica rota','')} pasa a ser <span class="cmg">daño mágico</span>.`},
+ act:()=>`<b>Transmutación</b>: durante <span class="nd">8 s</span>, el daño físico que reciben los enemigos con ${kw('mrbrk','resistencia mágica rota','')} pasa a ser <span class="cmg">daño mágico</span>.`},
  {dur:8,use:()=>{for(const e of S.enemies)if(e.hp>0&&mbrkOf(e)>0)S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:.7*K,col:'#b48aff'});return true;}});
 // Transmutación: el golpe físico cuenta con la resistencia mágica en lugar de la armadura
 {const _m=e2DmgM;e2DmgM=function(e,src,ty){let m=_m.apply(this,arguments);try{if(ty==='phys'&&S.relics.includes('grim')&&ra('grim')&&mbrkOf(e)>0){

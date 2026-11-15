@@ -69,3 +69,10 @@ function evDedupe(){if(!S||!S.evts)return;const seen=new Set(Object.keys(S.evPla
 // Ahora todos los dibujos del cofre usan nombres propios.
 for(const k in CFX){if(typeof CFX[k]!=='string')continue;const ids=[...CFX[k].matchAll(/id="([^"]+)"/g)].map(m=>m[1]);let s=CFX[k];
  for(const id of ids){s=s.split('id="'+id+'"').join('id="cfx'+k+'-'+id+'"').split('url(#'+id+')').join('url(#cfx'+k+'-'+id+')').split('href="#'+id+'"').join('href="#cfx'+k+'-'+id+'"');}CFX[k]=s;}
+// ---- Descripciones: las duraciones van con su icono (⌛, el mismo de «Duración» en el compendio), del tamaño del texto y sin negrita gorda ----
+{try{const svg=k=>'url("data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 56 56">'+ICUIS[k]+'</svg>')+'")';
+ const st=document.createElement('style');st.textContent=`.nd{white-space:nowrap;font-weight:600;color:var(--t7fb4d9,#7fb4d9)}
+.nd::before{content:"";display:inline-block;width:1.05em;height:1.05em;margin-right:.18em;vertical-align:-.17em;background:${svg('dur')} center/contain no-repeat}
+:root:not([data-skin="holo"]) :is(.pa,#comp,#tip,#relic,#bmcard,#tmcard,.ce,.rbx,#side) .nd{color:#5a3fa0}`;document.head.appendChild(st);}catch(e){}}
+// Bengala de Vega: desde Nv 8 (Fósforo blanco) la ficha dice directamente cuánto dura.
+try{Object.defineProperty(HDUR.vega,'b',{get(){try{if(S&&S.hero&&S.hero.id==='vega'&&S.hero.lvl>=8)return '12 s';}catch(e){}return '8 s (12 s con Fósforo blanco)';},configurable:true});}catch(e){}

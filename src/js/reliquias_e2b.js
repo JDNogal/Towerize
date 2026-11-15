@@ -10,7 +10,7 @@ const r3Path=c=>inb(c.x,c.y)&&S.cells[c.y][c.x]===2?c:pathNear(c.x,c.y);
 // ---- Virus troyano ----
 nrAdd({id:'trojan',n:'Virus troyano',ic:'🦠',col:'#2a5a2a',era:2,cd:3,
  pas:()=>'Todas las habilidades de los enemigos tardan un <span class="cr">30% más</span> en recargarse.',
- act:()=>'Un enemigo (no jefe) se pasa a tu bando <b>10 s</b>: camina hacia su portal y ataca a los enemigos que encuentra. Nadie le ataca mientras tanto.'},
+ act:()=>'Un enemigo (no jefe) se pasa a tu bando <span class="nd">10 s</span>: camina hacia su portal y ataca a los enemigos que encuentra. Nadie le ataca mientras tanto.'},
  {aim:'Elige el enemigo que vas a hackear.',r:1.2*K,col:'120,255,120',use:c=>{const e=r3Near(c,1.5*K,e=>!isBoss(e)&&!(e.hk>0));if(!e){S.msg='Virus troyano: elige un enemigo que no sea jefe.';return false;}
   e.hk=10;e.hkc=0;e.fx.fear={t:10};e.tgt=null;for(const t of S.list)if(t.tgt===e)t.tgt=null;RS('trojan').n++;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:.9*K,col:'#7aff7a'});return true;}});
 {const T=.77,w=f=>function(){const a=[...arguments];if(r3On('trojan')){const i=a.findIndex(v=>typeof v==='number');if(i>=0)a[i]*=T;}return f.apply(this,a);};
@@ -20,7 +20,7 @@ function hackTick(dt){for(const e of S.enemies){if(!(e.hk>0)||e.sw)continue;e.hk
 // ---- Dron de reconocimiento ----
 nrAdd({id:'drone',n:'Dron de reconocimiento',ic:'🛸',col:'#3a4a5a',era:2,cd:3,
  pas:()=>`Un dron da vueltas al núcleo y dispara al enemigo más adelantado a su alcance. Descubre a los ${kw('camo','camuflados','')} que pisan la casilla del núcleo o las 8 de alrededor.`,
- act:()=>`El dron suelta una bomba en un área: daño y ${kw('stun','aturde','')} <b>1 s</b>.`},
+ act:()=>`El dron suelta una bomba en un área: daño y ${kw('stun','aturde','')} <span class="nd">1 s</span>.`},
  {aim:'Elige dónde soltar la bomba.',r:1.5*K,col:'255,180,90',use:c=>{let n=0;const dm=r3Hp()*.6;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-c.x,e.y-c.y)<=1.5*K){hurt(e,dm,null,'phys');stunE(e,1);n++;}
   RS('drone').n2+=n;S.fx.push({x:c.x,y:c.y,t:.5,m:.5,r:1.5*K,col:'#ffb45a'});return true;}});
 const DRN={a:0,cd:0};
@@ -31,11 +31,11 @@ function droneTick(dt){if(!r3On('drone')){DRN.p=null;return;}DRN.a+=dt*1.4;const
 // ---- Implante cibernético ----
 nrAdd({id:'implant',n:'Implante cibernético',ic:'🦾',col:'#4a3a5a',era:2,cd:3,
  pas:()=>'Tu héroe: <span class="chp">+20% de vida</span> y <span class="cd">+10% de daño</span>.',
- act:()=>'Durante <b>20 s</b>, las habilidades de tu héroe se recargan el <span class="cr">doble de rápido</span>.'},{dur:20,use:()=>{if(!S.hero){S.msg='Implante cibernético: no tienes héroe.';return false;}S.fx.push({x:S.hero.s.x,y:S.hero.s.y,t:.5,m:.5,r:K,col:'#c070ff'});return true;}});
+ act:()=>'Durante <span class="nd">20 s</span>, las habilidades de tu héroe se recargan el <span class="cr">doble de rápido</span>.'},{dur:20,use:()=>{if(!S.hero){S.msg='Implante cibernético: no tienes héroe.';return false;}S.fx.push({x:S.hero.s.x,y:S.hero.s.y,t:.5,m:.5,r:K,col:'#c070ff'});return true;}});
 // ---- Bidón radiactivo ----
 nrAdd({id:'barrel',n:'Bidón radiactivo',ic:'☢️',col:'#5a5a1a',era:2,cd:3,
- pas:()=>'Los enemigos que mueren dejan <b>3 s</b> una mancha radiactiva que hace un poco de daño y <b>corta toda curación</b> de los enemigos que la pisan.',
- act:()=>'Una zona radiactiva grande durante <b>8 s</b>: daño constante y, dentro, ningún enemigo se cura ni se regenera.'},
+ pas:()=>'Los enemigos que mueren dejan <span class="nd">3 s</span> una mancha radiactiva que hace un poco de daño y <b>corta toda curación</b> de los enemigos que la pisan.',
+ act:()=>'Una zona radiactiva grande durante <span class="nd">8 s</span>: daño constante y, dentro, ningún enemigo se cura ni se regenera.'},
  {aim:'Elige dónde volcar el bidón.',r:2*K,col:'190,240,60',use:c=>{(S.rads=S.rads||[]).push({x:c.x,y:c.y,r:2*K,t:8,m:8,big:1,tk:0});return true;}});
 H2K.push(e=>{if(r3On('barrel')&&!e.hk)(S.rads=S.rads||[]).push({x:e.x,y:e.y,r:.8*K,t:3,m:3,tk:0});});
 function radTick(dt){for(const e of S.enemies){if(e.nh>0){if(e._nhp!=null&&e.hp>e._nhp&&e.hp>0){RS('barrel').gold+=e.hp-e._nhp;e.hp=e._nhp;}e.nh-=dt;}e._nhp=e.hp;}
@@ -43,14 +43,14 @@ function radTick(dt){for(const e of S.enemies){if(e.nh>0){if(e._nhp!=null&&e.hp>
 // ---- Mapa estelar ----
 nrAdd({id:'starmap',n:'Mapa estelar',ic:'🌌',col:'#1a2a5a',era:2,cd:3,
  pas:()=>'En los cofres eliges entre <b>4 reliquias</b> en vez de 3.',
- act:()=>'Eliges un punto y, a los <b>3 s</b>, cae un meteorito: mucho daño en un área grande y deja '+kw('burn','quemadura','')+'.'},
+ act:()=>'Eliges un punto y, a los <span class="nd">3 s</span>, cae un meteorito: mucho daño en un área grande y deja '+kw('burn','quemadura','')+'.'},
  {aim:'Elige dónde caerá el meteorito.',r:1.8*K,col:'255,140,60',use:c=>{(S.mets=S.mets||[]).push({x:c.x,y:c.y,t:3});return true;}});
 function metTick(dt){if(r3On('starmap'))S.chest4=1;if(!S.mets||!S.mets.length)return;for(const m of S.mets){m.t-=dt;if(m.t<=0){const dm=r3Hp()*2.2;let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-m.x,e.y-m.y)<=1.8*K){const d=Math.hypot(e.x-m.x,e.y-m.y);hurt(e,dm*(d<=.8*K?1:.55),null,'elem');addBurn(e,null,4);n++;}
   RS('starmap').n+=n;S.fx.push({x:m.x,y:m.y,t:.8,m:.8,r:1.8*K,col:'#ff8a3c'});S.fx.push({x:m.x,y:m.y,t:.5,m:.5,r:.9*K,col:'#fff0b0'});try{sfx('boom',{force:1});}catch(x){}}}S.mets=S.mets.filter(m=>m.t>0);}
 // ---- Mochila cohete ----
 nrAdd({id:'jetpack',n:'Mochila cohete',ic:'🚀',col:'#6a3a2a',era:2,cd:3,
  pas:()=>'Tu héroe reaparece un <span class="cr">30% antes</span> y se mueve un <span class="cr">30% más rápido</span>.',
- act:()=>`Tu héroe vuela hasta el punto elegido del camino y cae haciendo daño en área y ${kw('stun','aturdiendo','')} <b>1 s</b>.`},
+ act:()=>`Tu héroe vuela hasta el punto elegido del camino y cae haciendo daño en área y ${kw('stun','aturdiendo','')} <span class="nd">1 s</span>.`},
  {aim:'Elige dónde aterriza tu héroe.',r:1.3*K,col:'255,150,80',use:c=>{const H=S.hero;if(!H||H.s.hp<=0){S.msg='Mochila cohete: tu héroe tiene que estar vivo.';return false;}const q=r3Path(c);if(!q){S.msg='Mochila cohete: elige un punto del camino.';return false;}
   (S.kfx=S.kfx||[]).push({x0:H.s.x,y0:H.s.y,x1:q.x,y1:q.y,t:.35});H.s.x=q.x;H.s.y=q.y;H.pt.flag={x:q.x,y:q.y};H.s.lock=false;H.s.en=null;H.s.fight=false;
   const dm=Math.max(hdm()*2.5,r3Hp()*.5);let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-q.x,e.y-q.y)<=1.3*K){hurt(e,dm,H.pt,'phys');stunE(e,1);n++;}RS('jetpack').n+=n;S.fx.push({x:q.x,y:q.y,t:.5,m:.5,r:1.3*K,col:'#ffa060'});return true;}});
@@ -65,7 +65,7 @@ nrAdd({id:'scouter',n:'Rastreador de combate',ic:'🥽',col:'#2a6a3a',era:2,cd:3
   S.fx.push({x:c.x,y:c.y,t:.7,m:.7,r:1.5*K,col:top>8000?'#ff4f4f':'#7aff8a'});S.msg=top>8000?'¡Lectura máxima: '+top.toLocaleString('es-ES')+'!':'Rastreador de combate: lectura de '+top.toLocaleString('es-ES')+'.';return 'msg';}});
 // ---- Satélite láser ----
 nrAdd({id:'satlaser',n:'Satélite láser',ic:'🛰️',col:'#3a2a5a',era:2,cd:3,
- pas:()=>'Cada <b>20 s</b> de oleada, un impacto orbital cae sobre el enemigo con más vida: mucho daño en el centro y algo menos alrededor (2 casillas).',
+ pas:()=>'Cada <span class="nd">20 s</span> de oleada, un impacto orbital cae sobre el enemigo con más vida: mucho daño en el centro y algo menos alrededor (2 casillas).',
  act:()=>`El láser recorre <b>6 casillas</b> de camino desde el punto elegido hacia el portal, haciendo daño y dejando ${kw('burn','quemadura','')}.`},
  {aim:'Elige dónde empieza el barrido.',r:.8*K,col:'255,80,220',use:c=>{const q=r3Path(c);if(!q){S.msg='Satélite láser: elige un punto del camino.';return false;}S.sweep={pts:h2Route(q.x,q.y,6*K),i:0,tk:0,hit:new Set()};return true;}});
 function satTick(dt){if(S.phase==='wave'&&r3On('satlaser')){S.satT=(S.satT||0)+dt;if(S.satT>=20&&!S.satX){let b=null;for(const e of S.enemies)if(e.hp>0&&!e.leak&&!(e.hk>0)&&(!b||e.hp>b.hp))b=e;if(b){S.satT=0;S.satX={e:b,t:1,x:b.x,y:b.y};}}}
@@ -75,7 +75,7 @@ function satTick(dt){if(S.phase==='wave'&&r3On('satlaser')){S.satT=(S.satT||0)+d
 // ---- Generador de gravedad ----
 nrAdd({id:'gravity',n:'Generador de gravedad',ic:'🌀',col:'#2a2a4a',era:2,cd:3,
  pas:()=>`Los enemigos ${kw('slow','ralentizados','')} reciben un <span class="cd">+15% de daño</span>.`,
- act:()=>'Un campo de gravedad triple en un área durante <b>6 s</b>: los enemigos van un <b>60% más lentos</b>, no pueden teletransportarse ni esquivar a tus unidades (que ahora sí los bloquean). Los voladores siguen volando.'},
+ act:()=>'Un campo de gravedad triple en un área durante <span class="nd">6 s</span>: los enemigos van un <b>60% más lentos</b>, no pueden teletransportarse ni esquivar a tus unidades (que ahora sí los bloquean). Los voladores siguen volando.'},
  {aim:'Elige dónde activar el campo de gravedad.',r:2*K,col:'150,120,255',use:c=>{S.grav={x:c.x,y:c.y,r:2*K,t:6};return true;}});
 function gravTick(dt){for(const e of S.enemies)if(e.gpin>0)e.gpin-=dt;if(!S.grav)return;const G=S.grav;G.t-=dt;if(G.t<=0){S.grav=null;return;}
  for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-G.x,e.y-G.y)>G.r)continue;e.gpin=.25;if(!isFly(e))slowE(e,.4,.3);e.fsp=0;}}
@@ -83,7 +83,7 @@ function gravTick(dt){for(const e of S.enemies)if(e.gpin>0)e.gpin-=dt;if(!S.grav
 // ---- Cápsula de clonación ----
 nrAdd({id:'clone',n:'Cápsula de clonación',ic:'🧬',col:'#2a5a6a',era:2,cd:3,
  pas:()=>'Cuando cae una de tus unidades o tu héroe, hay un <span class="cf">25%</span> de que reaparezca al instante.',
- act:()=>'Durante <b>10 s</b>, un clon de tu héroe, con la mitad de vida y de daño, pelea a su lado.'},
+ act:()=>'Durante <span class="nd">10 s</span>, un clon de tu héroe, con la mitad de vida y de daño, pelea a su lado.'},
  {dur:10,use:()=>{const H=S.hero;if(!H||H.s.hp<=0){S.msg='Cápsula de clonación: tu héroe tiene que estar vivo.';return false;}const s=H.s,st=stats(H.pt),hp=s.max*.5;
   const t={type:'bastion',lvl:2,summ:1,ttl:10,x:s.x,y:s.y,cells:[],flag:{x:Math.round(s.x),y:Math.round(s.y)},ab:{},acd:{},sd:[],uspdx:(H.def.spd||2)/2,tinf:{n:'Clon de '+H.def.n,ic:H.def.ic,col:'#3fe8ff',dt:H.def.dt||'phys',range:st.range/K,dmg:st.dmg*.5,rate:st.rate,unit:{n:1,hp,ap:5,rez:99,spd:(H.def.spd||2)*K}},ovr:{dmg:st.dmg*.5,rate:st.rate,range:Math.max(2.5*K,st.range),crit:.05,critm:2,area:0,gold:0,pen:0}};
   t.sd=[{i:0,x:s.x,y:s.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,clone:H.id,rng:H.def.ranged?1:0}];(S.summ=S.summ||[]).push(t);RS('clone').n2++;S.fx.push({x:s.x,y:s.y,t:.6,m:.6,r:K,col:'#3fe8ff'});return true;}});
@@ -91,7 +91,7 @@ nrAdd({id:'clone',n:'Cápsula de clonación',ic:'🧬',col:'#2a5a6a',era:2,cd:3,
 // ---- Chip de IA táctica ----
 nrAdd({id:'aichip',n:'Chip de IA táctica',ic:'💾',col:'#1a4a4a',era:2,cd:3,
  pas:()=>'Tus torres eligen solas el mejor objetivo: las de área, el grupo más grande; las demás, el enemigo con más vida. Si cambias a mano el objetivo de una torre, se queda con tu elección.',
- act:()=>'Durante <b>10 s</b>, cada torre que mata a un enemigo <span class="cr">vuelve a disparar al instante</span>.'},{dur:10,use:()=>true});
+ act:()=>'Durante <span class="nd">10 s</span>, cada torre que mata a un enemigo <span class="cr">vuelve a disparar al instante</span>.'},{dur:10,use:()=>true});
 const AIT={area:{n:'IA táctica',score:e=>e._dn||0},one:{n:'IA táctica',score:e=>e.hp}};
 function tgtAI(t,s){if(t.mman||!r3On('aichip'))return null;return (s&&s.area>0)?AIT.area:AIT.one;}
 function denseTick(){if(!r3On('aichip'))return;const L=S.enemies;for(const e of L){let n=0;for(const o of L)if(o.hp>0&&Math.abs(o.x-e.x)<=1.2*K&&Math.abs(o.y-e.y)<=1.2*K)n++;e._dn=n;}}
@@ -99,7 +99,7 @@ function denseTick(){if(!r3On('aichip'))return;const L=S.enemies;for(const e of 
 // ---- Baliza de teletransporte ----
 nrAdd({id:'beacon',n:'Baliza de teletransporte',ic:'📍',col:'#5a2a5a',era:2,cd:3,
  pas:()=>'En cada oleada, el primer enemigo que iba a llegar al núcleo vuelve a su portal (jefes no).',
- act:()=>'Mueves una torre que hayas construido tú a otro solar libre, con su nivel, especialización y habilidades. Al llegar, durante <b>8 s</b> dispara un <span class="cr">50% más rápido</span> y hace un <span class="cd">25% más de daño</span>.'},
+ act:()=>'Mueves una torre que hayas construido tú a otro solar libre, con su nivel, especialización y habilidades. Al llegar, durante <span class="nd">8 s</span> dispara un <span class="cr">50% más rápido</span> y hace un <span class="cd">25% más de daño</span>.'},
  {aim:'Elige la torre que quieres mover.',any:1,start:()=>{S.bcSrc=null;},use:c=>{const t=S.occ[c.x+','+c.y];
   if(!S.bcSrc){if(!t||t.holo||TW[t.type].uniq||TW[t.type].guild||t.summ){S.msg='Baliza: elige una torre que hayas construido tú.';return false;}S.bcSrc=t.id;S.msg='Ahora elige un solar libre para llevarla.';return false;}
   const src=S.list.find(o=>o.id===S.bcSrc);if(!src){S.bcSrc=null;S.msg='Elige la torre que quieres mover.';return false;}

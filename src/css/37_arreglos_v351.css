@@ -14,3 +14,5 @@ input,textarea,[contenteditable="true"],[contenteditable=""]{-webkit-user-select
 #relic .toff>.tof{position:relative}
 #relic .toff>.tof>button.cpgo{grid-area:1/1/-1/-1!important;position:absolute!important;top:8px!important;right:8px!important;left:auto!important;bottom:auto!important;width:28px!important;height:28px!important;min-width:0!important;margin:0!important;padding:0!important;order:0!important;font-size:15px!important;display:grid!important;place-items:center!important;z-index:3}
 body.mfs #relic .toff>.tof>button.cpgo{grid-area:1/1/-1/-1!important;top:auto!important;bottom:54px!important;right:8px!important;width:24px!important;height:24px!important;font-size:13px!important}
+/* v351 · móvil: las torres de apoyo (sin objetivos) ya no enseñan un «·» suelto antes de sus etiquetas */
+body.mfs #relic .tof .chips .tgmob:empty{display:none!important}
