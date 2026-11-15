@@ -10,7 +10,7 @@ const {spawnSync}=require('child_process'),fs=require('fs'),path=require('path')
 const args=process.argv.slice(2),fileArg=args.find(a=>a.endsWith('.html'));
 const FILE=path.resolve(fileArg||path.join(__dirname,'..','index.html'));
 // grupos: «ui» = solo pruebas de menús, libro y aspecto (para cambios visuales); «juego» = el resto
-const UI=['sintaxis.js','navegacion_teclado.js','compendio_libro.js','libro_filtros.js','libro_menus.js','bocadillo.js','libro_bordes.js','encuadernaciones.js','libro_flechas_puntitos.js','preparacion_partida.js','libro_nucleo.js','final_partida.js','registro_partidas.js','compendio_enlace.js','logro_enlace.js','novedades.js','filtros_era.js','vista_enemigos.js','piezas_compendio.js','habilidades_compendio.js','tablet.js'];
+const UI=['sintaxis.js','navegacion_teclado.js','compendio_libro.js','libro_filtros.js','libro_menus.js','bocadillo.js','libro_bordes.js','encuadernaciones.js','libro_flechas_puntitos.js','preparacion_partida.js','libro_nucleo.js','final_partida.js','registro_partidas.js','compendio_enlace.js','logro_enlace.js','novedades.js','novedades_fichas.js','filtros_era.js','vista_enemigos.js','piezas_compendio.js','habilidades_compendio.js','tablet.js'];
 const grp=args.includes('ui')?'ui':args.includes('juego')?'juego':null;
 const only=args.filter(a=>a!==fileArg&&a!=='ui'&&a!=='juego'&&!/^-j\d+$/.test(a));
 if(!fs.existsSync(FILE)){console.error('No existe '+FILE+'. Ejecuta antes «node build.js».');process.exit(1);}
@@ -70,7 +70,7 @@ const T=[
   ['mimico_activo.js','Activo del Mímico: copiar el activo de otra reliquia'],
   ['moneda_oro.js','Moneda: +50% de todo el oro que recibes'],
   ['boton_fallo.js','Informar de un fallo: se puede pulsar en todas las pantallas (PC y móvil)'],
-  ['novedades.js','Novedades del compendio por ficha y marcar todos como vistos'],
+  ['novedades_fichas.js','Novedades del compendio por ficha y marcar todos como vistos'],
  ['construir_anillo.js','Construir con el anillo y el ratón (dos clics en la torre)'],
  ['area_casillas.js','La casilla Expansión agranda el cono de la Salamandra y los radios de las habilidades'],
  ['fabricador.js','Fabricador de sectores: el evento, los 5 pasos, cobrar, colocar y guardar para la próxima elección'],

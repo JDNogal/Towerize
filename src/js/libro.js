@@ -7,7 +7,7 @@ try{LB.news=JSON.parse(localStorage.getItem('rt-lbnew'))||{};}catch(e){}
 // puntito de novedad en las cintas: algo nuevo que ver en esa área (logro conseguido, descubrimiento, desbloqueo)
 function lbNew(area){if(LB.open&&!LB.cover&&LB.area===area)return;LB.news[area]=1;try{localStorage.setItem('rt-lbnew',JSON.stringify(LB.news));}catch(e){}if(LB.open)lbRender();}
 function lbSeenArea(area){if(!LB.news[area])return;delete LB.news[area];try{localStorage.setItem('rt-lbnew',JSON.stringify(LB.news));}catch(e){}}
-const lbHasNew=k=>(k==='cp'||k==='lg')&&typeof novArea==='function'?novArea(k):!!LB.news[k]||(k==='op'&&typeof NEWU!=='undefined'&&NEWU.length>0);
+const lbHasNew=k=>(k==='cp'||k==='lg')&&typeof nfArea==='function'?nfArea(k):!!LB.news[k]||(k==='op'&&typeof NEWU!=='undefined'&&NEWU.length>0);
 // v308: iconos dibujados de la portada (si están cargados; si no, el emoji)
 const icU=(k,fb)=>typeof ICU!=='undefined'&&ICU[k]?ICU[k]:fb;
 const LBAREAS=[['cp','Compendio','📖'],['lg','Logros','🏆'],['st','Estadísticas','📊'],['pt','Partidas','📚'],['op','Opciones','⚙️'],['hp','Ayuda','❓'],['cr','Créditos','📜']];
@@ -44,7 +44,7 @@ function lbClose(resume,now){
 }
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal. En la preparación de partida no se sale así
 function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.area==='msg'){const f=LB.msg&&LB.msg.onBack;LB.msg=null;if(f)f();else if(document.body.classList.contains('inmenu'))lbOpen(null,true);else lbClose(true);return;}if(LB.fromWin){LB.fromWin=0;lbClose(true);return;}if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
-const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}${typeof novMark==='function'&&novMark(act,v)?' new':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
+const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}${typeof nfMark==='function'&&nfMark(act,v)?' new':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
 const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
 // flechas de pasar página: al anterior / siguiente de la sección en la que estás (sin fondo, solo trazo)
 const lbArrows=()=>lbStepList()?`<button class="bkarr l" data-a="lbprev" title="Anterior">‹</button><button class="bkarr r" data-a="lbnext" title="Siguiente">›</button>`:'';
