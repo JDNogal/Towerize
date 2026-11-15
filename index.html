@@ -2540,10 +2540,6 @@ html:root[data-skin="holo"] .bti.ach.got,html:root[data-skin="holo"] #comp .bti.
 .lbcv.b .lbtip{display:none}
 /* informar de un fallo */
 .lbcvin{position:relative}
-.lbcvin>.bugbtn{position:absolute;top:10px;left:12px;z-index:3;margin:0;display:flex;align-items:center;gap:5px;padding:5px 9px;border-radius:16px;font-size:12px;font-weight:600;border:1px solid color-mix(in srgb,var(--trim,#c9a052) 50%,transparent);background:rgba(0,0,0,.22);color:var(--leatxt,#f2e6cc);opacity:.8}
-.lbcvin>.bugbtn:hover{opacity:1;background:rgba(0,0,0,.35)}
-.lbcvin>.bugbtn svg{width:15px;height:15px}
-.lbcv.b .lbcvin>.bugbtn span{display:none}
 #bugw{position:fixed;inset:0;z-index:300;display:none;place-items:center;background:rgba(0,0,0,.6);padding:16px}
 #bugw.open{display:grid}
 #bugw .bugbox{position:relative;width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;background:#f6ecd3;color:#2a1a10;border:2px solid #8a5a2e;border-radius:14px;padding:16px 18px;box-shadow:0 10px 40px #000c}
@@ -2639,6 +2635,7 @@ body.mfs #pcback,body.mfs #peekb.on{padding:9px 18px!important;font-size:14px!im
 #bmenu .tmb .p{color:#ffd23a!important;font-weight:800!important}
 /* v337 · vender: el «$» con contorno negro para que se lea sobre el botón */
 #tmenu .tmb.sell .ic{color:#ffd23a!important;font-weight:900!important;-webkit-text-stroke:1.6px #1b1712;paint-order:stroke fill;text-shadow:0 1px 0 #1b1712,0 0 3px rgba(0,0,0,.6)!important}
+#bugw .bugbot>button{margin:0!important;height:40px!important;min-height:0!important;box-sizing:border-box!important;display:inline-flex;align-items:center;justify-content:center;padding-top:0!important;padding-bottom:0!important}
 /* ===== Pergamino nuevo (Era Fantástica): elegir pieza, nueva torre y eventos. Papel, rodillos y bordes a pluma los dibuja pergamino_nuevo.js en un SVG (.pgsvg); aquí, el título en cinta, colores y medidas ===== */
 /* título: cinta roja con la letra grabada en la tela */
 :root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .ptt,:root:not([data-skin="holo"]) body.pcpick #panel .pctt{position:relative;display:inline-block!important;margin:0 auto 6px!important;padding:5px 34px 6px!important;background:linear-gradient(180deg,#c43a2a,#9a1e16 55%,#6a100c)!important;border:1.5px solid #4a0a06;border-radius:3px;
@@ -2744,7 +2741,7 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v341</div>
+<div id="ver">Towerize v342</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -4002,7 +3999,7 @@ const RELICS=[
 // Cada reliquia: pasivo + activo. Al usar el activo se pierde el pasivo durante la recarga (en RDEF, en «rondas»; abajo se pasa a segundos de oleada). dur = segundos de juego que dura el activo.
 const mapN=()=>Math.max(0,Object.keys(S.blocks).length-1),mapDmg=()=>Math.min(75,5*Math.floor(mapN()/2)),mapCool=()=>Math.min(30,5*Math.floor(mapN()/4));
 const RDEF={
- coin:{cd:4,pas:()=>'Los enemigos sueltan <span class="gd">+50% de oro</span>.',act:()=>'<span class="gd">+200 de oro</span> al instante.'},
+ coin:{cd:4,pas:()=>'Recibes <span class="gd">+50% de oro</span> de todo: enemigos, eventos, reliquias…',act:()=>'<span class="gd">+200 de oro</span> al instante.'},
  lens:{cd:3,dur:20,pas:()=>'Torres: <span class="cc">+10% de crítico</span>.',act:()=>'<b>20 s</b>: <span class="cc">+20% de crítico</span> y críticos <span class="cc">×3</span>.'},
  anvil:{cd:3,dur:20,pas:()=>'Las casillas especiales dan <span class="cf">+50% de su bonus</span>.',act:()=>'<b>20 s</b>: torres sobre casillas especiales con <span class="cr">−50% de enfriamiento</span> y <span class="cd">+50% de daño</span>.'},
  frost:{cd:3,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de <span class="kw" data-kw="slow">ralentizar</span>.',act:()=>'<span class="kw" data-kw="freeze">Congela</span> <b>10 s</b> a los enemigos de un área.'},
@@ -5663,7 +5660,7 @@ function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC
 function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
  if(m.food>=m.need){m.food=0;m.rdy++;m.n++;m.need=MIM0+MIMUP*m.n;S.fx.push({x:m.x,y:m.y,r:1.6*K,t:.7,m:.7,col:'#ffd84a'});S.msg='¡El mímico está lleno! Escupirá un cofre al colocar la próxima pieza.';}}
 function mimSpit(){const m=S.mim;if(!m||!(m.rdy>0)||RL.open)return false;m.rdy--;RS('mimic').n2=(RS('mimic').n2||0)+1;openRelic();return true;}
-function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y*CS+CS/2,B=K*CS,now=performance.now(),ch=m.ch&&now-m.ch<350?1-(now-m.ch)/350:0,bob=Math.sin(now/600)*B*.03,op=.12+.25*ch+(m.rdy?.25:0);
+function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y*CS+CS/2,B=K*CS,now=performance.now(),ch=m.ch&&now>=m.ch&&now-m.ch<350?1-(now-m.ch)/350:0,/* v342: con una partida cargada, m.ch venía de la sesión anterior (mayor que el reloj actual) y la boca se estiraba hasta el borde del mapa */bob=Math.sin(now/600)*B*.03,op=.12+.25*ch+(m.rdy?.25:0);
  g.save();g.translate(X,Y+bob);
  // anillo de llenado
  g.lineWidth=lw(3);g.strokeStyle='rgba(0,0,0,.35)';g.beginPath();g.arc(0,0,B*.62,0,7);g.stroke();g.strokeStyle=m.rdy?'#ffd84a':'#c9a24a';g.beginPath();g.arc(0,0,B*.62,-Math.PI/2,-Math.PI/2+6.283*(m.rdy?1:m.food/m.need));g.stroke();
@@ -5679,7 +5676,9 @@ function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y
  g.fillStyle='#fff7c8';g.beginPath();g.ellipse(w*.24,-h*.45,w*.09,h*.17,0,0,7);g.fill();g.fillStyle='#1a0a0a';g.beginPath();g.ellipse(w*.25,-h*.45,w*.035,h*.12,0,0,7);g.fill();
  g.restore();
  if(m.rdy){g.font='bold '+Math.round(B*.4)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🎁',X+B*.5,Y-B*.55);}}
-function mimInfo(){const m=S.mim;return `<div class="ttl"><b>📦 Mímico</b></div><small style="margin:0">Cada enemigo que muere a ${String(MIMR).replace('.',',')} casillas o menos lo alimenta. Lleno, escupe un cofre al colocar la siguiente pieza.</small>`+R('gd','Comida',m.rdy?'¡Lleno!':m.food+' / '+m.need)+(m.n?R('','Cofres escupidos',m.n):'');}
+function mimInfo(){const m=S.mim,R0=RELIC.mimic;/* v342: ficha más clara: qué hace, cuánto le falta, su alcance y qué pasa después */
+ return `<div class="ttl"><b>${icOf(R0)} Mímico</b><br><small style="margin:0">Reliquia · cofre glotón en el mapa</small></div>`+R('gd','Comida',m.rdy?'¡Lleno! Escupe al colocar pieza':m.food+' / '+m.need+' bajas')+R('cg','Alcance',String(MIMR).replace('.',',')+' casillas')+(m.n?R('','Cofres escupidos',m.n):'')+
+ `<small>Se alimenta de los enemigos que mueren cerca. Lleno, escupe un cofre de reliquias al colocar la siguiente pieza; el siguiente pide ${MIMUP} bajas más.</small><small>Su activo, en la barra de reliquias, copia el activo de otra reliquia tuya aunque esté recargando.</small>`;}
 
 // ---- Mímico glotón (torre única del evento «Cofre sospechoso»): no se mejora con oro, sube de nivel comiendo (bajas que hace él) ----
 const GLUT=[0,12,35,80];
@@ -6809,7 +6808,7 @@ function update(dt){
  wolfTick(dt);dragonAdults(dt);guildHeal(dt);furyTick();orbTick(dt);heroAbTick(dt);mechaTick(dt);achTick(dt);logTick(dt);if(typeof e2TowersTick==='function')e2TowersTick(dt);if(typeof bufoTick==='function')bufoTick(dt);
  let bossDead=false;
  S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(!e.leak)S.wk=(S.wk||0)+1;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=250)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
-  {const gb=killGoldF(e.t),g1=rndG(gb*guildLoot(e.src)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=rp('coin')?rndG(gb*.5):0;S.gold+=g1+g2+g3;mimFeed(e);if(e.src&&TW[e.src.type]&&TW[e.src.type].glut)glutEat(e.src);if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;{const q=EKS(e.t);q.k++;q.g+=g1+g2+g3;}if(e.src)e.src.kills=(e.src.kills||0)+1;}}
+  {const gb=killGoldF(e.t),g1=rndG(gb*guildLoot(e.src)),g2=e.src?rndG(gb*stats(e.src).gold):0,g3=0;/* v342: la Moneda ahora da +50% de todo el oro que recibes (moneda_oro.js) */S.gold+=g1+g2+g3;mimFeed(e);if(e.src&&TW[e.src.type]&&TW[e.src.type].glut)glutEat(e.src);if(e.wanted){S.gold+=200;if(S.st)S.st.gEv+=200;S.msg='¡Encargo cumplido! +200 🪙 y una reliquia.';setTimeout(()=>openRelic(),0);}if(S.st){S.st.gKill+=g1;S.st.gTile+=g2;S.st.gRel+=g3;S.st.kills++;{const q=EKS(e.t);q.k++;q.g+=g1+g2+g3;}if(e.src)e.src.kills=(e.src.kills||0)+1;}}
   // experiencia del héroe: si el golpe final es suyo, la experiencia entera le llega directa; si es de otro, recibe directa la parte del daño que hizo y cae una bola del 40 % del resto que recoge al acercarse
   {const X=ET[e.t].xp||1,nb=(S.nbR===S.round&&!S.pvH?1:0);if(e.src&&e.src.hero)orbAdd(e.x,e.y,X+nb);else{/* contribución: la parte del daño que hizo el héroe le llega directa; del resto, bola del 40 % en el suelo */const hx=Math.min(X,e.hx||0);if(hx>0)orbAdd(e.x,e.y,hx);orbGround(e.x,e.y,hx>0?(X-hx)*.4:Math.max(1,X*.4));if(nb)orbAdd(e.x,e.y,nb);}}
   if(isBoss(e)&&S.round===ROUNDS&&!S.tut)bossDead=true;
@@ -10827,6 +10826,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:342,f:'15 nov 2026',t:'Moneda y arreglos',s:[['Equilibrio',['Moneda: ahora da +50% de todo el oro que recibes (enemigos, eventos, reliquias…), no solo el de los enemigos. Vender no cuenta.']],['Arreglos',['Mímico: a veces su boca se estiraba hasta el borde del mapa como una columna roja. Ya no.','Mímico: su ficha en el mapa explica mejor qué hace y cuánto le falta.','Informar de un fallo: «Cancelar» y «Enviar» quedan a la misma altura.']]]},
  {v:341,f:'15 nov 2026',t:'Mímico',s:[['Arreglos',['Activo del Mímico: después de pulsarlo ya puedes elegir la reliquia cuyo activo copias (antes decía «termina la acción en curso» y no dejaba).']]]},
  {v:340,f:'15 nov 2026',t:'Casillas, portales y ÉTER',s:[['Arreglos',['Debajo de cada pieza, las casillas especiales salen con su dibujo y el texto seguido, sin amontonarse.','Portales: al pasar el ratón solo sale el bocadillo de encima, que ya lo dice todo (adiós al panel repetido).','ÉTER ya no se come los clics: pulsar fuera de su bocadillo lo cierra al momento y el clic sigue su camino (también la ✕ / Esc del libro).','La ✕ de la portada se separa del borde de la tapa y ÉTER se corre un poco a la izquierda.']]]},
  {v:339,f:'15 nov 2026',t:'Libro y fichas',s:[['Arreglos',['Libro: el lomo cae justo en el centro y el pie de las páginas ya no hace un corte raro junto a él.','Las fichas de comprar torre y las del menú de la torre (también las habilidades de Nv 4) crecen en pantallas grandes: ya se leen bien.','Las cintas del menú principal salen de debajo de la tapa del libro, sin quedarse flotando.','Al terminar una partida, la única salida es el menú principal (antes «Jugar de nuevo» podía dejar una partida rara en la ronda 1 sin héroe).']]]},
@@ -13793,4 +13793,14 @@ function bossAnnounce(e){BOSSA.list.push({e,t0:performance.now()});
  BOSSA.list=BOSSA.list.filter(a=>now-a.t0<2600&&S.enemies.includes(a.e));
  for(const a of BOSSA.list){const u=(now-a.t0)/2600;for(let k=0;k<3;k++){const v=u*1.6-k*.22;if(v<=0||v>=1)continue;g.save();g.globalAlpha=(1-v)*.85;g.strokeStyle='#ff5a3a';g.lineWidth=lw(4*(1-v)+1);g.beginPath();g.arc(X(a.e.x),X(a.e.y),CS*(.6+v*4.5),0,Math.PI*2);g.stroke();g.restore();}}
 }catch(e){}return r;};}
+// ==================== v342 · Moneda: +50% de todo el oro que recibes ====================
+// Nogal (15-nov): antes solo daba +50% del oro de los enemigos. Ahora cualquier oro que entra (enemigos, eventos, reliquias, intereses…)
+// sube un 50% mientras el pasivo esté activo. No cuenta lo que recuperas al vender o deshacer una torre (si no, construir y deshacer daría oro).
+let GNOX=0;
+function coinHook(st){if(!st||st.__gh)return;let v=+st.gold||0;
+ Object.defineProperty(st,'__gh',{value:1,enumerable:false});
+ Object.defineProperty(st,'gold',{configurable:true,enumerable:true,get(){return v;},set(n){n=+n;try{if(n>v&&!GNOX&&st===S&&st.relics&&st.rs&&rp('coin'))n=v+Math.round((n-v)*1.5);}catch(e){}v=n;}});}
+{const _s=sell;sell=function(){GNOX++;try{return _s.apply(this,arguments);}finally{GNOX--;}};}
+setInterval(()=>{try{if(typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('coin'))coinHook(S);}catch(e){}},200);
+{const _g=gainRelic;gainRelic=function(id){const r=_g.apply(this,arguments);try{if(id==='coin')coinHook(S);}catch(e){}return r;};}
 </script></body></html>
