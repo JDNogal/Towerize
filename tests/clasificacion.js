@@ -11,7 +11,7 @@ await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tut
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
 await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;OPT.eter=false;startGame(15);chooseHero('reinhart');for(let i=0;i<5&&DLG.on;i++)dlgEnd();HQ.q=[];if(HQ.cur)hintClose();});
 await p.waitForTimeout(600);
-await p.evaluate(()=>{try{lbClose(true);}catch(e){}RL.open=false;S.round=12;S.phase='lost';endGame();});await p.waitForTimeout(1200);
+await p.evaluate(()=>{try{lbClose(true);}catch(e){}RL.open=false;S.round=12;S.phase='lost';endGame();if(typeof SCT!=='undefined'&&LB.endv==='tally'){LB.endv='';lbRender();}});await p.waitForTimeout(1200);
 const r={};r.btn=await p.evaluate(()=>!!document.querySelector('#comp .lbupb'));r.rib=await p.evaluate(()=>!!document.querySelector('#comp [data-a="lbrank"]'));
 r.noAmz=await p.evaluate(()=>!/Amenaza/.test(document.querySelector('#comp .lbupb').textContent));
 await p.screenshot({path:'tests/out/clasif_fin.png'});
@@ -36,7 +36,7 @@ ck(r.ask,'Seguir sin subir: sale el aviso (sin mencionar la amenaza)');
 ck(r.name&&r.pilot==='Piloto','La primera vez pide el nombre del piloto y lo guarda');
 ck(r.posted,'Se sube la partida con nombre, héroe y puntuación');
 // tabla
-await p.evaluate(()=>{S.round=10;S.phase='lost';endGame();});await p.waitForTimeout(800);
+await p.evaluate(()=>{S.round=10;S.phase='lost';endGame();if(typeof SCT!=='undefined'&&LB.endv==='tally'){LB.endv='';lbRender();}});await p.waitForTimeout(800);
 await p.evaluate(()=>document.querySelector('#comp [data-a="lbrank"]').click());await p.waitForTimeout(1200);
 r.table=await p.evaluate(()=>{const t=document.querySelector('#comp table.lbrkt');return t?t.querySelectorAll('tr').length:0;});r.me=await p.evaluate(()=>!!document.querySelector('#comp tr.me'));r.tabs=await p.evaluate(()=>!!document.querySelector('#comp .lbrktabs'));
 await p.screenshot({path:'tests/out/clasif_tabla.png'});

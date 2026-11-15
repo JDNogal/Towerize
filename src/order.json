@@ -36,7 +36,9 @@
   "34_ayudas.css",
   "35_pergamino.css",
   "36_fabricador.css",
-  "37_arreglos_v351.css"
+  "37_arreglos_v351.css",
+  "38_ficha_enemigo.css",
+  "39_puntuacion_libro.css"
  ],
  "js": [
   "00_config.js",
@@ -134,6 +136,7 @@
   "piezas_compendio.js",
   "tablet.js",
   "sonidos_e2.js",
+  "sonidos_andres.js",
   "musica.js",
   "mazo_vista.js",
   "alcance_minimo.js",
@@ -181,6 +184,9 @@
   "fabricador.js",
   "ojo_pergamino.js",
   "data/rango_nv4.js",
-  "arreglos_v351.js"
+  "arreglos_v351.js",
+  "palabras_clave_iconos.js",
+  "enemigo_ahora.js",
+  "puntuacion_libro.js"
  ]
 }

@@ -1,0 +1,20 @@
+/* v352 · Ficha de enemigo: «Este enemigo, ahora» en directo */
+.enow{margin:8px 0 6px;padding:8px 10px 9px;border-radius:10px;background:color-mix(in srgb,currentColor 7%,transparent);border:1px solid color-mix(in srgb,currentColor 18%,transparent)}
+.enow h4{margin:0 0 6px;display:flex;gap:8px;justify-content:space-between;align-items:center;white-space:nowrap;font-size:11px;font-weight:800;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;color:var(--acc,#c2560e)}
+.enow h4 .enlive{font-style:normal;letter-spacing:.02em;font-size:10px;color:#ff7a5a;animation:enowbl 1.2s infinite}
+.enow.dead h4 .enlive{animation:none;color:var(--fg2,#9aa0ad)}
+@keyframes enowbl{50%{opacity:.3}}
+@media (prefers-reduced-motion:reduce){.enow h4 .enlive{animation:none}}
+.ehp{position:relative;height:20px;border-radius:7px;background:#4a1a14;overflow:hidden;border:1px solid #000}
+.ehp .g{position:absolute;inset:0 auto 0 0;background:#f0d080;transition:width .9s ease .25s}
+.ehp .f{position:absolute;inset:0 auto 0 0;background:linear-gradient(180deg,#7fe07a,#3a9a3a);transition:width .2s}
+.ehp span{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:12.5px;color:#fff;text-shadow:0 1px 2px #000}
+.ests{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.enst{font-size:12px;border-radius:6px;padding:1px 7px;background:color-mix(in srgb,currentColor 6%,transparent);border:1px solid color-mix(in srgb,currentColor 20%,transparent)}
+.enst.none{opacity:.6}
+.enow .erows{margin-top:4px}
+.efold{margin-top:4px;border-top:1px solid color-mix(in srgb,currentColor 18%,transparent)}
+.efold>summary{cursor:pointer;padding:6px 2px;font-weight:700;list-style:none;display:flex;justify-content:space-between}
+.efold>summary::-webkit-details-marker{display:none}
+.efold>summary::after{content:'▸';transition:transform .2s;opacity:.8}
+.efold[open]>summary::after{transform:rotate(90deg)}

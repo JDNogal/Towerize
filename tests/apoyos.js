@@ -8,7 +8,7 @@ r.m=await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.
  return {before:apOk(),m1:azScoreM({nie:4},{pp:1}),m2:azScoreM({},{pp:1,ag:1,ba:1,bi:1,cb:1}),m3:azScoreM({sup:2},{}),net:azNetOf({sup:1},{pp:1,bi:1})};});
 // desbloqueo: ganar con una amenaza
 r.un=await p.evaluate(()=>{startGame(15);chooseHero('reinhart');for(let i=0;i<5&&DLG.on;i++)dlgEnd();HQ.q=[];if(HQ.cur)hintClose();try{lbClose(true);}catch(e){}
- S.amz={sup:1};S.round=15;S.phase='won';endGame();return {ok:apOk(),n:APT.filter(apUn).length};});
+ S.amz={sup:1};S.round=15;S.phase='won';endGame();if(typeof SCT!=='undefined'&&LB.endv==='tally'){LB.endv='';lbRender();}return {ok:apOk(),n:APT.filter(apUn).length};});
 // pantalla
 await p.evaluate(()=>{try{lbClose(true);}catch(e){}AZ.apw=7;LB.area='prep';LB.step='era';lbOpen('prep');LB.step='amz';lbRender();});await p.waitForTimeout(800);
 r.scr=await p.evaluate(()=>({apl:document.querySelectorAll('#comp .apl').length,det:document.querySelectorAll('#comp .apdet').length}));

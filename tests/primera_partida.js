@@ -14,7 +14,7 @@ ck(a.R===15,'la primera partida no es de 15 rondas');ck(a.era===1,'la primera pa
 let n=0,port=0;while(await p.evaluate(()=>DLG.on)&&n<30){port+=await p.evaluate(()=>/REINHART|SYLVANA/.test((document.querySelector('#dlg .dsp')||{}).textContent||'')&&!!document.querySelector('#dlg .dpp svg')?1:0);await p.evaluate(()=>{DLG.n=DLG.full.length;dlgTap();});await p.waitForTimeout(60);n++;}
 ck(port>=2,'Reinhart y Sylvana no salen con su retrato');
 await p.waitForTimeout(800);ck(await p.evaluate(()=>LB.open&&RL.hpick),'tras la intro no se abre la elección de héroe');
-await p.evaluate(()=>{chooseHero('reinhart');S.phase='won';endGame();});await p.waitForTimeout(2500);
+await p.evaluate(()=>{chooseHero('reinhart');S.phase='won';endGame();if(typeof SCT!=='undefined'&&LB.endv==='tally'){LB.endv='';lbRender();}});await p.waitForTimeout(2500);
 let rad=false;for(let k=0;k<40;k++){const t=await p.evaluate(()=>DLG.on?((document.querySelector('#dlg .dsp')||{}).textContent||''):'');if(/RADAGAST/.test(t)){rad=true;break;}await p.evaluate(()=>{if(DLG.on){DLG.n=DLG.full.length;dlgTap();}});await p.waitForTimeout(120);}
 ck(rad,'Radagast no se presenta al ganar la primera partida');
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'primera ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

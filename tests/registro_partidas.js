@@ -5,7 +5,7 @@ await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);const fails=
 const game=async(win)=>{await p.evaluate(async win=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;OPT.eter=false;localStorage.setItem('rt-tutchoice','skip');startGame(15);chooseHero('sylvana');S.chests={};S.evts={};
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
  RL.open=false;HQ.q=[];if(HQ.cur)hintClose();S.gold=999;const fr=[];for(let y=0;y<N;y++)for(let x=0;x<N;x++){const q=sqOf(x,y);if(bmFree(q))fr.push(q);}bmBuildNow('arrow',fr[0]);
- histLeak('norm',2);S.st.dmg=500;S.list[0].dmgT=400;S.hero.pt.dmgT=100;S.phase=win?'won':'lost';if(win)S.era=2;endGame();if(DLG.on)dlgEnd();},win);await p.waitForTimeout(400);};
+ histLeak('norm',2);S.st.dmg=500;S.list[0].dmgT=400;S.hero.pt.dmgT=100;S.phase=win?'won':'lost';if(win)S.era=2;endGame();if(typeof SCT!=='undefined'&&LB.endv==='tally'){LB.endv='';lbRender();}if(DLG.on)dlgEnd();},win);await p.waitForTimeout(400);};
 await game(true);await game(false);
 // partida empezada y dejada a medias
 await p.evaluate(()=>{startGame(15);chooseHero('reinhart');});await p.waitForTimeout(400);

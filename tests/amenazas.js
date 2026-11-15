@@ -21,7 +21,7 @@ const r3=await p.evaluate(()=>{const o={amz:JSON.stringify(S.amz)};for(let i=0;i
  const mk=t=>{const hp=ehpOf(t,S.round),q={t,x:S.core.x,y:S.core.y,tx:S.core.x,ty:S.core.y,hp,max:hp,fx:{},src:null,pv:[S.core.x,S.core.y]};S.enemies.push(q);return q;};
  S.amz.ven=1;const el=mk('mini'),nb=mk('norm');el.hp=0;achDeath(el);o.rage=nb.rage>0;/* v329: R1 = mini-élites y jefes */delete S.amz.ven;
  const sc=scoreCalc();o.score=sc.rows.some(x=>x[0]==='amz');o.chip=!!document.getElementById('amzchip');
- S.phase='won';S.round=ROUNDS;endGame();o.unlock=!!AZ.un.ven&&!AZ.un.nie&&AZ.rk&&AZ.rk.sup===2&&AZ.rk.ref===2;return o;});
+ S.phase='won';S.round=ROUNDS;endGame();if(typeof SCT!=='undefined'&&LB.endv==='tally'){LB.endv='';lbRender();}o.unlock=!!AZ.un.ven&&!AZ.un.nie&&AZ.rk&&AZ.rk.sup===2&&AZ.rk.ref===2;return o;});
 await p.waitForTimeout(800);r3.chipShown=await p.evaluate(()=>{const c=document.getElementById('amzchip');return !!c;});
 console.log(JSON.stringify({r1,r2,r3}));
 ck(!r1.before&&r1.seal,'el botón de Amenazas solo sale con la era completada');ck(r1.page&&r1.inc,'la pantalla abre y suma rangos');ck(r1.lk,'las bloqueadas no se pueden activar y dicen cómo se desbloquean');ck(r1.back,'Continuar vuelve a la era con los puntos');

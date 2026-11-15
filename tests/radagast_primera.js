@@ -4,7 +4,7 @@ for(const tut of [0,1]){const p=await b.newPage({viewport:{width:1280,height:720
  await p.addInitScript(t=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');if(t)localStorage.setItem('rt-tutdone','1');}catch(e){}},tut);
  await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
  const r=await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;OPT.u_hr=false;applyUnl();const before=!!HEROES.radagast.lockTxt;
-  startGame(15);chooseHero('sylvana');S.phase='won';endGame();return {before,after:!!HEROES.radagast.lockTxt,nu:NEWU.some(u=>u.id==='radagast'),flag:localStorage.getItem('rt-win1')};});
+  startGame(15);chooseHero('sylvana');S.phase='won';endGame();if(typeof SCT!=='undefined'&&LB.endv==='tally'){LB.endv='';lbRender();}return {before,after:!!HEROES.radagast.lockTxt,nu:NEWU.some(u=>u.id==='radagast'),flag:localStorage.getItem('rt-win1')};});
  if(!tut){ck(r.before,'Radagast desbloqueado sin jugar');ck(!r.after,'no se desbloquea al ganar la primera partida');ck(r.nu,'no sale en Nuevos desbloqueos');ck(r.flag==='1','no se guarda');}
  else{ck(!r.before,'con el tutorial hecho sigue bloqueado');ck(!r.nu,'se anuncia otra vez aunque ya lo tenía');}
  await p.close();}

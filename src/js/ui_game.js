@@ -321,7 +321,7 @@ function act(e){
  else if(a==='nusel'){if(LB.msg){LB.msg.sel=+b.dataset.v;lbRender();}}
  else if(a==='achf'){CP.af=b.dataset.v;renderComp();}
  else if(a==='achs'){CP.as=b.dataset.v;renderComp();}
- else if(a==='sfxt'){sfxTest(b.dataset.v,+b.dataset.i||0);renderOpts();}
+ else if(a==='sfxt'){sfxTest(b.dataset.v);}
  else if(a==='optc'){OPTS[+b.dataset.i].set(b.dataset.v);renderOpts();}
  else if(a==='tgt'||a==='tgtall'||a==='tgtdef'){
   const t=S.list.find(o=>o.id===+b.dataset.id);

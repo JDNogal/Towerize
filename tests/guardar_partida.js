@@ -27,7 +27,7 @@ await p.evaluate(()=>openPause());await p.waitForTimeout(300);await p.click('#co
 await p.click('#comp [data-a="psave"]');await p.waitForTimeout(2500);console.log('tras guardar y salir',await p.evaluate(()=>[document.body.classList.contains('inmenu'),LB.cover,SAV.meta&&SAV.meta.why]));
 await p.click('#comp [data-a="lbload"]');await p.waitForTimeout(900);console.log('reanudada al inicio de la oleada',await p.evaluate(()=>[S.phase,S.enemies.length,S.round,S.list.length]));
 // ganar/perder borra
-await p.evaluate(()=>{S.phase='lost';endGame();});await p.waitForTimeout(400);console.log('tras perder',await p.evaluate(()=>[!!SAV.meta,localStorage.getItem('rt-save')]));
+await p.evaluate(()=>{S.phase='lost';endGame();if(typeof SCT!=='undefined'&&LB.endv==='tally'){LB.endv='';lbRender();}});await p.waitForTimeout(400);console.log('tras perder',await p.evaluate(()=>[!!SAV.meta,localStorage.getItem('rt-save')]));
 await p.evaluate(()=>{lbClose(false,true);showMenu();});await p.waitForTimeout(300);console.log('portada sin guardado',await p.evaluate(()=>!$('comp').querySelector('[data-a="lbload"]')));
 // formato antiguo
 await p.evaluate(async()=>{await svPut({v:0,S:{},g:{}});svMeta({round:1,rounds:15,hero:'x',t:Date.now()});lbRender();});await p.waitForTimeout(200);await p.click('#comp [data-a="lbload"]');await p.waitForTimeout(600);
