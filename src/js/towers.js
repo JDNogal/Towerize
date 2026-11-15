@@ -147,7 +147,7 @@ function monkTick(dt){for(const t of S.list){const T=TW[t.type];if(!T||!T.monk||
    if(lo){lo.hp=Math.min(lo.max,lo.hp+lo.max*T.mheal.p);S.fx.push({x:lo.x,y:lo.y,t:.5,m:.5,r:.7*K,col:'#9ff0b0'});}}}
   if(gd&&s.hp<s.max*.5&&!(s.gc>0)){s.gc=8;s.drunk=5;s.hp=Math.min(s.max,s.hp+s.max*gd.h);S.fx.push({x:s.x,y:s.y,t:.5,m:.5,r:.7*K,col:'#c99ae0'});
    if(fb){const tg=s.en&&s.en.hp>0?s.en:S.enemies.find(e=>e.hp>0&&Math.hypot(e.x-s.x,e.y-s.y)<=1.5*K);if(tg){const a=Math.atan2(tg.y-s.y,tg.x-s.x),n=stats(t).dmg*1.2*fb.m;
-     const fm=tileArm(t);for(const e of S.enemies){if(e.hp<=0)continue;const dx=e.x-s.x,dy=e.y-s.y;if(Math.hypot(dx,dy)>1.5*K*fm)continue;let da=Math.abs(Math.atan2(dy,dx)-a);if(da>Math.PI)da=2*Math.PI-da;if(da<=Math.min(Math.PI/2,Math.PI/4*fm)||e===tg)addBurn(e,t,n);}
+     const fm=tileArm(t);for(const e of S.enemies){if(e.hp<=0)continue;const dx=e.x-s.x,dy=e.y-s.y;if(Math.hypot(dx,dy)>1.5*K*fm)continue;let da=Math.abs(Math.atan2(dy,dx)-a);if(da>Math.PI)da=2*Math.PI-da;if(da<=Math.PI/4*fm||e===tg)addBurn(e,t,n);}
      S.fx.push({x:s.x+Math.cos(a)*.6*K,y:s.y+Math.sin(a)*.6*K,t:.45,m:.45,r:.8*K,col:'#ff8a3c'});}}}}}}
 function unitCombat(dt){
  const SL=[];for(const t of unitTowers())for(const s of t.sd)if(s.hp>0&&!(s.H&&s.H.camo>0))SL.push(s);

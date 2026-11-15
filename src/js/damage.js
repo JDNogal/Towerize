@@ -81,7 +81,7 @@ function volcHeat(t,has,dt){if(t.spec!=='volc')return;const eb=abRank(t,'embr');
  t.erT=Math.max(0,(t.erT||0)-dt);const er=abRank(t,'erupt');if(er&&t.heat>=1&&t.erT<=0){t.erT=er.cd;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=er.r*K)addBurn(e,t,er.b);S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:er.r*K,col:'#ff6a2e'});}}
 function flameTick(t,tg,s,cm,TT){
  const ht=t.spec==='volc'?(t.heat||0):0,fr=ht&&abRank(t,'flare');if(ht){TT={...TT,cone:60+50*ht};cm*=1+.5*ht;if(fr)s={...s,range:s.range+fr.g*K*ht};}
- const one=!TT.cone,ang=Math.atan2(tg.y-t.y,tg.x-t.x),half=Math.min(Math.PI/2,(TT.cone||0)*(s.arm||1)*Math.PI/360)/* v346: el cono crece con el área (Expansión…), hasta 180° */,
+ const one=!TT.cone,ang=Math.atan2(tg.y-t.y,tg.x-t.x),half=Math.min(Math.PI,(TT.cone||0)*(s.arm||1)*Math.PI/360)/* v346: el cono crece con el área (Expansión…), sin tope: a 360° ya es un círculo entero */,
   it=abRank(t,'intens'),fo=abRank(t,'focus'),nap=abRank(t,'napalm'),det=abRank(t,'deton'),
   n=s.dmg*cm*(1+(it?it.p:0))*(fo?1+Math.min(fo.max,fo.g*(t.foT||0)):1);
  t.fl={a:ang,h:one?.07:half,len:s.range,one,ttl:1/s.rate+.08};
