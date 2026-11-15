@@ -12,7 +12,10 @@ function bossAnnounce(e){BOSSA.list.push({e,t0:performance.now()});
  // a ×1 un momento (solo si iba más rápido) y luego vuelve a la velocidad que tenías, salvo que la hayas cambiado tú
  if(S.speed>1){if(!BOSSA.slow)BOSSA.slow={prev:S.speed};S.speed=1;try{ui();}catch(_){}clearTimeout(BOSSA.st);BOSSA.st=setTimeout(()=>{const s=BOSSA.slow;BOSSA.slow=null;if(s&&S&&S.speed===1)S.speed=s.prev;try{ui();}catch(_){}},3000);}}
 // los jefes se dibujan los últimos (encima de todo lo demás)
-{const _d=draw;draw=function(){if(!S||!S.enemies||!S.enemies.some(isBoss))return _d.apply(this,arguments);const E=S.enemies;S.enemies=E.filter(x=>!isBoss(x)).concat(E.filter(isBoss));try{return _d.apply(this,arguments);}finally{S.enemies=E;}};}
+// v351: también lo que es clave para matar al jefe (los generadores de escudo de ARGOS, los porteadores del trono…): ET[t].bkey.
+// Orden: enemigos normales, luego las piezas clave del jefe y, encima de todo, los jefes. Los enemigos normales que invoque un jefe no cuentan.
+const isBKey=e=>!!(e&&ET[e.t]&&ET[e.t].bkey);
+{const _d=draw;draw=function(){if(!S||!S.enemies||!S.enemies.some(x=>isBoss(x)||isBKey(x)))return _d.apply(this,arguments);const E=S.enemies;S.enemies=E.filter(x=>!isBoss(x)&&!isBKey(x)).concat(E.filter(x=>!isBoss(x)&&isBKey(x)),E.filter(isBoss));try{return _d.apply(this,arguments);}finally{S.enemies=E;}};}
 {const _dw=e2DrawWorld;e2DrawWorld=function(lw){const r=_dw.apply(this,arguments);try{if(!S||!S.enemies)return r;const X=v=>v*CS+CS/2,now=performance.now();
  for(const e of S.enemies){if(!isBoss(e)||e.sw||e.hp<=0)continue;const R=((ET[e.t]||{}).r||.5)*CS*(typeof EVS!=='undefined'?EVS:1),p=.5+.5*Math.sin(now/260);
   g.save();g.strokeStyle=`rgba(255,70,50,${.45+.35*p})`;g.lineWidth=lw(3);g.beginPath();g.arc(X(e.x),X(e.y),R*1.35+p*R*.15,0,Math.PI*2);g.stroke();g.restore();}
