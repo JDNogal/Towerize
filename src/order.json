@@ -189,6 +189,7 @@
   "enemigo_ahora.js",
   "puntuacion_libro.js",
   "fichas_zoom.js",
-  "descripciones_rango.js"
+  "descripciones_rango.js",
+  "cofre_salida.js"
  ]
 }
