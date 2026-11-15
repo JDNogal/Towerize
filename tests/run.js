@@ -68,6 +68,7 @@ const T=[
  ['logro_enlace.js','Logros pedidos: enlace a Logros desde torres y héroes bloqueados, fijar y volver'],
  ['pergamino_v336.js','Pergamino nuevo en piezas, torres y eventos; cofres y eventos del mapa'],
   ['mimico_activo.js','Activo del Mímico: copiar el activo de otra reliquia'],
+  ['moneda_oro.js','Moneda: +50% de todo el oro que recibes'],
   ['boton_fallo.js','Informar de un fallo: se puede pulsar en todas las pantallas (PC y móvil)'],
   ['novedades.js','Novedades del compendio por ficha y marcar todos como vistos'],
  ['construir_anillo.js','Construir con el anillo y el ratón (dos clics en la torre)'],

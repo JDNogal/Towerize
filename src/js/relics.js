@@ -14,7 +14,7 @@ const RELICS=[
 // Cada reliquia: pasivo + activo. Al usar el activo se pierde el pasivo durante la recarga (en RDEF, en «rondas»; abajo se pasa a segundos de oleada). dur = segundos de juego que dura el activo.
 const mapN=()=>Math.max(0,Object.keys(S.blocks).length-1),mapDmg=()=>Math.min(75,5*Math.floor(mapN()/2)),mapCool=()=>Math.min(30,5*Math.floor(mapN()/4));
 const RDEF={
- coin:{cd:4,pas:()=>'Los enemigos sueltan <span class="gd">+50% de oro</span>.',act:()=>'<span class="gd">+200 de oro</span> al instante.'},
+ coin:{cd:4,pas:()=>'Recibes <span class="gd">+50% de oro</span> de todo: enemigos, eventos, reliquias…',act:()=>'<span class="gd">+200 de oro</span> al instante.'},
  lens:{cd:3,dur:20,pas:()=>'Torres: <span class="cc">+10% de crítico</span>.',act:()=>'<b>20 s</b>: <span class="cc">+20% de crítico</span> y críticos <span class="cc">×3</span>.'},
  anvil:{cd:3,dur:20,pas:()=>'Las casillas especiales dan <span class="cf">+50% de su bonus</span>.',act:()=>'<b>20 s</b>: torres sobre casillas especiales con <span class="cr">−50% de enfriamiento</span> y <span class="cd">+50% de daño</span>.'},
  frost:{cd:3,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de <span class="kw" data-kw="slow">ralentizar</span>.',act:()=>'<span class="kw" data-kw="freeze">Congela</span> <b>10 s</b> a los enemigos de un área.'},

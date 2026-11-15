@@ -216,7 +216,7 @@ function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC
 function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
  if(m.food>=m.need){m.food=0;m.rdy++;m.n++;m.need=MIM0+MIMUP*m.n;S.fx.push({x:m.x,y:m.y,r:1.6*K,t:.7,m:.7,col:'#ffd84a'});S.msg='¡El mímico está lleno! Escupirá un cofre al colocar la próxima pieza.';}}
 function mimSpit(){const m=S.mim;if(!m||!(m.rdy>0)||RL.open)return false;m.rdy--;RS('mimic').n2=(RS('mimic').n2||0)+1;openRelic();return true;}
-function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y*CS+CS/2,B=K*CS,now=performance.now(),ch=m.ch&&now-m.ch<350?1-(now-m.ch)/350:0,bob=Math.sin(now/600)*B*.03,op=.12+.25*ch+(m.rdy?.25:0);
+function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y*CS+CS/2,B=K*CS,now=performance.now(),ch=m.ch&&now>=m.ch&&now-m.ch<350?1-(now-m.ch)/350:0,/* v342: con una partida cargada, m.ch venía de la sesión anterior (mayor que el reloj actual) y la boca se estiraba hasta el borde del mapa */bob=Math.sin(now/600)*B*.03,op=.12+.25*ch+(m.rdy?.25:0);
  g.save();g.translate(X,Y+bob);
  // anillo de llenado
  g.lineWidth=lw(3);g.strokeStyle='rgba(0,0,0,.35)';g.beginPath();g.arc(0,0,B*.62,0,7);g.stroke();g.strokeStyle=m.rdy?'#ffd84a':'#c9a24a';g.beginPath();g.arc(0,0,B*.62,-Math.PI/2,-Math.PI/2+6.283*(m.rdy?1:m.food/m.need));g.stroke();
@@ -232,7 +232,9 @@ function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y
  g.fillStyle='#fff7c8';g.beginPath();g.ellipse(w*.24,-h*.45,w*.09,h*.17,0,0,7);g.fill();g.fillStyle='#1a0a0a';g.beginPath();g.ellipse(w*.25,-h*.45,w*.035,h*.12,0,0,7);g.fill();
  g.restore();
  if(m.rdy){g.font='bold '+Math.round(B*.4)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🎁',X+B*.5,Y-B*.55);}}
-function mimInfo(){const m=S.mim;return `<div class="ttl"><b>📦 Mímico</b></div><small style="margin:0">Cada enemigo que muere a ${String(MIMR).replace('.',',')} casillas o menos lo alimenta. Lleno, escupe un cofre al colocar la siguiente pieza.</small>`+R('gd','Comida',m.rdy?'¡Lleno!':m.food+' / '+m.need)+(m.n?R('','Cofres escupidos',m.n):'');}
+function mimInfo(){const m=S.mim,R0=RELIC.mimic;/* v342: ficha más clara: qué hace, cuánto le falta, su alcance y qué pasa después */
+ return `<div class="ttl"><b>${icOf(R0)} Mímico</b><br><small style="margin:0">Reliquia · cofre glotón en el mapa</small></div>`+R('gd','Comida',m.rdy?'¡Lleno! Escupe al colocar pieza':m.food+' / '+m.need+' bajas')+R('cg','Alcance',String(MIMR).replace('.',',')+' casillas')+(m.n?R('','Cofres escupidos',m.n):'')+
+ `<small>Se alimenta de los enemigos que mueren cerca. Lleno, escupe un cofre de reliquias al colocar la siguiente pieza; el siguiente pide ${MIMUP} bajas más.</small><small>Su activo, en la barra de reliquias, copia el activo de otra reliquia tuya aunque esté recargando.</small>`;}
 
 // ---- Mímico glotón (torre única del evento «Cofre sospechoso»): no se mejora con oro, sube de nivel comiendo (bajas que hace él) ----
 const GLUT=[0,12,35,80];
