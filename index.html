@@ -2741,7 +2741,7 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v342</div>
+<div id="ver">Towerize v343</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -4012,7 +4012,7 @@ const RDEF={
  hammer:{cd:4,pas:()=>'Mejorar torres cuesta un <span class="gd">15% menos</span>.',act:()=>'Una torre de Nv 1 o 2 sube un nivel gratis.'},
  scale:{cd:3,pas:()=>'Al final de cada ronda, <span class="gd">+10% de interés</span> sobre tu oro (máx. '+INTMAX+').'+(typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('scale')?' Ahora: <span class="gd">+'+interest()+' 🪙</span>.':''),act:()=>'Cobras ya el interés de 3 rondas.'},
  idol:{cd:3,dur:15,pas:()=>`Torres: <span class="cd">+5% de daño</span> por cada vida perdida en la partida (máx. +50%; ahora: <span class="cd">+${idolPct()}%</span>).`,act:()=>'Pierdes 2 de vida: <b>15 s</b> con <span class="cr">−50% de enfriamiento</span>.'},
- mimic:{cd:4,pas:()=>'Cae en el mapa, junto al camino, donde haya solares libres y pocas torres. Cada enemigo que muere a 2,5 casillas o menos lo <span class="cf">alimenta</span>; lleno ('+MIM0+', y '+MIMUP+' más cada vez), <span class="gd">escupe un cofre</span> al colocar la siguiente pieza.',act:()=>'Usa el activo de otra reliquia tuya, aunque esté recargando.'},
+ mimic:{cd:4,pas:()=>'Cae en el mapa, junto al camino, donde haya solares libres y pocas torres. Cada enemigo que muere a '+String(MIMR).replace('.',',')+' casillas o menos lo <span class="cf">alimenta</span>; lleno ('+MIM0+', y '+MIMUP+' más cada vez), <span class="gd">escupe un cofre</span> al colocar la siguiente pieza.',act:()=>'Usa el activo de otra reliquia tuya, aunque esté recargando.'},
  ember:{cd:3,dur:8,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de aplicar <span class="kw" data-kw="burn">quemadura</span>.',act:()=>'<b>8 s</b>: lluvia de fuego en un área (<span class="kw" data-kw="burn">quemadura</span> cada segundo).'},
  badge:{cd:4,pas:()=>'Tu héroe: <span class="cd">+15% de daño</span> y <span class="chp">+15% de vida</span>.',act:()=>'Un Espadachín y un Sanador del gremio luchan contigo esta oleada.'},
  notebook:{cd:3,pas:()=>`Cada oleada sin perder vida: torres <span class="cd">+2% de daño</span> permanente (máx. +20%; ahora: <span class="cd">+${Math.min(20,2*((typeof S!=='undefined'&&S&&S.nbN)||0))}%</span>).`,act:()=>'Esta oleada, cada baja da <span class="cf">+1 de experiencia</span> a tu héroe.'},
@@ -5647,8 +5647,8 @@ function roundRewards(){
  if(due.length)S.msg='¡Has defendido las casas! Coloca tu recompensa.';}
 
 // ---- Mímico: al conseguirlo cae en el mapa, en una zona con solares libres y pocas torres (mejor por dentro del mapa que en el borde).
-// Las bajas a 2,5 casillas o menos lo alimentan; lleno, escupe un cofre al colocar la siguiente pieza y la próxima vez pide más ----
-const MIMR=2.5,MIM0=30,MIMUP=20;
+// Las bajas a 4 casillas o menos lo alimentan; lleno, escupe un cofre al colocar la siguiente pieza y la próxima vez pide más ----
+const MIMR=4,/* v343: antes 2,5 */MIM0=30,MIMUP=20;
 function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC(x,y)?S.cc[y][x]:-1,NB=P;let best=null,bs=-1e9;
  for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!S.blocks[Math.floor(x/NB)+','+Math.floor(y/NB)])continue;const v0=cc(x,y);if(v0!==0&&v0!==3)continue;if(!D.some(([a,b])=>cc(x+a,y+b)===2))continue;
   let sol=0,tw=0;for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){if(i*i+j*j>10)continue;const v=cc(x+i,y+j);if(v===1){if(S.occ[((x+i)*K+1)+','+((y+j)*K+1)])tw++;else sol++;}}
@@ -10826,6 +10826,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:343,f:'15 nov 2026',t:'Mímico más glotón',s:[['Equilibrio',['Mímico: ahora come las bajas a 4 casillas o menos (antes 2,5).']]]},
  {v:342,f:'15 nov 2026',t:'Moneda y arreglos',s:[['Equilibrio',['Moneda: ahora da +50% de todo el oro que recibes (enemigos, eventos, reliquias…), no solo el de los enemigos. Vender no cuenta.']],['Arreglos',['Mímico: a veces su boca se estiraba hasta el borde del mapa como una columna roja. Ya no.','Mímico: su ficha en el mapa explica mejor qué hace y cuánto le falta.','Informar de un fallo: «Cancelar» y «Enviar» quedan a la misma altura.']]]},
  {v:341,f:'15 nov 2026',t:'Mímico',s:[['Arreglos',['Activo del Mímico: después de pulsarlo ya puedes elegir la reliquia cuyo activo copias (antes decía «termina la acción en curso» y no dejaba).']]]},
  {v:340,f:'15 nov 2026',t:'Casillas, portales y ÉTER',s:[['Arreglos',['Debajo de cada pieza, las casillas especiales salen con su dibujo y el texto seguido, sin amontonarse.','Portales: al pasar el ratón solo sale el bocadillo de encima, que ya lo dice todo (adiós al panel repetido).','ÉTER ya no se come los clics: pulsar fuera de su bocadillo lo cierra al momento y el clic sigue su camino (también la ✕ / Esc del libro).','La ✕ de la portada se separa del borde de la tapa y ÉTER se corre un poco a la izquierda.']]]},
