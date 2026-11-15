@@ -2744,7 +2744,7 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v340</div>
+<div id="ver">Towerize v341</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -4045,7 +4045,7 @@ function renderRelics(){
  const hb=S.hero?`<button class="rl hero${S.aim==='hero'?' aim':''}${S.aim&&S.aim!=='hero'?' dim':''}${S.hero.s.hp<=0?' off':''}" data-a="hero" data-tip="hero:x" style="background:${S.hero.def.col}">${portrait(S.hero.id,1)}<span class="bdg">${S.hero.s.hp<=0?Math.ceil(S.hero.s.rt)+'s':S.hero.lvl}</span></button>`:'';
  const vb=Object.keys(VCH).filter(k=>S.vch&&S.vch[k]>0).map(k=>`<button class="rl${S.aim==='vch'&&S.vty===k?' aim':''}${S.aim&&!(S.aim==='vch'&&S.vty===k)?' dim':''}" data-a="vch" data-id="${k}" data-tip="vch:${k}" style="background:#5a4a2a">${VCH[k].ic}<span class="bdg">${S.vch[k]}</span></button>`).join('');
  let rki=0;$('relics').innerHTML=vb+(S.relics.length?S.relics.map(id=>{const kn=++rki;const st=S.rs[id],R=RELIC[id],off=st.cd>0,on=st.t>0,bd=on?Math.ceil(st.t)+'s':off?fmtT(st.cd,1):id==='scale'&&interest()>0?'+'+interest():'';
-  const rd=relUsable(id);return `<button class="rl${off?' off':''}${on?' act':''}${rd?' rdy'+(RUSE()<3?' pul':''):''}${RFL[id]&&performance.now()-RFL[id]<900?' rfl':''}${S.aim===id?' aim':''}${S.aim&&S.aim!==id?' dim':''}" data-a="ract" data-id="${id}" data-tip="relic:${id}" style="background:${R.col}">${R.ic}${bd!==''?`<span class="bdg">${bd}</span>`:''}${kn<=9&&kcOn()?`<span class="kcap kc2"><b>⇧</b><em>+</em><b>${kn}</b></span>`:''}</button>`;}).join(''):'');
+  const rd=relUsable(id);return `<button class="rl${off?' off':''}${on?' act':''}${rd?' rdy'+(RUSE()<3?' pul':''):''}${RFL[id]&&performance.now()-RFL[id]<900?' rfl':''}${S.aim===id?' aim':''}${S.aim&&S.aim!==id&&!(S.aim==='mimic')?' dim':''}" data-a="ract" data-id="${id}" data-tip="relic:${id}" style="background:${R.col}">${R.ic}${bd!==''?`<span class="bdg">${bd}</span>`:''}${kn<=9&&kcOn()?`<span class="kcap kc2"><b>⇧</b><em>+</em><b>${kn}</b></span>`:''}</button>`;}).join(''):'');
 }
 let RSIG='';const RFL={},RPCD={};
 // activa usable ahora mismo (para el brillo): recargada, sin efecto en curso y en la fase en que se puede usar
@@ -7857,7 +7857,7 @@ function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
  /* con una ventana (oferta, cofre, evento) abierta solo valen sus botones… salvo dentro del libro abierto encima (compendio desde el mazo, las reliquias o el 📖) */
  if(RL.open&&!(LB.open&&b.closest&&b.closest('#comp'))&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','erasel','era2hok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
- if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim)||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
+ if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim&&S.aim!=='mimic')||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
  else if(a==='pexp'){S.pexp=!S.pexp;ui();}
@@ -10827,6 +10827,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:341,f:'15 nov 2026',t:'Mímico',s:[['Arreglos',['Activo del Mímico: después de pulsarlo ya puedes elegir la reliquia cuyo activo copias (antes decía «termina la acción en curso» y no dejaba).']]]},
  {v:340,f:'15 nov 2026',t:'Casillas, portales y ÉTER',s:[['Arreglos',['Debajo de cada pieza, las casillas especiales salen con su dibujo y el texto seguido, sin amontonarse.','Portales: al pasar el ratón solo sale el bocadillo de encima, que ya lo dice todo (adiós al panel repetido).','ÉTER ya no se come los clics: pulsar fuera de su bocadillo lo cierra al momento y el clic sigue su camino (también la ✕ / Esc del libro).','La ✕ de la portada se separa del borde de la tapa y ÉTER se corre un poco a la izquierda.']]]},
  {v:339,f:'15 nov 2026',t:'Libro y fichas',s:[['Arreglos',['Libro: el lomo cae justo en el centro y el pie de las páginas ya no hace un corte raro junto a él.','Las fichas de comprar torre y las del menú de la torre (también las habilidades de Nv 4) crecen en pantallas grandes: ya se leen bien.','Las cintas del menú principal salen de debajo de la tapa del libro, sin quedarse flotando.','Al terminar una partida, la única salida es el menú principal (antes «Jugar de nuevo» podía dejar una partida rara en la ronda 1 sin héroe).']]]},
  {v:338,f:'15 nov 2026',t:'Fichas más cortas',s:[['Arreglos',['Torres únicas en la partida: la ficha ya no es kilométrica: las habilidades salen en corto (nombre y rango) y cada una abre su ficha.','Los cerditos de Nv 4 tienen su propia ficha: pulsa su nombre en la de su casa.','Al mover a los cerditos se marca el camino y la casilla a la que van, como con el héroe.']]]},
