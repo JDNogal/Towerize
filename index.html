@@ -2729,6 +2729,39 @@ body.pcpick #panel.pgf>.pgsvg{zoom:1!important}
 body.pcpick #panel .pcinfo div{display:block!important;margin-top:4px}
 body.pcpick #panel .pcinfo .pcbf .bbf2{display:inline-block;width:18px;height:18px;vertical-align:-4px;margin-right:4px;line-height:0}
 body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!important}
+/* v345 · Fabricador de sectores (evento de la era 2): ventana holográfica de 1000×580 que se escala para caber */
+#fabw{position:fixed;inset:0;z-index:60;display:none;background:rgba(4,8,14,.72);backdrop-filter:blur(2px);font-family:'Chakra Petch',Inter,Arial,sans-serif}
+#fabw.on{display:block}
+#fabw .fabwin{--cy:#3fe8ff;--ln:#24344e;--ink:#d8f6ff;--ink2:#8fb0c8;position:absolute;left:50%;top:50%;width:1000px;height:580px;box-sizing:border-box;transform-origin:50% 50%;
+ border:1.5px solid var(--cy);border-radius:14px;background:rgba(10,16,28,.96);box-shadow:0 0 24px #3fe8ff33,inset 0 0 40px #3fe8ff10;display:grid;grid-template-columns:230px 448px 1fr;gap:18px;padding:18px 20px;color:var(--ink);font-size:14px;line-height:1.4}
+#fabw .fabh1{font-weight:700;margin:0;font-size:21px;letter-spacing:.06em;color:var(--cy);text-shadow:0 0 10px #3fe8ff88;line-height:1.15}
+#fabw .fabsub{color:var(--ink2);font-size:13px;margin:6px 0 14px}
+#fabw .fabsteps{display:flex;flex-direction:column;gap:6px}
+#fabw .fabstp{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:8px;border:1px solid var(--ln);color:var(--ink2)}
+#fabw .fabstp i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:12px;border:1.5px solid var(--ln);flex:none}
+#fabw .fabstp.on{border-color:var(--cy);color:var(--ink);background:#3fe8ff14}#fabw .fabstp.on i{border-color:var(--cy);color:var(--cy)}
+#fabw .fabstp.done{color:#6fe0a0}#fabw .fabstp.done i{border-color:#6fe0a0;color:#6fe0a0}
+#fabw .fabg{margin-top:12px;padding:9px 12px;border-radius:8px;border:1px solid var(--ln);display:flex;justify-content:space-between;font-weight:700}
+#fabw .gd,#fabw .fabg b{color:#ffd75a}
+#fabw .fabc{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+#fabw canvas{width:448px;height:448px;border-radius:10px;box-shadow:0 0 0 1.5px var(--ln);touch-action:none;cursor:pointer}
+#fabw .fabmsg{min-height:20px;font-size:13px;color:var(--ink2);text-align:center}#fabw .fabmsg.bad{color:#ff8a7a}#fabw .fabmsg.ok{color:#6fe0a0}
+#fabw .fabside{display:flex;flex-direction:column;gap:9px;min-width:0}
+#fabw .fabside h2{margin:0;font-size:16px;color:var(--cy);letter-spacing:.04em}#fabw .fabside h2 small{color:var(--ink2);font-size:12px;letter-spacing:0}
+#fabw .fabside p{margin:0;color:var(--ink2);font-size:13px}#fabw .fabink{color:var(--ink)}#fabw .fabbad{color:#ff8a7a}
+#fabw .fabopt{all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;border:1.5px solid var(--ln);background:#16213a;color:var(--ink);font-size:14px}
+#fabw .fabopt:hover{border-color:#3fe8ff99}#fabw .fabopt.on{border-color:var(--cy);background:#3fe8ff1c;box-shadow:0 0 12px #3fe8ff33}#fabw .fabopt[disabled]{opacity:.4;cursor:default}
+#fabw .fabopt small{display:block;color:var(--ink2);font-size:12px}
+#fabw .fabchs{display:flex;flex-direction:column;gap:6px}
+#fabw .fabbf{justify-content:flex-start}#fabw .fabbf .bbf2{flex:none;display:inline-flex}
+#fabw .fabunk{width:26px;height:26px;border-radius:6px;display:inline-grid;place-items:center;font-weight:800;background:#2a3448;color:#8fb0c8;flex:none}
+#fabw .fabchk{font-size:13px;display:flex;flex-direction:column;gap:3px}#fabw .fabchk span::before{content:'✗ ';color:#ff6a5a}#fabw .fabchk span.y::before{content:'✓ ';color:#6fe0a0}
+#fabw .fabrow{display:flex;gap:8px;margin-top:auto}
+#fabw .fabbtn{all:unset;cursor:pointer;flex:1;text-align:center;padding:10px;border-radius:9px;font-weight:800;border:1.5px solid var(--ln);color:var(--ink)}
+#fabw .fabbtn:hover{border-color:#3fe8ff99}#fabw .fabbtn.go{background:var(--cy);color:#06202a;border-color:var(--cy);box-shadow:0 0 14px #3fe8ff66}#fabw .fabbtn[disabled]{opacity:.35;cursor:default;box-shadow:none}
+#fabw kbd{font:700 11px Inter,Arial;border:1px solid var(--ln);border-radius:4px;padding:0 4px;color:var(--ink2)}
+#fabtip{position:fixed;z-index:61;max-width:270px;padding:8px 10px;border-radius:8px;background:#0b111c;border:1.5px solid #3fe8ff;box-shadow:0 4px 16px #000a;font-size:13px;color:#d8f6ff;pointer-events:none;display:none}
+#fabtip b{display:block;margin-bottom:2px}#fabtip small{display:block;color:#8fb0c8;margin-top:3px;font-size:12px}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2743,7 +2776,7 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v344</div>
+<div id="ver">Towerize v345</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3036,7 +3069,7 @@ const AB={
  pierce:{n:'Balas penetrantes',ranks:[{c:30,r:2},{c:35,r:3},{c:40,r:4}],txt:r=>`Cuando un proyectil mata a un enemigo, el daño sobrante pasa al enemigo más cercano en un radio de <span class="ca">${r.r} casillas</span>, y puede encadenarse. Cada salto vuelve a pasar por la armadura.`},
  arsenal:{n:'Arsenal improvisado',ranks:[{c:40,tar:4,stk:.4,bee:.2},{c:50,tar:5,stk:.5,bee:.3}],txt:r=>`Cada disparo es al azar: <b>roca</b> (daño completo), <b>barril de brea</b> (60% del daño; deja un charco de <span class="cr">${f(r.tar)} s</span> que deja ${kw('sticky','pegajosos','')} a los enemigos, hasta un <span class="cc">${Math.round(r.stk*100)}%</span> de ralentización) o <b>colmena</b> (40% del daño; un enjambre pica 3 s a todos en 1,1 casillas: <span class="cd">${Math.round(r.bee*100)}%</span> del daño de la torre por segundo como daño físico, +50% a los enemigos ralentizados). La brea es ${kw('flam','inflamable','')}.`},
  debris:{n:'Restos del asedio',ranks:[{c:35,t:5,tar:2},{c:45,t:8,tar:3}],txt:r=>`Cada munición deja algo en el camino durante <span class="cr">${r.t} s</span>. <b>Roca</b>: cascotes que hacen tropezar (${kw('stun','aturden','')} ${f(RUBT)} s) al primer enemigo que los cruza. <b>Brea</b>: el charco dura <span class="cr">${r.tar} s</span> más. <b>Colmena</b>: un panal que suelta otro enjambre (2 s) cuando pasa un enemigo.`},
- breach:{n:'Rompemurallas',ranks:[{c:40,a:2,max:10},{c:50,a:3,max:15}],txt:r=>`Cada impacto de roca aplica ${kw('brk','armadura rota','')} a todos los alcanzados: <span class="cph">−${r.a}</span> de armadura durante ${BRKT} s, acumulable hasta <span class="cph">−${r.max}</span>.`},
+ breach:{n:'Rompemurallas',ranks:[{c:250,a:2,max:10},{c:170,a:3,max:15}],txt:r=>`Cada impacto de roca aplica ${kw('brk','armadura rota','')} a todos los alcanzados: <span class="cph">−${r.a}</span> de armadura durante ${BRKT} s, acumulable hasta <span class="cph">−${r.max}</span>.`},
  roll:{n:'Rodar',ranks:[{c:30,d:4},{c:40,d:5}],txt:r=>`La roca rueda <span class="ca">${r.d} casillas</span> en vez de 3.`},
  crush:{n:'Aplastar',ranks:[{c:35,s:.4},{c:45,s:.7}],txt:r=>`Los enemigos arrollados por una roca quedan ${kw('stun','aturdidos','')} <span class="cr">${f(r.s)} s</span>. Los jefes, la mitad.`},
  aval:{n:'Avalancha',ranks:[{c:50,cd:25,d:8,m:3},{c:60,cd:20,d:10,m:4}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, si hay un objetivo, una roca gigante rueda <span class="ca">${r.d} casillas</span> desde él hacia los portales: hace <span class="cd">${r.m}×</span> el daño del disparo a todos los que arrolla y los ${kw('push','empuja','')} 0,5 casillas hacia atrás.`},
@@ -3085,7 +3118,7 @@ const AB={
  wrath:{n:'Ira divina',ranks:[{c:50,p:.08},{c:60,p:.12}],txt:r=>`El rayo del juicio hace además un <span class="cd">${Math.round(r.p*100)}%</span> de la vida actual de su objetivo (los jefes, la mitad).`},
  fork:{n:'Rayo bifurcado',ranks:[{c:45,n:1},{c:55,n:2}],txt:r=>`El rayo del juicio se divide y cae también sobre ${r.n===1?'el enemigo más cercano':'los <b>'+r.n+'</b> enemigos más cercanos'} a su objetivo (2,5 casillas), con la mitad de daño.`},
  fulg:{n:'Fulgurita',ranks:[{c:40,t:4},{c:50,t:6}],txt:r=>`Donde cae el rayo del juicio, el suelo se vuelve cristal durante <span class="cr">${r.t} s</span>: cada segundo, los enemigos que lo pisan reciben daño eléctrico y 1 stack de ${kw('ez','electrizado','')}.`},
- hex:{n:'Maleficio',ranks:[{c:45,m:.15},{c:55,m:.25}],txt:r=>`Cada orbe deja ${kw('cursed','maldito','')} a su objetivo durante ${HEXT} s: recibe un <span class="cmg">+${Math.round(r.m*100)}%</span> de daño mágico de todas las fuentes.`},
+ hex:{n:'Maleficio',ranks:[{c:310,m:.15},{c:210,m:.25}],txt:r=>`Cada orbe deja ${kw('cursed','maldito','')} a su objetivo durante ${HEXT} s: recibe un <span class="cmg">+${Math.round(r.m*100)}%</span> de daño mágico de todas las fuentes.`},
  nova:{n:'Nova Arcana',ranks:[{c:45,ch:6,m:2,r:1.2},{c:55,ch:5,m:2.5,r:1.5}],txt:r=>`Cada <b>${r.ch}</b> orbes que impactan, el siguiente estalla en una nova: <span class="cmg">${r.m}×</span> el daño del orbe como daño mágico a todos en <span class="ca">${f(r.r)} casillas</span>.`},
  poly:{n:'Polimorfia',ranks:[{c:50,p:.1,d:3},{c:60,p:.15,d:4}],txt:r=>`Cada orbe tiene un <span class="cc">${Math.round(r.p*100)}%</span> de dejar ${kw('poly','transformado','')} (en rana) a su objetivo durante <span class="cr">${r.d} s</span>. Las élites, la mitad; los jefes son inmunes.`},
  raise:{n:'Alzar a los caídos',ranks:[{c:45,d:5,n:3},{c:55,d:7,n:5}],txt:r=>`Los enemigos que mata el orbe (salvo jefes) se alzan como ${kw('spect','espectros','')} durante <span class="cr">${r.d} s</span>, hasta <b>${r.n}</b> a la vez. Caminan hacia los portales y bloquean y golpean a los enemigos que encuentran.`},
@@ -4014,7 +4047,7 @@ const RDEF={
  hammer:{cd:4,pas:()=>'Mejorar torres cuesta un <span class="gd">15% menos</span>.',act:()=>'Una torre de Nv 1 o 2 sube un nivel gratis.'},
  scale:{cd:3,pas:()=>'Al final de cada ronda, <span class="gd">+10% de interés</span> sobre tu oro (máx. '+INTMAX+').'+(typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('scale')?' Ahora: <span class="gd">+'+interest()+' 🪙</span>.':''),act:()=>'Cobras ya el interés de 3 rondas.'},
  idol:{cd:3,dur:15,pas:()=>`Torres: <span class="cd">+5% de daño</span> por cada vida perdida en la partida (máx. +50%; ahora: <span class="cd">+${idolPct()}%</span>).`,act:()=>'Pierdes 2 de vida: <b>15 s</b> con <span class="cr">−50% de enfriamiento</span>.'},
- mimic:{cd:4,pas:()=>'Cae en el mapa, junto al camino, donde haya solares libres y pocas torres. Cada enemigo que muere a '+String(MIMR).replace('.',',')+' casillas o menos lo <span class="cf">alimenta</span>; lleno ('+MIM0+', y '+MIMUP+' más cada vez), <span class="gd">escupe un cofre</span> al colocar la siguiente pieza.',act:()=>'Usa el activo de otra reliquia tuya, aunque esté recargando.'},
+ mimic:{cd:4,pas:()=>'Cae en el mapa, junto al camino, donde haya solares libres y pocas torres. Cada enemigo que muere a '+String(MIMR).replace('.',',')+' casillas o menos lo <span class="cf">alimenta</span>; lleno ('+MIM0+', y '+MIMUP+' más cada vez), <span class="gd">escupe un cofre</span> al colocar la siguiente pieza. Lleno, no come más hasta soltarlo.',act:()=>'Usa el activo de otra reliquia tuya, aunque esté recargando.'},
  ember:{cd:3,dur:8,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de aplicar <span class="kw" data-kw="burn">quemadura</span>.',act:()=>'<b>8 s</b>: lluvia de fuego en un área (<span class="kw" data-kw="burn">quemadura</span> cada segundo).'},
  badge:{cd:4,pas:()=>'Tu héroe: <span class="cd">+15% de daño</span> y <span class="chp">+15% de vida</span>.',act:()=>'Un Espadachín y un Sanador del gremio luchan contigo esta oleada.'},
  notebook:{cd:3,pas:()=>`Cada oleada sin perder vida: torres <span class="cd">+2% de daño</span> permanente (máx. +20%; ahora: <span class="cd">+${Math.min(20,2*((typeof S!=='undefined'&&S&&S.nbN)||0))}%</span>).`,act:()=>'Esta oleada, cada baja da <span class="cf">+1 de experiencia</span> a tu héroe.'},
@@ -5650,7 +5683,7 @@ function roundRewards(){
 
 // ---- Mímico: al conseguirlo cae en el mapa, en una zona con solares libres y pocas torres (mejor por dentro del mapa que en el borde).
 // Las bajas a 4 casillas o menos lo alimentan; lleno, escupe un cofre al colocar la siguiente pieza y la próxima vez pide más ----
-const MIMR=4,/* v343: antes 2,5 */MIM0=30,MIMUP=20;
+const MIMR=4,/* v343: antes 2,5 */MIM0=50,MIMUP=100;/* v345: antes 30 y 20 */
 function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC(x,y)?S.cc[y][x]:-1,NB=P;let best=null,bs=-1e9;
  for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!S.blocks[Math.floor(x/NB)+','+Math.floor(y/NB)])continue;const v0=cc(x,y);if(v0!==0&&v0!==3)continue;if(!D.some(([a,b])=>cc(x+a,y+b)===2))continue;
   let sol=0,tw=0;for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){if(i*i+j*j>10)continue;const v=cc(x+i,y+j);if(v===1){if(S.occ[((x+i)*K+1)+','+((y+j)*K+1)])tw++;else sol++;}}
@@ -5659,7 +5692,7 @@ function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC
  if(!best)return;S.mim={x:best[0]*K+1,y:best[1]*K+1,food:0,need:MIM0,rdy:0,n:0,t0:performance.now()};
  S.fx.push({x:S.mim.x,y:S.mim.y,r:2*K,t:.8,m:.8,col:'#c9a24a'});
  if(!S.tut)setTimeout(()=>hint('mimic','El mímico','El mímico ha caído en el mapa, junto al camino. Cada enemigo que muere cerca lo <b>alimenta</b>; cuando se llena, <b>escupe un cofre</b> al colocar la siguiente pieza. Construye cerca para llenarlo antes.',tgCell(S.mim.x,S.mim.y,1.6)),0);}
-function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
+function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||m.rdy>0/* v345: lleno no come más hasta soltar el cofre */||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
  if(m.food>=m.need){m.food=0;m.rdy++;m.n++;m.need=MIM0+MIMUP*m.n;S.fx.push({x:m.x,y:m.y,r:1.6*K,t:.7,m:.7,col:'#ffd84a'});S.msg='¡El mímico está lleno! Escupirá un cofre al colocar la próxima pieza.';}}
 function mimSpit(){const m=S.mim;if(!m||!(m.rdy>0)||RL.open)return false;m.rdy--;RS('mimic').n2=(RS('mimic').n2||0)+1;openRelic();return true;}
 function drawMimic(g,CS,lw){const m=S.mim;if(!m)return;const X=m.x*CS+CS/2,Y=m.y*CS+CS/2,B=K*CS,now=performance.now(),ch=m.ch&&now>=m.ch&&now-m.ch<350?1-(now-m.ch)/350:0,/* v342: con una partida cargada, m.ch venía de la sesión anterior (mayor que el reloj actual) y la boca se estiraba hasta el borde del mapa */bob=Math.sin(now/600)*B*.03,op=.12+.25*ch+(m.rdy?.25:0);
@@ -7634,6 +7667,9 @@ function tgrStep(X,menuId,cardId,draw,dt){const st=X._g||(X._g={dead:0,pk:null,p
 {let t0=performance.now();setInterval(()=>{const t=performance.now(),dt=Math.min(.1,(t-t0)/1000);t0=t;
  try{if(typeof BM!=='undefined'&&BM.s)tgrStep(BM,'bmenu','bmcard',bmCard,dt);}catch(e){}
  try{if(typeof TM!=='undefined'&&TM.t)tgrStep(TM,'tmenu','tmcard',tmCard,dt);}catch(e){}},30);}
+// ==================== v345 · Mímico: al pasar el ratón (o con su ficha abierta) se ve su alcance, como el de las torres ====================
+{const _d=drawMimic;drawMimic=function(g,CS,lw){const m=S&&S.mim;try{if(m&&((typeof HV!=='undefined'&&HV.key==='mim')||(typeof PR!=='undefined'&&PR.open&&PR.key==='mim')||mimHov()))rangeCircle(m.x,m.y,MIMR*K);}catch(e){}return _d.apply(this,arguments);};}
+function mimHov(){const h=S&&S.hover,m=S.mim;return !!(h&&m&&Math.floor(h.x/K)===Math.floor(m.x/K)&&Math.floor(h.y/K)===Math.floor(m.y/K));}
 // botón de pantalla completa en los menús (móvil): al girar el móvil se sale de pantalla completa y en estas pantallas no hay Opciones a mano
 {const b=document.createElement('button');b.id='fsmb';b.title='Pantalla completa';b.textContent='⛶';b.addEventListener('click',e=>{e.stopPropagation();try{enterFS();}catch(er){}setTimeout(()=>b.classList.remove('on'),150);});document.body.appendChild(b);
  setInterval(()=>{try{const on=TOUCH&&FSOK&&!isFS()&&(document.body.classList.contains('inmenu')||(RL.open&&RL.hpick))&&!(typeof INTRO!=='undefined'&&INTRO.on)&&!(typeof DLG!=='undefined'&&DLG.on);if(b.classList.contains('on')!==on)b.classList.toggle('on',on);}catch(er){}},400);}
@@ -10842,6 +10878,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:345,f:'15 nov 2026',t:'Fabricador de sectores',s:[['Eventos',['Era Distópica: nuevo evento, el Fabricador de sectores. Diseña tu propia pieza (salidas, camino, solares y casilla especial) y colócala donde quieras… o guárdala para la próxima elección.']],['Equilibrio',['Mímico: pide 50 bajas para el primer cofre y 100 más por cada uno siguiente. Lleno, no come más hasta soltar el cofre.','Maleficio (Foco Arcano) y Rompemurallas (Trebuchet) costaban como si fueran de otra época: ahora valen como las demás habilidades de su torre.']],['Mejoras',['Mímico: al pasar el ratón por encima se ve su alcance, como el de las torres.']]]},
  {v:344,f:'15 nov 2026',t:'Fichas que aguantan',s:[['Arreglos',['Las fichas del anillo de construir y del menú de torre ya no se cierran nada más sacar el ratón del botón: aguantan un momento para que puedas llegar a ellas y mirar sus palabras clave.']]]},
  {v:343,f:'15 nov 2026',t:'Mímico más glotón',s:[['Equilibrio',['Mímico: ahora come las bajas a 4 casillas o menos (antes 2,5).']]]},
  {v:342,f:'15 nov 2026',t:'Moneda y arreglos',s:[['Equilibrio',['Moneda: ahora da +50% de todo el oro que recibes (enemigos, eventos, reliquias…), no solo el de los enemigos. Vender no cuenta.']],['Arreglos',['Mímico: a veces su boca se estiraba hasta el borde del mapa como una columna roja. Ya no.','Mímico: su ficha en el mapa explica mejor qué hace y cuánto le falta.','Informar de un fallo: «Cancelar» y «Enviar» quedan a la misma altura.']]]},
@@ -11982,7 +12019,7 @@ function rgTick(dt){for(const e of S.enemies){if(!(e.hp>0)){e.rgV=0;continue;}
 
 // ---- quién rompe la resistencia mágica ----
 // Maleficio (Foco Arcano): ya no da un % de daño mágico; cada orbe quita −5 de resistencia mágica (hasta −10 / −15)
-AB.hex.ranks=[{c:45,a:5,max:10,m:0},{c:55,a:5,max:15,m:0}];
+AB.hex.ranks=[{c:310,a:5,max:10,m:0},{c:210,a:5,max:15,m:0}];
 AB.hex.txt=r=>`Cada orbe deja ${kw('mrbrk','resistencia mágica rota','')} a su objetivo: <span class="cmg">−${r.a}</span> por orbe, hasta <span class="cmg">−${r.max}</span>.`;
 SPECS.orb.foco.d='Orbes que rompen la resistencia mágica, cargan novas y pueden convertir a los enemigos en ranas.';
 {const _oh=orbHit;orbHit=function(t,tg,s,dmg){const r=_oh.apply(this,arguments);try{const hx=abRank(t,'hex');if(hx&&tg){if(tg.fx)delete tg.fx.hex;mbrkAdd(tg,hx.a||5,hx.max||10);}}catch(e){}return r;};}
@@ -12024,7 +12061,7 @@ E2KW.rgn=()=>'<b>Regeneración</b>'+R('chp','Campeones · mini-élites',rgPct(.0
 E2KW.mrbrk=()=>'<b>Resistencia mágica rota</b>'+R('cr','Duración de cada golpe',MBRKT+' s')+'<small>Reduce la resistencia mágica del enemigo. Cada golpe suma su reducción y caduca por separado, hasta el máximo de cada fuente. Puede quedar por debajo de 0: entonces recibe más daño mágico (como mucho, el doble). Beneficia a todo el daño mágico, venga de la torre que venga.</small>';
 MECUSE.rgn=Object.keys(RGEN).map(k=>'en:'+k);MECUSE.mrbrk=['tw:orb','tw:nano','hr:radagast','hr:korr'];MECUSE.cursed=[];
 // Trebuchet › Rompemurallas: menos disparos para llegar al tope (Nogal, 13-nov: es de área y lenta, raro que dé muchas veces al mismo)
-AB.breach.ranks=[{c:40,a:5,max:10},{c:50,a:10,max:20}];
+AB.breach.ranks=[{c:250,a:5,max:10},{c:170,a:10,max:20}];
 // Colmena › Corrosión del enjambre: ya quitaba resistencia mágica a quien muerden (mientras sigan encima); ahora se llama por su nombre
 AB.swcor.n='Mordisco ácido';{AB.swcor.txt=r=>`Cada criatura que muerde al mismo enemigo le deja ${kw('mrbrk','resistencia mágica rota','')}: <span class="cmg">−${r.a}</span> mientras siga encima (puede quedar negativa).`;}
 MECUSE.mrbrk.push('tw:alien');
@@ -13821,4 +13858,166 @@ function coinHook(st){if(!st||st.__gh)return;let v=+st.gold||0;
 {const _s=sell;sell=function(){GNOX++;try{return _s.apply(this,arguments);}finally{GNOX--;}};}
 setInterval(()=>{try{if(typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('coin'))coinHook(S);}catch(e){}},200);
 {const _g=gainRelic;gainRelic=function(id){const r=_g.apply(this,arguments);try{if(id==='coin')coinHook(S);}catch(e){}return r;};}
+// ==================== v345 · Evento de la Era Distópica: Fabricador de sectores (Mesa «Evento · Fabricador de sectores», aprobado por Nogal) ====================
+// La fábrica está sin energía: se arranca con sangre (3 de vida) o con oro (30); o se desguaza (la pieza del evento gana una casilla especial al azar).
+// Arrancada, abre su ventana: en 5 pasos diseñas tu propio sector de 7×7 y lo pagas al terminar.
+//  1 · salidas contando la entrada (2 por 25, 3 por 50, 4 por 75; siempre en el centro de un lado)
+//  2 · camino gratis, como mucho 28 casillas, una casilla de ancho, uniendo todas las salidas (puede tocar el borde: si toca otra pieza, se levanta una valla)
+//  3 · solares (3 con 2 salidas, 4 con 3 o 4) y uno extra opcional por 100
+//  4 · casilla especial opcional (50 normal o 100 ★; eliges entre 3, las que aún no has visto salen como «???»)
+//  5 · colocarlo ya en el mapa, girándolo (R), o guardarlo: saldrá como pieza extra (ya pagada) en la próxima elección de pieza.
+// Si al colocarlo cae en un cofre o en un evento, se abren después, y la elección de torre de la ronda sale cuando acaben (nada se pierde).
+const FAB={open:false,st:null,cvs:null};
+const FABX={1:['S','N'],2:['S','W','E'],3:['S','N','W','E']},FABXC={N:[3,0],S:[3,6],W:[0,3],E:[6,3]},FABSOL={1:3,2:4,3:4},FABMAXP=28,FABSTEPS=['Salidas','Camino','Solares','Casilla especial','Colocar'];
+const fabK=(x,y)=>x+','+y;
+EVENTS.fabric={n:'Fabricador de sectores',ic:'🏭',era:2,txt:'Una fábrica automática de la Forja, abandonada entre los escombros. Imprimía terreno a medida para los asentamientos. Está sin energía: su biorreactor arranca con créditos… o con una muestra orgánica.',opts:[
+ {l:'Arrancarla con tu sangre',c:'Pierdes 3 de vida y se abre el Fabricador',req:()=>S.hp<4?'Necesitas al menos 4 de vida':'',run:()=>{hpLoss(3);S.fabGo=1;return['hp:-3','fab'];}},
+ {l:'Arrancarla con oro',c:'Pagas 30 🪙 y se abre el Fabricador',req:()=>S.gold<30?'Necesitas 30 🪙':'',run:()=>{S.gold-=30;S.fabGo=1;return['gold:-30','fab'];}},
+ {l:'Desguazarla',c:'No se abre el Fabricador',run:()=>{const k=fabScrap();return k?['bf:'+k]:['gold:40'];}}]};
+EVRES.fabric=['Pinchas la muestra en el biorreactor. La fábrica tose, se enciende y una pantalla te pide medidas.',
+ 'Metes los créditos en la ranura. Las luces se encienden una a una y la impresora se pone a calentar.',
+ k=>k[0]&&k[0].startsWith('bf')?'Desmontas lo que puedes. Uno de los módulos sigue vivo: lo entierras en un solar de esta pieza y empieza a zumbar.':'Desmontas lo que puedes y vendes la chatarra a la Resistencia.'];
+// imagen provisional del evento: la fábrica con su impresora
+if(typeof EVIMG!=='undefined')EVIMG.fabric={ev:'<svg viewBox="-4 -4 408 268"><rect width="400" height="260" rx="6" fill="#0d1626"/><path d="M0 200h400v60H0z" fill="#1a2436"/><path d="M60 200V110l60 30v-30l60 30v-30l60 30V80h50v120z" fill="#24344e" stroke="#3fe8ff" stroke-width="2.5" stroke-linejoin="round"/><path d="M250 80V40h22v40" fill="#24344e" stroke="#3fe8ff" stroke-width="2.5"/><rect x="150" y="160" width="100" height="40" fill="#121a2a" stroke="#3fe8ff" stroke-width="2"/><path d="M160 180h80" stroke="#ff3fd0" stroke-width="3" stroke-dasharray="8 6"/><g fill="#3fe8ff" opacity=".85"><rect x="90" y="150" width="14" height="14"/><rect x="200" y="120" width="14" height="14"/></g><circle cx="261" cy="30" r="8" fill="#ffd75a" opacity=".6"/></svg>',o:{}};
+{const _c=chip;chip=function(k){const[a,b]=k.split(':');if(a==='fab')return '<span class="cf">🏭 diseñas tu propio sector</span>';if(a==='bf'&&BF[b])return `<span class="gd">${BF[b].n}${BF[b].sup?' ★':''} en un solar de la pieza</span>`;return _c.apply(this,arguments);};}
+// Desguazarla: un solar libre de la pieza del evento recibe una casilla especial al azar
+function fabScrap(){const bk=EVK;if(!bk){goldEv(40);return null;}const[bx,by]=bk.split(',').map(Number),L=[];
+ for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;if(!inbc(gx,gy)||S.cc[gy][gx]!==1)continue;const fx=gx*K+1,fy=gy*K+1;if(S.buff[fy]&&S.buff[fy][fx])continue;if(S.occ[fx+','+fy])continue;L.push([gx,gy]);}
+ if(!L.length){goldEv(40);return null;}const[gx,gy]=L[Math.floor(Math.random()*L.length)],k=rollBuff();
+ for(let j=0;j<K;j++)for(let i=0;i<K;i++)S.buff[gy*K+j][gx*K+i]=k;see('bf',bkey(k));S.fx.push({x:gx*K+1,y:gy*K+1,t:.8,m:.8,r:1.4*K,col:BF[k].col});return k;}
+// al cerrar el evento, se abre el Fabricador
+{const _c=closeEvent;closeEvent=function(){const go=S&&S.fabGo&&!RL.evNext;const r=_c.apply(this,arguments);if(go){S.fabGo=0;setTimeout(fabOpen,0);}return r;};}
+// mientras está abierto, la elección de torre espera
+{const _t=tryTowerOffer;tryTowerOffer=function(){if(FAB.open)return;return _t.apply(this,arguments);};}
+// ---- estado y reglas ----
+function fabNew(){return{step:0,ex:0,path:new Set(),sol:new Set(),xs:0,tier:0,sp:null,spAt:null,ch:[],rot:0,hov:null,hovB:null,msg:'',mc:''};}
+const fabOpens=st=>st.ex?FABX[st.ex].map(d=>FABXC[d]):[];
+const fabIsOpen=(st,x,y)=>fabOpens(st).some(o=>o[0]===x&&o[1]===y);
+// las salidas que no has elegido no pueden llevar camino (serían una salida más)
+const fabForbid=(st,x,y)=>!fabIsOpen(st,x,y)&&Object.values(FABXC).some(o=>o[0]===x&&o[1]===y);
+const fabNSol=st=>FABSOL[st.ex]+(st.xs?1:0);
+function fabCost(st){return (st.ex?25*st.ex:0)+(st.xs?100:0)+(st.tier===1?50:st.tier===2?100:0);}
+function fabCheck(st){const O=fabOpens(st),Pt=st.path,r={len:Pt.size,ends:true,conn:false,block:true};
+ for(const[x,y]of O)if(!Pt.has(fabK(x,y)))r.ends=false;
+ for(const c of Pt){const[x,y]=c.split(',').map(Number);if(Pt.has(fabK(x+1,y))&&Pt.has(fabK(x,y+1))&&Pt.has(fabK(x+1,y+1)))r.block=false;}
+ if(Pt.size){const s=[...Pt][0],seen=new Set([s]),q=[s];while(q.length){const[x,y]=q.pop().split(',').map(Number);for(const[dx,dy]of D){const n=fabK(x+dx,y+dy);if(Pt.has(n)&&!seen.has(n)){seen.add(n);q.push(n);}}}r.conn=seen.size===Pt.size;}
+ r.lenOk=Pt.size<=FABMAXP;r.ok=r.ends&&r.conn&&r.block&&r.lenOk;return r;}
+// la pieza como las del juego: '.' camino, 'S' solar, lo demás terreno (con su decoración)
+function fabPiece(st){const g=Array.from({length:P},()=>Array(P).fill('#'));for(const c of st.path){const[x,y]=c.split(',').map(Number);g[y][x]='.';}for(const c of st.sol){const[x,y]=c.split(',').map(Number);g[y][x]='S';}
+ const o={n:'Sector a medida',p:g.map(r=>r.join('')),b:[],fab:1};try{decorate(o);}catch(e){}
+ if(st.sp&&st.spAt){const[x,y]=st.spAt.split(',').map(Number);o.b.push({x,y,k:st.tier===2?st.sp+'+':st.sp});}
+ for(let i=0;i<st.rot;i++)rotO(o);return o;}
+function fabPick(st){const pool=(typeof bfPool==='function'?bfPool():BK).filter(k=>BF[k]&&!BF[k].cur&&k!=='cur');st.ch=shuf([...pool]).slice(0,3);}
+// ---- ventana ----
+function fabOpen(){if(!S||FAB.open)return;FAB.open=true;FAB.st=fabNew();let w=$('fabw');if(!w){w=document.createElement('div');w.id='fabw';document.body.appendChild(w);
+  w.addEventListener('click',fabClick);w.addEventListener('mousemove',fabTipMove);w.addEventListener('mouseleave',()=>{const t=$('fabtip');if(t)t.style.display='none';});}
+ w.innerHTML=`<div class="fabwin"><div class="fabl"><div class="fabh1">FABRICADOR DE SECTORES</div><div class="fabsub">Imprime terreno a medida. Diseña tu propio sector y colócalo donde quieras.</div><div class="fabsteps"></div>
+  <div class="fabg"><span>Oro</span><b class="fabgold"></b></div><div class="fabg"><span>Coste del sector</span><span class="fabcost gd"></span></div></div>
+  <div class="fabc"><canvas width="448" height="448"></canvas><div class="fabmsg"></div></div><div class="fabside"></div></div><div id="fabtip"></div>`;
+ FAB.cvs=w.querySelector('canvas');const c=FAB.cvs;
+ c.addEventListener('pointerdown',fabDown);c.addEventListener('pointermove',fabMove);c.addEventListener('pointerup',()=>{FAB.drag=null;});c.addEventListener('pointerleave',()=>{FAB.st.hov=null;FAB.st.hovB=null;FAB.drag=null;fabDraw();});
+ w.classList.add('on');document.body.classList.add('fabopen');try{closePrim();}catch(e){}fabFit();fabRender();try{sfx('ui');}catch(e){}}
+function fabClose(){FAB.open=false;const w=$('fabw');if(w){w.classList.remove('on');w.innerHTML='';}document.body.classList.remove('fabopen');FAB.drag=null;try{ui();}catch(e){}}
+function fabFit(){const w=$('fabw'),b=w&&w.querySelector('.fabwin');if(!b)return;const z=Math.min((innerWidth-16)/1000,(innerHeight-76)/580);/* arriba queda sitio para el botón de informar de un fallo */b.style.top=`calc(50% + 30px)`;b.style.transform=`translate(-50%,-50%) scale(${Math.max(.3,z)})`;}
+addEventListener('resize',()=>{if(FAB.open)fabFit();});
+function fabMsg(t,c){FAB.st.msg=t||'';FAB.st.mc=c||'';const m=document.querySelector('#fabw .fabmsg');if(m){m.textContent=FAB.st.msg;m.className='fabmsg '+FAB.st.mc;}}
+function fabRender(){const st=FAB.st,w=$('fabw');if(!w||!st)return;const G=S.gold-fabCost(st),avail=x=>G+x>=0;
+ w.querySelector('.fabsteps').innerHTML=FABSTEPS.map((n,i)=>`<div class="fabstp${i===st.step?' on':i<st.step?' done':''}"><i>${i<st.step?'✓':i+1}</i>${n}</div>`).join('');
+ w.querySelector('.fabgold').textContent=G+' 🪙';w.querySelector('.fabcost').textContent=fabCost(st)+' 🪙';
+ const back='<button class="fabbtn" data-fb="back">‹ Atrás</button>';let h='';
+ if(st.step===0){const poor=S.gold<25;h=`<h2>1 · ¿Cuántas salidas?</h2><p>Contando por donde se entra. Siempre van en el centro de un lado; al colocar el sector podrás girarlo.</p>
+  ${[[1,'Pasillo','2 salidas'],[2,'Bifurcación','3 salidas'],[3,'Cruce','4 salidas']].map(([n,t,s])=>`<button class="fabopt${st.ex===n?' on':''}" data-ex="${n}"${S.gold<25*n?' disabled':''}><span>${t}<small>${s} · ${FABSOL[n]} solares</small></span><span class="gd">${25*n} 🪙</span></button>`).join('')}
+  <div class="fabrow">${poor?'<button class="fabbtn" data-fb="quit">Salir sin fabricar</button>':''}<button class="fabbtn go" data-fb="go"${st.ex?'':' disabled'}>Continuar ›</button></div>`;}
+ else if(st.step===1){const r=fabCheck(st);h=`<h2>2 · Dibuja el camino</h2><p>Pulsa o arrastra sobre las casillas para poner o quitar camino. Tiene que unir todas las salidas. Si toca el borde fuera de una salida y al lado hay otra pieza, se levanta una valla.</p>
+  <div class="fabchk"><span class="${r.ends&&r.conn?'y':''}">Une todas las salidas</span><span class="${r.block?'y':''}">Sin bloques de 2×2 (el camino es de una casilla de ancho)</span><span class="${r.lenOk?'y':''}">Como mucho ${FABMAXP} casillas (llevas ${r.len})</span></div>
+  <div class="fabrow">${back}<button class="fabbtn go" data-fb="go"${r.ok?'':' disabled'}>Continuar ›</button></div>`;}
+ else if(st.step===2){const n=fabNSol(st);h=`<h2>3 · Coloca los solares</h2><p>Tienes ${n} solares. Ponlos donde quieras, fuera del camino. Pulsa uno puesto para quitarlo.</p><p><b class="fabink">${st.sol.size} / ${n}</b> colocados</p>
+  <button class="fabopt${st.xs?' on':''}" data-xs="1"${!st.xs&&!avail(-100)?' disabled':''}><span>Solar extra<small>Uno más, solo uno</small></span><span class="gd">${st.xs?'Quitar · ':''}100 🪙</span></button>
+  <div class="fabrow">${back}<button class="fabbtn go" data-fb="go"${st.sol.size===n?'':' disabled'}>Continuar ›</button></div>`;}
+ else if(st.step===3){const cur=st.tier===1?50:st.tier===2?100:0;h=`<h2>4 · Casilla especial <small>(opcional)</small></h2><p>Elige el tipo, luego una de las tres y pulsa un solar para ponerla.</p>
+  <button class="fabopt${st.tier===0?' on':''}" data-tier="0"><span>Sin casilla especial</span><span class="gd">0 🪙</span></button>
+  <button class="fabopt${st.tier===1?' on':''}" data-tier="1"${avail(cur-50)?'':' disabled'}><span>Casilla especial<small>Elige entre 3</small></span><span class="gd">50 🪙</span></button>
+  <button class="fabopt${st.tier===2?' on':''}" data-tier="2"${avail(cur-100)?'':' disabled'}><span>Casilla especial ★<small>Elige entre 3, versión mejorada</small></span><span class="gd">100 🪙</span></button>
+  ${st.tier?`<div class="fabchs">${st.ch.map(k=>{const kk=st.tier===2?k+'+':k,kn=seen('bf',k);return `<button class="fabopt fabbf${st.sp===k?' on':''}" data-sp="${k}" data-ftip="${kn?kk:'?'}">${kn&&typeof bfIcon==='function'?bfIcon(kk,26):'<span class="fabunk">?</span>'}<span>${kn?BF[k].n+(st.tier===2?' ★':''):'???'}</span></button>`;}).join('')}</div>`:''}
+  <div class="fabrow">${back}<button class="fabbtn go" data-fb="go"${!st.tier||(st.sp&&st.spAt)?'':' disabled'}>Continuar ›</button></div>`;}
+ else{const o=fabPiece(st),any=fabSpots(o).length;h=`<h2>5 · Coloca el sector</h2><p>Los huecos marcados son donde encaja. Gíralo con <kbd>R</kbd> o con el botón. Pasa por un hueco para verlo y pulsa para colocarlo.</p>
+  <button class="fabopt" data-fb="rot"><span>⟳ Girar</span><small>${['Sin girar','Girado 90°','Girado 180°','Girado 270°'][st.rot]}</small></button>
+  <p>${any?'Si lo prefieres, guárdalo: saldrá ya pagado en la próxima elección de pieza.':'<b class="fabbad">Ahora no encaja en ningún sitio</b>: guárdalo y saldrá ya pagado en la próxima elección de pieza.'}</p>
+  <div class="fabrow">${back}<button class="fabbtn go" data-fb="keep">Guardar para después</button></div>`;}
+ w.querySelector('.fabside').innerHTML=h;fabDraw();
+ if(st.step===1){const r=fabCheck(st);fabMsg(r.ok?'Camino listo.':st.msg&&st.mc==='bad'?st.msg:'',r.ok?'ok':st.mc);}else if(st.step!==4&&st.mc!=='bad'&&st.mc!=='ok')fabMsg(st.msg);else fabMsg(st.msg,st.mc);}
+function fabClick(e){const b=e.target.closest('button');if(!b||b.disabled||!FAB.open)return;const st=FAB.st;e.stopPropagation();st.msg='';st.mc='';
+ if(b.dataset.ex){st.ex=+b.dataset.ex;st.path=new Set(fabOpens(st).map(([x,y])=>fabK(x,y)));st.sol=new Set();st.spAt=null;st.xs=0;}
+ else if(b.dataset.fb==='go'){st.step++;if(st.step===1&&!st.path.size)st.path=new Set(fabOpens(st).map(([x,y])=>fabK(x,y)));
+  if(st.step===2){for(const s of [...st.sol])if(st.path.has(s))st.sol.delete(s);while(st.sol.size>fabNSol(st))st.sol.delete([...st.sol].pop());}
+  if(st.step===3){if(st.spAt&&!st.sol.has(st.spAt))st.spAt=null;if(st.tier&&!st.ch.length)fabPick(st);}}
+ else if(b.dataset.fb==='back')st.step=Math.max(0,st.step-1);
+ else if(b.dataset.fb==='quit'){fabClose();return;}
+ else if(b.dataset.fb==='rot')st.rot=(st.rot+1)%4;
+ else if(b.dataset.fb==='keep'){fabFinish(null);return;}
+ else if(b.dataset.xs){st.xs=st.xs?0:1;if(!st.xs)while(st.sol.size>fabNSol(st)){const l=[...st.sol].pop();st.sol.delete(l);if(st.spAt===l)st.spAt=null;}}
+ else if(b.dataset.tier!=null){st.tier=+b.dataset.tier;st.sp=null;st.spAt=null;if(st.tier)fabPick(st);}
+ else if(b.dataset.sp){st.sp=b.dataset.sp;st.spAt=null;st.msg='Ahora pulsa uno de tus solares para ponerla.';}
+ try{sfx('ui');}catch(x){}fabRender();}
+// bocadillo de las casillas especiales
+function fabTipMove(e){const t=$('fabtip');if(!t)return;const b=e.target.closest&&e.target.closest('[data-ftip]');if(!b){t.style.display='none';return;}const k=b.dataset.ftip;
+ t.innerHTML=k==='?'?'<b>???</b>Una casilla especial que aún no has descubierto. La conocerás al ponerla.':`<b style="color:${BF[k].col}">${BF[k].n}${BF[k].sup?' ★':''}</b>${BF[k].t||''}${BF[k].note?`<small>${BF[k].note}</small>`:''}`;
+ t.style.display='block';const r=b.getBoundingClientRect(),tw=t.offsetWidth,th=t.offsetHeight;let x=r.left-tw-10;if(x<8)x=Math.min(innerWidth-tw-8,r.right+10);t.style.left=x+'px';t.style.top=Math.max(8,Math.min(innerHeight-th-8,r.top))+'px';}
+// ---- lienzo ----
+function fabCell(e){const c=FAB.cvs,r=c.getBoundingClientRect();return[Math.floor((e.clientX-r.left)/r.width*P),Math.floor((e.clientY-r.top)/r.height*P)];}
+function fabBlock(e){const c=FAB.cvs,r=c.getBoundingClientRect();return[Math.floor((e.clientX-r.left)/r.width*BN),Math.floor((e.clientY-r.top)/r.height*BN)];}
+function fabTog(x,y,mode){const st=FAB.st;if(x<0||y<0||x>=P||y>=P)return;const k=fabK(x,y);if(fabIsOpen(st,x,y))return;
+ if(fabForbid(st,x,y)){fabMsg('Ahí iría otra salida: el camino no puede pasar por el centro de un lado que no has elegido.','bad');return;}
+ if(mode==='del'||(!mode&&st.path.has(k)))st.path.delete(k);else if(!st.path.has(k)){if(st.path.size>=FABMAXP){fabMsg('Has llegado al máximo de camino.','bad');return;}st.path.add(k);}fabRender();}
+function fabDown(e){const st=FAB.st;e.preventDefault();
+ if(st.step===4){const[bx,by]=fabBlock(e),o=fabPiece(st);if(fabSpots(o).some(([a,b])=>a===bx&&b===by))fabFinish([bx,by]);else fabMsg('Ahí no encaja: elige uno de los huecos marcados.','bad');return;}
+ const[x,y]=fabCell(e),k=fabK(x,y);
+ if(st.step===1){if(fabIsOpen(st,x,y)){fabMsg('Las salidas no se pueden quitar.','bad');return;}FAB.drag=st.path.has(k)?'del':'add';fabTog(x,y,FAB.drag);try{FAB.cvs.setPointerCapture(e.pointerId);}catch(x){}}
+ else if(st.step===2){if(st.path.has(k)){fabMsg('Los solares van fuera del camino.','bad');return;}if(st.sol.has(k)){st.sol.delete(k);if(st.spAt===k)st.spAt=null;}else if(st.sol.size<fabNSol(st))st.sol.add(k);else{fabMsg('Ya has puesto todos los solares.','bad');return;}st.msg='';fabRender();}
+ else if(st.step===3){if(!st.sp)return;if(!st.sol.has(k)){fabMsg('La casilla especial va en uno de tus solares.','bad');return;}st.spAt=k;see('bf',st.sp);st.msg='Casilla especial colocada.';st.mc='ok';fabRender();}}
+function fabMove(e){const st=FAB.st;if(st.step===4){const[bx,by]=fabBlock(e),k=fabK(bx,by);if(st.hovB!==k){st.hovB=k;fabDraw();}return;}
+ const h=fabCell(e);if(FAB.drag&&st.step===1){fabTog(h[0],h[1],FAB.drag);}if(!st.hov||st.hov[0]!==h[0]||st.hov[1]!==h[1]){st.hov=h;fabDraw();}}
+// dónde encaja: los mismos huecos que una pieza normal
+function fabSpots(o){const out=[];for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++)if(check(bx,by,o.p)===0)out.push([bx,by]);return out;}
+const FABC={bg:'#151c27',ln:'#22314a',path:'#2a3a50',pe:'#3fe8ff66',sol:'#33415a',sole:'#9fb4d0',cy:'#3fe8ff',bad:'#ff6a5a55'};
+function fabDraw(){const st=FAB.st,c=FAB.cvs;if(!c||!st)return;const g2=c.getContext('2d'),W=c.width;g2.clearRect(0,0,W,W);
+ if(st.step===4)return fabDrawMap(g2,W);const cs=W/P;g2.fillStyle=FABC.bg;g2.fillRect(0,0,W,W);
+ g2.strokeStyle=FABC.ln;g2.lineWidth=1;for(let i=0;i<=P;i++){g2.beginPath();g2.moveTo(i*cs,0);g2.lineTo(i*cs,W);g2.stroke();g2.beginPath();g2.moveTo(0,i*cs);g2.lineTo(W,i*cs);g2.stroke();}
+ // salidas no elegidas: prohibidas
+ if(st.step===1)for(const[x,y]of Object.values(FABXC))if(fabForbid(st,x,y)){g2.fillStyle=FABC.bad;g2.fillRect(x*cs+6,y*cs+6,cs-12,cs-12);g2.strokeStyle='#ff6a5a';g2.lineWidth=2;g2.beginPath();g2.moveTo(x*cs+16,y*cs+16);g2.lineTo(x*cs+cs-16,y*cs+cs-16);g2.moveTo(x*cs+cs-16,y*cs+16);g2.lineTo(x*cs+16,y*cs+cs-16);g2.stroke();}
+ for(const[x,y]of fabOpens(st)){g2.fillStyle='#3fe8ff22';g2.fillRect(x*cs,y*cs,cs,cs);g2.strokeStyle=FABC.cy;g2.lineWidth=2;g2.setLineDash([6,4]);g2.strokeRect(x*cs+3,y*cs+3,cs-6,cs-6);g2.setLineDash([]);
+  const ax=x===0?-1:x===P-1?1:0,ay=y===0?-1:y===P-1?1:0,cx=x*cs+cs/2+ax*cs*.36,cy=y*cs+cs/2+ay*cs*.36;g2.fillStyle=FABC.cy;g2.beginPath();g2.moveTo(cx+ax*8,cy+ay*8);g2.lineTo(cx-ay*8-ax*4,cy+ax*8-ay*4);g2.lineTo(cx+ay*8-ax*4,cy-ax*8-ay*4);g2.fill();}
+ for(const p of st.path){const[x,y]=p.split(',').map(Number);g2.fillStyle=FABC.path;g2.fillRect(x*cs+1,y*cs+1,cs-2,cs-2);g2.strokeStyle=FABC.pe;g2.lineWidth=1.5;g2.strokeRect(x*cs+4,y*cs+4,cs-8,cs-8);}
+ for(const s of st.sol){const[x,y]=s.split(',').map(Number),sp=st.spAt===s&&st.sp,kk=sp?(st.tier===2?st.sp+'+':st.sp):null,m=cs*.16;g2.fillStyle=sp?BF[kk].col:FABC.sol;g2.fillRect(x*cs+m,y*cs+m,cs-2*m,cs-2*m);g2.strokeStyle=sp?'#fff':FABC.sole;g2.lineWidth=2.5;g2.strokeRect(x*cs+m,y*cs+m,cs-2*m,cs-2*m);
+  if(sp){g2.fillStyle='#0b111c';g2.font=`800 ${Math.round(cs*.34)}px Arial`;g2.textAlign='center';g2.textBaseline='middle';g2.fillText((BF[kk].l||'')+(st.tier===2?'★':''),x*cs+cs/2,y*cs+cs/2+1);}}
+ if(st.hov){const[x,y]=st.hov;g2.strokeStyle='#ffffffaa';g2.lineWidth=2;g2.strokeRect(x*cs+2,y*cs+2,cs-4,cs-4);}}
+// paso 5: el mapa de verdad, en pequeño, con los huecos donde encaja
+function fabDrawMap(g2,W){const st=FAB.st,bs=W/BN,cs=bs/P,o=fabPiece(st),sp=fabSpots(o),isSp=(a,b)=>sp.some(([x,y])=>x===a&&y===b);g2.fillStyle='#0f1522';g2.fillRect(0,0,W,W);
+ for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const x0=bx*bs,y0=by*bs,k=fabK(bx,by);g2.strokeStyle=FABC.ln;g2.lineWidth=1;g2.strokeRect(x0+.5,y0+.5,bs-1,bs-1);
+  if(S.blocks[k]){for(let y=0;y<P;y++)for(let x=0;x<P;x++){const v=S.cc[by*P+y][bx*P+x];g2.fillStyle=v===2?'#2e4462':v===1?'#3a4a64':'#141b28';g2.fillRect(x0+x*cs,y0+y*cs,cs+.3,cs+.3);}
+   const cx=Math.floor(S.core.x/K),cy=Math.floor(S.core.y/K);if(Math.floor(cx/P)===bx&&Math.floor(cy/P)===by){g2.fillStyle=FABC.cy;g2.beginPath();g2.arc((cx+.5)*cs,(cy+.5)*cs,cs*.9,0,7);g2.fill();}}
+  else{if(S.chests&&S.chests[k]){g2.fillStyle='#4d5a35';g2.fillRect(x0+bs*.32,y0+bs*.38,bs*.36,bs*.26);g2.fillStyle='#ff4d3a';g2.beginPath();g2.arc(x0+bs*.5,y0+bs*.33,bs*.04,0,7);g2.fill();}
+   if(S.evts&&S.evts[k]){g2.strokeStyle=FABC.cy;g2.lineWidth=2;g2.font=`800 ${Math.round(bs*.42)}px Arial`;g2.textAlign='center';g2.textBaseline='middle';g2.strokeText('?',x0+bs/2,y0+bs/2);}
+   if(isSp(bx,by)){g2.strokeStyle=FABC.cy;g2.setLineDash([7,5]);g2.lineWidth=2.5;g2.strokeRect(x0+3,y0+3,bs-6,bs-6);g2.setLineDash([]);if(st.hovB===k)fabDrawPiece(g2,o,x0,y0,bs,.65);}}}}
+function fabDrawPiece(g2,o,x0,y0,sz,al){const cs=sz/P;g2.save();g2.globalAlpha=al;g2.fillStyle=FABC.bg;g2.fillRect(x0,y0,sz,sz);
+ for(let y=0;y<P;y++)for(let x=0;x<P;x++){const ch=o.p[y][x];if(ch==='.'){g2.fillStyle=FABC.path;g2.fillRect(x0+x*cs,y0+y*cs,cs,cs);}else if(ch==='S'){const b=o.b.find(q=>q.x===x&&q.y===y);g2.fillStyle=b?BF[b.k].col:FABC.sol;g2.fillRect(x0+x*cs+cs*.15,y0+y*cs+cs*.15,cs*.7,cs*.7);}}
+ g2.strokeStyle=FABC.cy;g2.lineWidth=2;g2.strokeRect(x0,y0,sz,sz);g2.restore();}
+// ---- terminar: se paga y se coloca ya o se guarda ----
+function fabFinish(at){const st=FAB.st,cost=fabCost(st),o=fabPiece(st);S.gold-=cost;if(S.st)S.st.gEvSpent=(S.st.gEvSpent||0)+cost;fabClose();
+ if(!at){(S.fabKeep=S.fabKeep||[]).push(o);toast('🏭 Sector guardado: saldrá ya pagado en la próxima elección de pieza.');ui();return;}
+ fabPlace(o,at[0],at[1]);}
+// colocarlo como una pieza más (lo pagado ya está pagado: la casilla especial no se cobra otra vez)
+function fabPlace(o,bx,by){const off=S.offers,pi=S.pi;S.offers=[o];S.pi=0;const pc=payOn()?pcost(o):0;S.gold+=pc;
+ try{placePiece(bx,by);}finally{S.offers=off&&off.length&&S.phase!=='build'?off:[];S.pi=null;}
+ try{sfx('place');}catch(e){}ui();}
+// las piezas guardadas salen en la próxima elección de pieza, además de las de siempre
+{const _d=deal;deal=function(){const r=_d.apply(this,arguments);try{if(S&&S.fabKeep&&S.fabKeep.length&&!S.tut&&S.offers){const k=S.fabKeep.find(o=>anyPlace(o));if(k){S.fabKeep=S.fabKeep.filter(o=>o!==k);S.offers.push(k);S.noSlot=false;}}}catch(e){}return r;};}
+{const _p=placePiece;placePiece=function(bx,by){const o=S.offers&&S.offers[S.pi];if(o&&o.fab&&!FAB.placing){FAB.placing=1;try{if(payOn())S.gold+=pcost(o);return _p.apply(this,arguments);}finally{FAB.placing=0;}}return _p.apply(this,arguments);};}
+// fabPlace ya devuelve lo de la casilla especial: que el envoltorio no lo devuelva dos veces
+{const _fp=fabPlace;fabPlace=function(o,bx,by){FAB.placing=1;try{return _fp.apply(this,arguments);}finally{FAB.placing=0;}};}
+// en la elección de pieza, la guardada dice que ya está pagada
+{const _u=ui;ui=function(){const r=_u.apply(this,arguments);try{if(S&&S.phase==='place'&&S.offers)S.offers.forEach((o,i)=>{if(!o.fab)return;const c=document.querySelector(`#ui .card[data-i="${i}"] .pcst`);if(c){c.textContent='Ya pagada';c.className='pcst pfree';}});}catch(e){}return r;};}
+// teclado: mientras está abierto, las teclas son suyas (R gira en el paso 5)
+addEventListener('keydown',e=>{if(!FAB.open)return;const k=e.key.toLowerCase();if(k==='r'&&FAB.st.step===4){FAB.st.rot=(FAB.st.rot+1)%4;fabRender();}
+ if(e.key==='Escape'&&FAB.st.step>0){FAB.st.step--;fabRender();}e.stopImmediatePropagation();e.preventDefault();},true);
 </script></body></html>
