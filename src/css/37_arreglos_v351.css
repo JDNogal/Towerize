@@ -10,3 +10,7 @@ input,textarea,[contenteditable="true"],[contenteditable=""]{-webkit-user-select
 /* v351 · Tablet (era 2): al cerrar el compendio, la pantalla se recoge a la vez que se juntan la consola y el emisor.
    La animación no tenía punto de partida (pasaba de «sin recorte» a «recortada» de golpe a mitad, y la pantalla desaparecía de repente). */
 @keyframes hcP{from{clip-path:inset(0 0)}to{clip-path:inset(0 50%)}}
+/* v351 · botón 📖 (al compendio) en las cartas de la oferta de torres */
+#relic .toff>.tof{position:relative}
+#relic .toff>.tof>button.cpgo{grid-area:1/1/-1/-1!important;position:absolute!important;top:8px!important;right:8px!important;left:auto!important;bottom:auto!important;width:28px!important;height:28px!important;min-width:0!important;margin:0!important;padding:0!important;order:0!important;font-size:15px!important;display:grid!important;place-items:center!important;z-index:3}
+body.mfs #relic .toff>.tof>button.cpgo{grid-area:1/1/-1/-1!important;top:auto!important;bottom:54px!important;right:8px!important;width:24px!important;height:24px!important;font-size:13px!important}

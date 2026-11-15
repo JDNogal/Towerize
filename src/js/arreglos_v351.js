@@ -62,3 +62,5 @@ function evDedupe(){if(!S||!S.evts)return;const seen=new Set(Object.keys(S.evPla
 {const _o=openEvent;openEvent=function(id){try{S.evPlayed=S.evPlayed||{};if(S.evPlayed[id]&&RL.ev!==id)return;S.evPlayed[id]=1;}catch(e){}return _o.apply(this,arguments);};}
 {const _sg=startGame;startGame=function(){const r=_sg.apply(this,arguments);try{evDedupe();}catch(e){}return r;};}
 {const _ch=chooseHero;chooseHero=function(){const r=_ch.apply(this,arguments);try{evDedupe();}catch(e){}return r;};}
+// Ofertas de torres: botón 📖 en cada carta para abrir esa torre en el compendio (Nogal), como en las fichas.
+{const _r=renderTowerOffer;renderTowerOffer=function(){const r=_r.apply(this,arguments);try{if(compOk()){const ks=RL.towo||[];document.querySelectorAll('#relic .toff>.tof').forEach((el,i)=>{const k=ks[i];if(k&&TW[k]&&!el.querySelector(':scope>.cpgo'))el.insertAdjacentHTML('afterbegin',cpBtn('tw',k));});}}catch(e){}return r;};}

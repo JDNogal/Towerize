@@ -1,5 +1,5 @@
 // Filtros del compendio por pestaña: key, etiqueta (keyword), opciones y test(id,valor). Añadir un filtro = una entrada.
-const CFILTERS={tw:[{key:'dt',label:'Tipo de daño',kw:'dtype',opts:Object.keys(DT).map(k=>[k,DT[k].n,DT[k].cls]),test:(id,v)=>TW[id].dt===v}],
+const CFILTERS={tw:[{key:'dt',label:'Tipo de daño',kw:'dtype',opts:[...Object.keys(DT).map(k=>[k,DT[k].n,DT[k].cls]),['sup','Apoyo','']],test:(id,v)=>v==='sup'?!!TW[id].bufo:TW[id].dt===v&&!TW[id].bufo}],
  en:[{key:'erg',label:'Ataque',kw:'erg',opts:[['melee','Cuerpo a cuerpo',''],['ranged','A distancia','']],test:(id,v)=>ET[id].rg===v},{key:'eorg',label:'Origen',kw:'eorg',opts:[['n','Normales',''],['e','De evento','']],test:(id,v)=>(v==='e')===!!ET[id].evn}]};
 const fbarHtml=fl=>fl.map(f=>`<div class="fbar">${kst(f.kw,f.label,'')}: <button class="${CP.flt[f.key]?'':'on'}" data-a="cflt" data-f="${f.key}" data-v="">Todos</button>`+f.opts.map(([v,l,c])=>`<button class="${c} ${CP.flt[f.key]===v?'on':''}" data-a="cflt" data-f="${f.key}" data-v="${v}">${l}</button>`).join('')+'</div>').join('');
 const csec=(t,s)=>`<div class="esec" style="margin-top:14px">${t}</div><small>${s}</small>`;
