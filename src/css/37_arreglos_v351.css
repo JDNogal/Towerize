@@ -3,3 +3,7 @@
 /* v351 · Móvil: en el resultado de un evento, «Continuar» siempre a la vista (antes, en Holo, quedaba cortado bajo las recompensas) */
 body.mfs #relic .evp.evrsl .evrc>button.go{position:sticky;bottom:0;z-index:2;flex:none}
 body.mfs #relic .evp.evrsl .evget .evchip{padding-top:4px;padding-bottom:4px;min-height:0}
+/* v351 · No se puede seleccionar texto al hacer clic, arrastrar o mantener pulsado (se quedaba todo en azul).
+   Donde se escribe o se copia (cajas de texto: código de guardado, informe de fallo, nombre…) sí se puede. */
+html,body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea,[contenteditable="true"],[contenteditable=""]{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
