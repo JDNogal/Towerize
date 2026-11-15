@@ -12,7 +12,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  S.evts={};for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
  RL.open=false;S.phase='build';S.hp=20;S.gold=5000;for(const q of S.portals){q.sq=[];q.sqm=[];q.plan={norm:3,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}
  const bk=Object.keys(S.blocks).find(k=>uSpots(k).length>1);out.block=!!bk;
- const ev=(id,i)=>{openEvent(id,bk);const o=RL.open&&RL.ev===id;chooseEvent(i);return o;};const done=()=>{closeEvent();};
+ const ev=(id,i)=>{S.evPlayed={};openEvent(id,bk);const o=RL.open&&RL.ev===id;chooseEvent(i);return o;};const done=()=>{closeEvent();};
  // Cápsula caída
  out.capOpen=ev('capsule',0)&&!!S.ally&&unitTowers().includes(S.ally)&&S.allyOn===1&&STO.h_korr===1&&!HEROES.korr.lockTxt;done();out.capPanel=heroPanel().includes('data-a="ally"');out.capKorr=S.allyKorr===1&&S.ally.sd[0].port==='korr'&&heroPanel().includes('#5ad0e0');
  S.h2just={};S.ally=null;mkAlly();out.capOther=S.allyKorr===0&&!S.ally.sd[0].port&&chip('hero:korr')==='';
@@ -30,8 +30,8 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  g=S.gold;ev('omega',0);out.omNext=RL.evNext==='omega2'&&S.gold===g-100;closeEvent();out.omPhase2=RL.open&&RL.ev==='omega2';
  hp=S.hp;chooseEvent(0);out.omAct=S.hp===hp-4&&S.uq.some(u=>u.type==='omega');closeEvent();out.omPlace=S.aim==='uplace';
  const q=uSpots(bk)[0];uPlaceAt({x:q.x,y:q.y});uPlaceAt({x:q.x,y:q.y});const om=S.list.find(t=>t.type==='omega');out.omBuilt=!!om&&S.aim!=='uplace';
- openEvent('omega2',bk);out.omOnce=!!EVENTS.omega2.opts[0].req();chooseEvent(1);closeEvent();out.omCore=S.relics.includes('core2');
- openEvent('omega2',bk);const v0=S.vch.up;chooseEvent(2);closeEvent();out.omPlans=S.vch.up===v0+1;
+ S.evPlayed={};openEvent('omega2',bk);out.omOnce=!!EVENTS.omega2.opts[0].req();chooseEvent(1);closeEvent();out.omCore=S.relics.includes('core2');
+ S.evPlayed={};openEvent('omega2',bk);const v0=S.vch.up;chooseEvent(2);closeEvent();out.omPlans=S.vch.up===v0+1;
  if(!om)return out;
  // la torre: controles
  S.deck=['bunker','cannon','laser','acid','nano','robots','sonic'];S.gold=9999;

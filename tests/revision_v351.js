@@ -10,7 +10,8 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  // Rezar: «+8», no «++8»
  S.hp=5;openEvent('shrine',bk);chooseEvent(3);out.rezar=!/\+\+8/.test(document.querySelector('#relic').innerText)&&S.hp===13;closeEvent();
  // evento repetido: la reliquia no se duplica, das 100 de oro
- openEvent('nest',bk);chooseEvent(2);closeEvent();const g=S.gold;openEvent('nest',bk);chooseEvent(2);closeEvent();out.noDup=S.relics.filter(x=>x==='ember').length===1&&S.gold===g+100;
+ openEvent('nest',bk);chooseEvent(2);closeEvent();openEvent('nest',bk);out.noRepeat=!RL.open&&S.relics.filter(x=>x==='ember').length===1;
+ S.evts={'0,0':'lab','1,0':'lab','2,0':'nest','3,0':'smith'};evDedupe();out.dedupe=JSON.stringify(Object.values(S.evts).sort())==='["lab","smith"]';
  // los avisos esperan a que cierres el evento
  const n0=document.querySelectorAll('#toast>*').length;openEvent('merchant',bk);toast('prueba v351');out.toastWait=document.querySelectorAll('#toast>*').length===n0;closeEvent();out.toastAfter=true;
  // Yunque: la casilla enseña el valor real y la mecánica cuadra

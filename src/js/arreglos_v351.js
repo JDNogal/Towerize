@@ -55,3 +55,10 @@ const habR=(H,k)=>{const id=H.id;if(id==='vega')return (k==='b'?(H.lvl>=8?.75:.5
 {const _c=castHab;castHab=function(c,k){const H=S.hero,b0=H?H.bcd||0:0,u0=H?H.ucd||0:0;const r=_c.apply(this,arguments);
  try{if(H&&c&&((k==='u'?H.ucd||0:H.bcd||0)>(k==='u'?u0:b0)+.5)){const p=H.id==='vega'&&k==='b'?{x:c.fx!=null?c.fx-.5:c.x,y:c.fy!=null?c.fy-.5:c.y}:(pathNear(c.x,c.y)||c);amkAdd(p.x,p.y,habR(H,k),H.def&&H.def.col?hexRgb(H.def.col):'255,215,90',4);}}catch(e){}return r;};}
 function hexRgb(h){const m=String(h).replace('#','');if(m.length<6)return '255,215,90';return [0,2,4].map(i=>parseInt(m.slice(i,i+2),16)).join(',');}
+// ---- Un evento sale como mucho una vez por partida (Nogal) ----
+// Al repartirlos ya no se repetían, pero ahora además: si por lo que sea el mapa tuviera dos casillas con el mismo evento, se quita la segunda;
+// y un evento ya jugado en esta partida no se vuelve a abrir (salvo al recuperar la partida guardada con ese evento a medias).
+function evDedupe(){if(!S||!S.evts)return;const seen=new Set(Object.keys(S.evPlayed||{}));for(const k of Object.keys(S.evts)){const id=S.evts[k];if(!id)continue;if(seen.has(id))delete S.evts[k];else seen.add(id);}}
+{const _o=openEvent;openEvent=function(id){try{S.evPlayed=S.evPlayed||{};if(S.evPlayed[id]&&RL.ev!==id)return;S.evPlayed[id]=1;}catch(e){}return _o.apply(this,arguments);};}
+{const _sg=startGame;startGame=function(){const r=_sg.apply(this,arguments);try{evDedupe();}catch(e){}return r;};}
+{const _ch=chooseHero;chooseHero=function(){const r=_ch.apply(this,arguments);try{evDedupe();}catch(e){}return r;};}
