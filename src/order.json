@@ -80,6 +80,7 @@
   "ui.js",
   "buildring.js",
   "towermenu.js",
+  "tarjeta_gracia.js",
   "ui_game.js",
   "libro.js",
   "tooltip.js",

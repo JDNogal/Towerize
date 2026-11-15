@@ -16,8 +16,7 @@ function bmTap(c){const q=sqOf(c.x,c.y);if(!inb(c.x,c.y)||!bmFree(q)){if(BM.s){b
 function bmBuildNow(k,q){q=q||BM.s;if(!q)return;const pt=S.tsel;S.tsel=k;const n=S.list.length;build(q.x,q.y);S.tsel=pt&&pt!==k?pt:null;if(S.list.length>n)bmClose();else{BM.arm=null;BM.sig='';}}
 function bmBuild(){let m=$('bmenu');if(!m){m=document.createElement('div');m.id='bmenu';$('cw').appendChild(m);const c=document.createElement('div');c.id='bmcard';$('cw').appendChild(c);
   m.addEventListener('click',e=>{const b=e.target.closest('.tmb');if(!b)return;e.stopPropagation();const k=b.dataset.k;if(BM.arm===k){bmBuildNow(k);return;}BM.arm=k;BM.sig='';try{sfx('ui');}catch(er){}});
-  m.addEventListener('mouseover',e=>{if(TOUCH)return;const b=e.target.closest('.tmb');BM.hov=b?b.dataset.k:null;bmCard();});
-  m.addEventListener('mouseleave',()=>{BM.hov=null;bmCard();});}
+  /* v343: el ratón por encima lo lleva tarjeta_gracia.js (la ficha aguanta un poco al salir, para poder ir hasta ella y mirar sus palabras clave) */}
  const q=BM.s;m.innerHTML=bmDeck().map(k=>{const T=TW[k],arm=BM.arm===k,wish=(S.wish||[]).some(w=>w.a==='build'&&w.v===k&&w.x===q.x&&w.y===q.y);
   return `<button class="tmb${arm?' arm':''}${wish?' wish':''}" data-k="${k}" data-tm="build" data-v="${k}" data-sx="${q.x}" data-sy="${q.y}">${arm?'✓':`<span class="ic tw twd" style="background:${T.col}">${icHtml(twIcO(T))}</span>`}<span class="p">${bmCost(k)} 🪙</span></button>`;}).join('');
  m.classList.add('on');bmPos(true);bmCard();}

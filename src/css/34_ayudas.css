@@ -130,3 +130,5 @@ body.mfs #pcback,body.mfs #peekb.on{padding:9px 18px!important;font-size:14px!im
 /* v337 · vender: el «$» con contorno negro para que se lea sobre el botón */
 #tmenu .tmb.sell .ic{color:#ffd23a!important;font-weight:900!important;-webkit-text-stroke:1.6px #1b1712;paint-order:stroke fill;text-shadow:0 1px 0 #1b1712,0 0 3px rgba(0,0,0,.6)!important}
 #bugw .bugbot>button{margin:0!important;height:40px!important;min-height:0!important;box-sizing:border-box!important;display:inline-flex;align-items:center;justify-content:center;padding-top:0!important;padding-bottom:0!important}
+/* v344: las fichas del anillo y del menú de torre se pueden alcanzar con el ratón (para mirar sus palabras clave) */
+@media (hover:hover){#bmcard.on,#tmcard.on{pointer-events:auto}}

@@ -16,8 +16,7 @@ function tmClose(){TM.t=null;TM.arm=null;TM.hov=null;TM.sig='';const m=$('tmenu'
 function tmOpen(t){TM.t=t;TM.arm=null;TM.hov=null;TM.sig='';}
 function tmBuild(){let m=$('tmenu');if(!m){m=document.createElement('div');m.id='tmenu';$('cw').appendChild(m);const c=document.createElement('div');c.id='tmcard';$('cw').appendChild(c);
   m.addEventListener('click',e=>{const b=e.target.closest('.tmb');if(!b)return;e.stopPropagation();tmClick(b);});
-  m.addEventListener('mouseover',e=>{if(TOUCH)return;const b=e.target.closest('.tmb');TM.hov=b?b.dataset.k:null;tmCard();});
-  m.addEventListener('mouseleave',()=>{TM.hov=null;tmCard();});}
+  /* v343: el ratón por encima lo lleva tarjeta_gracia.js (la ficha aguanta un poco al salir, para poder ir hasta ella y mirar sus palabras clave) */}
  const t=TM.t,o=tmOpts(t),B=(x,cls,inner)=>`<button class="tmb ${cls}" data-k="${tmKey(x)}" data-tm="${x.k}" data-id="${t.id}"${x.v?` data-v="${x.v}"`:''}>${inner}</button>`;
  let h='';
  o.top.forEach(x=>{const arm=TM.arm===tmKey(x);let inner;

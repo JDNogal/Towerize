@@ -3,6 +3,7 @@
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:344,f:'15 nov 2026',t:'Fichas que aguantan',s:[['Arreglos',['Las fichas del anillo de construir y del menú de torre ya no se cierran nada más sacar el ratón del botón: aguantan un momento para que puedas llegar a ellas y mirar sus palabras clave.']]]},
  {v:343,f:'15 nov 2026',t:'Mímico más glotón',s:[['Equilibrio',['Mímico: ahora come las bajas a 4 casillas o menos (antes 2,5).']]]},
  {v:342,f:'15 nov 2026',t:'Moneda y arreglos',s:[['Equilibrio',['Moneda: ahora da +50% de todo el oro que recibes (enemigos, eventos, reliquias…), no solo el de los enemigos. Vender no cuenta.']],['Arreglos',['Mímico: a veces su boca se estiraba hasta el borde del mapa como una columna roja. Ya no.','Mímico: su ficha en el mapa explica mejor qué hace y cuánto le falta.','Informar de un fallo: «Cancelar» y «Enviar» quedan a la misma altura.']]]},
  {v:341,f:'15 nov 2026',t:'Mímico',s:[['Arreglos',['Activo del Mímico: después de pulsarlo ya puedes elegir la reliquia cuyo activo copias (antes decía «termina la acción en curso» y no dejaba).']]]},
