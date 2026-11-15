@@ -16,3 +16,9 @@ input,textarea,[contenteditable="true"],[contenteditable=""]{-webkit-user-select
 body.mfs #relic .toff>.tof>button.cpgo{grid-area:1/1/-1/-1!important;top:auto!important;bottom:54px!important;right:8px!important;width:24px!important;height:24px!important;font-size:13px!important}
 /* v351 · móvil: las torres de apoyo (sin objetivos) ya no enseñan un «·» suelto antes de sus etiquetas */
 body.mfs #relic .tof .chips .tgmob:empty{display:none!important}
+/* v351 · Héroe caído: la cuenta atrás de reaparición, grande en su retrato de abajo a la derecha (Nogal y playtesters) */
+.hpb.hpport.off img,.hpb.hpport.off svg:not(.icsv){filter:grayscale(1) brightness(.6)}
+.hpb.hpport .hrsp{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:1px;border-radius:inherit;background:rgba(10,12,16,.45);color:#fff;font:900 22px/1 system-ui,sans-serif;text-shadow:0 1px 3px #000,0 0 6px #000;pointer-events:none;z-index:2}
+.hpb.hpport .hrsp small{font-size:12px;font-weight:800;margin-top:6px}
+.hpb.hpport .hrsp .icsv{width:14px;height:14px;margin-right:2px;opacity:.9}
+body.mfs .hpb.hpport .hrsp{font-size:17px}

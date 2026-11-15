@@ -12,7 +12,7 @@ const scInit=()=>{if(!S.sc)S.sc={mini:0,eli:0,boss:0,bossF:0,evs:0,picks:0};retu
 const SCREF=15;
 function scoreCalc(){const R=[];if(!S||!S.st)return {t:0,rows:R};const s=scInit(),st=S.st,won=S.phase==='won',done=won?ROUNDS:Math.max(0,Math.min(S.round,ROUNDS)-1);
  const add=(k,n,d,p)=>{if(p)R.push([k,n,d,Math.round(p)]);};
- let rp=0;for(let i=1;i<=done;i++)rp+=100*i;add('rnd','Rondas superadas',done+' de '+ROUNDS+' (100 × número de ronda)',rp);
+ let rp=0;for(let i=1;i<=done;i++)rp+=100*i;add('rnd','Rondas superadas',done+' de '+ROUNDS+' (cada ronda vale 100 × su número: 100 + 200 + … + '+(100*done).toLocaleString('es-ES')+')',rp);
  if(won){add('win','Victoria','Partida de '+ROUNDS+' rondas',3000*ROUNDS/SCREF);
   const t=GT.r||0,fast=ROUNDS*25,slow=ROUNDS*90,f=Math.max(0,Math.min(1,(slow-t)/(slow-fast)));add('fast','Rapidez','Tiempo real jugado: '+fClk(t),3000*f);
   if(!(S.hpEn>0))add('nol','Sin perder vida','Ningún enemigo te quitó vida',2000);

@@ -76,3 +76,7 @@ for(const k in CFX){if(typeof CFX[k]!=='string')continue;const ids=[...CFX[k].ma
 :root:not([data-skin="holo"]) :is(.pa,#comp,#tip,#relic,#bmcard,#tmcard,.ce,.rbx,#side) .nd{color:#5a3fa0}`;document.head.appendChild(st);}catch(e){}}
 // Bengala de Vega: desde Nv 8 (Fósforo blanco) la ficha dice directamente cuánto dura.
 try{Object.defineProperty(HDUR.vega,'b',{get(){try{if(S&&S.hero&&S.hero.id==='vega'&&S.hero.lvl>=8)return '12 s';}catch(e){}return '8 s (12 s con Fósforo blanco)';},configurable:true});}catch(e){}
+// Héroe caído en el mapa: su retrato gris con la cuenta atrás se dibuja encima de las bolitas de experiencia (antes quedaba tapado).
+{const _dw=e2DrawWorld;e2DrawWorld=function(lw){const r=_dw.apply(this,arguments);try{const H=S&&S.hero,q=H&&H.s;if(q&&q.hp<=0&&(S.gorbs||[]).length){const cs=CS,px=q.x*cs+cs/2,py=q.y*cs+cs/2,rr=cs*1.05,im=heroImg(H.id);g.save();g.globalAlpha=.9;g.fillStyle='#3a3d45';g.beginPath();g.arc(px,py,rr,0,7);g.fill();
+ if(im.complete&&im.naturalWidth){g.beginPath();g.arc(px,py,rr,0,7);g.clip();try{g.filter='grayscale(1) brightness(.75)';}catch(e){}g.drawImage(im,px-rr,py-rr,rr*2,rr*2);try{g.filter='none';}catch(e){}}g.restore();
+ g.strokeStyle='#8a8f9c';g.lineWidth=lw(2.5);g.beginPath();g.arc(px,py,rr,0,7);g.stroke();const n=Math.ceil(q.rt||0);if(n>0){g.font='800 '+Math.round(rr*1.1)+'px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.lineWidth=lw(3);g.strokeStyle='rgba(0,0,0,.8)';g.strokeText(n,px,py+1);g.fillStyle='#fff';g.fillText(n,px,py+1);}}}catch(e){}return r;};}
