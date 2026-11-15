@@ -67,7 +67,7 @@ function pigsAbTick(dt){
  for(const t of S.list){const T=TW[t.type];if(!T.pig||!uabOk(t))continue;const pg=pigOf(t),s=stats(t);
   if(t.type==='straw'){const cr=abRank(t,'scrows');if(cr&&pg){t.crT=(t.crT===undefined?2:t.crT)-dt;if(t.crT<=0){const f=t.flag||t,c=S.enemies.filter(e=>e.hp>0&&!(e.hk>0)&&Math.hypot(e.x-f.x,e.y-f.y)<=3*K);
      if(c.length){t.crT=CROWCD;const dm=PIGU.straw.dmg*.5;for(let i=0;i<cr.n;i++){const e=c[i%c.length];S.proj.push({x:pg.x+(Math.random()-.5),y:pg.y-.6-Math.random()*.6,e,tx:e.x,ty:e.y,vx:0,vy:0,dm,dt:'phys',src:t,sp:9+Math.random()*3,area:0,slow:0,pen:0,col:'#2a2a34',uab:1,crow:1});}}else t.crT=.5;}}}
-  else if(t.type==='wood'){const sp=abRank(t,'wspin');if(sp&&pg){t.spT=(t.spT===undefined?sp.cd/2:t.spT)-dt;if(t.spT<=0){const R=1*K,c=S.enemies.filter(e=>e.hp>0&&!(e.hk>0)&&!isFly(e)&&Math.hypot(e.x-pg.x,e.y-pg.y)<=R);
+  else if(t.type==='wood'){const sp=abRank(t,'wspin');if(sp&&pg){t.spT=(t.spT===undefined?sp.cd/2:t.spT)-dt;if(t.spT<=0){const R=1*K*tileArm(t),c=S.enemies.filter(e=>e.hp>0&&!(e.hk>0)&&!isFly(e)&&Math.hypot(e.x-pg.x,e.y-pg.y)<=R);
      if(c.length){t.spT=sp.cd;const dm=PIGU.wood.dmg*sp.m;for(const e of c)hurt(e,dm,t.pigT,'phys',0);S.fx.push({x:pg.x,y:pg.y,t:.35,m:.35,r:R,col:'#e8dcc0'});(S.spins=S.spins||[]).push({x:pg.x,y:pg.y,t:.35,m:.35});}else t.spT=.3;}}}
   else if(t.type==='brick'){const th=abRank(t,'bthrow');if(th&&pg){t.thT=(t.thT===undefined?1:t.thT)-dt;if(t.thT<=0){let be=null,bs=-1;for(const e of S.enemies){if(e.hp<=0||e.hk>0||Math.hypot(e.x-t.x,e.y-t.y)>s.range)continue;
       const wl=!isFly(e)&&S.barr.some(b=>b.brick&&segD(e.x+.5,e.y+.5,b.seg)<=1.1)?1e6:0,f=S.field[e.ty]?S.field[e.ty][e.tx]:0,sc=wl+1e5-(f||0)-(brkOf(e)>=th.mx?5e5:0);if(sc>bs){bs=sc;be=e;}}

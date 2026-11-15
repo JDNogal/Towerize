@@ -174,7 +174,7 @@ function rows(s,T,src,extra){
   return R('cg',kst('rng','Rango',src),cas(s.range/K))+(du?R('cr',kst('dur','Duración',src),du):'')+'<div class="usub"><b>'+unitHead(src)+(extra.title||'Estadísticas de unidades')+'</b>'+extra.n+dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s')+extra.life+extra.rng+extra.obj+
    (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+cr+(ef?R('cf',kst('eff','Efectos',src),ef):'')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(dpsOf(s,T))}</span></div>`+'</div>'+extra.tail;}
  return dm+(dtRowOn(src)?R(DT[T.dt].cls,kst('dtype','Tipo de daño',src),kw(DT[T.dt].kw,DT[T.dt].n,src,'st')):'')+(T.puddle?R('ccl',kst('cool','Enfriamiento',src)+' ('+kst('pstk','Acumulación',src)+')',f(1/s.rate)+' s ('+f(PTICK)+' s)'):R('ccl',kst('cool','Enfriamiento',src),f(1/s.rate)+' s'))+(du?R('cr',kst('dur','Duración',src),du):'')+R('cg',kst('rng','Rango',src),cas(s.range/K))+objRow(!!T.ground,src)+
-  (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(T.burn&&T.cone?R('ca',kst('area','Área',src),'Cono de '+T.cone+'°'):'')+
+  (s.area?R('ca',kst('area','Área',src),f(s.area/K)+' de radio'):'')+(T.burn&&T.cone?R('ca',kst('area','Área',src),'Cono de '+Math.round(Math.min(180,T.cone*(s.arm||1)))+'°'):'')+
   (s.pen?R('cph',kst('penp','Penetración '+(T.dt==='magic'?'mágica':'física'),src),f(s.pen)):'')+(s.dmg>0||T.dot||T.burn?R('cc',kst('crit','Crítico',src),Math.round(s.crit*100)+'% (×'+s.critm+')'):'')+
   (T.log?R('',kst('push','Empuje',src),'0,5 casillas'):'')+(extra||'')+(ef?R('cf',kst('eff','Efectos',src),ef):'');
 }
@@ -200,7 +200,7 @@ function uxAdj(k,sp,s,hpm,uap){const X=sp&&SPECS[k]&&SPECS[k][sp],C=X&&X.ucls&&C
 function clsBlock(title,nTxt,C,k,s,hpm,uap,uspd,src,extra){const T=TW[k],U=T.unit,ap=U.ap+(uap||0)+(C.ap||0);
  return '<div class="usub"><b>'+title+'</b>'+(nTxt!==''?R('',kst('usol','Nº de unidades',src),nTxt):'')+R(dtCls(dtOf(T)),kst('dmg','Daño',src),f(s.dmg*(C.d||1)))+R('ccl',kst('cool','Enfriamiento',src),f(1/(s.rate*(C.rt||1)))+' s')+R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm*(C.hp||1)))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+R('cg',kst('espd','Velocidad',src),cas(Math.round(U.spd/K*(uspd||1)*(C.sp||1)*100)/100)+'/s')+(extra||'')+R('cc',kst('crit','Crítico',src),Math.round((s.crit+(C.cr||0))*100)+'% (×'+s.critm+')')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(s.dmg*(C.d||1)*s.rate*(C.rt||1)*(1+(s.crit+(C.cr||0))*(s.critm-1))*(+nTxt>0?+nTxt:1))}</span></div>`+'</div>';}
 function unitExtra(r,k,sp,t,s,hpm,uap,uspd,src){try{
-  if(k==='robots'&&sp==='mecha'){r.title='Robots';r.n=R('',kst('usol','Nº de unidades',src),2);r.tail=clsBlock('🦾 Mecha',1,CLS.mecha,k,s,hpm,uap,uspd,src,R('',kst('hblk','Corpulencia',src),'Bloquea hasta 2')+R('ca',kst('area','Área',src),'0,7 de radio')+'<small>Uno de los tres robots. Sus golpes alcanzan también a los enemigos pegados al que ataca (la mitad del daño).</small>')+r.tail;}
+  if(k==='robots'&&sp==='mecha'){r.title='Robots';r.n=R('',kst('usol','Nº de unidades',src),2);r.tail=clsBlock('🦾 Mecha',1,CLS.mecha,k,s,hpm,uap,uspd,src,R('',kst('hblk','Corpulencia',src),'Bloquea hasta 2')+R('ca',kst('area','Área',src),f(.7*((s&&s.arm)||1))+' de radio')+'<small>Uno de los tres robots. Sus golpes alcanzan también a los enemigos pegados al que ataca (la mitad del daño).</small>')+r.tail;}
   if(k==='alien'&&sp==='hive'&&t&&abRank(t,'larva')){const lv=abRank(t,'larva');r.title='Criaturas';r.tail=clsBlock('Larvas',lv.n+' por criatura caída',CLS.larva,k,s,hpm,uap,uspd,src,R('cr',kst('dur','Duración',src),lv.t+' s'))+r.tail;}
  }catch(e){}return r;}
 function towerInfo(t){
@@ -208,7 +208,7 @@ function towerInfo(t){
  const T=TW[t.type],s=stats(t),src='tw:'+t.id,ks=[...new Set(t.cells.map(([x,y])=>S.buff[y][x]).filter(Boolean))];
  const X=tinfo(t),usp=X.uspd||(!t.tinf&&t.uspdx)||0,UA=T.unit?uxAdj(t.type,t.spec,s,lvMods(t.type,t.lvl,t.spec).hp,X.uap):null;
  return `<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+rows(UA?UA.s:s,uxT(t.type,t.spec),src,T.unit?unitExtra(unitRows(T,src,t,PR.pinned&&PR.key===src,UA.hpm,UA.uap,usp),t.type,t.spec,t,UA.s,UA.hpm,UA.uap,usp,src):tgtRow(t,src,PR.pinned&&PR.key===src))+
-  (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
+  (ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!s.area&&!T.cone&&!(t.type==='robots'&&t.spec==='mecha')?' (sin efecto aquí)':''}</div>`).join(''):'')+abRows(t)+(T.unit?'':dpsRow(s,T,src));
 }
 // pestañas de nivel (oferta y compendio): Nv 1-3 y una por especialización; solo las alcanzadas
 let LVT_NOSPEC=0;/* v308: en el compendio las especializaciones van en su propia sección, debajo */

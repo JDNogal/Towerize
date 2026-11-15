@@ -67,8 +67,8 @@ function cataHit(p){const t=p.src;if(!S.list.includes(t))return;S.cz=S.cz||[];
   if(t.spec==='ogre'){const c=p.e&&p.e.pv?[Math.round(p.e.pv[0]),Math.round(p.e.pv[1])]:[Math.round(p.x),Math.round(p.y)];if(inb(c[0],c[1])&&S.cells[c[1]][c[0]]===2)rollStart(t,p.x,p.y,c[0],c[1],false);}}
  else if(p.ammo==='tar'&&ar)S.cz.push({k:'tar',x:p.x,y:p.y,r:Math.max(p.area,.8*K),t:ar.tar+(rs?rs.tar:0),m:ar.stk,src:t});
  else if(p.ammo==='hive'&&ar){const dps=p.bd*ar.bee;S.cz.push({k:'bee',x:p.x,y:p.y,r:1.1*K,t:3,tk:0,dps,pen:p.pen,src:t});if(rs)S.cz.push({k:'hive',x:p.x,y:p.y,t:rs.t,dps,pen:p.pen,src:t});}}
-function rollStart(t,x,y,cx,cy,big){const s=stats(t),rr=abRank(t,'roll'),av=abRank(t,'aval'),d=big?av.d:(rr?rr.d:3);
- S.rolls=S.rolls||[];S.rolls.push({src:t,x,y,cx,cy,left:d*K,dm:s.dmg*(big?av.m:ROLLM),r:(big?.8:.45)*K,hit:new Set(),big,fire:0,pen:s.pen});}
+function rollStart(t,x,y,cx,cy,big){const s=stats(t),rr=abRank(t,'roll'),av=abRank(t,'aval'),d=(big?av.d:(rr?rr.d:3))*tileArm(t);
+ S.rolls=S.rolls||[];S.rolls.push({src:t,x,y,cx,cy,left:d*K,dm:s.dmg*(big?av.m:ROLLM),r:(big?.8:.45)*K*tileArm(t),hit:new Set(),big,fire:0,pen:s.pen});}
 function rollNext(x,y){if(!S.field||!S.field[y])return null;const f0=S.field[y][x];let b=null;for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2||cutF(x,y,nx,ny))continue;const g=S.field[ny][nx];if(g<1e9&&g>f0&&(!b||g<b.g))b={x:nx,y:ny,g};}return b?[b.x,b.y]:null;}
 function rollTick(dt){if(!S.rolls||!S.rolls.length)return;
  S.rolls=S.rolls.filter(r=>{if(!S.list.includes(r.src))return false;let mv=ROLLSP*dt;

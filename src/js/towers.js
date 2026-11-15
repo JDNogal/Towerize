@@ -19,7 +19,7 @@ function stats(t){
  if(rp('quiver')&&!T.unit)r/=.85;
  if(rp('trophy'))rg*=1+.05*(S.troN||0);if(ra('trophy'))rg*=1.5;
  const tx=abRank(t,'toxin'),pa=abRank(t,'arcpen'),crit=Math.min(1,CRIT+(tx?tx.cr:0)+(rp('lens')?.1:0)+(ra('lens')?.2:0)),critm=2+(ra('lens')?1:0);
- return{ldur:T.log?logDur(t.lvl):0,dmg:T.dmg*d,rate:T.rate*r,range:T.range*rg,crit,critm,area:(T.splash||T.pr||0)*ar,gold,pen:(L.pen||0)+(pa?pa.pen:0)+(rp('tome')&&twm(t.type,t.spec).dt==='magic'?10:0)};
+ return{ldur:T.log?logDur(t.lvl):0,dmg:T.dmg*d,rate:T.rate*r,range:T.range*rg,crit,critm,area:(T.splash||T.pr||0)*ar,arm:ar/* v346: multiplicador de área (casillas Expansión, bendición, Yunque): lo usan los conos y las áreas sin radio base */,gold,pen:(L.pen||0)+(pa?pa.pen:0)+(rp('tome')&&twm(t.type,t.spec).dt==='magic'?10:0)};
 }
 // cadencia de la torre respecto a la de su nivel sin bonus: los charcos (cuyo número no depende de disparar más) la usan para que Potencia y Frenesí sigan siendo un intercambio justo
 const rateF=(t,s)=>{try{const T=TW[t.type],L=lvMods(t.type,t.lvl,t.spec);return Math.max(.25,s.rate/(T.rate/(L.cd||1)));}catch(e){return 1;}};
@@ -147,7 +147,7 @@ function monkTick(dt){for(const t of S.list){const T=TW[t.type];if(!T||!T.monk||
    if(lo){lo.hp=Math.min(lo.max,lo.hp+lo.max*T.mheal.p);S.fx.push({x:lo.x,y:lo.y,t:.5,m:.5,r:.7*K,col:'#9ff0b0'});}}}
   if(gd&&s.hp<s.max*.5&&!(s.gc>0)){s.gc=8;s.drunk=5;s.hp=Math.min(s.max,s.hp+s.max*gd.h);S.fx.push({x:s.x,y:s.y,t:.5,m:.5,r:.7*K,col:'#c99ae0'});
    if(fb){const tg=s.en&&s.en.hp>0?s.en:S.enemies.find(e=>e.hp>0&&Math.hypot(e.x-s.x,e.y-s.y)<=1.5*K);if(tg){const a=Math.atan2(tg.y-s.y,tg.x-s.x),n=stats(t).dmg*1.2*fb.m;
-     for(const e of S.enemies){if(e.hp<=0)continue;const dx=e.x-s.x,dy=e.y-s.y;if(Math.hypot(dx,dy)>1.5*K)continue;let da=Math.abs(Math.atan2(dy,dx)-a);if(da>Math.PI)da=2*Math.PI-da;if(da<=Math.PI/4||e===tg)addBurn(e,t,n);}
+     const fm=tileArm(t);for(const e of S.enemies){if(e.hp<=0)continue;const dx=e.x-s.x,dy=e.y-s.y;if(Math.hypot(dx,dy)>1.5*K*fm)continue;let da=Math.abs(Math.atan2(dy,dx)-a);if(da>Math.PI)da=2*Math.PI-da;if(da<=Math.min(Math.PI/2,Math.PI/4*fm)||e===tg)addBurn(e,t,n);}
      S.fx.push({x:s.x+Math.cos(a)*.6*K,y:s.y+Math.sin(a)*.6*K,t:.45,m:.45,r:.8*K,col:'#ff8a3c'});}}}}}}
 function unitCombat(dt){
  const SL=[];for(const t of unitTowers())for(const s of t.sd)if(s.hp>0&&!(s.H&&s.H.camo>0))SL.push(s);

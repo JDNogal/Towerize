@@ -97,7 +97,7 @@ function renderHeroPickOld(){
  if(!lk&&!(PHV&&PHV.pick&&PHV.id===id))hpkNew(id);
  fitHero();
 }
-const abRank=(t,id)=>t.ab&&t.ab[id]?AB[id].ranks[t.ab[id]-1]:null;
+const abRank=(t,id)=>{const r=t.ab&&t.ab[id]?AB[id].ranks[t.ab[id]-1]:null;return r&&typeof abRad==='function'?abRad(t,id,r):r;};/* v346: los radios de las habilidades crecen con el área (area_habilidades.js) */
 // v311 · las torres de evento también tienen habilidades a Nv 4 (el Dragón, al ser anciano): UAB dice cuáles; abIds(t) vale para cualquier torre
 const uabOk=t=>!!t&&typeof UAB!=='undefined'&&!!TW[t.type]&&!!UAB[t.type]&&!t.pigU&&!t.summ&&(TW[t.type].dragon?(t.stage||0)>=3:(t.lvl||1)>=4);
 const abIds=t=>t&&t.spec&&SPECS[t.type]&&SPECS[t.type][t.spec]?SPECS[t.type][t.spec].ab:uabOk(t)?UAB[t.type]:[];

@@ -126,7 +126,7 @@ function netGroup(t){const seen=new Set([t]),q=[t];while(q.length){const a=q.pop
    if(e.vc[t.id]>=VMAX){e.vc[t.id]=0;const dm=st().dmg*15;hurt(e,dm,t,'elem');stunE(e,1);const gr=abRank(t,'ground');if(gr)for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=gr.r*K)hurt(o,dm*gr.p,t,'elem');
     S.fx.push({x:e.x,y:e.y,t:.4,m:.4,r:(gr?gr.r:.6)*K,col:'#fff08a'});S.fx.push({bolt:[[t.x,t.y],[e.x,e.y]],t:.2,m:.2,big:1});try{sfx('zap');}catch(er){}const jp=abRank(t,'jump');if(jp)t.vcarry=VMAX*jp.k;}}
   if(t.type==='bunker'){const ex=abRank(t,'expan');if(ex&&e.hp>0&&prdRoll(ex,ex.p))addBleed(e,t,1);if(e.hp<=0&&abRank(t,'blink'))t.cd=Math.min(t.cd,0);}
-  if(t.type==='robots'&&t.spec==='mecha'&&t.sd&&t.sd[0]&&t.sd[0].fight&&t.sd[0].en===e){const m=t.sd[0],dm=st().dmg*2*.5;for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-m.x,o.y-m.y)<=.7*K)hurt(o,dm,t,'phys',st().pen);}
+  if(t.type==='robots'&&t.spec==='mecha'&&t.sd&&t.sd[0]&&t.sd[0].fight&&t.sd[0].en===e){const m=t.sd[0],dm=st().dmg*2*.5;for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-m.x,o.y-m.y)<=.7*K*(st().arm||1))hurt(o,dm,t,'phys',st().pen);}
  }catch(er){}return r;};}
 // ---- tick común y limpieza al acabar la ronda ----
 function e2TowersTick(dt){try{laserTick(dt);}catch(e){}try{nanoTick(dt);}catch(e){}try{mechaTickE2(dt);}catch(e){}

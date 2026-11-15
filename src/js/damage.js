@@ -16,7 +16,7 @@ function knock(e,d){if(e.anch||(e.t==='argos'&&e.sh))return;if(isBoss(e)){const 
 function plague(e){if(!e.ps||!e.ps.length)return;const by=new Map();
  for(const q of e.ps){if(!(q.src&&q.src.ab&&abRank(q.src,'plague')))continue;if(!by.has(q.src))by.set(q.src,[]);by.get(q.src).push(q);}
  for(const[src,arr]of by){const r=abRank(src,'plague'),n=Math.round(arr.length*r.p);
-  const near=S.enemies.filter(o=>o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=2*K).sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y)).slice(0,2);
+  const near=S.enemies.filter(o=>o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=2*K*tileArm(src)).sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y)).slice(0,2);
   if(!near.length)continue;
   for(let i=0;i<n;i++){const o=near[i%near.length];(o.ps=o.ps||[]).push({w:arr[i].w,t:arr[i].t,src});}}}
 const armorOf=(e,ty)=>e.fx&&e.fx.poly?0:ty==='phys'?Math.max(-MAXPEN,(e.apx!=null?e.apx:(ET[e.t].ap||0))+(e.cb||0)-(e.cor||0)-brkOf(e)):ty==='magic'?Math.max(-MAXPEN,(e.amx!=null?e.amx:(ET[e.t].am||0))+(e.cbm||0)-(e.cor||0)-mbrkOf(e)):0;
@@ -81,7 +81,7 @@ function volcHeat(t,has,dt){if(t.spec!=='volc')return;const eb=abRank(t,'embr');
  t.erT=Math.max(0,(t.erT||0)-dt);const er=abRank(t,'erupt');if(er&&t.heat>=1&&t.erT<=0){t.erT=er.cd;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=er.r*K)addBurn(e,t,er.b);S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:er.r*K,col:'#ff6a2e'});}}
 function flameTick(t,tg,s,cm,TT){
  const ht=t.spec==='volc'?(t.heat||0):0,fr=ht&&abRank(t,'flare');if(ht){TT={...TT,cone:60+50*ht};cm*=1+.5*ht;if(fr)s={...s,range:s.range+fr.g*K*ht};}
- const one=!TT.cone,ang=Math.atan2(tg.y-t.y,tg.x-t.x),half=(TT.cone||0)*Math.PI/360,
+ const one=!TT.cone,ang=Math.atan2(tg.y-t.y,tg.x-t.x),half=Math.min(Math.PI/2,(TT.cone||0)*(s.arm||1)*Math.PI/360)/* v346: el cono crece con el área (Expansión…), hasta 180° */,
   it=abRank(t,'intens'),fo=abRank(t,'focus'),nap=abRank(t,'napalm'),det=abRank(t,'deton'),
   n=s.dmg*cm*(1+(it?it.p:0))*(fo?1+Math.min(fo.max,fo.g*(t.foT||0)):1);
  t.fl={a:ang,h:one?.07:half,len:s.range,one,ttl:1/s.rate+.08};
@@ -100,14 +100,14 @@ function burnSpread(e){if(!(e.bn>0)||!e.bsrc||!e.bsrc.ab)return;const r=abRank(e
  for(const o of near)addBurn(o,e.bsrc,e.bn*r.p/near.length);}
 // Fragilidad: el enemigo congelado estalla en escarcha al descongelarse
 function shatter(e,t){const r=abRank(t,'shatter');if(!r||!S.list.includes(t))return;const dm=stats(t).dmg*r.m;
- for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=K)hurt(o,dm,t,'magic',stats(t).pen);S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:K,col:'#bfefff'});}
+ const R=K*tileArm(t);for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=R)hurt(o,dm,t,'magic',stats(t).pen);S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:R,col:'#bfefff'});}
 // Racimo: bombas pequeñas alrededor de la explosión
-function cluster(p,r){for(let i=0;i<r.n;i++){const a=Math.random()*6.283,d=K*(.4+.6*Math.random()),x=p.x+Math.cos(a)*d,y=p.y+Math.sin(a)*d;
-  for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-x,e.y-y)<=.5*K)hurt(e,p.dm*.25,p.src,p.dt,p.pen);S.fx.push({x,y,t:.3,m:.3,r:.5*K,col:'#ffb070'});}}
+function cluster(p,r){const m=tileArm(p.src);for(let i=0;i<r.n;i++){const a=Math.random()*6.283,d=K*m*(.4+.6*Math.random()),x=p.x+Math.cos(a)*d,y=p.y+Math.sin(a)*d;
+  for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-x,e.y-y)<=.5*K*m)hurt(e,p.dm*.25,p.src,p.dt,p.pen);S.fx.push({x,y,t:.3,m:.3,r:.5*K*m,col:'#ffb070'});}}
 // Epidemia: el enemigo envenenado explota al morir con parte del veneno restante de cada torre que la tenga
 function epidemic(e){if(!e.ps||!e.ps.length)return;const by=new Map();
  for(const q of e.ps){if(!(q.src&&q.src.ab&&abRank(q.src,'epid')))continue;by.set(q.src,(by.get(q.src)||0)+q.w*q.t);}
- for(const[src,rest]of by){const dm=rest*abRank(src,'epid').p;DNK='poison';for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=1.5*K)hurt(o,dm,src,'elem');DNK=null;S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:1.5*K,col:'#9be15d'});}}
+ for(const[src,rest]of by){const dm=rest*abRank(src,'epid').p,R=1.5*K*tileArm(src);DNK='poison';for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=R)hurt(o,dm,src,'elem');DNK=null;S.fx.push({x:e.x,y:e.y,t:.45,m:.45,r:R,col:'#9be15d'});}}
 // Aura sagrada: bonus de armadura/resistencia para una unidad según las banderas de Paladines cercanas
 function auraAP(s){let b=0;for(const t of S.list){const r=t.flag&&abRank(t,'sacred');if(r&&Math.hypot(s.x-t.flag.x,s.y-t.flag.y)<=2*K)b=Math.max(b,r.a);}return b;}
 function critMark(e){e.crF=DNF;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,mk:1});}
