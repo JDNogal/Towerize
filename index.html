@@ -2636,6 +2636,8 @@ body.mfs #pcback,body.mfs #peekb.on{padding:9px 18px!important;font-size:14px!im
 /* v337 · vender: el «$» con contorno negro para que se lea sobre el botón */
 #tmenu .tmb.sell .ic{color:#ffd23a!important;font-weight:900!important;-webkit-text-stroke:1.6px #1b1712;paint-order:stroke fill;text-shadow:0 1px 0 #1b1712,0 0 3px rgba(0,0,0,.6)!important}
 #bugw .bugbot>button{margin:0!important;height:40px!important;min-height:0!important;box-sizing:border-box!important;display:inline-flex;align-items:center;justify-content:center;padding-top:0!important;padding-bottom:0!important}
+/* v344: las fichas del anillo y del menú de torre se pueden alcanzar con el ratón (para mirar sus palabras clave) */
+@media (hover:hover){#bmcard.on,#tmcard.on{pointer-events:auto}}
 /* ===== Pergamino nuevo (Era Fantástica): elegir pieza, nueva torre y eventos. Papel, rodillos y bordes a pluma los dibuja pergamino_nuevo.js en un SVG (.pgsvg); aquí, el título en cinta, colores y medidas ===== */
 /* título: cinta roja con la letra grabada en la tela */
 :root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .ptt,:root:not([data-skin="holo"]) body.pcpick #panel .pctt{position:relative;display:inline-block!important;margin:0 auto 6px!important;padding:5px 34px 6px!important;background:linear-gradient(180deg,#c43a2a,#9a1e16 55%,#6a100c)!important;border:1.5px solid #4a0a06;border-radius:3px;
@@ -2741,7 +2743,7 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v343</div>
+<div id="ver">Towerize v344</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -7500,8 +7502,7 @@ function bmTap(c){const q=sqOf(c.x,c.y);if(!inb(c.x,c.y)||!bmFree(q)){if(BM.s){b
 function bmBuildNow(k,q){q=q||BM.s;if(!q)return;const pt=S.tsel;S.tsel=k;const n=S.list.length;build(q.x,q.y);S.tsel=pt&&pt!==k?pt:null;if(S.list.length>n)bmClose();else{BM.arm=null;BM.sig='';}}
 function bmBuild(){let m=$('bmenu');if(!m){m=document.createElement('div');m.id='bmenu';$('cw').appendChild(m);const c=document.createElement('div');c.id='bmcard';$('cw').appendChild(c);
   m.addEventListener('click',e=>{const b=e.target.closest('.tmb');if(!b)return;e.stopPropagation();const k=b.dataset.k;if(BM.arm===k){bmBuildNow(k);return;}BM.arm=k;BM.sig='';try{sfx('ui');}catch(er){}});
-  m.addEventListener('mouseover',e=>{if(TOUCH)return;const b=e.target.closest('.tmb');BM.hov=b?b.dataset.k:null;bmCard();});
-  m.addEventListener('mouseleave',()=>{BM.hov=null;bmCard();});}
+  /* v343: el ratón por encima lo lleva tarjeta_gracia.js (la ficha aguanta un poco al salir, para poder ir hasta ella y mirar sus palabras clave) */}
  const q=BM.s;m.innerHTML=bmDeck().map(k=>{const T=TW[k],arm=BM.arm===k,wish=(S.wish||[]).some(w=>w.a==='build'&&w.v===k&&w.x===q.x&&w.y===q.y);
   return `<button class="tmb${arm?' arm':''}${wish?' wish':''}" data-k="${k}" data-tm="build" data-v="${k}" data-sx="${q.x}" data-sy="${q.y}">${arm?'✓':`<span class="ic tw twd" style="background:${T.col}">${icHtml(twIcO(T))}</span>`}<span class="p">${bmCost(k)} 🪙</span></button>`;}).join('');
  m.classList.add('on');bmPos(true);bmCard();}
@@ -7559,8 +7560,7 @@ function tmClose(){TM.t=null;TM.arm=null;TM.hov=null;TM.sig='';const m=$('tmenu'
 function tmOpen(t){TM.t=t;TM.arm=null;TM.hov=null;TM.sig='';}
 function tmBuild(){let m=$('tmenu');if(!m){m=document.createElement('div');m.id='tmenu';$('cw').appendChild(m);const c=document.createElement('div');c.id='tmcard';$('cw').appendChild(c);
   m.addEventListener('click',e=>{const b=e.target.closest('.tmb');if(!b)return;e.stopPropagation();tmClick(b);});
-  m.addEventListener('mouseover',e=>{if(TOUCH)return;const b=e.target.closest('.tmb');TM.hov=b?b.dataset.k:null;tmCard();});
-  m.addEventListener('mouseleave',()=>{TM.hov=null;tmCard();});}
+  /* v343: el ratón por encima lo lleva tarjeta_gracia.js (la ficha aguanta un poco al salir, para poder ir hasta ella y mirar sus palabras clave) */}
  const t=TM.t,o=tmOpts(t),B=(x,cls,inner)=>`<button class="tmb ${cls}" data-k="${tmKey(x)}" data-tm="${x.k}" data-id="${t.id}"${x.v?` data-v="${x.v}"`:''}>${inner}</button>`;
  let h='';
  o.top.forEach(x=>{const arm=TM.arm===tmKey(x);let inner;
@@ -7618,6 +7618,22 @@ function tmTick(){if(!tmVis()){if(TM.t&&!(TM.t&&S&&S.list&&S.list.includes(TM.t)
  if(TM.arm||TM.hov)tmCard();}
 addEventListener('keydown',e=>{if(e.key==='Escape'&&TM.t&&tmVis()&&!e.defaultPrevented){if(TM.arm){TM.arm=null;TM.sig='';}else{S.selT=null;tmClose();ui();}}});
 
+// ==================== v343 · Fichas del anillo de construir y del menú de torre: aguantan un poco al salir ====================
+// Antes se cerraban en cuanto el ratón salía del botón, así que no se podía llegar a la ficha para mirar sus palabras clave.
+// Ahora, como el resto de bocadillos: al salir, la ficha espera un momento; si llegas a ella (o a una palabra clave abierta
+// desde ella) se queda abierta. Si pasas de camino por encima de otro botón, solo cambia de ficha si te paras un instante en él.
+const TGR={OUT:.45,SW:.14};
+function tgrStep(X,menuId,cardId,draw,dt){const st=X._g||(X._g={dead:0,pk:null,pt:0});
+ if(typeof TOUCH!=='undefined'&&TOUCH)return;const m=$(menuId);if(!m||!m.classList.contains('on')){st.dead=0;st.pk=null;return;}
+ const el=M.has?document.elementFromPoint(M.x,M.y):null,b=el&&el.closest('#'+menuId+' .tmb'),k=b?b.dataset.k:null;
+ const onCard=!!(el&&(el.closest('#'+cardId)||el.closest('.kpanel')));let ch=false;
+ if(k){st.dead=0;if(k===X.hov){st.pk=null;}else if(!X.hov){X.hov=k;st.pk=null;ch=true;}else{if(st.pk!==k){st.pk=k;st.pt=0;}st.pt+=dt;if(st.pt>=TGR.SW){X.hov=k;st.pk=null;ch=true;}}}
+ else if(onCard&&X.hov){st.dead=0;st.pk=null;}
+ else if(X.hov){st.pk=null;st.dead+=dt;if(st.dead>TGR.OUT){X.hov=null;st.dead=0;ch=true;}}
+ if(ch)draw();}
+{let t0=performance.now();setInterval(()=>{const t=performance.now(),dt=Math.min(.1,(t-t0)/1000);t0=t;
+ try{if(typeof BM!=='undefined'&&BM.s)tgrStep(BM,'bmenu','bmcard',bmCard,dt);}catch(e){}
+ try{if(typeof TM!=='undefined'&&TM.t)tgrStep(TM,'tmenu','tmcard',tmCard,dt);}catch(e){}},30);}
 // botón de pantalla completa en los menús (móvil): al girar el móvil se sale de pantalla completa y en estas pantallas no hay Opciones a mano
 {const b=document.createElement('button');b.id='fsmb';b.title='Pantalla completa';b.textContent='⛶';b.addEventListener('click',e=>{e.stopPropagation();try{enterFS();}catch(er){}setTimeout(()=>b.classList.remove('on'),150);});document.body.appendChild(b);
  setInterval(()=>{try{const on=TOUCH&&FSOK&&!isFS()&&(document.body.classList.contains('inmenu')||(RL.open&&RL.hpick))&&!(typeof INTRO!=='undefined'&&INTRO.on)&&!(typeof DLG!=='undefined'&&DLG.on);if(b.classList.contains('on')!==on)b.classList.toggle('on',on);}catch(er){}},400);}
@@ -10826,6 +10842,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:344,f:'15 nov 2026',t:'Fichas que aguantan',s:[['Arreglos',['Las fichas del anillo de construir y del menú de torre ya no se cierran nada más sacar el ratón del botón: aguantan un momento para que puedas llegar a ellas y mirar sus palabras clave.']]]},
  {v:343,f:'15 nov 2026',t:'Mímico más glotón',s:[['Equilibrio',['Mímico: ahora come las bajas a 4 casillas o menos (antes 2,5).']]]},
  {v:342,f:'15 nov 2026',t:'Moneda y arreglos',s:[['Equilibrio',['Moneda: ahora da +50% de todo el oro que recibes (enemigos, eventos, reliquias…), no solo el de los enemigos. Vender no cuenta.']],['Arreglos',['Mímico: a veces su boca se estiraba hasta el borde del mapa como una columna roja. Ya no.','Mímico: su ficha en el mapa explica mejor qué hace y cuánto le falta.','Informar de un fallo: «Cancelar» y «Enviar» quedan a la misma altura.']]]},
  {v:341,f:'15 nov 2026',t:'Mímico',s:[['Arreglos',['Activo del Mímico: después de pulsarlo ya puedes elegir la reliquia cuyo activo copias (antes decía «termina la acción en curso» y no dejaba).']]]},
