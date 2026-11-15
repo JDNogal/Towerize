@@ -2660,6 +2660,16 @@ body.mfs #comp .bk.hasft>.bkp{height:calc(100% - 66px)!important;max-height:calc
 body.dsk:not(.mfs) #bugw .bugbox{zoom:var(--uiz,1)}body.dsk:not(.mfs) #lbmside{zoom:var(--uiz,1)}
 body.mfs #bugw{padding:6px}body.mfs #bugw .bugbox{padding:10px 14px;max-height:calc(100vh - 12px)}body.mfs #bugw .bugsub{margin-bottom:6px}
 body.mfs #bugw textarea{min-height:52px;height:52px}body.mfs #bugw .bugshot img{max-height:56px;width:auto}
+/* v349: las fichas del anillo de construir y del menú de torre, más grandes y con letra que se lea de un vistazo (PC, a cualquier zoom: no dependen del zoom del mapa) */
+body.dsk:not(.mfs) #tmcard,body.dsk:not(.mfs) #bmcard{width:300px!important;font-size:14.5px!important;line-height:1.45!important;padding:11px 14px!important}
+body.dsk:not(.mfs) #tmcard>b:first-child,body.dsk:not(.mfs) #bmcard .bmh b{font-size:16.5px}
+body.dsk:not(.mfs) #tmcard small{font-size:14px!important;line-height:1.45;color:color-mix(in srgb,var(--ink,#2a1a10) 90%,transparent)!important}
+body.dsk:not(.mfs) #tmcard .hn,body.dsk:not(.mfs) #bmcard .hn{font-size:12.5px!important;color:color-mix(in srgb,var(--ink,#2a1a10) 72%,transparent)!important}
+body.dsk:not(.mfs) #tmcard .tmc span:first-child{color:color-mix(in srgb,var(--ink,#2a1a10) 80%,transparent)!important}
+body.dsk:not(.mfs) #bmcard .grow{grid-template-columns:104px 1fr 58px!important;font-size:13.5px}body.dsk:not(.mfs) #bmcard .bmt em{font-size:12px}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) :is(#tmcard,#bmcard) .cf:not(.no):not(.vch){color:#1f7a3a!important}
+/* v349: la tecla F3 va debajo del botón de informar (arriba quedaba pegada al borde) */
+[data-a="bugrep"]>.kcap.bugk{top:auto!important;bottom:-12px!important}
 /* ===== Pergamino nuevo (Era Fantástica): elegir pieza, nueva torre y eventos. Papel, rodillos y bordes a pluma los dibuja pergamino_nuevo.js en un SVG (.pgsvg); aquí, el título en cinta, colores y medidas ===== */
 /* título: cinta roja con la letra grabada en la tela */
 :root:not([data-skin="holo"]) #relic .pscr:has(.toff) .ppap .ptt,:root:not([data-skin="holo"]) body.pcpick #panel .pctt{position:relative;display:inline-block!important;margin:0 auto 6px!important;padding:5px 34px 6px!important;background:linear-gradient(180deg,#c43a2a,#9a1e16 55%,#6a100c)!important;border:1.5px solid #4a0a06;border-radius:3px;
@@ -2809,7 +2819,7 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v348</div>
+<div id="ver">Towerize v349</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -7551,7 +7561,7 @@ setInterval(()=>{try{for(const el of document.querySelectorAll(SMSEL)){const on=
 
 
 // v339 · las fichas de comprar torre y del menú de torre crecen con la pantalla (en pantallas grandes la letra era enana)
-function cardZ(c){const z=Math.max(1,Math.min(1.6,Math.min(innerWidth/1280,innerHeight/720)))*(document.body.classList.contains('mfs')?1:1.06);c.style.transformOrigin='0 0';c.style.transform=z>1.01?`scale(${z.toFixed(3)})`:'';return z>1.01?z:1;}
+function cardZ(c){/* v349: la ficha ya es más grande de base: crece con la pantalla hasta ×1,45 */const z=document.body.classList.contains('mfs')?1:Math.max(1,Math.min(1.45,Math.min(innerWidth/1280,innerHeight/720)));c.style.transformOrigin='0 0';c.style.transform=z>1.01?`scale(${z.toFixed(3)})`:'';return z>1.01?z:1;}
 // ---- construir en un solar: al pulsar un solar libre salen alrededor las torres del mazo (1.º toque: tarjeta · 2.º: construir) ----
 const BM={s:null,arm:null,hov:null,sig:''};
 const bmDeck=()=>Object.keys(TW).filter(k=>!TW[k].uniq&&(!S.deck||S.deck.includes(k)));
@@ -10919,6 +10929,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:349,f:'15 nov 2026',t:'Fichas que se leen y más alcance a Nv 4',s:[['Equilibrio',['Al especializar (Nv 4), las torres que no ganaban alcance ahora ganan, a medida de cada una: los Ballesteros, un 40% (francotiradores); las lentas, de un solo objetivo o que trabajan dentro de su alcance (Foco Arcano, Alquimista, Electrocutor, Altar mayor, Helipuerto…), entre un 15 y un 20%; la mayoría, un 10%; y las muy rápidas o con muchísimo daño (Raudos, Ogros, Supresión, Asesinos, Volcán, Detonador), un 5%. Solo el alcance de la torre (hasta dónde dispara o hasta dónde llega su bandera, su dron o sus runas): no cambia el área de los efectos ni las unidades.']],['Mejoras',['Las fichas del anillo de construir y del menú de torre son más grandes y con letra más clara: se leen de un vistazo a cualquier zoom.','La tecla F3 va debajo del botón de informar de un fallo.']]]},
  {v:348,f:'15 nov 2026',t:'Informar con F3',s:[['Mejoras',['Informar de un fallo: ahora con la tecla F3 desde cualquier sitio (se puede cambiar en Opciones › Atajos), y siempre va con una captura de la pantalla, abras el informe desde donde lo abras.']],['Equilibrio',['Salamandra: menos daño (a Nv 1, de 8,1 a 4,3 de DPS, como la Envenenadora). Se estaba comiendo caminos enteros ella sola.']],['Arreglos',['La tecla de la bandera (B) va debajo de su botón: arriba tapaba el precio y el nombre de la habilidad de al lado.','El ojo para ver el mapa va en la esquina de arriba a la derecha del pergamino.','Ayuda › Cómo se juega: volvía a verse solo media página. Arreglado.','Móvil: el menú principal, la pausa, la ventana de duración, el final de partida, el informe de fallos y el Fabricador ya caben enteros (había botones cortados o tapados).','Tablet: los eventos ya muestran todas las opciones sin bajar, y en pantallas estrechas la oferta de torres ya no se sale de su ventana.','Encuadernaciones Noche y Ámbar: lo que va sobre el dorado (pestañas, filtros, opciones elegidas) ya se lee.','Pantallas grandes: el informe de fallos y el panel de la clasificación crecen como el resto.']]]},
  {v:347,f:'15 nov 2026',t:'Conos sin tope',s:[['Arreglos',['Los conos de la Salamandra y del Lanzallamas ya no tienen tope de 180°: crecen todo lo que dé el área, hasta el círculo entero.']]]},
  {v:346,f:'15 nov 2026',t:'El área, en todas partes',s:[['Arreglos',['La casilla Expansión (y todo lo que agranda el área: su ★, la bendición de la casilla, el Yunque) ya agranda el cono de la Salamandra y del Lanzallamas (sin tope: si llega a 360°, es un círculo entero) y el área del Mecha. Antes no les hacía nada.','También crecen con el área los radios y largos de las habilidades: Lluvia de flechas, Témpanos, Nova, Erupción, Bombardeo, Minas, Fragilidad, Racimo, Epidemia, Plaga, Llamarada etílica, Hachazo giratorio, Rodar, Avalancha, ¡Giga Taladro!, Cañón de hombro, Señuelo, Virus, Toma de tierra, Serenata, Cadena rúnica y más.']]]},
@@ -14135,4 +14146,17 @@ setInterval(()=>{try{const ps=[...document.querySelectorAll('#mzside>.mzd,#mzsid
  const wr=w&&w.getBoundingClientRect();
  for(const p of ps){let hit=false;if(wr&&wr.width){p.style.visibility='';const r=p.getBoundingClientRect();hit=r.width>0&&r.left<wr.right-2&&r.right>wr.left+2&&r.top<wr.bottom&&r.bottom>wr.top;}
   p.style.visibility=hit?'hidden':'';}}catch(e){}},150);
+// ==================== v349 · Al especializar (Nv 4), el alcance de la torre también crece, a medida de cada una (Nogal) ====================
+// Solo el alcance (el círculo de la torre): hasta dónde dispara, o hasta dónde llega su aura, su nube, su bandera, su dron o sus runas.
+// No cambia el área de los efectos (explosiones, conos, charcos…) ni las unidades. Cuánto, especialización por especialización,
+// según lo que hace (las rápidas o con mucho daño, poco; las lentas, de un objetivo o que trabajan dentro de su alcance, más):
+// las que conectan con otras por su alcance (Red eléctrica) ganan algo más, para que no haya que colocarlas al milímetro;
+// las que ya crecían (Trebuchet, Ventisca, Tormenta, Heraldo, Forja, Riel, Bombarderos, Nido, Muro de fuego, Nube, Sónica gigante) no se tocan.
+const RNG4={
+ arrow:{xbow:.40,rapid:.05}, cata:{ogre:.05}, frost:{hel:.10}, orb:{foco:.15,reap:.10}, poison:{alch:.15,pest:.10},
+ tesla:{cad:.10,ele:.15}, sala:{volc:.05}, altar:{altar:.20,senda:.10},
+ monk:{fist:.10,drunk:.10}, bastion:{pal:.10,ass:.05},
+ bunker:{sup:.05}, laser:{red:.15,volt:.10}, robots:{mecha:.10,kami:.10}, nano:{hack:.10,devour:.10},
+ dron:{dron:.20,petro:.15}, flame:{detn:.05}, acid:{corr:.10}, sonic:{spk:.10}, alien:{hive:.10,pred:.10}};
+{const R3=LV[3].range;for(const k in RNG4)for(const sp in RNG4[k]){const X=SPECS[k]&&SPECS[k][sp];if(!X)continue;X.lv=X.lv||{...LV[3],pen:0};X.lv.range=Math.max(X.lv.range||R3,R3*(1+RNG4[k][sp]));}}
 </script></body></html>
