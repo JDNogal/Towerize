@@ -37,7 +37,7 @@ Object.assign(ACH,{
  perfect:{c:'jg',n:'¿Partida perfecta?',d:'Gana con 1 de vida sin que ningún enemigo golpee tu núcleo.'},
  minimal:{c:'jg',n:'Minimalista',d:'Gana construyendo solo torres del mazo inicial de tu héroe.'},
  collector:{c:'jg',n:'Coleccionista',d:'Gana una partida de 15 rondas o más con exactamente 7 torres construidas, una de cada tipo.'},
- close:{c:'jg',n:'Por los pelos',d:'Gana tras quedarte a 1 de vida por golpes enemigos, con el jefe final muriendo a 2 casillas o menos de tu núcleo.'},
+ close:{c:'jg',n:'Por los pelos',d:'Gana tras quedarte a 1 de vida por golpes enemigos, con el jefe final muriendo a <span class="kw rgv" data-kw="rng" data-src="">2</span> o menos de tu núcleo.'},
  noact:{c:'jg',n:'Autosuficiente',d:'Gana sin usar ni una vez la activa de ninguna reliquia.'},
  untouch:{c:'hr',n:'Intocable',d:'Gana sin que caigan nunca tu héroe ni ninguna unidad de tus torres (las invocaciones no cuentan).',rl:'banner'},
  bowl:{c:'hr',n:'Bola de Bolos',d:'Aturde a 8 enemigos con una sola Carga Heroica de Reinhart.'},
@@ -80,7 +80,7 @@ function achState(id){const H=S.hero,B=S.built||[];const ok=t=>['ok','✓ En cur
   case 'clean':return ROUNDS<20?['nt','Solo en partidas de 20 rondas o más']:S.st&&S.st.lkN?ko('un enemigo ha llegado al núcleo'):ok();
   case 'nonet':return ROUNDS<30?['nt','Solo en partidas de 30 rondas']:S.st&&S.st.retries?ko('has usado un reintento'):ok();
   case 'collector':{const bc=S.bcnt||{},tot=Object.values(bc).reduce((a,v)=>a+v,0);return ROUNDS<15?ko('la partida dura menos de 15 rondas'):Object.values(bc).some(v=>v>1)?ko('has construido dos torres del mismo tipo'):tot>7?ko('has construido más de 7 torres'):ok(tot+' de 7 tipos distintos; se comprueba al ganar');}
-  case 'close':return win('1 de vida por golpes y el jefe final a 2 casillas o menos');
+  case 'close':return win('1 de vida por golpes y el jefe final a <span class="kw rgv" data-kw="rng" data-src="">2</span> o menos');
   case 'noact':return S.usedAct?ko('usaste una activa'):ok();
   case 'untouch':return S.unitDied?ko('cayó una unidad'):ok();
   case 'pure':return !H||H.id!=='radagast'?ko('necesitas a Radagast'):B.some(k=>TW[k].dt==='phys')?ko('construiste una torre física'):ok();

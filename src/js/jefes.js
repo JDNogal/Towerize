@@ -67,7 +67,7 @@ function bossDraw(g,lw){if(!S)return;
 // palabras clave y consejos
 {const _k=kwHtml0;kwHtml0=function(id,src){
  if(id==='throne')return '<b>Trono</b><small>Va a hombros de '+KGP+' Porteadores goblin, que se pueden matar. Mientras quede alguno va un 40 % más rápido y usa Lluvia de riquezas. Sin porteadores se cae, se queda atontado '+FALLT+' s y sigue a pie, más lento, con Cetrazo real.</small>';
- if(id==='riches')return '<b>Lluvia de riquezas</b><small>Cada '+RICHCD+' s, desde el trono, lanza monedas, copas y joyas a tus unidades ('+f(RICHR/K)+' casillas): daño en un área pequeña. Los tesoros se quedan brillando en el camino y, si matas al Rey, te los quedas como oro.</small>';
+ if(id==='riches')return '<b>Lluvia de riquezas</b><small>Cada '+RICHCD+' s, desde el trono, lanza monedas, copas y joyas a tus unidades ('+RGV(f(RICHR/K))+'): daño en un área pequeña. Los tesoros se quedan brillando en el camino y, si matas al Rey, te los quedas como oro.</small>';
  if(id==='scepter')return '<b>Cetrazo real</b><small>A pie, cada '+SCEPCD+' s despide hacia atrás a tus unidades cercanas y les hace algo de daño.</small>';
  if(id==='gens')return '<b>Escudo de generadores</b><small>Es invulnerable mientras vivan sus Generadores de escudo: salen de otros portales con una escuadra de escolta, avanzan despacio por el camino y le apuntan con un láser.</small>';
  if(id==='anchor')return '<b>Plataforma móvil</b><small>Avanza despacio por el camino, escoltado por una escuadra de autómatas, y alimenta el escudo de ARGOS con un láser. Si cae su escolta, sigue avanzando él solo. Destrúyelo para dejar a ARGOS sin escudo.</small>';
@@ -99,7 +99,7 @@ function boss2Tick(dt){const SL=liveUnits().filter(s=>!s.charm);
 {const _u=update;update=function(dt){_u(dt);if(S&&S.phase==='wave')boss2Tick(dt);};}
 {const _k=kwHtml0;kwHtml0=function(id,src){
  if(id==='abregen')id='regen'; // v328: una sola «Sangre de troll» para todos los trolls (Nogal, 14-nov)
- if(id==='stomp')return '<b>Pisotón</b><small>Por debajo de la mitad de vida, cada '+STOMPCD+' s pisa el suelo: daña y aturde '+f(STOMPST)+' s a tus unidades a '+f(STOMPR/K)+' casillas o menos.</small>';
+ if(id==='stomp')return '<b>Pisotón</b><small>Por debajo de la mitad de vida, cada '+STOMPCD+' s pisa el suelo: daña y aturde '+f(STOMPST)+' s a tus unidades a '+RGV(f(STOMPR/K))+' o menos.</small>';
  if(id==='line')return '<b>Cadena de montaje</b><small>Cada '+LINECD+' s fabrica '+LINEN+' Autómatas y cada '+LINEBIG+' s una Nodriza, que a su vez lanza drones. Por debajo de la mitad de vida lo hace todo casi el doble de rápido.</small>';
  return _k(id,src);};}
 {const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(['stomp','Pisotón','🦶'],['line','Cadena de montaje','🏭']);}
@@ -146,10 +146,10 @@ function boss3Tick(dt){
   if(e.t==='symb'&&e.fury){const r=ET.symb.r*CS*EVS,p=.5+.5*Math.sin(performance.now()/90);g.strokeStyle='rgba(255,60,40,'+(.5+.4*p)+')';g.lineWidth=lw(3);g.beginPath();g.arc(px,py,r+lw(6),0,7);g.stroke();}}};}
 {const _k=kwHtml0;kwHtml0=function(id,src){
  if(id==='rift')return '<b>Portal del abismo</b><small>Cada '+RIFTCD+' s abre un portal a su lado del que salen '+RIFTN+' demonios.</small>';
- if(id==='penta')return '<b>Pentagrama</b><small>Cada '+PENTCD+' s dibuja un gran pentagrama ('+f(PENTR/K)+' casillas) donde está. Tras '+f(PENTW)+' s de aviso, se enciende '+PENTT+' s: las torres dentro se apagan y no disparan. El pentagrama se queda donde lo dibujó.</small>';
+ if(id==='penta')return '<b>Pentagrama</b><small>Cada '+PENTCD+' s dibuja un gran pentagrama ('+RGV(f(PENTR/K))+') donde está. Tras '+f(PENTW)+' s de aviso, se enciende '+PENTT+' s: las torres dentro se apagan y no disparan. El pentagrama se queda donde lo dibujó.</small>';
  if(id==='wings')return '<b>Alas</b><small>Al bajar del 25 % de vida despliega las alas y vuela '+WINGT+' s, más rápido: mientras vuela, tus unidades no pueden bloquearlo y solo le dan las torres que alcancen el aire.</small>';
  if(id==='shell')return '<b>Caparazón</b><small>Fase 1: muchísima armadura física ('+SHELL[0]+') y casi nada de resistencia mágica. Al perder la mitad de la vida el caparazón se rompe.</small>';
- if(id==='pulse')return '<b>Pulso</b><small>Con el caparazón, cada '+PULSECD+' s carga un pulso (aviso de '+f(PULSEW)+' s) que apaga '+PULSET+' s las torres a '+f(PULSER/K)+' casillas o menos.</small>';
+ if(id==='pulse')return '<b>Pulso</b><small>Con el caparazón, cada '+PULSECD+' s carga un pulso (aviso de '+f(PULSEW)+' s) que apaga '+PULSET+' s las torres a '+RGV(f(PULSER/K))+' o menos.</small>';
  if(id==='core2')return '<b>Núcleo</b><small>Fase 2 (bajo el 50 %): va un 60 % más rápido, cambia a mucha resistencia mágica ('+CORE[1]+') y poca armadura, se regenera (los estados se lo bajan) y cada '+EATCD+' s devora a un enemigo cercano para curarse un '+f(EATH*100)+' %. Bajo el 25 % entra en furia y dobla su velocidad.</small>';
  return _k(id,src);};}
 {const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(['rift','Portal del abismo','🌀'],['penta','Pentagrama','⛧'],['wings','Alas','🦇'],['shell','Caparazón','🐚'],['pulse','Pulso','📴'],['core2','Núcleo','💠']);}

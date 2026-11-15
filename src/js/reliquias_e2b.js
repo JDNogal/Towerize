@@ -65,8 +65,8 @@ nrAdd({id:'scouter',n:'Rastreador de combate',ic:'🥽',col:'#2a6a3a',era:2,cd:3
   S.fx.push({x:c.x,y:c.y,t:.7,m:.7,r:1.5*K,col:top>8000?'#ff4f4f':'#7aff8a'});S.msg=top>8000?'¡Lectura máxima: '+top.toLocaleString('es-ES')+'!':'Rastreador de combate: lectura de '+top.toLocaleString('es-ES')+'.';return 'msg';}});
 // ---- Satélite láser ----
 nrAdd({id:'satlaser',n:'Satélite láser',ic:'🛰️',col:'#3a2a5a',era:2,cd:3,
- pas:()=>'Cada <span class="nd">20 s</span> de oleada, un impacto orbital cae sobre el enemigo con más vida: mucho daño en el centro y algo menos alrededor (2 casillas).',
- act:()=>`El láser recorre <b>6 casillas</b> de camino desde el punto elegido hacia el portal, haciendo daño y dejando ${kw('burn','quemadura','')}.`},
+ pas:()=>'Cada <span class="nd">20 s</span> de oleada, un impacto orbital cae sobre el enemigo con más vida: mucho daño en el centro y algo menos alrededor (<span class="kw rgv" data-kw="rng" data-src="">2</span>).',
+ act:()=>`El láser recorre <b><span class="kw rgv" data-kw="rng" data-src="">6</span></b> de camino desde el punto elegido hacia el portal, haciendo daño y dejando ${kw('burn','quemadura','')}.`},
  {aim:'Elige dónde empieza el barrido.',r:.8*K,col:'255,80,220',use:c=>{const q=r3Path(c);if(!q){S.msg='Satélite láser: elige un punto del camino.';return false;}S.sweep={pts:h2Route(q.x,q.y,6*K),i:0,tk:0,hit:new Set()};return true;}});
 function satTick(dt){if(S.phase==='wave'&&r3On('satlaser')){S.satT=(S.satT||0)+dt;if(S.satT>=20&&!S.satX){let b=null;for(const e of S.enemies)if(e.hp>0&&!e.leak&&!(e.hk>0)&&(!b||e.hp>b.hp))b=e;if(b){S.satT=0;S.satX={e:b,t:1,x:b.x,y:b.y};}}}
  if(S.satX){const X=S.satX;if(X.e.hp>0){X.x=X.e.x;X.y=X.e.y;}X.t-=dt;if(X.t<=0){const dm=r3Hp()*1.6;let n=0;for(const e of S.enemies)if(e.hp>0&&!e.leak&&Math.hypot(e.x-X.x,e.y-X.y)<=2*K){const d=Math.hypot(e.x-X.x,e.y-X.y);hurt(e,d<=.7*K?dm:dm*.4,null,'elem');n++;}

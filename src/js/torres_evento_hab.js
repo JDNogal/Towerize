@@ -16,7 +16,7 @@ Object.assign(AB,{
  // Casa de madera
  wlogs:{n:'Troncos gordos',ranks:[{c:220,t:1,m:.3},{c:150,t:2,m:.6}],txt:r=>`Troncos más gruesos: ruedan <span class="cr">${r.t} s</span> más (llegan más lejos) y hacen un <span class="cd">+${Math.round(r.m*100)}%</span> de daño. No empujan más.`},
  wsplint:{n:'Astillas',ranks:[{c:220,n:1},{c:150,n:2}],txt:r=>`Cada tronco aplica <b>${r.n}</b> ${r.n>1?'stacks':'stack'} de ${kw('bleed','sangrado','')} a los enemigos que arrolla.`},
- wspin:{n:'Hachazo giratorio',ranks:[{c:220,cd:8,m:2},{c:150,cd:6,m:3}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, el cerdito leñador gira con el hacha y golpea a todos los enemigos a 1 casilla: <span class="cd">${f(r.m)}×</span> su daño.`},
+ wspin:{n:'Hachazo giratorio',ranks:[{c:220,cd:8,m:2},{c:150,cd:6,m:3}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, el cerdito leñador gira con el hacha y golpea a todos los enemigos a <span class="kw rgv" data-kw="rng" data-src="">1</span>: <span class="cd">${f(r.m)}×</span> su daño.`},
  // Casa de ladrillo
  bwall:{n:'Muro reforzado',ranks:[{c:220,t:2},{c:150,t:4}],txt:r=>`Los muros aguantan <span class="cr">${r.t} s</span> más en pie.`},
  bspikes:{n:'Muro con pinchos',ranks:[{c:220,d:8},{c:150,d:16}],txt:r=>`Los enemigos frenados por un muro reciben <span class="cd">${r.d}</span> de daño físico por segundo.`},
@@ -31,8 +31,8 @@ Object.assign(AB,{
  mbelly:{n:'Estómago sin fondo',req:'mengulf',ranks:[{c:400,n:20},{c:300,n:15}],txt:r=>`Cada <b>${r.n}</b> enemigos que mueren dentro del Mímico, escupe un cofre: eliges una reliquia.`},
  // Dragón anciano
  dscales:{n:'Escamas de obsidiana',ranks:[{c:220,a:20},{c:150,a:40}],txt:r=>`El dragón gana <span class="cph">+${r.a} de armadura</span> y <span class="cmg">+${r.a} de resistencia mágica</span>.`},
- dbreath:{n:'Aliento abrasador',ranks:[{c:220,L:2,t:1,b:.25},{c:150,L:3,t:2,b:.5}],txt:r=>`La franja de fuego de su llamarada es <span class="ca">${f(r.L)} casillas</span> más larga, dura <span class="cr">${r.t} s</span> más y aplica un <span class="cd">+${Math.round(r.b*100)}%</span> de ${kw('burn','quemadura','')}.`},
- droar:{n:'Rugido',ranks:[{c:320,cd:15,t:1.5}],txt:r=>`Cada <span class="cr">${r.cd} s</span> ruge: los enemigos a ${f(ROARR)} casillas de su bandera quedan ${kw('fear','aterrados','')} ${f(r.t)} s (los jefes, la mitad).`}});
+ dbreath:{n:'Aliento abrasador',ranks:[{c:220,L:2,t:1,b:.25},{c:150,L:3,t:2,b:.5}],txt:r=>`La franja de fuego de su llamarada es <span class="kw rgv" data-kw="rng" data-src="">${f(r.L)}</span> más larga, dura <span class="cr">${r.t} s</span> más y aplica un <span class="cd">+${Math.round(r.b*100)}%</span> de ${kw('burn','quemadura','')}.`},
+ droar:{n:'Rugido',ranks:[{c:320,cd:15,t:1.5}],txt:r=>`Cada <span class="cr">${r.cd} s</span> ruge: los enemigos a <span class="kw rgv" data-kw="rng" data-src="">${f(ROARR)}</span> de su bandera quedan ${kw('fear','aterrados','')} ${f(r.t)} s (los jefes, la mitad).`}});
 // al comprar una habilidad de torre de evento
 function uabBought(t,id){if(!t)return;if(id==='gbanner')guildBanner(t);if(id==='mengulf'){t.eng=1;}if(id==='dscales'&&t.sd&&t.sd[0]&&t.sd[0].air){/* nada: las escamas se leen al vuelo */}}
 

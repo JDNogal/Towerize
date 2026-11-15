@@ -63,7 +63,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  // --- Dragón anciano ---
  {const t=T.dragon,f=t.flag,cs=near(f,4);const es=cs.map(c=>dummy(c,90000));let strip=0,pass=0,fear=0,burn=0,cells=0;run(14,()=>{es.forEach((e,i)=>{e.x=e.tx=cs[i].x;e.y=e.ty=cs[i].y;});const z=(S.strips||[]).find(z=>z.fire);if(z){strip++;cells=Math.max(cells,z.cells.length);}if(t.fly.pass)pass++;if(es.some(e=>e.fx.fear))fear++;if(es.some(e=>e.bn>0))burn++;});
   out.strip=strip>0;out.stripCells=cells;out.pass=pass>0;out.roar=fear>0;out.burn=burn>0;const sa=t.sd[0];out.air=!!(sa&&sa.air)&&sa.max;out.scales=auraAP(sa);
-  out.dSheet=(()=>{const h=uniqInfo(t,'dragon');return h.includes('Vida')&&h.includes('Franja de fuego')&&h.includes('6 casillas');})();
+  out.dSheet=(()=>{const h=uniqInfo(t,'dragon');return h.includes('Vida')&&h.includes('Franja de fuego')&&/Franja de fuego[\s\S]{0,200}?>6<\/span>/.test(h)&&!h.includes('casillas');})();
   clear();const rt=Object.keys(ET).find(k=>ET[k].rg==='ranged'&&!ET[k].el&&!ET[k].fly);out.ranged=rt;for(const u of unitTowers())if(u!==t)for(const q of u.sd){q.hp=0;q.rt=999;}const re=dummy(cs[0],90000,rt);let mn=sa.hp,blk=0;run(8,()=>{mn=Math.min(mn,sa.hp);if(sa.en||sa.fight)blk++;});out.hit=mn<sa.max;out.noBlock=!blk;
   sa.hp=0;sa.rt=0;clear();dummy(cs[0],90000);run(1);out.down=sa.hp<=0&&sa.rt>10&&!dragonUp(t);run(16);out.back=sa.hp===sa.max;clear();}
  out.err=UABERR?String(UABERR.stack||UABERR):null;return out;});

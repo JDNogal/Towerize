@@ -187,6 +187,8 @@
   "arreglos_v351.js",
   "palabras_clave_iconos.js",
   "enemigo_ahora.js",
-  "puntuacion_libro.js"
+  "puntuacion_libro.js",
+  "fichas_zoom.js",
+  "descripciones_rango.js"
  ]
 }

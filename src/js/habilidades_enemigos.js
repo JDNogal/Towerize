@@ -13,10 +13,10 @@ ET.gundr.rg='ranged';ET.gundr.ud=Math.max(ET.gundr.ud,5);
 Object.assign(ET.warlock,{curse:0,charm:1});Object.assign(ET.hack,{curse:0,jam:1});
 for(const k of['javelin','rocket','gyro','gundr'])ET[k].splashU=1;
 Object.assign(ET.champ,{sk:'whirl'});Object.assign(ET.dchamp,{sk:'jet'});Object.assign(ET.centu,{sk:'quake'});Object.assign(ET.praet,{sk:'claw'});
-const ESK={whirl:{n:'Hachazo giratorio',r:1.2,m:2,col:'#f0b429',d:'Cada 25 s, si tiene unidades cerca, gira con el hacha: golpe circular a todas tus unidades a 1 casilla o menos (doble de su daño).'},
- jet:{n:'Estallido de llamas',r:2.2,a:.6,m:1.5,col:'#ff7a3c',d:'Cada 25 s, si tiene unidades cerca, lanza un chorro de fuego hacia delante (cono de 2 casillas): 1,5 veces su daño a las unidades alcanzadas.'},
- quake:{n:'Golpe sísmico',r:1.2,m:1.5,st:.5,col:'#8fb0d0',d:'Cada 25 s, si tiene unidades cerca, golpea el suelo: onda circular a 1 casilla o menos (1,5 veces su daño) que aturde a tus unidades 0,5 s.'},
- claw:{n:'Barrido de garras',r:1.5,a:.8,m:2,col:'#ff4fd8',d:'Cada 25 s, si tiene unidades cerca, barre con las garras en arco hacia delante (1,5 casillas): doble de su daño a las unidades alcanzadas.'}};
+const ESK={whirl:{n:'Hachazo giratorio',r:1.2,m:2,col:'#f0b429',d:'Cada 25 s, si tiene unidades cerca, gira con el hacha: golpe circular a todas tus unidades a <span class="kw rgv" data-kw="rng" data-src="">1</span> o menos (doble de su daño).'},
+ jet:{n:'Estallido de llamas',r:2.2,a:.6,m:1.5,col:'#ff7a3c',d:'Cada 25 s, si tiene unidades cerca, lanza un chorro de fuego hacia delante (cono de <span class="kw rgv" data-kw="rng" data-src="">2</span>): 1,5 veces su daño a las unidades alcanzadas.'},
+ quake:{n:'Golpe sísmico',r:1.2,m:1.5,st:.5,col:'#8fb0d0',d:'Cada 25 s, si tiene unidades cerca, golpea el suelo: onda circular a <span class="kw rgv" data-kw="rng" data-src="">1</span> o menos (1,5 veces su daño) que aturde a tus unidades 0,5 s.'},
+ claw:{n:'Barrido de garras',r:1.5,a:.8,m:2,col:'#ff4fd8',d:'Cada 25 s, si tiene unidades cerca, barre con las garras en arco hacia delante (<span class="kw rgv" data-kw="rng" data-src="">1,5</span>): doble de su daño a las unidades alcanzadas.'}};
 const SKCD=25,CHARMT=10,CHARMCD=8,CHARMR=3*K,JAMR=2.5*K,JAMT=1,JAMOFF=6,JAMREST=12;
 for(const k of['gyro'])if(!REGT.includes(k))REGT.push(k);
 FORM.gyro=3;
@@ -83,9 +83,9 @@ function eSkillsDraw(g,lw){if(!S)return;
  for(const q of S.efx||[]){const px=q.x*CS+CS/2,py=q.y*CS+CS/2,al=Math.max(0,q.t/q.m);g.globalAlpha=al*.55;g.fillStyle=q.col;g.beginPath();if(q.arc){g.moveTo(px,py);g.arc(px,py,q.r*CS,q.a-q.arc,q.a+q.arc);g.closePath();}else g.arc(px,py,q.r*CS*(1.1-al*.3),0,7);g.fill();g.globalAlpha=al;g.strokeStyle=q.col;g.lineWidth=lw(2.5);g.stroke();g.globalAlpha=1;}}
 // palabras clave nuevas
 {const _k=kwHtml0;kwHtml0=function(id,src){
- if(id==='charm')return '<b>Embeleso</b><small>Cada '+CHARMCD+' s elige a uno de tus soldados cercanos (3 casillas), que pasa a ser un enemigo rosa durante '+CHARMT+' s: camina por el camino con el grupo y pelea contra tus unidades. Si llega al núcleo quita 1 de vida y el soldado vuelve a su torre. Si lo matas, el soldado cae y reaparece como siempre. Si la Súcubo muere o se acaba el tiempo, vuelve a ser tuyo. El héroe es inmune.</small>';
- if(id==='jam')return '<b>Interferencia</b><small>Se para '+JAMT+' s a lanzar un pulso de '+f(JAMR/K)+' casillas: las torres alcanzadas se apagan '+JAMOFF+' s, aunque él muera. Recarga '+JAMREST+' s. Las torres de unidades siguen luchando.</small>';
- if(id==='arcsh')return '<b>Disparo en arco</b><small>Su ataque cae en arco y salpica: las unidades a menos de 0,9 casillas del objetivo reciben la mitad del daño.</small>';
+ if(id==='charm')return '<b>Embeleso</b><small>Cada '+CHARMCD+' s elige a uno de tus soldados cercanos (<span class="kw rgv" data-kw="rng" data-src="">3</span>), que pasa a ser un enemigo rosa durante '+CHARMT+' s: camina por el camino con el grupo y pelea contra tus unidades. Si llega al núcleo quita 1 de vida y el soldado vuelve a su torre. Si lo matas, el soldado cae y reaparece como siempre. Si la Súcubo muere o se acaba el tiempo, vuelve a ser tuyo. El héroe es inmune.</small>';
+ if(id==='jam')return '<b>Interferencia</b><small>Se para '+JAMT+' s a lanzar un pulso de '+RGV(f(JAMR/K))+': las torres alcanzadas se apagan '+JAMOFF+' s, aunque él muera. Recarga '+JAMREST+' s. Las torres de unidades siguen luchando.</small>';
+ if(id==='arcsh')return '<b>Disparo en arco</b><small>Su ataque cae en arco y salpica: las unidades a menos de <span class="kw rgv" data-kw="rng" data-src="">0,9</span> del objetivo reciben la mitad del daño.</small>';
  if(id==='airatk')return '<b>Ataque aéreo</b><small>Vuela, pero se para en el aire para atacar a tus unidades y a tu héroe desde lejos. Solo las unidades a distancia y las torres que alcancen el aire pueden darle.</small>';
  if(ESK[id])return '<b>'+ESK[id].n+'</b><small>'+ESK[id].d+'</small>';
  return _k(id,src);};}

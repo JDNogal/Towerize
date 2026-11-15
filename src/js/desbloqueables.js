@@ -121,7 +121,7 @@ function unlDraw(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000;
  for(const e of S.enemies)if(e.dz>0){g.font=Math.round(CS*.9)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('💫',X(e.x),X(e.y)-ET[e.t].r*CS*EVS-lw(6));}}
 {const _d=e2DrawWorld;e2DrawWorld=function(lw){const r=_d.apply(this,arguments);try{unlDraw(lw);}catch(e){}return r;};}
 // ---- fichas: efectos base y palabras clave ----
-{const _ef=effHtml;effHtml=function(T,src){if(T.acidj)return kw('poison','Veneno',src)+' + '+kw('brk','Armadura rota',src);if(T.sonic)return kw('push','Empuje',src)+' '+(T.giant?f(SONKG):f(SONK))+' casillas'+(T.spk?' + '+kw('slow','Ralentización',src)+' 30%':'');return _ef.apply(this,arguments);};}
+{const _ef=effHtml;effHtml=function(T,src){if(T.acidj)return kw('poison','Veneno',src)+' + '+kw('brk','Armadura rota',src);if(T.sonic)return kw('push','Empuje',src)+' '+RGV(T.giant?f(SONKG):f(SONK))+(T.spk?' + '+kw('slow','Ralentización',src)+' 30%':'');return _ef.apply(this,arguments);};}
 const UNLTXT={acid:T=>T.tcloud?'':'Cada chorro aplica stacks de veneno (su «daño») y rompe −1 de armadura, hasta −5. Alcanza también a los voladores.',
  sonic:T=>'Cada onda sale de la torre y se expande hasta su alcance: golpea una vez a cada enemigo que atraviesa y lo empuja hacia atrás por el camino'+(T.giant?' (los voladores no, salvo con Muro de sonido)':' (los voladores no)')+'. Su alcance crece más que el de otras torres al subir de nivel.'};
 {const _ti=towerInfo;towerInfo=function(t){let h=_ti.apply(this,arguments);try{if(t&&UNLTXT[t.type]){const tx=UNLTXT[t.type](twm(t.type,t.spec));if(tx){const i=h.indexOf('<div class="row');h=i>=0?h.slice(0,i)+`<small>${tx}</small>`+h.slice(i):h+`<small>${tx}</small>`;}}}catch(e){}return h;};}

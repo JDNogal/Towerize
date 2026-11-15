@@ -10,7 +10,7 @@ const OMF={
  mag:{n:'Mágico',col:'#c070ff',d:['Rayo mágico.','Rayo mágico más fuerte.','Rayo mágico fuerte que quita resistencia mágica.','El rayo rebota entre 3 enemigos y les quita resistencia mágica.']},
  uni:{n:'Unidades',col:'#9aa4b4',d:['1 dron de combate que bloquea.','2 drones de combate.','3 drones de combate.','3 drones reforzados: el doble de vida y de daño.']},
  con:{n:'Control',col:'#7ad8ff',d:['Pulso que ralentiza.','Pulso que ralentiza y aplica hipotermia.','Pulso que ralentiza, aplica hipotermia y empuja hacia atrás.','Ralentiza, aplica hipotermia y empuja; cada tercer pulso congela 1 s.']},
- apo:{n:'Apoyo',col:'#ffb43a',d:['Torres a 2 casillas: +5% de daño.','Torres a 2 casillas: +10% de daño.','Torres a 2 casillas: +15% de daño.','Torres a 2 casillas: +20% de daño.']}};
+ apo:{n:'Apoyo',col:'#ffb43a',d:['Torres a <span class="kw rgv" data-kw="rng" data-src="">2</span>: +5% de daño.','Torres a <span class="kw rgv" data-kw="rng" data-src="">2</span>: +10% de daño.','Torres a <span class="kw rgv" data-kw="rng" data-src="">2</span>: +15% de daño.','Torres a <span class="kw rgv" data-kw="rng" data-src="">2</span>: +20% de daño.']}};
 const OMORD=['fis','ele','fue','ven','mag','uni','con','apo'],OMUP=[0,0,150,300,500],OMSV={};
 const omPc=k=>`<svg viewBox="-12 -12 24 24" xmlns="http://www.w3.org/2000/svg">${OMPC[k]}</svg>`;
 function omegaSvg(fams){fams=fams||[];const key=OMORD.filter(k=>fams.includes(k)).join();if(OMSV[key])return OMSV[key];const O='stroke="#14101e" stroke-width="1.6" stroke-linejoin="round"',hex=cy=>[30,90,150,210,270,330].map(a=>(50+38*Math.cos(a*Math.PI/180)).toFixed(1)+','+(cy+30*Math.sin(a*Math.PI/180)).toFixed(1)).join(' ');
@@ -31,7 +31,7 @@ function omegaUp(t){if(placeLock()){plMsg();return false;}if(t.lvl>=4)return fal
  const c=OMUP[t.lvl+1];if(S.gold<c){S.msg='Oro insuficiente para mejorar.';ui();return false;}S.gold-=c;if(S.st)S.st.spent+=c;t.inv=(t.inv||0)+c;t.lvl++;S.msg='Prototipo Omega a Nv '+t.lvl+': mejoran todas sus piezas.';S.fx.push({x:t.x,y:t.y,t:.7,m:.7,r:1.8*K,col:'#3fe8ff'});try{sfx(t.lvl>=4?'nv4':'up');}catch(e){}return true;}
 // ---- ficha ----
 function omegaInfo(t,lvo){const fam=t?t.fam||[]:[],lv=t?t.lvl:(lvo||1),rg=t?stats(t).range/K:TW.omega.range/K;
- let h=`<div class="ttl ttlg"><b>Ω Prototipo Omega</b></div>`+R('','Nivel',lv)+(t?R('','Familias',fam.length+' / '+2*lv):'')+R('cg','Rango',f(rg)+' casillas');
+ let h=`<div class="ttl ttlg"><b>Ω Prototipo Omega</b></div>`+R('','Nivel',lv)+(t?R('','Familias',fam.length+' / '+2*lv):'')+R('cg','Rango',f(rg));
  if(t)h+=fam.length?OMORD.filter(k=>fam.includes(k)).map(k=>`<div class="omf"><span class="omi">${omPc(k)}</span><span><b style="color:${OMF[k].col}">${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small></span></div>`).join(''):'<small>Todavía no ha absorbido ninguna torre: solo lanza un pulso muy débil.</small>';
  return h+'<small>Asimila torres de tu mazo: «Construir encima» cuesta 1,5 veces su precio y le da la pieza de esa familia. Cada Nv admite 2 familias más. No se vende.</small>';}
 {const _u=uniqInfo;uniqInfo=function(t,k,lvo){if(k==='omega')return omegaInfo(t,lvo);return _u.apply(this,arguments);};}

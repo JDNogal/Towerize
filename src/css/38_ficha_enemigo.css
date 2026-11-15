@@ -18,3 +18,9 @@
 .efold>summary::-webkit-details-marker{display:none}
 .efold>summary::after{content:'▸';transition:transform .2s;opacity:.8}
 .efold[open]>summary::after{transform:rotate(90deg)}
+/* v352 · «Ver en el compendio» en las fichas del mapa */
+.fzlink{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:6px;width:100%;margin-top:7px;padding-top:6px;border-top:1px dashed color-mix(in srgb,currentColor 30%,transparent);font-weight:700;color:var(--acc)}
+.fzlink:hover{text-decoration:underline}.fzlink kbd{margin-left:auto;font:700 11px ui-monospace,Consolas,monospace;border:1px solid currentColor;border-radius:4px;padding:0 5px;opacity:.85}
+#bmcard,#tmcard{z-index:60}
+/* si la ficha del mapa cae encima del panel de la izquierda (próxima oleada…), ese panel se aparta (casi transparente) mientras la ves */
+#lstack{transition:opacity .15s}#lstack.fzunder{opacity:.12;pointer-events:none}#lstack.fzunder>*{pointer-events:none}
