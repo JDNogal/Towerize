@@ -23,3 +23,8 @@ body{background:radial-gradient(120% 90% at 50% 0%,var(--bgg),var(--bg)) fixed}
 
 /* lomo y bordes de las páginas: en las encuadernaciones oscuras, la sombra va hacia el negro (con el remate dorado o marrón se veía un brillo) */
 :root[data-pal="noche"],:root[data-pal="amb"]{--pedge:#000;--gut:rgba(0,0,0,.55)}
+/* v349: en las encuadernaciones con el dorado claro (Noche y Ámbar), lo que va sobre el dorado lleva letra oscura (antes blanca: no se leía) */
+:root[data-pal="noche"] .bkrib.on span,:root[data-pal="amb"] .bkrib.on span,
+:root[data-pal="noche"] .pill.on,:root[data-pal="amb"] .pill.on,
+:root[data-pal="noche"] .oseg button.on,:root[data-pal="amb"] .oseg button.on,
+:root[data-pal="noche"] #comp.lbtouch .bkmk.on .bkml,:root[data-pal="amb"] #comp.lbtouch .bkmk.on .bkml{color:var(--gbtnf,#1a1610)!important;text-shadow:none!important}

@@ -11,6 +11,7 @@ await p.evaluate(()=>{CP.tab='tw';lbOpen('cp');});await p.waitForTimeout(800);ck
 await p.evaluate(()=>{lbClose(true);startGame(15);});await p.waitForTimeout(900);ck(await can(),dev+': no se puede pulsar al elegir héroe');ck(await tabsFree(),dev+': se monta con los marcapáginas al elegir héroe');
 await p.evaluate(()=>{chooseHero('reinhart');if(DLG.on)dlgEnd();try{lbClose(true);}catch(e){}});await p.waitForTimeout(1500);ck(await can(),dev+': no se puede pulsar en la partida');
 await p.evaluate(()=>lbOpen(null));await p.waitForTimeout(800);ck(await can(),dev+': no se puede pulsar en la pausa');
-const n=await p.evaluate(()=>{const f=document.getElementById('bugfab');f.click();return !!document.querySelector('#bugw.open');});ck(n,dev+': el botón no abre la ventana');
+await p.evaluate(()=>{document.getElementById('bugfab').click();});await p.waitForFunction(()=>!!document.querySelector('#bugw.open'),null,{timeout:12000}).catch(()=>{});const n=await p.evaluate(()=>!!document.querySelector('#bugw.open'));ck(n,dev+': el botón no abre la ventana');ck(await p.evaluate(()=>!!BUG.shot),dev+': el informe no lleva captura');
+ await p.evaluate(()=>bugClose());await p.keyboard.press('F3');await p.waitForFunction(()=>!!document.querySelector('#bugw.open'),null,{timeout:12000}).catch(()=>{});ck(await p.evaluate(()=>!!document.querySelector('#bugw.open')&&!!BUG.shot),dev+': F3 no abre el informe con captura');await p.evaluate(()=>bugClose());
 await c.close();}
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'boton_fallo ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

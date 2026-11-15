@@ -132,3 +132,18 @@ body.mfs #pcback,body.mfs #peekb.on{padding:9px 18px!important;font-size:14px!im
 #bugw .bugbot>button{margin:0!important;height:40px!important;min-height:0!important;box-sizing:border-box!important;display:inline-flex;align-items:center;justify-content:center;padding-top:0!important;padding-bottom:0!important}
 /* v344: las fichas del anillo y del menú de torre se pueden alcanzar con el ratón (para mirar sus palabras clave) */
 @media (hover:hover){#bmcard.on,#tmcard.on{pointer-events:auto}}
+/* v348: la tecla de la bandera (B) va debajo del botón: arriba tapaba el precio y el nombre de la habilidad de al lado */
+#tmenu .tmb.flag .kcap{top:auto;bottom:-15px}
+/* v349: en la tablet, el botón de la clasificación también va en holograma (se quedaba color pergamino) */
+:root[data-skin="holo"] #lbmside .lbmall{background:rgba(63,232,255,.12);border-color:#3fe8ff99;color:#d4f4ff}:root[data-skin="holo"] #lbmside .lbmall:hover{background:rgba(63,232,255,.24)}
+:root[data-skin="holo"] #lbmside li b,:root[data-skin="holo"] #lbmside li em{color:#7fdcf0}:root[data-skin="holo"] #lbmside li{border-bottom-color:#3fe8ff33}
+/* v349: móvil, pausa: el título «Towerize» quedaba debajo de la cinta de los puntos y los botones de abajo se cortaban; en la pausa sobra el título */
+body.mfs .lbcvin:has(.lbscr) .lbtit{display:none!important}
+body.mfs .lbcvin:has(.lbscr) .lbembw{margin-top:22px}
+body.mfs .lbcvin:has(.lbscr) .lbtiles button{min-height:0!important;height:36px!important}
+/* v349: móvil: el pie del libro (botones de abajo) ya no tapa el final del texto de la página (p. ej. «Gana una partida…» en Duración) */
+body.mfs #comp .bk.hasft>.bkp{height:calc(100% - 66px)!important;max-height:calc(100% - 66px)!important;box-sizing:border-box}
+/* v349: el informe de fallos crece en pantallas grandes (como el resto de la interfaz) y en móvil es más compacto para que se vean los botones de enviar */
+body.dsk:not(.mfs) #bugw .bugbox{zoom:var(--uiz,1)}body.dsk:not(.mfs) #lbmside{zoom:var(--uiz,1)}
+body.mfs #bugw{padding:6px}body.mfs #bugw .bugbox{padding:10px 14px;max-height:calc(100vh - 12px)}body.mfs #bugw .bugsub{margin-bottom:6px}
+body.mfs #bugw textarea{min-height:52px;height:52px}body.mfs #bugw .bugshot img{max-height:56px;width:auto}

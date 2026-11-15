@@ -89,3 +89,8 @@ body.pcpick #panel.pgf>.pgsvg{zoom:1!important}
 body.pcpick #panel .pcinfo div{display:block!important;margin-top:4px}
 body.pcpick #panel .pcinfo .pcbf .bbf2{display:inline-block;width:18px;height:18px;vertical-align:-4px;margin-right:4px;line-height:0}
 body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!important}
+/* v348: el ojo de las ventanas del pergamino, en la esquina de arriba a la derecha del papel (lo coloca ojo_pergamino.js) */
+#relic .rlbar [data-a="peek"].eyepg{position:fixed!important;right:auto!important;bottom:auto!important;margin:0!important;transform:none!important;z-index:46!important}
+:root:not([data-skin="holo"]) #relic .rlbar [data-a="peek"].eyepg{background:#f3e6c4!important;border:2px solid #8a5a2a!important;color:#3a2410!important;box-shadow:none!important;width:34px!important;height:34px!important}
+/* v349 (Mesa fab0g, aprobado): en la tablet, la ventana del evento crece para que quepan las opciones (antes medía lo que la imagen y había que bajar) */
+:root[data-skin="holo"] body.dsk:not(.mfs) #relic .ppap.evp .evrc{contain:none!important;overflow-y:auto!important;max-height:calc(100vh - 290px)!important}

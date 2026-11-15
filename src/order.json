@@ -171,10 +171,13 @@
   "cofre_anim.js",
   "mapa_iconos.js",
   "ayudas_v330.js",
+  "vendor/html2canvas.min.js",
+  "bug_captura.js",
   "paneles_centrados.js",
   "pergamino_nuevo.js",
   "jefe_aviso.js",
   "moneda_oro.js",
-  "fabricador.js"
+  "fabricador.js",
+  "ojo_pergamino.js"
  ]
 }

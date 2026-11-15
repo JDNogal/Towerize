@@ -24,6 +24,9 @@ async function addRun(req, env) {
   const seen = new Set(), out = [];
   for (const r of top) { const id = r.nick.toLowerCase() + '|' + r.hero; if (seen.has(id)) continue; seen.add(id); out.push(r); if (out.length >= TOPN) break; }
   await env.RUNS.put(key, JSON.stringify(out));
+  // índice de niveles de amenaza con partidas (antes se sacaba con list(), que en el plan gratuito solo deja 1.000 al día y tumbaba /tiers)
+  const tk = `tiers:${era}`, tl = (await env.RUNS.get(tk, 'json')) || [];
+  if (!tl.includes(amz)) { tl.push(amz); tl.sort((a, c) => a - c); await env.RUNS.put(tk, JSON.stringify(tl)); }
   const pos = out.indexOf(run);
   return J({ ok: true, pos: pos < 0 ? null : pos + 1, n: out.length });
 }
@@ -56,6 +59,11 @@ async function addBug(req, env) {
 
 export default {
   async fetch(req, env) {
+    try { return await route(req, env); } catch (e) { return J({ ok: false, err: 'server' }, 500); }
+  }
+};
+async function route(req, env) {
+  {
     const u = new URL(req.url);
     if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
     if (req.method === 'POST' && u.pathname === '/run') return addRun(req, env);
@@ -67,8 +75,9 @@ export default {
     }
     if (req.method === 'GET' && u.pathname === '/tiers') {
       const era = int(u.searchParams.get('era'), 1, 9); if (era == null) return J({ ok: false, err: 'datos' }, 400);
-      const l = await env.RUNS.list({ prefix: `top:${era}:` });
-      return J({ ok: true, era, tiers: l.keys.map(k => +k.name.split(':')[2]).sort((a, b) => a - b) });
+      let tl = await env.RUNS.get(`tiers:${era}`, 'json');
+      if (!tl) { try { const l = await env.RUNS.list({ prefix: `top:${era}:` }); tl = l.keys.map(k => +k.name.split(':')[2]).sort((a, b) => a - b); await env.RUNS.put(`tiers:${era}`, JSON.stringify(tl)); } catch (e) { tl = []; } }
+      return J({ ok: true, era, tiers: tl });
     }
     return J({ ok: true, juego: 'Towerize', rutas: ['POST /run', 'POST /bug', 'GET /top?era=&amz=', 'GET /tiers?era='] });
   }

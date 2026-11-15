@@ -30,7 +30,9 @@
 .bk.hasft .lbft.r:empty{display:block!important;height:44px;padding:0!important;pointer-events:none}
 /* v339 · cada página mide justo la mitad del libro (antes la derecha era 28 px más ancha por su relleno, el lomo no caía en el centro
    y el pie de cada página se montaba 14 px sobre la otra: de ahí el corte raro junto al lomo) */
-#comp:not(.narrow) .bk>.bkp{flex:0 0 50%!important;max-width:50%!important;box-sizing:border-box!important}
+#comp:not(.narrow) .bk>.bkp:not(.spread):not(.one){flex:0 0 50%!important;max-width:50%!important;box-sizing:border-box!important}
 /* v339 · las cintas del menú principal salen de debajo de la tapa (antes quedaban flotando a ~15 px) */
 :root:not([data-skin="holo"]) .lbcv.a>.lbribs{right:auto!important;left:calc(100% - 24px)!important;z-index:0!important}:root:not([data-skin="holo"]) .lbcv.a>.lbcvin{position:relative;z-index:1}
 :root:not([data-skin="holo"]) .lbcv.a>.lbribs .bkrib{width:calc(64px + 18px)!important;padding-left:calc(6px + 18px)!important}
+.lbnovrow{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}.lbnovrow .lbnov{margin-top:6px}
+body.mfs .lbcvin:not(:has(.lbscr)) .lbtiles button{min-height:0!important;height:38px!important}

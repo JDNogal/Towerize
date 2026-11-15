@@ -31,3 +31,9 @@
 #fabw kbd{font:700 11px Inter,Arial;border:1px solid var(--ln);border-radius:4px;padding:0 4px;color:var(--ink2)}
 #fabtip{position:fixed;z-index:61;max-width:270px;padding:8px 10px;border-radius:8px;background:#0b111c;border:1.5px solid #3fe8ff;box-shadow:0 4px 16px #000a;font-size:13px;color:#d8f6ff;pointer-events:none;display:none}
 #fabtip b{display:block;margin-bottom:2px}#fabtip small{display:block;color:#8fb0c8;margin-top:3px;font-size:12px}
+/* v349: versión compacta para móvil (860×450) */
+#fabw .fabwin.fabm{width:860px;height:450px;grid-template-columns:180px 360px 1fr;gap:14px;padding:12px 14px;font-size:15px}
+#fabw .fabwin.fabm .fabsub{display:none}#fabw .fabwin.fabm .fabh1{font-size:18px;margin-bottom:8px}
+#fabw .fabwin.fabm canvas{width:360px;height:360px}#fabw .fabwin.fabm .fabstp{padding:5px 8px}#fabw .fabwin.fabm .fabg{margin-top:8px;padding:7px 10px}
+#fabw .fabwin.fabm .fabside{gap:7px}#fabw .fabwin.fabm .fabside p{font-size:13px}#fabw .fabwin.fabm .fabopt{padding:7px 10px}
+#fabw .fabg{gap:10px}

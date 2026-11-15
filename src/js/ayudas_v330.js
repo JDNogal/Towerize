@@ -119,7 +119,7 @@ const TIPS=[
  ()=>'Las habilidades del héroe pueden ir solas: actívalo en Opciones › Juego.',
  ()=>'Desde la ronda 5, si no hay enemigos al alcance, el juego va solo a ×3.',
  ()=>'En Estadísticas › Carrera tienes el resumen de todas tus partidas.',
- ()=>'¿Algo no funciona como debería? Desde la pausa puedes <b>informar de un fallo</b> con una captura.',
+ ()=>'¿Algo no funciona como debería? Con <b>F3</b> (o el botón del bicho) puedes <b>informar de un fallo</b>: va con una captura de la pantalla.',
  ()=>'Abrir cofres pronto da más tiempo a que sus reliquias rindan.',
  ()=>S0e2()?'Cada era tiene sus propias piezas, casillas y enemigos. Lo que descubres, se recuerda.':null];
 function S0e2(){return typeof era2Ok==='function'&&era2Ok();}
@@ -154,7 +154,7 @@ function bugRender(first){let el=document.getElementById('bugw');if(!el){el=docu
   <small class="bugsub">Cuéntanos qué ha pasado. Lo recibimos en el canal de feedback de Discord.</small>
   <div class="bugcats">${BUGCAT.map(([k,l])=>`<button class="pill${BUG.cat===k?' on':''}" data-bg="cat" data-v="${k}">${l}</button>`).join('')}</div>
   <textarea maxlength="1500" placeholder="¿Qué ha pasado? ¿Qué esperabas que pasara?"></textarea>
-  ${BUG.shot?`<div class="bugshot${BUG.inc?'':' off'}"><img src="${BUG.shot}" alt="" data-bg="zoom"><label><input type="checkbox" data-bg="inc"${BUG.inc?' checked':''}> Adjuntar esta captura del mapa</label></div>`:'<small class="bugnos">Sin captura: ábrelo desde la pausa de una partida para adjuntar el mapa.</small>'}
+  ${BUG.shot?`<div class="bugshot${BUG.inc?'':' off'}"><img src="${BUG.shot}" alt="" data-bg="zoom"><label><input type="checkbox" data-bg="inc"${BUG.inc?' checked':''}> Adjuntar esta captura de la pantalla</label></div>`:'<small class="bugnos">No se ha podido hacer la captura de la pantalla.</small>'}
   <small class="buginfo">Se envía también: ${bugInfo()}${typeof lbPilot==='function'&&lbPilot()?' · piloto '+lbPilot():''}</small>
   <div class="bugbot"><span class="bugmsg">${BUG.msg}</span><button class="lbbk" data-bg="x">Cancelar</button><button class="gbtn" data-bg="send"${BUG.sending?' disabled':''}>${BUG.sending?'Enviando…':'Enviar'}</button></div></div>
   <div class="bugzoom"><img alt=""></div>`;
