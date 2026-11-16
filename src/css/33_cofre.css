@@ -1,5 +1,5 @@
 /* v329 · Cofre y paquete de ayuda sin marco (cofre_anim.js) */
-#relic.cofre:has(.cfsign) .pscr{filter:none;max-width:1100px}#relic.cofre:has(.cfsign) .pscr i.prod,#relic.cofre:has(.cfsign) .prod{display:none!important}#relic.cofre:has(.cfsign) .pscr::before,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr::before{display:none!important;content:none!important}
+#relic.cofre:has(.cfsign) .pscr{filter:none;max-width:1100px}#relic.cofre:has(.cfsign) .pscr::before,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr::before{display:none!important;content:none!important}
 #relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr{background:none!important;box-shadow:none!important;border:0!important;padding:0 0 10px!important;margin:0!important;animation:none!important}
 #relic.cofre:has(.cfsign) .cfhint{display:none!important}#relic.cofre:has(.cfsign) .ppap{text-align:center!important}
 #relic.cofre:has(.cfsign) .cgrid{position:relative;z-index:2;gap:32px!important;margin-top:18px!important;justify-content:center}

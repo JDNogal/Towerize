@@ -7,13 +7,13 @@ const FT={key:null,t:null,open:{}};
 const FTFOLD={obj:false,ab:true,more:false};
 // ---- mecánicas con barra en directo: v = 0..1, l = texto de la derecha, base = se ve también la descripción de la torre ----
 const TMECH=[
- {on:t=>t.spec==='volc',n:'Calor',ic:'burn',base:1,v:t=>t.heat||0,l:t=>'Calor '+Math.round((t.heat||0)*100)+'%'},
- {on:t=>t.type==='augur'&&t.spec==='herald',n:'Carga del Juicio',ic:'ez',v:t=>Math.min(1,(t.ch||0)/HCH),l:t=>Math.floor(t.ch||0)+' / '+HCH},
- {on:t=>{try{return magMax(t)>0;}catch(e){return false;}},n:'Cargador',ic:'mag',base:1,
+ {k:'volc',on:t=>t.spec==='volc',n:'Calor',ic:'burn',base:1,v:t=>t.heat||0,l:t=>'Calor '+Math.round((t.heat||0)*100)+'%'},
+ {k:'herald',on:t=>t.type==='augur'&&t.spec==='herald',n:'Carga del Juicio',ic:'ez',v:t=>Math.min(1,(t.ch||0)/HCH),l:t=>Math.floor(t.ch||0)+' / '+HCH},
+ {k:'mag',on:t=>{try{return magMax(t)>0;}catch(e){return false;}},n:'Cargador',ic:'mag',base:1,
   v:t=>{const mx=magMax(t);if(t.rld>0){const T=twm(t.type,t.spec),r=T.reload||1.8;return 1-Math.min(1,t.rld/r);}return (t.magN==null?mx:t.magN)/mx;},
   l:t=>{const mx=magMax(t);return t.rld>0?'Recargando…':(t.magN==null?mx:t.magN)+' / '+mx;},
-  x:t=>{const T=twm(t.type,t.spec),r=T.ramp||.6;return 'Cuanto más vacío el cargador, más rápido dispara (hasta +'+Math.round(r*100)+'%). Al vaciarse, recarga.';}},
- {on:t=>{try{return !!twm(t.type,t.spec).net;}catch(e){return false;}},n:'Red',ic:'chain',v:t=>Math.min(4,t.netN||0)/4,l:t=>'+'+(15*Math.min(4,t.netN||0))+'% de daño'},
+  x:t=>{const T=twm(t.type,t.spec),r=T.ramp||.6;return 'Cuanto más rato dispara seguido, más Cadencia gana (hasta +'+Math.round(r*100)+'% de velocidad); al recargar, la pierde.';}},
+ {k:'net',on:t=>{try{return !!twm(t.type,t.spec).net;}catch(e){return false;}},n:'Red',ic:'chain',v:t=>Math.min(4,t.netN||0)/4,l:t=>'+'+(15*Math.min(4,t.netN||0))+'% de daño'},
 ];
 const ftMech=t=>TMECH.find(m=>{try{return m.on(t);}catch(e){return false;}})||null;
 // ---- DPS real: muestras del daño hecho por cada torre (t.dmgT) en tiempo de juego; ventana de 3 s ----
@@ -82,7 +82,7 @@ document.addEventListener('toggle',ev=>{const d=ev.target;if(d&&d.classList&&d.c
 try{if(typeof ICKW!=='undefined'&&ICKW.dps){ICKW.dpsr=ICKW.dps;const st=document.createElement('style');st.textContent=`body.kwico .kw[data-kw="dpsr"]:not(.gico)::before{background-image:url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 56 56">'+ICKW.dps+'</svg>')}")}`;document.head.appendChild(st);}}catch(e){}
 // en directo: muestras cada 200 ms y se pintan las barras de la ficha abierta
 setInterval(()=>{try{ftSample();const t=FT.t;if(!t)return;const box=document.querySelector('#side .ftc,#tip .ftc');if(!box)return;
- const M=ftMech(t),mb=box.querySelector('.ftmb i'),ml=box.querySelector('.ftml');if(M&&mb){mb.style.width=Math.round(M.v(t)*100)+'%';const l=M.l(t);if(ml.textContent!==l)ml.textContent=l;}
+ const M=ftMech(t),mb=box.querySelector('.ftmb i'),ml=box.querySelector('.ftml');if(M&&mb)mb.style.width=Math.round(M.v(t)*100)+'%';if(M&&ml){const l=M.l(t);if(ml.textContent!==l)ml.textContent=l;}
  const dp=box.querySelector('.ftdps');if(dp){const theo=+dp.dataset.theo,r=ftReal(t),bi=dp.querySelector('.ftbar i'),dv=dp.querySelector('.ftdv'),dn=dp.querySelector('.ftdn');
   let pc=0,v='—',n='';if(r){pc=Math.round(r.v/theo*100);v=f(r.v);n=r.frozen?'Media de la última oleada · '+pc+'% del teórico':(r.warm?'Midiendo…':pc+'% de su DPS teórico ('+f(theo)+')');}
   else n=S.phase==='wave'?'':'Se mide durante las oleadas';

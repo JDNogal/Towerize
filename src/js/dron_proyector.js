@@ -6,7 +6,7 @@
 const hdOn=()=>document.documentElement.dataset.skin==='holo';
 // ¡Cofre abierto! va en la misma ventana que las demás: pergamino en la era 1 y dron en la era 2 (antes, solo las tarjetas sueltas)
 {const _rp=renderRelicPick;renderRelicPick=function(){const r=_rp.apply(this,arguments);try{const rl=$('relic');if(!rl.querySelector('.pscr')){
- const sc=document.createElement('div');sc.className='pscr rpscr';sc.innerHTML='<i class="prod l"></i><i class="prod r"></i><div class="ppap"></div>';const pp=sc.querySelector('.ppap');
+ const sc=document.createElement('div');sc.className='pscr rpscr';sc.innerHTML='<div class="ppap"></div>';const pp=sc.querySelector('.ppap');
  [...rl.childNodes].filter(n=>!(n.nodeType===1&&(n.classList.contains('rlbar')||n.classList.contains('wcomp')))).forEach(n=>pp.appendChild(n));
  const t=pp.querySelector(':scope>b');if(t){t.className='ptt';t.removeAttribute('style');}const st=pp.querySelector(':scope>small');if(st)st.className='pst';[...pp.querySelectorAll(':scope>br')].forEach(x=>x.remove());
  rl.insertBefore(sc,rl.firstChild);}}catch(e){}return r;};}

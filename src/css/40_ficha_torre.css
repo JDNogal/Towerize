@@ -35,3 +35,6 @@
 .ftab .ftpip{display:flex;gap:3px;align-items:center}
 .ftab .ftpip i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,currentColor 18%,transparent)}
 .ftab .ftpip i.on{background:var(--acc,#c9893a)}
+
+/* v353 · barras de mecánica dibujadas (ficha_barras.js) */
+.ftmech canvas.fbc{display:block;width:100%;margin-top:5px}

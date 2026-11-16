@@ -2,7 +2,7 @@
 const BF={
 rng:{n:'Alcance',l:'A',col:'#4cc9a0',rg:1.35,t:'<span class="cg">+35% rango</span>'},
 pow:{n:'Potencia',l:'P',col:'#e0605a',d:1.5,r:1/1.5,t:'<span class="cd">+50% daño</span>, <span class="cr">+50% enfriamiento</span>'},
-spd:{n:'Frenesí',l:'R',col:'#a15cff',d:.75,r:1/.75,t:'<span class="cr">−25% enfriamiento</span>, <span class="cd">−25% daño</span>'},
+spd:{n:'Frenesí',l:'R',col:'#a15cff',d:.75,r:1/.8,t:'<span class="cr">−20% enfriamiento</span>, <span class="cd">−25% daño</span>'},
 gold:{n:'Codicia',l:'$',col:'#f0b429',gold:.5,t:'<span class="gd">+50% de oro</span> por baja'},
 aoe:{n:'Expansión',l:'E',col:'#ff9a3c',ar:1.4,t:'<span class="ca">+40% área de efecto</span>',note:'Solo tiene efecto en torres que hacen daño en área.'},
 crt:{n:'Precisión',l:'C',col:'#ff5c8a',cr:.15,t:'<span class="cc">+15% de probabilidad de crítico</span>'},
@@ -16,7 +16,7 @@ const BK=Object.keys(BF);
 const SUP0=.2,SUPUP=.05;
 const BFSUP={rng:{rg:1.7,t:'<span class="cg">+70% rango</span>'},
  pow:{d:2,r:1/2,t:'<span class="cd">+100% daño</span>, <span class="cr">+100% enfriamiento</span>'},
- spd:{d:.5,r:2,t:'<span class="cr">−50% enfriamiento</span>, <span class="cd">−50% daño</span>'},
+ spd:{d:.5,r:1/.6,t:'<span class="cr">−40% enfriamiento</span>, <span class="cd">−50% daño</span>'},
  gold:{gold:1,t:'<span class="gd">+100% de oro</span> por baja'},aoe:{ar:1.8,t:'<span class="ca">+80% área de efecto</span>'},
  crt:{cr:.3,t:'<span class="cc">+30% de probabilidad de crítico</span>'},prf:{pen:20,t:'<span class="cph">+20 de penetración</span> (física o mágica, según la torre)'},
  eco:{eco:3,t:'Uno de cada <b>3</b> disparos se repite al instante'},per:{per:2,t:'Lo que deja la torre dura el <span class="cr">doble</span>'},
@@ -172,7 +172,7 @@ const AB={
  deton:{n:'Detonación',ranks:[{c:45,th:50,r:1},{c:50,th:40,r:1.2},{c:55,th:30,r:1.5}],txt:r=>`Cuando un enemigo supera <b>${r.th}</b> stacks de ${kw('burn','quemadura','')}, explota: hace a todos en <span class="kw rgv" data-kw="rng" data-src="">${f(r.r)}</span> la mitad del daño de 1 segundo de sus stacks (<span class="cd">${BURND}</span> por stack) y pierde la mitad de ellos.`},
  intens:{n:'Intensidad',ranks:[{c:35,p:.1},{c:40,p:.15},{c:45,p:.2}],txt:r=>`+<span class="cbu">${Math.round(r.p*100)}%</span> de stacks de ${kw('burn','quemadura','')} por tick.`},
  // ---- era 2 · Búnker ----
- trigger:{n:'Gatillo fácil',ranks:[{c:30,r:.5},{c:35,r:1},{c:40,r:1.5}],txt:r=>`La cadencia sube aún más mientras dispara: hasta <span class="cr">+${Math.round(r.r*100)}%</span> extra con el ${kw('mag','cargador','')} a punto de vaciarse.`},
+ trigger:{n:'Gatillo fácil',ranks:[{c:30,r:.5},{c:35,r:1},{c:40,r:1.5}],txt:r=>`La cadencia sube aún más mientras dispara: hasta <span class="cr">+${Math.round(r.r*100)}%</span> extra con la Cadencia llena (${kw('mag','cargador','')}).`},
  magz:{n:'Cargador ampliado',ranks:[{c:30,n:15},{c:35,n:30},{c:40,n:50}],txt:r=>`El ${kw('mag','cargador','')} tiene <b>+${r.n} balas</b>.`},
  expan:{n:'Balas expansivas',ranks:[{c:30,p:.1},{c:35,p:.15},{c:40,p:.2}],txt:r=>`Cada bala tiene un <span class="cc">${Math.round(r.p*100)}%</span> de aplicar 1 stack de ${kw('bleed','sangrado','')}.`},
  weak:{n:'Punto débil',ranks:[{c:35,m:.5},{c:40,m:1},{c:45,m:1.5}],txt:r=>`Los ${kw('crit','críticos','')} hacen <span class="cc">×${f(2+r.m)}</span> en vez de ×2.`},
@@ -260,7 +260,7 @@ frost:{
  vent:{n:'Guardián de la Ventisca',ic:'🌨️',col:'#9fe0ff',lv:{dmg:L4D*.42,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},aura:true,ab:['deep','blizz','bite'],d:'No dispara: emite un aura que ralentiza y daña poco a todos los enemigos dentro.'}},
 augur:{
  lord:{n:'Señor de la Tormenta',ic:'☁️',col:'#9fc4e8',lv:{dmg:L4D*1.3,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},ab:['drench','cumulo','hail'],d:'Invoca una nube sobre su bandera (puedes moverla). Sus rayos caen al azar sobre los enemigos que pasan debajo.'},
- herald:{n:'Heraldo del Juicio',ic:'🌟',col:'#ffe58a',lv:{dmg:L4D*1.5,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},ab:['wrath','fork','fulg'],d:'No dispara: se carga con el tiempo y, más despacio, con cada muerte cercana. Lleno (8), lanza un rayo al enemigo con más vida: 6× su daño.'}},
+ herald:{n:'Heraldo del Juicio',ic:'🌟',col:'#ffe58a',lv:{dmg:L4D*1.5,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},ab:['wrath','fork','fulg'],d:'No dispara: acumula la Carga del Juicio con el tiempo y con las bajas de otras torres cerca (las suyas no cuentan). Llena (20), lanza un rayo al enemigo con más vida: 6× su daño. Se vacía al acabar la oleada.'}},
 orb:{
  foco:{n:'Foco Arcano',ic:'🌑',col:'#9d86ff',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['hex','nova','poly'],d:'Orbes que maldicen: debilitan frente a la magia, cargan novas y pueden convertir a los enemigos en ranas.'},
  reap:{n:'Segador de Almas',ic:'🪦',col:'#9fb4d8',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['raise','knight','harvest'],d:'Orbes más débiles: los enemigos que matan se alzan como espectros aliados.'}},

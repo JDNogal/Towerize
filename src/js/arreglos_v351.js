@@ -32,8 +32,8 @@ bfT=function(k,kx,ky){const B=BF[k],{m,why}=bfMul(kx,ky);if(m===1)return B.t;con
  return t+` <small class="cf">(${why.join(', ')})</small>`;};
 // Reinhart · Provocación (Nv 4): el −15% de daño recibido ahora también vale contra los ataques especiales de los enemigos (a distancia, en área…), no solo cuerpo a cuerpo.
 {const _h=hitUnit;hitUnit=function(s,d,e){try{if(s&&s.H&&s.H.id==='reinhart'&&s.H.lvl>=4)d*=.85;}catch(x){}return _h.call(this,s,d,e);};}
-// Moneda antigua: la ficha del enemigo enseña el oro por baja que cobras de verdad (+50%).
-{const _e=enemyInfo;enemyInfo=function(k){let h=_e.apply(this,arguments);try{const E=ET[k];if(E&&typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('coin')&&rp('coin')&&E.gold>0)h=h.replace('>'+E.gold+' 🪙<','>'+Math.round(E.gold*1.5)+' 🪙 <small class="cf">(+50%, Moneda antigua)</small><');}catch(x){}return h;};}
+// Moneda antigua: la ficha del enemigo enseña el oro por baja que cobras de verdad (+20% desde la v353).
+{const _e=enemyInfo;enemyInfo=function(k){let h=_e.apply(this,arguments);try{const E=ET[k];if(E&&typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('coin')&&rp('coin')&&E.gold>0)h=h.replace('>'+E.gold+' 🪙<','>'+Math.round(E.gold*COINM)+' 🪙 <small class="cf">(+20%, Moneda antigua)</small><');}catch(x){}return h;};}
 // Implante cibernético (y cualquier reliquia que cambie la vida del héroe): la vida máxima se actualiza al conseguirla, no a la siguiente oleada.
 {const _g=gainRelic;gainRelic=function(id){const r=_g.apply(this,arguments);try{heroSync();}catch(x){}return r;};}
 // ---- Huella de las habilidades de área (Nogal): al soltar un activo de reliquia o una habilidad del héroe sobre el mapa,

@@ -1109,24 +1109,16 @@ body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,.kpanel,#tip,#hp
 #hinfo .row{display:flex;justify-content:space-between;gap:10px}
 /* bocadillos de portal sobre pergamino: cabecera y textos con la tinta del libro (antes blanco/naranja claro, no se leía) */
 .pbin .pbh{color:var(--ink)!important}.pbin .pbs{color:color-mix(in srgb,#d0701a 75%,var(--ink))!important}.pbin .pbmore{color:var(--ink2)!important;opacity:1}
-/* ===== PERGAMINO ENROLLADO: elegir torre (ventana) y elegir pieza (panel de abajo) =====
-   Papel con rodillos de cuero a los lados y remaches en las puntas; toma los colores de la encuadernación.
-   Al aparecer se desenrolla desde el centro. */
-.prod{position:absolute;top:-10px;bottom:-10px;width:30px;border-radius:15px;z-index:2;pointer-events:none;
- background:linear-gradient(90deg,var(--lea2),var(--lea) 32%,color-mix(in srgb,var(--lea) 70%,#fff 30%) 50%,var(--lea) 68%,var(--lea2));box-shadow:0 4px 10px rgba(0,0,0,.45)}
-.prod::before,.prod::after{content:'';position:absolute;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;
- background:radial-gradient(circle at 35% 35%,color-mix(in srgb,var(--trim) 60%,#fff),var(--trim) 55%,color-mix(in srgb,var(--trim) 60%,#000));box-shadow:0 1px 3px rgba(0,0,0,.5)}
-.prod::before{top:-6px}.prod::after{bottom:-6px}
-.prod.l{left:0}.prod.r{right:0}
-#relic .pscr i.prod{width:30px!important;height:auto!important;top:-10px!important;bottom:-10px!important;margin:0!important;display:block!important;font-size:0!important}
+/* ===== VENTANAS DE ELECCIÓN (oferta de torres, eventos, cofre y panel de piezas): medidas y maqueta común =====
+   v353: antes era «pergamino enrollado». Los rodillos viejos (.prod y los del panel de piezas) se han borrado: el pergamino lo dibuja
+   pergamino_nuevo.js (era 1, 35_pergamino.css) y el dron 21_dron.css (era 2). Aquí queda solo la maqueta que comparten las ventanas.
+   Queda también el papel base de .ppap y su animación de abrirse: el pergamino nuevo lo tapa en la era 1 (.pgf) y el dron en la era 2. */
 .ppap{background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 78%,var(--lea)),var(--paper) 6%,color-mix(in srgb,var(--paper) 92%,#fff) 50%,var(--paper) 94%,color-mix(in srgb,var(--paper) 78%,var(--lea)));
  border-top:3px solid var(--lea);border-bottom:3px solid var(--lea);color:var(--ink)}
 /* ---- elegir torre ---- */
 #relic .pscr{position:relative;margin:0 auto;max-width:900px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.55))}
 #relic .ppap{margin:0 22px;padding:18px 36px 14px;text-align:center;animation:punroll .65s cubic-bezier(.3,.7,.3,1) both}
-#relic .pscr .prod.l{animation:prodl .65s cubic-bezier(.3,.7,.3,1) both}#relic .pscr .prod.r{animation:prodr .65s cubic-bezier(.3,.7,.3,1) both}
 @keyframes punroll{from{clip-path:inset(0 50%)}to{clip-path:inset(0 0)}}
-@keyframes prodl{from{left:calc(50% - 30px)}to{left:0}}@keyframes prodr{from{right:calc(50% - 30px)}to{right:0}}
 #relic .ppap .ptt{display:block;font:700 20px Georgia,"Times New Roman",serif!important;color:var(--inkh)!important;text-shadow:none!important}
 #relic .ppap .pst{display:block;margin-top:2px;color:var(--ink)!important;opacity:.85;text-shadow:none!important}
 #relic .ppap .toff{margin:14px 0 6px;gap:16px}
@@ -1139,17 +1131,13 @@ body.dsk #panel,#hinfo,.tof,#relic .ce.rcard,.evwin,#relic .hpc,.kpanel,#tip,#hp
 body.dsk #panel:has(.prow){border-width:3px 0!important;border-style:solid!important;border-color:var(--lea)!important;border-radius:2px!important;
  background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 78%,var(--lea)),var(--paper) 6%,color-mix(in srgb,var(--paper) 92%,#fff) 50%,var(--paper) 94%,color-mix(in srgb,var(--paper) 78%,var(--lea)))!important;
  box-shadow:0 12px 26px rgba(0,0,0,.5)!important;overflow:visible!important;padding-left:40px!important;padding-right:40px!important}
-body.dsk #panel:has(.prow)::before,body.dsk #panel:has(.prow)::after{content:'';position:absolute;top:-12px;bottom:-12px;width:28px;border-radius:14px;z-index:2;pointer-events:none;
- background:radial-gradient(circle at 50% 10px,color-mix(in srgb,var(--trim) 60%,#fff) 0 4px,var(--trim) 5px 8px,transparent 9px),radial-gradient(circle at 50% calc(100% - 10px),color-mix(in srgb,var(--trim) 60%,#fff) 0 4px,var(--trim) 5px 8px,transparent 9px),linear-gradient(90deg,var(--lea2),var(--lea) 32%,color-mix(in srgb,var(--lea) 70%,#fff 30%) 50%,var(--lea) 68%,var(--lea2));
- box-shadow:0 4px 10px rgba(0,0,0,.45)}
-body.dsk #panel:has(.prow)::before{left:-14px}body.dsk #panel:has(.prow)::after{right:-14px}
 /* las piezas, como dibujadas a tinta sobre el papel */
 #panel .prow .card{background:transparent!important;border:1.5px dashed color-mix(in srgb,var(--pline3) 70%,transparent)!important;box-shadow:none!important}
 #panel .prow .card.on,#panel .prow .card:hover{border:2px solid var(--acc2)!important;background:color-mix(in srgb,var(--paper1) 70%,transparent)!important}
 #panel .prow .card canvas{filter:invert(1) grayscale(1) sepia(.55) contrast(1.35) brightness(1.05);mix-blend-mode:multiply;border-radius:4px}
-@media (prefers-reduced-motion:reduce){#relic .ppap,#relic .pscr .prod{animation:none}}
+@media (prefers-reduced-motion:reduce){#relic .ppap{animation:none}}
 /* móvil: más compacto para que quepa entero */
-body.mfs #relic .pscr{margin-top:12px}body.mfs #relic .ppap{padding:8px 26px 8px;margin:0 16px}body.mfs #relic .pscr i.prod{width:22px!important}
+body.mfs #relic .pscr{margin-top:12px}body.mfs #relic .ppap{padding:8px 26px 8px;margin:0 16px}
 body.mfs #relic .ppap .ptt{font-size:15px!important}body.mfs #relic .ppap .toff{margin:6px 0 4px;gap:8px}body.mfs #relic .pskip{margin-top:2px}body.mfs #relic .pskip small{display:none}
 
 /* botón del compendio en las ventanas de elección */
@@ -1575,6 +1563,7 @@ body.mfs #pinbar .pnl{display:none;margin-top:6px}body.mfs #pinbar.open .pnl{dis
 /* v305 · novedades del compendio por ficha */
 .bti.nov{position:relative}.bti.nov::after{content:"";position:absolute;top:3px;right:3px;width:9px;height:9px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2),0 0 6px var(--gbtn);pointer-events:none}
 .bkmk.new{position:relative}.bkmk.new::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--gbtn);box-shadow:0 0 0 2px var(--lea2);pointer-events:none}
+.bknovall{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;margin:6px 0 2px;padding:3px 10px;font-size:12px;border-radius:12px}.bknovall small{display:inline!important;margin:0!important}
 
 /* v305 · comparación de mejora con los colores de cada estadística */
 .tmcmp .tmold{opacity:.7;font-weight:500}
@@ -2049,7 +2038,7 @@ body.era2g .cnf{background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%
 @keyframes hdpara{from{transform:translateY(-200px) rotate(-6deg)}70%{transform:translateY(6px) rotate(3deg)}to{transform:none}}
 @keyframes hdsway{50%{transform:rotate(2deg)}}
 /* --- el pergamino desaparece: rodillos fuera --- */
-:root[data-skin="holo"] #relic .pscr .prod,:root[data-skin="holo"] body.dsk #panel:has(.prow)::after{display:none!important}
+
 /* --- ventana proyectada (oferta de torres, eventos y su resultado) --- */
 :root[data-skin="holo"] #relic .pscr{filter:none!important}
 :root[data-skin="holo"] #relic .ppap{background:linear-gradient(180deg,rgba(18,64,80,.92),rgba(9,30,40,.96)),repeating-linear-gradient(0deg,rgba(63,232,255,.07) 0 1px,transparent 1px 3px)!important;background-blend-mode:screen;border:1px solid rgba(63,232,255,.8)!important;border-radius:4px!important;box-shadow:0 0 0 1px rgba(63,232,255,.2),0 0 30px rgba(63,232,255,.35),inset 0 0 40px rgba(63,232,255,.1)!important;animation:hdopen .6s .32s cubic-bezier(.2,.8,.3,1) both,hdjit 7s 1.4s infinite!important}
@@ -2468,7 +2457,7 @@ table.lbrkt{margin-top:34px}
 html:root[data-skin="holo"] .bti.ach.got,html:root[data-skin="holo"] #comp .bti.ach.got{background:linear-gradient(180deg,rgba(63,232,150,.2),rgba(63,232,150,.07))!important;box-shadow:inset 0 0 0 1px rgba(63,232,150,.45)!important}
 .lbdet .bkbic:not([style*="background"]),.bksh .bkbic:not([style*="background"]){background:none!important;box-shadow:none!important}
 /* v329 · Cofre y paquete de ayuda sin marco (cofre_anim.js) */
-#relic.cofre:has(.cfsign) .pscr{filter:none;max-width:1100px}#relic.cofre:has(.cfsign) .pscr i.prod,#relic.cofre:has(.cfsign) .prod{display:none!important}#relic.cofre:has(.cfsign) .pscr::before,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr::before{display:none!important;content:none!important}
+#relic.cofre:has(.cfsign) .pscr{filter:none;max-width:1100px}#relic.cofre:has(.cfsign) .pscr::before,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr::before{display:none!important;content:none!important}
 #relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .ppap,:root[data-skin="holo"] #relic.cofre:has(.cfsign) .pscr{background:none!important;box-shadow:none!important;border:0!important;padding:0 0 10px!important;margin:0!important;animation:none!important}
 #relic.cofre:has(.cfsign) .cfhint{display:none!important}#relic.cofre:has(.cfsign) .ppap{text-align:center!important}
 #relic.cofre:has(.cfsign) .cgrid{position:relative;z-index:2;gap:32px!important;margin-top:18px!important;justify-content:center}
@@ -2695,7 +2684,7 @@ body.mfs.pcpick #ui .prow:has(>.cardw:nth-child(4)) .cardw{max-width:84px!import
 .pgsvg{position:absolute;pointer-events:none;z-index:0;overflow:visible}
 :root:not([data-skin="holo"]) body.pcpick #panel.pgf,:root:not([data-skin="holo"]) #relic .pscr .ppap.pgf{background:none!important;border-color:transparent!important;box-shadow:0 0 0 200vmax rgba(10,8,6,.55),inset 0 0 0 100vmax rgba(10,8,6,.55)!important;overflow:visible!important}
 :root:not([data-skin="holo"]) #relic .pscr .ppap.pgf{box-shadow:none!important}
-:root:not([data-skin="holo"]) body.pcpick #panel.pgf::before,:root:not([data-skin="holo"]) body.pcpick #panel.pgf::after,:root:not([data-skin="holo"]) #relic .pscr:has(.ppap.pgf) .prod{display:none!important}
+:root:not([data-skin="holo"]) body.pcpick #panel.pgf::before,:root:not([data-skin="holo"]) body.pcpick #panel.pgf::after{display:none!important}
 :root:not([data-skin="holo"]) #relic .pscr:has(.ppap.pgf) .ppap{animation:none!important}
 .pgf>#ui,.pgf>#msg,.ppap.pgf>*:not(.pgsvg){position:relative;z-index:1}
 /* cartas: sin caja propia (el borde lo traza la pluma del SVG); letra de tinta */
@@ -2766,6 +2755,7 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 :root:not([data-skin="holo"]) #relic .rlbar [data-a="peek"].eyepg{background:#f3e6c4!important;border:2px solid #8a5a2a!important;color:#3a2410!important;box-shadow:none!important;width:34px!important;height:34px!important}
 /* v349 (Mesa fab0g, aprobado): en la tablet, la ventana del evento crece para que quepan las opciones (antes medía lo que la imagen y había que bajar) */
 :root[data-skin="holo"] body.dsk:not(.mfs) #relic .ppap.evp .evrc{contain:none!important;overflow-y:auto!important;max-height:calc(100vh - 290px)!important}
+
 /* v345 · Fabricador de sectores (evento de la era 2): ventana holográfica de 1000×580 que se escala para caber */
 #fabw{position:fixed;inset:0;z-index:60;display:none;background:rgba(4,8,14,.72);backdrop-filter:blur(2px);font-family:'Chakra Petch',Inter,Arial,sans-serif}
 #fabw.on{display:block}
@@ -2940,6 +2930,9 @@ table.lbrkt tr.pk td{background:#e9c46a!important;font-weight:800}
 .ftab .ftpip{display:flex;gap:3px;align-items:center}
 .ftab .ftpip i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,currentColor 18%,transparent)}
 .ftab .ftpip i.on{background:var(--acc,#c9893a)}
+
+/* v353 · barras de mecánica dibujadas (ficha_barras.js) */
+.ftmech canvas.fbc{display:block;width:100%;margin-top:5px}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -2954,7 +2947,7 @@ table.lbrkt tr.pk td{background:#e9c46a!important;font-weight:800}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v352</div>
+<div id="ver">Towerize v353</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3146,7 +3139,7 @@ function solarize(o,v,all){const L=SOLARES[o.n];if(!L)return;const g=o.p.map(r=>
 const BF={
 rng:{n:'Alcance',l:'A',col:'#4cc9a0',rg:1.35,t:'<span class="cg">+35% rango</span>'},
 pow:{n:'Potencia',l:'P',col:'#e0605a',d:1.5,r:1/1.5,t:'<span class="cd">+50% daño</span>, <span class="cr">+50% enfriamiento</span>'},
-spd:{n:'Frenesí',l:'R',col:'#a15cff',d:.75,r:1/.75,t:'<span class="cr">−25% enfriamiento</span>, <span class="cd">−25% daño</span>'},
+spd:{n:'Frenesí',l:'R',col:'#a15cff',d:.75,r:1/.8,t:'<span class="cr">−20% enfriamiento</span>, <span class="cd">−25% daño</span>'},
 gold:{n:'Codicia',l:'$',col:'#f0b429',gold:.5,t:'<span class="gd">+50% de oro</span> por baja'},
 aoe:{n:'Expansión',l:'E',col:'#ff9a3c',ar:1.4,t:'<span class="ca">+40% área de efecto</span>',note:'Solo tiene efecto en torres que hacen daño en área.'},
 crt:{n:'Precisión',l:'C',col:'#ff5c8a',cr:.15,t:'<span class="cc">+15% de probabilidad de crítico</span>'},
@@ -3160,7 +3153,7 @@ const BK=Object.keys(BF);
 const SUP0=.2,SUPUP=.05;
 const BFSUP={rng:{rg:1.7,t:'<span class="cg">+70% rango</span>'},
  pow:{d:2,r:1/2,t:'<span class="cd">+100% daño</span>, <span class="cr">+100% enfriamiento</span>'},
- spd:{d:.5,r:2,t:'<span class="cr">−50% enfriamiento</span>, <span class="cd">−50% daño</span>'},
+ spd:{d:.5,r:1/.6,t:'<span class="cr">−40% enfriamiento</span>, <span class="cd">−50% daño</span>'},
  gold:{gold:1,t:'<span class="gd">+100% de oro</span> por baja'},aoe:{ar:1.8,t:'<span class="ca">+80% área de efecto</span>'},
  crt:{cr:.3,t:'<span class="cc">+30% de probabilidad de crítico</span>'},prf:{pen:20,t:'<span class="cph">+20 de penetración</span> (física o mágica, según la torre)'},
  eco:{eco:3,t:'Uno de cada <b>3</b> disparos se repite al instante'},per:{per:2,t:'Lo que deja la torre dura el <span class="cr">doble</span>'},
@@ -3316,7 +3309,7 @@ const AB={
  deton:{n:'Detonación',ranks:[{c:45,th:50,r:1},{c:50,th:40,r:1.2},{c:55,th:30,r:1.5}],txt:r=>`Cuando un enemigo supera <b>${r.th}</b> stacks de ${kw('burn','quemadura','')}, explota: hace a todos en <span class="kw rgv" data-kw="rng" data-src="">${f(r.r)}</span> la mitad del daño de 1 segundo de sus stacks (<span class="cd">${BURND}</span> por stack) y pierde la mitad de ellos.`},
  intens:{n:'Intensidad',ranks:[{c:35,p:.1},{c:40,p:.15},{c:45,p:.2}],txt:r=>`+<span class="cbu">${Math.round(r.p*100)}%</span> de stacks de ${kw('burn','quemadura','')} por tick.`},
  // ---- era 2 · Búnker ----
- trigger:{n:'Gatillo fácil',ranks:[{c:30,r:.5},{c:35,r:1},{c:40,r:1.5}],txt:r=>`La cadencia sube aún más mientras dispara: hasta <span class="cr">+${Math.round(r.r*100)}%</span> extra con el ${kw('mag','cargador','')} a punto de vaciarse.`},
+ trigger:{n:'Gatillo fácil',ranks:[{c:30,r:.5},{c:35,r:1},{c:40,r:1.5}],txt:r=>`La cadencia sube aún más mientras dispara: hasta <span class="cr">+${Math.round(r.r*100)}%</span> extra con la Cadencia llena (${kw('mag','cargador','')}).`},
  magz:{n:'Cargador ampliado',ranks:[{c:30,n:15},{c:35,n:30},{c:40,n:50}],txt:r=>`El ${kw('mag','cargador','')} tiene <b>+${r.n} balas</b>.`},
  expan:{n:'Balas expansivas',ranks:[{c:30,p:.1},{c:35,p:.15},{c:40,p:.2}],txt:r=>`Cada bala tiene un <span class="cc">${Math.round(r.p*100)}%</span> de aplicar 1 stack de ${kw('bleed','sangrado','')}.`},
  weak:{n:'Punto débil',ranks:[{c:35,m:.5},{c:40,m:1},{c:45,m:1.5}],txt:r=>`Los ${kw('crit','críticos','')} hacen <span class="cc">×${f(2+r.m)}</span> en vez de ×2.`},
@@ -3404,7 +3397,7 @@ frost:{
  vent:{n:'Guardián de la Ventisca',ic:'🌨️',col:'#9fe0ff',lv:{dmg:L4D*.42,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},aura:true,ab:['deep','blizz','bite'],d:'No dispara: emite un aura que ralentiza y daña poco a todos los enemigos dentro.'}},
 augur:{
  lord:{n:'Señor de la Tormenta',ic:'☁️',col:'#9fc4e8',lv:{dmg:L4D*1.3,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},ab:['drench','cumulo','hail'],d:'Invoca una nube sobre su bandera (puedes moverla). Sus rayos caen al azar sobre los enemigos que pasan debajo.'},
- herald:{n:'Heraldo del Juicio',ic:'🌟',col:'#ffe58a',lv:{dmg:L4D*1.5,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},ab:['wrath','fork','fulg'],d:'No dispara: se carga con el tiempo y, más despacio, con cada muerte cercana. Lleno (8), lanza un rayo al enemigo con más vida: 6× su daño.'}},
+ herald:{n:'Heraldo del Juicio',ic:'🌟',col:'#ffe58a',lv:{dmg:L4D*1.5,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},ab:['wrath','fork','fulg'],d:'No dispara: acumula la Carga del Juicio con el tiempo y con las bajas de otras torres cerca (las suyas no cuentan). Llena (20), lanza un rayo al enemigo con más vida: 6× su daño. Se vacía al acabar la oleada.'}},
 orb:{
  foco:{n:'Foco Arcano',ic:'🌑',col:'#9d86ff',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['hex','nova','poly'],d:'Orbes que maldicen: debilitan frente a la magia, cargan novas y pueden convertir a los enemigos en ranas.'},
  reap:{n:'Segador de Almas',ic:'🪦',col:'#9fb4d8',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['raise','knight','harvest'],d:'Orbes más débiles: los enemigos que matan se alzan como espectros aliados.'}},
@@ -3595,7 +3588,7 @@ Object.assign(ACH,{
  marathon:{c:'jg',n:'Maratón',d:'Gana una partida de 42 rondas.'},
  perfect:{c:'jg',n:'¿Partida perfecta?',d:'Gana con 1 de vida sin que ningún enemigo golpee tu núcleo.'},
  minimal:{c:'jg',n:'Minimalista',d:'Gana construyendo solo torres del mazo inicial de tu héroe.'},
- collector:{c:'jg',n:'Coleccionista',d:'Gana una partida de 15 rondas o más con exactamente 7 torres construidas, una de cada tipo.'},
+ collector:{c:'jg',n:'Coleccionista',d:'Gana una partida de 15 rondas o más con exactamente 7 torres construidas, una de cada tipo, sin vender ninguna.'},
  close:{c:'jg',n:'Por los pelos',d:'Gana tras quedarte a 1 de vida por golpes enemigos, con el jefe final muriendo a <span class="kw rgv" data-kw="rng" data-src="">2</span> o menos de tu núcleo.'},
  noact:{c:'jg',n:'Autosuficiente',d:'Gana sin usar ni una vez la activa de ninguna reliquia.'},
  untouch:{c:'hr',n:'Intocable',d:'Gana sin que caigan nunca tu héroe ni ninguna unidad de tus torres (las invocaciones no cuentan).',rl:'banner'},
@@ -3638,7 +3631,7 @@ function achState(id){const H=S.hero,B=S.built||[];const ok=t=>['ok','✓ En cur
   case 'rear':return ROUNDS<20?['nt','Solo en partidas de 20 rondas o más']:S.st&&S.st.hmv?ko('has movido a tu héroe'):ok();
   case 'clean':return ROUNDS<20?['nt','Solo en partidas de 20 rondas o más']:S.st&&S.st.lkN?ko('un enemigo ha llegado al núcleo'):ok();
   case 'nonet':return ROUNDS<30?['nt','Solo en partidas de 30 rondas']:S.st&&S.st.retries?ko('has usado un reintento'):ok();
-  case 'collector':{const bc=S.bcnt||{},tot=Object.values(bc).reduce((a,v)=>a+v,0);return ROUNDS<15?ko('la partida dura menos de 15 rondas'):Object.values(bc).some(v=>v>1)?ko('has construido dos torres del mismo tipo'):tot>7?ko('has construido más de 7 torres'):ok(tot+' de 7 tipos distintos; se comprueba al ganar');}
+  case 'collector':{const bc=S.bcnt||{},tot=Object.values(bc).reduce((a,v)=>a+v,0);return ROUNDS<15?ko('la partida dura menos de 15 rondas'):S.nSell?ko('has vendido una torre'):Object.values(bc).some(v=>v>1)?ko('has construido dos torres del mismo tipo'):tot>7?ko('has construido más de 7 torres'):ok(tot+' de 7 tipos distintos; se comprueba al ganar');}
   case 'close':return win('1 de vida por golpes y el jefe final a <span class="kw rgv" data-kw="rng" data-src="">2</span> o menos');
   case 'noact':return S.usedAct?ko('usaste una activa'):ok();
   case 'untouch':return S.unitDied?ko('cayó una unidad'):ok();
@@ -3689,7 +3682,7 @@ function achWin(){roundUnlock();const H=S.hero,B=S.built||[],nm=S.list.filter(t=
  if(H&&B.length&&B.every(k=>(HEROES[H.id].deck||[]).includes(k)))achieve('minimal');
  {const st=S.st||{};if(ROUNDS>=20&&!st.fork)achieve('onepath');if(!st.paid)achieve('austere');if(ROUNDS>=20&&!st.hmv)achieve('rear');if(ROUNDS>=20&&!st.lkN)achieve('clean');if(ROUNDS>=30&&!st.retries)achieve('nonet');
   const all=(st.all||[]).concat(S.hero?[S.hero.pt]:[]),tot=all.reduce((a,t)=>a+(t.dmgT||0),0);if(tot>0&&all.some(t=>!t.hero&&(t.dmgT||0)>=.6*tot))achieve('master');}
- if(ROUNDS>=15&&nm.length===7&&new Set(nm.map(t=>t.type)).size===7&&!Object.values(S.bcnt||{}).some(v=>v>1))achieve('collector');
+ if(ROUNDS>=15&&!S.nSell&&nm.length===7&&new Set(nm.map(t=>t.type)).size===7&&!Object.values(S.bcnt||{}).some(v=>v>1))achieve('collector');
  if(!S.usedAct)achieve('noact');
  if(!S.unitDied)achieve('untouch');
  if(H&&H.id==='radagast'&&!B.some(k=>TW[k].dt==='phys'))achieve('pure');
@@ -3746,7 +3739,7 @@ const tdetB=()=>`<button class="tdetb" data-a="tdet">${RL.tdet?'− Ocultar deta
 const tofTg=k=>{const T=TW[k];if(T.support||T.custom&&!T.dmg)return '';const g=T.unit?!T.unit.range:!!T.ground;return `<div class="toftg"><span class="kw st" data-kw="tgnd" data-src="shop:${k}">${icTG()}</span><span class="kw st${g?' off':''}" data-kw="tair" data-src="shop:${k}">${icTA()}</span></div>`;};
 const tofBadge=k=>{const T=TW[k],u=T.unit&&UNAME[k];return T.unit?`<span class="tubdg" title="${u?u[0]:'Unidades'} ×${T.unit.n}">${u?`<span class="tuic" style="background:${T.col}">${icHtml(UIC[k])}</span>`:''}×${T.unit.n}</span>`:'';};
 function renderTowerOffer(){try{(RL.towo||[]).forEach(k=>see('tw',k));}catch(e){}closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.classList.toggle('tdeton',!!RL.tdet);el.scrollTop=0;const g=SKIPG[S.skips||0]||0;
- el.innerHTML=`<div class="pscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap"><b class="ptt">${RL.towT||'Nueva torre para tu mazo'}</b><small class="pst">${RL.towD||'Elige una torre: a partir de ahora podrás construirla en esta partida. Tu mazo: '+S.deck.length+'/'+DECKMAX+'.'} ${RL.towP?'':' El juego está en pausa.'}</small><div>`+
+ el.innerHTML=`<div class="pscr"><div class="ppap"><b class="ptt">${RL.towT||'Nueva torre para tu mazo'}</b><small class="pst">${RL.towD||'Elige una torre: a partir de ahora podrás construirla en esta partida. Tu mazo: '+S.deck.length+'/'+DECKMAX+'.'} ${RL.towP?'':' El juego está en pausa.'}</small><div>`+
   '</div><div class="toff">'+RL.towo.map(k=>{const T=TW[k];return `<div class="tof">${tofTg(k)}<div class="tic twd" style="background:${T.col}">${twIc(k)}${tofBadge(k)}</div><div class="tnm">${T.n}</div><div class="chips"><span class="tgmob">${tofTg(k)}</span>${twChips(k).map(c=>tagHtml(c,k)).join('')}</div><span class="gd">${T.cost} 🪙</span><div class="tgl">${tofGlance(k)}</div><div class="tdt" data-k="${k}"><div class="ce tcard" style="margin:0">${shopInfo(k,1)}</div></div>${RL.towP?'':`<button data-a="towpick" data-k="${k}">Añadir al mazo</button>`}</div>`;}).join('')+
   `</div>`+(RL.towP?'<div class="pskip">'+tdetB()+'<button class="go" data-a="towok">Entendido ›</button></div>':RL.towNS?`<div class="pskip">${tdetB()}</div>`:`<div class="pskip">${tdetB()}${diceRr('tw')}<button data-a="towskip">Saltar${g?` (+${g} 🪙)`:''}</button><small>Conservas el hueco: en 2 rondas te ofrecerán torres otra vez.${g?' El oro que recibes se reduce cada vez.':''}</small></div>`)+'</div></div>'+wcompBtn('tw');try{sfx('page');}catch(e){}}
 // cerrar la presentación de las torres del héroe (tutorial): ya están en el mazo
@@ -4214,7 +4207,7 @@ const RELICS=[
 // Cada reliquia: pasivo + activo. Al usar el activo se pierde el pasivo durante la recarga (en RDEF, en «rondas»; abajo se pasa a segundos de oleada). dur = segundos de juego que dura el activo.
 const mapN=()=>Math.max(0,Object.keys(S.blocks).length-1),mapDmg=()=>Math.min(75,5*Math.floor(mapN()/2)),mapCool=()=>Math.min(30,5*Math.floor(mapN()/4));
 const RDEF={
- coin:{cd:4,pas:()=>'Recibes <span class="gd">+50% de oro</span> de todo: enemigos, eventos, reliquias…',act:()=>'<span class="gd">+200 de oro</span> al instante.'},
+ coin:{cd:4,pas:()=>'Recibes <span class="gd">+20% de oro</span> de todo: enemigos, eventos, reliquias…',act:()=>'<span class="gd">+200 de oro</span> al instante.'},
  lens:{cd:3,dur:20,pas:()=>'Torres: <span class="cc">+10% de crítico</span>.',act:()=>'<span class="nd">20 s</span>: <span class="cc">+20% de crítico</span> y críticos <span class="cc">×3</span>.'},
  anvil:{cd:3,dur:20,pas:()=>'Las casillas especiales dan <span class="cf">+50% de su bonus</span>.',act:()=>'<span class="nd">20 s</span>: torres sobre casillas especiales con <span class="cr">−50% de enfriamiento</span> y <span class="cd">+50% de daño</span>.'},
  frost:{cd:3,pas:()=>'Cada impacto de torre: <span class="cf">10%</span> de <span class="kw" data-kw="slow">ralentizar</span>.',act:()=>'<span class="kw" data-kw="freeze">Congela</span> <span class="nd">10 s</span> a los enemigos de un área.'},
@@ -5782,7 +5775,7 @@ const EVALT={chest:{0:k=>k[0]!=='relicx'},lab:{2:k=>!(k[0]||'').startsWith('gold
 function evImg(id,i,keys){const M=typeof EVIMG!=='undefined'&&EVIMG[id];if(!M)return '';if(i==null)return M.ev;const f=EVALT[id]&&EVALT[id][i];return f&&keys&&f(keys)&&M.alt&&M.alt[i]?M.alt[i]:(M.o[i]||M.ev);}
 // disposición del pergamino de eventos: 'b' = solo la imagen a la izquierda; 'a' = imagen con el texto debajo
 let EVLAY='b';
-function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap evp ev${EVLAY}${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
+function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><div class="ppap evp ev${EVLAY}${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
  const img=evImg(id),B=EVLAY==='b',opts=`<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div>';
  el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?'':`<p>${E.txt}</p>`}`,
@@ -6360,7 +6353,7 @@ function buyAb(t,id){if(placeLock()){plMsg();return;}{const w=abReq(t,id);if(w){
 function pinTower(t){S.selT=t;openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:{x:t.x,y:t.y}});PR.pinned=true;refreshPrim();ui();}
 function sell(t){
  if(t&&TW[t.type].uniq){S.msg='Las torres únicas no se pueden vender.';ui();return;}
- S.gold+=sellVal(t);S.st.gSell+=sellVal(t);t.sold=1;S.list=S.list.filter(o=>o!==t);
+ S.gold+=sellVal(t);S.st.gSell+=sellVal(t);t.sold=1;S.nSell=(S.nSell||0)+1;/* v353: vender anula el Coleccionista */S.list=S.list.filter(o=>o!==t);
  for(const[a,b]of t.sq)delete S.occ[a+','+b];S.selT=null;if(PR.pinned&&PR.key==='tw:'+t.id)closePrim();ui();
 }
 // ---- Baluarte: soldados y bandera ----
@@ -6803,7 +6796,7 @@ function abilities(t,tg,s){
 
 
 // ===== Augur Voltaico (Era Fantástica): rayos que caen del cielo, nubes de tormenta y juicios =====
-const WETT=3,WETF=1.5,CLR=2.1,HCH=8,HJM=6,FULGD=.2,HCHK=.35;
+const WETT=3,WETF=1.5,CLR=2.1,HCH=20,HJM=6,FULGD=.2,HCHK=.5;/* v353 (Nogal 15-16 nov): Carga del Juicio hasta 20; +1/s y +0,5 por baja de OTRA torre cercana (las suyas no cuentan); se vacía al acabar la oleada */
 // v307 · lo «duro» que es un enemigo, de 0 (pequeño) a 1 (élite o jefe): para habilidades que escalan con la vida del objetivo en vez de con su tipo
 const toughK=e=>isBoss(e)?1:Math.max(0,Math.min(1,((ET[e.t].hp||1)-1)/11));
 const ezM=e=>1+EZAMP*(e.ez?e.ez.n:0);
@@ -6827,7 +6820,8 @@ function heraldBolt(t,s,be){const wr=abRank(t,'wrath'),fk=abRank(t,'fork'),fg=ab
  if(fk){const nr=S.enemies.filter(o=>o!==be&&o.hp>0&&Math.hypot(o.x-be.x,o.y-be.y)<=2.5*K).sort((a,b)=>Math.hypot(a.x-be.x,a.y-be.y)-Math.hypot(b.x-be.x,b.y-be.y)).slice(0,fk.n);for(const o of nr){hit(o,.5);pts.push([o.x,o.y]);}}
  for(const[x,y]of pts){S.fx.push({bolt:[[x+(Math.random()-.5)*1.5,y-5*K],[x+(Math.random()-.5)*.8,y-2.5*K],[x,y]],t:.3,m:.3,big:1});if(fg)(S.cz=S.cz||[]).push({k:'fulg',x,y,r:.8*K,t:fg.t,tk:0,dm:s.dmg*FULGD,src:t});}
  S.fx.push({x:be.x,y:be.y,t:.45,m:.45,r:ar,col:'#ffe58a'});}
-function heraldDeath(e){for(const t of S.list)if(t.type==='augur'&&t.spec==='herald'&&Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range)t.ch=Math.min(HCH,(t.ch||0)+HCHK);}
+function heraldDeath(e){const k=e.src;if(!k||k.hero||!TW[k.type])return;for(const t of S.list)if(t!==k&&t.type==='augur'&&t.spec==='herald'&&Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range){t.ch=Math.min(HCH,(t.ch||0)+HCHK);t.chK=(t.chK||0)+1;}}
+{const _sw=startWave;startWave=function(){for(const t of (S&&S.list)||[])if(t.type==='augur'&&t.spec==='herald')t.ch=0;return _sw.apply(this,arguments);};}
 // ===== Orbe arcano (Era Fantástica): maleficios y almas =====
 const HEXT=3,POLYS=.6,FEART=1.5,SPECSP=1.2*K,KNHP=900;
 const SPECT={spectre:{n:'Espectro',ic:'👻',col:'#c8d4f0',hp:.5,d:.5,w:1,sp:1.4},knight:{n:'Caballero Espectral',ic:'♞',col:'#9fb4d8',w:2,d:1.2,sp:.85}};
@@ -8268,7 +8262,7 @@ try{LB.news=JSON.parse(localStorage.getItem('rt-lbnew'))||{};}catch(e){}
 // puntito de novedad en las cintas: algo nuevo que ver en esa área (logro conseguido, descubrimiento, desbloqueo)
 function lbNew(area){if(LB.open&&!LB.cover&&LB.area===area)return;LB.news[area]=1;try{localStorage.setItem('rt-lbnew',JSON.stringify(LB.news));}catch(e){}if(LB.open)lbRender();}
 function lbSeenArea(area){if(!LB.news[area])return;delete LB.news[area];try{localStorage.setItem('rt-lbnew',JSON.stringify(LB.news));}catch(e){}}
-const lbHasNew=k=>(k==='cp'||k==='lg')&&typeof novArea==='function'?novArea(k):!!LB.news[k]||(k==='op'&&typeof NEWU!=='undefined'&&NEWU.length>0);
+const lbHasNew=k=>(k==='cp'||k==='lg')&&typeof nfArea==='function'?nfArea(k):!!LB.news[k]||(k==='op'&&typeof NEWU!=='undefined'&&NEWU.length>0);
 // v308: iconos dibujados de la portada (si están cargados; si no, el emoji)
 const icU=(k,fb)=>typeof ICU!=='undefined'&&ICU[k]?ICU[k]:fb;
 const LBAREAS=[['cp','Compendio','📖'],['lg','Logros','🏆'],['st','Estadísticas','📊'],['pt','Partidas','📚'],['op','Opciones','⚙️'],['hp','Ayuda','❓'],['cr','Créditos','📜']];
@@ -8305,7 +8299,7 @@ function lbClose(resume,now){
 }
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal. En la preparación de partida no se sale así
 function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.area==='msg'){const f=LB.msg&&LB.msg.onBack;LB.msg=null;if(f)f();else if(document.body.classList.contains('inmenu'))lbOpen(null,true);else lbClose(true);return;}if(LB.fromWin){LB.fromWin=0;lbClose(true);return;}if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
-const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}${typeof novMark==='function'&&novMark(act,v)?' new':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
+const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}${typeof nfMark==='function'&&nfMark(act,v)?' new':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
 const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
 // flechas de pasar página: al anterior / siguiente de la sección en la que estás (sin fondo, solo trazo)
 const lbArrows=()=>lbStepList()?`<button class="bkarr l" data-a="lbprev" title="Anterior">‹</button><button class="bkarr r" data-a="lbnext" title="Siguiente">›</button>`:'';
@@ -9328,7 +9322,7 @@ UIC.robots={f:'🤖',b:'🛡️',fs:.9};UIC.kami='💥';UIC.mecha='🦾';
 function e2DmgM(e,src,ty){let m=1;if(e.inf&&e.inf.t>0)m*=1+e.inf.m;if(typeof flareM==='function')m*=flareM(e);return m;}
 // ---- estadísticas: calentamiento del Búnker, red eléctrica, enjambre devorador, críticos del Nido, bufos de runas y drones ----
 {const _st=stats;stats=function(t){const s=_st.apply(this,arguments);if(!t||t.hero||!TW[t.type])return s;const TT=twm(t.type,t.spec);
- if(TT.mag!=null&&TT.mag>0){const mx=magMax(t),h=1-Math.min(1,(t.magN==null?mx:t.magN)/mx),tr=abRank(t,'trigger');s.rate*=1+((TT.ramp||.6)+(tr?tr.r:0))*h;}
+ if(TT.mag!=null&&TT.mag>0){const tr=abRank(t,'trigger');s.rate*=1+((TT.ramp||.6)+(tr?tr.r:0))*bkCad(t);}
  if(TT.net){s.dmg*=1+.15*Math.min(4,t.netN||0);}
  if(TT.grow)s.dmg*=t.g||1;
  {const w=abRank(t,'weak');if(w)s.critm+=w.m;}
@@ -9336,12 +9330,15 @@ function e2DmgM(e,src,ty){let m=1;if(e.inf&&e.inf.t>0)m*=1+e.inf.m;if(typeof fla
  if(t.drc>0)s.crit=Math.min(1,s.crit+(t.drp||.05)*t.drc);
  if(t.oc>0)s.rate*=t.ocm||2;
  return s;};}
+// v353 (Nogal 15-nov) · Cadencia del Búnker: sube mientras dispara seguido (llena en 4 s), baja si deja de disparar y se pierde al recargar.
+const BKUP=4,BKGAP=1.2,BKDOWN=.8;
+const bkCad=t=>{const c=t.cad||0;if(!c)return 0;const idle=(S.wt||0)-(t.lsh==null?(S.wt||0):t.lsh)-BKGAP;return Math.max(0,c-Math.max(0,idle)*BKDOWN);};
 const magMax=t=>{const TT=twm(t.type,t.spec),mz=abRank(t,'magz');return (TT.mag||0)+(mz?mz.n:0);};
 // ---- Búnker: disparo con cargador; el Nido no tiene cargador y marca con láser ----
 function bunkerFire(t,tg,s,dm,crit){const TT=twm(t.type,t.spec),mx=magMax(t);
- if(mx>0){if(t.magN==null)t.magN=mx;t.magN--;}
+ if(mx>0){if(t.magN==null)t.magN=mx;t.magN--;const now=S.wt||0,gap=t.lsh==null?0:now-t.lsh,c0=bkCad(t);t.cad=Math.min(1,gap<=BKGAP?c0+gap/BKUP:c0);t.lsh=now;}
  S.proj.push({x:t.x,y:t.y,e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm,dt:'phys',src:t,sp:TT.ps||40,area:0,slow:0,pen:s.pen,col:TT.col,crit,bul:1});
- if(mx>0&&t.magN<=0){t.magN=mx;t.cd=Math.max(t.cd,TT.reload||1.8);t.rld=TT.reload||1.8;}
+ if(mx>0&&t.magN<=0){t.magN=mx;t.cd=Math.max(t.cd,TT.reload||1.8);t.rld=TT.reload||1.8;t.cad=0;}
  if(abRank(t,'lmark')){t.lmE=tg;const v=abRank(t,'lmark').v,q=tg.lmk&&tg.lmk.t>0?tg.lmk:null;tg.lmk={t:Math.max(1/s.rate+.4,q?q.t:0),v:Math.max(v,q?q.v:0)};}}
 // ---- Robots ----
 CLS.mecha={n:'Mecha',d:2,rt:.8,cr:.05,hp:2.5,ap:15,sp:.75};
@@ -9467,7 +9464,7 @@ function e2DrawWorld(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000;
  // infectados: aro cian; marcados con láser: punto rojo
  for(const e of S.enemies){if(e.inf&&e.inf.t>0){g.strokeStyle='rgba(159,224,255,.9)';g.lineWidth=lw(1.5);g.setLineDash([lw(2),lw(2)]);g.beginPath();g.arc(X(e.x),X(e.y),ET[e.t].r*CS*EVS+lw(3),0,7);g.stroke();g.setLineDash([]);}}}
 // ---- palabras clave nuevas ----
-const E2KW={mag:()=>'<b>Cargador</b><small>El Búnker dispara ráfagas con un cargador: cuanto más vacío está, más rápido dispara. Al vaciarse, recarga durante un momento (barra naranja bajo la torre) y vuelve a empezar.</small>',
+const E2KW={mag:()=>'<b>Cargador</b><small>El Búnker dispara ráfagas con un cargador. Cuanto más rato dispara seguido, más Cadencia gana y más rápido dispara (llena en '+BKUP+' s); si deja de disparar, la va perdiendo, y al vaciarse el cargador recarga y la pierde entera.</small>',
 
  inf:()=>'<b>Infectado</b>'+R('','Duración','4 s')+'<small>Los nanitos han infectado al enemigo: recibe más daño de todas las fuentes. Con Virus, al morir contagia a los de alrededor; con Reprogramar, ataca a otros enemigos.</small>',
  vc:()=>'<b>Carga</b>'+R('','Máximo',VMAX)+'<small>El Arco voltaico carga de electricidad a su objetivo (anillo amarillo). Al llenarse, descarga: un golpe de 15× el daño de un tick y lo aturde 1 s.</small>'};
@@ -11082,6 +11079,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:353,f:'16 nov 2026',t:'Lo nuevo se ve y barras nuevas',s:[['Novedades',['Lo nuevo vuelve a llevar su puntito (logros, compendio, pestañas y cintas del libro) hasta que lo abres: ya no se borra solo al entrar en el libro.','Las torres con una mecánica especial la enseñan en su ficha con una barra animada nueva.']],['Equilibrio',['Frenesí: −20% de enfriamiento y −25% de daño (la versión ★, el doble).','Moneda antigua: +20% de todo el oro que recibes (antes +50%).','Dos torres especializadas cambian cómo cargan su mecánica. Míralo en su ficha.']],['Logros',['Coleccionista: ahora tampoco puedes vender ninguna torre.']],['Interfaz',['La oferta de torres y los eventos ya no enseñan la flecha de desplazamiento cuando caben en pantalla.']]]},
  {v:352,f:'15 nov 2026',t:'Fichas nuevas y sonidos',s:[['Novedades',['Sonidos nuevos hechos a mano por Andres. Si echas de menos los de antes, Opciones › Volumen › «Sonidos».','La ficha de las torres, rehecha: qué hace en una línea, sus números principales de un vistazo y su DPS real en directo, comparado con el que debería hacer. Algunas torres tienen algo más que enseñarte en su ficha… descúbrelas.','Al pulsar un enemigo ves cómo está ahora mismo: su vida, sus estados y sus defensas, en directo.','Al acabar la partida, la puntuación se va sumando en el libro antes de la victoria o la derrota.','Al elegir reliquia, el cofre y el paquete de ayuda tienen una despedida nueva.']],['Mejoras',['Las palabras clave llevan su icono delante y un subrayado punteado (el icono se puede quitar en Opciones › Gráficos).','Las fichas del mapa salen pegadas a su torre, crecen al acercar la cámara y con la L abres esa torre en el compendio.','Las distancias ya no hablan de «casillas»: llevan el icono de rango y su número.','El icono de los portales queda centrado en su círculo.']]]},
  {v:351,f:'15 nov 2026',t:'Revisión',s:[['Novedades',['En el registro de partidas aparece la versión del juego en la que jugaste cada una.','Descripciones: las duraciones llevan el icono de duración (⌛) y van del tamaño del texto, en lugar de en negrita grande. El enfriamiento de habilidades y reliquias lleva siempre el cronómetro (⏱); en la ficha de las habilidades del héroe estaban al revés.','Ya no se selecciona texto sin querer al hacer clic, arrastrar o mantener pulsado (se quedaba todo en azul). En las cajas de texto sí se puede.','Las reliquias y habilidades de héroe que se sueltan en un área dejan una marca en el mapa donde cayeron, que se desvanece en unos segundos.']],
   ['Reliquias',['Yunque rúnico: la casilla enseña el valor que da de verdad en todas las casillas especiales (Penetración, Persistencia, Taller, Eco y Rebote incluidas). El Eco repite más a menudo y el Rebote hace más daño, en lugar de no ganar nada o ganar un rebote de más.','Moneda antigua: la ficha del enemigo enseña el oro por baja con el +50%.','Implante cibernético: la vida de tu héroe sube nada más conseguirlo.']],
@@ -11148,6 +11146,31 @@ if(!NOVSEEN){NOVSEEN=NOVV();try{localStorage.setItem('rt-novseen',String(NOVSEEN
   h=h.replace(m[0],sv+'<div class="lbmains">'+ld+`<button class="lbmain lbalt${m[1]}" data-a="newgame">${LB.ask?m[2]:(typeof icU==='function'?icU('m_deck',''):'')+' Nueva partida'}</button></div>`);}
  const cur=NOVV(),nw=NOVL.some(x=>x.v<=cur&&novNew(x.v));
  h=h.replace(/(<button class="lbmain[^"]*" data-a="newgame">[\s\S]*?<\/button>(<\/div>)?)/,`$1<button class="lbnov" data-a="novopen">${nw?'<i></i>':''}Novedades · v${cur}</button>`);}catch(e){}return h;};}
+// ==================== v305 · Novedades del compendio, ítem a ítem (recuperado en v353) ====================
+// OJO: en la v320 se perdió al reescribir novedades.js (el registro de cambios). Este sistema vive aquí, aparte.
+// Las funciones llevan prefijo nf para no chocar con las del registro de cambios (nfMark de novedades.js es otra cosa).
+// Cada cosa nueva (torre, enemigo, reliquia, mecánica, logro conseguido…) lleva su puntito hasta que abres su ficha.
+// La pestaña y la cinta del área solo se apagan cuando ya no queda ninguna por ver. «Marcar todos como vistos» limpia solo la pestaña en la que estás.
+var NOVO={};try{NOVO=JSON.parse(localStorage.getItem('rt-novo'))||{};}catch(e){}
+const nfSave=()=>{try{localStorage.setItem('rt-novo',JSON.stringify(NOVO));}catch(e){}};
+function nfAdd(t,k){if(t==null||k==null)return;(NOVO[t]=NOVO[t]||{})[k]=1;nfSave();}
+function nfSeen(t,k){if(NOVO[t]&&NOVO[t][k]){delete NOVO[t][k];if(!Object.keys(NOVO[t]).length)delete NOVO[t];nfSave();return true;}return false;}
+function nfHas(t){return !!(NOVO&&NOVO[t]&&Object.keys(NOVO[t]).length);}
+function nfArea(a){return a==='lg'?nfHas('lg'):['tw','hr','pc','bf','rl','en','ev','mc'].some(nfHas);}
+function nfMark(act,v){if(act==='ctab')return nfHas(v);if(act==='achf')return !!(NOVO.lg&&Object.keys(NOVO.lg).some(id=>ACH[id]&&(v==='all'||(ACH[id].c||'cl')===v)));return false;}
+// mecánicas: se descubren solas al ver lo que las usa; se apuntan las que pasan a verse
+let MECK=null;try{MECK=JSON.parse(localStorage.getItem('rt-meck'));}catch(e){}
+function mecScan(mark){if(typeof MECI==='undefined'||typeof mecOk!=='function')return;const first=!MECK;MECK=MECK||{};let ch=false;
+ for(const id in MECI){if(typeof MALIAS!=='undefined'&&MALIAS[id])continue;if(!MECK[id]&&mecOk(id)){MECK[id]=1;ch=true;if(!first&&mark)nfAdd('mc',id);}}if(ch){try{localStorage.setItem('rt-meck',JSON.stringify(MECK));}catch(e){}}}
+try{mecScan(false);}catch(e){}
+{const _s=see;see=function(t,k){const nw=typeof SEEOK!=='undefined'&&SEEOK&&SEEN[t]&&!SEEN[t][k];const r=_s.apply(this,arguments);try{if(nw&&SEEN[t][k]){nfAdd(t,k);mecScan(true);}}catch(e){}return r;};}
+{const _a=achieve;achieve=function(id){const nw=ACH[id]&&!ACHS[id];const r=_a.apply(this,arguments);try{if(nw&&ACHS[id])nfAdd('lg',id);}catch(e){}return r;};}
+// al abrir una ficha, deja de ser nueva; puntito en las fichas nuevas y botón para marcar toda la pestaña
+{const _c=compParts;compParts=function(){const P=_c.apply(this,arguments);try{const t=CP.tab,k=CP.sel[t];
+  if(k!=null&&!(CP.prev||CP.hprev||CP.eprev)&&(!bkNarrow()||CP.pageR))nfSeen(t,k);
+  const N=NOVO[t]||{};P.left=P.left.replace(/<button class="bti([^"]*)" data-a="csel" data-v="([^"]*)"/g,(m,c,v)=>N[v]?`<button class="bti${c} nov" data-a="csel" data-v="${v}"`:m);
+  if(Object.keys(N).length)P.left=P.left.replace(/(<div class="bksub">[\s\S]*?<\/div>)/,`$1<button class="bknovall" data-a="nfall">✓ Marcar todos como vistos <small>(${Object.keys(N).length})</small></button>`);}catch(e){}return P;};}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="nfall"]');if(!b)return;e.stopPropagation();e.preventDefault();delete NOVO[CP.tab];nfSave();try{sfx('ui');}catch(er){}lbRender();},true);
 // ==================== v305 · Historia de la era 2: Kai, el reencuentro de Vega y Ferro, y Korr al salir de la cápsula ====================
 // Kai (CERRADO en plan_era2): solo jugando con Vega, en una ronda de jefe de la Era Distópica (con 15 rondas o más, siempre la 15).
 // Kai aparece cazando al jefe; pelea esa oleada como aliada controlada por la máquina (cerca de tu héroe, a por el jefe).
@@ -12150,7 +12173,7 @@ try{const add=(id,r)=>{MECUSE[id]=MECUSE[id]||[];if(!MECUSE[id].includes(r))MECU
 const hdOn=()=>document.documentElement.dataset.skin==='holo';
 // ¡Cofre abierto! va en la misma ventana que las demás: pergamino en la era 1 y dron en la era 2 (antes, solo las tarjetas sueltas)
 {const _rp=renderRelicPick;renderRelicPick=function(){const r=_rp.apply(this,arguments);try{const rl=$('relic');if(!rl.querySelector('.pscr')){
- const sc=document.createElement('div');sc.className='pscr rpscr';sc.innerHTML='<i class="prod l"></i><i class="prod r"></i><div class="ppap"></div>';const pp=sc.querySelector('.ppap');
+ const sc=document.createElement('div');sc.className='pscr rpscr';sc.innerHTML='<div class="ppap"></div>';const pp=sc.querySelector('.ppap');
  [...rl.childNodes].filter(n=>!(n.nodeType===1&&(n.classList.contains('rlbar')||n.classList.contains('wcomp')))).forEach(n=>pp.appendChild(n));
  const t=pp.querySelector(':scope>b');if(t){t.className='ptt';t.removeAttribute('style');}const st=pp.querySelector(':scope>small');if(st)st.className='pst';[...pp.querySelectorAll(':scope>br')].forEach(x=>x.remove());
  rl.insertBefore(sc,rl.firstChild);}}catch(e){}return r;};}
@@ -14069,7 +14092,7 @@ const PGDEFS3='<linearGradient id="pgwd" x1="0" y1="0" x2="1" y2="0"><stop offse
 function pgRoll2(cx,R,y0,y1){const knob=(y,d)=>{const yy=y+d*2;return `<rect x="${cx-R-4}" y="${d<0?yy-9:yy}" width="${2*R+8}" height="9" rx="3" fill="url(#pgwd)" stroke="#2a1608" stroke-width="1.4"/><rect x="${cx-5}" y="${d<0?yy-19:yy+9}" width="10" height="10" fill="url(#pgwd)" stroke="#2a1608" stroke-width="1.2"/><ellipse cx="${cx}" cy="${yy+d*27}" rx="11" ry="9" fill="url(#pgkn)" stroke="#2a1608" stroke-width="1.5"/>`;};
  let lines='';for(let i=1;i<4;i++){const xx=cx-R+2*R*i/4;lines+=`<path d="M${xx} ${y0+3}V${y1-3}" stroke="#a88450" stroke-width=".8" opacity=".35"/>`;}
  return `${knob(y0,-1)}${knob(y1,1)}<rect x="${cx-R}" y="${y0}" width="${2*R}" height="${y1-y0}" rx="${Math.min(6,R/2)}" fill="url(#pgpr)" stroke="#8a6a3a" stroke-width="1.2"/>${lines}<path d="M${cx-R+3} ${y0+4}V${y1-4}" stroke="#fff8e4" stroke-width="2" opacity=".35"/>`;}
-const PGM=60,PGIX=34,PGIY=38;/* margen del SVG alrededor de la ventana, para los rodillos y los mangos */
+const PGM=60,PGB=16/* v353: por debajo del papel solo hace falta sitio para los pomos; si no, el SVG hacía scroll (▼) aunque el pergamino cupiera */,PGIX=34,PGIY=38;/* margen del SVG alrededor de la ventana, para los rodillos y los mangos */
 const PGF={on:null};
 const pgCfg={pieza:{host:()=>{const p=$('panel');return p&&document.body.classList.contains('pcpick')&&p.querySelector('.prow')?p:null;},inner:h=>[h.querySelector('#ui'),h.querySelector('#msg')],cards:h=>[...h.querySelectorAll('.prow .card')],ttl:h=>h.querySelector('.pctt'),sub:h=>h.querySelector('#ui>small')},
  torre:{host:()=>{const r=$('relic');const a=r&&RL.open&&!r.classList.contains('cofre')&&r.querySelector('.pscr .ppap');return a&&(a.querySelector('.toff')||a.querySelector('.evopts')||a.classList.contains('evp'))?a:null;},inner:h=>[...h.children].filter(x=>!x.classList.contains('pgsvg')),cards:h=>[...h.querySelectorAll('.tof,.evopts .evo')],ttl:h=>h.querySelector('.ptt,.evhead b'),sub:h=>h.querySelector('.pst')}};
@@ -14086,7 +14109,7 @@ function pgTick(now){const o=PGF.on;if(!o)return;const C=pgCfg[o.kind],h=C.host(
  /* los rodillos y sus mangos van dentro de la caja de la ventana (que reserva ese hueco), para no montarse con lo de al lado */
  const op=t<UN0?0:Math.max(0,pgBack(pgseg(t,UN0,UN0+UND)));const w=Math.max(0,PW*Math.min(op,1.04)),xl=CX-w/2,xr=CX+w/2;
  const appear=t<UN0?pgeo(pgseg(t,.15,.6)):1,drop=(1-pgeo(pgseg(t,.15,.6)))*-40;
- const SW=W+2*PGM,SH=H+2*PGM;o.sv.setAttribute('viewBox',`0 0 ${SW} ${SH}`);o.sv.style.cssText=`left:${-PGM}px;top:${-PGM}px;width:${SW}px;height:${SH}px;opacity:${appear};transform:translateY(${drop}px)`;
+ const SW=W+2*PGM,SH=H+PGM+PGB;o.sv.setAttribute('viewBox',`0 0 ${SW} ${SH}`);o.sv.style.cssText=`left:${-PGM}px;top:${-PGM}px;width:${SW}px;height:${SH}px;opacity:${appear};transform:translateY(${drop}px)`;
  // el HTML de la ventana: recortado al papel abierto; título, subtítulo y cartas a su tiempo
  const m=Math.max(0,(W-w)/2-IX);for(const e of C.inner(h))if(e)e.style.clipPath=t>=UN0+UND+.2?'':`inset(-40px ${m.toFixed(1)}px -40px ${m.toFixed(1)}px)`;
  const tt=C.ttl(h);if(tt){const k=pgBack(pgseg(t,t0,t0+.7));tt.style.transform=`scaleX(${Math.max(.01,k).toFixed(3)})`;tt.style.opacity=pgseg(t,t0,t0+.15).toFixed(2);}
@@ -14151,13 +14174,13 @@ const isBKey=e=>!!(e&&ET[e.t]&&ET[e.t].bkey);
  BOSSA.list=BOSSA.list.filter(a=>now-a.t0<2600&&S.enemies.includes(a.e));
  for(const a of BOSSA.list){const u=(now-a.t0)/2600;for(let k=0;k<3;k++){const v=u*1.6-k*.22;if(v<=0||v>=1)continue;g.save();g.globalAlpha=(1-v)*.85;g.strokeStyle='#ff5a3a';g.lineWidth=lw(4*(1-v)+1);g.beginPath();g.arc(X(a.e.x),X(a.e.y),CS*(.6+v*4.5),0,Math.PI*2);g.stroke();g.restore();}}
 }catch(e){}return r;};}
-// ==================== v342 · Moneda: +50% de todo el oro que recibes ====================
+// ==================== v342 · Moneda: +20% de todo el oro que recibes (v353: antes +50%) ====================
 // Nogal (15-nov): antes solo daba +50% del oro de los enemigos. Ahora cualquier oro que entra (enemigos, eventos, reliquias, intereses…)
-// sube un 50% mientras el pasivo esté activo. No cuenta lo que recuperas al vender o deshacer una torre (si no, construir y deshacer daría oro).
-let GNOX=0;
+// sube un 20% (v353; era +50% y se elegía siempre: elección falsa) mientras el pasivo esté activo. No cuenta lo que recuperas al vender o deshacer una torre (si no, construir y deshacer daría oro).
+let GNOX=0;const COINM=1.2;
 function coinHook(st){if(!st||st.__gh)return;let v=+st.gold||0;
  Object.defineProperty(st,'__gh',{value:1,enumerable:false});
- Object.defineProperty(st,'gold',{configurable:true,enumerable:true,get(){return v;},set(n){n=+n;try{if(n>v&&!GNOX&&st===S&&st.relics&&st.rs&&rp('coin'))n=v+Math.round((n-v)*1.5);}catch(e){}v=n;}});}
+ Object.defineProperty(st,'gold',{configurable:true,enumerable:true,get(){return v;},set(n){n=+n;try{if(n>v&&!GNOX&&st===S&&st.relics&&st.rs&&rp('coin'))n=v+Math.round((n-v)*COINM);}catch(e){}v=n;}});}
 {const _s=sell;sell=function(){GNOX++;try{return _s.apply(this,arguments);}finally{GNOX--;}};}
 setInterval(()=>{try{if(typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('coin'))coinHook(S);}catch(e){}},200);
 {const _g=gainRelic;gainRelic=function(id){const r=_g.apply(this,arguments);try{if(id==='coin')coinHook(S);}catch(e){}return r;};}
@@ -14398,8 +14421,8 @@ bfT=function(k,kx,ky){const B=BF[k],{m,why}=bfMul(kx,ky);if(m===1)return B.t;con
  return t+` <small class="cf">(${why.join(', ')})</small>`;};
 // Reinhart · Provocación (Nv 4): el −15% de daño recibido ahora también vale contra los ataques especiales de los enemigos (a distancia, en área…), no solo cuerpo a cuerpo.
 {const _h=hitUnit;hitUnit=function(s,d,e){try{if(s&&s.H&&s.H.id==='reinhart'&&s.H.lvl>=4)d*=.85;}catch(x){}return _h.call(this,s,d,e);};}
-// Moneda antigua: la ficha del enemigo enseña el oro por baja que cobras de verdad (+50%).
-{const _e=enemyInfo;enemyInfo=function(k){let h=_e.apply(this,arguments);try{const E=ET[k];if(E&&typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('coin')&&rp('coin')&&E.gold>0)h=h.replace('>'+E.gold+' 🪙<','>'+Math.round(E.gold*1.5)+' 🪙 <small class="cf">(+50%, Moneda antigua)</small><');}catch(x){}return h;};}
+// Moneda antigua: la ficha del enemigo enseña el oro por baja que cobras de verdad (+20% desde la v353).
+{const _e=enemyInfo;enemyInfo=function(k){let h=_e.apply(this,arguments);try{const E=ET[k];if(E&&typeof S!=='undefined'&&S&&S.relics&&S.relics.includes('coin')&&rp('coin')&&E.gold>0)h=h.replace('>'+E.gold+' 🪙<','>'+Math.round(E.gold*COINM)+' 🪙 <small class="cf">(+20%, Moneda antigua)</small><');}catch(x){}return h;};}
 // Implante cibernético (y cualquier reliquia que cambie la vida del héroe): la vida máxima se actualiza al conseguirla, no a la siguiente oleada.
 {const _g=gainRelic;gainRelic=function(id){const r=_g.apply(this,arguments);try{heroSync();}catch(x){}return r;};}
 // ---- Huella de las habilidades de área (Nogal): al soltar un activo de reliquia o una habilidad del héroe sobre el mapa,
@@ -14644,13 +14667,13 @@ const FT={key:null,t:null,open:{}};
 const FTFOLD={obj:false,ab:true,more:false};
 // ---- mecánicas con barra en directo: v = 0..1, l = texto de la derecha, base = se ve también la descripción de la torre ----
 const TMECH=[
- {on:t=>t.spec==='volc',n:'Calor',ic:'burn',base:1,v:t=>t.heat||0,l:t=>'Calor '+Math.round((t.heat||0)*100)+'%'},
- {on:t=>t.type==='augur'&&t.spec==='herald',n:'Carga del Juicio',ic:'ez',v:t=>Math.min(1,(t.ch||0)/HCH),l:t=>Math.floor(t.ch||0)+' / '+HCH},
- {on:t=>{try{return magMax(t)>0;}catch(e){return false;}},n:'Cargador',ic:'mag',base:1,
+ {k:'volc',on:t=>t.spec==='volc',n:'Calor',ic:'burn',base:1,v:t=>t.heat||0,l:t=>'Calor '+Math.round((t.heat||0)*100)+'%'},
+ {k:'herald',on:t=>t.type==='augur'&&t.spec==='herald',n:'Carga del Juicio',ic:'ez',v:t=>Math.min(1,(t.ch||0)/HCH),l:t=>Math.floor(t.ch||0)+' / '+HCH},
+ {k:'mag',on:t=>{try{return magMax(t)>0;}catch(e){return false;}},n:'Cargador',ic:'mag',base:1,
   v:t=>{const mx=magMax(t);if(t.rld>0){const T=twm(t.type,t.spec),r=T.reload||1.8;return 1-Math.min(1,t.rld/r);}return (t.magN==null?mx:t.magN)/mx;},
   l:t=>{const mx=magMax(t);return t.rld>0?'Recargando…':(t.magN==null?mx:t.magN)+' / '+mx;},
-  x:t=>{const T=twm(t.type,t.spec),r=T.ramp||.6;return 'Cuanto más vacío el cargador, más rápido dispara (hasta +'+Math.round(r*100)+'%). Al vaciarse, recarga.';}},
- {on:t=>{try{return !!twm(t.type,t.spec).net;}catch(e){return false;}},n:'Red',ic:'chain',v:t=>Math.min(4,t.netN||0)/4,l:t=>'+'+(15*Math.min(4,t.netN||0))+'% de daño'},
+  x:t=>{const T=twm(t.type,t.spec),r=T.ramp||.6;return 'Cuanto más rato dispara seguido, más Cadencia gana (hasta +'+Math.round(r*100)+'% de velocidad); al recargar, la pierde.';}},
+ {k:'net',on:t=>{try{return !!twm(t.type,t.spec).net;}catch(e){return false;}},n:'Red',ic:'chain',v:t=>Math.min(4,t.netN||0)/4,l:t=>'+'+(15*Math.min(4,t.netN||0))+'% de daño'},
 ];
 const ftMech=t=>TMECH.find(m=>{try{return m.on(t);}catch(e){return false;}})||null;
 // ---- DPS real: muestras del daño hecho por cada torre (t.dmgT) en tiempo de juego; ventana de 3 s ----
@@ -14719,10 +14742,83 @@ document.addEventListener('toggle',ev=>{const d=ev.target;if(d&&d.classList&&d.c
 try{if(typeof ICKW!=='undefined'&&ICKW.dps){ICKW.dpsr=ICKW.dps;const st=document.createElement('style');st.textContent=`body.kwico .kw[data-kw="dpsr"]:not(.gico)::before{background-image:url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 56 56">'+ICKW.dps+'</svg>')}")}`;document.head.appendChild(st);}}catch(e){}
 // en directo: muestras cada 200 ms y se pintan las barras de la ficha abierta
 setInterval(()=>{try{ftSample();const t=FT.t;if(!t)return;const box=document.querySelector('#side .ftc,#tip .ftc');if(!box)return;
- const M=ftMech(t),mb=box.querySelector('.ftmb i'),ml=box.querySelector('.ftml');if(M&&mb){mb.style.width=Math.round(M.v(t)*100)+'%';const l=M.l(t);if(ml.textContent!==l)ml.textContent=l;}
+ const M=ftMech(t),mb=box.querySelector('.ftmb i'),ml=box.querySelector('.ftml');if(M&&mb)mb.style.width=Math.round(M.v(t)*100)+'%';if(M&&ml){const l=M.l(t);if(ml.textContent!==l)ml.textContent=l;}
  const dp=box.querySelector('.ftdps');if(dp){const theo=+dp.dataset.theo,r=ftReal(t),bi=dp.querySelector('.ftbar i'),dv=dp.querySelector('.ftdv'),dn=dp.querySelector('.ftdn');
   let pc=0,v='—',n='';if(r){pc=Math.round(r.v/theo*100);v=f(r.v);n=r.frozen?'Media de la última oleada · '+pc+'% del teórico':(r.warm?'Midiendo…':pc+'% de su DPS teórico ('+f(theo)+')');}
   else n=S.phase==='wave'?'':'Se mide durante las oleadas';
   dp.classList.toggle('frozen',!!(r&&r.frozen)||!r);dp.classList.toggle('over',pc>100);bi.style.width=Math.min(100,pc)+'%';if(dv.textContent!==v)dv.textContent=v;if(dn.textContent!==n)dn.textContent=n;}
 }catch(e){}},200);
+// ==================== v353 · BARRAS DE MECÁNICA DIBUJADAS EN LA FICHA DE TORRE (Mesa «Barras de mecánica v4», aprobadas por Nogal 16-nov) ====================
+// Búnker: Cadencia arriba y debajo una ventana fija del cargador: las balas (de lado) se gastan por la izquierda, la tira se desliza
+//   y una sombra a la derecha avisa de que quedan más; al disparar, la bala sale saltando y girando. «Recargando…» solo en el texto de abajo.
+// Volcán: lava con el frente en diagonal (abajo va por delante), costra y vetas que avanzan, burbujas; avanza siempre al mismo ritmo y al 100 % llena entera.
+// Heraldo: 20 pips marcados; chispas que vuelan a la barra con cada baja de otra torre; llena, parpadea la barra (la ficha no).
+// Red: 5 puntos iguales y equidistantes (el primero, marrón, es la torre); electricidad azul con borde oscuro, como el arco del mapa.
+// Sustituye a la barra simple (.ftbar) de ficha_torre.js solo para las mecánicas con clave k; la etiqueta de la derecha (.ftml) sigue igual.
+const FB={st:new WeakMap(),raf:0};
+const fbS=t=>{let o=FB.st.get(t);if(!o){o={fly:[],bub:[],spk:[],orbs:[],lastN:null,lastCh:null,flash:0};FB.st.set(t,o);}return o;};
+const fbEase=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+const FBH={mag:50,volc:28,herald:24,net:30};
+{const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||!M.k||!FBH[M.k])return _mb.apply(this,arguments);
+ return `<div class="ftmech fbm fb-${M.k}"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="fbc" data-k="${M.k}" style="height:${FBH[M.k]}px"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
+// ---- Búnker ----
+function fbBullet(c,x,y,s,rot){c.save();c.translate(x,y);if(rot)c.rotate(rot);c.scale(s,s);c.lineWidth=1;c.strokeStyle='#2a1a10';
+ c.fillStyle='#c9824a';c.beginPath();c.moveTo(-3,-3);c.quadraticCurveTo(0,-12,3,-3);c.closePath();c.fill();c.stroke();
+ c.fillStyle='#e2b44a';c.beginPath();c.rect(-3,-3,6,13);c.fill();c.stroke();c.fillStyle='#b98a2a';c.beginPath();c.rect(-3.5,8,7,3);c.fill();c.stroke();
+ c.strokeStyle='rgba(255,243,192,.8)';c.beginPath();c.moveTo(-1.4,-1);c.lineTo(-1.4,7);c.stroke();c.restore();}
+function fbMag(c,W,H,t,o,dt){const mx=magMax(t),n=t.rld>0?0:(t.magN==null?mx:t.magN),cad=typeof bkCad==='function'?bkCad(t):0,T=twm(t.type,t.spec),tr=abRank(t,'trigger'),rmp=(T.ramp||.6)+(tr?tr.r:0);
+ // Cadencia
+ c.font='600 11px system-ui,sans-serif';c.textBaseline='middle';c.fillStyle='#6b5f52';c.textAlign='left';c.fillText('Cadencia',0,6);c.textAlign='right';c.fillText('+'+Math.round(cad*rmp*100)+'%',W,6);
+ c.fillStyle='rgba(120,90,50,.18)';c.beginPath();c.roundRect(0,12,W,7,4);c.fill();if(cad>0){const g=c.createLinearGradient(0,0,W,0);g.addColorStop(0,'#9a8f84');g.addColorStop(1,'#5f554b');c.fillStyle=g;c.beginPath();c.roundRect(0,12,Math.max(7,W*cad),7,4);c.fill();}
+ // cargador: ventana fija, la tira se desliza (se vacía por la izquierda)
+ const P=8.6,y=36,fired=mx-n;if(o.lastN!=null&&n<o.lastN&&t.rld<=0){for(let k=0;k<Math.min(3,o.lastN-n);k++)o.fly.push({x:4,y,t:0,vx:-(10+Math.random()*12),r:(Math.random()<.5?-1:1)*9});}
+ o.lastN=n;o.off=o.off==null?fired*P:o.off+(fired*P-o.off)*Math.min(1,dt*18);
+ c.save();c.beginPath();c.rect(0,22,W,H-22);c.clip();
+ for(let i=0;i<mx;i++){const x=4+i*P-o.off;if(x<-6||x>W+6)continue;if(i<fired)continue;fbBullet(c,x,y,.95,0);}
+ if((mx-fired)*P>W-10){const g=c.createLinearGradient(W-40,0,W,0);g.addColorStop(0,'rgba(255,246,221,0)');g.addColorStop(.85,'rgba(255,246,221,1)');c.fillStyle=g;c.fillRect(W-40,22,40,H-22);}
+ c.restore();
+ for(const f of o.fly){f.t+=dt;const k=f.t/.55,yy=f.y-Math.sin(Math.min(1,k)*Math.PI*.9)*26+k*6;c.globalAlpha=Math.max(0,1-k);fbBullet(c,f.x+f.vx*k,yy,.95,f.r*k);c.globalAlpha=1;}
+ o.fly=o.fly.filter(f=>f.t<.55);}
+// ---- Volcán ----
+function fbVolc(c,W,H,t,o,dt,tm){const heat=Math.max(0,Math.min(1,t.heat||0)),x0=2,y0=3,y1=H-3,bh=y1-y0,len=W-4,lean=Math.min(16,W*.08);
+ c.save();c.beginPath();c.roundRect(1,1,W-2,H-2,6);const rg=c.createLinearGradient(0,0,0,H);rg.addColorStop(0,'#2a140c');rg.addColorStop(1,'#45251a');c.fillStyle=rg;c.fill();c.clip();
+ if(heat>0){const fb=x0+heat*(len+lean+6),front=y=>Math.max(x0,fb-lean*(1-(y-y0)/bh)+Math.sin(y*.36+tm*4)*1.1-Math.pow((y-y0)/bh-.85,2)*5);
+  c.beginPath();c.moveTo(x0,y1);c.lineTo(x0,y0+1);for(let x=x0;x<=front(y0+1);x+=3)c.lineTo(x,y0+1+Math.sin(x*.09-tm*3)*.8);for(let y=y0+1;y<=y1;y+=1)c.lineTo(front(y),y);c.closePath();
+  const g=c.createLinearGradient(0,y0,0,y1);g.addColorStop(0,'#ffe066');g.addColorStop(.3,'#ff8a1e');g.addColorStop(.75,'#d8380e');g.addColorStop(1,'#8a1a08');c.fillStyle=g;c.fill();
+  c.save();c.clip();const fl=tm*19;c.fillStyle='rgba(90,16,4,.55)';
+  for(let i=0;i<10;i++){const cx=((i*31+fl)%(len+40))-20+x0,cy=y0+4+((i*19)%(bh-7)),r=2.5+(i*13)%3;c.beginPath();c.ellipse(cx,cy,r*1.8,r*.7,.15,0,7);c.fill();}
+  c.strokeStyle='rgba(255,240,170,.55)';c.lineWidth=1;for(let k=0;k<3;k++){c.beginPath();for(let x=x0;x<fb-lean;x+=3)c.lineTo(x,y0+5+k*6+Math.sin(x*.07-tm*2.4+k*2)*1.5);c.stroke();}
+  const fg=c.createLinearGradient(fb-lean-8,0,fb+2,0);fg.addColorStop(0,'rgba(255,255,200,0)');fg.addColorStop(1,'rgba(255,250,200,.85)');c.fillStyle=fg;c.fillRect(fb-lean-8,y0,lean+11,bh);c.restore();
+  c.strokeStyle='#5a1204';c.lineWidth=1;c.beginPath();for(let y=y0+1;y<=y1;y+=1)c.lineTo(front(y),y);c.stroke();
+  if(Math.random()<dt*16*heat)o.bub.push({x:x0+Math.random()*Math.max(4,fb-lean-4),y:y1-2,r:1+Math.random()*2,v:7+Math.random()*8});
+  for(const b of o.bub){b.y-=b.v*dt;c.fillStyle='rgba(255,236,150,.8)';c.beginPath();c.arc(b.x,b.y,b.r,0,7);c.fill();}
+  o.bub=o.bub.filter(b=>b.y>y0+2);}
+ c.restore();c.strokeStyle='#1a0904';c.lineWidth=1.5;c.beginPath();c.roundRect(1,1,W-2,H-2,6);c.stroke();}
+// ---- Heraldo ----
+function fbHerald(c,W,H,t,o,dt,tm){const ch=Math.max(0,Math.min(HCH,t.ch||0));
+ if(o.lastCh!=null){if(ch-o.lastCh>=HCHK*.9)o.orbs.push({p:0,sx:.15+Math.random()*.5});if(o.lastCh>=HCH*.95&&ch<o.lastCh*.5)o.flash=.9;}o.lastCh=ch;o.flash=Math.max(0,o.flash-dt);
+ const full=ch>=HCH-.001||o.flash>0,on=full&&(Math.floor(tm/.12)%2===0),x0=1,y0=6,y1=H-2,len=W-2,w=len*ch/HCH;
+ c.save();c.beginPath();c.roundRect(x0,y0,len,y1-y0,5);c.fillStyle='#e3d2ae';c.fill();c.clip();
+ const g=c.createLinearGradient(0,y0,0,y1);g.addColorStop(0,on?'#ffffff':'#fff0a0');g.addColorStop(.45,on?'#fff7c0':'#ffc928');g.addColorStop(1,on?'#ffe066':'#c98a00');c.fillStyle=g;c.fillRect(x0,y0,o.flash>0&&ch<1?len:w,y1-y0);
+ if(full&&!on){c.fillStyle='rgba(120,70,0,.25)';c.fillRect(x0,y0,len,y1-y0);}
+ c.strokeStyle=on?'#fff':'rgba(255,255,255,.7)';c.lineWidth=on?1.6:1;c.beginPath();for(let x=x0;x<x0+(o.flash>0&&ch<1?len:w);x+=4)c.lineTo(x,(y0+y1)/2+Math.sin(x*.18+tm*14)*2*Math.sin(x*.04+tm*3));c.stroke();c.restore();
+ c.strokeStyle='#7a5200';c.lineWidth=1;for(let i=1;i<HCH;i++){const x=x0+len*i/HCH;c.beginPath();c.moveTo(x+.5,y0+1.5);c.lineTo(x+.5,y1-1.5);c.stroke();}
+ c.strokeStyle='#5a3a00';c.lineWidth=1.5;c.beginPath();c.roundRect(x0,y0,len,y1-y0,5);c.stroke();
+ for(const b of o.orbs){b.p+=dt*2.2;const k=fbEase(Math.min(1,b.p)),sx=x0+len*b.sx,sy=-4,ex=x0+w,ey=(y0+y1)/2,x=sx+(ex-sx)*k,y=sy+(ey-sy)*k-Math.sin(k*Math.PI)*4;
+  c.fillStyle='#fff5b0';c.beginPath();c.arc(x,y,2.5,0,7);c.fill();c.strokeStyle='#d99a00';c.lineWidth=1;c.stroke();}
+ o.orbs=o.orbs.filter(b=>b.p<1);}
+// ---- Red ----
+function fbNet(c,W,H,t,o,dt,tm){const n=Math.min(4,t.netN||0),y=H/2,r=6,xs=[0,1,2,3,4].map(i=>r+2+i*(W-2*r-4)/4);
+ for(let i=0;i<4;i++){if(i>=n)break;const xa=xs[i]+r,xb=xs[i+1]-r,pts=[[xa,y]];for(let s=1;s<6;s++)pts.push([xa+(xb-xa)*s/6,y+(Math.sin(tm*23+i*3+s*1.7))*4]);pts.push([xb,y]);
+  for(const [col,wd] of [['#0c3556',4.4],['#3fb4ff',2.2],['#e6f8ff',.8]]){c.strokeStyle=col;c.lineWidth=wd;c.lineCap='round';c.lineJoin='round';c.beginPath();pts.forEach((p,k)=>k?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();}}
+ xs.forEach((x,i)=>{const on=i===0||i<=n;c.fillStyle=i===0?'#8a5a00':on?'#ffcf3a':'#e3d2ae';c.strokeStyle='#2a1a10';c.lineWidth=1.4;c.beginPath();c.arc(x,y,r,0,7);c.fill();c.stroke();
+  if(i>0&&on){c.strokeStyle='#0c3556';c.globalAlpha=.4+.3*Math.sin(tm*8+i);c.lineWidth=1.2;c.beginPath();c.arc(x,y,r+3.5,0,7);c.stroke();c.globalAlpha=1;}});}
+// ---- bucle: solo mientras hay una barra en pantalla ----
+function fbDraw(now){FB.raf=0;const cs=document.querySelectorAll('canvas.fbc');if(!cs.length)return;const t=FT.t;const tm=now/1000,dt=Math.min(.05,(now-(FB.last||now))/1000);FB.last=now;
+ for(const cv of cs){if(!t||!cv.isConnected)continue;const r=cv.getBoundingClientRect();if(!r.width)continue;const dpr=Math.min(2,window.devicePixelRatio||1),W=Math.round(r.width),H=Math.round(r.height);
+  if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
+  const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);const o=fbS(t),k=cv.dataset.k;
+  try{if(k==='mag')fbMag(c,W,H,t,o,dt);else if(k==='volc')fbVolc(c,W,H,t,o,dt,tm);else if(k==='herald')fbHerald(c,W,H,t,o,dt,tm);else if(k==='net')fbNet(c,W,H,t,o,dt,tm);}catch(e){}}
+ FB.raf=requestAnimationFrame(fbDraw);}
+setInterval(()=>{if(!FB.raf&&document.querySelector('canvas.fbc')){FB.last=performance.now();FB.raf=requestAnimationFrame(fbDraw);}},250);
 </script></body></html>

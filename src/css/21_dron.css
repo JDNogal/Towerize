@@ -12,7 +12,7 @@
 @keyframes hdpara{from{transform:translateY(-200px) rotate(-6deg)}70%{transform:translateY(6px) rotate(3deg)}to{transform:none}}
 @keyframes hdsway{50%{transform:rotate(2deg)}}
 /* --- el pergamino desaparece: rodillos fuera --- */
-:root[data-skin="holo"] #relic .pscr .prod,:root[data-skin="holo"] body.dsk #panel:has(.prow)::after{display:none!important}
+
 /* --- ventana proyectada (oferta de torres, eventos y su resultado) --- */
 :root[data-skin="holo"] #relic .pscr{filter:none!important}
 :root[data-skin="holo"] #relic .ppap{background:linear-gradient(180deg,rgba(18,64,80,.92),rgba(9,30,40,.96)),repeating-linear-gradient(0deg,rgba(63,232,255,.07) 0 1px,transparent 1px 3px)!important;background-blend-mode:screen;border:1px solid rgba(63,232,255,.8)!important;border-radius:4px!important;box-shadow:0 0 0 1px rgba(63,232,255,.2),0 0 30px rgba(63,232,255,.35),inset 0 0 40px rgba(63,232,255,.1)!important;animation:hdopen .6s .32s cubic-bezier(.2,.8,.3,1) both,hdjit 7s 1.4s infinite!important}

@@ -19,7 +19,7 @@ UIC.robots={f:'🤖',b:'🛡️',fs:.9};UIC.kami='💥';UIC.mecha='🦾';
 function e2DmgM(e,src,ty){let m=1;if(e.inf&&e.inf.t>0)m*=1+e.inf.m;if(typeof flareM==='function')m*=flareM(e);return m;}
 // ---- estadísticas: calentamiento del Búnker, red eléctrica, enjambre devorador, críticos del Nido, bufos de runas y drones ----
 {const _st=stats;stats=function(t){const s=_st.apply(this,arguments);if(!t||t.hero||!TW[t.type])return s;const TT=twm(t.type,t.spec);
- if(TT.mag!=null&&TT.mag>0){const mx=magMax(t),h=1-Math.min(1,(t.magN==null?mx:t.magN)/mx),tr=abRank(t,'trigger');s.rate*=1+((TT.ramp||.6)+(tr?tr.r:0))*h;}
+ if(TT.mag!=null&&TT.mag>0){const tr=abRank(t,'trigger');s.rate*=1+((TT.ramp||.6)+(tr?tr.r:0))*bkCad(t);}
  if(TT.net){s.dmg*=1+.15*Math.min(4,t.netN||0);}
  if(TT.grow)s.dmg*=t.g||1;
  {const w=abRank(t,'weak');if(w)s.critm+=w.m;}
@@ -27,12 +27,15 @@ function e2DmgM(e,src,ty){let m=1;if(e.inf&&e.inf.t>0)m*=1+e.inf.m;if(typeof fla
  if(t.drc>0)s.crit=Math.min(1,s.crit+(t.drp||.05)*t.drc);
  if(t.oc>0)s.rate*=t.ocm||2;
  return s;};}
+// v353 (Nogal 15-nov) · Cadencia del Búnker: sube mientras dispara seguido (llena en 4 s), baja si deja de disparar y se pierde al recargar.
+const BKUP=4,BKGAP=1.2,BKDOWN=.8;
+const bkCad=t=>{const c=t.cad||0;if(!c)return 0;const idle=(S.wt||0)-(t.lsh==null?(S.wt||0):t.lsh)-BKGAP;return Math.max(0,c-Math.max(0,idle)*BKDOWN);};
 const magMax=t=>{const TT=twm(t.type,t.spec),mz=abRank(t,'magz');return (TT.mag||0)+(mz?mz.n:0);};
 // ---- Búnker: disparo con cargador; el Nido no tiene cargador y marca con láser ----
 function bunkerFire(t,tg,s,dm,crit){const TT=twm(t.type,t.spec),mx=magMax(t);
- if(mx>0){if(t.magN==null)t.magN=mx;t.magN--;}
+ if(mx>0){if(t.magN==null)t.magN=mx;t.magN--;const now=S.wt||0,gap=t.lsh==null?0:now-t.lsh,c0=bkCad(t);t.cad=Math.min(1,gap<=BKGAP?c0+gap/BKUP:c0);t.lsh=now;}
  S.proj.push({x:t.x,y:t.y,e:tg,tx:tg.x,ty:tg.y,vx:0,vy:0,dm,dt:'phys',src:t,sp:TT.ps||40,area:0,slow:0,pen:s.pen,col:TT.col,crit,bul:1});
- if(mx>0&&t.magN<=0){t.magN=mx;t.cd=Math.max(t.cd,TT.reload||1.8);t.rld=TT.reload||1.8;}
+ if(mx>0&&t.magN<=0){t.magN=mx;t.cd=Math.max(t.cd,TT.reload||1.8);t.rld=TT.reload||1.8;t.cad=0;}
  if(abRank(t,'lmark')){t.lmE=tg;const v=abRank(t,'lmark').v,q=tg.lmk&&tg.lmk.t>0?tg.lmk:null;tg.lmk={t:Math.max(1/s.rate+.4,q?q.t:0),v:Math.max(v,q?q.v:0)};}}
 // ---- Robots ----
 CLS.mecha={n:'Mecha',d:2,rt:.8,cr:.05,hp:2.5,ap:15,sp:.75};
@@ -158,7 +161,7 @@ function e2DrawWorld(lw){const X=v=>v*CS+CS/2,now=performance.now()/1000;
  // infectados: aro cian; marcados con láser: punto rojo
  for(const e of S.enemies){if(e.inf&&e.inf.t>0){g.strokeStyle='rgba(159,224,255,.9)';g.lineWidth=lw(1.5);g.setLineDash([lw(2),lw(2)]);g.beginPath();g.arc(X(e.x),X(e.y),ET[e.t].r*CS*EVS+lw(3),0,7);g.stroke();g.setLineDash([]);}}}
 // ---- palabras clave nuevas ----
-const E2KW={mag:()=>'<b>Cargador</b><small>El Búnker dispara ráfagas con un cargador: cuanto más vacío está, más rápido dispara. Al vaciarse, recarga durante un momento (barra naranja bajo la torre) y vuelve a empezar.</small>',
+const E2KW={mag:()=>'<b>Cargador</b><small>El Búnker dispara ráfagas con un cargador. Cuanto más rato dispara seguido, más Cadencia gana y más rápido dispara (llena en '+BKUP+' s); si deja de disparar, la va perdiendo, y al vaciarse el cargador recarga y la pierde entera.</small>',
 
  inf:()=>'<b>Infectado</b>'+R('','Duración','4 s')+'<small>Los nanitos han infectado al enemigo: recibe más daño de todas las fuentes. Con Virus, al morir contagia a los de alrededor; con Reprogramar, ataca a otros enemigos.</small>',
  vc:()=>'<b>Carga</b>'+R('','Máximo',VMAX)+'<small>El Arco voltaico carga de electricidad a su objetivo (anillo amarillo). Al llenarse, descarga: un golpe de 15× el daño de un tick y lo aturde 1 s.</small>'};

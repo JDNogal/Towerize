@@ -36,7 +36,7 @@ Object.assign(ACH,{
  marathon:{c:'jg',n:'Maratón',d:'Gana una partida de 42 rondas.'},
  perfect:{c:'jg',n:'¿Partida perfecta?',d:'Gana con 1 de vida sin que ningún enemigo golpee tu núcleo.'},
  minimal:{c:'jg',n:'Minimalista',d:'Gana construyendo solo torres del mazo inicial de tu héroe.'},
- collector:{c:'jg',n:'Coleccionista',d:'Gana una partida de 15 rondas o más con exactamente 7 torres construidas, una de cada tipo.'},
+ collector:{c:'jg',n:'Coleccionista',d:'Gana una partida de 15 rondas o más con exactamente 7 torres construidas, una de cada tipo, sin vender ninguna.'},
  close:{c:'jg',n:'Por los pelos',d:'Gana tras quedarte a 1 de vida por golpes enemigos, con el jefe final muriendo a <span class="kw rgv" data-kw="rng" data-src="">2</span> o menos de tu núcleo.'},
  noact:{c:'jg',n:'Autosuficiente',d:'Gana sin usar ni una vez la activa de ninguna reliquia.'},
  untouch:{c:'hr',n:'Intocable',d:'Gana sin que caigan nunca tu héroe ni ninguna unidad de tus torres (las invocaciones no cuentan).',rl:'banner'},
@@ -79,7 +79,7 @@ function achState(id){const H=S.hero,B=S.built||[];const ok=t=>['ok','✓ En cur
   case 'rear':return ROUNDS<20?['nt','Solo en partidas de 20 rondas o más']:S.st&&S.st.hmv?ko('has movido a tu héroe'):ok();
   case 'clean':return ROUNDS<20?['nt','Solo en partidas de 20 rondas o más']:S.st&&S.st.lkN?ko('un enemigo ha llegado al núcleo'):ok();
   case 'nonet':return ROUNDS<30?['nt','Solo en partidas de 30 rondas']:S.st&&S.st.retries?ko('has usado un reintento'):ok();
-  case 'collector':{const bc=S.bcnt||{},tot=Object.values(bc).reduce((a,v)=>a+v,0);return ROUNDS<15?ko('la partida dura menos de 15 rondas'):Object.values(bc).some(v=>v>1)?ko('has construido dos torres del mismo tipo'):tot>7?ko('has construido más de 7 torres'):ok(tot+' de 7 tipos distintos; se comprueba al ganar');}
+  case 'collector':{const bc=S.bcnt||{},tot=Object.values(bc).reduce((a,v)=>a+v,0);return ROUNDS<15?ko('la partida dura menos de 15 rondas'):S.nSell?ko('has vendido una torre'):Object.values(bc).some(v=>v>1)?ko('has construido dos torres del mismo tipo'):tot>7?ko('has construido más de 7 torres'):ok(tot+' de 7 tipos distintos; se comprueba al ganar');}
   case 'close':return win('1 de vida por golpes y el jefe final a <span class="kw rgv" data-kw="rng" data-src="">2</span> o menos');
   case 'noact':return S.usedAct?ko('usaste una activa'):ok();
   case 'untouch':return S.unitDied?ko('cayó una unidad'):ok();
@@ -130,7 +130,7 @@ function achWin(){roundUnlock();const H=S.hero,B=S.built||[],nm=S.list.filter(t=
  if(H&&B.length&&B.every(k=>(HEROES[H.id].deck||[]).includes(k)))achieve('minimal');
  {const st=S.st||{};if(ROUNDS>=20&&!st.fork)achieve('onepath');if(!st.paid)achieve('austere');if(ROUNDS>=20&&!st.hmv)achieve('rear');if(ROUNDS>=20&&!st.lkN)achieve('clean');if(ROUNDS>=30&&!st.retries)achieve('nonet');
   const all=(st.all||[]).concat(S.hero?[S.hero.pt]:[]),tot=all.reduce((a,t)=>a+(t.dmgT||0),0);if(tot>0&&all.some(t=>!t.hero&&(t.dmgT||0)>=.6*tot))achieve('master');}
- if(ROUNDS>=15&&nm.length===7&&new Set(nm.map(t=>t.type)).size===7&&!Object.values(S.bcnt||{}).some(v=>v>1))achieve('collector');
+ if(ROUNDS>=15&&!S.nSell&&nm.length===7&&new Set(nm.map(t=>t.type)).size===7&&!Object.values(S.bcnt||{}).some(v=>v>1))achieve('collector');
  if(!S.usedAct)achieve('noact');
  if(!S.unitDied)achieve('untouch');
  if(H&&H.id==='radagast'&&!B.some(k=>TW[k].dt==='phys'))achieve('pure');

@@ -1,5 +1,5 @@
 # Genera src/css/21_dron.css: en la Era Distópica (aspecto «holo») el pergamino se cambia por el dron proyector.
-# Solo cambia el aspecto: la colocación de todo lo de dentro es la del pergamino (10_pergamino_enrollado.css).
+# Solo cambia el aspecto: la colocación de todo lo de dentro es la del pergamino (10_ventanas_eleccion.css).
 # Aprobado por Nogal el 13-nov-2026 (maquetas/dron_pantallas.html).
 import os,urllib.parse
 os.chdir(os.path.dirname(os.path.abspath(__file__))+'/..')

@@ -9,7 +9,7 @@
   "07_bocadillo.css",
   "08_cuero.css",
   "09_pergamino.css",
-  "10_pergamino_enrollado.css",
+  "10_ventanas_eleccion.css",
   "11_era2.css",
   "12_compendio.css",
   "13_novedades.css",
@@ -193,6 +193,7 @@
   "fichas_zoom.js",
   "descripciones_rango.js",
   "cofre_salida.js",
-  "ficha_torre.js"
+  "ficha_torre.js",
+  "ficha_barras.js"
  ]
 }

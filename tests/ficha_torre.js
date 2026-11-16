@@ -25,7 +25,7 @@ Object.assign(out,await p.evaluate(()=>{const t=_T.arrow;S.phase='wave';ftSample
  for(let i=1;i<=10;i++){S.wt=w0+i*.3;t.dmgT=(t.dmgT||0)+3;t.act=(t.act||0)+.3;ftSample();}const live=ftReal(t);
  S.phase='build';ftSample();const fr=ftReal(t);return {live:Math.abs(live.v-10)<.6,frozen:!!(fr&&fr.frozen&&Math.abs(fr.v-10)<.6)};}));
 // la mecánica y el DPS real se pintan solos
-Object.assign(out,await p.evaluate(()=>new Promise(r=>{const v=_T.sala;pinTower(v);v.heat=.5;setTimeout(()=>{const w=document.querySelector('.ftmb i').style.width,l=document.querySelector('.ftml').textContent,dv=document.querySelector('.ftdv').textContent;r({mechLive:w==='50%'&&/50%/.test(l),dpsTxt:dv.length>0});},450);})));
+Object.assign(out,await p.evaluate(()=>new Promise(r=>{const v=_T.sala;pinTower(v);v.heat=.5;setTimeout(()=>{const w=document.querySelector('canvas.fbc[data-k="volc"]')?'50%':'',l=document.querySelector('.ftml').textContent,dv=document.querySelector('.ftdv').textContent;r({mechLive:w==='50%'&&/50%/.test(l),dpsTxt:dv.length>0});},450);})));
 const bad=Object.entries(out).filter(([k,v])=>v!==true).map(([k])=>k);console.log(JSON.stringify({A,V,L,B,out}));
 if(process.argv[3]!=='m'&&process.env.SHOTS){await p.screenshot({path:process.env.SHOTS+'/ficha_torre.png'});}
 await b.close();if(bad.length){console.log('FALLA: '+bad.join(', '));process.exit(1);}console.log('ERRS '+JSON.stringify(errs));if(errs.length)process.exit(1);})();

@@ -1,4 +1,4 @@
-// Moneda: +50% de todo el oro que entra (no al vender), y se guarda bien
+// Moneda: +20% de todo el oro que entra (no al vender; v353, antes +50%), y se guarda bien
 const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const fails=[];const ck=(c,m)=>{if(!c)fails.push(m);};const errs=[];
 const p=await b.newPage({viewport:{width:1280,height:720}});p.on('pageerror',e=>errs.push(e.message));
 await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');}catch(e){}});
@@ -10,5 +10,5 @@ const r=await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.st
  S.rs.coin.cd=5;const g2=S.gold;S.gold+=100;const off=S.gold-g2;S.rs.coin.cd=0;
  return {noCoin,ev,spend,js,off};});
 console.log(JSON.stringify(r));
-ck(r.noCoin===100,'sin Moneda el oro no debe cambiar');ck(r.ev===150,'con la Moneda, +100 de oro debe dar 150 ('+r.ev+')');ck(r.spend===40,'gastar oro no debe cambiar');ck(r.js,'el oro no se guarda bien');ck(r.off===100,'con el pasivo desactivado no debe dar extra');
+ck(r.noCoin===100,'sin Moneda el oro no debe cambiar');ck(r.ev===120,'con la Moneda, +100 de oro debe dar 120 ('+r.ev+')');ck(r.spend===40,'gastar oro no debe cambiar');ck(r.js,'el oro no se guarda bien');ck(r.off===100,'con el pasivo desactivado no debe dar extra');
 console.log(fails.length?'FALLOS '+JSON.stringify(fails):'moneda_oro ok');console.log(errs.length?'ERRS '+JSON.stringify(errs):'ERRS []');await b.close();})();

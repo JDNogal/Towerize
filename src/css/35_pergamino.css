@@ -23,7 +23,7 @@ body.mfs.pcpick #ui .prow:has(>.cardw:nth-child(4)) .cardw{max-width:84px!import
 .pgsvg{position:absolute;pointer-events:none;z-index:0;overflow:visible}
 :root:not([data-skin="holo"]) body.pcpick #panel.pgf,:root:not([data-skin="holo"]) #relic .pscr .ppap.pgf{background:none!important;border-color:transparent!important;box-shadow:0 0 0 200vmax rgba(10,8,6,.55),inset 0 0 0 100vmax rgba(10,8,6,.55)!important;overflow:visible!important}
 :root:not([data-skin="holo"]) #relic .pscr .ppap.pgf{box-shadow:none!important}
-:root:not([data-skin="holo"]) body.pcpick #panel.pgf::before,:root:not([data-skin="holo"]) body.pcpick #panel.pgf::after,:root:not([data-skin="holo"]) #relic .pscr:has(.ppap.pgf) .prod{display:none!important}
+:root:not([data-skin="holo"]) body.pcpick #panel.pgf::before,:root:not([data-skin="holo"]) body.pcpick #panel.pgf::after{display:none!important}
 :root:not([data-skin="holo"]) #relic .pscr:has(.ppap.pgf) .ppap{animation:none!important}
 .pgf>#ui,.pgf>#msg,.ppap.pgf>*:not(.pgsvg){position:relative;z-index:1}
 /* cartas: sin caja propia (el borde lo traza la pluma del SVG); letra de tinta */
@@ -94,3 +94,4 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 :root:not([data-skin="holo"]) #relic .rlbar [data-a="peek"].eyepg{background:#f3e6c4!important;border:2px solid #8a5a2a!important;color:#3a2410!important;box-shadow:none!important;width:34px!important;height:34px!important}
 /* v349 (Mesa fab0g, aprobado): en la tablet, la ventana del evento crece para que quepan las opciones (antes medía lo que la imagen y había que bajar) */
 :root[data-skin="holo"] body.dsk:not(.mfs) #relic .ppap.evp .evrc{contain:none!important;overflow-y:auto!important;max-height:calc(100vh - 290px)!important}
+

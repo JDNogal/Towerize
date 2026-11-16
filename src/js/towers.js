@@ -105,7 +105,7 @@ function buyAb(t,id){if(placeLock()){plMsg();return;}{const w=abReq(t,id);if(w){
 function pinTower(t){S.selT=t;openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:{x:t.x,y:t.y}});PR.pinned=true;refreshPrim();ui();}
 function sell(t){
  if(t&&TW[t.type].uniq){S.msg='Las torres únicas no se pueden vender.';ui();return;}
- S.gold+=sellVal(t);S.st.gSell+=sellVal(t);t.sold=1;S.list=S.list.filter(o=>o!==t);
+ S.gold+=sellVal(t);S.st.gSell+=sellVal(t);t.sold=1;S.nSell=(S.nSell||0)+1;/* v353: vender anula el Coleccionista */S.list=S.list.filter(o=>o!==t);
  for(const[a,b]of t.sq)delete S.occ[a+','+b];S.selT=null;if(PR.pinned&&PR.key==='tw:'+t.id)closePrim();ui();
 }
 // ---- Baluarte: soldados y bandera ----

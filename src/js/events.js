@@ -122,7 +122,7 @@ const EVALT={chest:{0:k=>k[0]!=='relicx'},lab:{2:k=>!(k[0]||'').startsWith('gold
 function evImg(id,i,keys){const M=typeof EVIMG!=='undefined'&&EVIMG[id];if(!M)return '';if(i==null)return M.ev;const f=EVALT[id]&&EVALT[id][i];return f&&keys&&f(keys)&&M.alt&&M.alt[i]?M.alt[i]:(M.o[i]||M.ev);}
 // disposición del pergamino de eventos: 'b' = solo la imagen a la izquierda; 'a' = imagen con el texto debajo
 let EVLAY='b';
-function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><i class="prod l"></i><i class="prod r"></i><div class="ppap evp ev${EVLAY}${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
+function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><div class="ppap evp ev${EVLAY}${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
  const img=evImg(id),B=EVLAY==='b',opts=`<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div>';
  el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?'':`<p>${E.txt}</p>`}`,

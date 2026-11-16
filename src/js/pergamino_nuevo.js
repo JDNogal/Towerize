@@ -52,7 +52,7 @@ const PGDEFS3='<linearGradient id="pgwd" x1="0" y1="0" x2="1" y2="0"><stop offse
 function pgRoll2(cx,R,y0,y1){const knob=(y,d)=>{const yy=y+d*2;return `<rect x="${cx-R-4}" y="${d<0?yy-9:yy}" width="${2*R+8}" height="9" rx="3" fill="url(#pgwd)" stroke="#2a1608" stroke-width="1.4"/><rect x="${cx-5}" y="${d<0?yy-19:yy+9}" width="10" height="10" fill="url(#pgwd)" stroke="#2a1608" stroke-width="1.2"/><ellipse cx="${cx}" cy="${yy+d*27}" rx="11" ry="9" fill="url(#pgkn)" stroke="#2a1608" stroke-width="1.5"/>`;};
  let lines='';for(let i=1;i<4;i++){const xx=cx-R+2*R*i/4;lines+=`<path d="M${xx} ${y0+3}V${y1-3}" stroke="#a88450" stroke-width=".8" opacity=".35"/>`;}
  return `${knob(y0,-1)}${knob(y1,1)}<rect x="${cx-R}" y="${y0}" width="${2*R}" height="${y1-y0}" rx="${Math.min(6,R/2)}" fill="url(#pgpr)" stroke="#8a6a3a" stroke-width="1.2"/>${lines}<path d="M${cx-R+3} ${y0+4}V${y1-4}" stroke="#fff8e4" stroke-width="2" opacity=".35"/>`;}
-const PGM=60,PGIX=34,PGIY=38;/* margen del SVG alrededor de la ventana, para los rodillos y los mangos */
+const PGM=60,PGB=16/* v353: por debajo del papel solo hace falta sitio para los pomos; si no, el SVG hacía scroll (▼) aunque el pergamino cupiera */,PGIX=34,PGIY=38;/* margen del SVG alrededor de la ventana, para los rodillos y los mangos */
 const PGF={on:null};
 const pgCfg={pieza:{host:()=>{const p=$('panel');return p&&document.body.classList.contains('pcpick')&&p.querySelector('.prow')?p:null;},inner:h=>[h.querySelector('#ui'),h.querySelector('#msg')],cards:h=>[...h.querySelectorAll('.prow .card')],ttl:h=>h.querySelector('.pctt'),sub:h=>h.querySelector('#ui>small')},
  torre:{host:()=>{const r=$('relic');const a=r&&RL.open&&!r.classList.contains('cofre')&&r.querySelector('.pscr .ppap');return a&&(a.querySelector('.toff')||a.querySelector('.evopts')||a.classList.contains('evp'))?a:null;},inner:h=>[...h.children].filter(x=>!x.classList.contains('pgsvg')),cards:h=>[...h.querySelectorAll('.tof,.evopts .evo')],ttl:h=>h.querySelector('.ptt,.evhead b'),sub:h=>h.querySelector('.pst')}};
@@ -69,7 +69,7 @@ function pgTick(now){const o=PGF.on;if(!o)return;const C=pgCfg[o.kind],h=C.host(
  /* los rodillos y sus mangos van dentro de la caja de la ventana (que reserva ese hueco), para no montarse con lo de al lado */
  const op=t<UN0?0:Math.max(0,pgBack(pgseg(t,UN0,UN0+UND)));const w=Math.max(0,PW*Math.min(op,1.04)),xl=CX-w/2,xr=CX+w/2;
  const appear=t<UN0?pgeo(pgseg(t,.15,.6)):1,drop=(1-pgeo(pgseg(t,.15,.6)))*-40;
- const SW=W+2*PGM,SH=H+2*PGM;o.sv.setAttribute('viewBox',`0 0 ${SW} ${SH}`);o.sv.style.cssText=`left:${-PGM}px;top:${-PGM}px;width:${SW}px;height:${SH}px;opacity:${appear};transform:translateY(${drop}px)`;
+ const SW=W+2*PGM,SH=H+PGM+PGB;o.sv.setAttribute('viewBox',`0 0 ${SW} ${SH}`);o.sv.style.cssText=`left:${-PGM}px;top:${-PGM}px;width:${SW}px;height:${SH}px;opacity:${appear};transform:translateY(${drop}px)`;
  // el HTML de la ventana: recortado al papel abierto; título, subtítulo y cartas a su tiempo
  const m=Math.max(0,(W-w)/2-IX);for(const e of C.inner(h))if(e)e.style.clipPath=t>=UN0+UND+.2?'':`inset(-40px ${m.toFixed(1)}px -40px ${m.toFixed(1)}px)`;
  const tt=C.ttl(h);if(tt){const k=pgBack(pgseg(t,t0,t0+.7));tt.style.transform=`scaleX(${Math.max(.01,k).toFixed(3)})`;tt.style.opacity=pgseg(t,t0,t0+.15).toFixed(2);}
