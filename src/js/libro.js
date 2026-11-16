@@ -137,7 +137,7 @@ function prepParts(){const st=LB.step||'era',nm=STO.name||'Piloto';
  const marksHTML=`<div class="bkmarks hmarks">${kcOn()&&ids.length>1?'<span class="kcap bkq">Q</span>':''}${ids.map(h=>{const L=!!HEROES[h].lockTxt;return `<button class="bkmk hmk${h===id?' on':''}${L?' lk':''}" data-a="hgo" data-id="${h}" title="${L?'???':HEROES[h].n}"><span class="hmp">${portrait(h,1,L)}</span></button>`;}).join('')}${kcOn()&&ids.length>1?'<span class="kcap bkq">E</span>':''}</div>`;
  const left=`<div class="lbhero${lk?' lk':''}" style="--hc:${D.col}"><span class="lbhart fr${hTier(id)}">${portrait(id,0,lk)}</span><div class="lbhn">${lk?'???':D.n}</div><div class="lbhc">${lk?'Héroe por desbloquear':D.role+' · '+(D.ranged?'A distancia':'Cuerpo a cuerpo')}</div></div>`;
  const right=`<div class="lbhpc" style="--hc:${D.col}">${heroSheet(id)}</div>`;
- return {marksHTML,left,right,key:'hero'+id,flip:LB.lastK!=='prep|hero'+id,hero:1,
+ return {marksHTML,left,right,key:'hero'+id,flip:LB.lastK!=='prep|hero'+id,hero:1,after:ids.length>1?heroArrows:null,
   footL:S.tut?'':`<button class="lbbk" data-a="herobk">‹ Duración</button>`,footR:`<button class="gbtn hok2" data-a="pickhero" data-id="${lk?'':id}"${lk?' disabled':''}>${lk?'Bloqueado':'Elegir a '+D.n+' ✓'}</button>`};
 }
 // ---- final de partida: la crónica ----
