@@ -42,7 +42,7 @@ body.mfs #relic .tof .chips{display:flex!important;flex-wrap:nowrap!important;al
 body.mfs.pcpick:not(.pcpeek) #pkbar.on{display:flex!important;position:fixed;top:8px;right:10px;z-index:46}
 body.mfs.pcpick #pkbar .mzb{display:inline-grid!important;width:30px;height:30px}
 body.mfs.pcpick #pkbar button{width:30px;height:30px;font-size:14px!important}
-:root body.mfs.pcpick:not(.pcpeek) #panel,:root[data-skin] body.mfs.pcpick:not(.pcpeek) #panel:has(.prow){box-shadow:0 0 0 200vmax rgba(9,10,14,.95)!important}
+/* v356: fuera el fondo casi negro de la v312 (tapaba el mapa y recortaba la ventana como un rectángulo negro): elegir pieza en el móvil oscurece el mapa igual que en PC */
 body.mfs.pcpick #panel .pcpeek,body.mfs.pcpick #mzpk{display:none!important}
 body.mfs.pcpick.mzbtn #panel #ui>b,body.mfs.pcpick.mzbtn #panel #ui>small,body.mfs.pcpick.mzbtn #panel .ptt,body.mfs.pcpick.mzbtn #panel h3{padding-right:0!important;padding-left:0!important}
 /* cada descripción de reliquia ocupa justo 3 líneas; si tiene más, scroll dentro de su recuadro */

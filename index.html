@@ -2135,7 +2135,7 @@ body.mfs #relic .tof .chips{display:flex!important;flex-wrap:nowrap!important;al
 body.mfs.pcpick:not(.pcpeek) #pkbar.on{display:flex!important;position:fixed;top:8px;right:10px;z-index:46}
 body.mfs.pcpick #pkbar .mzb{display:inline-grid!important;width:30px;height:30px}
 body.mfs.pcpick #pkbar button{width:30px;height:30px;font-size:14px!important}
-:root body.mfs.pcpick:not(.pcpeek) #panel,:root[data-skin] body.mfs.pcpick:not(.pcpeek) #panel:has(.prow){box-shadow:0 0 0 200vmax rgba(9,10,14,.95)!important}
+/* v356: fuera el fondo casi negro de la v312 (tapaba el mapa y recortaba la ventana como un rectángulo negro): elegir pieza en el móvil oscurece el mapa igual que en PC */
 body.mfs.pcpick #panel .pcpeek,body.mfs.pcpick #mzpk{display:none!important}
 body.mfs.pcpick.mzbtn #panel #ui>b,body.mfs.pcpick.mzbtn #panel #ui>small,body.mfs.pcpick.mzbtn #panel .ptt,body.mfs.pcpick.mzbtn #panel h3{padding-right:0!important;padding-left:0!important}
 /* cada descripción de reliquia ocupa justo 3 líneas; si tiene más, scroll dentro de su recuadro */
@@ -9389,7 +9389,7 @@ function camFit(instant){const b=camFitBox();if(!b)return;const PK=P*K,wc=(b.x1-
 // el encuadre automático se repite al colocar pieza y al cambiar de fase (colocar ↔ construir); un zoom manual lo respeta hasta el siguiente cambio
 let CAMPH=null,CAMNB=0;
 function camAuto(){if(!S||PREVIEWING||S.pvE||S.pvH||!S.blocks)return;const nb=Object.keys(S.blocks).length,ph=S.phase==='place'?'place':'other';
- if(nb!==CAMNB||ph!==CAMPH){const first=!CAMNB;CAMNB=nb;CAMPH=ph;if(OPT.camauto!==false)camFit(first);}}
+ if(nb!==CAMNB||ph!==CAMPH){const first=!CAMNB,toPick=ph==='place'&&nb===CAMNB;CAMNB=nb;CAMPH=ph;/* v356 (Nogal): al abrir «Elige una pieza» la cámara se queda como está; antes se alejaba de golpe para enseñar los huecos de alrededor y, en el móvil, dejaba ver el borde del mapa */if(OPT.camauto!==false&&(first||!toPick))camFit(first);}}
 // el botón de centrar encuadra lo construido
 {const _g=startGame;startGame=function(){CAMNB=0;CAMPH=null;CAMA.on=false;return _g.apply(this,arguments);};}
 // ==================== NÚMEROS DE DAÑO: estilos (salto lateral, al costado, encima) y filtros ====================

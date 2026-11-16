@@ -21,6 +21,6 @@ function camFit(instant){const b=camFitBox();if(!b)return;const PK=P*K,wc=(b.x1-
 // el encuadre automático se repite al colocar pieza y al cambiar de fase (colocar ↔ construir); un zoom manual lo respeta hasta el siguiente cambio
 let CAMPH=null,CAMNB=0;
 function camAuto(){if(!S||PREVIEWING||S.pvE||S.pvH||!S.blocks)return;const nb=Object.keys(S.blocks).length,ph=S.phase==='place'?'place':'other';
- if(nb!==CAMNB||ph!==CAMPH){const first=!CAMNB;CAMNB=nb;CAMPH=ph;if(OPT.camauto!==false)camFit(first);}}
+ if(nb!==CAMNB||ph!==CAMPH){const first=!CAMNB,toPick=ph==='place'&&nb===CAMNB;CAMNB=nb;CAMPH=ph;/* v356 (Nogal): al abrir «Elige una pieza» la cámara se queda como está; antes se alejaba de golpe para enseñar los huecos de alrededor y, en el móvil, dejaba ver el borde del mapa */if(OPT.camauto!==false&&(first||!toPick))camFit(first);}}
 // el botón de centrar encuadra lo construido
 {const _g=startGame;startGame=function(){CAMNB=0;CAMPH=null;CAMA.on=false;return _g.apply(this,arguments);};}
