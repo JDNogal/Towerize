@@ -5,3 +5,12 @@
 html.iosapp{--iob:max(env(safe-area-inset-bottom,0px),18px);background:#0b0d10}
 html.iosapp body{position:fixed;left:0;top:0;right:0;bottom:var(--iob);height:auto;overflow:hidden;transform:translateZ(0)}
 html.iosapp #cw{height:calc(100vh - var(--iob))!important;height:calc(100dvh - var(--iob))!important;aspect-ratio:auto!important}
+/* v355 · preparación de la partida en móvil apaisado: dos páginas (#comp.narrow.two, ver prepTwo en book.js) */
+#comp.narrow.two .bk>.bkp.l,#comp.narrow.two .bk>.bkp.r{flex:0 0 50%!important;max-width:50%!important;box-sizing:border-box!important;overflow-y:auto}
+#comp.narrow.two .bkp.r{padding-right:16px}
+#comp.narrow.two .lbhart{width:min(170px,calc(100vh - 220px));margin-bottom:6px}
+body.mfs #comp.narrow.two .bk.hasft>.bkp{height:calc(100% - 50px)!important;max-height:calc(100% - 50px)!important;padding-bottom:12px!important}
+#comp.narrow.two .lbft{padding:6px 14px;height:50px;background:none}
+#comp.narrow.two .lbft .gbtn{font-size:14px!important;padding:7px 14px!important;min-height:0!important}
+/* «▾ Más abajo» en las páginas del libro con más contenido (bkpMoreUpd en book.js) */
+#comp.narrow .bkp.more::after{content:"▾ Más abajo";position:sticky;bottom:-12px;display:block;margin:0 -16px -12px;padding:14px 0 6px;text-align:center;font:600 12px/1 system-ui,sans-serif;color:var(--ink2,#7a5a3a);background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 96%,transparent) 55%);pointer-events:none;z-index:3}

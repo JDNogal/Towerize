@@ -4,6 +4,8 @@ document.addEventListener('click',e=>{const c=$('comp');if(LB.open&&c&&e.target=
 // marcapáginas arriba (secciones) · página izquierda: fichas en cuadritos · página derecha: detalle de lo elegido
 const CTICO={tw:'🗼',hr:'🦸',pc:'🧩',bf:'✨',rl:'💎',en:'👹',ev:'📜',lg:'🏆'};
 const bkNarrow=()=>innerWidth<760||innerHeight<430;
+// v355 · la preparación de la partida en móvil apaisado va en dos páginas, como en PC (Nogal, iPhone de su padre): antes era una sola página con un scroll que no se veía
+const prepTwo=()=>innerWidth>=600&&innerWidth>innerHeight;
 CP.sel=CP.sel||{};
 function bkItems(t){const L=[];
  if(t==='tw'){const fl=CFILTERS.tw,act=fl.filter(f=>CP.flt[f.key]);
@@ -134,3 +136,7 @@ function compParts(){
 }
 function renderComp(){if(typeof lbRender==='function')lbRender();}
 
+// v355 · móvil: si una página del libro tiene más contenido abajo, sale «▾ Más abajo» pegado a su borde inferior (antes el texto
+// quedaba cortado a media línea y no se notaba que se podía desplazar; Nogal, iPhone de su padre)
+function bkpMoreUpd(){document.querySelectorAll('#comp.narrow .bkp').forEach(p=>{const m=p.scrollHeight>p.clientHeight+6&&p.scrollTop+p.clientHeight<p.scrollHeight-6;p.classList.toggle('more',m);});}
+{const c=document.getElementById('comp');if(c){new MutationObserver(()=>requestAnimationFrame(bkpMoreUpd)).observe(c,{childList:true});c.addEventListener('scroll',bkpMoreUpd,true);addEventListener('resize',bkpMoreUpd);}}

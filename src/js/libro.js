@@ -155,7 +155,7 @@ function credParts(){const ver=($('ver')&&$('ver').textContent)||'Towerize';
 // ---- montaje ----
 function lbRender(){
  const el=$('comp');if(!LB.open){el.classList.remove('open');return;}
- el.classList.add('bkm','open');el.classList.toggle('lbtouch',!!TOUCH);const nar=bkNarrow();el.classList.toggle('narrow',nar);el.classList.toggle('lbcv0',LB.cover);
+ el.classList.add('bkm','open');el.classList.toggle('lbtouch',!!TOUCH);const nar0=bkNarrow(),two=nar0&&LB.area==='prep'&&prepTwo(),nar=nar0&&!two;el.classList.toggle('two',two);el.classList.toggle('narrow',nar0);el.classList.toggle('lbcv0',LB.cover);
  if(LB.cover){CP.open=false;OP.open=false;lbSetOrigin();el.innerHTML=lbCoverHTML();if(LB.grow){el.firstElementChild.classList.add('lbgrow');LB.grow=false;}return;}
  LB.grow=false;
  if(LB.area==='st'&&!lbInGame())LB.area='cp';
