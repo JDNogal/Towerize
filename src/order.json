@@ -40,7 +40,8 @@
   "38_ficha_enemigo.css",
   "39_puntuacion_libro.css",
   "40_ficha_torre.css",
-  "41_hud_v354.css"
+  "41_hud_v354.css",
+  "42_iphone_app.css"
  ],
  "js": [
   "00_config.js",

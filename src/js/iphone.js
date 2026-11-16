@@ -1,5 +1,12 @@
 // ---- iPhone: Safari no deja poner pantalla completa. Evitamos el «tirar para recargar» y explicamos cómo jugar sin barras ----
 const IOS=/iPhone|iPod/.test(navigator.userAgent||'')&&!(window.navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches));
+// v355 · iPhone desde la pantalla de inicio (padre de Nogal, iPhone 17): el juego ocupaba también la zona de la isla, las esquinas
+// y la rayita de abajo, donde el iPhone se queda los toques. Se quita «viewport-fit=cover» (iOS deja entonces el juego dentro de la
+// zona segura a los lados) y la clase «iosapp» sube los controles de abajo por encima de la rayita. Con #iosapp en la dirección se
+// simula en el ordenador (sin tocar la etiqueta viewport).
+const IOSAPP=/iPhone|iPod/.test(navigator.userAgent||'')&&!!(window.navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches));
+if(IOSAPP||/iosapp/.test(location.hash)){document.documentElement.classList.add('iosapp');
+ if(IOSAPP){const m=document.querySelector('meta[name=viewport]');if(m)m.setAttribute('content','width=device-width, initial-scale=1');}}
 // fuera de las zonas que tienen scroll, deslizar no mueve la página (así no recarga ni rebota)
 {const canScroll=el=>{for(let n=el;n&&n!==document.body&&n.nodeType===1;n=n.parentElement){const st=getComputedStyle(n),oy=st.overflowY,ox=st.overflowX;
   if((oy==='auto'||oy==='scroll')&&n.scrollHeight>n.clientHeight+1)return true;if((ox==='auto'||ox==='scroll')&&n.scrollWidth>n.clientWidth+1)return true;}return false;};

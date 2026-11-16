@@ -1,0 +1,7 @@
+/* v355 · iPhone abierto desde la pantalla de inicio (html.iosapp, ver iphone.js). A los lados, iOS ya deja el juego fuera de la isla y
+   de las esquinas (sin viewport-fit=cover). Abajo, el iPhone se queda los toques de la franja de la rayita de inicio: el <body> se acorta
+   esa franja y, con el transform, todo lo que va «fixed» (botones, avisos, libro, ventanas) se coloca dentro de él. Como el body empieza
+   en (0,0), las coordenadas de la pantalla siguen siendo las mismas para los bocadillos y el mapa. */
+html.iosapp{--iob:max(env(safe-area-inset-bottom,0px),18px);background:#0b0d10}
+html.iosapp body{position:fixed;left:0;top:0;right:0;bottom:var(--iob);height:auto;overflow:hidden;transform:translateZ(0)}
+html.iosapp #cw{height:calc(100vh - var(--iob))!important;height:calc(100dvh - var(--iob))!important;aspect-ratio:auto!important}

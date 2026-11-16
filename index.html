@@ -3009,6 +3009,13 @@ body.mfs #fps{background:linear-gradient(180deg,var(--paper1,#f6ecd3),var(--pape
 /* v354 · pantalla de «Gira el teléfono»: el texto salía oscuro sobre el fondo oscuro (iPhone) */
 #rot{color:#f6ecd3!important}#rot b{color:#f6ecd3}#rot span{opacity:1!important;color:#e9d6a8}#rot .rlink{color:#f0c060!important;opacity:1!important}
 #rot .rph{font-size:0;line-height:0}
+/* v355 · iPhone abierto desde la pantalla de inicio (html.iosapp, ver iphone.js). A los lados, iOS ya deja el juego fuera de la isla y
+   de las esquinas (sin viewport-fit=cover). Abajo, el iPhone se queda los toques de la franja de la rayita de inicio: el <body> se acorta
+   esa franja y, con el transform, todo lo que va «fixed» (botones, avisos, libro, ventanas) se coloca dentro de él. Como el body empieza
+   en (0,0), las coordenadas de la pantalla siguen siendo las mismas para los bocadillos y el mapa. */
+html.iosapp{--iob:max(env(safe-area-inset-bottom,0px),18px);background:#0b0d10}
+html.iosapp body{position:fixed;left:0;top:0;right:0;bottom:var(--iob);height:auto;overflow:hidden;transform:translateZ(0)}
+html.iosapp #cw{height:calc(100vh - var(--iob))!important;height:calc(100dvh - var(--iob))!important;aspect-ratio:auto!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -5393,6 +5400,13 @@ function setRounds(n){MR=Math.min(rMax(),Math.max(15,n));try{localStorage.setIte
 
 // ---- iPhone: Safari no deja poner pantalla completa. Evitamos el «tirar para recargar» y explicamos cómo jugar sin barras ----
 const IOS=/iPhone|iPod/.test(navigator.userAgent||'')&&!(window.navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches));
+// v355 · iPhone desde la pantalla de inicio (padre de Nogal, iPhone 17): el juego ocupaba también la zona de la isla, las esquinas
+// y la rayita de abajo, donde el iPhone se queda los toques. Se quita «viewport-fit=cover» (iOS deja entonces el juego dentro de la
+// zona segura a los lados) y la clase «iosapp» sube los controles de abajo por encima de la rayita. Con #iosapp en la dirección se
+// simula en el ordenador (sin tocar la etiqueta viewport).
+const IOSAPP=/iPhone|iPod/.test(navigator.userAgent||'')&&!!(window.navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches));
+if(IOSAPP||/iosapp/.test(location.hash)){document.documentElement.classList.add('iosapp');
+ if(IOSAPP){const m=document.querySelector('meta[name=viewport]');if(m)m.setAttribute('content','width=device-width, initial-scale=1');}}
 // fuera de las zonas que tienen scroll, deslizar no mueve la página (así no recarga ni rebota)
 {const canScroll=el=>{for(let n=el;n&&n!==document.body&&n.nodeType===1;n=n.parentElement){const st=getComputedStyle(n),oy=st.overflowY,ox=st.overflowX;
   if((oy==='auto'||oy==='scroll')&&n.scrollHeight>n.clientHeight+1)return true;if((ox==='auto'||ox==='scroll')&&n.scrollWidth>n.clientWidth+1)return true;}return false;};
