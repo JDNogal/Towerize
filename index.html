@@ -3009,6 +3009,28 @@ body.mfs #fps{background:linear-gradient(180deg,var(--paper1,#f6ecd3),var(--pape
 /* v354 · pantalla de «Gira el teléfono»: el texto salía oscuro sobre el fondo oscuro (iPhone) */
 #rot{color:#f6ecd3!important}#rot b{color:#f6ecd3}#rot span{opacity:1!important;color:#e9d6a8}#rot .rlink{color:#f0c060!important;opacity:1!important}
 #rot .rph{font-size:0;line-height:0}
+/* v355 · iPhone abierto desde la pantalla de inicio (html.iosapp, ver iphone.js). A los lados, iOS ya deja el juego fuera de la isla y
+   de las esquinas (sin viewport-fit=cover). Abajo, el iPhone se queda los toques de la franja de la rayita de inicio: el <body> se acorta
+   esa franja y, con el transform, todo lo que va «fixed» (botones, avisos, libro, ventanas) se coloca dentro de él. Como el body empieza
+   en (0,0), las coordenadas de la pantalla siguen siendo las mismas para los bocadillos y el mapa. */
+html.iosapp{--iob:max(env(safe-area-inset-bottom,0px),18px);background:#0b0d10}
+html.iosapp body{position:fixed;left:0;top:0;right:0;bottom:var(--iob);height:auto;overflow:hidden;transform:translateZ(0)}
+html.iosapp #cw{height:calc(100vh - var(--iob))!important;height:calc(100dvh - var(--iob))!important;aspect-ratio:auto!important}
+/* v355 · preparación de la partida en móvil apaisado: dos páginas (#comp.narrow.two, ver prepTwo en book.js) */
+#comp.narrow.two .bk>.bkp.l,#comp.narrow.two .bk>.bkp.r{flex:0 0 50%!important;max-width:50%!important;box-sizing:border-box!important;overflow-y:auto}
+#comp.narrow.two .bkp.r{padding-right:16px}
+#comp.narrow.two .lbhart{width:min(170px,calc(100vh - 220px));margin-bottom:6px}
+/* el papel de la página llega hasta abajo y los botones van encima, como en PC (antes la página acababa encima de la barra de
+   botones y parecían dos libros, uno encima del otro; Nogal 16-nov). Vale para todas las páginas del libro en móvil. */
+body.mfs #comp .bk.hasft>.bkp{height:100%!important;max-height:100%!important;padding-bottom:62px!important}
+body.mfs #comp.narrow.two .bk.hasft>.bkp{padding-bottom:56px!important}
+#comp.narrow.two .lbft{padding:0 14px 6px;height:84px;align-items:flex-end}
+#comp.narrow .lbft{background:linear-gradient(color-mix(in srgb,var(--paper) 0%,transparent),var(--paper) 45%)!important}
+#comp.narrow.two .lbft .gbtn{font-size:14px!important;padding:7px 14px!important;min-height:0!important}
+/* «▾ Más abajo» (bkpMoreUpd en book.js): la barra de botones lleva por encima un degradado de papel (lo que sigue
+   se difumina, nada asoma cortado detrás de los botones) y, junto a los botones, «▾ Más abajo» en su mitad */
+#comp.narrow.morel .lbft.l::after,#comp.narrow.morer .lbft.r::after{content:"▾ Más abajo";margin:0 auto 10px;font:600 12px/1 system-ui,sans-serif;color:#7a5a3a;white-space:nowrap;pointer-events:none}
+#comp.narrow.morer .lbft.r::after{order:-1}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -3023,7 +3045,7 @@ body.mfs #fps{background:linear-gradient(180deg,var(--paper1,#f6ecd3),var(--pape
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v354</div>
+<div id="ver">Towerize v355</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -4617,6 +4639,8 @@ document.addEventListener('click',e=>{const c=$('comp');if(LB.open&&c&&e.target=
 // marcapáginas arriba (secciones) · página izquierda: fichas en cuadritos · página derecha: detalle de lo elegido
 const CTICO={tw:'🗼',hr:'🦸',pc:'🧩',bf:'✨',rl:'💎',en:'👹',ev:'📜',lg:'🏆'};
 const bkNarrow=()=>innerWidth<760||innerHeight<430;
+// v355 · la preparación de la partida en móvil apaisado va en dos páginas, como en PC (Nogal, iPhone de su padre): antes era una sola página con un scroll que no se veía
+const prepTwo=()=>innerWidth>=600&&innerWidth>innerHeight;
 CP.sel=CP.sel||{};
 function bkItems(t){const L=[];
  if(t==='tw'){const fl=CFILTERS.tw,act=fl.filter(f=>CP.flt[f.key]);
@@ -4747,6 +4771,10 @@ function compParts(){
 }
 function renderComp(){if(typeof lbRender==='function')lbRender();}
 
+// v355 · móvil: si una página del libro tiene más contenido abajo, sale «▾ Más abajo» en su mitad de la barra de botones (antes el texto
+// quedaba cortado a media línea y no se notaba que se podía desplazar; Nogal, iPhone de su padre)
+function bkpMoreUpd(){const c=document.getElementById('comp');if(!c)return;let l=false,r=false;c.querySelectorAll('.bkp').forEach(p=>{const m=c.classList.contains('narrow')&&p.scrollHeight>p.clientHeight+6&&p.scrollTop+p.clientHeight<p.scrollHeight-6;p.classList.toggle('more',m);if(m){if(p.classList.contains('r'))r=true;else l=true;}});c.classList.toggle('morel',l);c.classList.toggle('morer',r);}
+{const c=document.getElementById('comp');if(c){new MutationObserver(()=>requestAnimationFrame(bkpMoreUpd)).observe(c,{childList:true});c.addEventListener('scroll',bkpMoreUpd,true);addEventListener('resize',bkpMoreUpd);}}
 // ---- previsualización de torres (mini-partida independiente con un solo enemigo) ----
 // prepara una torre de evento en la previsualización (nivel/forma elegidos en el compendio)
 function uPrevFix(st,k){const T=TW[k],cur=(CP.ulv&&CP.ulv[k])||1,tw=st.list[0];if(!tw)return;const real=S;S=st;
@@ -5393,6 +5421,13 @@ function setRounds(n){MR=Math.min(rMax(),Math.max(15,n));try{localStorage.setIte
 
 // ---- iPhone: Safari no deja poner pantalla completa. Evitamos el «tirar para recargar» y explicamos cómo jugar sin barras ----
 const IOS=/iPhone|iPod/.test(navigator.userAgent||'')&&!(window.navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches));
+// v355 · iPhone desde la pantalla de inicio (padre de Nogal, iPhone 17): el juego ocupaba también la zona de la isla, las esquinas
+// y la rayita de abajo, donde el iPhone se queda los toques. Se quita «viewport-fit=cover» (iOS deja entonces el juego dentro de la
+// zona segura a los lados) y la clase «iosapp» sube los controles de abajo por encima de la rayita. Con #iosapp en la dirección se
+// simula en el ordenador (sin tocar la etiqueta viewport).
+const IOSAPP=/iPhone|iPod/.test(navigator.userAgent||'')&&!!(window.navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches));
+if(IOSAPP||/iosapp/.test(location.hash)){document.documentElement.classList.add('iosapp');
+ if(IOSAPP){const m=document.querySelector('meta[name=viewport]');if(m)m.setAttribute('content','width=device-width, initial-scale=1');}}
 // fuera de las zonas que tienen scroll, deslizar no mueve la página (así no recarga ni rebota)
 {const canScroll=el=>{for(let n=el;n&&n!==document.body&&n.nodeType===1;n=n.parentElement){const st=getComputedStyle(n),oy=st.overflowY,ox=st.overflowX;
   if((oy==='auto'||oy==='scroll')&&n.scrollHeight>n.clientHeight+1)return true;if((ox==='auto'||ox==='scroll')&&n.scrollWidth>n.clientWidth+1)return true;}return false;};
@@ -8486,7 +8521,7 @@ function credParts(){const ver=($('ver')&&$('ver').textContent)||'Towerize';
 // ---- montaje ----
 function lbRender(){
  const el=$('comp');if(!LB.open){el.classList.remove('open');return;}
- el.classList.add('bkm','open');el.classList.toggle('lbtouch',!!TOUCH);const nar=bkNarrow();el.classList.toggle('narrow',nar);el.classList.toggle('lbcv0',LB.cover);
+ el.classList.add('bkm','open');el.classList.toggle('lbtouch',!!TOUCH);const nar0=bkNarrow(),two=nar0&&LB.area==='prep'&&prepTwo(),nar=nar0&&!two;el.classList.toggle('two',two);el.classList.toggle('narrow',nar0);el.classList.toggle('lbcv0',LB.cover);
  if(LB.cover){CP.open=false;OP.open=false;lbSetOrigin();el.innerHTML=lbCoverHTML();if(LB.grow){el.firstElementChild.classList.add('lbgrow');LB.grow=false;}return;}
  LB.grow=false;
  if(LB.area==='st'&&!lbInGame())LB.area='cp';
@@ -11155,6 +11190,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:355,f:'16 nov 2026',t:'iPhone y libro en el móvil',s:[['Móvil',['iPhone abierto desde la pantalla de inicio: los botones ya no quedan bajo la isla, las esquinas ni la rayita de abajo, así que se pueden pulsar todos.','Preparar partida en el móvil apaisado: dos páginas, como en el ordenador, y más sitio para leer.','Las páginas del libro en el móvil son una sola hoja con los botones encima, y si hay más que leer, te avisa con «▾ Más abajo».']]]},
  {v:354,f:'16 nov 2026',t:'Medidor de daño e interfaz renovada',s:[['Novedades',['Medidor de daño: mira cuánto hace cada torre en la ronda, por tipo de torre, y pasa el ratón por una fila para ver de cuál se trata. Se puede apagar en Opciones.','Los paneles de la izquierda se pliegan como cajones.','Algunas unidades estrenan dibujo y barra propia en su ficha.']],['Interfaz',['Arriba a la izquierda, todos los botones en fila y a la misma altura; «Reintentar» pasa abajo, al centro.','Los FPS ya no parecen un botón.','Los logros fijados se despliegan para ver su descripción y progreso, y se quitan con su chincheta.','Iconos nuevos para el tiempo real y el de combate.','En el móvil, la pantalla de «Gira el teléfono» ya se lee bien.']]]},
  {v:353,f:'16 nov 2026',t:'Lo nuevo se ve y barras nuevas',s:[['Novedades',['Lo nuevo vuelve a llevar su puntito (logros, compendio, pestañas y cintas del libro) hasta que lo abres: ya no se borra solo al entrar en el libro.','Las torres con una mecánica especial la enseñan en su ficha con una barra animada nueva.']],['Equilibrio',['Frenesí: −20% de enfriamiento y −25% de daño (la versión ★, el doble).','Moneda antigua: +20% de todo el oro que recibes (antes +50%).','Dos torres especializadas cambian cómo cargan su mecánica. Míralo en su ficha.']],['Logros',['Coleccionista: ahora tampoco puedes vender ninguna torre.']],['Interfaz',['La oferta de torres y los eventos ya no enseñan la flecha de desplazamiento cuando caben en pantalla.']]]},
  {v:352,f:'15 nov 2026',t:'Fichas nuevas y sonidos',s:[['Novedades',['Sonidos nuevos hechos a mano por Andres. Si echas de menos los de antes, Opciones › Volumen › «Sonidos».','La ficha de las torres, rehecha: qué hace en una línea, sus números principales de un vistazo y su DPS real en directo, comparado con el que debería hacer. Algunas torres tienen algo más que enseñarte en su ficha… descúbrelas.','Al pulsar un enemigo ves cómo está ahora mismo: su vida, sus estados y sus defensas, en directo.','Al acabar la partida, la puntuación se va sumando en el libro antes de la victoria o la derrota.','Al elegir reliquia, el cofre y el paquete de ayuda tienen una despedida nueva.']],['Mejoras',['Las palabras clave llevan su icono delante y un subrayado punteado (el icono se puede quitar en Opciones › Gráficos).','Las fichas del mapa salen pegadas a su torre, crecen al acercar la cámara y con la L abres esa torre en el compendio.','Las distancias ya no hablan de «casillas»: llevan el icono de rango y su número.','El icono de los portales queda centrado en su círculo.']]]},
