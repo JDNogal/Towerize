@@ -2135,7 +2135,7 @@ body.mfs #relic .tof .chips{display:flex!important;flex-wrap:nowrap!important;al
 body.mfs.pcpick:not(.pcpeek) #pkbar.on{display:flex!important;position:fixed;top:8px;right:10px;z-index:46}
 body.mfs.pcpick #pkbar .mzb{display:inline-grid!important;width:30px;height:30px}
 body.mfs.pcpick #pkbar button{width:30px;height:30px;font-size:14px!important}
-:root body.mfs.pcpick:not(.pcpeek) #panel,:root[data-skin] body.mfs.pcpick:not(.pcpeek) #panel:has(.prow){box-shadow:0 0 0 200vmax rgba(9,10,14,.95)!important}
+/* v356: fuera el fondo casi negro de la v312 (tapaba el mapa y recortaba la ventana como un rectángulo negro): elegir pieza en el móvil oscurece el mapa igual que en PC */
 body.mfs.pcpick #panel .pcpeek,body.mfs.pcpick #mzpk{display:none!important}
 body.mfs.pcpick.mzbtn #panel #ui>b,body.mfs.pcpick.mzbtn #panel #ui>small,body.mfs.pcpick.mzbtn #panel .ptt,body.mfs.pcpick.mzbtn #panel h3{padding-right:0!important;padding-left:0!important}
 /* cada descripción de reliquia ocupa justo 3 líneas; si tiene más, scroll dentro de su recuadro */
@@ -3031,6 +3031,15 @@ body.mfs #comp.narrow.two .bk.hasft>.bkp{padding-bottom:56px!important}
    se difumina, nada asoma cortado detrás de los botones) y, junto a los botones, «▾ Más abajo» en su mitad */
 #comp.narrow.morel .lbft.l::after,#comp.narrow.morer .lbft.r::after{content:"▾ Más abajo";margin:0 auto 10px;font:600 12px/1 system-ui,sans-serif;color:#7a5a3a;white-space:nowrap;pointer-events:none}
 #comp.narrow.morer .lbft.r::after{order:-1}
+/* v356 · elegir pieza en el móvil apaisado (Nogal y su padre, Android e iPhone): la ventana era estrecha (≈360 px), el pergamino solo se
+   abría hasta ahí y parecía que el juego se encogía a un cuadrado en el centro. Ahora la ventana ocupa casi todo el ancho y cada carta
+   va en horizontal: la pieza a la izquierda y lo que tiene a la derecha. pgFitPz (pergamino_nuevo.js) la encoge si no cabe de alto. */
+body.mfs.pcpick #panel:has(.prow){width:min(760px,calc(100vw - 150px))!important;max-width:none!important;box-sizing:border-box}
+body.mfs.pcpick #ui .prow{display:flex;gap:10px!important;justify-content:center}
+body.mfs.pcpick #ui .prow .cardw{flex:1 1 0!important;max-width:none!important;min-width:0;display:grid;grid-template-columns:96px 1fr;column-gap:8px;align-items:center;position:relative}
+body.mfs.pcpick #ui .prow .cardw>.card{grid-column:1;grid-row:1}
+body.mfs.pcpick #ui .prow .cardw>.pcinfo{grid-column:2;grid-row:1;margin:0!important;text-align:left;font-size:12px;line-height:1.3}
+body.mfs.pcpick #ui .prow .cardw>.rbtn{position:absolute;left:66px;top:-6px}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -3045,7 +3054,7 @@ body.mfs #comp.narrow.two .bk.hasft>.bkp{padding-bottom:56px!important}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v355</div>
+<div id="ver">Towerize v356</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3210,10 +3219,11 @@ function decorate(o){if(typeof S!=='undefined'&&S&&S.era===2)return decorateE2(o
  o.p=g.map(r=>r.join(''));}
 function drawRim(g,k){const BCS=K*CS,x0=Math.floor(CAM.x/BCS)-1,y0=Math.floor(CAM.y/BCS)-1,x1=Math.ceil((CAM.x+VIEW/k)/BCS)+1,y1=Math.ceil((CAM.y+VH/k)/BCS)+1;
  const e2=S&&S.era===2,ext=e2?[]:COSM.dec.filter(d=>decOn(d.id)).map(d=>d.ch),pool=(e2?['Q','c','Y','Y','V','X','c','N']:['T','T','T','R','T','R']).concat(ext);
- for(let gy=Math.max(y0,-P);gy<Math.min(y1,NC+P);gy++)for(let gx=Math.max(x0,-P);gx<Math.min(x1,NC+P);gx++){if(gx>=0&&gy>=0&&gx<NC&&gy<NC)continue;
+ /* v356: el terreno de alrededor llega a todo lo que se ve (antes solo una pieza de margen y luego negro: en móvil, que es más alargado, se veía el corte; Nogal 16-nov) */
+ for(let gy=y0;gy<y1;gy++)for(let gx=x0;gx<x1;gx++){if(gx>=0&&gy>=0&&gx<NC&&gy<NC)continue;
   const X=gx*BCS,Y=gy*BCS,h=((gx*374761393+gy*668265263)^(gx*gy*2246822519))>>>0;if(e2)e2Ground(g,X,Y,gx,gy,BCS);else{g.fillStyle='#2c3a2f';g.fillRect(X,Y,BCS,BCS);}
   if(h%100<(e2?30:38))drawObs(g,pool[(h>>>8)%pool.length],X,Y,BCS);else if(!e2)drawObs(g,'#',X,Y,BCS);
-  const d=Math.max(gx<0?-gx:gx>=NC?gx-NC+1:0,gy<0?-gy:gy>=NC?gy-NC+1:0)/P;g.fillStyle=`rgba(8,10,14,${(.35+.5*d).toFixed(2)})`;g.fillRect(X,Y,BCS,BCS);}}
+  const d=Math.max(gx<0?-gx:gx>=NC?gx-NC+1:0,gy<0?-gy:gy>=NC?gy-NC+1:0)/P;g.fillStyle=`rgba(8,10,14,${(.35+.3*Math.min(1,d)).toFixed(2)})`;g.fillRect(X,Y,BCS,BCS);}}
 function drawObs(c,ch,x,y,s){if('QNXVcYE'.includes(ch))return e2Obs(c,ch,x,y,s);if('njklgefuzb'.includes(ch))return drawDeco2(c,ch,x,y,s);
  if(ch==='#'){const h=((x*73+y*151)|0)%7;if(h===0){c.fillStyle='#d9c26a';c.beginPath();c.arc(x+s*.3,y+s*.35,s*.05,0,7);c.fill();}else if(h===3){c.fillStyle='#c98ac9';c.beginPath();c.arc(x+s*.68,y+s*.62,s*.05,0,7);c.fill();}else if(h===5){c.strokeStyle='#3e5a3a';c.lineWidth=Math.max(1,s*.04);c.beginPath();c.moveTo(x+s*.45,y+s*.7);c.lineTo(x+s*.42,y+s*.55);c.moveTo(x+s*.5,y+s*.7);c.lineTo(x+s*.55,y+s*.56);c.stroke();}return;}
  if(ch==='T'){c.fillStyle='#5a3c22';c.fillRect(x+s*.44,y+s*.55,s*.12,s*.3);c.fillStyle='#2f6b3a';c.beginPath();c.arc(x+s*.5,y+s*.42,s*.3,0,7);c.fill();c.fillStyle='#3e8a4a';c.beginPath();c.arc(x+s*.42,y+s*.36,s*.15,0,7);c.fill();}
@@ -9361,11 +9371,14 @@ addEventListener('keydown',e=>{if(!CMC.on)return;if([' ','Enter','Escape','Arrow
 // La cámara automática encuadra las piezas colocadas (en la fase de colocar pieza, también los huecos donde puede ir la siguiente).
 const CAMA={on:false,tz:1,ax:0,ay:0,wx:0,wy:0,cx:null,cy:null};
 // zoom suave hacia un punto de la pantalla (el punto del mundo bajo el cursor se queda quieto)
-function zoomSmooth(f,px,py){const base=CAMA.on&&CAMA.cx==null?CAMA.tz:CAM.z,a=sc();CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,base*f));CAMA.ax=px;CAMA.ay=py;CAMA.wx=px/a+CAM.x;CAMA.wy=py/a+CAM.y;CAMA.cx=null;CAMA.cy=null;}
+function zoomSmooth(f,px,py){CAMA.tw=null;const base=CAMA.on&&CAMA.cx==null?CAMA.tz:CAM.z,a=sc();CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,base*f));CAMA.ax=px;CAMA.ay=py;CAMA.wx=px/a+CAM.x;CAMA.wy=py/a+CAM.y;CAMA.cx=null;CAMA.cy=null;}
 // viaje suave a un zoom y un centro (en casillas del mundo)
-function camGo(z,x,y,sp){CAMA.sp=sp||11;CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,z));CAMA.cx=x;CAMA.cy=y;}
-function camStop(){CAMA.on=false;}
-function camTick(dt){if(!CAMA.on)return;const k=1-Math.exp(-dt*(CAMA.cx!=null?(CAMA.sp||11):11));/* v307: los encuadres automáticos van más suaves que el zoom de la rueda */CAM.z+=(CAMA.tz-CAM.z)*k;
+function camGo(z,x,y,sp){CAMA.tw=null;CAMA.sp=sp||11;CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,z));CAMA.cx=x;CAMA.cy=y;}
+function camStop(){CAMA.on=false;CAMA.tw=null;}
+// v356 (Nogal): los encuadres automáticos (al cambiar de fase o colocar pieza) van con una transición suave de principio a fin
+// (acelera y frena), en vez de saltar casi todo de golpe al empezar. Duración en segundos.
+function camGoT(z,x,y,dur){const w=VIEW/sc(),h=VH/sc();CAMA.on=true;CAMA.tw={el:0,dur:dur||.9,z0:CAM.z,x0:(CAM.x+w/2-CS/2)/CS,y0:(CAM.y+h/2-CS/2)/CS};CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,z));CAMA.cx=x;CAMA.cy=y;}
+function camTick(dt){if(!CAMA.on)return;if(CAMA.tw&&CAMA.cx!=null){const T=CAMA.tw;T.el+=dt;const u=Math.min(1,T.el/T.dur),e=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;CAM.z=T.z0+(CAMA.tz-T.z0)*e;camCenter(T.x0+(CAMA.cx-T.x0)*e,T.y0+(CAMA.cy-T.y0)*e);if(u>=1){CAMA.tw=null;CAMA.on=false;}return;}const k=1-Math.exp(-dt*(CAMA.cx!=null?(CAMA.sp||11):11));/* v307: los encuadres automáticos van más suaves que el zoom de la rueda */CAM.z+=(CAMA.tz-CAM.z)*k;
  if(CAMA.cx!=null){const w=VIEW/sc(),h=VH/sc(),tx=CAMA.cx*CS+CS/2-w/2,ty=CAMA.cy*CS+CS/2-h/2;CAM.x+=(tx-CAM.x)*k;CAM.y+=(ty-CAM.y)*k;clampCam();
   if(Math.abs(CAMA.tz-CAM.z)<CAM.z*.002&&Math.abs(tx-CAM.x)<.5&&Math.abs(ty-CAM.y)<.5){CAM.z=CAMA.tz;camCenter(CAMA.cx,CAMA.cy);CAMA.on=false;}}
  else{const b=sc();CAM.x=CAMA.wx-CAMA.ax/b;CAM.y=CAMA.wy-CAMA.ay/b;clampCam();if(Math.abs(CAMA.tz-CAM.z)<CAM.z*.002){CAM.z=CAMA.tz;const c=sc();CAM.x=CAMA.wx-CAMA.ax/c;CAM.y=CAMA.wy-CAMA.ay/c;clampCam();CAMA.on=false;}}}
@@ -9375,7 +9388,7 @@ function camFitBox(){if(!S||!S.blocks)return null;let x0=1e9,y0=1e9,x1=-1e9,y1=-
 const CAMFITMAX=3.2;
 function camFit(instant){const b=camFitBox();if(!b)return;const PK=P*K,wc=(b.x1-b.x0+1)*PK+K*2,hc=(b.y1-b.y0+1)*PK+K*2;
  const z=Math.max(ZMIN,Math.min(ZMAX,CAMFITMAX,Math.min(VIEW/(wc*CS*BS),VH/(hc*CS*BS))*.92)),cx=(b.x0+b.x1+1)/2*PK-.5,cy=(b.y0+b.y1+1)/2*PK-.5;
- if(instant){CAMA.on=false;CAM.z=z;camCenter(cx,cy);}else camGo(z,cx,cy,5);}
+ if(instant){CAMA.on=false;CAMA.tw=null;CAM.z=z;camCenter(cx,cy);}else camGoT(z,cx,cy,.9);}
 // el encuadre automático se repite al colocar pieza y al cambiar de fase (colocar ↔ construir); un zoom manual lo respeta hasta el siguiente cambio
 let CAMPH=null,CAMNB=0;
 function camAuto(){if(!S||PREVIEWING||S.pvE||S.pvH||!S.blocks)return;const nb=Object.keys(S.blocks).length,ph=S.phase==='place'?'place':'other';
@@ -11190,6 +11203,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:356,f:'16 nov 2026',t:'Elegir pieza en el móvil',s:[['Móvil',['Elegir pieza: el pergamino se abre a todo lo ancho, con las piezas más grandes, y ya no tapa el resto de la pantalla de negro.']],['Mapa',['El terreno de alrededor del mapa llega hasta el borde de la pantalla.','La cámara se aleja y se acerca sola con una transición suave.']]]},
  {v:355,f:'16 nov 2026',t:'iPhone y libro en el móvil',s:[['Móvil',['iPhone abierto desde la pantalla de inicio: los botones ya no quedan bajo la isla, las esquinas ni la rayita de abajo, así que se pueden pulsar todos.','Preparar partida en el móvil apaisado: dos páginas, como en el ordenador, y más sitio para leer.','Las páginas del libro en el móvil son una sola hoja con los botones encima, y si hay más que leer, te avisa con «▾ Más abajo».']]]},
  {v:354,f:'16 nov 2026',t:'Medidor de daño e interfaz renovada',s:[['Novedades',['Medidor de daño: mira cuánto hace cada torre en la ronda, por tipo de torre, y pasa el ratón por una fila para ver de cuál se trata. Se puede apagar en Opciones.','Los paneles de la izquierda se pliegan como cajones.','Algunas unidades estrenan dibujo y barra propia en su ficha.']],['Interfaz',['Arriba a la izquierda, todos los botones en fila y a la misma altura; «Reintentar» pasa abajo, al centro.','Los FPS ya no parecen un botón.','Los logros fijados se despliegan para ver su descripción y progreso, y se quitan con su chincheta.','Iconos nuevos para el tiempo real y el de combate.','En el móvil, la pantalla de «Gira el teléfono» ya se lee bien.']]]},
  {v:353,f:'16 nov 2026',t:'Lo nuevo se ve y barras nuevas',s:[['Novedades',['Lo nuevo vuelve a llevar su puntito (logros, compendio, pestañas y cintas del libro) hasta que lo abres: ya no se borra solo al entrar en el libro.','Las torres con una mecánica especial la enseñan en su ficha con una barra animada nueva.']],['Equilibrio',['Frenesí: −20% de enfriamiento y −25% de daño (la versión ★, el doble).','Moneda antigua: +20% de todo el oro que recibes (antes +50%).','Dos torres especializadas cambian cómo cargan su mecánica. Míralo en su ficha.']],['Logros',['Coleccionista: ahora tampoco puedes vender ninguna torre.']],['Interfaz',['La oferta de torres y los eventos ya no enseñan la flecha de desplazamiento cuando caben en pantalla.']]]},
@@ -14214,10 +14228,13 @@ function pgStart(kind,anim){if(pgE2())return;const C=pgCfg[kind],h=C.host();if(!
  PGF.on={kind,h,sv,t0:anim&&!pgRM()?performance.now():-1e9,hov:-1,hovT:0};if(kind==='torre')pgFit(h);requestAnimationFrame(pgTick);}
 // si la ventana (con rodillos y mangos) no cabe de alto en la pantalla, se encoge entera lo justo
 function pgFit(h){const cur=parseFloat(h.style.zoom)||1,nat=h.getBoundingClientRect().height/cur,f=Math.max(document.body.classList.contains('mfs')?.7:.9,Math.min(1,(innerHeight-(document.body.classList.contains('mfs')?12:44))/nat));if(Math.abs(f-cur)>.01)h.style.zoom=f<1?f.toFixed(3):'';}/* el reloj empieza cuando la ventana ya se ve */
-function pgStop(){const o=PGF.on;if(!o)return;PGF.on=null;try{o.sv.remove();o.h.classList.remove('pgf');o.h.style.zoom='';for(const e of pgCfg[o.kind].inner(o.h))if(e){e.style.clipPath='';}for(const c of pgCfg[o.kind].cards(o.h))(c.closest('.cardw')||c).style.opacity='';const tt=pgCfg[o.kind].ttl(o.h);if(tt){tt.style.transform='';tt.style.opacity='';}const sb=pgCfg[o.kind].sub(o.h);if(sb)sb.style.opacity='';}catch(e){}}
+// v356 · móvil apaisado (iPhone): el pergamino de elegir pieza, con sus rodillos y pomos (PGM por arriba, PGB por abajo), era más
+// alto que la pantalla y se cortaba por arriba y por abajo: se encoge lo justo para que quepa entero y se centra en vertical
+function pgFitPz(h){const cur=parseFloat(h.style.zoom)||1,nat=h.getBoundingClientRect().height/cur,vh=document.documentElement.classList.contains('iosapp')?document.body.getBoundingClientRect().height:innerHeight,f=Math.max(.6,Math.min(1,(vh-8)/(nat+PGM+PGB)));if(Math.abs(f-cur)>.01)h.style.zoom=f<1?f.toFixed(3):'';h.style.marginTop=((PGM-PGB)/2)+'px';}
+function pgStop(){const o=PGF.on;if(!o)return;PGF.on=null;try{o.sv.remove();o.h.classList.remove('pgf');o.h.style.zoom='';o.h.style.marginTop='';for(const e of pgCfg[o.kind].inner(o.h))if(e){e.style.clipPath='';}for(const c of pgCfg[o.kind].cards(o.h))(c.closest('.cardw')||c).style.opacity='';const tt=pgCfg[o.kind].ttl(o.h);if(tt){tt.style.transform='';tt.style.opacity='';}const sb=pgCfg[o.kind].sub(o.h);if(sb)sb.style.opacity='';}catch(e){}}
 function pgTick(now){const o=PGF.on;if(!o)return;const C=pgCfg[o.kind],h=C.host();if(h!==o.h||!h.isConnected){pgStop();/* la ventana cambió (otra ronda, otra oferta): se vuelve a montar si sigue abierta */const h2=C.host();if(h2)pgStart(o.kind,false);return;}
  const W=h.offsetWidth,H=h.offsetHeight,vis=h.getBoundingClientRect().width>0&&getComputedStyle(h).visibility!=='hidden'&&!(o.kind==='pieza'&&((typeof LB!=='undefined'&&LB.open)||$('relic').classList.contains('open')||(typeof DLG!=='undefined'&&DLG.on)));if(!W||!H||!vis){if(o.t0>0)o.t0=now;requestAnimationFrame(pgTick);return;}if(o.kind==='pieza'&&o.t0>0&&S)PGN.round=S.round;
- if(o.kind==='torre')pgFit(h);
+ if(o.kind==='torre')pgFit(h);else if(document.body.classList.contains('mfs'))pgFitPz(h);
  const t=(now-o.t0)/1000,SE=1.0,UN0=1.8,UND=1.35,t0=UN0+.55,base=UN0+.75,CX=W/2+PGM,CY=H/2+PGM,IX=PGIX,IY=PGIY,Y0=PGM+IY,PH=H-2*IY,PW=W-2*IX;
  /* los rodillos y sus mangos van dentro de la caja de la ventana (que reserva ese hueco), para no montarse con lo de al lado */
  const op=t<UN0?0:Math.max(0,pgBack(pgseg(t,UN0,UN0+UND)));const w=Math.max(0,PW*Math.min(op,1.04)),xl=CX-w/2,xr=CX+w/2;
