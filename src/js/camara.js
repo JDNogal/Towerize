@@ -3,11 +3,14 @@
 // La cámara automática encuadra las piezas colocadas (en la fase de colocar pieza, también los huecos donde puede ir la siguiente).
 const CAMA={on:false,tz:1,ax:0,ay:0,wx:0,wy:0,cx:null,cy:null};
 // zoom suave hacia un punto de la pantalla (el punto del mundo bajo el cursor se queda quieto)
-function zoomSmooth(f,px,py){const base=CAMA.on&&CAMA.cx==null?CAMA.tz:CAM.z,a=sc();CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,base*f));CAMA.ax=px;CAMA.ay=py;CAMA.wx=px/a+CAM.x;CAMA.wy=py/a+CAM.y;CAMA.cx=null;CAMA.cy=null;}
+function zoomSmooth(f,px,py){CAMA.tw=null;const base=CAMA.on&&CAMA.cx==null?CAMA.tz:CAM.z,a=sc();CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,base*f));CAMA.ax=px;CAMA.ay=py;CAMA.wx=px/a+CAM.x;CAMA.wy=py/a+CAM.y;CAMA.cx=null;CAMA.cy=null;}
 // viaje suave a un zoom y un centro (en casillas del mundo)
-function camGo(z,x,y,sp){CAMA.sp=sp||11;CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,z));CAMA.cx=x;CAMA.cy=y;}
-function camStop(){CAMA.on=false;}
-function camTick(dt){if(!CAMA.on)return;const k=1-Math.exp(-dt*(CAMA.cx!=null?(CAMA.sp||11):11));/* v307: los encuadres automáticos van más suaves que el zoom de la rueda */CAM.z+=(CAMA.tz-CAM.z)*k;
+function camGo(z,x,y,sp){CAMA.tw=null;CAMA.sp=sp||11;CAMA.on=true;CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,z));CAMA.cx=x;CAMA.cy=y;}
+function camStop(){CAMA.on=false;CAMA.tw=null;}
+// v356 (Nogal): los encuadres automáticos (al cambiar de fase o colocar pieza) van con una transición suave de principio a fin
+// (acelera y frena), en vez de saltar casi todo de golpe al empezar. Duración en segundos.
+function camGoT(z,x,y,dur){const w=VIEW/sc(),h=VH/sc();CAMA.on=true;CAMA.tw={el:0,dur:dur||.9,z0:CAM.z,x0:(CAM.x+w/2-CS/2)/CS,y0:(CAM.y+h/2-CS/2)/CS};CAMA.tz=Math.max(ZMIN,Math.min(ZMAX,z));CAMA.cx=x;CAMA.cy=y;}
+function camTick(dt){if(!CAMA.on)return;if(CAMA.tw&&CAMA.cx!=null){const T=CAMA.tw;T.el+=dt;const u=Math.min(1,T.el/T.dur),e=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;CAM.z=T.z0+(CAMA.tz-T.z0)*e;camCenter(T.x0+(CAMA.cx-T.x0)*e,T.y0+(CAMA.cy-T.y0)*e);if(u>=1){CAMA.tw=null;CAMA.on=false;}return;}const k=1-Math.exp(-dt*(CAMA.cx!=null?(CAMA.sp||11):11));/* v307: los encuadres automáticos van más suaves que el zoom de la rueda */CAM.z+=(CAMA.tz-CAM.z)*k;
  if(CAMA.cx!=null){const w=VIEW/sc(),h=VH/sc(),tx=CAMA.cx*CS+CS/2-w/2,ty=CAMA.cy*CS+CS/2-h/2;CAM.x+=(tx-CAM.x)*k;CAM.y+=(ty-CAM.y)*k;clampCam();
   if(Math.abs(CAMA.tz-CAM.z)<CAM.z*.002&&Math.abs(tx-CAM.x)<.5&&Math.abs(ty-CAM.y)<.5){CAM.z=CAMA.tz;camCenter(CAMA.cx,CAMA.cy);CAMA.on=false;}}
  else{const b=sc();CAM.x=CAMA.wx-CAMA.ax/b;CAM.y=CAMA.wy-CAMA.ay/b;clampCam();if(Math.abs(CAMA.tz-CAM.z)<CAM.z*.002){CAM.z=CAMA.tz;const c=sc();CAM.x=CAMA.wx-CAMA.ax/c;CAM.y=CAMA.wy-CAMA.ay/c;clampCam();CAMA.on=false;}}}
@@ -17,10 +20,10 @@ function camFitBox(){if(!S||!S.blocks)return null;let x0=1e9,y0=1e9,x1=-1e9,y1=-
 const CAMFITMAX=3.2;
 function camFit(instant){const b=camFitBox();if(!b)return;const PK=P*K,wc=(b.x1-b.x0+1)*PK+K*2,hc=(b.y1-b.y0+1)*PK+K*2;
  const z=Math.max(ZMIN,Math.min(ZMAX,CAMFITMAX,Math.min(VIEW/(wc*CS*BS),VH/(hc*CS*BS))*.92)),cx=(b.x0+b.x1+1)/2*PK-.5,cy=(b.y0+b.y1+1)/2*PK-.5;
- if(instant){CAMA.on=false;CAM.z=z;camCenter(cx,cy);}else camGo(z,cx,cy,5);}
+ if(instant){CAMA.on=false;CAMA.tw=null;CAM.z=z;camCenter(cx,cy);}else camGoT(z,cx,cy,.9);}
 // el encuadre automático se repite al colocar pieza y al cambiar de fase (colocar ↔ construir); un zoom manual lo respeta hasta el siguiente cambio
 let CAMPH=null,CAMNB=0;
 function camAuto(){if(!S||PREVIEWING||S.pvE||S.pvH||!S.blocks)return;const nb=Object.keys(S.blocks).length,ph=S.phase==='place'?'place':'other';
- if(nb!==CAMNB||ph!==CAMPH){const first=!CAMNB,toPick=ph==='place'&&nb===CAMNB;CAMNB=nb;CAMPH=ph;/* v356 (Nogal): al abrir «Elige una pieza» la cámara se queda como está; antes se alejaba de golpe para enseñar los huecos de alrededor y, en el móvil, dejaba ver el borde del mapa */if(OPT.camauto!==false&&(first||!toPick))camFit(first);}}
+ if(nb!==CAMNB||ph!==CAMPH){const first=!CAMNB;CAMNB=nb;CAMPH=ph;if(OPT.camauto!==false)camFit(first);}}
 // el botón de centrar encuadra lo construido
 {const _g=startGame;startGame=function(){CAMNB=0;CAMPH=null;CAMA.on=false;return _g.apply(this,arguments);};}
