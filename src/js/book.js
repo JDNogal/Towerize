@@ -136,7 +136,7 @@ function compParts(){
 }
 function renderComp(){if(typeof lbRender==='function')lbRender();}
 
-// v355 · móvil: si una página del libro tiene más contenido abajo, sale «▾ Más abajo» pegado a su borde inferior (antes el texto
+// v355 · móvil: si una página del libro tiene más contenido abajo, sale «▾ Más abajo» en su mitad de la barra de botones (antes el texto
 // quedaba cortado a media línea y no se notaba que se podía desplazar; Nogal, iPhone de su padre)
-function bkpMoreUpd(){document.querySelectorAll('#comp.narrow .bkp').forEach(p=>{const m=p.scrollHeight>p.clientHeight+6&&p.scrollTop+p.clientHeight<p.scrollHeight-6;p.classList.toggle('more',m);});}
+function bkpMoreUpd(){const c=document.getElementById('comp');if(!c)return;let l=false,r=false;c.querySelectorAll('.bkp').forEach(p=>{const m=c.classList.contains('narrow')&&p.scrollHeight>p.clientHeight+6&&p.scrollTop+p.clientHeight<p.scrollHeight-6;p.classList.toggle('more',m);if(m){if(p.classList.contains('r'))r=true;else l=true;}});c.classList.toggle('morel',l);c.classList.toggle('morer',r);}
 {const c=document.getElementById('comp');if(c){new MutationObserver(()=>requestAnimationFrame(bkpMoreUpd)).observe(c,{childList:true});c.addEventListener('scroll',bkpMoreUpd,true);addEventListener('resize',bkpMoreUpd);}}

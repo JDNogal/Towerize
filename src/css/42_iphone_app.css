@@ -9,8 +9,14 @@ html.iosapp #cw{height:calc(100vh - var(--iob))!important;height:calc(100dvh - v
 #comp.narrow.two .bk>.bkp.l,#comp.narrow.two .bk>.bkp.r{flex:0 0 50%!important;max-width:50%!important;box-sizing:border-box!important;overflow-y:auto}
 #comp.narrow.two .bkp.r{padding-right:16px}
 #comp.narrow.two .lbhart{width:min(170px,calc(100vh - 220px));margin-bottom:6px}
-body.mfs #comp.narrow.two .bk.hasft>.bkp{height:calc(100% - 50px)!important;max-height:calc(100% - 50px)!important;padding-bottom:12px!important}
-#comp.narrow.two .lbft{padding:6px 14px;height:50px;background:none}
+/* el papel de la página llega hasta abajo y los botones van encima, como en PC (antes la página acababa encima de la barra de
+   botones y parecían dos libros, uno encima del otro; Nogal 16-nov). Vale para todas las páginas del libro en móvil. */
+body.mfs #comp .bk.hasft>.bkp{height:100%!important;max-height:100%!important;padding-bottom:62px!important}
+body.mfs #comp.narrow.two .bk.hasft>.bkp{padding-bottom:56px!important}
+#comp.narrow.two .lbft{padding:0 14px 6px;height:84px;align-items:flex-end}
+#comp.narrow .lbft{background:linear-gradient(color-mix(in srgb,var(--paper) 0%,transparent),var(--paper) 45%)!important}
 #comp.narrow.two .lbft .gbtn{font-size:14px!important;padding:7px 14px!important;min-height:0!important}
-/* «▾ Más abajo» en las páginas del libro con más contenido (bkpMoreUpd en book.js) */
-#comp.narrow .bkp.more::after{content:"▾ Más abajo";position:sticky;bottom:-12px;display:block;margin:0 -16px -12px;padding:14px 0 6px;text-align:center;font:600 12px/1 system-ui,sans-serif;color:var(--ink2,#7a5a3a);background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 96%,transparent) 55%);pointer-events:none;z-index:3}
+/* «▾ Más abajo» (bkpMoreUpd en book.js): la barra de botones lleva por encima un degradado de papel (lo que sigue
+   se difumina, nada asoma cortado detrás de los botones) y, junto a los botones, «▾ Más abajo» en su mitad */
+#comp.narrow.morel .lbft.l::after,#comp.narrow.morer .lbft.r::after{content:"▾ Más abajo";margin:0 auto 10px;font:600 12px/1 system-ui,sans-serif;color:#7a5a3a;white-space:nowrap;pointer-events:none}
+#comp.narrow.morer .lbft.r::after{order:-1}

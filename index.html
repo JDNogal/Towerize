@@ -3020,11 +3020,17 @@ html.iosapp #cw{height:calc(100vh - var(--iob))!important;height:calc(100dvh - v
 #comp.narrow.two .bk>.bkp.l,#comp.narrow.two .bk>.bkp.r{flex:0 0 50%!important;max-width:50%!important;box-sizing:border-box!important;overflow-y:auto}
 #comp.narrow.two .bkp.r{padding-right:16px}
 #comp.narrow.two .lbhart{width:min(170px,calc(100vh - 220px));margin-bottom:6px}
-body.mfs #comp.narrow.two .bk.hasft>.bkp{height:calc(100% - 50px)!important;max-height:calc(100% - 50px)!important;padding-bottom:12px!important}
-#comp.narrow.two .lbft{padding:6px 14px;height:50px;background:none}
+/* el papel de la página llega hasta abajo y los botones van encima, como en PC (antes la página acababa encima de la barra de
+   botones y parecían dos libros, uno encima del otro; Nogal 16-nov). Vale para todas las páginas del libro en móvil. */
+body.mfs #comp .bk.hasft>.bkp{height:100%!important;max-height:100%!important;padding-bottom:62px!important}
+body.mfs #comp.narrow.two .bk.hasft>.bkp{padding-bottom:56px!important}
+#comp.narrow.two .lbft{padding:0 14px 6px;height:84px;align-items:flex-end}
+#comp.narrow .lbft{background:linear-gradient(color-mix(in srgb,var(--paper) 0%,transparent),var(--paper) 45%)!important}
 #comp.narrow.two .lbft .gbtn{font-size:14px!important;padding:7px 14px!important;min-height:0!important}
-/* «▾ Más abajo» en las páginas del libro con más contenido (bkpMoreUpd en book.js) */
-#comp.narrow .bkp.more::after{content:"▾ Más abajo";position:sticky;bottom:-12px;display:block;margin:0 -16px -12px;padding:14px 0 6px;text-align:center;font:600 12px/1 system-ui,sans-serif;color:var(--ink2,#7a5a3a);background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 96%,transparent) 55%);pointer-events:none;z-index:3}
+/* «▾ Más abajo» (bkpMoreUpd en book.js): la barra de botones lleva por encima un degradado de papel (lo que sigue
+   se difumina, nada asoma cortado detrás de los botones) y, junto a los botones, «▾ Más abajo» en su mitad */
+#comp.narrow.morel .lbft.l::after,#comp.narrow.morer .lbft.r::after{content:"▾ Más abajo";margin:0 auto 10px;font:600 12px/1 system-ui,sans-serif;color:#7a5a3a;white-space:nowrap;pointer-events:none}
+#comp.narrow.morer .lbft.r::after{order:-1}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -4765,9 +4771,9 @@ function compParts(){
 }
 function renderComp(){if(typeof lbRender==='function')lbRender();}
 
-// v355 · móvil: si una página del libro tiene más contenido abajo, sale «▾ Más abajo» pegado a su borde inferior (antes el texto
+// v355 · móvil: si una página del libro tiene más contenido abajo, sale «▾ Más abajo» en su mitad de la barra de botones (antes el texto
 // quedaba cortado a media línea y no se notaba que se podía desplazar; Nogal, iPhone de su padre)
-function bkpMoreUpd(){document.querySelectorAll('#comp.narrow .bkp').forEach(p=>{const m=p.scrollHeight>p.clientHeight+6&&p.scrollTop+p.clientHeight<p.scrollHeight-6;p.classList.toggle('more',m);});}
+function bkpMoreUpd(){const c=document.getElementById('comp');if(!c)return;let l=false,r=false;c.querySelectorAll('.bkp').forEach(p=>{const m=c.classList.contains('narrow')&&p.scrollHeight>p.clientHeight+6&&p.scrollTop+p.clientHeight<p.scrollHeight-6;p.classList.toggle('more',m);if(m){if(p.classList.contains('r'))r=true;else l=true;}});c.classList.toggle('morel',l);c.classList.toggle('morer',r);}
 {const c=document.getElementById('comp');if(c){new MutationObserver(()=>requestAnimationFrame(bkpMoreUpd)).observe(c,{childList:true});c.addEventListener('scroll',bkpMoreUpd,true);addEventListener('resize',bkpMoreUpd);}}
 // ---- previsualización de torres (mini-partida independiente con un solo enemigo) ----
 // prepara una torre de evento en la previsualización (nivel/forma elegidos en el compendio)
