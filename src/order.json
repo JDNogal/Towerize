@@ -39,7 +39,8 @@
   "37_arreglos_v351.css",
   "38_ficha_enemigo.css",
   "39_puntuacion_libro.css",
-  "40_ficha_torre.css"
+  "40_ficha_torre.css",
+  "41_hud_v354.css"
  ],
  "js": [
   "00_config.js",
@@ -194,6 +195,8 @@
   "descripciones_rango.js",
   "cofre_salida.js",
   "ficha_torre.js",
-  "ficha_barras.js"
+  "ficha_barras.js",
+  "hud_v354.js",
+  "almas_v354.js"
  ]
 }
