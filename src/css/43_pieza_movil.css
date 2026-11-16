@@ -1,0 +1,9 @@
+/* v356 · elegir pieza en el móvil apaisado (Nogal y su padre, Android e iPhone): la ventana era estrecha (≈360 px), el pergamino solo se
+   abría hasta ahí y parecía que el juego se encogía a un cuadrado en el centro. Ahora la ventana ocupa casi todo el ancho y cada carta
+   va en horizontal: la pieza a la izquierda y lo que tiene a la derecha. pgFitPz (pergamino_nuevo.js) la encoge si no cabe de alto. */
+body.mfs.pcpick #panel:has(.prow){width:min(760px,calc(100vw - 150px))!important;max-width:none!important;box-sizing:border-box}
+body.mfs.pcpick #ui .prow{display:flex;gap:10px!important;justify-content:center}
+body.mfs.pcpick #ui .prow .cardw{flex:1 1 0!important;max-width:none!important;min-width:0;display:grid;grid-template-columns:96px 1fr;column-gap:8px;align-items:center;position:relative}
+body.mfs.pcpick #ui .prow .cardw>.card{grid-column:1;grid-row:1}
+body.mfs.pcpick #ui .prow .cardw>.pcinfo{grid-column:2;grid-row:1;margin:0!important;text-align:left;font-size:12px;line-height:1.3}
+body.mfs.pcpick #ui .prow .cardw>.rbtn{position:absolute;left:66px;top:-6px}
