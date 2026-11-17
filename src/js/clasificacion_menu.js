@@ -14,7 +14,9 @@ function lbmTick(){try{const on=document.body.classList.contains('inmenu')&&LB.o
  if(h!==LBM.sig){LBM.sig=h;el.innerHTML=h;}
  el.classList.add('on');
  // centrado entre el borde izquierdo y el libro
- const bk=document.querySelector('#comp .lbcv')||document.querySelector('#comp .bkw');if(bk){const r=bk.getBoundingClientRect(),w=el.offsetWidth;el.style.left=Math.max(8,(r.left-w)/2)+'px';el.style.top=Math.max(60,r.top+r.height/2-el.offsetHeight/2)+'px';}else{el.style.left='40px';el.style.top=Math.max(60,innerHeight/2-el.offsetHeight/2)+'px';}
+ // v358: en pantallas grandes el panel lleva zoom (--uiz, desde v348) y left/top se multiplican por él: se calcula en píxeles de pantalla y se divide entre el zoom
+ const z=parseFloat(getComputedStyle(el).zoom)||1,sw=el.offsetWidth*z,sh=el.offsetHeight*z;
+ const bk=document.querySelector('#comp .lbcv')||document.querySelector('#comp .bkw');if(bk){const r=bk.getBoundingClientRect();el.style.left=Math.max(8,(r.left-sw)/2)/z+'px';el.style.top=Math.max(60,Math.min(innerHeight-sh-8,r.top+r.height/2-sh/2))/z+'px';}else{el.style.left=40/z+'px';el.style.top=Math.max(60,innerHeight/2-sh/2)/z+'px';}
  el.classList.add('on');}catch(e){}}
 setInterval(lbmTick,300);
 // móvil: cinta «Clasificación» en la portada del menú
