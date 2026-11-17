@@ -18,5 +18,5 @@ let _bkItemsRaw=null;
  return out.filter((it,i)=>it.sec==null||(i+1<out.length&&out[i+1].sec==null));};}
 {const _bf=bkFilters;bkFilters=function(t){let h=_bf.apply(this,arguments);if(!ERAF_T.includes(t)||!(typeof era2Ok==='function'&&era2Ok()))return h;
  CP.flt=CP.flt||{};const has=eraSeen(t);if(!(has[1]&&has[2])){if(CP.flt.era)CP.flt.era='';return h;}
- const row=`<div class="bkfr"><span class="bkfl">Era:</span><button class="${CP.flt.era?'':'on'}" data-a="cflt" data-f="era" data-v="">Todas</button>`+[['1',ERADEF[1]],['2',ERADEF[2]]].map(([v,E])=>`<button class="${CP.flt.era===v?'on':''}" data-a="cflt" data-f="era" data-v="${v}">${E.ic} ${E.n}</button>`).join('')+'</div>';
+ const row=`<div class="bkfr"><span class="bkfl">Era:</span><button class="${CP.flt.era?'':'on'}" data-a="cflt" data-f="era" data-v="">Todas</button>`+[['1',ERADEF[1]],['2',ERADEF[2]]].map(([v,E])=>`<button class="${CP.flt.era===v?'on':''}" data-a="cflt" data-f="era" data-v="${v}">${eraIc(+v)} ${E.n}</button>`).join('')+'</div>';
  return h&&h.startsWith('<div class="bkflt">')?h.replace('<div class="bkflt">','<div class="bkflt">'+row):'<div class="bkflt">'+row+'</div>'+h;};}

@@ -1,6 +1,8 @@
 // ==================== ERAS · la segunda era: Distópica (escenario: Ruinas de Neón) ====================
 // ERA = era elegida para la próxima partida; S.era = era de la partida en curso. La era 2 se abre al reparar a ÉTER (3 victorias).
 const ERADEF={1:{n:'Fantástica',ic:'🐉',col:'#4a8a4a',esc:'Reinos de Leyenda'},2:{n:'Distópica',ic:'🌆',col:'#3fe8ff',esc:'Ruinas de Neón'}};
+// v358 · icono dibujado de cada era (nunca su emoji: regla de los emojis)
+const eraIc=e=>{const E=ERADEF[e]||ERADEF[1];try{return icU(+e===2?'m_era2':'m_castle',E.ic);}catch(x){return E.ic;}};
 // nombre de la era con su escenario: «Era Distópica · Ruinas de Neón»
 const eraName=(e,full)=>{const D=ERADEF[e]||ERADEF[1];return 'Era '+D.n+(full&&D.esc?' · '+D.esc:'');};
 

@@ -196,7 +196,7 @@ function uPlaceAt(c){const u=S.uq[0];if(!u)return;const kx=Math.floor(c.x/K),ky=
  const T=TW[u.type],tw={id:++S.tid,type:u.type,lvl:1,x:q.x,y:q.y,cells:[[q.x,q.y]],sq:sqCells(q),inv:0,spec:null,ab:{},acd:{},cd:0,tgt:null,mode:S.dtg[u.type]||'core',rd:S.round};
  see('tw',u.type);hint('uniq','Torres de evento','Las torres de evento solo se consiguen en eventos concretos. Son únicas: no se compran, no se venden y se mejoran a su manera.',tgCell(q.x,q.y,1.4));if(T.guild)mkGuild(tw);if(T.glut)mkGlut(tw);if(T.faro){tw.light=0;tw.lz=[{x:q.x,y:q.y}];tw.lzcd=[0,0];}if(T.dragon){tw.born=S.round;tw.stage=0;}
  S.list.push(tw);S.st.all.push(tw);for(const[a,b]of tw.sq)S.occ[a+','+b]=tw;S.uq.shift();
- if(S.uq.length)startUPlace();else{S.aim=null;S.msg='';toast(T.ic+' '+T.n+': ya está en su sitio.');renderRelics();ui();}}
+ if(S.uq.length)startUPlace();else{S.aim=null;S.msg='';toast(icOf(T)+' '+T.n+': ya está en su sitio.');renderRelics();ui();}}
 function roundRewards(){
  for(const t of S.list)if(TW[t.type].guild){const v=[10,20,35,50][t.lvl-1]||10;goldEv(v);}
  if(rp('scale')){const v=interest();if(v>0){goldEv(v);if(S.st)S.st.gRel+=v;}}

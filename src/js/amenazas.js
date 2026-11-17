@@ -70,11 +70,11 @@ function azParts(){const sel=AZ.sel[ERA]=AZ.sel[ERA]||{},t=AZT.find(x=>x[0]===AZ
 // ---- resumen antes de empezar ----
 function azResParts(){const id=RL.hsel,D=HEROES[id],E=ERADEF[ERA]||{},done=azEraDone(ERA),sel=AZ.sel[ERA]||{},on=AZT.filter(t=>(sel[t[0]]||0)>0),p=azPtsOf(sel);
  const left=`<h3>Resumen</h3><div class="bksub">Nueva partida · revisa antes de empezar</div><div class="amzres">
-  <div class="it"><span class="ai">${E.ic||''}</span><span><small>Era</small><b>${ERA===2?'Distópica · Ruinas de Neón':'Fantástica · Reinos de Leyenda'}</b></span><button class="lbbk ch" data-a="azch" data-v="era">Cambiar</button></div>
+  <div class="it"><span class="ai">${eraIc(ERA)}</span><span><small>Era</small><b>${ERA===2?'Distópica · Ruinas de Neón':'Fantástica · Reinos de Leyenda'}</b></span><button class="lbbk ch" data-a="azch" data-v="era">Cambiar</button></div>
   <div class="it"><span class="ai">${typeof icU==='function'?icU('m_hourglass','⏳'):'⏳'}</span><span><small>Duración</small><b>${ROUNDS} rondas</b></span><button class="lbbk ch" data-a="azch" data-v="rounds">Cambiar</button></div>
   <div class="it" style="--hc:${D.col}"><span class="hp">${portrait(id)}</span><span><small>Héroe</small><b>${D.n}</b><small>${D.role} · ${D.ranged?'A distancia':'Cuerpo a cuerpo'}</small></span><button class="lbbk ch" data-a="azch" data-v="hero">Cambiar</button></div></div>`;
  const right=done?`<h3>Amenazas</h3><div class="bksub">${on.length?p+' puntos de amenaza · puntuación '+azMult(p):'Sin amenazas · partida normal'}</div><div class="amzl" style="margin-top:10px">${on.length?on.map(t=>azRow(t,sel,1)).join(''):'<p style="opacity:.75">Puedes añadir amenazas para que la partida sea más difícil y puntúe más.</p>'}</div><div style="margin-top:12px"><button class="amzsealb" data-a="azopen" data-v="res"><span class="ai">${AZIC.sup}</span>${on.length?'Cambiar amenazas':'Añadir amenazas'}</button></div>`
-  :`<div class="lbdet"><span class="lbdic">${E.ic||''}</span><h4>Todo listo</h4><p>Cuando estés preparado, empieza la partida.</p></div>`;
+  :`<div class="lbdet"><span class="lbdic">${eraIc(ERA)}</span><h4>Todo listo</h4><p>Cuando estés preparado, empieza la partida.</p></div>`;
  return {marks:null,key:'res'+JSON.stringify(sel)+ERA+id,left,right,footL:`<button class="lbbk" data-a="azch" data-v="hero">‹ Héroe</button>`,footR:`<button class="gbtn" data-a="azgo">Empezar partida ›</button>`,after:azFit};}
 // botón de la era: a la derecha de las piezas (solo con la era completada)
 const azSeal=()=>{const sel=AZ.sel[ERA]||{},p=azPtsOf(sel),on=Object.entries(sel).filter(x=>x[1]>0);

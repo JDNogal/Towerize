@@ -50,7 +50,7 @@ function hsFiltered(){const L=HIST.list||[];return HIST.flt==='w'?L.filter(r=>r.
 function hsPor(id,big){const D=HEROES[id];return `<span class="hspor${big?' big':''}" style="background:${D?D.col:'#888'}">${typeof portrait==='function'?portrait(id,1):D?D.ic:'?'}</span>`;}
 // v305: el fondo del minimapa depende de la era (bosque en la Fantástica, asfalto de neón en la Distópica)
 const HSMC={1:{bg:'#26391f',path:'#a8875a',sol:'#2f4a2a'},2:{bg:'#171a2c',path:'#4a5677',sol:'#252a44'}};
-const hsEraIc=r=>{const E=ERADEF[r.era||1]||ERADEF[1];return `<span class="hsera e${r.era||1}" style="--ec:${E.col}">${(r.era||1)==1?icU('m_castle',E.ic):E.ic}</span>`;};
+const hsEraIc=r=>{const E=ERADEF[r.era||1]||ERADEF[1];return `<span class="hsera e${r.era||1}" style="--ec:${E.col}">${eraIc(r.era||1)}</span>`;};
 function hsMini(r,W){const g=hsUnmap(r.map),n=r.N||g.length,MC=HSMC[r.era||1]||HSMC[1];
  // solo la zona construida (con un margen), no todo el tablero vacío
  let x0=n,y0=n,x1=0,y1=0;g.forEach((row,y)=>{for(let x=0;x<row.length;x++)if(row[x]!=='.'){x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);}});
