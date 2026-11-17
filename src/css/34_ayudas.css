@@ -159,4 +159,4 @@ body.dsk:not(.mfs) #bmcard .grow{grid-template-columns:104px 1fr 58px!important;
 [data-a="bugrep"]>.kcap.bugk{top:auto!important;bottom:-12px!important}
 
 /* v358 · «Informar de un fallo» un poco más grande en el menú principal (Nogal, 17-nov), y crece con la pantalla como el libro */
-body.dsk.inmenu:not(.mfs) #bugfab{zoom:calc(var(--uiz,1)*1.2)}
+body.dsk.inmenu:not(.mfs):has(#comp .lbcv) #bugfab{zoom:calc(var(--uiz,1)*1.2)}

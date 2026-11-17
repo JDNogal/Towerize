@@ -20,4 +20,4 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  return out;});
 const ok=r.specOk&&r.shrinePlain!=='shrine'&&!!EVOK(r.shrinePlain)&&r.shrineSpec==='shrine'&&r.shrineMax!=='shrine'&&r.merchNoGold==='merchant'&&r.chestBoth!=='chest'&&r.chestGold==='chest'&&!errs.length;
 function EVOK(x){return typeof x==='string'&&x.length>0;}
-console.log(JSON.stringify(r),errs.slice(0,3));console.log(ok?'OK':'FALLO');await b.close();process.exit(ok?0:1);})();
+console.log(JSON.stringify(r),errs.slice(0,3));console.log(ok?'eventos_cambio ok':'FALLO');await b.close();process.exit(ok?0:1);})();
