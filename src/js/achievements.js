@@ -93,10 +93,12 @@ function achState(id){const H=S.hero,B=S.built||[];const ok=t=>['ok','✓ En cur
   case 'bowl':return !H||H.id!=='reinhart'?ko('necesitas a Reinhart'):now();case 'bhole':return !H||H.id!=='radagast'?ko('necesitas a Radagast'):now();
   case 'zero':case 'thermal':return !H||H.id!=='yrsa'?['nt','Necesitas a Yrsa para aplicar hipotermia']:now();
   default:return now();}}
+// v358: fijar va en su propia línea, bajo la descripción (antes tras el título y chocaba con ↶ y ✕ según lo largo que fuese)
+function achPinLine(id,ok){if(ok)return '';const on=PINS.includes(id);return `<div class="apinl"><button class="pinb${on?' on':''}" data-a="apin" data-id="${id}" title="${on?'Quitar de fijados':'Fijar para seguirlo en partida'}">📌${on?' Fijado':' Fijar'}</button></div>`;}
 function achProg(id,run){const M=APM[id];let h='';
  if(M){const b=M.cur?(run?M.cur():null):M.best?(ACHBEST[id]||0):null,c=run&&M.best?((S.gbest||{})[id]||0):null;
-  if(M.best&&!M.cur){h+=`<div class="apb"><span style="width:${Math.min(100,(ACHBEST[id]||0)/M.max*100)}%"></span></div><small>Mejor marca: ${Math.min(M.max,ACHBEST[id]||0)} / ${M.max}</small>`;if(run)h+=`<div class="apb cur"><span style="width:${Math.min(100,c/M.max*100)}%"></span></div><small>Esta partida: ${Math.min(M.max,c)} / ${M.max}</small>`;}
-  else if(M.cur&&(run||id==='curious')){const v=M.cur();h+=`<div class="apb cur"><span style="width:${Math.min(100,v/M.max*100)}%"></span></div><small>${run&&id!=='curious'?'Esta partida':'Progreso'}: ${Math.min(M.max,v)} / ${M.max}</small>`;}}
+  if(M.best&&!M.cur){h+=`<small>Mejor marca: ${Math.min(M.max,ACHBEST[id]||0)} / ${M.max}</small><div class="apb"><span style="width:${Math.min(100,(ACHBEST[id]||0)/M.max*100)}%"></span></div>`;if(run)h+=`<small>Esta partida: ${Math.min(M.max,c)} / ${M.max}</small><div class="apb cur"><span style="width:${Math.min(100,c/M.max*100)}%"></span></div>`;}
+  else if(M.cur&&(run||id==='curious')){const v=M.cur();h+=`<small>${run&&id!=='curious'?'Esta partida':'Progreso'}: ${Math.min(M.max,v)} / ${M.max}</small><div class="apb cur"><span style="width:${Math.min(100,v/M.max*100)}%"></span></div>`;}}
  if(run){const [cl,t]=achState(id);h+=`<div class="ast ${cl}">${t}</div>`;}
  return h;}
 const APAN={open:false,sig:''};
