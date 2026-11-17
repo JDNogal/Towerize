@@ -199,6 +199,7 @@
   "ficha_torre.js",
   "ficha_barras.js",
   "hud_v354.js",
-  "almas_v354.js"
+  "almas_v354.js",
+  "eventos_cambio.js"
  ]
 }

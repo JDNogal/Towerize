@@ -74,6 +74,7 @@ const T=[
  ['construir_anillo.js','Construir con el anillo y el ratón (dos clics en la torre)'],
  ['area_casillas.js','La casilla Expansión agranda el cono de la Salamandra y los radios de las habilidades'],
  ['fabricador.js','Fabricador de sectores: el evento, los 5 pasos, cobrar, colocar y guardar para la próxima elección'],
+ ['eventos_cambio.js','Eventos que no se pueden jugar bien (casilla especial, héroe al máximo, oro y vida a la vez) se cambian por otro al abrirse'],
  ['revision_v351.js','Revisión de eventos, reliquias y héroes: duplicados, avisos, Yunque, Moneda, Reinhart, huellas, Implante y versión'],
  ['tarjeta_gracia.js','Fichas del anillo y del menú de torre: aguantan al salir y dejan mirar sus palabras clave'],
  ['historia_kai.js','Historia de Kai: aparece con Vega en la ronda de jefe y se une si la oleada sale perfecta'],

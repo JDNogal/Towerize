@@ -157,3 +157,6 @@ body.dsk:not(.mfs) #bmcard .grow{grid-template-columns:104px 1fr 58px!important;
 :root:not([data-skin="holo"]) body.dsk:not(.mfs) :is(#tmcard,#bmcard) .cf:not(.no):not(.vch){color:#1f7a3a!important}
 /* v349: la tecla F3 va debajo del botón de informar (arriba quedaba pegada al borde) */
 [data-a="bugrep"]>.kcap.bugk{top:auto!important;bottom:-12px!important}
+
+/* v358 · «Informar de un fallo» un poco más grande en el menú principal (Nogal, 17-nov), y crece con la pantalla como el libro */
+body.dsk.inmenu:not(.mfs) #bugfab{zoom:calc(var(--uiz,1)*1.2)}
