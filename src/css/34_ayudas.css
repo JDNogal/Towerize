@@ -160,3 +160,9 @@ body.dsk:not(.mfs) #bmcard .grow{grid-template-columns:104px 1fr 58px!important;
 
 /* v358 · «Informar de un fallo» un poco más grande en el menú principal (Nogal, 17-nov), y crece con la pantalla como el libro */
 body.dsk.inmenu:not(.mfs):has(#comp .lbcv) #bugfab{zoom:calc(var(--uiz,1)*1.2)}
+
+/* v358 · clasificación pequeña: flechas para pasar por las tablas donde tienes puntuación */
+#lbmside .lbmnav{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px}#lbmside .lbmnav i{font-style:normal;font-weight:700;font-size:11.5px;min-width:34px;text-align:center}
+#lbmside .lbmar{margin:0;width:24px;height:24px;padding:0;border-radius:7px;border:1px solid #8a5a2a;background:#f6e6c2;color:#3a2410;font:700 16px/1 Georgia,serif;cursor:pointer;display:grid;place-items:center}#lbmside .lbmar:hover{background:#fff1cf}
+#lbmside li.gap{justify-content:center;border-bottom:0;padding:0;color:#8a5a2a}
+:root[data-skin="holo"] #lbmside .lbmar{background:rgba(63,232,255,.12);border-color:#3fe8ff99;color:#d4f4ff}
