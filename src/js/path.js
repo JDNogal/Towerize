@@ -112,7 +112,7 @@ function placePiece(bx,by){
  pieceWarn(p);S.lastBk=bx+','+by;
  if(S.hero)hint('hero','Tu héroe',HEROTXT,tgEl('#mbr .hpport'));
  if(S.chests[bx+','+by]){delete S.chests[bx+','+by];S.chOpen=(S.chOpen||0)+1;if(S.chOpen>=3&&S.round<7&&!S.tut)achieve('treasure');openRelic();RL.fromChest=!!(RL.open&&RL.choices&&RL.choices.length);}
- else if(S.evts[bx+','+by]){const id=S.evts[bx+','+by];delete S.evts[bx+','+by];openEvent(id,bx+','+by);}
+ else if(S.evts[bx+','+by]){const id=S.evts[bx+','+by];delete S.evts[bx+','+by];let ev=id;try{ev=evSwapFor(id,bx+','+by);}catch(e){}openEvent(ev,bx+','+by);}
  else if(S.mim&&S.mim.rdy>0)setTimeout(mimSpit,0);
 }
 // Ronda sin pieza: los portales salen de los extremos sin salida del camino (los más lejanos del núcleo primero)

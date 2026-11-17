@@ -10,7 +10,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  const plain=keys.find(k=>!blockBuffs(k)),spec=keys.find(k=>k!==plain);
  {const[bx,by]=spec.split(',').map(Number);const bfk=Object.keys(BF).find(k=>!k.includes('+')&&!BF[k].free&&k!=='cur')||Object.keys(BF)[0];S.buff[by*NB]=S.buff[by*NB]||[];S.buff[by*NB][bx*NB]=bfk;}
  out.specOk=blockBuffs(spec);
- const open=(id,bk)=>{S.evPlayed={};openEvent(id,bk);const got=RL.ev;try{closeEvent();}catch(e){}RL.open=false;return got;};
+ const open=(id,bk)=>{S.evPlayed={};openEvent(evSwapFor(id,bk),bk);const got=RL.ev;try{closeEvent();}catch(e){}RL.open=false;return got;};
  out.shrinePlain=open('shrine',plain);           // sin casilla especial → otro evento
  out.shrineSpec=open('shrine',spec);             // con casilla especial → Santuario
  S.hero.lvl=HLMAX;out.shrineMax=open('shrine',spec);S.hero.lvl=1; // héroe al máximo → otro evento

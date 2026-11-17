@@ -19,4 +19,4 @@ function evSwapFor(id,bk){if(!S||S.tut||!bk)return id;const E=EVENTS[id];if(!E||
  if(!pool.length)return id;
  const fresh=pool.filter(k=>!(typeof seen==='function'&&seen('ev',k))),L=fresh.length?fresh:pool;
  return L[Math.floor(Math.random()*L.length)];}
-{const _o=openEvent;openEvent=function(id,bk){try{id=evSwapFor(id,bk);}catch(e){}return _o.call(this,id,bk);};}
+// se aplica solo al abrir un evento del mapa al colocar la pieza (path.js), no en otras llamadas a openEvent
