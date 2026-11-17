@@ -43,10 +43,10 @@ function dpsTick(){let el=$('dpsc');const on=dpsOn();
  if(DPS.tab!=='all'&&!types.includes(DPS.tab))DPS.tab='all';
  let list=DPS.tab==='all'?rows:rows.filter(r=>r.t.type===DPS.tab);const n=list.length,cut=DPS.tab==='all'&&!DPS.more?4:99;list=list.slice(0,cut);DPS.rowT=list.map(r=>r.t);
  const mx=Math.max(1,...list.map(r=>r.v)),fold=!mob&&!!DRW.dps,ttl=DPS.tab==='all'?'Todas':(TW[DPS.tab]?TW[DPS.tab].n:'');
- const tabIc=k=>{const t=rows.find(r=>r.t.type===k).t;return icHtml(tinfo(t).ic);};
+ const tabIc=k=>{const t=rows.find(r=>r.t.type===k).t;return icOf(tinfo(t));};
  const h=fold?drwTab('dps'):`<div class="dtabs${types.length+1>5?' many':''}"><button class="dtb${DPS.tab==='all'?' on':''}" data-dtab="all" data-n="Todas" title="Todas las torres">Σ</button>${types.map(k=>`<button class="dtb${DPS.tab===k?' on':''}" data-dtab="${k}" data-n="${TW[k]?TW[k].n:k}" title="${TW[k]?TW[k].n:k}">${tabIc(k)}</button>`).join('')}</div>`+
   `<div class="lh">${DIC.dps} DPS · ${ttl}${mob?'':drwBtn('dps')}</div>`+
-  (list.length?'<div class="drs">'+list.map((r,i)=>`<div class="dr" data-i="${i}"><i class="dic">${icHtml(tinfo(r.t).ic)}</i><span class="dn">${DPS.tab==='all'?'':'#'+(i+1)}</span><span class="db"><i style="width:${Math.max(3,r.v/mx*100).toFixed(1)}%"></i></span><b>${dpsFmt(r.v)}</b><small>${tot>0?Math.round(r.dm/tot*100):0}%</small></div>`).join('')+'</div>':'<div class="dempty">Aún no hay daño en esta ronda.</div>')+
+  (list.length?'<div class="drs">'+list.map((r,i)=>`<div class="dr" data-i="${i}"><i class="dic">${icOf(tinfo(r.t))}</i><span class="dn">${DPS.tab==='all'?'':'#'+(i+1)}</span><span class="db"><i style="width:${Math.max(3,r.v/mx*100).toFixed(1)}%"></i></span><b>${dpsFmt(r.v)}</b><small>${tot>0?Math.round(r.dm/tot*100):0}%</small></div>`).join('')+'</div>':'<div class="dempty">Aún no hay daño en esta ronda.</div>')+
   (DPS.tab==='all'&&n>4?`<button class="dmore">${DPS.more?'▴ ver menos':'▾ ver las '+n}</button>`:'');
  if(h!==DPS.sg){DPS.sg=h;el.innerHTML=h;}el.classList.toggle('drwF',fold);
  dpsBadges(DPS.tab!=='all'&&!fold?rows.filter(r=>r.t.type===DPS.tab).map(r=>r.t):null);}
