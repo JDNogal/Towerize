@@ -26,7 +26,7 @@ const DIC={dps:'<svg viewBox="0 0 16 16" width="14" height="14"><rect x="1" y="3
 const drwBtn=k=>`<span class="cl" data-drw="${k}" title="Plegar">‹</span>`;
 const drwTab=k=>`<button class="drt" data-drw="${k}" title="Desplegar">${DIC[k]}<i>›</i></button>`;
 function dpsMob(){return document.body.classList.contains('mfs');}
-function dpsOn(){return (hud4On()||dpsMob())&&S&&OPT.dps!==false&&!S.tut&&(S.phase==='wave'||S.phase==='build')&&!PREVIEWING&&!document.body.classList.contains('inmenu');}
+function dpsOn(){return (hud4On()||dpsMob())&&S&&OPT.dps!==false&&!S.tut&&(S.phase==='wave'||S.phase==='build')&&!PREVIEWING&&!document.body.classList.contains('inmenu')&&!(typeof LB!=='undefined'&&LB.open);}
 function dpsData(){const out=[];let tot=0;const wt=Math.max(1,DPS.wt);
  for(const t of S.list){if(t.summ||t.hero||t.sold)continue;const d=ftD(t),dm=d.d0==null?0:Math.max(0,(t.dmgT||0)-d.d0);tot+=dm;out.push({t,dm,v:dm/wt});}
  return {rows:out.sort((a,b)=>b.dm-a.dm),tot};}
