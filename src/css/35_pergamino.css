@@ -97,8 +97,17 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 
 /* v359 (Nogal, 18-nov · opción B de la Mesa): eventos en el móvil, las opciones se desplazan por dentro: se difuminan arriba y abajo y, si hay más debajo, aviso «▾ Más opciones»;
    el pergamino crece hacia arriba para que la imagen no quede pegada al borde de abajo (los pomos pueden quedar detrás de los botones) */
-:root:not([data-skin="holo"]) body.mfs #relic .ppap.evp.pgf .evrc.pgdn{-webkit-mask-image:linear-gradient(#000 calc(100% - 26px),transparent);mask-image:linear-gradient(#000 calc(100% - 26px),transparent)}
-:root:not([data-skin="holo"]) body.mfs #relic .ppap.evp.pgf .evrc.pgup{-webkit-mask-image:linear-gradient(transparent,#000 16px);mask-image:linear-gradient(transparent,#000 16px)}
-:root:not([data-skin="holo"]) body.mfs #relic .ppap.evp.pgf .evrc.pgup.pgdn{-webkit-mask-image:linear-gradient(transparent,#000 16px,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(transparent,#000 16px,#000 calc(100% - 26px),transparent)}
-:root:not([data-skin="holo"]) body.mfs #relic .ppap.evp.pgf.pgmore::after{content:"▾ Más opciones";position:absolute;right:28%;bottom:30px;z-index:5;font:700 11px Inter,system-ui,sans-serif;color:#5a3a1c;background:#f3e6c6;border:1px solid #8a6a40;border-radius:10px;padding:2px 9px;box-shadow:0 2px 4px rgba(0,0,0,.25);pointer-events:none}
+:root:not([data-skin="holo"]) #relic .ppap.evp.pgf .evrc.pgdn{-webkit-mask-image:linear-gradient(#000 calc(100% - 26px),transparent);mask-image:linear-gradient(#000 calc(100% - 26px),transparent)}
+:root:not([data-skin="holo"]) #relic .ppap.evp.pgf .evrc.pgup{-webkit-mask-image:linear-gradient(transparent,#000 16px);mask-image:linear-gradient(transparent,#000 16px)}
+:root:not([data-skin="holo"]) #relic .ppap.evp.pgf .evrc.pgup.pgdn{-webkit-mask-image:linear-gradient(transparent,#000 16px,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(transparent,#000 16px,#000 calc(100% - 26px),transparent)}
+:root:not([data-skin="holo"]) #relic .ppap.evp.pgf.pgmore::after{content:"▾ Más opciones";position:absolute;left:var(--pgmx,50%);top:var(--pgmy,80%);transform:translate(-50%,calc(-100% - 8px));z-index:5;font:700 11px Inter,system-ui,sans-serif;color:#5a3a1c;background:#f3e6c6;border:1px solid #8a6a40;border-radius:10px;padding:2px 9px;box-shadow:0 2px 4px rgba(0,0,0,.25);pointer-events:none;white-space:nowrap}
 :root:not([data-skin="holo"]) body.mfs #relic .ppap.evp.pgf{padding-top:40px!important;padding-bottom:52px!important;margin-top:-18px!important}
+
+/* v359 (Nogal, 19-nov): eventos en PC: imagen y debajo la descripción (hueco fijo de 4 líneas, así el pergamino mide siempre lo mismo); las opciones solas a la derecha,
+   con la altura de esa columna y desplazándose por dentro si no caben; texto más grande */
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evl{display:flex;flex-direction:column;align-self:stretch}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evdesc .esec{margin-top:12px}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evdesc .evtx{font-size:15px!important;line-height:1.45!important;height:5.8em;overflow-y:auto;margin:4px 0 0!important}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evrc{contain:size!important;overflow-y:auto!important}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evo b{font-size:16.5px!important}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evo small{font-size:14px!important}

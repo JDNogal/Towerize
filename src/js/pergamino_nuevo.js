@@ -84,7 +84,7 @@ function pgTick(now){const o=PGF.on;if(!o)return;const C=pgCfg[o.kind],h=C.host(
   // cartas: el borde se traza a pluma y después aparece lo de dentro; con el ratón encima, borde dorado y destello
   const cs=C.cards(h);let hv=-1;cs.forEach((c,i)=>{if(c.matches(':hover'))hv=i;});if(hv!==o.hov){o.hov=hv;o.hovT=now;}
   /* v359: si las opciones van en una zona que se desplaza (eventos en el móvil), sus marcos se recortan a esa zona y se marca si queda más por ver */
-  const scz=h.querySelector('.evrc'),scr=scz&&scz.scrollHeight>scz.clientHeight+2?scz:null;if(scz){const top=scr&&scr.scrollTop>2,bot=scr&&scr.scrollTop+scr.clientHeight<scr.scrollHeight-2;scz.classList.toggle('pgup',!!top);scz.classList.toggle('pgdn',!!bot);h.classList.toggle('pgmore',!!bot);}
+  const scz=h.querySelector('.evrc'),scr=scz&&scz.scrollHeight>scz.clientHeight+2?scz:null;if(scz){const top=scr&&scr.scrollTop>2,bot=scr&&scr.scrollTop+scr.clientHeight<scr.scrollHeight-2;scz.classList.toggle('pgup',!!top);scz.classList.toggle('pgdn',!!bot);h.classList.toggle('pgmore',!!bot);if(bot){const q=scz.getBoundingClientRect();h.style.setProperty('--pgmx',((q.left+q.width/2-hr.left)/zx).toFixed(1)+'px');h.style.setProperty('--pgmy',((q.bottom-hr.top)/zy).toFixed(1)+'px');}}
   if(scr){const q=scr.getBoundingClientRect();s+=`<clipPath id="pgec"><rect x="${(q.left-hr.left)/zx+PGM}" y="${(q.top-hr.top)/zy+PGM}" width="${q.width/zx}" height="${q.height/zy}"/></clipPath><g clip-path="url(#pgec)">`;}
   cs.forEach((c,i)=>{const r=c.getBoundingClientRect();const x=(r.left-hr.left)/zx+PGM,y=(r.top-hr.top)/zy+PGM,cw=r.width/zx,ch=r.height/zy,P=2*(cw+ch);
    const a=pgseg(t,base+i*.2,base+.65+i*.2),cc=pgseg(t,base+.45+i*.2,base+.8+i*.2),hot=i===hv||c.classList.contains('pgchosen');

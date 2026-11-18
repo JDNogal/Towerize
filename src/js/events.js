@@ -125,8 +125,10 @@ let EVLAY='b';
 function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><div class="ppap evp ev${EVLAY}${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
  const img=evImg(id),B=EVLAY==='b',opts=`<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div>';
- el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?'':`<p>${E.txt}</p>`}`,
-  B?`${evBanner()}<div class="esec">Evento</div><p class="evtx">${E.txt}</p><div class="esec">Opciones</div>${opts}`:`${evBanner()}${opts}<small class="evps">Evento · el juego está en pausa.</small>`,
+ /* v359 (Nogal, 19-nov): en PC (pergamino), la descripción va debajo de la imagen con hueco fijo para 4 líneas y las opciones solas a la derecha */
+ const dl=B&&!document.body.classList.contains('mfs')&&document.documentElement.dataset.skin!=='holo',desc=`<div class="esec">Evento</div><p class="evtx">${E.txt}</p>`;
+ el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?(dl?`<div class="evdesc">${desc}</div>`:''):`<p>${E.txt}</p>`}`,
+  B?`${evBanner()}${dl?'':desc}<div class="esec">Opciones</div>${opts}`:`${evBanner()}${opts}<small class="evps">Evento · el juego está en pausa.</small>`,
   0,`<div class="evhead big">${img?'':`<span class="evic">${E.ic}</span>`}<b>${E.n}</b></div>`)+wcompBtn('ev');}
 function chooseEvent(i){const id=RL.ev,E=EVENTS[id],o=E&&E.opts[i];if(!o||(o.req&&o.req()))return;const keys=o.run()||[];remember(id,i,keys);
  const img=evImg(id,i,keys),tale=evRes(id,i,keys),B=EVLAY==='b';
