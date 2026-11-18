@@ -117,6 +117,9 @@ function cfPlay(rl,cards,sign,e2,chest){let fx=rl.querySelector('.cofx');if(fx)f
  showSign(t0+.35);showCards(t0,from);}
 // v359 (Nogal, 19-nov): en el móvil, el cofre cabe entero sin desplazar: se encoge lo justo el cartel y las cartas
 setInterval(()=>{try{const rl=$('relic');if(!rl||!rl.classList.contains('cofre')||!rl.classList.contains('open'))return;const ps=rl.querySelector('.pscr');if(!ps)return;
- if(!document.body.classList.contains('mfs')){if(ps.style.zoom)ps.style.zoom='';return;}
- const cur=parseFloat(ps.style.zoom)||1,r=ps.getBoundingClientRect(),nat=r.height/cur,top=r.top/cur*cur,f=Math.max(.6,Math.min(1,(innerHeight-16-Math.max(0,r.top))/nat));
- if(Math.abs(f-cur)>.01)ps.style.zoom=f<1?f.toFixed(3):'';}catch(e){}},150);
+ if(!document.body.classList.contains('mfs')){if(ps.style.zoom)ps.style.zoom='';rl.style.overflowY='';return;}
+ const cur=parseFloat(ps.style.zoom)||1,r=ps.getBoundingClientRect(),nat=r.height/cur,need=(innerHeight-20-Math.max(0,r.top))/nat,f=Math.max(.6,Math.min(1,need));
+ if(Math.abs(f-cur)>.01)ps.style.zoom=f<1?f.toFixed(3):'';
+ /* si cabe, sin desplazamiento ni barra (las sombras de las cartas giradas no cuentan) */rl.style.overflowY=need>=.6?'hidden':'';}catch(e){}},150);
+// al cerrar el cofre, la ventana vuelve a desplazarse como siempre
+setInterval(()=>{try{const rl=$('relic');if(rl&&rl.style.overflowY&&!rl.classList.contains('cofre'))rl.style.overflowY='';}catch(e){}},300);
