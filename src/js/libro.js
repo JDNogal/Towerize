@@ -12,7 +12,7 @@ const lbHasNew=k=>(k==='cp'||k==='lg')&&typeof nfArea==='function'?nfArea(k):!!L
 const icU=(k,fb)=>typeof ICU!=='undefined'&&ICU[k]?ICU[k]:fb;
 const LBAREAS=[['cp','Compendio','📖'],['lg','Logros','🏆'],['st','Estadísticas','📊'],['pt','Partidas','📚'],['op','Opciones','⚙️'],['hp','Ayuda','❓'],['cr','Créditos','📜']];
 const lbInGame=()=>!document.body.classList.contains('inmenu')&&!!(S&&S.list);
-const lbAreas=()=>LBAREAS.filter(([k])=>k!=='st'||lbInGame());
+/* v359: en la pausa no salen Partidas ni Créditos (siguen en el menú principal) */const lbAreas=()=>LBAREAS.filter(([k])=>lbInGame()?k!=='pt'&&k!=='cr':k!=='st');
 const lbMob=()=>TOUCH||bkNarrow();
 function lbOpen(area,cover){
  LB.exit=0;
@@ -45,7 +45,7 @@ function lbClose(resume,now){
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal. En la preparación de partida no se sale así
 function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.area==='msg'){const f=LB.msg&&LB.msg.onBack;LB.msg=null;if(f)f();else if(document.body.classList.contains('inmenu'))lbOpen(null,true);else lbClose(true);return;}if(LB.fromWin){LB.fromWin=0;lbClose(true);return;}if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
 const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}${typeof nfMark==='function'&&nfMark(act,v)?' new':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
-const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
+const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}"${lbInGame()?'':` title="${l}"`}>${i}<span>${l}</span></button>`).join('')}</div>`;
 // flechas de pasar página: al anterior / siguiente de la sección en la que estás (sin fondo, solo trazo)
 const lbArrows=()=>lbStepList()?`<button class="bkarr l" data-a="lbprev" title="Anterior">‹</button><button class="bkarr r" data-a="lbnext" title="Siguiente">›</button>`:'';
 function lbStepList(){const a=LB.area;
@@ -58,14 +58,14 @@ function lbStepList(){const a=LB.area;
 function lbStep(d){const s=lbStepList();if(!s)return;const i=s.L.indexOf(s.cur),n=s.L[((i<0?0:i)+d+s.L.length)%s.L.length];if(n!==undefined){try{sfx('page');}catch(e){}s.go(n);}}
 function lbCoverHTML(){
  const inG=lbInGame(),B=lbMob(),H=inG&&S.hero?HEROES[S.hero.id]:null;
- const chips=inG?[`${icU('dur','⏳')} Ronda ${Math.min(S.round,ROUNDS)}/${ROUNDS}`,`${icU('ehp','❤️')} ${S.hp}`,`🪙 ${Math.floor(S.gold)}`,H?`<i class="lbsvpor" style="background:${H.col||'#8a5a2e'}">${portrait(S.hero.id,1)}</i> ${H.n} · Nv ${S.hero.lvl}`:'',`${icU('cool','🕒')} ${fClk(GT.r)}`].filter(Boolean).map(x=>`<span>${x}</span>`).join(''):'';
+ const chips=inG?[`${icU('dur','⏳')} Ronda ${Math.min(S.round,ROUNDS)}/${ROUNDS}`,`${icU('ehp','❤️')} ${S.hp}`,`<svg class="lbgold" viewBox="-4 -4 56 56">${typeof ICKW!=='undefined'&&ICKW.egold||''}</svg> ${Math.floor(S.gold)}`,H?`<i class="lbsvpor" style="background:${H.col||'#8a5a2e'}">${portrait(S.hero.id,1)}</i> ${H.n} · Nv ${S.hero.lvl}`:'',`${icU('cool','🕒')} ${fClk(GT.r)}`].filter(Boolean).map(x=>`<span>${x}</span>`).join(''):'';
  const sv=!inG&&SAV.meta;
  const main=inG?`<button class="lbmain" data-a="lbcont">${icU('play','▶')} Continuar</button>`:sv?`<button class="lbmain" data-a="lbload">${icU('play','▶')} Continuar partida</button><div class="lbsv">${sv.tut?icU('cap','🎓')+' Tutorial':icU('dur','⏳')+' Ronda '+sv.round+'/'+sv.rounds}${sv.heroN?' · '+(sv.hero&&HEROES[sv.hero]&&typeof portrait==='function'?`<i class="lbsvpor" style="background:${HEROES[sv.hero].col||'#8a5a2e'}">${portrait(sv.hero,1)}</i>`:sv.heroIc)+' '+sv.heroN:''} · ${svWhen(sv.t)}</div><button class="lbnew${LB.ask?' warn':''}" data-a="newgame">${LB.ask?'¿Seguro? Se perderá la partida guardada':'Nueva partida'}</button>`:`<button class="lbmain" data-a="newgame">${icU('play','▶')} Nueva partida</button>`;
  const areas=lbAreas();
  const tiles=`<div class="lbtiles">${areas.map(([k,l,i])=>`<button data-a="lbarea" data-v="${k}" class="${k==='cp'&&!compOk()?'dim':''}${lbHasNew(k)?' new':''}"><em>${i}</em>${l}</button>`).join('')}${(FSOK||IOS)&&B?`<button data-a="pfs"><em>⛶</em>${IOS?'Pantalla completa en iPhone':isFS()?'Salir de pantalla completa':'Pantalla completa'}</button>`:''}</div>`;
  const rt=inG&&S.phase==='wave'&&S.snap&&S.rc>0;
  const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}${svOk()?`<button data-a="psave" title="${S.phase==='wave'?'Se guardará el principio de esta oleada':'Guarda la partida tal como está'}">${icU('save','💾')} Guardar y salir</button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Se perderá la partida':icU('flag','🏳')+' Abandonar partida'}</button></div>`:`<div class="lbbot"><button data-a="pexit" class="pquit">${LB.exit?'¿Seguro? Pulsa otra vez para salir':icU('door','🚪')+' Salir del juego'}</button></div>`;
- return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:icU('m_castle','🏰')}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
+ return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:icU('m_castle','🏰')}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}"${inG?'':` title="${l}"`}>${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
 }
 // ---- estadísticas: tabla a la izquierda, cifras grandes y resumen a la derecha ----
 function statParts(){const T=STABS.find(t=>t[0]===STW.tab)||STABS[0],st=S.st||{};
@@ -155,7 +155,7 @@ function credParts(){const ver=($('ver')&&$('ver').textContent)||'Towerize';
 // ---- montaje ----
 function lbRender(){
  const el=$('comp');if(!LB.open){el.classList.remove('open');return;}
- el.classList.add('bkm','open');el.classList.toggle('lbtouch',!!TOUCH);const nar0=bkNarrow(),two=nar0&&LB.area==='prep'&&prepTwo(),nar=nar0&&!two;el.classList.toggle('two',two);el.classList.toggle('narrow',nar0);el.classList.toggle('lbcv0',LB.cover);
+ el.classList.add('bkm','open');el.classList.toggle('lbtouch',!!TOUCH);const nar0=bkNarrow(),two=nar0&&LB.area==='prep'&&prepTwo(),nar=nar0&&!two;el.classList.toggle('two',two);el.classList.toggle('narrow',nar0);el.classList.toggle('lbcv0',LB.cover);el.classList.toggle('lbing',lbInGame());
  if(LB.cover){CP.open=false;OP.open=false;lbSetOrigin();el.innerHTML=lbCoverHTML();if(LB.grow){el.firstElementChild.classList.add('lbgrow');LB.grow=false;}return;}
  LB.grow=false;
  if(LB.area==='st'&&!lbInGame())LB.area='cp';

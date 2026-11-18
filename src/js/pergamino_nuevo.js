@@ -83,11 +83,15 @@ function pgTick(now){const o=PGF.on;if(!o)return;const C=pgCfg[o.kind],h=C.host(
  if(w>2){s+=`<g clip-path="url(#pgpc)"><path d="${PD}" fill="url(#pgpp)"/><path d="${PD}" fill="#000" filter="url(#pgtx2)"/><path d="${PD}" fill="#000" filter="url(#pgtx)" opacity=".5"/><path d="${TOP}" stroke="#8a5a2a" stroke-width="1.4" fill="none" opacity=".55"/><path d="${BOT}" stroke="#8a5a2a" stroke-width="1.4" fill="none" opacity=".55"/><circle cx="${PGM+IX+PW*.12}" cy="${Y0+PH*.76}" r="34" fill="#a0723a" opacity=".07"/><circle cx="${PGM+IX+PW*.84}" cy="${Y0+PH*.18}" r="24" fill="#a0723a" opacity=".09"/>`;
   // cartas: el borde se traza a pluma y después aparece lo de dentro; con el ratón encima, borde dorado y destello
   const cs=C.cards(h);let hv=-1;cs.forEach((c,i)=>{if(c.matches(':hover'))hv=i;});if(hv!==o.hov){o.hov=hv;o.hovT=now;}
+  /* v359: si las opciones van en una zona que se desplaza (eventos en el móvil), sus marcos se recortan a esa zona y se marca si queda más por ver */
+  const scz=h.querySelector('.evrc'),scr=scz&&scz.scrollHeight>scz.clientHeight+2?scz:null;if(scz){const top=scr&&scr.scrollTop>2,bot=scr&&scr.scrollTop+scr.clientHeight<scr.scrollHeight-2;scz.classList.toggle('pgup',!!top);scz.classList.toggle('pgdn',!!bot);h.classList.toggle('pgmore',!!bot);}
+  if(scr){const q=scr.getBoundingClientRect();s+=`<clipPath id="pgec"><rect x="${(q.left-hr.left)/zx+PGM}" y="${(q.top-hr.top)/zy+PGM}" width="${q.width/zx}" height="${q.height/zy}"/></clipPath><g clip-path="url(#pgec)">`;}
   cs.forEach((c,i)=>{const r=c.getBoundingClientRect();const x=(r.left-hr.left)/zx+PGM,y=(r.top-hr.top)/zy+PGM,cw=r.width/zx,ch=r.height/zy,P=2*(cw+ch);
    const a=pgseg(t,base+i*.2,base+.65+i*.2),cc=pgseg(t,base+.45+i*.2,base+.8+i*.2),hot=i===hv||c.classList.contains('pgchosen');
    const cw0=c.closest('.cardw')||c;cw0.style.opacity=cc<1?cc.toFixed(2):'';
    s+=`<rect x="${x}" y="${y}" width="${cw}" height="${ch}" rx="10" fill="${hot?'rgba(240,200,110,.2)':'none'}" stroke="${hot?'url(#pgau)':'#6a4a2a'}" stroke-width="${hot?2.8:1.4}" stroke-dasharray="${P}" stroke-dashoffset="${(P*(1-a)).toFixed(1)}"/>`;
    if(i===hv){const u=pgcl(((now-o.hovT)/1000%3.6)/.9);if(u<1){const sx=x-60+(cw+120)*pgEio(u);s+=`<clipPath id="pgcc${i}"><rect x="${x}" y="${y}" width="${cw}" height="${ch}" rx="10"/></clipPath><g clip-path="url(#pgcc${i})"><rect x="${sx}" y="${y-40}" width="46" height="${ch+80}" fill="#fff6d0" opacity=".45" transform="rotate(18 ${sx+23} ${y+ch/2})"/></g>`;}}});
+  if(scr)s+='</g>';
   s+=`</g><rect x="${xl}" y="${Y0}" width="20" height="${PH}" fill="url(#pgsh)"/><rect x="${xr-20}" y="${Y0}" width="20" height="${PH}" fill="url(#pgsh)" transform="rotate(180 ${xr-10} ${CY})"/>`;}
  const R=12+12*(1-pgcl(op));for(const [x,d] of [[xl,-1],[xr,1]])s+=pgRoll2(x+d*R,R,Y0-6,Y0+PH+6);
  if(t<UN0+.5)s+=`<g transform="translate(${CX} ${CY})">${pgClosed(pgseg(t,SE,UN0+.15),54)}</g>`;

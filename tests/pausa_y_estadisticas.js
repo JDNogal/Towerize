@@ -9,7 +9,7 @@ await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.disp
 await p.waitForTimeout(300);
 if(name==='pc'){console.log(await p.evaluate(()=>JSON.stringify({aim:S.aim,tsel:S.tsel,pi:S.pi,selT:!!S.selT,pr:PR.pinned,rl:RL.open,cp:CP.open,op:OP.open,fo:FO.open,hq:!!HQ.cur,ph:S.phase,inm:document.body.classList.contains('inmenu')})));await p.keyboard.press('Escape');}else{await p.click('#mtl [data-a="pause"]');}
 await p.waitForTimeout(300);console.log(name,'pause',await p.evaluate(()=>[PMU.open,S.speed]));await p.screenshot({path:`${OUT}/p_${name}.png`});
-await p.click('#comp [data-a="lbarea"][data-v="st"]');await p.waitForTimeout(200);
+await p.click('#comp [data-a="lbarea"][data-v="st"]',{position:{x:60,y:20}})/* v359: lengüetas metidas en la pausa: se pulsa la parte que asoma */;await p.waitForTimeout(200);
 for(const t of ['run','dmg','rel','hero','en']){await p.click(`#comp .bkmk[data-a="stab"][data-v="${t}"]`);await p.waitForTimeout(120);await p.screenshot({path:`${OUT}/s_${name}_${t}.png`});}
 await p.click('#comp [data-a="lbx"]');await p.waitForTimeout(100);
 console.log(name,'after stats',await p.evaluate(()=>[PMU.open,LB.cover]));

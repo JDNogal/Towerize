@@ -278,3 +278,19 @@ body.inmenu.lbsetup canvas#c{filter:none}
 .orow.otg.osl .osr{grid-column:1/-1;display:flex;align-items:center;gap:12px;width:100%}
 .orow.otg.osl .osr input{flex:1;width:auto!important;min-width:0;height:24px;margin:0}
 .orow.otg.osl .osr output{width:60px;min-width:60px;flex:none;font-weight:700}
+/* v359 · Portada de la pausa (Nogal, 17-18 nov; Mesa «Portada de la pausa»): chips alineados, más aire y lengüetas metidas (D) */
+.lbcv.ing .lbchips{gap:8px;margin:4px 0 26px;align-items:center}
+.lbcv.ing .lbchips span{display:inline-flex;align-items:center;gap:6px;height:26px;box-sizing:border-box;padding:0 11px;line-height:1}
+.lbcv.ing .lbchips span>svg,.lbcv.ing .lbchips span>i:not(.lbsvpor)>svg{width:16px!important;height:16px!important;flex:none;display:block}
+.lbcv.ing .lbchips svg.lbgold{width:20px!important;height:20px!important;margin:-2px -1px}
+.lbcv.ing .lbchips .lbsvpor{width:18px!important;height:18px!important;border-radius:50%!important;overflow:hidden;display:inline-grid!important;place-items:center;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+.lbcv.ing .lbchips .lbsvpor svg{width:18px!important;height:18px!important}
+.lbcv.ing .lbtit{margin-bottom:14px}
+.lbcv.ing .lbembw{margin-bottom:20px}
+.lbcv.ing .lbmain{margin-top:6px}
+/* lengüetas metidas: asoma algo más de la mitad del icono, centrado; al pasar el ratón (o con el teclado) sale entera, el icono sube y aparece el nombre; la de la sección abierta, siempre fuera */
+:root:not([data-skin="holo"]) #comp.lbing .lbribs,:root:not([data-skin="holo"]) #comp.lbing .bkribs{top:46px!important;bottom:46px;justify-content:space-evenly;gap:0!important;z-index:-1!important}
+:root:not([data-skin="holo"]) #comp.lbing .lbribs .bkrib,:root:not([data-skin="holo"]) #comp.lbing .bkribs .bkrib{height:50px!important;transform:translateX(-47%);transition:transform .17s cubic-bezier(.3,.7,.3,1)}
+:root:not([data-skin="holo"]) #comp.lbing .bkrib span{max-height:0;opacity:0;overflow:hidden;margin-top:0!important;transition:max-height .17s,opacity .12s,margin .17s}
+:root:not([data-skin="holo"]) #comp.lbing .bkrib:is(:hover,:focus-visible,.on,.kfoc){transform:none}
+:root:not([data-skin="holo"]) #comp.lbing .bkrib:is(:hover,:focus-visible,.on,.kfoc) span{max-height:14px;opacity:1;margin-top:2px!important}
