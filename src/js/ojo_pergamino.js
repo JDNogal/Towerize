@@ -18,7 +18,7 @@ setInterval(()=>{try{if(typeof S==='undefined'||!S)return;
  // ventanas del pergamino (torres, eventos): el ojo de la barra pasa a la esquina del papel
  const rl=$('relic'),pp=rl&&rl.classList.contains('open')&&!rl.classList.contains('peek')?rl.querySelector('.pscr .ppap.pgf'):null,eb=rl&&rl.querySelector('.rlbar [data-a="peek"]');
  if(eb){if(pp){const hr=pp.getBoundingClientRect(),z=hr.width/(pp.offsetWidth||hr.width)||1,w=eb.offsetWidth;eb.classList.add('eyepg');
-   eb.style.left=(hr.right-(PGIX+20)*z-w)+"px";eb.style.top=(hr.top+(PGIY+16)*z)+"px";}
+   eb.style.left=(hr.right-(PGIX+20)*z-w)+"px";/* v359: a la altura del título (centrado con su cinta), sin pisar la línea de debajo */const tt=pp.querySelector('.ptt,.evhead b,.evtt'),tr=tt&&tt.getBoundingClientRect();eb.style.top=(tr&&tr.height?tr.top+tr.height/2-eb.offsetHeight/2:hr.top+(PGIY+16)*z)+"px";}
   else if(eb.classList.contains('eyepg')){eb.classList.remove('eyepg');eb.style.left='';eb.style.top='';}}}catch(e){}},80);
 // v349: si la ventana (pergamino o dron) no cabe entre los paneles del mazo y del cofre (pantallas estrechas, la tablet es más ancha), el panel que choca se oculta mientras está abierta
 setInterval(()=>{try{const ps=[...document.querySelectorAll('#mzside>.mzd,#mzside>.mzr')];if(!ps.length)return;
