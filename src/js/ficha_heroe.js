@@ -12,7 +12,7 @@ var HDESC1={reinhart:'Caballero cuerpo a cuerpo: aguanta en primera línea y fre
 var HST3={reinhart:'ap',yrsa:'ap',korr:'mr',kai:'spd',sylvana:'rng',radagast:'rng',ferro:'rng',vega:'rng'};
 // efectos del héroe: icono y valor en la misma pastilla; el nombre, en el bocadillo de su palabra clave
 var HFXP={yrsa:[['burn','×2'],['chill','×2']],korr:[['tmagic',''],['umr','30'],['mrbrk','−5']],radagast:[['tmagic',''],['mrbrk','−5']],ferro:[['telem','']]};
-function fhPill(ic,v,src){return `<span class="fhpill">${kw(ic,'',src)}${v?'<b>'+v+'</b>':''}</span>`;}
+function fhPill(ic,v,src){return fxPill(ic,v,src);}
 // mismas piezas que la ficha de torre, pero como funciones (la ficha del héroe se pinta ya al cargar el libro, antes de ficha_torre.js)
 function fhChip(cls,lab,val){return `<div class="ftchip"><span>${lab}</span><b class="${cls}">${val}</b></div>`;}
 var FHOPEN={hpas:true};

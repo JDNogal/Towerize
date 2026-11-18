@@ -32,7 +32,9 @@ const ftFold=(id,sum,body)=>{const o=FT.open[id]!=null?FT.open[id]:FTFOLD[id];re
 function ftFx(T,src){const h=effHtml(T,src);if(!h)return '';const m=h.match(/data-kw="([^"]+)"/),id=m&&m[1],extra=h.replace(/<span[^>]*>[^<]*<\/span>/,'').trim();
  const ic=id&&typeof ICKW!=='undefined'&&ICKW[id];if(!ic)return `<div class="ftfx">${h}</div>`;
  const nm=(h.match(/>([^<]*)<\/span>/)||[])[1]||'';
- return `<div class="ftfx"><span class="kw gico ftfxi" data-kw="${id}" data-src="${src}" aria-label="${nm}"><svg viewBox="-4 -4 56 56" width="22" height="22">${ic}</svg></span>${extra?`<small>${extra}</small>`:''}</div>`;}
+ return `<div class="ftfx">${fxPill(id,extra,src,nm)}</div>`;}
+// v359: icono y valor en una sola pastilla (la misma en las torres y en el héroe)
+function fxPill(id,v,src,nm){const ic=typeof ICKW!=='undefined'&&ICKW[id];return `<span class="kw gico ftfxi fxpill" data-kw="${id}" data-src="${src}"${nm?` aria-label="${nm}"`:''}>${ic?`<svg viewBox="-4 -4 56 56">${ic}</svg>`:''}${v?`<b>${v}</b>`:''}</span>`;}
 function ftDpsBar(t,theo){if(!(theo>0))return '';const src='tw:'+t.id;
  return `<div class="ftdps" data-theo="${theo}"><div class="ftdl"><span>${kst('dpsr','DPS real',src)}</span><span class="ftdv">—</span></div><div class="ftbar"><i></i></div><div class="ftdn"></div></div>`;}
 function ftMechBox(t,M,txt){return `<div class="ftmech"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><div class="ftbar ftmb"><i style="width:${Math.round(M.v(t)*100)}%"></i></div><div class="ftml">${M.l(t)}</div></div>`;}

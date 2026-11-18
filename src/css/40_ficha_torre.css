@@ -22,9 +22,6 @@
 .ftdn{font-size:11.5px;opacity:.75;margin-top:2px;min-height:1em}
 .ftdps.frozen{opacity:.7;filter:grayscale(1)}
 .ftfx{display:flex;align-items:center;gap:8px;margin:0 0 4px;padding:5px 8px;border-radius:9px;background:color-mix(in srgb,currentColor 5%,transparent);border:1px solid color-mix(in srgb,currentColor 20%,transparent)}
-.ftfxi{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;background:color-mix(in srgb,#fff 70%,transparent);border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 55%,transparent);cursor:help}
-.ftfxi:hover{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc,#c2560e) 40%,transparent)}
-.ftfx small{font-weight:700}
 .ftfold{border-top:1px solid color-mix(in srgb,currentColor 18%,transparent);margin-top:4px}
 .ftfold>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:6px 2px;font-weight:700}
 .ftfold>summary::-webkit-details-marker{display:none}
@@ -51,10 +48,12 @@
 .ftc .kw[data-kw=umr],.ftc .ftchip>b.cmg{color:var(--sm)!important}
 .ftc .kw[data-kw=espd],.ftc .ftchip>b.cs{color:var(--ss)!important}
 .ftc .kw[data-kw=hxp],.fhxp .fhl>b{color:var(--sx)!important}
-/* efectos: icono y valor en la misma pastilla */
+/* efectos: icono y valor en una sola pastilla (torres y héroe); el nombre, en el bocadillo */
+.fxpill{display:inline-flex!important;align-items:center;gap:5px;width:auto!important;height:30px!important;margin:0!important;box-sizing:border-box;padding:0 10px 0 6px;border-radius:9px;background:color-mix(in srgb,#fff 70%,transparent);border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 55%,transparent);cursor:help;text-decoration:none!important;color:var(--ink,#2a2118)!important;font-weight:700}
+.fxpill::before{display:none!important}.fxpill:hover{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc,#c2560e) 40%,transparent)}
+.fxpill svg{width:20px;height:20px;flex:none;display:block}.fxpill b{font-size:13px;line-height:1}
+:root[data-skin="holo"] .fxpill{background:color-mix(in srgb,#fff 10%,transparent);color:#e8f4ff!important}
 .ftfx{flex-wrap:wrap;gap:6px}
-.ftfx .ftfxi{border-radius:9px 0 0 9px;border-right:0}
-.ftfx .ftfxi+small{margin-left:-6px;height:32px;box-sizing:border-box;display:grid;place-items:center;padding:0 10px 0 4px;border-radius:0 9px 9px 0;background:color-mix(in srgb,#fff 70%,transparent);border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 55%,transparent);border-left:0}
 .ftgap{height:8px}
 /* ficha del héroe (ficha_heroe.js) */
 #hinfo{width:340px;font-size:14px}
@@ -66,8 +65,6 @@
 .fhxp .ftbar i{background:linear-gradient(90deg,#5a8adf,#8fb8ff)}
 .fhdv{color:#a0402a;font-weight:700}:root[data-skin="holo"] .fhdv{color:#ff8a7a}
 .fhseg{display:flex;gap:2px;margin-top:5px;height:12px}.fhseg i{flex:1;border-radius:3px;background:color-mix(in srgb,currentColor 14%,transparent)}.fhseg i.on{background:linear-gradient(180deg,#8fb8ff,#5a7adf)}
-.fhpill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px 3px 5px;border-radius:9px;background:color-mix(in srgb,#fff 70%,transparent);border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 55%,transparent);cursor:help}
-.fhpill .kw{text-decoration:none!important;border:0!important}.fhpill .kw::before{width:20px!important;height:20px!important;margin:0!important}.fhpill b{font-size:13px;font-weight:700}
 .fhpas{margin:2px 0;padding:4px 6px;border-radius:8px;background:color-mix(in srgb,currentColor 4%,transparent)}.fhpas summary{cursor:pointer;display:flex;gap:6px;align-items:center}
 .fhpas.no{display:flex;gap:6px;align-items:center}.fhpas.no b{color:#000}:root[data-skin="holo"] .fhpas.no b{color:#e8f4ff}
 .fhpn{font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;background:#a0724a;color:#fff}.fhpt{font-size:12.5px;margin:4px 0 2px;line-height:1.4}
