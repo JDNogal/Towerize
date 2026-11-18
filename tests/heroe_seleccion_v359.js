@@ -26,6 +26,10 @@ await p.evaluate(()=>{S.tsel=null;ui();});
 await p.evaluate(()=>{tmClose();pinTower(S.list[0]);});await p.waitForTimeout(400);
 const d=await p.evaluate(async()=>{const tw=()=>{const t=S.list[0],r=cellRect(t.x-1,t.y-1,K);return r;};const tp=$('tip').getBoundingClientRect(),a=tw();CAM.x-=150;await new Promise(r=>setTimeout(r,600));const tp2=$('tip').getBoundingClientRect(),b2=tw();return [Math.round((tp2.left-tp.left)-(b2.l-a.l)),Math.round(b2.l-a.l)];});
 if(Math.abs(d[0])>3)F.push('la ficha no sigue a la torre: '+d);
+// arrastrar el mapa con la ficha fijada no la cierra
+await p.evaluate(()=>{pinTower(S.list[0]);});await p.waitForTimeout(300);
+{const tr=await p.evaluate(()=>{const r=$('tip').getBoundingClientRect();return r.left>640?300:1000;});await p.mouse.move(tr,300);await p.mouse.down();await p.mouse.move(tr-60,260,{steps:8});await p.mouse.up();await p.waitForTimeout(300);
+ if(!await p.evaluate(()=>PR.pinned))F.push('arrastrar cierra la ficha');}
 // ficha del héroe
 const h=await p.evaluate(()=>{S.aim='hero';heroCard();const e=$('hinfo');return [!!e.querySelector('.fhhp .ftbar'),e.querySelectorAll('.ftchips .ftchip').length,!!e.querySelector('.fhxp'),!!e.querySelector('.fhdps'),e.querySelectorAll('.fhpas').length,/Nv 8/.test(e.textContent)&&/\?\?\?/.test(e.textContent),!!e.querySelector('.fhpor svg,.fhpor canvas,.fhpor img,.fhpor *')];});
 if(!h[0]||h[1]!==3||!h[2]||!h[3]||h[4]!==2||!h[5]||!h[6])F.push('ficha héroe: '+h);

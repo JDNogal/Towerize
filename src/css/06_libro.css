@@ -272,3 +272,9 @@ body.inmenu.lbsetup canvas#c{filter:none}
 
 /* v334 · filas largas del compendio (p. ej. «Efectos» de Yrsa): el valor pasa a varias líneas en vez de salirse con barra de scroll */
 #comp .bkp .bkg>.row.rw{align-items:flex-start}#comp .bkp .bkg>.row.rw>span:first-child{flex:none;white-space:nowrap}#comp .bkp .bkg>.row.rw>span:last-child{white-space:normal!important;min-width:0;flex:1 1 auto;text-align:right;overflow-wrap:anywhere}
+/* v359 (Nogal, 18-nov): las barras de Opciones, todas del mismo largo: icono y nombre arriba, barra debajo a todo el ancho (cada 1 % mide más y es más fácil de afinar) */
+.orow.otg.osl{display:grid!important;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:6px 10px;max-width:720px}
+.orow.otg.osl:not(:has(.oic)){grid-template-columns:minmax(0,1fr)}
+.orow.otg.osl .osr{grid-column:1/-1;display:flex;align-items:center;gap:12px;width:100%}
+.orow.otg.osl .osr input{flex:1;width:auto!important;min-width:0;height:24px;margin:0}
+.orow.otg.osl .osr output{width:60px;min-width:60px;flex:none;font-weight:700}

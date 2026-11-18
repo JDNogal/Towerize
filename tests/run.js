@@ -25,7 +25,7 @@ const T=[
  ['pausa_y_estadisticas.js','Pausa, estadísticas y bocadillo de error, en PC y móvil',null,2],
  ['anillo_construccion.js','Anillo de construcción y compra marcada 🔖'],
  ['heroe_en_mapa.js','Héroe en el mapa: tocarlo, moverlo, bocadillo, avisos',['pc','m']],
- ['heroe_seleccion_v359.js','v359: héroe seleccionado y clic en una torre, aviso en rojo, ficha fijada que sigue a la torre y ficha del héroe nueva'],
+ ['heroe_seleccion_v359.js','v359: héroe seleccionado y clic en una torre, aviso en rojo, ficha fijada que sigue a la torre y no se cierra al arrastrar, ficha del héroe nueva'],
  ['logros_ocultos.js','Logros ocultos sin spoilers'],
  ['navegacion_teclado.js','Menús con teclado (WASD/flechas, Intro, Q/E)'],
  ['compendio_libro.js','Compendio en formato libro',['pc','m']],

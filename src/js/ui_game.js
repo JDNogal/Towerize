@@ -219,7 +219,7 @@ document.addEventListener('click',e=>{
 });
 // un clic fuera del panel fijado y de su torre lo suelta
 document.addEventListener('click',e=>{
- if(!PR.pinned)return;const tg=e.target;
+ /* v359: soltar después de arrastrar el mapa no es un clic fuera: la ficha se queda */if(!PR.pinned||DRAGGED)return;const tg=e.target;
  if(tg.closest&&(tg.closest('#tip')||tg.closest('#side')||tg.closest('.kpanel')))return;
  if(tg===cv){const c=cell(e),t=S.occ[c.x+','+c.y];if(t&&PR.key==='tw:'+t.id)return;}
  closePrim();
