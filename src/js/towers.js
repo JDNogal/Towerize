@@ -201,5 +201,5 @@ function quickFlag(t){if(!t||!S.list.includes(t)||!(S.phase==='build'||S.phase==
  try{tmClose();}catch(e){}S.selT=null;
  if(TW[t.type].faro){const cd=S.phase==='wave'?((t.lzcd||[0,0])[0]||0):0;if(cd>0){errBubble('La luz se podrá mover en '+Math.ceil(cd)+' s.');return true;}S.aim='faroz';S.flzSel={id:t.id,i:0};S.msg='Elige dónde proyectar la luz del Faro (Esc para cancelar).';renderRelics();ui();return true;}
  if(tmHas(t,'flag')){startFlag(t);return true;}return false;}
-function startFlag(t){/* casas de los cerditos en Nv 4: el cerdito se mueve como un héroe, por todo el mapa (junto a los demás) */if(TW[t.type]&&TW[t.type].pig&&t.pigT&&pigsOn()){closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino a la que mover a los cerditos (Esc o el mismo botón para cancelar).';renderRelics();ui();return;}
+function startFlag(t){/* casas de los cerditos en Nv 4: el cerdito se mueve como un héroe, por todo el mapa (junto a los demás) */if(TW[t.type]&&TW[t.type].pig&&t.pigT&&pigsOn()){closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino para los cerditos.';renderRelics();ui();return;}
  closePrim();S.aim='flag';S.aimT=t;S.msg='Elige una casilla del camino dentro del rango. Haz clic fuera del círculo para cancelar.';renderRelics();ui();}

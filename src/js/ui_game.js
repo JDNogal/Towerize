@@ -158,10 +158,10 @@ cv.addEventListener('contextmenu',e=>{e.preventDefault();if(!S||!S.list)return;i
 // móvil: mantener pulsada una torre ~0,5 s = mover su bandera
 {let lp=null;cv.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||!S||!S.list||S.aim)return;const c=cell(e),t=S.occ[c.x+','+c.y];if(!t)return;const x=e.clientX,y=e.clientY;lp={x,y,tm:setTimeout(()=>{if(lp&&quickFlag(t)){LPF=performance.now();try{navigator.vibrate&&navigator.vibrate(25);}catch(er){}}lp=null;},500)};});
  const cancel=e=>{if(lp&&(!e||e.type!=='pointermove'||Math.hypot(e.clientX-lp.x,e.clientY-lp.y)>10)){clearTimeout(lp.tm);lp=null;}};cv.addEventListener('pointermove',cancel);cv.addEventListener('pointerup',cancel);cv.addEventListener('pointercancel',cancel);}
-// v359 (Nogal, 18-nov): moviendo al héroe (o a los cerditos), si pulsas fuera del camino algo del mapa (una torre, un solar,
-// un cofre, un evento, un enemigo…) se suelta el héroe y se selecciona eso; si no hay nada, aviso en rojo.
+// v359 (Nogal, 18-nov): moviendo al héroe (o a los cerditos), si pulsas fuera del camino algo que se pueda seleccionar (una torre,
+// un solar o un enemigo; los cofres y eventos no se seleccionan) se suelta el héroe y se selecciona eso; si no, aviso en rojo.
+// Los botones de la interfaz y tus reliquias también lo sueltan (ver act).
 function aimSwap(c){if(!inb(c.x,c.y))return false;const q=sqOf(c.x,c.y);let some=!!S.occ[c.x+','+c.y]||bmFree(q);
- if(!some){try{some=!!resolve(cv);}catch(e){}}
  if(!some){const fx=c.fx-.5,fy=c.fy-.5;some=S.enemies.some(o=>Math.hypot(o.x-fx,o.y-fy)<1.4);}
  if(!some)return false;S.aim=null;S.msg='';S.msgErr='';return true;}
 let LPF=0;
@@ -242,6 +242,7 @@ function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
  /* con una ventana (oferta, cofre, evento) abierta solo valen sus botones… salvo dentro del libro abierto encima (compendio desde el mazo, las reliquias o el 📖) */
  if(RL.open&&!(LB.open&&b.closest&&b.closest('#comp'))&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','erasel','era2hok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
+ /* v359: moviendo al héroe o a los cerditos, un botón de la interfaz o una reliquia lo suelta y hace lo suyo */if((S.aim==='hero'||S.aim==='pigs')&&a!=='hero'&&a!=='pigs'&&(AIMLOCK.includes(a)||a==='ract'||a==='vch'||a==='hab'||a==='hult')){S.aim=null;S.msg='';S.msgErr='';renderRelics();}
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim&&S.aim!=='mimic')||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -343,8 +344,8 @@ function act(e){
  else if(a==='hab'){if(S.hero&&!RL.open)startHab('b');}
  else if(a==='mecha'){if(!RL.open)startMecha();}
  else if(a==='hult'){if(S.hero&&!RL.open)startHab('u');}
- else if(a==='pigs'){if(RL.open||!pigsOn())return;if(S.aim==='pigs'){S.aim=null;S.msg='';}else{closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino a la que mover a los cerditos (Esc o el mismo botón para cancelar).';}renderRelics();ui();}
- else if(a==='hero'){if(!S.hero||RL.open)return;if(S.aim==='hero'){S.aim=null;S.msg='';}else{closePrim();S.aim='hero';S.aimT=null;/* v307: en el tutorial, el héroe se explica en cuanto lo tocas */if(S.tut&&!S.tut.heroT){S.tut.heroT=1;hint('hero','Tu héroe',HEROTXT2,null);}S.msg='Elige una casilla del camino donde colocar a '+S.hero.def.n+' (clic; Esc o el mismo icono para cancelar).';}renderRelics();ui();}
+ else if(a==='pigs'){if(RL.open||!pigsOn())return;if(S.aim==='pigs'){S.aim=null;S.msg='';}else{closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino para los cerditos.';}renderRelics();ui();}
+ else if(a==='hero'){if(!S.hero||RL.open)return;if(S.aim==='hero'){S.aim=null;S.msg='';}else{closePrim();S.aim='hero';S.aimT=null;/* v307: en el tutorial, el héroe se explica en cuanto lo tocas */if(S.tut&&!S.tut.heroT){S.tut.heroT=1;hint('hero','Tu héroe',HEROTXT2,null);}S.msg='Elige una casilla del camino para '+S.hero.def.n+'.';}renderRelics();ui();}
  else if(a==='pickhero'){if(b.dataset.id)chooseHero(b.dataset.id);}
  else if(a==='hdet'){RL.hdet=!RL.hdet;RL.dman={};RL.rman={};const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
  else if(a==='hsel'){if(RL.hsel!==b.dataset.id&&!RL.hdet)RL.dman={};RL.rman={};RL.hsel=b.dataset.id;const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}

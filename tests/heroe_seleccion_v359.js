@@ -18,6 +18,10 @@ if(info.empty){const q=await pt(info.empty);await p.mouse.click(q[0],q[1]);await
  const r=await p.evaluate(()=>[S.aim,S.msg,$('msg').classList.contains('err')]);if(r[0]!=='hero'||!r[2])F.push('vacío: '+r);}
 const qt=await pt(info.t);await p.mouse.click(qt[0],qt[1]);await p.waitForTimeout(300);
 const r2=await p.evaluate(()=>[S.aim,!!S.selT,$('tmenu').classList.contains('on'),$('msg').classList.contains('err')]);if(r2[0]||!r2[1]||!r2[2]||r2[3])F.push('torre: '+r2);
+// un botón de la interfaz (elegir torre del mazo) también suelta al héroe
+await p.evaluate(()=>{tmClose();S.selT=null;clickA('[data-a="hero"]');});await p.waitForTimeout(200);
+const sb=await p.$('[data-a="sel"]');if(sb){await sb.click();await p.waitForTimeout(200);const r3=await p.evaluate(()=>[S.aim,S.tsel]);if(r3[0]||!r3[1])F.push('botón: '+r3);}
+await p.evaluate(()=>{S.tsel=null;ui();});
 // ficha fijada que sigue a la torre
 await p.evaluate(()=>{tmClose();pinTower(S.list[0]);});await p.waitForTimeout(400);
 const d=await p.evaluate(async()=>{const tw=()=>{const t=S.list[0],r=cellRect(t.x-1,t.y-1,K);return r;};const tp=$('tip').getBoundingClientRect(),a=tw();CAM.x-=150;await new Promise(r=>setTimeout(r,600));const tp2=$('tip').getBoundingClientRect(),b2=tw();return [Math.round((tp2.left-tp.left)-(b2.l-a.l)),Math.round(b2.l-a.l)];});
