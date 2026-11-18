@@ -178,6 +178,6 @@ function tutEnd(){const clean=TUTR===0,perfect=clean&&!(S.hpEn>0);try{localStora
 function heroCard(){let el=$('hinfo');const H=S&&S.hero,on=!!(H&&S.aim==='hero'&&!RL.open&&!LB.open&&!document.body.classList.contains('inmenu'));
  if(!el){if(!on)return;el=document.createElement('div');el.id='hinfo';el.className='tipc';document.body.appendChild(el);}
  if(!on){el.classList.remove('on');el._sg='';return;}
- const sg=H.id+'|'+H.lvl+'|'+Math.round(H.s.hp)+'|'+Math.floor(H.xp);if(el._sg!==sg){el._sg=sg;el.innerHTML=heroInfo(H.id).replace(/<div class="tgt">[\s\S]*?<\/div>/,'')+heroAbHtml(H.id,H.lvl);}
+ const sg=H.id+'|'+H.lvl+'|'+Math.round(H.s.hp)+'|'+Math.floor(H.xp)+'|'+(H.s.hp<=0?Math.ceil(H.s.rt):0);if(el._sg!==sg){el._sg=sg;el.innerHTML=heroInfo(H.id).replace(/<div class="tgt">[\s\S]*?<\/div>/,'');}
  el.classList.add('on');const p=document.querySelector('#mbr .hpan');const r=p?p.getBoundingClientRect():{top:innerHeight-100,right:innerWidth-8};
  const h=el.offsetHeight;el.style.right=Math.max(8,innerWidth-r.right)+'px';el.style.top=Math.max(8,r.top-h-10)+'px';}

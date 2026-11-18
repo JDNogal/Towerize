@@ -57,8 +57,9 @@ function fichaTorre(t){
  if(ss.range>0)ch.push(ftChip('cg',kst('rng','Rango',src),cas(ss.range/K)));
  if(ss.area)ch.push(ftChip('ca',kst('area','Área',src),f(ss.area/K)));else if(TT.burn&&TT.cone)ch.push(ftChip('ca',kst('area','Área',src),Math.round(Math.min(360,TT.cone*(ss.arm||1)))+'°'));
  if(ch.length)h+=`<div class="ftchips n${ch.length}">${ch.join('')}</div>`;
- h+=ftDpsBar(t,theo);
  h+=ftFx(TT,src);
+ // v359: lo del momento (DPS real) abajo, separado de los datos fijos
+ h+='<div class="ftgap"></div>'+ftDpsBar(t,theo);
  // botones de bandera de las torres con unidades (o de la nube), siempre a mano
  let rest=rows(ss,TT,src,T.unit?unitExtra(unitRows(T,src,t,PR.pinned&&PR.key===src,UA.hpm,UA.uap,usp),t.type,t.spec,t,UA.s,UA.hpm,UA.uap,usp,src):'');
  const tail=[];rest=rest.replace(/<div class="tgt"><button data-a="flag"[^]*?<\/div>|<small>Haz clic en la torre para mover su (bandera|nube)\.<\/small>/g,m=>{tail.push(m);return '';});

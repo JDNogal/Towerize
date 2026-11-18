@@ -38,3 +38,38 @@
 
 /* v353 · barras de mecánica dibujadas (ficha_barras.js) */
 .ftmech canvas.fbc{display:block;width:100%;margin-top:5px}
+
+/* v359 · colores de cada estadística (nombre y número) en la ficha de torre y en la del héroe; tonos legibles sobre pergamino (Nogal, 18-nov) */
+.ftc,#hinfo{--sv:#2f8a3c;--sd:#b5302a;--se:#7340b8;--sr:#1d6bb0;--sa:#c0601a;--sp:#6b5a48;--sm:#4b4fc4;--ss:#0f7a6c;--sx:#3a62b8}
+:root[data-skin="holo"] .ftc,:root[data-skin="holo"] #hinfo{--sv:#7bd84a;--sd:#ff6b5a;--se:#c08aff;--sr:#5ab4ff;--sa:#ff9a3c;--sp:#c9b8a0;--sm:#9fa8ff;--ss:#4fd6b8;--sx:#8fb8ff}
+.ftc .kw[data-kw=hhp],.fhhp .fhl>b{color:var(--sv)!important}
+.ftc .kw[data-kw=hdmg],.ftc .kw[data-kw=dps],.ftc .kw[data-kw=dpsr],.ftc .ftchip>b.cd,.ftc .ftdv{color:var(--sd)!important}
+.ftc .kw[data-kw=hcd],.ftc .kw[data-kw=cool],.ftc .ftchip>b.cr{color:var(--se)!important}
+.ftc .kw[data-kw=hrng],.ftc .kw[data-kw=rng],.ftc .ftchip>b.cg{color:var(--sr)!important}
+.ftc .kw[data-kw=area],.ftc .ftchip>b.ca{color:var(--sa)!important}
+.ftc .kw[data-kw=aphys],.ftc .ftchip>b.cph{color:var(--sp)!important}
+.ftc .kw[data-kw=umr],.ftc .ftchip>b.cmg{color:var(--sm)!important}
+.ftc .kw[data-kw=espd],.ftc .ftchip>b.cs{color:var(--ss)!important}
+.ftc .kw[data-kw=hxp],.fhxp .fhl>b{color:var(--sx)!important}
+/* efectos: icono y valor en la misma pastilla */
+.ftfx{flex-wrap:wrap;gap:6px}
+.ftfx .ftfxi{border-radius:9px 0 0 9px;border-right:0}
+.ftfx .ftfxi+small{margin-left:-6px;height:32px;box-sizing:border-box;display:grid;place-items:center;padding:0 10px 0 4px;border-radius:0 9px 9px 0;background:color-mix(in srgb,#fff 70%,transparent);border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 55%,transparent);border-left:0}
+.ftgap{height:8px}
+/* ficha del héroe (ficha_heroe.js) */
+#hinfo{width:340px;font-size:14px}
+.fhttl{display:flex;align-items:center;gap:8px}.fhttl>b{font:700 18px Georgia,serif}.fhpor{font-size:22px;flex:none}
+.fhlv{font-size:13px;font-weight:600}.fhrez{margin-left:auto;font-weight:700;font-size:13px}.fhrez .kw{font-weight:700}
+.fhbox{margin:4px 0 6px;padding:6px 9px;border-radius:9px;background:color-mix(in srgb,currentColor 5%,transparent);border:1px solid color-mix(in srgb,currentColor 20%,transparent)}
+.fhl{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px}.fhl>b{font-variant-numeric:tabular-nums;font-size:15px}
+.fhhp .ftbar{height:12px}.fhhp .ftbar i{background:linear-gradient(90deg,#3fae4a,#7bd84a)}.fhhp .ftbar i.low{background:linear-gradient(90deg,#d8452f,#f0a040)}
+.fhxp .ftbar i{background:linear-gradient(90deg,#5a8adf,#8fb8ff)}
+.fhdv{color:#a0402a;font-weight:700}:root[data-skin="holo"] .fhdv{color:#ff8a7a}
+.fhseg{display:flex;gap:2px;margin-top:5px;height:12px}.fhseg i{flex:1;border-radius:3px;background:color-mix(in srgb,currentColor 14%,transparent)}.fhseg i.on{background:linear-gradient(180deg,#8fb8ff,#5a7adf)}
+.fhpill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px 3px 5px;border-radius:9px;background:color-mix(in srgb,#fff 70%,transparent);border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 55%,transparent);cursor:help}
+.fhpill .kw{text-decoration:none!important;border:0!important}.fhpill .kw::before{width:20px!important;height:20px!important;margin:0!important}.fhpill b{font-size:13px;font-weight:700}
+.fhpas{margin:2px 0;padding:4px 6px;border-radius:8px;background:color-mix(in srgb,currentColor 4%,transparent)}.fhpas summary{cursor:pointer;display:flex;gap:6px;align-items:center}
+.fhpas.no{display:flex;gap:6px;align-items:center}.fhpas.no b{color:#000}:root[data-skin="holo"] .fhpas.no b{color:#e8f4ff}
+.fhpn{font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;background:#a0724a;color:#fff}.fhpt{font-size:12.5px;margin:4px 0 2px;line-height:1.4}
+.fhmore{margin-top:6px}
+.bksht .fhlv,.bksht .fhrez{margin-left:8px;font-size:13px}
