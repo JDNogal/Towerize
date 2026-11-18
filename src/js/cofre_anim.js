@@ -115,3 +115,8 @@ function cfPlay(rl,cards,sign,e2,chest){let fx=rl.querySelector('.cofx');if(fx)f
   CFA(c,[{transform:`translateY(${-up}px) scale(1.7)`},{transform:'translateY(0) scale(1)'}],{duration:450,delay:1650,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});t0=1.6;}
  setTimeout(()=>{if(fx.isConnected)fx.classList.add('back');},T(t0));
  showSign(t0+.35);showCards(t0,from);}
+// v359 (Nogal, 19-nov): en el móvil, el cofre cabe entero sin desplazar: se encoge lo justo el cartel y las cartas
+setInterval(()=>{try{const rl=$('relic');if(!rl||!rl.classList.contains('cofre')||!rl.classList.contains('open'))return;const ps=rl.querySelector('.pscr');if(!ps)return;
+ if(!document.body.classList.contains('mfs')){if(ps.style.zoom)ps.style.zoom='';return;}
+ const cur=parseFloat(ps.style.zoom)||1,r=ps.getBoundingClientRect(),nat=r.height/cur,top=r.top/cur*cur,f=Math.max(.6,Math.min(1,(innerHeight-16-Math.max(0,r.top))/nat));
+ if(Math.abs(f-cur)>.01)ps.style.zoom=f<1?f.toFixed(3):'';}catch(e){}},150);

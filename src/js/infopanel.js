@@ -307,11 +307,12 @@ function openKw(a,pl){
  closeKS(pl);
  const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.dataset.kself=a.dataset.kw||'';if(a.closest('#comp')||a.closest('.kpanel.inbk'))d.classList.add('inbk');d.style.setProperty('--kc',getComputedStyle(a).color);
  document.body.appendChild(d);
- const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth,ht=d.offsetHeight;
+ /* v359 (Nogal, 19-nov): en los menús (el libro) los bocadillos crecen con la pantalla, como el libro; en el mapa no, para no tapar la partida */const BZ=d.classList.contains('inbk')?bkZ():1;if(BZ>1)d.style.zoom=BZ;
+ const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth*BZ,ht=d.offsetHeight*BZ;
  // la caja sale junto a la palabra (debajo; si no cabe, encima), aunque tape parte del panel del que sale: así no se va lejos de donde miras
  let l=Math.max(6,Math.min(innerWidth-6-wd,ar.left-12));
  let t=ar.bottom+6;if(t+ht>innerHeight-6)t=ar.top-6-ht;if(t<6)t=Math.max(6,Math.min(innerHeight-6-ht,ar.bottom+6));
- d.style.left=l+'px';d.style.top=t+'px';
+ d.style.left=(l/BZ)+'px';d.style.top=(t/BZ)+'px';
  KS.push({el:d,anchor:a,dead:0});KD.el=null;KD.t=0;
 }
 
@@ -372,7 +373,8 @@ function hoverTick(rdt){
  const tip=$('tip');
  if(PMN()&&PR.open&&!(HQ.cur&&document.body.classList.contains('mfs'))){
   tip.style.display='block';
-  const wd=tip.offsetWidth,ht=tip.offsetHeight;
+  /* v359: con el libro abierto (menús), el bocadillo crece con la pantalla; en el mapa, no */const TZ=typeof LB!=='undefined'&&LB.open?bkZ():1;if((parseFloat(tip.style.zoom)||1)!==TZ)tip.style.zoom=TZ>1?TZ:'';
+  const wd=tip.offsetWidth*TZ,ht=tip.offsetHeight*TZ;
   /* v359: la ficha fijada de una torre sigue a la torre si mueves o acercas la cámara (antes se quedaba donde se abrió) */
   if(PR.pinned&&String(PR.key).startsWith('tw:')){const t=S.list.find(o=>'tw:'+o.id===PR.key);if(t)PR.rect=cellRect(t.x-1,t.y-1,K);}
   let r=PR.rect;
@@ -382,7 +384,7 @@ function hoverTick(rdt){
   let t=PR.dom?(r.t+r.b)/2-ht/2:r.t;if(t+ht>innerHeight-6)t=innerHeight-6-ht;if(t<6)t=6;
   /* v332: algunos bocadillos salen justo debajo de lo que señalan (la línea de rondas) */
   if(PR.below){l=Math.max(6,Math.min(innerWidth-6-wd,(r.l+r.r)/2-wd/2));t=r.b+8;if(t+ht>innerHeight-6)t=Math.max(6,r.t-8-ht);}
-  tip.style.left=l+'px';tip.style.top=t+'px';
+  tip.style.left=(l/TZ)+'px';tip.style.top=(t/TZ)+'px';
  }else tip.style.display='none';
  if(!S.hover&&PR.open&&PR.cell)S.hover=PR.cell;
  HV.sl=PR.pinned?(onPin?1:0):(PR.open?1:HV.t);
@@ -393,3 +395,6 @@ function hoverTick(rdt){
 function kwSelf(k){try{const id=k.dataset.kw;if(!id)return false;const kp=k.closest('.kpanel');if(kp&&kp.dataset.kself===id)return true;
  if(k.closest('#comp')&&typeof CP!=='undefined'&&CP.open&&CP.tab==='mc'&&CP.sel&&CP.sel.mc===id)return true;}catch(e){}return false;}
 setInterval(()=>{try{document.querySelectorAll('.kpanel .kw:not(.kwself),#comp .kw:not(.kwself)').forEach(k=>{if(kwSelf(k))k.classList.add('kwself');});document.querySelectorAll('.kwself').forEach(k=>{if(!kwSelf(k))k.classList.remove('kwself');});}catch(e){}},200);
+
+// v359: escala de los menús en pantallas grandes (la misma que --uiz); 1 en móvil
+function bkZ(){const B=document.body.classList;if(!B.contains('dsk')||B.contains('mfs'))return 1;return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--uiz'))||1;}

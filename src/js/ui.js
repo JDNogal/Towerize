@@ -57,7 +57,7 @@ setInterval(()=>{try{for(const el of document.querySelectorAll(SMSEL)){const on=
 
 // habilidades en la selección de héroe: se abren al tocar o pasar el ratón (antes no mostraban nada)
 (()=>{const p=document.createElement('div');p.id='hpop';p.className='tipc';document.body.appendChild(p);let cur=null;
- const show=a=>{clearTimeout(p._ht);const tg=resolve(a);if(!tg)return;p.innerHTML=tg.html();p.style.display='block';const r=a.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight;let l=r.right+8;if(l+w>innerWidth-8)l=r.left-8-w;if(l<8)l=Math.max(8,Math.min(innerWidth-8-w,r.left));let t=r.top;if(t+h>innerHeight-8)t=innerHeight-8-h;if(t<8)t=8;p.style.left=l+'px';p.style.top=t+'px';cur=a;};
+ const show=a=>{clearTimeout(p._ht);const tg=resolve(a);if(!tg)return;p.innerHTML=tg.html();/* v359: en el libro, el bocadillo crece con la pantalla */const Z=a.closest('#comp')?bkZ():1;p.style.zoom=Z>1?Z:'';p.style.display='block';const r=a.getBoundingClientRect(),w=p.offsetWidth*Z,h=p.offsetHeight*Z;let l=r.right+8;if(l+w>innerWidth-8)l=r.left-8-w;if(l<8)l=Math.max(8,Math.min(innerWidth-8-w,r.left));let t=r.top;if(t+h>innerHeight-8)t=innerHeight-8-h;if(t<8)t=8;p.style.left=(l/Z)+'px';p.style.top=(t/Z)+'px';cur=a;};
  const hide=()=>{clearTimeout(p._ht);p.style.display='none';cur=null;};
  /* se queda abierto un momento al salir, para poder entrar en él y consultar sus palabras clave */
  const hideSoon=()=>{clearTimeout(p._ht);p._ht=setTimeout(()=>{if(!p.matches(':hover')&&!document.querySelector('.kpanel:hover'))hide();},260);};
