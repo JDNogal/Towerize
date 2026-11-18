@@ -372,7 +372,10 @@ function hoverTick(rdt){
  const tip=$('tip');
  if(PMN()&&PR.open&&!(HQ.cur&&document.body.classList.contains('mfs'))){
   tip.style.display='block';
-  const wd=tip.offsetWidth,ht=tip.offsetHeight;let r=PR.rect;
+  const wd=tip.offsetWidth,ht=tip.offsetHeight;
+  /* v359: la ficha fijada de una torre sigue a la torre si mueves o acercas la cámara (antes se quedaba donde se abrió) */
+  if(PR.pinned&&String(PR.key).startsWith('tw:')){const t=S.list.find(o=>'tw:'+o.id===PR.key);if(t)PR.rect=cellRect(t.x-1,t.y-1,K);}
+  let r=PR.rect;
   /* si el anillo de controles de la torre (o del solar) está abierto, el panel se coloca fuera de él para no taparlo */
   for(const id of ['tmenu','bmenu']){const m=$(id);if(m&&m.classList.contains('on')&&m.offsetParent!==null){let u=null;m.querySelectorAll('button').forEach(b=>{const q=b.getBoundingClientRect();if(!q.width)return;u=u?{l:Math.min(u.l,q.left),t:Math.min(u.t,q.top),r:Math.max(u.r,q.right),b:Math.max(u.b,q.bottom)}:{l:q.left,t:q.top,r:q.right,b:q.bottom};});if(u)r={l:Math.min(r.l,u.l),t:r.t,r:Math.max(r.r,u.r),b:r.b};}}
   let l=r.r+8;if(l+wd>innerWidth-6)l=r.l-8-wd;if(l<6)l=6;

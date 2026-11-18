@@ -158,6 +158,12 @@ cv.addEventListener('contextmenu',e=>{e.preventDefault();if(!S||!S.list)return;i
 // móvil: mantener pulsada una torre ~0,5 s = mover su bandera
 {let lp=null;cv.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||!S||!S.list||S.aim)return;const c=cell(e),t=S.occ[c.x+','+c.y];if(!t)return;const x=e.clientX,y=e.clientY;lp={x,y,tm:setTimeout(()=>{if(lp&&quickFlag(t)){LPF=performance.now();try{navigator.vibrate&&navigator.vibrate(25);}catch(er){}}lp=null;},500)};});
  const cancel=e=>{if(lp&&(!e||e.type!=='pointermove'||Math.hypot(e.clientX-lp.x,e.clientY-lp.y)>10)){clearTimeout(lp.tm);lp=null;}};cv.addEventListener('pointermove',cancel);cv.addEventListener('pointerup',cancel);cv.addEventListener('pointercancel',cancel);}
+// v359 (Nogal, 18-nov): moviendo al héroe (o a los cerditos), si pulsas fuera del camino algo del mapa (una torre, un solar,
+// un cofre, un evento, un enemigo…) se suelta el héroe y se selecciona eso; si no hay nada, aviso en rojo.
+function aimSwap(c){if(!inb(c.x,c.y))return false;const q=sqOf(c.x,c.y);let some=!!S.occ[c.x+','+c.y]||bmFree(q);
+ if(!some){try{some=!!resolve(cv);}catch(e){}}
+ if(!some){const fx=c.fx-.5,fy=c.fy-.5;some=S.enemies.some(o=>Math.hypot(o.x-fx,o.y-fy)<1.4);}
+ if(!some)return false;S.aim=null;S.msg='';S.msgErr='';return true;}
 let LPF=0;
 cv.addEventListener('click',e=>{
  if(DRAGGED)return;if(performance.now()-LPF<700)return;
@@ -167,8 +173,8 @@ cv.addEventListener('click',e=>{
  if(S.aim==='frost'){if(inb(c.x,c.y))castFreeze(c);return;}
  if(S.aim==='harpoon'){if(inb(c.x,c.y))castHarpoon(c);return;}
  if(S.aim==='faroz'){const f=S.list.find(o=>o.id===S.flzSel.id);if(f&&inb(c.x,c.y)){faroZones(f);f.lz[S.flzSel.i]={x:c.x,y:c.y};f.lzcd=f.lzcd||[0,0];f.lzcd[S.flzSel.i]=S.phase==='wave'?FCD[(f.lvl||1)-1]:0;try{sfx('ui');}catch(er){}}S.aim=null;S.msg='';renderRelics();ui();return;}
- if(S.aim==='pigs'){if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2){for(const t of pigHouses())if(t&&t.pigT)setFlag(t,c);S.aim=null;S.msg='';try{sfx('ui');}catch(e){}}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
- if(S.aim==='hero'){const H=S.hero;/* v307: solo cancela si pulsas su propia casilla; antes un radio de 1,35 se comía la casilla de al lado y no dejaba moverlo un paso */if(H&&H.s.hp>0&&c&&c.x===Math.round(H.s.x)&&c.y===Math.round(H.s.y)){S.aim=null;S.msg='';renderRelics();ui();return;}if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);if(S.st)S.st.hmv=1;S.aim=null;S.msg='';heroSay(fr,c);}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
+ if(S.aim==='pigs'){let sw=false;if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2){for(const t of pigHouses())if(t&&t.pigT)setFlag(t,c);S.aim=null;S.msg='';try{sfx('ui');}catch(e){}}else if(aimSwap(c)){sw=true;renderRelics();}else S.msg=S.msgErr='Elige una casilla del camino.';if(!sw){renderRelics();ui();return;}}
+ if(S.aim==='hero'){const H=S.hero;/* v307: solo cancela si pulsas su propia casilla; antes un radio de 1,35 se comía la casilla de al lado y no dejaba moverlo un paso */if(H&&H.s.hp>0&&c&&c.x===Math.round(H.s.x)&&c.y===Math.round(H.s.y)){S.aim=null;S.msg='';renderRelics();ui();return;}let sw=false;if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);if(S.st)S.st.hmv=1;S.aim=null;S.msg='';heroSay(fr,c);}else if(aimSwap(c)){sw=true;renderRelics();/* v359: pulsar una torre u otra cosa del mapa cambia la selección a eso: sigue abajo como un clic normal */}else S.msg=S.msgErr='Elige una casilla del camino.';if(!sw){renderRelics();ui();return;}}
  if(!S.aim&&heroAt(c)&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')){bmClose();S.selT=null;try{tmClose();}catch(er){}clickA('[data-a="hero"]');return;}
  if(S.aim==='barricade'){const bp=barrPick(c.x,c.y);if(bp){S.barr.push({t:5,...bp});const st=S.rs.barricade;setCD('barricade');st.t=5;S.aim=null;S.msg='';}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(S.aim==='uplace'){uPlaceAt(c);return;}

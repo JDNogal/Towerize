@@ -1,7 +1,7 @@
 // ---- interfaz ----
 function ui(){
  try{if(S.msg){const t=String(S.msg).replace(/<[^>]+>/g,'');if(ERRRX.test(t)&&!/^(Elige|Pulsa)/.test(t)){S.msg='';LMSG='';errBubble(t);}}}catch(e){}
- $('panel').style.display=S.hero?'':'none';$('msg').textContent=S.msg;let h='';$('ui').classList.toggle('lock',!!S.aim);
+ $('panel').style.display=S.hero?'':'none';$('msg').textContent=S.msg;$('msg').classList.toggle('err',!!S.msg&&S.msg===S.msgErr);let h='';$('ui').classList.toggle('lock',!!S.aim);
  const sp=[[0,'Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2'],[3,'×3']];
  $('ctl').innerHTML='';
  const sl=S.speed;const MF=document.body.classList.contains('mfs');if(S.speed>0)S.lspd=S.speed;
