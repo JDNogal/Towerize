@@ -15700,7 +15700,9 @@ function wlAccel(h){if(!h)return;const o=wlPg(h);if(o&&!(o.spd>1)){o.spd=WLX;o.l
  for(const a of wlAnims(h))try{if(a.playbackRate!==WLX){if(a.updatePlaybackRate)a.updatePlaybackRate(WLX);else a.playbackRate=WLX;}}catch(e){}}
 // el reloj del pergamino corre WLX veces más deprisa una vez acelerado
 {const _pt=pgTick;pgTick=function(now){const o=PGF.on;if(o&&o.spd>1&&o.t0>0){if(o.lastN!=null)o.t0-=(now-o.lastN)*(o.spd-1);o.lastN=now;}return _pt.apply(this,arguments);};}
-{const inWin=(e,h)=>!!(h&&e.target&&e.target.nodeType===1&&h.contains(e.target));
+/* dentro de la ventana se bloquea todo (también el fondo, que antes saltaba la animación de golpe) salvo los botones de mirar: mazo, reliquias, ojo, detalles y palabras clave */
+const WLOK='[data-mz],.rlbar,[data-a="peek"],[data-a="ppeek"],[data-a="tdet"],.kw,.wcomp';
+{const inWin=(e,h)=>!!(h&&e.target&&e.target.nodeType===1&&h.contains(e.target)&&!e.target.closest(WLOK));
  const ptr=e=>{if(!e.isTrusted||!wlBusy())return;const h=wlHost();wlAccel(h);if(inWin(e,h))e.stopPropagation();};
  /* en window (y no en document) para ir antes que los demás que escuchan en captura, como la salida del cofre */
  for(const ty of ['pointerdown','mousedown','touchstart'])window.addEventListener(ty,ptr,true);
