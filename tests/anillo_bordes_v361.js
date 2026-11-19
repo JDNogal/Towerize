@@ -1,7 +1,7 @@
 // v361: el anillo de la torre (habilidades, mejorar, vender…) nunca queda debajo de la interfaz ni fuera de la pantalla,
 // con la torre pegada a cualquiera de los cuatro bordes, en PC y en móvil
 const {chromium,devices}=require('playwright');(async()=>{const b=await chromium.launch();const fails=[];const ck=(c,m)=>{if(!c)fails.push(m);};const errs=[];const out={};
-const OBS=['stats','rtl','mtl','mbl','mbr','zm','relics','dpsmb','emap','pkbar'];
+const OBS=['stats','rtl','mtl','mbl','mbr','zm','relics','dpsmb','dpsc','emap','pkbar','rtyb'];
 for(const [dev,opt] of [['pc',{viewport:{width:1280,height:720}}],['movil',devices['iPhone 13 landscape']]]){
  const c=await b.newContext(opt),p=await c.newPage();p.on('pageerror',e=>errs.push(e.message));
  await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');}catch(e){}});

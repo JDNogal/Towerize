@@ -1,5 +1,5 @@
 // v361: tarjeta de unidad. En la ficha de una torre con unidades, «Más detalles» lleva un botón por unidad (ya no sus bloques de cifras);
-// al pulsarlo sale su tarjeta (vida en barra, números en tarjetas) con «← Torre» para volver. PC y móvil; Baluarte, Gremio y Casa de paja.
+// un botón por unidad (Soldado, Soldado, Soldado…); al pulsarlo sale su tarjeta (vida en barra, números en tarjetas) con «← Torre» para volver. PC y móvil; Baluarte, Gremio y Casa de paja.
 const {chromium,devices}=require('playwright');(async()=>{const b=await chromium.launch();const fails=[];const ck=(c,m)=>{if(!c)fails.push(m);};const errs=[];const out={};
 for(const [dev,opt] of [['pc',{viewport:{width:1280,height:720}}],['movil',devices['iPhone 13 landscape']]]){
  const c=await b.newContext(opt),p=await c.newPage();p.on('pageerror',e=>errs.push(e.message));
@@ -21,12 +21,12 @@ for(const [dev,opt] of [['pc',{viewport:{width:1280,height:720}}],['movil',devic
    const bt=box().querySelector('[data-a="fuunit"]');if(!bt)return o;bt.click();await new Promise(r=>setTimeout(r,300));
    const card=box().querySelector('.fuu');o.card=!!card;if(card){o.back=!!card.querySelector('[data-a="fuback"]');o.chips=card.querySelectorAll('.ftchip').length;o.bars=card.querySelectorAll('.fuhp .ftbar').length;o.name=(card.querySelector('.ttl')||{}).textContent;
     const q=card.querySelector('[data-a="fuback"]').getBoundingClientRect();o.backVis=q.top>=0&&q.bottom<=innerHeight&&q.left>=0&&q.right<=innerWidth;
-    ui();refreshPrim();await new Promise(r=>setTimeout(r,250));o.stays=!!box().querySelector('.fuu');/* aguanta los repintados de la ficha */
+    ui();refreshPrim();await new Promise(r=>setTimeout(r,250));o.stays=!!box().querySelector('.fuu');const ln=document.getElementById('fuln');o.line=!!(ln&&ln.style.display==='block');/* aguanta los repintados de la ficha */
     box().querySelector('[data-a="fuback"]').click();await new Promise(r=>setTimeout(r,300));o.backOk=!box().querySelector('.fuu')&&box().querySelectorAll('[data-a="fuunit"]').length===o.btn;}
    closePrim();return o;},ty);
   out[dev+'_'+ty]=r;const L=`${dev} ${ty}`;
   ck(r.btn>=1,L+': no hay botones de unidad en la ficha');ck(r.usub===0,L+': siguen los bloques de cifras de unidad en la ficha');ck(r.card,L+': no sale la tarjeta de la unidad');
-  if(r.card){ck(r.back&&r.backVis,L+': «Volver» no se ve');ck(r.chips>=2,L+': la tarjeta no tiene sus números en tarjetas');ck(r.bars>=1,L+': la vida no va en barra');ck(r.stays,L+': la tarjeta se cierra al repintar la ficha');ck(r.backOk,L+': «Volver» no devuelve a la ficha de la torre');}
+  if(r.card){ck(r.back&&r.backVis,L+': «Volver» no se ve');ck(r.chips>=2,L+': la tarjeta no tiene sus números en tarjetas');ck(r.bars>=1,L+': la vida no va en barra');ck(r.stays,L+': la tarjeta se cierra al repintar la ficha');ck(r.backOk,L+': «Volver» no devuelve a la ficha de la torre');ck(r.line||ty==='straw',L+': no sale la línea punteada hasta la unidad');}
   await p.screenshot({path:`tests/out/ficha_unidad_${dev}_${ty}.png`});}
  await c.close();}
 ck(!errs.length,'errores: '+errs.join(' | '));

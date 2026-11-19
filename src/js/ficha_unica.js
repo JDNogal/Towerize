@@ -84,7 +84,7 @@ function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lv
   const tot=(D.fis||0)+(D.mag||0)+(D.ele||0),dp=q('.ftdps');if(dp){if(tot>0)dp.outerHTML=ftDpsBar(t,tot);else dp.remove();}else if(tot>0){const g=q('.ftchips');if(g)g.insertAdjacentHTML('afterend',ftDpsBar(t,tot));}
   // las familias, en pips del color de cada una, en el orden en que las metiste
   const mb=q('.ftmech .ftmb');if(mb)mb.outerHTML=`<div class="fupips om">${Array.from({length:omCap(t)},(_,i)=>{const k=fam[i];return k?`<i class="on" style="background:${OMF[k].col}" title=""></i>`:'<i></i>';}).join('')}</div>`;
-  const c=q('.ftdps')||q('.ftfx')||q('.ftchips');if(c)c.insertAdjacentHTML('afterend',fam.length?`<div class="fuom">${fam.map(k=>`<div class="omf"><span class="omi">${omPc(k)}</span><span><b style="color:color-mix(in srgb,${OMF[k].col} 65%,#2a1d08)">${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small></span></div>`).join('')}</div>`:'<small>Todavía no ha absorbido ninguna torre: solo lanza un pulso muy débil.</small>');}
+  var omFam=(fam.length?`<div class="fuom">${fam.map(k=>`<div class="omf"><span class="omi">${omPc(k)}</span><span><b style="color:color-mix(in srgb,${OMF[k].col} 65%,#2a1d08)">${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small></span></div>`).join('')}</div>`:'<small>Todavía no ha absorbido ninguna torre: solo lanza un pulso muy débil.</small>');}
  if(T.log){const fx=q('.ftfx');if(fx)fx.insertAdjacentHTML('beforeend',fxPill('push','0,5',src,'Empuje'));}
  // Más detalles propios (sacados de la ficha antigua, que ya tiene las cifras bien)
  const more=[];
@@ -96,6 +96,7 @@ function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lv
   if(mf)mf.querySelector('.ftin').insertAdjacentHTML('afterbegin',more.join(''));else{const c=q('.ftc');if(c)c.insertAdjacentHTML('beforeend',ftFold('more','<span>Más detalles</span>',more.join('')));}}
  // fuera lo repetido arriba y las cifras que valen 0
  if(T.faro||T.omega)rm('.ftfold[data-ft="more"]');
+ if(T.omega&&omFam){const c=q('.ftc');if(c)c.insertAdjacentHTML('beforeend',ftFold('more','<span>Más detalles</span>',omFam));}/* las familias, en Más detalles (Nogal) */
  w.querySelectorAll('.ftfold[data-ft="more"] .row').forEach(r=>{const k=r.querySelector('[data-kw]'),id=k&&k.dataset.kw,v=(r.lastElementChild&&r.lastElementChild.textContent||'').trim();
   if(v==='0'||((T.dragon||T.glut)&&id==='uhp')||(T.glut&&id==='usol')||(T.wall&&id==='dur')||(T.log&&(id==='push'||id==='dur')))r.remove();});
  return w.innerHTML;}

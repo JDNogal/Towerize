@@ -27,7 +27,7 @@ function tmBuild(){let m=$('tmenu');if(!m){m=document.createElement('div');m.id=
  if(o.side)h+=B(o.side,'flag',`<span class="ic">${o.side.ic}</span>${kcap(kbN('flag'))}`);
  m.innerHTML=h;m._o=o;m.classList.add('on');tmPos(true);tmCard();try{wishDeco();}catch(e){}}
 // v361: zonas de la interfaz que el anillo de la torre no puede tapar (relativas a #cw)
-const TMOBS=['stats','rtl','mtl','mbl','mbr','zm','relics','dpsmb','emap','pkbar'];
+const TMOBS=['stats','rtl','mtl','mbl','mbr','zm','relics','dpsmb','dpsc','emap','pkbar','rtyb'];
 function tmObs(c){const o=[];for(const id of TMOBS){const e=$(id);if(!e)continue;const s=getComputedStyle(e);if(s.display==='none'||s.visibility==='hidden'||+s.opacity===0)continue;
  const r=e.getBoundingClientRect();if(r.width<2||r.height<2)continue;o.push([r.left-c.left-4,r.top-c.top-4,r.right-c.left+4,r.bottom-c.top+4]);}return o;}
 function tmPos(force){const m=$('tmenu'),t=TM.t;if(!m||!t||!m._o)return;const r=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*r.width;
@@ -36,12 +36,20 @@ function tmPos(force){const m=$('tmenu'),t=TM.t;if(!m||!t||!m._o)return;const r=
  // v361: el anillo nunca se queda debajo de la interfaz (barra de arriba, columnas de los lados, barra de abajo) ni fuera de la pantalla:
  // si choca, primero cambia arriba ↔ abajo y luego se desplaza a los lados lo justo, sin dejar de rodear la torre
  // modos: 0 normal, 1 arriba ↔ abajo, 2 las dos filas arriba, 3 las dos filas abajo
- const lay=(sw,dx,dy=0)=>{const P=[],ty=(sw===1?by0+8:sw===3?by0+56:ty0)+dy,by=(sw===1?ty0-8:sw===2?ty0-56:by0)+dy;
+ const lay=(sw,dx,dy=0)=>{const P=[];
+  // 4 / 5: el mismo anillo girado hacia la derecha / la izquierda (torre pegada a un lado): habilidades en una columna junto a la torre y el resto en otra, más fuera
+  if(sw===4||sw===5){const g=sw===4?1:-1,xa=px+g*(R+44),xb=xa+g*58,m=o.bot.length;
+   o.top.forEach((x,j)=>{if(n===3)P.push([xa+(j===1?g*12:0)+dx,py+(j-1)*56+dy]);else if(n===2)P.push([xa+dx,py+(j?29:-29)+dy]);else P.push([xa+dx,py+dy]);});
+   o.bot.forEach((x,j)=>P.push([xb+dx,py+(j-(m-1)/2)*56+dy]));if(o.side)P.push([px,py+R+34]);return {P,ty:py-R-42,by:py+R+28,rot:g};}
+  /* 2 / 3: todo arriba / todo abajo, con la misma forma que de lado: las habilidades junto a la torre y el resto más fuera */
+  const ty=(sw===1?by0+8:sw===3?by0+8:ty0)+dy,by=(sw===1?ty0-8:sw===2?ty0-62:sw===3?by0+80:by0)+dy;
   o.top.forEach((x,j)=>{if(n===3)P.push([px+(j-1)*50+dx,ty-(j===1?(sw?-12:12):0)]);else if(n===2)P.push([px+(j?26:-26)+dx,ty]);else P.push([px+dx,ty]);});
   o.bot.forEach((x,j)=>P.push([px+(j-(o.bot.length-1)/2)*52+dx,by]));if(o.side)P.push([px+R+34,py]);return {P,ty,by};};
  const obs=tmObs(c),hits=L=>{let h=0;for(const[x,y]of L.P){const b=[x-21,y-21,x+21,y+33];if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of obs)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h;};
- let best=null;const C=[];for(const dx of[0,30,-30,60,-60,90,-90,120,-120,150,-150])for(const sw of[0,1,2,3])C.push([sw,dx,0]);
+ // orden de preferencia: la forma de siempre; si no cabe, todo hacia el lado libre (abajo, arriba, derecha, izquierda) con la misma forma; y solo al final, volteada o desplazada
+ let best=null;const C=[[0,0,0],[3,0,0],[2,0,0],[4,0,0],[5,0,0],[1,0,0]];for(const dy of[-30,30,-60,60,-90,90])C.push([4,0,dy],[5,0,dy]);
  for(const dy of[24,48,72])for(const dx of[0,40,-40,80,-80]){C.push([3,dx,dy]);C.push([2,dx,-dy]);}/* la torre está casi debajo de la interfaz: el anillo se separa un poco más */
+ for(const dx of[30,-30,60,-60,90,-90,120,-120,150,-150])for(const sw of[0,1,2,3])C.push([sw,dx,0]);
  for(const[sw,dx,dy]of C){const L=lay(sw,dx,dy),h=hits(L);if(!best||h<best.h)best=Object.assign(L,{h});if(!h)break;}
  best.P.forEach(([x,y],i)=>{const b=bs[i];if(b){b.style.left=x+'px';b.style.top=y+'px';}});
  const ty=best.ty,by=best.by;
