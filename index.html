@@ -233,7 +233,7 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw:not(.st)[data-kw="curse"],.kw:not(.st)[data-kw="cursed"]{color:var(--tb07cff,#b07cff)}
 .kw:not(.st)[data-kw="poly"]{color:var(--tff8fd0,#ff8fd0)}
 .kw:not(.st)[data-kw="mark"]{color:var(--red)}
-.kw:not(.st)[data-kw="prey"],.kw:not(.st)[data-kw="push"],.kw:not(.st)[data-kw="logk"],.kw:not(.st)[data-kw="bwall"]{color:var(--td9c08a,#d9c08a)}
+.kw:not(.st)[data-kw="prey"],.kw:not(.st)[data-kw="push"],.kw:not(.st)[data-kw="logk"],.kw:not(.st)[data-kw="bwall"],.kw:not(.st)[data-kw="rroll"]{color:var(--td9c08a,#d9c08a)}
 .kw:not(.st)[data-kw="drunk"]{color:var(--te0a050,#e0a050)}
 .kw:not(.st)[data-kw="mheal"],.kw:not(.st)[data-kw="eheal"]{color:var(--t9be15d,#9be15d)}
 .kw:not(.st)[data-kw="mhit"],.kw:not(.st)[data-kw="tmagic"],.kw:not(.st)[data-kw="umr"],.kw:not(.st)[data-kw="penp"]{color:var(--t8f9bff,#8f9bff)}
@@ -3168,6 +3168,18 @@ body.mfs:has(#relic.open) #bugfab.ingame{left:6px}
 .fuubh.dead{height:auto;background:none;font:600 11px system-ui,sans-serif;opacity:.7}
 .fuub .fuubl{flex:none;width:22px;height:22px;display:grid;place-items:center}.fuubl svg,.fuubl img{width:22px;height:22px}
 .kw.noic::before{display:none!important}
+/* v361 · Omega: familias en huecos redondos (2 separados, 4 en fila, 6 en 4+2 como los aros olímpicos, 8 en 4+4) (Nogal) */
+.fuoms{display:grid;grid-template-columns:repeat(8,1fr);row-gap:4px;margin:6px auto 2px;max-width:232px;justify-items:center}
+.fuoms .fuoms1{grid-column:span 2;width:30px;height:30px;border-radius:50%;box-sizing:border-box;border:2px dashed color-mix(in srgb,currentColor 30%,transparent);display:flex;align-items:center;justify-content:center;padding:0;text-decoration:none}
+.fuoms .fuoms1.on{border:2px solid var(--c);background:color-mix(in srgb,var(--c) 22%,#241a0c);cursor:pointer}
+.fuoms .fuoms1 svg{width:22px;height:22px}
+.fuoms.c2 .fuoms1:nth-child(1),.fuoms.c6 .fuoms1:nth-child(5){grid-column:2/span 2}
+.fuoms.c2 .fuoms1:nth-child(2),.fuoms.c6 .fuoms1:nth-child(6){grid-column:6/span 2}
+.fuoms.c6 .fuoms1:nth-child(n+5){margin-top:-8px}
+/* v361: en móvil, la tarjeta de unidad se pega a la izquierda si a la derecha tapa a su unidad (Nogal) */
+body.mfs #tip.fuL{left:0!important;right:auto!important;border-radius:0 10px 10px 0}
+/* v361: la tarjeta de unidad, apartándose de su unidad con suavidad (Nogal) */
+#tip.fumv{transition:left .18s ease-out,top .18s ease-out}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -3626,7 +3638,7 @@ const SPECS={arrow:{
  xbow:{n:'Ballesteros',ic:'🎯',col:'#c9783a',lv:{dmg:L4D*2.8,cd:.7*1.4,range:1.2,area:1.3,hp:L4H,pen:15},ab:['charged','racha','mark'],d:'Disparan más lento, pero con mucho más daño y penetración de armadura.'}},
 cata:{
  treb:{n:'Trebuchet',ic:'🏯',col:'#b59a6a',lv:{dmg:L4D*1.9,cd:.7*1.45,range:1.2*1.3,area:1.3*1.2,hp:L4H,pen:0},ab:['arsenal','debris','breach'],d:'Alcance enorme y disparos muy lentos y potentes. Arma de asedio: lanza lo que tenga a mano.'},
- ogre:{n:'Ogros Lanzarrocas',ic:'👹',col:'#7e9a5a',lv:{dmg:L4D*.9,cd:.7*.75,range:1.2,area:1.3*.8,hp:L4H,pen:0},ab:['roll','crush','presion'],d:'Lanzan más a menudo. La roca rueda hacia los portales y golpea a hasta '+ROLLMX+' enemigos (45% del daño). Si pasa por brea ardiendo, quema; si pasa por veneno, envenena.'}},
+ ogre:{n:'Ogros Lanzarrocas',ic:'👹',col:'#7e9a5a',lv:{dmg:L4D*.9,cd:.7*.75,range:1.2,area:1.3*.8,hp:L4H,pen:0},ab:['roll','crush','presion'],d:'Lanzan más a menudo una <span class="kw" data-kw="rroll" data-src="">roca rodante</span> en dirección a los portales.'}},
 cannon:{
  rail:{n:'Cañón de riel',ic:'🔩',col:'#7ad8ff',lv:{dmg:L4D*3,cd:.7*2.2,range:1.2*1.35,area:1.3,hp:L4H,pen:20},rail:1,o:{splash:0,shape:'Línea',areaTxt:'Atraviesa a todos los enemigos de la línea de tiro.',fx:'Atraviesa'},ab:['perfor','recarga','estela'],d:'Carga lenta y mucho alcance. Dispara en línea recta por todo su alcance, en el ángulo que más enemigos atraviesa; pierde un 15% de daño por cada enemigo atravesado.'},
  bomb:{n:'Drones bombarderos',ic:'🛩️',col:'#e8a05a',lv:{dmg:L4D*.34,cd:.7*2/3*1.25,range:1.2*1.25,area:1.3*.75,hp:L4H,pen:0},custom:1,notgt:1,o:{ground:1,fx:'Drones autónomos'},ab:['escuad','picado','metafil'],d:'La torre ya no dispara: 2 drones vuelan solos por su alcance y sueltan bombas pequeñas y rápidas. Cada dron va a una escuadra distinta, empezando por la más adelantada.'}},
@@ -3643,8 +3655,8 @@ laser:{
  red:{n:'Red eléctrica',ic:'🔗',col:'#9fe8ff',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{net:1},ab:['fence','shortc','overload'],d:'Se une con un arco a las demás Redes eléctricas que estén dentro de su alcance: cada torre conectada da +15% de daño a todas. Los enemigos que cruzan un arco sufren.'},
  volt:{n:'Arco voltaico',ic:'⚡',col:'#fff08a',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{volt:1},ab:['hv','ground','jump'],d:'El arco carga de electricidad a su objetivo; con la carga llena, descarga: un golpe de 15× y lo aturde.'}},
 bunker:{
- sup:{n:'Supresión',ic:'🔩',col:'#c9b06a',lv:{dmg:L4D*1.2,cd:.7*.8,range:1.2,area:1.3,hp:L4H,pen:0},o:{mag:45,ramp:1.2},ab:['trigger','magz','expan'],d:'Cargadores de 45 balas y la cadencia sube mucho más mientras dispara. Pensada para hordas.'},
- nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*10,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['concen','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración. Para élites y jefes.'}},
+ sup:{n:'Supresión',ic:'🔩',col:'#c9b06a',lv:{dmg:L4D*1.2,cd:.7*.8,range:1.2,area:1.3,hp:L4H,pen:0},o:{mag:45,ramp:1.2},ab:['trigger','magz','expan'],d:'Cargadores de 45 balas y la cadencia sube mucho más mientras dispara.'},
+ nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*10,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['concen','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración.'}},
 robots:{
  mecha:{n:'Mechas',ic:'🦾',col:'#e0884a',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.5,pen:0},o:{mecha:1},ab:['drill','react','shoulder'],d:'Uno de los robots se transforma en un mecha élite: mucha más vida, corpulencia 2 y golpes en área. Los otros dos le apoyan.'},
  kami:{n:'Androides kamikaze',ic:'💥',col:'#ff6a5a',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H*.5,pen:0},o:{kami:1},uspd:1.5,ab:['reens','decoy','scrap'],d:'4 androides rápidos y frágiles. Al caer explotan (3× su daño en <span class="kw rgv" data-kw="rng" data-src="">1</span>) y la torre los reensambla enseguida.'}},
@@ -3667,11 +3679,11 @@ bastion:{
  pal:{n:'Paladines',ic:'⚜️',col:'#f0d36a',lv:{dmg:L4D*.7,cd:.7,range:1.2,area:1.3,hp:L4H*1.6,pen:0},uap:15,uspd:.8,ab:['heal','wall','sacred'],d:'Soldados con más vida y armadura y menos daño. Se curan y bloquean mejor.'},
  ass:{n:'Asesinos',ic:'🗡️',col:'#9a4bd6',lv:{dmg:L4D*1.6,cd:.7*.6,range:1.2,area:1.3,hp:L4H*.6,pen:0},uspd:1.5,ab:['dodge','cut','back'],d:'Soldados rápidos y frágiles que golpean mucho. Esquivan y provocan sangrado.'}},
 tesla:{
- cad:{n:'Cadena',ic:'🔗',col:'#fff08a',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:{n:5,f:.8}},ab:['cond','disch','storm'],d:'El rayo salta hasta 5 veces entre enemigos, con un 20% menos de daño por salto. Pensada para hordas.'},
- ele:{n:'Electrocutor',ic:'🔌',col:'#e8c21f',lv:{dmg:L4D*2.3,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:null,ez:1},ab:['accum','short','reson'],d:'Sin rebotes: golpea a un solo enemigo y lo electriza (+5% de daño eléctrico por stack, máx. 10). Para élites y jefes.'}},
+ cad:{n:'Cadena',ic:'🔗',col:'#fff08a',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:{n:5,f:.8}},ab:['cond','disch','storm'],d:'El rayo salta hasta 5 veces entre enemigos, con un 20% menos de daño por salto.'},
+ ele:{n:'Electrocutor',ic:'🔌',col:'#e8c21f',lv:{dmg:L4D*2.3,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:null,ez:1},ab:['accum','short','reson'],d:'Sin rebotes: golpea a un solo enemigo y lo electriza (+5% de daño eléctrico por stack, máx. 10).'}},
 sala:{
  volc:{n:'Corazón Volcánico',ic:'❤️‍🔥',col:'#ff6a2e',lv:{dmg:L4D*.75,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['erupt','flare','embr'],d:'Acumula Calor mientras dispara (lleno en 8 s): el cono se abre hasta 110° y aplica hasta un 50% más de stacks. Sin objetivo, se enfría.'},
- forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*5.3,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo. Para élites, jefes y enemigos con armadura.'}},
+ forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*5.3,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo.'}},
 flame:{
  detn:{n:'Detonador',ic:'🎆',col:'#ff8a3c',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['overp','chainr','tarb'],d:'Cuando un enemigo acumula 30 stacks de quemadura de esta torre, explota: pierde la mitad de sus stacks y hace daño en área (<span class="kw rgv" data-kw="rng" data-src="">1</span>).'},
  muro:{n:'Muro de fuego',ic:'🌋',col:'#ff5f3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},o:{cone:0,fwall:1,shape:'Franja',areaTxt:'La franja ocupa toda la anchura del camino.'},ab:['morew','densef','ash'],d:'Ya no lanza llamas: enciende una franja de fuego en el camino, delante de su objetivo, que quema durante 4 s a todo el que la cruza.'}},
@@ -7918,7 +7930,9 @@ function hoverTick(rdt){
   let t=PR.dom?(r.t+r.b)/2-ht/2:r.t;if(t+ht>innerHeight-6)t=innerHeight-6-ht;if(t<6)t=6;
   /* v332: algunos bocadillos salen justo debajo de lo que señalan (la línea de rondas) */
   if(PR.below){l=Math.max(6,Math.min(innerWidth-6-wd,(r.l+r.r)/2-wd/2));t=r.b+8;if(t+ht>innerHeight-6)t=Math.max(6,r.t-8-ht);}
+  /* v361: la tarjeta de una unidad no tapa a su unidad (Nogal) */if(typeof fuAvoid==='function'){const q=fuAvoid(l,t,wd,ht,r);if(q){l=q[0];t=q[1];}}
   tip.style.left=(l/TZ)+'px';tip.style.top=(t/TZ)+'px';
+  /* v361: en móvil la ficha va pegada a la derecha; si tapa a la unidad de su tarjeta, se pega a la izquierda */if(typeof fuUnitBox==='function'){let L=false;const ub=MFSQ()&&fuUnitBox();if(ub){const W=tip.offsetWidth;L=ub.r>innerWidth-W&&ub.l>W;}tip.classList.toggle('fuL',L);}
  }else tip.style.display='none';
  if(!S.hover&&PR.open&&PR.cell)S.hover=PR.cell;
  HV.sl=PR.pinned?(onPin?1:0):(PR.open?1:HV.t);
@@ -8043,9 +8057,12 @@ function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getB
  let bx=cx,by=cy,a0=-Math.PI/2;
  // v361: primero, el mismo anillo centrado en el solar pero girado hacia el lado libre (abajo, derecha, izquierda); solo si no cabe, desplazado
  let row=null;/* solar pegado arriba: las torres en fila, debajo del solar (Nogal) */
- const rowAt=y0=>{const gap=bz+14,L=[];for(let i=0;i<n;i++)L.push([px+(i-(n-1)/2)*gap,y0]);let h=0;for(const[x,y]of L){const b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h?null:L;};
- if(at(px,py)&&n<5){  if(at(px,py,-Math.PI/2)&&py<c.height*.4)row=rowAt(py+R*.95);
-  if(!row)for(const g of[Math.PI/2,0,Math.PI])if(!at(px,py,g)){bx=px;by=py;a0=g;break;}}else if(n<5&&!at(px,py)){bx=px;by=py;}
+ const rowAt=y0=>{const gap=bz+14,per=Math.max(1,Math.min(n,5,Math.floor((c.width-8)/gap))),L=[];/* v361: si no caben en una fila, otra debajo (Nogal) */
+  for(let i=0;i<n;i++){const r=Math.floor(i/per),k=i%per,m=Math.min(per,n-r*per),x0=Math.max(4+bz/2+(m-1)/2*gap,Math.min(c.width-4-bz/2-(m-1)/2*gap,px));L.push([x0+(k-(m-1)/2)*gap,y0+r*(bz+22)]);}
+  let h=0;for(const[x,y]of L){const b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h?null:L;};
+ if(at(px,py)&&py<c.height*.4)row=rowAt(py+R*.95);
+ if(!row&&at(px,py)&&n<5){
+  for(const g of[Math.PI/2,0,Math.PI])if(!at(px,py,g)){bx=px;by=py;a0=g;break;}}else if(n<5&&!at(px,py)){bx=px;by=py;}
  if(!row&&a0===-Math.PI/2&&at(bx,by)){let best=null;for(let r=0;r<=240&&!(best&&!best.h);r+=12)for(const[ux,uy]of[[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]){const x=cx+ux*r,y=cy+uy*r,h=at(x,y);if(!best||h<best.h)best={x,y,h};if(!h)break;}bx=best.x;by=best.y;}
  if(row){a0=0;bs.forEach((b,i)=>{b.style.left=row[i][0]+'px';b.style.top=row[i][1]+'px';});bx=px;by=py;}else bs.forEach((b,i)=>{const a=a0+(i-(n-1)/2)*d;b.style.left=bx+Math.cos(a)*R+'px';b.style.top=by+Math.sin(a)*R+'px';});
  m._p={px:bx,py:by,R,W:c.width,H:c.height};if(force||BM.hov||BM.arm)bmCardPos();}
@@ -13067,6 +13084,10 @@ if(typeof LB!=='undefined'&&LB.open)try{lbRender();}catch(e){}
  ICKW.logk=`<g transform="translate(28 24) scale(1.25)"><path d="M-14 -7h26a4 7 0 0 1 0 14h-26a4 7 0 0 1 0-14z" fill="#a8743a" stroke="#1b1712" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M-12 -2h12M-8 3h14" fill="none" stroke="#7a4a2a" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="12" cy="0" rx="4" ry="7" fill="#e0b070" stroke="#1b1712" stroke-width="2.1"/><ellipse cx="12" cy="0" rx="2" ry="3.4" fill="none" stroke="#a8743a" stroke-width="1"/></g><path d="M1 17h5M0 24h6M1 31h5" fill="none" stroke="#1b1712" stroke-width="4.6" stroke-linecap="round"/><path d="M1 17h5M0 24h6M1 31h5" fill="none" stroke="#5ab8ff" stroke-width="2.2" stroke-linecap="round"/>`;/* el mismo tronco que «Troncos gordos» (Nogal) */
  // Fardo de paja (Casa de paja): un fardo con sus dos cuerdas y pajas sueltas
  ICKW.bale=`<g ${O}><path d="M6 14h36a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V18a4 4 0 0 1 4-4z" fill="#e8cf6a"/><path d="M15 14v22M33 14v22" fill="none" stroke="#9a6a2a" stroke-width="2.6"/><path d="M7 20h5M20 21h9M37 19h4M8 29h4M21 28h8M37 30h5" fill="none" stroke="#c4a640" stroke-width="1.5"/><path d="M4 12l-3-3M44 12l3-3M24 36l1 5" fill="none" stroke-width="1.6"/></g>`;
+ // Roca rodante (Ogros lanzarrocas): una roca con rayas de movimiento detrás
+ ICKW.rroll=`<g ${O}><path d="M4 18h10M2 26h10M5 34h9" fill="none" stroke="#7e9a5a" stroke-width="3"/><circle cx="30" cy="26" r="14" fill="#9a928a"/><path d="M24 20l5 3-2 6M34 30l4-1" fill="none" stroke-width="1.6"/></g>`;
+ // Llamarada: el mismo icono que su habilidad, Aliento abrasador (Nogal: lo que viene de una habilidad lleva el icono de la habilidad)
+ if(typeof AB!=='undefined'&&AB.dbreath&&ICSV[AB.dbreath.ic])ICKW.llama=ICSV[AB.dbreath.ic];
  // Muro (Casa de ladrillo): ya tiene dibujo aprobado (el de su casilla de evento, te_bwall): se usa ese
  if(typeof ICUIS!=='undefined'&&ICUIS.te_bwall)ICKW.bwall=ICUIS.te_bwall;}
 // Dibujos de las torres de evento a Nv 4 y fases del huevo de dragón (maquetas/torres_evento_final.json)
@@ -15744,7 +15765,7 @@ function b6Botin(c,W,H,t,o,dt,tm){const r=abRank(t,'botin'),cof=!!r.cof,cn=Math.
   if(o.rep>0){const q=1-o.rep/1.3;y-=Math.sin(Math.min(1,q*1.4)*Math.PI)*(14+(k%5)*5);y=Math.max(rx*.9,y);/* v361: que no se corte por arriba */a=Math.max(0,1-Math.max(0,q-.6)/.4);}
   c.globalAlpha=a;b6Coin(c,p.x,y,rx);c.globalAlpha=1;}
  if(o.rep>0){const q=1-o.rep/1.3;c.font='700 13px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.globalAlpha=Math.min(1,o.rep*2);c.lineWidth=3;c.strokeStyle='#5a4000';const tx='+'+BOTN*r.g;c.strokeText(tx,cx,PH*.35-q*10);c.fillStyle='#ffd34a';c.fillText(tx,cx,PH*.35-q*10);c.globalAlpha=1;}
- {const tx=W-34,ty=PH*.5,nv=String(o.rep>0?BOTN:cn);c.textBaseline='middle';b6Coin(c,tx-14,ty-25,6);
+ {const tx=W-34,ty=PH*.5,nv=String(o.rep>0?BOTN:cn);c.textBaseline='middle';/* sin moneda: ya se ve la pila al lado (Nogal) */
   c.textAlign='right';c.fillStyle='#6b4a00';c.font='800 20px system-ui,sans-serif';c.fillText(nv,tx-2,ty-8);
   c.strokeStyle='#8a6a2a';c.lineWidth=2;c.lineCap='round';c.beginPath();c.moveTo(tx-4,ty+12);c.lineTo(tx+6,ty-6);c.stroke();
   c.textAlign='left';c.fillStyle='#8a6a2a';c.font='700 14px system-ui,sans-serif';c.fillText(String(BOTN),tx+6,ty+9);}/* v361: monedas como fracción en diagonal (Nogal): el número arriba a la izquierda, la raya y el 15 abajo a la derecha */
@@ -15754,7 +15775,7 @@ function b6Draw(now){B6.raf=0;const cs=document.querySelectorAll('canvas.b6c');i
   const rc=cv.getBoundingClientRect();if(!rc.width)continue;const dpr=Math.min(2,window.devicePixelRatio||1),W=Math.round(rc.width),H=Math.round(rc.height);
   if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
   const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);const o=b6S(t);
-  try{if(k==='racha')b6Racha(c,W,H,t,o,dt);else if(k==='concen')b6Concen(c,W,H,t,o,dt,tm);else if(k==='pres')b6Pres(c,W,H,t,o,dt,tm);else if(k==='resv')b6Resv(c,W,H,t,o,dt,tm);else if(k==='botin')b6Botin(c,W,H,t,o,dt,tm);}catch(e){}
+  try{if(k==='racha')b6Racha(c,W,H,t,o,dt);else if(k==='concen')b6Concen(c,W,H,t,o,dt,tm);else if(k==='pres')b6Pres(c,W,H,t,o,dt,tm);else if(k==='resv')b6Resv(c,W,H,t,o,dt,tm);else if(k==='botin')b6Botin(c,W,H,t,o,dt,tm);else if(B6DR[k])B6DR[k](c,W,H,t,o,dt,tm);}catch(e){}
   const lb=cv.parentElement&&cv.parentElement.querySelector('.ftml[data-b6]');if(lb){const l=M.l(t);if(lb.textContent!==l)lb.textContent=l;}}
  B6.raf=requestAnimationFrame(b6Draw);}
 setInterval(()=>{if(!B6.raf&&document.querySelector('canvas.b6c')){B6.last=performance.now();B6.raf=requestAnimationFrame(b6Draw);}},250);
@@ -15792,6 +15813,8 @@ TMECH.push(
  if(id==='llama'){const br=t&&abRank(t,'dbreath'),bm=1+(br?br.b:0),L=DBRL+(br?br.L:0),T2=DBRT+(br?br.t:0);
   return '<b>Llamarada</b><small>Cada bola de fuego la carga (unos '+DBRCD+' s disparando). Llena, la siguiente bola lleva llamarada: pasa en línea recta sobre el camino, aplica '+f(DBRN*bm)+' stacks de '+kw('burn','quemadura',src)+' a los que pilla y deja una franja de fuego de '+cas(L)+' que dura '+f(T2)+' s y quema a quien la pisa.</small>';}
  if(id==='bale')return '<b>Fardo de paja</b><small>La Casa de paja lanza fardos de paja que caen en un área: dañan y ralentizan mucho a todos los que pilla.</small>';
+ if(/^omf_/.test(id)){const k=id.slice(4),lv=t&&t.lvl||1;return OMF[k]?`<b>${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small>`:'';}
+ if(id==='rroll')return '<b>Roca rodante</b><small>Al caer, la roca sigue rodando por el camino hacia los portales unas '+cas(ROLLB)+' y golpea a hasta '+ROLLMX+' enemigos con el '+Math.round(ROLLM*100)+'% del daño. Si pasa por brea ardiendo, se prende y quema; si pasa por veneno, envenena.</small>';
  if(id==='omfam')return '<b>Familias</b><small>Cada torre que absorbe le da la pieza de su familia (Físico, Fuego, Veneno…). Cada Nv admite 2 familias más.</small>';
  if(id==='logk'&&t&&TW[t.type].log){const h=_k0.apply(this,arguments),rows=document.createElement('div');rows.innerHTML=uniqInfo(t,t.type);
   const d=[...rows.querySelectorAll('.row')].find(r=>{const k=r.querySelector('[data-kw]');return k&&k.dataset.kw==='dur';});
@@ -15803,7 +15826,7 @@ function fuVida(t,src){const T=TW[t.type],u=T.glut?glutU(t):(t.sd&&t.sd[0]);if(!
  const hp=Math.ceil(u.hp),mx=Math.round(u.max);return `<div class="fhbox fhhp fuhp"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><b>${hp} / ${mx}</b></div><div class="ftbar"><i style="width:${hp/mx*100}%"${hp/mx<.35?' class="low"':''}></i></div></div>`;}
 // torres que ilumina este Faro ahora mismo (las que reciben su mejora)
 const fuIlN=f=>S.list.filter(o=>o!==f&&!o.hero&&TW[o.type]&&!TW[o.type].faro&&faroIn(f,o)>0).length;
-const fuIl=f=>{const n=fuIlN(f);return n?'Ilumina '+n+(n===1?' torre':' torres'):'No ilumina ninguna torre';};
+const fuIl=f=>{const n=fuIlN(f);return 'Iluminando '+n+(n===1?' torre':' torres');};/* v361: «Iluminando», que se entienda que es ahora (Nogal) */
 setInterval(()=>{try{const t=typeof FT!=='undefined'&&FT.t;if(!t||!TW[t.type]||!TW[t.type].faro)return;const e=document.querySelector('#side .fuil,#tip .fuil');if(e){const x=fuIl(t);if(e.textContent!==x)e.textContent=x;}}catch(e){}},300);
 // color de cada familia en la ficha; Físico, el mismo gris del daño físico (Nogal: el de la pieza parecía color carne)
 const fuOmC=k=>k==='fis'?'var(--sp,#8a8f96)':OMF[k].col;
@@ -15846,8 +15869,10 @@ function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lv
   const ofx=q('.ftfx');if(ofx)ofx.remove();if(fx.length){const c=q('.ftchips');if(c)c.insertAdjacentHTML('afterend',`<div class="ftfx">${fx.join('')}</div>`);}
   const tot=(D.fis||0)+(D.mag||0)+(D.ele||0),dp=q('.ftdps');if(dp){if(tot>0)dp.outerHTML=ftDpsBar(t,tot);else dp.remove();}else if(tot>0){const g=q('.ftchips');if(g)g.insertAdjacentHTML('afterend',ftDpsBar(t,tot));}
   // las familias, en pips del color de cada una, en el orden en que las metiste
-  const mb=q('.ftmech .ftmb');if(mb)mb.outerHTML=`<div class="fupips om">${Array.from({length:omCap(t)},(_,i)=>{const k=fam[i];return k?`<i class="on" style="background:${fuOmC(k)}" title=""></i>`:'<i></i>';}).join('')}</div>`;
-  var omFam=(fam.length?`<div class="fuom">${fam.map(k=>`<div class="omf"><span class="omi">${omPc(k)}</span><span><b style="color:${k==='fis'?fuOmC(k):`color-mix(in srgb,${OMF[k].col} 65%,#2a1d08)`}">${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small></span></div>`).join('')}</div>`:'<small>Todavía no ha absorbido ninguna torre: solo lanza un pulso muy débil.</small>');}
+  // las familias, en huecos redondos: vacíos sin color; llenos, con el icono de su familia en el orden en que las metiste.
+  // Al pulsar uno, su bocadillo dice qué hace. 2 huecos separados, 4 en fila, 6 en 4+2 (como los aros olímpicos), 8 en 4+4 (Nogal)
+  const cap=omCap(t),mb=q('.ftmech .ftmb');
+  if(mb)mb.outerHTML=`<div class="fuoms c${cap}">${Array.from({length:cap},(_,i)=>{const k=fam[i];return k?`<span class="kw noic fuoms1 on" data-kw="omf_${k}" data-src="${src}" style="--c:${fuOmC(k)}">${omPc(k)}</span>`:'<span class="fuoms1"></span>';}).join('')}</div>`;}
  if(T.log){const fx=q('.ftfx');if(fx)fx.insertAdjacentHTML('beforeend',fxPill('push','0,5',src,'Empuje'));}
  // las tres casas: primero lo que lanzan (fardo, tronco, muro) y después sus efectos (Nogal)
  if(T.pig&&!T.log&&!T.wall){const fx=q('.ftfx');if(fx)fx.insertAdjacentHTML('afterbegin',fxPill('bale','',src,'Fardo de paja'));else{const c=q('.ftchips');if(c)c.insertAdjacentHTML('afterend',`<div class="ftfx">${fxPill('bale','',src,'Fardo de paja')}</div>`);}}
@@ -15860,10 +15885,9 @@ function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lv
  if(more.length){let mf=q('.ftfold[data-ft="more"]');if(T.guild||T.dragon){if(mf)mf.remove();mf=null;}
   if(mf)mf.querySelector('.ftin').insertAdjacentHTML('afterbegin',more.join(''));else{const c=q('.ftc');if(c)c.insertAdjacentHTML('beforeend',ftFold('more','<span>Más detalles</span>',more.join('')));}}
  // fuera lo repetido arriba y las cifras que valen 0
- if(T.faro||T.omega)rm('.ftfold[data-ft="more"]');
- if(T.omega&&omFam){const c=q('.ftc');if(c)c.insertAdjacentHTML('beforeend',ftFold('more','<span>Más detalles</span>',omFam));}/* las familias, en Más detalles (Nogal) */
+ if(T.faro)rm('.ftfold[data-ft="more"]');/* v361: el Omega, con su «Más detalles» como el resto de torres; las familias van en sus huecos (Nogal) */
  w.querySelectorAll('.ftfold[data-ft="more"] .row').forEach(r=>{const k=r.querySelector('[data-kw]'),id=k&&k.dataset.kw,v=(r.lastElementChild&&r.lastElementChild.textContent||'').trim();
-  if(v==='0'||((T.dragon||T.glut)&&id==='uhp')||(T.glut&&id==='usol')||(T.wall&&id==='dur')||(T.log&&(id==='push'||id==='dur')))r.remove();});
+  if(v==='0'||((T.dragon||T.glut)&&id==='uhp')||(T.glut&&id==='usol')||(T.wall&&id==='dur')||(T.log&&(id==='push'||id==='dur'))||(T.omega&&id==='dmg'))r.remove();/* Omega: su daño ya va por tipos arriba */});
  return w.innerHTML;}
 {const _ti=towerInfo;towerInfo=function(t){if(t&&TW[t.type]&&TW[t.type].uniq){try{return fichaUnica(t);}catch(e){console.error(e);}}return _ti.apply(this,arguments);};}
 // ==================== v361 · TARJETA DE UNIDAD (Nogal, 19-nov) ====================
@@ -15872,8 +15896,8 @@ function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lv
 // vida en barra, números en tarjetas, efectos en pastilla y el resto plegado) con «← Torre» para volver.
 const FU={tid:null,i:-1};
 const fuNm=t=>(t.spec&&SPECS[t.type]&&SPECS[t.type][t.spec]&&SPECS[t.type][t.spec].n)||TW[t.type].n;/* nombre de la torre tal como sale en su ficha */
-// nombre en singular de cada unidad (propuesta de Claude, 19-nov; por confirmar con Nogal)
-const FUSG={bastion:'Soldado',pal:'Paladín',ass:'Asesino',monk:'Monje',fist:'Monje de batalla',drunk:'Maestro ebrio',robots:'Robot',mecha:'Mecha',kami:'K4M1-K4Z3',hack:'Robot',alien:'Alienígena',pred:'Depredador',hive:'Alienígena'};
+// nombre en singular de cada unidad (aprobados por Nogal, 19-nov)
+const FUSG={bastion:'Soldado',pal:'Paladín',ass:'Asesino',monk:'Monje',fist:'Monje de Batalla',drunk:'Maestro Ebrio',robots:'Robot',mecha:'Mecha',kami:'K4M1-K4Z3',hack:'Robot',alien:'Alienígena',pred:'Depredador',hive:'Alienígena'};
 const fuSing=t=>FUSG[t.spec]||FUSG[t.type]||fuNm(t);
 const fuTxt=h=>{const d=document.createElement('div');d.innerHTML=h;return d.textContent.trim();};
 // soldados vivos de cada bloque (para la vida en directo): normales, todos; Gremio, por clase; cerditos, el suyo
@@ -15886,7 +15910,7 @@ function fuList(t,w){const blocks=[...w.querySelectorAll('.ftfold[data-ft="more"
   const mx=/\s*×(\d+)$/.exec(nm);if(mx){n=+mx[1];nm=nm.slice(0,mx.index);}
   if(/^Estadísticas de unidades$/.test(nm)){nm=fuSing(t);const SD=fuSold(t,bi);n=Math.max(1,SD.length||((T.unit&&T.unit.n)||1));}
   const SD=fuSold(t,bi);for(let j=0;j<n;j++)L.push({bi,j,n,nm,ic:ic?ic.outerHTML:'',html:b.outerHTML,s:SD[j]||null});});
- const ic0=(L.find(u=>u.ic)||{}).ic||unitHead('tw:'+t.id)||'';L.forEach(u=>{if(!u.ic)u.ic=ic0;});
+ const ic0=(T.pig&&PIGU[t.type]?`<span class="tuic uhic" style="background:${T.col||'#5b8def'}">${icHtml(PIGU[t.type].ic)}</span>`:'')||(L.find(u=>u.ic)||{}).ic||unitHead('tw:'+t.id)||'';/* v361: los cerditos, con su icono en redondel (Nogal) */L.forEach(u=>{if(!u.ic)u.ic=ic0;});
  return {L,blocks};}
 function fuButtons(t,w){const R0=fuList(t,w);if(!R0.L)return [];const {L,blocks}=R0;if(!L.length)return [];const lupa=icU('m_lupa','🔍');
  const bh=u=>{const s=u.s;if(!s)return '';return s.hp>0?`<span class="fuubh"><i style="width:${Math.round(s.hp/s.max*100)}%"></i></span>`:`<span class="fuubh dead">Caído</span>`;};
@@ -15935,6 +15959,77 @@ function fuLine(){try{let sv=$('fuln');const k=String(PR.key||''),t=PR.open&&S&&
   sv.innerHTML=`<path d="M${x0} ${y0} C${mx} ${y0} ${mx} ${cy} ${cx} ${cy}" fill="none" stroke="#10202a" stroke-width="5" stroke-dasharray="6 5" stroke-linecap="round" opacity=".55"/><path d="M${x0} ${y0} C${mx} ${y0} ${mx} ${cy} ${cx} ${cy}" fill="none" stroke="#7ad8ff" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="${ur}" fill="none" stroke="#10202a" stroke-width="5" opacity=".55"/><circle cx="${cx}" cy="${cy}" r="${ur}" fill="none" stroke="#7ad8ff" stroke-width="2.5"/>`;sv.style.display='block';}
  else if(sv)sv.style.display='none';}catch(e){}setTimeout(()=>requestAnimationFrame(fuLine),50);}
 requestAnimationFrame(fuLine);
+// v361 · la tarjeta de una unidad sale a su lado, sin taparla (si no, el círculo y la línea quedan debajo de la tarjeta) (Nogal)
+function fuUnitBox(){const k=String(PR.key||''),t=PR.open&&S&&S.list&&S.list.find(o=>'tw:'+o.id===k);if(!t||FU.tid!==t.id||FU.i<0||typeof scrOf!=='function')return null;
+ /* la unidad se busca como mucho 4 veces por segundo (montar la ficha cada fotograma sería caro) */const now=performance.now();if(!FU.sc||FU.sc.k!==t.id+':'+FU.i||now-FU.sc.at>250){const w=document.createElement('div');w.innerHTML=fuBase(t);const u=fuButtons(t,w)[FU.i];FU.sc={k:t.id+':'+FU.i,at:now,s:u&&u.s};}const s=FU.sc.s;if(!s||s.hp<=0)return null;
+ const [x,y,wd]=scrOf(s),cz=wd/K,cx=x+cz/2,cy=y+cz/2,rr=Math.max(8,cz*.9)+10;return {l:cx-rr,r:cx+rr,t:cy-rr,b:cy+rr};}
+// si la unidad se mete debajo, la tarjeta se aparta lo justo, empujada por la unidad (así se mueve con ella, sin saltos);
+// sigue apartándose hacia el mismo lado mientras quepa, y una transición corta suaviza el resto (Nogal)
+function fuAvoid(l,t,wd,ht,r){const tip=$('tip'),ub=fuUnitBox(),k0=ub?FU.tid+':'+FU.i:null;/* al abrir la tarjeta, sale ya en su sitio; después, se aparta con suavidad */if(tip)tip.classList.toggle('fumv',!!ub&&FU.mk===k0);FU.mk=k0;if(!ub){FU.dir=null;return null;}
+ const hit=(L,T)=>L<ub.r&&L+wd>ub.l&&T<ub.b&&T+ht>ub.t,fit=(L,T)=>L>=6&&T>=6&&L+wd<=innerWidth-6&&T+ht<=innerHeight-6;
+ if(!hit(l,t))return null;const g=6,M={L:[ub.l-g-wd,t],R:[ub.r+g,t],U:[l,ub.t-g-ht],D:[l,ub.b+g]},dist=k=>Math.abs(M[k][0]-l)+Math.abs(M[k][1]-t);
+ if(FU.dir&&fit(...M[FU.dir]))return M[FU.dir];
+ const ks=Object.keys(M).filter(k=>fit(...M[k])).sort((a,b)=>dist(a)-dist(b));if(!ks.length)return null;FU.dir=ks[0];return M[ks[0]];}
+// ==================== v361 · BARRAS DE MURO Y COMIDA (maquetas Muro B y Comida A, aprobadas por Nogal el 19-nov) ====================
+// Muro (Casa de ladrillo): un muro de ladrillos que se agrieta mientras aguanta (grietas distintas cada vez, que nacen en momentos
+// distintos y avanzan en zigzag con ramas), tiembla y se derrumba; tras una pausa, se vuelve a levantar desde abajo hasta el siguiente.
+// Comida (Mímico): el Mímico a un lado; por cada baja aparece una bolita de la nada en el otro extremo y vuela a su boca; al morder
+// baja la tapa y se llena una casilla del contador de abajo (en grupos de 5).
+// guarda la duración inicial de cada muro, para saber cuánto le queda
+{const _w=wallShot;wallShot=function(t){const n0=S.barr.length;const r=_w.apply(this,arguments);if(S.barr.length>n0){const b=S.barr[S.barr.length-1];b.src=b.src||t;b.t0=b.t;}return r;};}
+const B6DR={};
+const b7Brick=(c,x,y,w,h,col,a=1)=>{c.globalAlpha=a;c.fillStyle=col;c.strokeStyle='#1b1712';c.lineWidth=1.4;c.beginPath();c.roundRect(x,y,w,h,2);c.fill();c.stroke();c.globalAlpha=1;};
+const b7Wall=t=>S&&S.barr&&S.barr.find(b=>b.brick&&b.src===t&&b.t>0);
+function b7Cracks(x0,y0,WW,HH){const L=[],N=5+Math.floor(Math.random()*3);for(let j=0;j<N;j++){
+ let x=x0+WW*(.08+Math.random()*.84),y=Math.random()<.5?y0:y0+HH*(.2+Math.random()*.6),a=Math.PI/2+(Math.random()-.5)*1.6;if(y>y0)a=(Math.random()<.5?0:Math.PI)+(Math.random()-.5)*1.2;
+ const p=[[x,y]],steps=6+Math.floor(Math.random()*8);for(let i=0;i<steps;i++){a+=(Math.random()-.5)*1.4;const d=3+Math.random()*6;x+=Math.cos(a)*d;y+=Math.sin(a)*d;x=Math.max(x0+1,Math.min(x0+WW-1,x));y=Math.max(y0+1,Math.min(y0+HH-1,y));p.push([x,y]);}
+ const br=[];for(let i=2;i<p.length-1;i++)if(Math.random()<.3){let bx=p[i][0],by=p[i][1],ba=a+(Math.random()<.5?1:-1)*(.6+Math.random()*.8);const q=[[bx,by]];for(let s=0;s<3+Math.floor(Math.random()*3);s++){ba+=(Math.random()-.5)*1.2;bx+=Math.cos(ba)*(2+Math.random()*4);by+=Math.sin(ba)*(2+Math.random()*4);q.push([bx,by]);}br.push({at:i,p:q});}
+ L.push({t0:j/N*.75+Math.random()*.08,p,br});}return L;}
+const b7Parts=(c,o,dt)=>{o.pt=(o.pt||[]).filter(p=>p.t>0);for(const p of o.pt){p.t-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=(p.b?260:40)*dt;if(p.rot!=null)p.rot+=p.vr*dt;
+ c.globalAlpha=Math.max(0,Math.min(1,p.t*1.5));if(p.b){c.save();c.translate(p.x+p.w/2,p.y+p.h/2);c.rotate(p.rot);b7Brick(c,-p.w/2,-p.h/2,p.w,p.h,p.col);c.restore();}else{c.fillStyle=p.col+Math.max(0,p.t)+')';c.beginPath();c.arc(p.x,p.y,p.r,0,7);c.fill();}c.globalAlpha=1;}};
+const PAUSE7=1.3;
+function b7Muro(c,W,H,t,o,dt,tm){const b=b7Wall(t),cols=Math.max(6,Math.min(12,Math.floor((W-12)/22))),bw=Math.min(22,(W-12)/cols),bh=10,rows=4,WW=cols*bw,HH=rows*bh,x0=(W-WW)/2,y0=H-8-HH;
+ c.fillStyle='rgba(60,40,10,.15)';c.beginPath();c.ellipse(W/2,H-6,WW/2+8,4,0,0,7);c.fill();
+ if(b){if(o.mb!==b){o.mb=b;o.cr=b7Cracks(x0,y0,WW,HH);o.cw=W;}if(o.cw!==W){o.cr=b7Cracks(x0,y0,WW,HH);o.cw=W;}o.up=1;const D=b.t0||4,k=Math.max(0,Math.min(1,1-b.t/D));
+  const sh=b.t<.6?(Math.random()-.5)*3*(1-b.t/.6):0;c.save();c.translate(sh,0);
+  c.save();c.beginPath();c.rect(x0-1,y0-1,WW+2,HH+2);c.clip();for(let r=0;r<rows;r++)for(let i=0;i<=cols;i++)b7Brick(c,x0+i*bw-(r%2?bw/2:0),y0+r*bh,bw,bh,'#c8553d');
+  for(const q0 of o.cr){const q=Math.max(0,Math.min(1,(k-q0.t0)/(1-q0.t0)*1.3));if(q<=0)continue;const n=Math.max(1,Math.floor(q*q0.p.length)),P=q0.p;
+   const ln=()=>{c.beginPath();c.moveTo(P[0][0],P[0][1]);for(let i=1;i<n;i++)c.lineTo(P[i][0],P[i][1]);c.stroke();};c.lineJoin='round';
+   c.strokeStyle='rgba(20,12,8,.45)';c.lineWidth=3.2;ln();c.strokeStyle='#1b1712';c.lineWidth=1.3+q*.7;ln();
+   for(const br of q0.br)if(br.at<n){const m=Math.max(1,Math.floor(Math.min(1,(n-br.at)/4)*br.p.length));c.lineWidth=1;c.beginPath();c.moveTo(br.p[0][0],br.p[0][1]);for(let i=1;i<m;i++)c.lineTo(br.p[i][0],br.p[i][1]);c.stroke();}}
+  c.restore();c.strokeStyle='#1b1712';c.lineWidth=1.6;c.strokeRect(x0,y0,WW,HH);c.restore();}
+ else{if(o.up){o.up=0;o.down=tm;o.mb=null;o.pt=o.pt||[];for(let i=0;i<14;i++)o.pt.push({x:x0+Math.random()*(WW-bw),y:y0+Math.random()*HH*.6,w:bw,h:bh,vx:(Math.random()-.5)*30,vy:-20,t:1.1,col:'#c8553d',rot:0,vr:(Math.random()-.5)*6,b:1});
+   for(let i=0;i<18;i++)o.pt.push({x:W/2,y:y0+HH*.6,vx:(Math.random()-.5)*40,vy:-Math.random()*30,t:.7,r:2+Math.random()*3,col:'rgba(200,180,150,'});}
+  // se vuelve a levantar desde abajo: tras una pausa, al ritmo que le queda de enfriamiento
+  const cd=Math.max(0,t.cd||0),el=o.down!=null?tm-o.down:99,ph=cd<=0?1:Math.max(0,Math.min(1,(el-PAUSE7)/Math.max(.1,el+cd-PAUSE7))),hh=HH*ph;
+  if(ph>0){c.save();c.beginPath();c.rect(x0,y0+HH-hh,WW,hh);c.clip();for(let r=0;r<rows;r++)for(let i=0;i<=cols;i++)b7Brick(c,x0+i*bw-(r%2?bw/2:0),y0+r*bh,bw,bh,'#d9b49a',.85);c.restore();}
+  c.setLineDash([3,3]);c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=1.2;c.strokeRect(x0,y0,WW,HH);c.setLineDash([]);}
+ b7Parts(c,o,dt);}
+function b7Comida(c,W,H,t,o,dt,tm){const lv=t.lvl||1,NEED=GLUT[lv]||1,food=Math.min(NEED,t.food||0);
+ if(o.glv!==lv){o.glv=lv;o.lf=food;o.eat=food;o.bt=[];o.jmp=lv>1&&o.seen?1:0;}o.seen=1;
+ if(food>o.lf)for(let i=o.lf;i<food;i++)o.bt.push({t:-(i-o.lf)*.18});else if(food<o.lf)o.eat=food;o.lf=food;
+ for(const b of o.bt){const was=b.t;b.t+=dt;if(was<.62&&b.t>=.62)o.eat=Math.min(food,o.eat+1);}o.bt=o.bt.filter(b=>b.t<.8);if(o.eat>food)o.eat=food;o.jmp=Math.max(0,(o.jmp||0)-dt*.8);
+ // el contador, aparte: casillas en grupos de 5 (más de 40, en dos filas)
+ const rowsN=NEED>40?2:1,perRow=Math.ceil(NEED/rowsN),G=Math.ceil(perRow/5),bw0=W-12,gw=bw0/G,cw=Math.min(9,(gw-4)/5),ch=rowsN>1?7:9,gy=H-4-rowsN*(ch+3);
+ for(let k=0;k<NEED;k++){const r=Math.floor(k/perRow),kk=k%perRow,gi=Math.floor(kk/5),j=kk%5,x=6+gi*gw+(gw-5*cw)/2+j*cw,y=gy+r*(ch+3),on=k<o.eat;
+  c.fillStyle=on?'#e0903a':'rgba(0,0,0,.09)';c.strokeStyle=on?'#1b1712':'rgba(0,0,0,.2)';c.lineWidth=1;c.beginPath();c.roundRect(x,y,cw-1.5,ch,2);c.fill();c.stroke();}
+ const MW=40,mx=8,my=Math.max(2,gy-44),ex=mx+MW/2,ey=my+16;
+ // las bolitas: aparecen de la nada en el otro extremo (destello) y vuelan en arco hasta la boca
+ for(const b of o.bt){if(b.t<0)continue;const q=Math.min(1,b.t/.6),sx=W-18,sy=my+6;if(q<.18){const pp=q/.18;c.fillStyle=`rgba(255,240,180,${1-pp})`;c.beginPath();c.arc(sx,sy,4+pp*10,0,7);c.fill();}
+  const e=Math.min(1,Math.max(0,(q-.12)/.88)),x=sx+(ex-sx)*e,y=sy+(ey-sy)*e-Math.sin(e*Math.PI)*Math.min(18,my+2),r=4.5*Math.min(1,q/.12);if(q<1){c.fillStyle='#e0a060';c.strokeStyle='#1b1712';c.lineWidth=1.3;c.beginPath();c.arc(x,y,r,0,7);c.fill();c.stroke();}}
+ // el Mímico: el cuerpo quieto y la tapa baja para morder (Nogal)
+ const chomp=o.bt.some(b=>b.t>.55&&b.t<.75),jy=-Math.sin(o.jmp*Math.PI*3)*6*o.jmp,LY=my+(chomp?9:0),BY=my+23;
+ c.save();c.translate(0,jy);c.fillStyle='#8a5a2e';c.strokeStyle='#1b1712';c.lineWidth=1.8;c.beginPath();c.roundRect(mx,BY,MW,20,3);c.fill();c.stroke();
+ c.fillStyle='#f4ead8';for(let i=0;i<5;i++){const tx=mx+2+i*7.2;c.beginPath();c.moveTo(tx,BY);c.lineTo(tx+3.6,BY-5);c.lineTo(tx+7.2,BY);c.fill();c.stroke();}
+ c.fillStyle='#a8743a';c.beginPath();c.roundRect(mx,LY,MW,13,[7,7,2,2]);c.fill();c.stroke();
+ c.fillStyle='#f4ead8';for(let i=0;i<5;i++){const tx=mx+2+i*7.2;c.beginPath();c.moveTo(tx,LY+13);c.lineTo(tx+3.6,LY+18);c.lineTo(tx+7.2,LY+13);c.fill();c.stroke();}
+ c.fillStyle='#ffd34a';c.fillRect(mx+MW/2-3,BY+5,6,5);c.fillStyle='#1b1712';c.beginPath();c.arc(mx+11,LY+6,1.8,0,7);c.arc(mx+MW-11,LY+6,1.8,0,7);c.fill();c.restore();}
+B6DR.muro=b7Muro;B6DR.comida=b7Comida;B6H.muro=56;B6H.comida=76;
+// las barras: la de Comida ya existía (ficha_unica.js) con dibujo genérico; la de Muro es nueva
+{const i=TMECH.findIndex(m=>m.k==='comida');if(i>=0)B6K.comida=TMECH[i];
+ const M={k:'muro',on:t=>!!(TW[t.type]&&TW[t.type].wall),n:'Muro',ic:'bwall',v:t=>{const b=b7Wall(t);return b?b.t/(b.t0||4):0;},
+  l:t=>{const b=b7Wall(t);if(b)return 'Quedan '+f(Math.ceil(b.t*10)/10)+' s';const cd=t.cd||0;return cd>0?'Siguiente muro en '+f(Math.ceil(cd*10)/10)+' s':'¡Listo!';}};
+ TMECH.push(M);B6K.muro=M;}
 // ==================== v360 · Clics durante las animaciones de las ventanas y «Saltar» con confirmación (Nogal, 15-nov y 19-nov) ====================
 // La gente salta las animaciones a base de clics. Para que un clic de más no elija una reliquia, una torre, una pieza u opción sin querer:
 //  · mientras la ventana (cofre o paquete, oferta de torres, evento, elegir pieza) se está dibujando, el primer clic (o Intro/Espacio)
