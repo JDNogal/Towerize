@@ -6,7 +6,7 @@ await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tut
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
 await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;OPT.eter=false;OPT.nearach=false;ERA=1;startGame(15);chooseHero(Object.keys(HEROES)[0]);if(DLG.on)dlgEnd();HQ.q=[];if(HQ.cur)hintClose();});
 await p.evaluate(()=>{RL.open=false;$('relic').classList.remove('open');ui();});
-const tap=async sel=>{const pos=await p.evaluate(s=>{const b=document.querySelector(s);if(!b||!b.offsetParent)return null;const r=b.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2];},sel);if(!pos)return false;await p.touchscreen.tap(pos[0],pos[1]);await p.waitForTimeout(400);return true;};
+const tap=async sel=>{for(let k=0;k<50&&await p.evaluate(()=>typeof wlBusy==='function'&&wlBusy());k++)await p.waitForTimeout(100);const pos=await p.evaluate(s=>{const b=document.querySelector(s);if(!b||!b.offsetParent)return null;const r=b.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2];},sel);if(!pos)return false;await p.touchscreen.tap(pos[0],pos[1]);await p.waitForTimeout(400);return true;};
 const pop=()=>p.evaluate(()=>{const e=document.getElementById('mzpop');return e?(e.querySelector('.mzd')?'deck':'rel'):null;});
 const close=()=>p.evaluate(()=>{try{mzClose();}catch(e){}});
 // 1) elegir pieza
@@ -15,7 +15,7 @@ if(!(await tap('#pkbar.on [data-mz="deck"]'))||await pop()!=='deck')fails.push('
 if(!(await tap('#pkbar.on [data-mz="rel"]'))||await pop()!=='rel')fails.push('pieza: las reliquias no se abren');await close();
 if(!(await tap('#pkbar.on [data-a="ppeek"]'))||!(await p.evaluate(()=>S.ppk===1&&document.body.classList.contains('pcpeek'))))fails.push('pieza: el ojo no deja ver el mapa');
 // 2) ventana de reliquias
-await p.evaluate(()=>{S.ppk=0;S.phase='build';document.body.classList.remove('pcpick','pcpeek');const pb=document.getElementById('pcback');if(pb)pb.remove();openRelic();});await p.waitForTimeout(600);
+await p.evaluate(()=>{S.ppk=0;S.phase='build';document.body.classList.remove('pcpick','pcpeek');const pb=document.getElementById('pcback');if(pb)pb.remove();openRelic();});await p.waitForTimeout(600);/* v360: mientras se dibuja la ventana no responde nada: se espera a que acabe */for(let k=0;k<50&&await p.evaluate(()=>typeof wlBusy==='function'&&wlBusy());k++)await p.waitForTimeout(100);
 if(!(await tap('#relic .rlbar [data-mz="deck"]'))||await pop()!=='deck')fails.push('reliquias: el mazo no se abre');await close();
 if(!(await tap('#relic .rlbar [data-mz="rel"]'))||await pop()!=='rel')fails.push('reliquias: las reliquias no se abren');await close();
 if(!(await tap('#relic .rlbar [data-a="peek"]'))||!(await p.evaluate(()=>RL.peek===true)))fails.push('reliquias: el ojo no deja ver el mapa');
