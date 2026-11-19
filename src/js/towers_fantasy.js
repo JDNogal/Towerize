@@ -68,8 +68,11 @@ function cataHit(p){const t=p.src;if(!S.list.includes(t))return;S.cz=S.cz||[];
   if(t.spec==='ogre'){const c=p.e&&p.e.pv?[Math.round(p.e.pv[0]),Math.round(p.e.pv[1])]:[Math.round(p.x),Math.round(p.y)];if(inb(c[0],c[1])&&S.cells[c[1]][c[0]]===2)rollStart(t,p.x,p.y,c[0],c[1],false);}}
  else if(p.ammo==='tar'&&ar)S.cz.push({k:'tar',x:p.x,y:p.y,r:Math.max(p.area,.8*K),t:ar.tar+(rs?rs.tar:0),m:ar.stk,src:t});
  else if(p.ammo==='hive'&&ar){const dps=p.bd*ar.bee;S.cz.push({k:'bee',x:p.x,y:p.y,r:1.1*K,t:3,tk:0,dps,pen:p.pen,src:t});if(rs)S.cz.push({k:'hive',x:p.x,y:p.y,t:rs.t,dps,pen:p.pen,src:t});}}
-function rollStart(t,x,y,cx,cy,big){const s=stats(t),rr=abRank(t,'roll'),av=abRank(t,'aval'),d=(big?av.d:(rr?rr.d:3))*tileArm(t);
- S.rolls=S.rolls||[];S.rolls.push({src:t,x,y,cx,cy,left:d*K,dm:s.dmg*(big?av.m:ROLLM),r:(big?.8:.45)*K*tileArm(t),hit:new Set(),big,fire:0,pen:s.pen});}
+// v360: cada roca arrolla como mucho a ROLLMX enemigos (al llegar, se rompe). Presión (habilidad que sustituye a Avalancha): cada enemigo arrollado
+// por una roca normal suma 1; con la Presión llena, la siguiente roca es una avalancha (más larga, más daño y su propio tope)
+function rollStart(t,x,y,cx,cy,big){const s=stats(t),rr=abRank(t,'roll'),pr=abRank(t,'presion');if(!big&&pr&&(t.pres||0)>=pr.n){big=true;t.pres=0;t.presAv=(t.presAv||0)+1;S.fx.push({x,y,t:.5,m:.5,r:.9*K,col:'#b0a48c'});}
+ const d=(big?pr.d:(rr?rr.d:3))*tileArm(t);
+ S.rolls=S.rolls||[];S.rolls.push({src:t,x,y,cx,cy,left:d*K,dm:s.dmg*(big?pr.m:ROLLM),r:(big?.8:.45)*K*tileArm(t),hit:new Set(),mx:big?pr.mx:ROLLMX,big,fire:0,pen:s.pen});}
 function rollNext(x,y){if(!S.field||!S.field[y])return null;const f0=S.field[y][x];let b=null;for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2||cutF(x,y,nx,ny))continue;const g=S.field[ny][nx];if(g<1e9&&g>f0&&(!b||g<b.g))b={x:nx,y:ny,g};}return b?[b.x,b.y]:null;}
 function rollTick(dt){if(!S.rolls||!S.rolls.length)return;
  S.rolls=S.rolls.filter(r=>{if(!S.list.includes(r.src))return false;let mv=ROLLSP*dt;
@@ -80,8 +83,11 @@ function rollTick(dt){if(!S.rolls||!S.rolls.length)return;
   /* también se empapa en los charcos de veneno: envenena a todo lo que arrolla con la fuerza del charco */
   if(!r.pois){const pp=S.pools.find(p=>!p.el&&Math.hypot(p.x-r.x,p.y-r.y)<=p.r);if(pp)r.pois=pp.n;}
   const cr=abRank(r.src,'crush');
-  for(const e of S.enemies){if(e.hp<=0||isFly(e)||r.hit.has(e)||Math.hypot(e.x-r.x,e.y-r.y)>r.r)continue;r.hit.add(e);hurt(e,r.dm,r.src,'phys',r.pen);
+  const pr=!r.big&&abRank(r.src,'presion');
+  for(const e of S.enemies){if(r.hit.size>=r.mx)break;if(e.hp<=0||isFly(e)||r.hit.has(e)||Math.hypot(e.x-r.x,e.y-r.y)>r.r)continue;r.hit.add(e);hurt(e,r.dm,r.src,'phys',r.pen);
+   if(pr)r.src.pres=Math.min(pr.n,(r.src.pres||0)+1);
    if(e.hp>0){if(cr)stunE(e,cr.s);if(r.big)knock(e,AVPUSH*K);if(r.fire)addBurn(e,r.src,ROLLB);if(r.pois)addPois(e,r.pois,r.src);}}
+  if(r.hit.size>=r.mx&&r.left>0){r.left=0;S.fx.push({x:r.x,y:r.y,t:.35,m:.35,r:r.r*1.4,col:'#b0a48c'});}
   return r.left>0;});}
 // zonas: charcos de brea (pegajoso, inflamable), enjambres, panales y cascotes
 function czTick(dt){for(const e of S.enemies)e.stkIn=0;

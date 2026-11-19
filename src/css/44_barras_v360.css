@@ -1,0 +1,8 @@
+/* v360 · tanda 2 de barras: lienzos de las barras de habilidad y color de sus palabras clave (oscuros en pergamino, claros en las encuadernaciones oscuras) */
+.ftmech canvas.b6c{display:block;width:100%;margin-top:5px}
+.b6uq{margin:6px 0 2px}
+.kw:not(.st)[data-kw="racha"],.ftmt .kw[data-kw="racha"]{color:var(--kracha,#a3461a)}
+.kw:not(.st)[data-kw="concen"],.ftmt .kw[data-kw="concen"]{color:var(--kconcen,#1f6a80)}
+.kw:not(.st)[data-kw="pres"],.ftmt .kw[data-kw="pres"]{color:var(--kpres,#6e5530)}
+.kw:not(.st)[data-kw="resv"],.ftmt .kw[data-kw="resv"]{color:var(--kresv,#1d65a0)}
+.kw:not(.st)[data-kw="botin"],.ftmt .kw[data-kw="botin"]{color:var(--kbotin,#8a6400)}

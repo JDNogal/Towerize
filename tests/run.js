@@ -97,6 +97,7 @@ const T=[
  ['pergamino_v353.js','Pergamino nuevo en la oferta de torres y en todos los eventos de la era 1, sin rodillos viejos ni scroll'],
  ['hud_v354.js','Interfaz de PC v354: fila ☰ F3 X, Reintentar abajo, medidor de daño, cajones y barra de Almas'],
  ['barras_v353.js','Barras de mecánica: Heraldo (20, bajas de otras torres), Cadencia del Búnker y barras dibujadas en la ficha'],
+ ['barras_v360.js','v360: tanda 2 de barras (Racha, Concentración y Sin pestañear, Presión con tope de 6 por roca, Reserva de escarcha y Botín), sus palabras clave y partidas guardadas antiguas'],
  ['fichas_zoom.js','Fichas del mapa: pegadas a su torre, crecen con el zoom, compendio con L, sin «casillas»'],
  ['especializaciones_nuevas.js','Especializaciones nuevas: Senda rúnica, Dron petrolero, Cañón de riel y Drones bombarderos',null,2],
  ['compendio_eventos.js','Compendio de eventos: imagen de cada evento, opciones y página de cada opción'],

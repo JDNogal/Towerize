@@ -40,13 +40,6 @@ const rsvAdd=(e,dm,ty,pen)=>{const A=ty==='elem'?0:Math.max(-MAXPEN,armorOf(e,ty
 const hurt=(e,a,src,ty,pen)=>{if(e.hk>0&&!(typeof HKD!=='undefined'&&HKD))return 0;if(typeof eHurtMod==='function'){a=eHurtMod(e,a,src,ty);if(!(a>0))return 0;}a+=fixFlat(e,src);if(e.fx&&e.fx.wet&&src&&(src.type==='augur'||src.type==='tesla'))a*=1+e.fx.wet.m;if(ty==='magic'&&e.fx&&e.fx.hex)a*=1+e.fx.hex.m;if(S.fury)a*=furyM();if(ET[e.t].fly&&rp('harpoon'))a*=1.25;if(e.prey>0)a*=1.15;if(typeof e2DmgM==='function')a*=e2DmgM(e,src,ty);if(src&&S.faros&&S.faros.length&&!src.hero)faroFeed(src,Math.min(Math.max(e.hp,0),a));if(ty==='phys'&&src&&src.ab&&src.ab.hollow)a*=1+abRank(src,'hollow').p*Math.max(0,armorOf(e,'phys'));const A=ty==='elem'?0:Math.max(-MAXPEN,armorOf(e,ty)-(pen||0)),m=1-A/(A+ARM_K);if(src&&src.hero&&src.hero.s&&S.phase==='wave')src.hero.s.la=S.wt;if(src&&src.hero&&e.hp>0)e.hx=(e.hx||0)+ET[e.t].xp*Math.min(e.hp,a*m)/e.max;if(src&&!src.hero){if(ty==='phys')e.ph=1;else if(ty==='magic')e.mh=1;}const dl=Math.min(Math.max(e.hp,0),a*m);e.hp-=a*m;if(src)e.src=src;e.kdn=DNK;if(S.tut&&src&&src.id)(e.hb=e.hb||{})[src.id]=S.wt;if(dl>0&&S.dn)dnAdd(e,dl,dnKey(src,ty));if(dl>0&&src&&typeof onDmg==='function')onDmg(e,dl,src,ty);if(S.st&&dl>0){S.st.dmg+=dl;if(src){src.dmgT=(src.dmgT||0)+dl;relDmg(src,dl);}}
  if(!TZX&&S.tz&&S.tz.length&&S.tz.some(z=>Math.hypot(e.x-z.x,e.y-z.y)<=z.r)){TZX=1;const d0=S.st?S.st.dmg:0;hurt(e,a*.25,src,'magic',0);if(S.st)RS('tome').dmg+=S.st.dmg-d0;TZX=0;}
  return m;};
-function pierceChain(e,raw,t,ty,pen,R){
- const seen=[e];let cur=e;
- for(let i=0;i<12&&raw>.05;i++){let nx=null,nd=R;
-  for(const o of S.enemies){if(o.hp<=0||seen.includes(o))continue;const d=Math.hypot(o.x-cur.x,o.y-cur.y);if(d<=nd){nd=d;nx=o;}}
-  if(!nx)break;const m=hurt(nx,raw,t,ty,pen);seen.push(nx);S.fx.push({x:nx.x,y:nx.y,t:.2,m:.2,r:.4*K,col:'#c9783a'});
-  if(nx.hp>0)break;raw=-nx.hp/m;cur=nx;}
-}
 // Contraste (Piedra del equilibrio): con quemadura e hipotermia a la vez, +25% de stacks de cualquier estado
 const stkM=e=>(S.relics&&rp('balance')&&e.bn>0&&e.cs&&e.cs.length?1.25:1)*(typeof stkX==='function'?stkX(e):1),stkN=(e,n)=>{const v=n*stkM(e),b=Math.floor(v);return b+(Math.random()<v-b?1:0);};
 // Choque térmico (Yrsa Nv 4): +50% de stacks de quemadura a enemigos ralentizados o parados
@@ -116,8 +109,7 @@ function strike(e,dm,t,ty,pen,pz){
  if(t.ab){const pr=abRank(t,'poison');if(pr&&(pz===undefined?prdRoll(pr,pr.p):pz))addPois(e,1,t);
   const sh=abRank(t,'shrap');if(sh&&prdRoll(sh,sh.p))addBleed(e,t,1);
   const fz=abRank(t,'frzh');if(fz&&prdRoll(fz,fz.p)&&freezeE(e,1))e.fx.freeze.src=t;
-  const mr=abRank(t,'mark');if(mr&&e.hp>0)e.mk={t:4,cr:Math.max(mr.cr,e.mk&&e.mk.t>0?e.mk.cr:0)};
-  const pc=abRank(t,'pierce');if(pc&&e.hp<=0)pierceChain(e,-e.hp/m,t,ty,pen,pc.r*K);}
+  const mr=abRank(t,'mark');if(mr&&e.hp>0)e.mk={t:4,cr:Math.max(mr.cr,e.mk&&e.mk.t>0?e.mk.cr:0)};}
  return m;
 }
 function abilities(t,tg,s){
@@ -130,8 +122,6 @@ function abilities(t,tg,s){
    be.hp-=dmg;be.src=t;t.flash={x:be.x,y:be.y,t:.35};S.fx.push({x:be.x,y:be.y,t:.4,m:.4,r:.9*K,col:'#ffffff'});}}
  const rdy=id=>(t.acd[id]||0)<=0,r3=abRank(t,'bombard');
  if(r3&&rdy('bombard')){t.acd.bombard=r3.cd;S.rain.push({src:t,x:tg.x,y:tg.y,r:r3.r*K,left:r3.n,tk:0,dm:s.dmg*RAINP,pen:s.pen,ar:.6*K,af:SPLASH,col:'#ff6a2e',burn:r3.b});S.fx.push({x:tg.x,y:tg.y,t:1.2,m:1.2,r:r3.r*K,col:'#e07a3d'});}
- const ra=abRank(t,'aval');
- if(ra&&rdy('aval')&&inb(tg.tx,tg.ty)){t.acd.aval=ra.cd;const c=tg.pv||[tg.tx,tg.ty];rollStart(t,tg.x,tg.y,c[0],c[1],true);S.fx.push({x:tg.x,y:tg.y,t:.5,m:.5,r:.9*K,col:'#b0a48c'});}
  const r4=abRank(t,'mine');
  if(r4&&rdy('mine')&&!S.mines.some(m=>m.src===t))S.mines.push({src:t,x:tg.tx,y:tg.ty,r:r4.r*K,dm:s.dmg*r4.dm,pen:s.pen});
  const r5=abRank(t,'icicle');
@@ -142,8 +132,6 @@ function abilities(t,tg,s){
  const r8=abRank(t,'flask');
  if(r8&&rdy('flask')){let be=null,bn=0;for(const e of S.enemies){if(e.hp<=0||Math.hypot(e.x-t.x,e.y-t.y)>s.range)continue;let n=0;for(const o of S.enemies)if(o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=s.area)n++;if(n>bn){bn=n;be=e;}}
   if(be){t.acd.flask=r8.cd;const pz=abRank(t,'ponz');S.pools.push({x:be.tx,y:be.ty,t:4,n:s.dmg*(pz?pz.m:1)*rateF(t,s),tk:0,src:t,r:s.area});S.fx.push({x:be.x,y:be.y,t:.5,m:.5,r:s.area,col:'#7bd34a'});}}
- const r6=abRank(t,'blizz');
- if(r6&&rdy('blizz')){t.acd.blizz=r6.cd;let n=0;for(const e of S.enemies)if(e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<=s.range&&freezeE(e,r6.d))n++;S.fx.push({x:t.x,y:t.y,t:.6,m:.6,r:s.range,col:'#cdf2ff'});}
 }
 
 

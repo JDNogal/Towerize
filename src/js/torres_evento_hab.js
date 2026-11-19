@@ -2,8 +2,8 @@
 // Faro arcano · Casas de los cerditos · Sede del Gremio · Mímico glotón · Dragón anciano. El Prototipo Omega queda para cuando su Nv 4 sea un héroe.
 // Las torres de evento no tienen dos especializaciones: sus habilidades cuelgan directamente de la torre (UAB) y abIds(t) las devuelve a todo el juego.
 const UAB={faro:['fflash','freveal','fconv'],straw:['sdry','sheavy','scrows'],wood:['wlogs','wsplint','wspin'],brick:['bwall','bspikes','bthrow'],
- guild:['gcontr','glegend','gbanner'],glut:['mengulf','mbite','mbelly'],dragon:['dscales','dbreath','droar']};
-const BNRR=1,BNRA=15,HAYT=8,ENGCD=8,ENGCH=2,ENGHEAL=.3,ROARR=2.5,DRHP=[0,0,300,400],DRREZ=15,DRORB=.5,DRGO=6,DRPASS=4,DRRET=5,DBRL=3,DBRT=4,DBRS=2,CROWCD=6,THROWCD=3,SPKTK=.5;
+ guild:['botin','glegend','gbanner'],glut:['mengulf','mbite','mbelly'],dragon:['dscales','dbreath','droar']};
+const BOTK=3,BOTN=15,BOTG=[2,3],BOTC=5,BNRR=1,BNRA=15,HAYT=8,ENGCD=8,ENGCH=2,ENGHEAL=.3,ROARR=2.5,DRHP=[0,0,300,400],DRREZ=15,DRORB=.5,DRGO=6,DRPASS=4,DRRET=5,DBRL=3,DBRT=4,DBRS=2,CROWCD=6,THROWCD=3,SPKTK=.5;
 Object.assign(AB,{
  // Faro arcano
  fflash:{n:'Destello',ranks:[{c:220,cd:10},{c:150,cd:7}],txt:r=>`Cada <span class="cr">${r.cd} s</span>, las zonas de luz dan un fogonazo: los enemigos de dentro quedan ${kw('daze','desorientados','')} 0,5 s.`},
@@ -22,7 +22,7 @@ Object.assign(AB,{
  bspikes:{n:'Muro con pinchos',ranks:[{c:220,d:8},{c:150,d:16}],txt:r=>`Los enemigos frenados por un muro reciben <span class="cd">${r.d}</span> de daño físico por segundo.`},
  bthrow:{n:'Ladrillazo',ranks:[{c:220,a:5,mx:20},{c:150,a:8,mx:35}],txt:r=>`Cada ${THROWCD} s, el cerdito albañil lanza un ladrillo al enemigo más adelantado dentro del alcance de la casa (primero, a los frenados por un muro): poco daño y <span class="cph">−${r.a}</span> de ${kw('brk','armadura rota','')} (hasta −${r.mx}).`},
  // Sede del Gremio
- gcontr:{n:'Contratos lucrativos',ranks:[{c:220,m:.25},{c:150,m:.5}],txt:r=>`La recompensa por ronda del gremio sube un <span class="gd">+${Math.round(r.m*100)}%</span> y su botín pasa a <span class="gd">+${Math.round((.25+r.m)*100)}%</span> de oro por baja.`},
+ botin:{n:'Botín',ranks:[{c:220,g:BOTG[0]},{c:150,g:BOTG[1],cof:1}],txt:r=>`Cada ${BOTK} bajas del grupo cae una moneda al ${kw('botin','Botín','')}. Con ${BOTN} monedas, el grupo reparte <span class="gd">${BOTN*r.g} 🪙</span>`+(r.cof?`, y cada reparto llena un cofrecito: al quinto, una reliquia (en la siguiente pieza que coloques).`:'.')},
  glegend:{n:'Leyenda viva',ranks:[{c:320,m:1.5}],txt:r=>`El Renombre que gana el grupo sube a un <span class="cd">7,5% / 15% / 22,5%</span>, y un aventurero que cae solo pierde la mitad del suyo.`},
  gbanner:{n:'Abanderado',ranks:[{c:320,a:BNRA}],txt:r=>`Se une al grupo un <b>Abanderado</b>: su estandarte da <span class="cph">+${r.a} de armadura</span> y <span class="cmg">+${r.a} de resistencia mágica</span> a tus unidades y a tu héroe a ${cas(BNRR)} de él.`},
  // Mímico glotón
@@ -81,9 +81,8 @@ function guildBanner(t){if(!t.sd||t.sd.some(s=>s.cls==='flagb'))return;const U=T
 // Abanderado y Escamas: armadura y resistencia mágica extra (auraAP suma a la armadura y es toda la resistencia mágica de una unidad)
 {const _a=auraAP;auraAP=function(s){let b=_a.apply(this,arguments);try{let x=0;for(const t of S.list){if(!TW[t.type].guild||!t.sd)continue;const r=abRank(t,'gbanner');if(!r)continue;const q=t.sd.find(o=>o.cls==='flagb'&&o.hp>0);if(q&&Math.hypot(s.x-q.x,s.y-q.y)<=BNRR*K)x=Math.max(x,r.a);}
    if(s.air&&s.tw){const sc=abRank(s.tw,'dscales');if(sc)x+=sc.a;}b+=x;}catch(e){}return b;};}
-// Contratos lucrativos: recompensa por ronda (el botín por baja se ajusta en update.js con guildLoot)
-const guildLoot=src=>{if(!(src&&src.type&&TW[src.type]&&TW[src.type].guild))return 1;const r=abRank(src,'gcontr');return 1.25+(r?r.m:0);};
-{const _rr=roundRewards;roundRewards=function(){try{for(const t of S.list)if(TW[t.type].guild){const r=abRank(t,'gcontr');if(r)goldEv(Math.round(([10,20,35,50][t.lvl-1]||10)*r.m));}}catch(e){}return _rr.apply(this,arguments);};}
+// Oro por baja del gremio: +25 % del oro de las bajas de sus aventureros (v360: Contratos lucrativos pasa a ser Botín, barras_v360.js)
+const guildLoot=src=>src&&src.type&&TW[src.type]&&TW[src.type].guild?1.25:1;
 
 // ================= Mímico glotón =================
 // Es una unidad: un cofre plantado en el camino (con bandera), que bloquea y muerde. Sube de nivel con sus bajas.

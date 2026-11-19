@@ -52,7 +52,7 @@ function update(dt){
     if(!tg||sc>bs||(sc===bs&&prog(e)<prog(tg))){tg=e;bs=sc;}}
    if(!tg)tg=tg2;}
   t.tgt=T.beam?tg:null;
-  volcHeat(t,!!tg,dt);
+  volcHeat(t,!!tg,dt);if(typeof mechTick==='function')mechTick(t,tg,s,dt);/* v360: Sin pestañear, Reserva de escarcha (barras_v360.js) */
   if(!tg){t.rays=null;continue;}
   abilities(t,tg,s);
   const X=tinfo(t),TT=twm(t.type,t.spec);
