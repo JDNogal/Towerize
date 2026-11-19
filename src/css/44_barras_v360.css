@@ -8,3 +8,5 @@
 .kw:not(.st)[data-kw="botin"],.ftmt .kw[data-kw="botin"]{color:var(--kbotin,#8a6400)}
 /* v360 · «Saltar» marcado: el segundo clic salta */
 #relic button.skarm{background:linear-gradient(180deg,#c0503a,#8a2a1a)!important;color:#fff1d6!important;border-color:#6a1a0e!important}
+/* v360 (Nogal, 19-nov): en el móvil, con una ventana abierta (oferta, evento, cofre) el botón de fallos va a la izquierda del todo, para no tapar el rodillo del pergamino */
+body.mfs:has(#relic.open) #bugfab.ingame{left:6px}
