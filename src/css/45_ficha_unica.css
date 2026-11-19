@@ -18,6 +18,6 @@
 :root[data-skin="holo"] .fuub,:root[data-skin="holo"] .fuback{background:color-mix(in srgb,#fff 8%,transparent);color:#e8f4ff}
 #fuln{position:fixed;inset:0;width:100vw;height:100vh;z-index:55;pointer-events:none;display:none}
 .fuub .fuubn{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}.fuub .fuubn b{font-weight:600}
-.fuubh{display:block;height:5px;border-radius:3px;background:color-mix(in srgb,#888 25%,transparent);overflow:hidden}.fuubh i{display:block;height:100%;background:linear-gradient(90deg,#3cb84a,#7ad85a)}
+.fuub .fuubh{flex:none}.fuubh{display:block;height:5px;border-radius:3px;background:color-mix(in srgb,#888 25%,transparent);overflow:hidden}.fuubh i{display:block;height:100%;background:linear-gradient(90deg,#3cb84a,#7ad85a)}
 .fuubh.dead{height:auto;background:none;font:600 11px system-ui,sans-serif;opacity:.7}
-.fuubl{flex:none;width:22px;height:22px;display:grid;place-items:center}.fuubl svg,.fuubl img{width:22px;height:22px}
+.fuub .fuubl{flex:none;width:22px;height:22px;display:grid;place-items:center}.fuubl svg,.fuubl img{width:22px;height:22px}
