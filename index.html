@@ -3141,6 +3141,9 @@ body.mfs.pcpick #ui .prow .cardw>.rbtn{position:absolute;left:66px;top:-6px}
 #relic button.skarm{background:linear-gradient(180deg,#c0503a,#8a2a1a)!important;color:#fff1d6!important;border-color:#6a1a0e!important}
 /* v360 (Nogal, 19-nov): en el móvil, con una ventana abierta (oferta, evento, cofre) el botón de fallos va a la izquierda del todo, para no tapar el rodillo del pergamino */
 body.mfs:has(#relic.open) #bugfab.ingame{left:6px}
+
+/* v361: el Botín lleva sus cuentas dentro del dibujo (monedas al lado, cofres debajo): sin línea de texto debajo */
+.b6-botin .ftml{display:none}
 /* v361 · ficha nueva de las torres de evento (ficha_unica.js) */
 .fuRk{margin-left:auto;font-size:13px;font-weight:600;white-space:nowrap}.fuRk b{font:700 16px Georgia,serif;color:var(--acc,#c2560e)}
 .fuom{margin:6px 0 4px}.fuom .omf small{display:block;font-size:12.5px;line-height:1.35}
@@ -15604,7 +15607,7 @@ const B6M=[
   x:t=>'Cada '+BOTK+' bajas del grupo cae una moneda; con '+BOTN+', el grupo reparte oro.'}];
 for(let i=B6M.length-1;i>=0;i--)TMECH.unshift(B6M[i]);
 const B6K={};for(const m of B6M)B6K[m.k]=m;
-const b6H=(k,t)=>k==='botin'?(abRank(t,'botin')&&abRank(t,'botin').cof?92:70):B6H[k];
+const b6H=(k,t)=>k==='botin'?(abRank(t,'botin')&&abRank(t,'botin').cof?120:98):B6H[k];/* v361: más alto para que la pirámide y las monedas que caen no se corten (Nogal) */
 const b6Box=(t,M,txt)=>`<div class="ftmech fbm b6m b6-${M.k}"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="b6c" data-k="${M.k}" data-tid="${t.id}" style="height:${b6H(M.k,t)}px"></canvas><div class="ftml" data-b6="${M.k}">${M.l(t)}</div></div>`;
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||!B6K[M.k])return _mb.apply(this,arguments);return b6Box(t,M,txt);};}
 // la Sede del Gremio aún usa la ficha antigua (uniqInfo): el Botín va justo debajo del título
@@ -15682,13 +15685,15 @@ function b6Botin(c,W,H,t,o,dt,tm){const r=abRank(t,'botin'),cof=!!r.cof,cn=Math.
  if((t.btRel||0)!==o.lastRel){o.lastRel=t.btRel||0;o.rel=2.2;}
  o.rep=Math.max(0,o.rep-dt);o.rel=Math.max(0,o.rel-dt);
  if(cn>o.lastCoins)for(let k=o.lastCoins;k<cn;k++)o.coins.push({k,t0:tm});o.lastCoins=cn;o.coins=o.coins.filter(q=>tm-q.t0<.6);
- const rx=Math.min(15,(W*.62)/10),ry=rx*.42,dy=ry*2.3,cx=W/2,L=[];for(let row=0;row<5;row++){const n=5-row;for(let k=0;k<n;k++)L.push({x:cx+(k-(n-1)/2)*rx*2.05,y:PH-ry-rx*.32-row*dy});}
+ const rx=Math.min(13.5,(W*.55)/10),ry=rx*.42,dy=ry*2.3,cx=W/2,L=[];for(let row=0;row<5;row++){const n=5-row;for(let k=0;k<n;k++)L.push({x:cx+(k-(n-1)/2)*rx*2.05,y:PH-ry-rx*.32-row*dy});}
  c.fillStyle='rgba(60,40,10,.16)';c.beginPath();c.ellipse(cx,PH-ry*.4,rx*5.6,ry*1.2,0,0,7);c.fill();
  const show=o.rep>0?o.repN:cn;
- for(let k=0;k<show&&k<L.length;k++){const p=L[k];let y=p.y,a=1;const fl=o.coins.find(q=>q.k===k);if(fl){const q=Math.min(1,(tm-fl.t0)/.45);y=p.y-(1-b6E(q))*30;}
-  if(o.rep>0){const q=1-o.rep/1.3;y-=Math.sin(Math.min(1,q*1.4)*Math.PI)*(14+(k%5)*5);a=Math.max(0,1-Math.max(0,q-.6)/.4);}
+ for(let k=0;k<show&&k<L.length;k++){const p=L[k];let y=p.y,a=1;const fl=o.coins.find(q=>q.k===k);if(fl){const q=Math.min(1,(tm-fl.t0)/.45);y=p.y-(1-b6E(q))*Math.min(30,Math.max(0,p.y-rx*1.2));}
+  if(o.rep>0){const q=1-o.rep/1.3;y-=Math.sin(Math.min(1,q*1.4)*Math.PI)*(14+(k%5)*5);y=Math.max(rx*.9,y);/* v361: que no se corte por arriba */a=Math.max(0,1-Math.max(0,q-.6)/.4);}
   c.globalAlpha=a;b6Coin(c,p.x,y,rx);c.globalAlpha=1;}
  if(o.rep>0){const q=1-o.rep/1.3;c.font='700 13px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.globalAlpha=Math.min(1,o.rep*2);c.lineWidth=3;c.strokeStyle='#5a4000';const tx='+'+BOTN*r.g;c.strokeText(tx,cx,PH*.35-q*10);c.fillStyle='#ffd34a';c.fillText(tx,cx,PH*.35-q*10);c.globalAlpha=1;}
+ {const tx=W-30,ty=PH*.45;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#6b4a00';c.font='800 20px system-ui,sans-serif';c.fillText(String(o.rep>0?BOTN:cn),tx,ty);
+  c.font='600 12px system-ui,sans-serif';c.fillStyle='#8a6a2a';c.fillText('/ '+BOTN,tx,ty+17);b6Coin(c,tx,ty-24,7);}/* v361: monedas en vertical, al lado */
  if(cof){const cw=Math.min(26,(W-20)/6.5),y=H-12,n=o.rel>0?BOTC:(t.btC||0);for(let k=0;k<BOTC;k++){const x=cx+(k-(BOTC-1)/2)*cw*1.35;b6Chest(c,x,y,cw,k<n,o.rel>0&&Math.floor(tm/.15)%2===0);}}}
 function b6Draw(now){B6.raf=0;const cs=document.querySelectorAll('canvas.b6c');if(!cs.length)return;const tm=now/1000,dt=Math.min(.05,(now-(B6.last||now))/1000);B6.last=now;
  for(const cv of cs){if(!cv.isConnected)continue;const t=S&&S.list&&S.list.find(q=>String(q.id)===cv.dataset.tid);if(!t)continue;const k=cv.dataset.k,M=B6K[k];if(!M||!M.on(t))continue;

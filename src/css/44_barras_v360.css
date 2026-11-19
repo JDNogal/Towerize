@@ -10,3 +10,6 @@
 #relic button.skarm{background:linear-gradient(180deg,#c0503a,#8a2a1a)!important;color:#fff1d6!important;border-color:#6a1a0e!important}
 /* v360 (Nogal, 19-nov): en el móvil, con una ventana abierta (oferta, evento, cofre) el botón de fallos va a la izquierda del todo, para no tapar el rodillo del pergamino */
 body.mfs:has(#relic.open) #bugfab.ingame{left:6px}
+
+/* v361: el Botín lleva sus cuentas dentro del dibujo (monedas al lado, cofres debajo): sin línea de texto debajo */
+.b6-botin .ftml{display:none}
