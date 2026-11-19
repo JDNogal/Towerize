@@ -11,6 +11,11 @@ function fzPlace(c,m,it){const P=m._p;if(!P||!it)return false;const Z=cardZ(c),w
  const right=[ix+r.width+g,cy-h/2],left=[ix-g-w,cy-h/2],up=[cx-w/2,iy-g-h],down=[cx-w/2,iy+r.height+g];
  const order=Math.abs(dx)>=Math.abs(dy)?(dx<0?[left,up,down,right]:[right,up,down,left]):(dy<0?[up,dx<0?left:right,dx<0?right:left,down]:[down,dx<0?left:right,dx<0?right:left,up]);
  const fit=([x,y])=>x>=6&&y>=T0&&x+w<=P.W-6&&y+h<=P.H-6;let [x,y]=order.find(fit)||order[0];
+ // v361: la ficha no tapa la interfaz (barras y columnas) ni los botones del anillo: si el sitio de siempre pisa algo, se busca el que menos pise
+ if(typeof tmObs==='function'){const ob=tmObs(op);for(const b of m.querySelectorAll('.tmb')){const q=b.getBoundingClientRect();if(q.width)ob.push([q.left-op.left-3,q.top-op.top-3,q.right-op.left+3,q.bottom-op.top+16]);}
+  const cl=([a,b])=>[Math.max(6,Math.min(P.W-w-6,a)),Math.max(6,Math.min(P.H-h-6,b))],pis=([a,b])=>{let s=0;for(const q of ob){const ix=Math.min(a+w,q[2])-Math.max(a,q[0]),iy=Math.min(b+h,q[3])-Math.max(b,q[1]);if(ix>0&&iy>0)s+=ix*iy;}return s;};
+  if(pis(cl([x,y]))>0){const all=order.filter(fit).concat(order);for(const[ax,ay]of order)for(let d=20;d<=300;d+=20)all.push([ax+d,ay],[ax-d,ay],[ax,ay+d],[ax,ay-d]);
+   let best=null;for(const q of all){const k=cl(q),v=pis(k);if(!best||v<best.v)best={k,v};if(!v)break;}[x,y]=best.k;}}
  x=Math.max(6,Math.min(P.W-w-6,x));y=Math.max(T0,Math.min(P.H-h-6,y));c.style.left=x+'px';c.style.top=y+'px';return true;}
 {const _p=bmCardPos;bmCardPos=function(){const c=$('bmcard'),m=$('bmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const k=BM.arm||BM.hov,it=k&&m.querySelector(`.tmb[data-k="${k}"]`);if(!fzPlace(c,m,it))return _p.apply(this,arguments);};}
 {const _p=tmCardPos;tmCardPos=function(){const c=$('tmcard'),m=$('tmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const k=c.dataset.k,it=k&&[...m.querySelectorAll('.tmb[data-k]')].find(b=>b.dataset.k===k);if(!fzPlace(c,m,it))return _p.apply(this,arguments);};}

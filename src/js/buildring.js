@@ -29,8 +29,12 @@ function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getB
  const d=n>=5?2*Math.PI/n:Math.min(2*Math.PI/n,gap/R);/* v305: con 5 o más, polígono regular completo (pentágono, hexágono…) */
  // si se sale de la pantalla, se desplaza hacia dentro (sin dejar de rodear el solar)
  const pad=bz/2+6,cx=Math.max(R+pad,Math.min(c.width-R-pad,px)),cy=Math.max(T0+R+pad,Math.min(c.height-pad-bz*.35-(n*d>Math.PI?R:0),py));
- bs.forEach((b,i)=>{const a=-Math.PI/2+(i-(n-1)/2)*d;b.style.left=cx+Math.cos(a)*R+'px';b.style.top=cy+Math.sin(a)*R+'px';});
- m._p={px:cx,py:cy,R,W:c.width,H:c.height};if(force||BM.hov||BM.arm)bmCardPos();}
+ // v361: si algún botón cae debajo de la interfaz (barras, columnas), el anillo se desplaza lo justo para librarla
+ const ob=typeof tmObs==='function'?tmObs(c):[],at=(x0,y0)=>{let h=0;for(let i=0;i<n;i++){const a=-Math.PI/2+(i-(n-1)/2)*d,x=x0+Math.cos(a)*R,y=y0+Math.sin(a)*R,b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];
+   if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h;};
+ let bx=cx,by=cy;if(at(cx,cy)){let best=null;for(let r=0;r<=240&&!(best&&!best.h);r+=12)for(const[ux,uy]of[[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]){const x=cx+ux*r,y=cy+uy*r,h=at(x,y);if(!best||h<best.h)best={x,y,h};if(!h)break;}bx=best.x;by=best.y;}
+ bs.forEach((b,i)=>{const a=-Math.PI/2+(i-(n-1)/2)*d;b.style.left=bx+Math.cos(a)*R+'px';b.style.top=by+Math.sin(a)*R+'px';});
+ m._p={px:bx,py:by,R,W:c.width,H:c.height};if(force||BM.hov||BM.arm)bmCardPos();}
 const DTN={phys:'Físico',magic:'Mágico',elem:'Elemental'};
 function bmInfo(k){const T=TW[k],a=twAt(k,1,null),M=twMax(1),src='shop:'+k;
  const tags=T.bufo?['Apoyo']:[DTN[T.dt]||'',T.unit?'Unidades':T.splash||T.pr?'Área':T.beam||T.chain?'Rayo':'Un objetivo'].filter(Boolean);
