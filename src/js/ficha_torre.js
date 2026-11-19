@@ -68,10 +68,10 @@ function fichaTorre(t){
  h+=tail.join('');
  // Objetivo (plegado): a quién ataca y, en la ficha fijada, el selector
  if(!T.unit){const notgt=SP&&SP.notgt,tg=notgt?'':tgtRow(t,src,PR.pinned&&PR.key===src),tw=tg.replace(/<div class="row[^>]*><span>[^]*?<\/span><span>[^<]*<\/span><\/div>/,'').replace(/(<div class="tgt">)<div>[^]*?<\/span><\/div>/,'$1');
-  h+=ftFold('obj',`<span>${kst('tgt','Objetivo',src)}${notgt?'':' <em>· '+TGT[t.mode].n+'</em>'}</span>`,tw+R('cg',kst('tgts','Ataca a',src),objIc(!!T.ground,src)));}
+  if(!notgt||tw.replace(/<[^>]+>/g,'').trim())h+=ftFold('obj',`<span>${kst('tgt','Objetivo',src)}${notgt?'':' <em>· '+TGT[t.mode].n+'</em>'}</span>`,tw);}/* v361: «Ataca a» va en Más detalles (Nogal) */
  // Habilidades: en partida NO van en la ficha (v361, Nogal): se miran en los botones del anillo; en el compendio, sí
  // Más detalles (plegado): el resto de datos, cada uno con su icono y su color
- const more=ftStrip(rest,T.unit?['rng','eff','tgt','cool','dps']:['cool','rng','area','eff','tgts','tgt','dps'])+(ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!ss.area&&!T.cone&&!(t.type==='robots'&&t.spec==='mecha')?' (sin efecto aquí)':''}</div>`).join(''):'');
+ const more=ftStrip(rest,T.unit?['rng','eff','tgt','cool','dps']:['cool','rng','area','eff','tgts','tgt','dps'])+(T.unit?'':R('cg',kst('tgts','Ataca a',src),objIc(!!T.ground,src)))+(ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!ss.area&&!T.cone&&!(t.type==='robots'&&t.spec==='mecha')?' (sin efecto aquí)':''}</div>`).join(''):'');
  if(more.replace(/<[^>]+>/g,'').trim())h+=ftFold('more','<span>Más detalles</span>',more);
  return h+'</div>';
 }

@@ -16,7 +16,7 @@ function b7Cracks(x0,y0,WW,HH){const L=[],N=5+Math.floor(Math.random()*3);for(le
 const b7Parts=(c,o,dt)=>{o.pt=(o.pt||[]).filter(p=>p.t>0);for(const p of o.pt){p.t-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=(p.b?260:40)*dt;if(p.rot!=null)p.rot+=p.vr*dt;
  c.globalAlpha=Math.max(0,Math.min(1,p.t*1.5));if(p.b){c.save();c.translate(p.x+p.w/2,p.y+p.h/2);c.rotate(p.rot);b7Brick(c,-p.w/2,-p.h/2,p.w,p.h,p.col);c.restore();}else{c.fillStyle=p.col+Math.max(0,p.t)+')';c.beginPath();c.arc(p.x,p.y,p.r,0,7);c.fill();}c.globalAlpha=1;}};
 const PAUSE7=1.3;
-function b7Muro(c,W,H,t,o,dt,tm){const b=b7Wall(t),cols=Math.max(6,Math.min(12,Math.floor((W-12)/22))),bw=Math.min(22,(W-12)/cols),bh=10,rows=4,WW=cols*bw,HH=rows*bh,x0=(W-WW)/2,y0=H-8-HH;
+function b7Muro(c,W,H,t,o,dt,tm){const b=b7Wall(t),cols=Math.max(6,Math.min(11,Math.floor((W-24)/26))),bw=Math.min(26,(W-24)/cols),bh=14,rows=4,WW=cols*bw,HH=rows*bh,x0=(W-WW)/2,y0=H-8-HH;
  c.fillStyle='rgba(60,40,10,.15)';c.beginPath();c.ellipse(W/2,H-6,WW/2+8,4,0,0,7);c.fill();
  if(b){if(o.mb!==b){o.mb=b;o.cr=b7Cracks(x0,y0,WW,HH);o.cw=W;}if(o.cw!==W){o.cr=b7Cracks(x0,y0,WW,HH);o.cw=W;}o.up=1;const D=b.t0||4,k=Math.max(0,Math.min(1,1-b.t/D));
   const sh=b.t<.6?(Math.random()-.5)*3*(1-b.t/.6):0;c.save();c.translate(sh,0);
@@ -38,21 +38,21 @@ function b7Comida(c,W,H,t,o,dt,tm){const lv=t.lvl||1,NEED=GLUT[lv]||1,food=Math.
  if(food>o.lf)for(let i=o.lf;i<food;i++)o.bt.push({t:-(i-o.lf)*.18});else if(food<o.lf)o.eat=food;o.lf=food;
  for(const b of o.bt){const was=b.t;b.t+=dt;if(was<.62&&b.t>=.62)o.eat=Math.min(food,o.eat+1);}o.bt=o.bt.filter(b=>b.t<.8);if(o.eat>food)o.eat=food;o.jmp=Math.max(0,(o.jmp||0)-dt*.8);
  // el contador, aparte: casillas en grupos de 5 (más de 40, en dos filas)
- const rowsN=NEED>40?2:1,perRow=Math.ceil(NEED/rowsN),G=Math.ceil(perRow/5),bw0=W-12,gw=bw0/G,cw=Math.min(9,(gw-4)/5),ch=rowsN>1?7:9,gy=H-4-rowsN*(ch+3);
+ const rowsN=NEED>40?2:1,perRow=Math.ceil(NEED/rowsN),G=Math.ceil(perRow/5),bw0=W-12,gw=bw0/G,cw=Math.min(12,(gw-4)/5),ch=rowsN>1?9:12,gy=H-4-rowsN*(ch+3);
  for(let k=0;k<NEED;k++){const r=Math.floor(k/perRow),kk=k%perRow,gi=Math.floor(kk/5),j=kk%5,x=6+gi*gw+(gw-5*cw)/2+j*cw,y=gy+r*(ch+3),on=k<o.eat;
   c.fillStyle=on?'#e0903a':'rgba(0,0,0,.09)';c.strokeStyle=on?'#1b1712':'rgba(0,0,0,.2)';c.lineWidth=1;c.beginPath();c.roundRect(x,y,cw-1.5,ch,2);c.fill();c.stroke();}
- const MW=40,mx=8,my=Math.max(2,gy-44),ex=mx+MW/2,ey=my+16;
+ const Z=1.35,MW=40,mx=8,my=Math.max(2,gy-6-44*Z),ex=mx+MW*Z/2,ey=my+16*Z;/* el Mímico, a escala Z */
  // las bolitas: aparecen de la nada en el otro extremo (destello) y vuelan en arco hasta la boca
- for(const b of o.bt){if(b.t<0)continue;const q=Math.min(1,b.t/.6),sx=W-18,sy=my+6;if(q<.18){const pp=q/.18;c.fillStyle=`rgba(255,240,180,${1-pp})`;c.beginPath();c.arc(sx,sy,4+pp*10,0,7);c.fill();}
-  const e=Math.min(1,Math.max(0,(q-.12)/.88)),x=sx+(ex-sx)*e,y=sy+(ey-sy)*e-Math.sin(e*Math.PI)*Math.min(18,my+2),r=4.5*Math.min(1,q/.12);if(q<1){c.fillStyle='#e0a060';c.strokeStyle='#1b1712';c.lineWidth=1.3;c.beginPath();c.arc(x,y,r,0,7);c.fill();c.stroke();}}
+ for(const b of o.bt){if(b.t<0)continue;const q=Math.min(1,b.t/.6),sx=W-18,sy=my+10;if(q<.18){const pp=q/.18;c.fillStyle=`rgba(255,240,180,${1-pp})`;c.beginPath();c.arc(sx,sy,4+pp*10,0,7);c.fill();}
+  const e=Math.min(1,Math.max(0,(q-.12)/.88)),x=sx+(ex-sx)*e,y=sy+(ey-sy)*e-Math.sin(e*Math.PI)*Math.min(18,my+2),r=5.5*Math.min(1,q/.12);if(q<1){c.fillStyle='#e0a060';c.strokeStyle='#1b1712';c.lineWidth=1.3;c.beginPath();c.arc(x,y,r,0,7);c.fill();c.stroke();}}
  // el Mímico: el cuerpo quieto y la tapa baja para morder (Nogal)
  const chomp=o.bt.some(b=>b.t>.55&&b.t<.75),jy=-Math.sin(o.jmp*Math.PI*3)*6*o.jmp,LY=my+(chomp?9:0),BY=my+23;
- c.save();c.translate(0,jy);c.fillStyle='#8a5a2e';c.strokeStyle='#1b1712';c.lineWidth=1.8;c.beginPath();c.roundRect(mx,BY,MW,20,3);c.fill();c.stroke();
+ c.save();c.translate(mx,my+jy);c.scale(Z,Z);c.translate(-mx,-my);c.fillStyle='#8a5a2e';c.strokeStyle='#1b1712';c.lineWidth=1.8;c.beginPath();c.roundRect(mx,BY,MW,20,3);c.fill();c.stroke();
  c.fillStyle='#f4ead8';for(let i=0;i<5;i++){const tx=mx+2+i*7.2;c.beginPath();c.moveTo(tx,BY);c.lineTo(tx+3.6,BY-5);c.lineTo(tx+7.2,BY);c.fill();c.stroke();}
  c.fillStyle='#a8743a';c.beginPath();c.roundRect(mx,LY,MW,13,[7,7,2,2]);c.fill();c.stroke();
  c.fillStyle='#f4ead8';for(let i=0;i<5;i++){const tx=mx+2+i*7.2;c.beginPath();c.moveTo(tx,LY+13);c.lineTo(tx+3.6,LY+18);c.lineTo(tx+7.2,LY+13);c.fill();c.stroke();}
  c.fillStyle='#ffd34a';c.fillRect(mx+MW/2-3,BY+5,6,5);c.fillStyle='#1b1712';c.beginPath();c.arc(mx+11,LY+6,1.8,0,7);c.arc(mx+MW-11,LY+6,1.8,0,7);c.fill();c.restore();}
-B6DR.muro=b7Muro;B6DR.comida=b7Comida;B6H.muro=56;B6H.comida=76;
+B6DR.muro=b7Muro;B6DR.comida=b7Comida;B6H.muro=74;B6H.comida=104;
 // las barras: la de Comida ya existía (ficha_unica.js) con dibujo genérico; la de Muro es nueva
 {const i=TMECH.findIndex(m=>m.k==='comida');if(i>=0)B6K.comida=TMECH[i];
  const M={k:'muro',on:t=>!!(TW[t.type]&&TW[t.type].wall),n:'Muro',ic:'bwall',v:t=>{const b=b7Wall(t);return b?b.t/(b.t0||4):0;},

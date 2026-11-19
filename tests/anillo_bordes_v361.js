@@ -1,4 +1,4 @@
-// v361: el anillo de la torre (habilidades, mejorar, vender…) nunca queda debajo de la interfaz ni fuera de la pantalla,
+// v361: el anillo de la torre (habilidades, mejorar, vender…) nunca queda debajo de la interfaz ni fuera de la pantalla, con la torre pegada a cualquiera de los cuatro bordes, en PC y en móvil; el de construir, en cambio, es siempre el mismo círculo alrededor del solar (Nogal, 20-nov)
 // con la torre pegada a cualquiera de los cuatro bordes, en PC y en móvil
 const {chromium,devices}=require('playwright');(async()=>{const b=await chromium.launch();const fails=[];const ck=(c,m)=>{if(!c)fails.push(m);};const errs=[];const out={};
 const OBS=['stats','rtl','mtl','mbl','mbr','zm','relics','dpsmb','dpsc','emap','pkbar','rtyb'];
@@ -39,13 +39,14 @@ for(const [dev,opt] of [['pc',{viewport:{width:1280,height:720}}],['movil',devic
   const r=await p.evaluate(([edge,OBS])=>{const q=_q,cvr=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*cvr.width,ox=cvr.left-c.left,oy=cvr.top-c.top;
    const want={arriba:[c.width/2,40],abajo:[c.width/2,c.height-40],izquierda:[90,c.height/2],derecha:[c.width-90,c.height/2]}[edge];
    CAM.x=(q.x+.5)*CS-(want[0]-ox)/k;CAM.y=(q.y+.5)*CS-(want[1]-oy)/k;BM.s=q;bmTick();bmPos(true);
-   const obs=[];for(const id of OBS){const e=$(id);if(!e)continue;const s=getComputedStyle(e);if(s.display==='none'||s.visibility==='hidden'||+s.opacity===0)continue;const o=e.getBoundingClientRect();if(o.width>2&&o.height>2)obs.push([id,o]);}
-   const bad=[];let n=0;for(const bt of document.querySelectorAll('#bmenu .tmb')){const o=bt.getBoundingClientRect();if(!o.width)continue;n++;
-    if(o.left<0||o.top<0||o.right>innerWidth||o.bottom>innerHeight)bad.push('fuera');
-    for(const [id,b] of obs)if(o.left<b.right&&o.right>b.left&&o.top<b.bottom&&o.bottom>b.top)bad.push(id);}
+   /* v361 (Nogal, 20-nov): el anillo de construir es siempre el mismo círculo alrededor del solar, también en los bordes (no se desplaza ni se gira) */
+   const P=$('bmenu')._p,cr=$('cw').getBoundingClientRect(),sx=cr.left+((q.x+.5)*CS-CAM.x)*k+ox,sy=cr.top+((q.y+.5)*CS-CAM.y)*k+oy;
+   const bad=[];let n=0,top=null;for(const bt of document.querySelectorAll('#bmenu .tmb')){const o=bt.getBoundingClientRect();if(!o.width)continue;n++;
+    const bx=parseFloat(bt.style.left)+cr.left,by=parseFloat(bt.style.top)+cr.top,d=Math.hypot(bx-sx,by-sy);if(Math.abs(d-P.R)>2)bad.push('no rodea el solar');if(top===null||by<top)top=by;}
+   if(top!==null&&top>sy)bad.push('girado');
    return {n,bad};},[edge,OBS]);
   await p.waitForTimeout(150);await p.screenshot({path:`tests/out/anillo_construir_${dev}_${edge}.png`});
-  out['construir_'+dev+'_'+edge]=r;ck(r.n>=2,`${dev} ${edge}: no sale el anillo de construir`);ck(!r.bad.length,`${dev} ${edge}: el anillo de construir pisa ${[...new Set(r.bad)].join(', ')}`);}
+  out['construir_'+dev+'_'+edge]=r;ck(r.n>=2,`${dev} ${edge}: no sale el anillo de construir`);ck(!r.bad.length,`${dev} ${edge}: el anillo de construir ${[...new Set(r.bad)].join(', ')}`);}
  await c.close();}
 ck(!errs.length,'errores: '+errs.join(' | '));
 console.log(JSON.stringify(out));if(fails.length){console.log('FALLOS\n'+fails.join('\n'));console.log(JSON.stringify(errs));}
