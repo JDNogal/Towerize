@@ -43,7 +43,7 @@ function tmPos(force){const m=$('tmenu'),t=TM.t;if(!m||!t||!m._o)return;const r=
    o.bot.forEach((x,j)=>P.push([xb+dx,py+(j-(m-1)/2)*56+dy]));if(o.side)P.push([px,py+R+34]);return {P,ty:py-R-42,by:py+R+28,rot:g};}
   /* 2 / 3: todo arriba / todo abajo, con la misma forma que de lado: las habilidades junto a la torre y el resto más fuera */
   const ty=(sw===1?by0+8:sw===3?by0+8:ty0)+dy,by=(sw===1?ty0-8:sw===2?ty0-62:sw===3?by0+80:by0)+dy;
-  o.top.forEach((x,j)=>{if(n===3)P.push([px+(j-1)*50+dx,ty-(j===1?(sw?-12:12):0)]);else if(n===2)P.push([px+(j?26:-26)+dx,ty]);else P.push([px+dx,ty]);});
+  o.top.forEach((x,j)=>{if(n===3)P.push([px+(j-1)*50+dx,ty-(j===1?(sw===1||sw===3?-12:12):0)]);/* el arco de las habilidades, siempre hacia fuera de la torre */else if(n===2)P.push([px+(j?26:-26)+dx,ty]);else P.push([px+dx,ty]);});
   o.bot.forEach((x,j)=>P.push([px+(j-(o.bot.length-1)/2)*52+dx,by]));if(o.side)P.push([px+R+34,py]);return {P,ty,by};};
  const obs=tmObs(c),hits=L=>{let h=0;for(const[x,y]of L.P){const b=[x-21,y-21,x+21,y+33];if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of obs)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h;};
  // orden de preferencia: la forma de siempre; si no cabe, todo hacia el lado libre (abajo, arriba, derecha, izquierda) con la misma forma; y solo al final, volteada o desplazada

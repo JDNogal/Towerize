@@ -50,8 +50,8 @@ function fichaTorre(t){
  // cabecera
  let h=`<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+(SP?`<div class="ftsub">${T.n} · especialización</div>`:'');
  // qué hace + su mecánica
- const desc=M?(M.base?base:''):(SP?SP.d||base:base);
- h+=`<div class="ftc">`+(desc?`<div class="ftdesc">${desc}</div>`:'')+(M?ftMechBox(t,M,M.x?M.x(t):(SP?SP.d:'')):'')+'<div class="row ftanc"></div><div class="esec" data-ftanc></div>';
+ const desc=SP?SP.d||base:base;/* v361: la barra va sin frase (Nogal); lo que hace la especialización, aquí arriba; la mecánica, en el bocadillo de su palabra */
+ h+=`<div class="ftc">`+(desc?`<div class="ftdesc">${desc}</div>`:'')+(M?ftMechBox(t,M,''):'')+'<div class="row ftanc"></div><div class="esec" data-ftanc></div>';
  // los 4 números (sin los que valen 0)
  const hit=ss.dmg>0||TT.dot||TT.burn,theo=hit&&!(TT.bufo&&!(ss.dmg>0))?dpsOf(ss,TT):0,ch=[];
  if(theo>0)ch.push(ftChip('cd',kst('dps','DPS',src),f(theo)));

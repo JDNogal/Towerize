@@ -155,8 +155,10 @@ function b6Botin(c,W,H,t,o,dt,tm){const r=abRank(t,'botin'),cof=!!r.cof,cn=Math.
   if(o.rep>0){const q=1-o.rep/1.3;y-=Math.sin(Math.min(1,q*1.4)*Math.PI)*(14+(k%5)*5);y=Math.max(rx*.9,y);/* v361: que no se corte por arriba */a=Math.max(0,1-Math.max(0,q-.6)/.4);}
   c.globalAlpha=a;b6Coin(c,p.x,y,rx);c.globalAlpha=1;}
  if(o.rep>0){const q=1-o.rep/1.3;c.font='700 13px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.globalAlpha=Math.min(1,o.rep*2);c.lineWidth=3;c.strokeStyle='#5a4000';const tx='+'+BOTN*r.g;c.strokeText(tx,cx,PH*.35-q*10);c.fillStyle='#ffd34a';c.fillText(tx,cx,PH*.35-q*10);c.globalAlpha=1;}
- {const tx=W-30,ty=PH*.45;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#6b4a00';c.font='800 20px system-ui,sans-serif';c.fillText(String(o.rep>0?BOTN:cn),tx,ty);
-  c.font='600 12px system-ui,sans-serif';c.fillStyle='#8a6a2a';c.fillText('/ '+BOTN,tx,ty+17);b6Coin(c,tx,ty-24,7);}/* v361: monedas en vertical, al lado */
+ {const tx=W-34,ty=PH*.5,nv=String(o.rep>0?BOTN:cn);c.textBaseline='middle';b6Coin(c,tx-14,ty-25,6);
+  c.textAlign='right';c.fillStyle='#6b4a00';c.font='800 20px system-ui,sans-serif';c.fillText(nv,tx-2,ty-8);
+  c.strokeStyle='#8a6a2a';c.lineWidth=2;c.lineCap='round';c.beginPath();c.moveTo(tx-4,ty+12);c.lineTo(tx+6,ty-6);c.stroke();
+  c.textAlign='left';c.fillStyle='#8a6a2a';c.font='700 14px system-ui,sans-serif';c.fillText(String(BOTN),tx+6,ty+9);}/* v361: monedas como fracción en diagonal (Nogal): el número arriba a la izquierda, la raya y el 15 abajo a la derecha */
  if(cof){const cw=Math.min(26,(W-20)/6.5),y=H-12,n=o.rel>0?BOTC:(t.btC||0);for(let k=0;k<BOTC;k++){const x=cx+(k-(BOTC-1)/2)*cw*1.35;b6Chest(c,x,y,cw,k<n,o.rel>0&&Math.floor(tm/.15)%2===0);}}}
 function b6Draw(now){B6.raf=0;const cs=document.querySelectorAll('canvas.b6c');if(!cs.length)return;const tm=now/1000,dt=Math.min(.05,(now-(B6.last||now))/1000);B6.last=now;
  for(const cv of cs){if(!cv.isConnected)continue;const t=S&&S.list&&S.list.find(q=>String(q.id)===cv.dataset.tid);if(!t)continue;const k=cv.dataset.k,M=B6K[k];if(!M||!M.on(t))continue;

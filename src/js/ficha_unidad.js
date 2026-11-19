@@ -62,7 +62,8 @@ function fuLine(){try{let sv=$('fuln');const k=String(PR.key||''),t=PR.open&&S&&
  if(t&&FU.tid===t.id&&FU.i>=0){el=document.querySelector('#tip .fuu,#side .fuu');i=FU.i;}else if(t&&FUH.el&&document.body.contains(FUH.el)){el=FUH.el;i=FUH.k;}
  let s=null;if(el&&i>=0){const w=document.createElement('div');w.innerHTML=fuBase(t);const u=fuButtons(t,w)[i];s=u&&u.s;}
  if(s&&s.hp>0&&typeof scrOf==='function'){if(!sv){sv=document.createElementNS('http://www.w3.org/2000/svg','svg');sv.id='fuln';document.body.appendChild(sv);}
-  const a=el.getBoundingClientRect(),[x,y,wd]=scrOf(s),cx=x+wd*.0,cy=y,lft=cx<a.left,x0=lft?a.left-4:a.right+4,y0=Math.max(a.top+12,Math.min(a.bottom-12,cy)),mx=(x0+cx)/2;
-  sv.innerHTML=`<path d="M${x0} ${y0} C${mx} ${y0} ${mx} ${cy} ${cx} ${cy}" fill="none" stroke="#f0c060" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round" opacity=".95"/><circle cx="${cx}" cy="${cy}" r="${Math.max(12,wd*.42)}" fill="none" stroke="#f0c060" stroke-width="3"/>`;sv.style.display='block';}
+  const a=el.getBoundingClientRect(),[x,y,wd]=scrOf(s),cz=wd/K,cx=x+cz/2,cy=y+cz/2,lft=cx<a.left,x0=lft?a.left-4:a.right+4,y0=Math.max(a.top+12,Math.min(a.bottom-12,cy)),mx=(x0+cx)/2;
+  const ur=Math.max(8,cz*.9);/* solo alrededor de esa unidad; azul claro con borde oscuro para que no se confunda con la bandera ni con el alcance (Nogal) */
+  sv.innerHTML=`<path d="M${x0} ${y0} C${mx} ${y0} ${mx} ${cy} ${cx} ${cy}" fill="none" stroke="#10202a" stroke-width="5" stroke-dasharray="6 5" stroke-linecap="round" opacity=".55"/><path d="M${x0} ${y0} C${mx} ${y0} ${mx} ${cy} ${cx} ${cy}" fill="none" stroke="#7ad8ff" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="${ur}" fill="none" stroke="#10202a" stroke-width="5" opacity=".55"/><circle cx="${cx}" cy="${cy}" r="${ur}" fill="none" stroke="#7ad8ff" stroke-width="2.5"/>`;sv.style.display='block';}
  else if(sv)sv.style.display='none';}catch(e){}setTimeout(()=>requestAnimationFrame(fuLine),50);}
 requestAnimationFrame(fuLine);

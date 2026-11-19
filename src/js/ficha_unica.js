@@ -31,6 +31,7 @@ TMECH.push(
   return x+'</small>';}
  if(id==='llama'){const br=t&&abRank(t,'dbreath'),bm=1+(br?br.b:0),L=DBRL+(br?br.L:0),T2=DBRT+(br?br.t:0);
   return '<b>Llamarada</b><small>Cada bola de fuego la carga (unos '+DBRCD+' s disparando). Llena, la siguiente bola lleva llamarada: pasa en línea recta sobre el camino, aplica '+f(DBRN*bm)+' stacks de '+kw('burn','quemadura',src)+' a los que pilla y deja una franja de fuego de '+cas(L)+' que dura '+f(T2)+' s y quema a quien la pisa.</small>';}
+ if(id==='bale')return '<b>Fardo de paja</b><small>La Casa de paja lanza fardos de paja que caen en un área: dañan y ralentizan mucho a todos los que pilla.</small>';
  if(id==='omfam')return '<b>Familias</b><small>Cada torre que absorbe le da la pieza de su familia (Físico, Fuego, Veneno…). Cada Nv admite 2 familias más.</small>';
  if(id==='logk'&&t&&TW[t.type].log){const h=_k0.apply(this,arguments),rows=document.createElement('div');rows.innerHTML=uniqInfo(t,t.type);
   const d=[...rows.querySelectorAll('.row')].find(r=>{const k=r.querySelector('[data-kw]');return k&&k.dataset.kw==='dur';});
@@ -44,6 +45,8 @@ function fuVida(t,src){const T=TW[t.type],u=T.glut?glutU(t):(t.sd&&t.sd[0]);if(!
 const fuIlN=f=>S.list.filter(o=>o!==f&&!o.hero&&TW[o.type]&&!TW[o.type].faro&&faroIn(f,o)>0).length;
 const fuIl=f=>{const n=fuIlN(f);return n?'Ilumina '+n+(n===1?' torre':' torres'):'No ilumina ninguna torre';};
 setInterval(()=>{try{const t=typeof FT!=='undefined'&&FT.t;if(!t||!TW[t.type]||!TW[t.type].faro)return;const e=document.querySelector('#side .fuil,#tip .fuil');if(e){const x=fuIl(t);if(e.textContent!==x)e.textContent=x;}}catch(e){}},300);
+// color de cada familia en la ficha; Físico, el mismo gris del daño físico (Nogal: el de la pieza parecía color carne)
+const fuOmC=k=>k==='fis'?'var(--sp,#8a8f96)':OMF[k].col;
 // DPS teórico del Omega por tipo de daño, con las mismas cuentas que omegaTick (omega.js): ametralladoras (físico), rayo (mágico) y arco (elemental, al primero)
 function omDps(t){const fam=t.fam||[],L=t.lvl||1,st=stats(t),M=[0,1,1.3,1.6,2][L]*(st.dmg/TW.omega.dmg/lvMods('omega',L,null).dmg||1)*(t.xd||1),o={};
  if(fam.includes('fis')){const guns=L>=4?3:L>=2?2:1;o.fis=(L>=3?5.5:4)*guns*3*(L>=4?1.4:1)*M;}
@@ -83,9 +86,11 @@ function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lv
   const ofx=q('.ftfx');if(ofx)ofx.remove();if(fx.length){const c=q('.ftchips');if(c)c.insertAdjacentHTML('afterend',`<div class="ftfx">${fx.join('')}</div>`);}
   const tot=(D.fis||0)+(D.mag||0)+(D.ele||0),dp=q('.ftdps');if(dp){if(tot>0)dp.outerHTML=ftDpsBar(t,tot);else dp.remove();}else if(tot>0){const g=q('.ftchips');if(g)g.insertAdjacentHTML('afterend',ftDpsBar(t,tot));}
   // las familias, en pips del color de cada una, en el orden en que las metiste
-  const mb=q('.ftmech .ftmb');if(mb)mb.outerHTML=`<div class="fupips om">${Array.from({length:omCap(t)},(_,i)=>{const k=fam[i];return k?`<i class="on" style="background:${OMF[k].col}" title=""></i>`:'<i></i>';}).join('')}</div>`;
-  var omFam=(fam.length?`<div class="fuom">${fam.map(k=>`<div class="omf"><span class="omi">${omPc(k)}</span><span><b style="color:color-mix(in srgb,${OMF[k].col} 65%,#2a1d08)">${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small></span></div>`).join('')}</div>`:'<small>Todavía no ha absorbido ninguna torre: solo lanza un pulso muy débil.</small>');}
+  const mb=q('.ftmech .ftmb');if(mb)mb.outerHTML=`<div class="fupips om">${Array.from({length:omCap(t)},(_,i)=>{const k=fam[i];return k?`<i class="on" style="background:${fuOmC(k)}" title=""></i>`:'<i></i>';}).join('')}</div>`;
+  var omFam=(fam.length?`<div class="fuom">${fam.map(k=>`<div class="omf"><span class="omi">${omPc(k)}</span><span><b style="color:${k==='fis'?fuOmC(k):`color-mix(in srgb,${OMF[k].col} 65%,#2a1d08)`}">${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small></span></div>`).join('')}</div>`:'<small>Todavía no ha absorbido ninguna torre: solo lanza un pulso muy débil.</small>');}
  if(T.log){const fx=q('.ftfx');if(fx)fx.insertAdjacentHTML('beforeend',fxPill('push','0,5',src,'Empuje'));}
+ // las tres casas: primero lo que lanzan (fardo, tronco, muro) y después sus efectos (Nogal)
+ if(T.pig&&!T.log&&!T.wall){const fx=q('.ftfx');if(fx)fx.insertAdjacentHTML('afterbegin',fxPill('bale','',src,'Fardo de paja'));else{const c=q('.ftchips');if(c)c.insertAdjacentHTML('afterend',`<div class="ftfx">${fxPill('bale','',src,'Fardo de paja')}</div>`);}}
  // Más detalles propios (sacados de la ficha antigua, que ya tiene las cifras bien)
  const more=[];
  if(T.guild){const o=document.createElement('div');o.innerHTML=uniqInfo(t,t.type);o.querySelectorAll('.usub').forEach(e=>more.push(e.outerHTML));
