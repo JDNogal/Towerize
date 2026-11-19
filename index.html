@@ -957,6 +957,28 @@ body.inmenu.lbsetup canvas#c{filter:none}
 
 /* v334 · filas largas del compendio (p. ej. «Efectos» de Yrsa): el valor pasa a varias líneas en vez de salirse con barra de scroll */
 #comp .bkp .bkg>.row.rw{align-items:flex-start}#comp .bkp .bkg>.row.rw>span:first-child{flex:none;white-space:nowrap}#comp .bkp .bkg>.row.rw>span:last-child{white-space:normal!important;min-width:0;flex:1 1 auto;text-align:right;overflow-wrap:anywhere}
+/* v359 (Nogal, 18-nov): las barras de Opciones, todas del mismo largo: icono y nombre arriba, barra debajo a todo el ancho (cada 1 % mide más y es más fácil de afinar) */
+.orow.otg.osl{display:grid!important;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:6px 10px;max-width:720px}
+.orow.otg.osl:not(:has(.oic)){grid-template-columns:minmax(0,1fr)}
+.orow.otg.osl .osr{grid-column:1/-1;display:flex;align-items:center;gap:12px;width:100%}
+.orow.otg.osl .osr input{flex:1;width:auto!important;min-width:0;height:24px;margin:0}
+.orow.otg.osl .osr output{width:60px;min-width:60px;flex:none;font-weight:700}
+/* v359 · Portada de la pausa (Nogal, 17-18 nov; Mesa «Portada de la pausa»): chips alineados, más aire y lengüetas metidas (D) */
+.lbcv.ing .lbchips{gap:8px;margin:4px 0 26px;align-items:center}
+.lbcv.ing .lbchips span{display:inline-flex;align-items:center;gap:6px;height:26px;box-sizing:border-box;padding:0 11px;line-height:1}
+.lbcv.ing .lbchips span>svg,.lbcv.ing .lbchips span>i:not(.lbsvpor)>svg{width:16px!important;height:16px!important;flex:none;display:block}
+.lbcv.ing .lbchips svg.lbgold{width:20px!important;height:20px!important;margin:-2px -1px}
+.lbcv.ing .lbchips .lbsvpor{width:18px!important;height:18px!important;border-radius:50%!important;overflow:hidden;display:inline-grid!important;place-items:center;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+.lbcv.ing .lbchips .lbsvpor svg{width:18px!important;height:18px!important}
+.lbcv.ing .lbtit{margin-bottom:14px}
+.lbcv.ing .lbembw{margin-bottom:20px}
+.lbcv.ing .lbmain{margin-top:6px}
+/* lengüetas metidas: asoma algo más de la mitad del icono, centrado; al pasar el ratón (o con el teclado) sale entera, el icono sube y aparece el nombre; la de la sección abierta, siempre fuera */
+:root:not([data-skin="holo"]) #comp.lbing .lbribs,:root:not([data-skin="holo"]) #comp.lbing .bkribs{top:46px!important;bottom:46px;justify-content:space-evenly;gap:0!important;z-index:-1!important}
+:root:not([data-skin="holo"]) #comp.lbing .lbribs .bkrib,:root:not([data-skin="holo"]) #comp.lbing .bkribs .bkrib{height:50px!important;transform:translateX(-47%);transition:transform .17s cubic-bezier(.3,.7,.3,1)}
+:root:not([data-skin="holo"]) #comp.lbing .bkrib span{max-height:0;opacity:0;overflow:hidden;margin-top:0!important;transition:max-height .17s,opacity .12s,margin .17s}
+:root:not([data-skin="holo"]) #comp.lbing .bkrib:is(:hover,:focus-visible,.on,.kfoc){transform:none}
+:root:not([data-skin="holo"]) #comp.lbing .bkrib:is(:hover,:focus-visible,.on,.kfoc) span{max-height:14px;opacity:1;margin-top:2px!important}
 /* ---- bocadillo de pergamino (sustituye a la etiqueta del navegador) ---- */
 #ttb{position:fixed;left:0;top:0;z-index:200;pointer-events:none;max-width:260px;padding:5px 11px;border-radius:9px;background:var(--paper);border:1.5px solid var(--trim);color:var(--ink);font:600 12.5px/1.35 Inter,system-ui,sans-serif;box-shadow:0 6px 16px rgba(30,15,5,.4);opacity:0;transform:translateY(3px);transition:opacity .1s,transform .1s;white-space:normal;text-align:center}
 #ttb.on{opacity:1;transform:none}
@@ -2770,6 +2792,22 @@ body.pcpick #panel .pcinfo .pcbf .bbf2 svg{width:18px!important;height:18px!impo
 /* v349 (Mesa fab0g, aprobado): en la tablet, la ventana del evento crece para que quepan las opciones (antes medía lo que la imagen y había que bajar) */
 :root[data-skin="holo"] body.dsk:not(.mfs) #relic .ppap.evp .evrc{contain:none!important;overflow-y:auto!important;max-height:calc(100vh - 290px)!important}
 
+/* v359 (Nogal, 18-nov · opción B de la Mesa): eventos en el móvil, las opciones se desplazan por dentro: se difuminan arriba y abajo y, si hay más debajo, aviso «▾ Más opciones»;
+   el pergamino crece hacia arriba para que la imagen no quede pegada al borde de abajo (los pomos pueden quedar detrás de los botones) */
+:root:not([data-skin="holo"]) #relic .ppap.evp.pgf .evrc.pgdn{-webkit-mask-image:linear-gradient(#000 calc(100% - 26px),transparent);mask-image:linear-gradient(#000 calc(100% - 26px),transparent)}
+:root:not([data-skin="holo"]) #relic .ppap.evp.pgf .evrc.pgup{-webkit-mask-image:linear-gradient(transparent,#000 16px);mask-image:linear-gradient(transparent,#000 16px)}
+:root:not([data-skin="holo"]) #relic .ppap.evp.pgf .evrc.pgup.pgdn{-webkit-mask-image:linear-gradient(transparent,#000 16px,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(transparent,#000 16px,#000 calc(100% - 26px),transparent)}
+:root:not([data-skin="holo"]) #relic .ppap.evp.pgf.pgmore::after{content:"▾ Más opciones";position:absolute;left:var(--pgmx,50%);top:var(--pgmy,80%);transform:translate(-50%,calc(-100% - 8px));z-index:5;font:700 11px Inter,system-ui,sans-serif;color:#5a3a1c;background:#f3e6c6;border:1px solid #8a6a40;border-radius:10px;padding:2px 9px;box-shadow:0 2px 4px rgba(0,0,0,.25);pointer-events:none;white-space:nowrap}
+:root:not([data-skin="holo"]) body.mfs #relic .ppap.evp.pgf{padding-top:40px!important;padding-bottom:52px!important;margin-top:-18px!important}
+
+/* v359 (Nogal, 19-nov): eventos en PC: imagen y debajo la descripción (hueco fijo de 4 líneas, así el pergamino mide siempre lo mismo); las opciones solas a la derecha,
+   con la altura de esa columna y desplazándose por dentro si no caben; texto más grande */
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evl{display:flex;flex-direction:column;align-self:stretch}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evdesc .esec{margin-top:12px}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evdesc .evtx{font-size:15px!important;line-height:1.45!important;height:5.8em;overflow-y:auto;margin:4px 0 0!important}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evrc{contain:size!important;overflow-y:auto!important}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evo b{font-size:16.5px!important}
+:root:not([data-skin="holo"]) body.dsk:not(.mfs) #relic .ppap.evp.evb.pgf .evo small{font-size:14px!important}
 /* v345 · Fabricador de sectores (evento de la era 2): ventana holográfica de 1000×580 que se escala para caber */
 #fabw{position:fixed;inset:0;z-index:60;display:none;background:rgba(4,8,14,.72);backdrop-filter:blur(2px);font-family:'Chakra Petch',Inter,Arial,sans-serif}
 #fabw.on{display:block}
@@ -2931,9 +2969,6 @@ table.lbrkt tr.pk td{background:#e9c46a!important;font-weight:800}
 .ftdn{font-size:11.5px;opacity:.75;margin-top:2px;min-height:1em}
 .ftdps.frozen{opacity:.7;filter:grayscale(1)}
 .ftfx{display:flex;align-items:center;gap:8px;margin:0 0 4px;padding:5px 8px;border-radius:9px;background:color-mix(in srgb,currentColor 5%,transparent);border:1px solid color-mix(in srgb,currentColor 20%,transparent)}
-.ftfxi{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;background:color-mix(in srgb,#fff 70%,transparent);border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 55%,transparent);cursor:help}
-.ftfxi:hover{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc,#c2560e) 40%,transparent)}
-.ftfx small{font-weight:700}
 .ftfold{border-top:1px solid color-mix(in srgb,currentColor 18%,transparent);margin-top:4px}
 .ftfold>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:6px 2px;font-weight:700}
 .ftfold>summary::-webkit-details-marker{display:none}
@@ -2947,6 +2982,45 @@ table.lbrkt tr.pk td{background:#e9c46a!important;font-weight:800}
 
 /* v353 · barras de mecánica dibujadas (ficha_barras.js) */
 .ftmech canvas.fbc{display:block;width:100%;margin-top:5px}
+
+/* v359 · colores de cada estadística (nombre y número) en la ficha de torre y en la del héroe; tonos legibles sobre pergamino (Nogal, 18-nov) */
+.ftc,#hinfo{--sv:#2f8a3c;--sd:#b5302a;--se:#7340b8;--sr:#1d6bb0;--sa:#c0601a;--sp:#6b5a48;--sm:#4b4fc4;--ss:#0f7a6c;--sx:#3a62b8}
+:root[data-skin="holo"] .ftc,:root[data-skin="holo"] #hinfo{--sv:#7bd84a;--sd:#ff6b5a;--se:#c08aff;--sr:#5ab4ff;--sa:#ff9a3c;--sp:#c9b8a0;--sm:#9fa8ff;--ss:#4fd6b8;--sx:#8fb8ff}
+.ftc .kw[data-kw=hhp],.fhhp .fhl>b{color:var(--sv)!important}
+.ftc .kw[data-kw=hdmg],.ftc .kw[data-kw=dps],.ftc .kw[data-kw=dpsr],.ftc .ftchip>b.cd,.ftc .ftdv{color:var(--sd)!important}
+.ftc .kw[data-kw=hcd],.ftc .kw[data-kw=cool],.ftc .ftchip>b.cr{color:var(--se)!important}
+.ftc .kw[data-kw=hrng],.ftc .kw[data-kw=rng],.ftc .ftchip>b.cg{color:var(--sr)!important}
+.ftc .kw[data-kw=area],.ftc .ftchip>b.ca{color:var(--sa)!important}
+.ftc .kw[data-kw=aphys],.ftc .ftchip>b.cph{color:var(--sp)!important}
+.ftc .kw[data-kw=umr],.ftc .ftchip>b.cmg{color:var(--sm)!important}
+.ftc .kw[data-kw=espd],.ftc .ftchip>b.cs{color:var(--ss)!important}
+.ftc .kw[data-kw=hxp],.fhxp .fhl>b{color:var(--sx)!important}
+/* efectos: icono y valor en una sola pastilla (torres y héroe); el nombre, en el bocadillo */
+.fxpill{display:inline-flex!important;align-items:center;gap:5px;width:auto!important;height:30px!important;margin:0!important;box-sizing:border-box;padding:0 10px 0 6px;border-radius:9px;background:color-mix(in srgb,#fff 70%,transparent);border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 55%,transparent);cursor:help;text-decoration:none!important;color:var(--ink,#2a2118)!important;font-weight:700}
+.fxpill::before{display:none!important}.fxpill:hover{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc,#c2560e) 40%,transparent)}
+.fxpill svg{width:20px;height:20px;flex:none;display:block}.fxpill b{font-size:13px;line-height:1}
+:root[data-skin="holo"] .fxpill{background:color-mix(in srgb,#fff 10%,transparent);color:#e8f4ff!important}
+.ftfx{flex-wrap:wrap;gap:6px}
+.ftgap{height:8px}
+/* ficha del héroe (ficha_heroe.js) */
+#hinfo{width:340px;font-size:14px}
+.fhttl{display:flex;align-items:center;gap:8px}.fhttl>b{font:700 18px Georgia,serif}.fhpor{font-size:22px;flex:none}
+.fhlv{font-size:13px;font-weight:600}.fhrez{margin-left:auto;font-weight:700;font-size:13px}.fhrez .kw{font-weight:700}
+.fhbox{margin:4px 0 6px;padding:6px 9px;border-radius:9px;background:color-mix(in srgb,currentColor 5%,transparent);border:1px solid color-mix(in srgb,currentColor 20%,transparent)}
+.fhl{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px}.fhl>b{font-variant-numeric:tabular-nums;font-size:15px}
+.fhhp .ftbar{height:12px}.fhhp .ftbar i{background:linear-gradient(90deg,#3fae4a,#7bd84a)}.fhhp .ftbar i.low{background:linear-gradient(90deg,#d8452f,#f0a040)}
+.fhxp .ftbar i{background:linear-gradient(90deg,#5a8adf,#8fb8ff)}
+.fhdv{color:#a0402a;font-weight:700}:root[data-skin="holo"] .fhdv{color:#ff8a7a}
+.fhseg{display:flex;gap:2px;margin-top:5px;height:12px}.fhseg i{flex:1;border-radius:3px;background:color-mix(in srgb,currentColor 14%,transparent)}.fhseg i.on{background:linear-gradient(180deg,#8fb8ff,#5a7adf)}
+.fhpas{margin:2px 0;padding:4px 6px;border-radius:8px;background:color-mix(in srgb,currentColor 4%,transparent)}.fhpas summary{cursor:pointer;display:flex;gap:6px;align-items:center}
+.fhpas.no{display:flex;gap:6px;align-items:center}.fhpas.no b{color:#000}:root[data-skin="holo"] .fhpas.no b{color:#e8f4ff}
+.fhpn{font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;background:#a0724a;color:#fff}.fhpt{font-size:12.5px;margin:4px 0 2px;line-height:1.4}
+.fhmore{margin-top:6px}
+.bksht .fhlv,.bksht .fhrez{margin-left:8px;font-size:13px}
+/* v359: el aviso de abajo, cuando solo hay aviso, es pequeño y centrado; en rojo si pulsaste donde no vale */
+body.dsk #panel:has(#ui:empty){min-width:0;min-height:0;padding:7px 16px}
+#panel:has(#ui:empty) #msg{text-align:center;font-size:13px;margin:0;min-height:0}
+#msg.err{color:#c0392b}:root[data-skin="holo"] #msg.err{color:#ff7a6a}
 /* v354 · fila de arriba en PC: ☰, F3, X y FPS a la misma altura; «Reintentar» abajo en el centro */
 body.hud4 #mtl{flex-direction:row;align-items:flex-start;gap:8px}
 body.hud4 #mtl .gap{display:none}
@@ -3072,7 +3146,7 @@ body.mfs.pcpick #ui .prow .cardw>.rbtn{position:absolute;left:66px;top:-6px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v358</div>
+<div id="ver">Towerize v359</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -4086,7 +4160,7 @@ const NUKL={era:'Eras',tw:'Torres',hr:'Héroes',rl:'Reliquias',ev:'Eventos',ux:'
 function nuDetail(u){if(!u)return '';
  if(u.k==='tw'&&u.id&&TW[u.id]){const T=TW[u.id];return bkSheet(`<span class="bkbic" style="background:${T.col}">${icOf(T)}</span>`,(T.uniq?uniqGlance(u.id,1):shopInfo(u.id,1)).replace(/<b>[^\p{L}<\s]+ /u,'<b>'))+'<p class="bknote">A partir de ahora puede salirte en las ofertas de torres de cada partida.</p>';}
  if(u.k==='rl'&&u.id&&RELIC[u.id]){const r=RELIC[u.id];return bkSheet(`<span class="bkbic" style="background:${r.col}">${r.ic}</span>`,relicInfo(u.id,1))+'<p class="bknote">A partir de ahora puede salirte en los cofres.</p>';}
- if(u.k==='hr'&&u.id&&HEROES[u.id]){const D=HEROES[u.id];return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(u.id)}</span>`,heroInfo(u.id,1).replace(/<b>[^\p{L}<\s]+ /u,'<b>'))+'<p class="bknote">Ya puedes elegirlo al empezar una partida.</p>';}
+ if(u.k==='hr'&&u.id&&HEROES[u.id]){const D=HEROES[u.id];return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(u.id)}</span>`,heroInfo(u.id,1))+'<p class="bknote">Ya puedes elegirlo al empezar una partida.</p>';}
  const why={ev:'A partir de ahora puede salirte en el mapa, en los huecos de evento.',era:'Se elige al empezar una partida, en el paso «Era».',ux:'Ya está disponible en el menú.',pal:'Se elige en Opciones › Personalización.',core:'Se elige en Opciones › Personalización.',dec:'Se activa o desactiva en Opciones › Personalización.',frame:'Se pone solo en el retrato del héroe.'}[u.k]||'';
  return `<div class="bksh"><span class="bkbic">${u.ic}</span><div class="ttl bksht"><b>${u.n}</b>${u.x?`<br><small>${u.x}</small>`:''}</div></div><p class="bknote">${why}</p>`;}
 function renderUnlocks(){if(!NEWU.length)return;const list=NEWU.slice();NEWU=[];saveNewu();
@@ -4489,27 +4563,79 @@ function renderRelicPick(){
   '</div>'+diceRr('rl')+'<small>Pulsa una reliquia de la fila superior para usar su activo (pierdes el pasivo un rato de oleada).</small>'+wcompBtn('rl');
 }
 function toggleOpts(v){const on=v===undefined?!(LB.open&&!LB.cover&&OP.open):v;if(on){OP.keepS=0;lbOpen('op');}else lbClose();}
-function heroInfo(id,quiet){
- const D=HEROES[id],H=!quiet&&S.hero&&S.hero.id===id?S.hero:null,l=H?H.lvl:1,x=hsAt(id,l),x10=hsAt(id,HLMAX),src='hero:'+id,R2=RELIC[D.relic],q=H?H.s:null;
- const arm=x.ap+(H?RELARM()+auraAP(H.s):0),amr=H?auraAP(H.s):0;
- return `<div class="ttl"><b>${D.ic} ${D.n}</b> · ${kst('hlv','Nv '+l,src)}</div>`+
-  R('chp',kst('hhp','Vida',src),H&&q?Math.round(Math.max(0,q.hp))+' / '+Math.round(q.max):Math.round(x.hp))+
-  (arm>0?R('cph',kst('aphys','Armadura',src),armTxt(Math.round(arm*10)/10)):'')+(amr>0?R('cmg',kst('umr','Resistencia mágica',src),armTxt(amr)):'')+
-  R('cd',kst('hdmg','Daño',src)+(D.ranged?' ('+kst('hmel','Melee',src)+')':''),f(x.dmg)+(D.ranged?` (${f(x.dmg*HMELEE)})`:''))+R(DT[D.dt||'phys'].cls,kst('dtype','Tipo de daño',src),DT[D.dt||'phys'].n)+(D.area?R('ca',kst('harea','Área',src),cas(D.area)+' de radio'):'')+R('ccl',kst('hcd','Enfriamiento',src),f(x.cd)+' s')+objRow(!D.ranged,src)+
-  (D.ranged?R('cg',kst('hrng','Rango',src),cas(D.base.range)):'')+
-  (HFX[id]?R('cf','Efectos',HFX[id](src)):'')+R('',kst('hblk','Corpulencia',src),D.w>1?'Bloquea hasta '+D.w:'1')+
-  R('cg',kst('espd','Velocidad',src),cas(D.spd)+'/s')+`<small style="margin:0 0 2px">En combate se mueve un ${Math.round((1-COMBM)*100)}% más lento.</small>`+
-  R('cr',kst('hrez','Reaparición',src),x.rez+' s')+
-  (H?R('cf',kst('hxp','Experiencia',src),H.lvl>=HLMAX?'Nivel máximo':Math.floor(H.xp)+' / '+xpNeed(H.lvl+1)):quiet===1?R('cf',kst('hxp','Experiencia por nivel',src),xpNeed(2)+' → '+xpNeed(10)):'')+
-  (H&&q&&q.hp<=0?`<small class="cr">Caído: vuelve en ${Math.ceil(q.rt)} s.</small>`:'')+
-  (quiet?'':`<div class="tgt"><small>Pulsa su icono y luego una casilla del camino para recolocarlo.</small></div>`)+
-  (quiet?'':`<div style="margin-top:6px"><span class="cf">${kst('hrel','Reliquia inicial',src)}:</span> ${kw('rl_'+D.relic,R2.ic+' '+R2.n,src,'st')}</div>`)+
-  `<small>Nv ${HLMAX}: ${Math.round(x10.hp)} de vida, ${f(x10.dmg)} de daño, ${f(x10.ap)} de armadura.</small>`;
-}
+// heroInfo: ficha del héroe, en ficha_heroe.js (v359)
 function enemyInfo(k){
  const E=ET[k],src='en:'+k,hp=r=>Math.round(E.hf&&!E.evn?E.hf*hpR(r):HP0*HPOLD(r)*E.hp);
  return `<div class="ttl"><b><i style="background:${E.col};border-radius:50%"></i>${E.n}</b></div>`+(E.hf&&!E.evn?R('chp',kst('ehp','Vida',src),hp(1))+(E.fly?R('',kst('fly','Volador',src),'Sí'):''):(E.call?'':R('chp',kst('ehp','Vida (ronda 1)',src),hp(1)))+R('chp',kst('ehp','Vida (ronda '+(E.call?30:ROUNDS)+')',src),hp(E.call?30:ROUNDS)))+R('cvl',kst('espd','Velocidad',src),f(E.sp/K)+'/s')+R('cd',kst('edmg','Daño al núcleo',src),(['boss','colossus','bob'].includes(k)||E.story)?20:E.dmg)+R('cd',kst('eud','Daño a unidades',src),E.ud)+R('ccl',kst('eac','Enfriamiento',src),f(E.ac)+' s')+R('cg',kst('erg','Rango',src),E.rg==='ranged'?'A distancia':'Melee')+R(DT[E.dt||'phys'].cls,kst('dtype','Tipo de daño',src),kw(DT[E.dt||'phys'].kw,DT[E.dt||'phys'].n,src,'st'))+R('',kst('eblk','Corpulencia',src),E.need)+(E.ap?R('cph',kst('aphys','Armadura',src),armTxt(E.ap)):'')+(E.am?R('cmg',kst('amagic','Resistencia mágica',src),armTxt(E.am)):'')+(()=>{const ef=[];if(E.call)ef.push(kw('call','Vástagos',src));if(E.aura)ef.push(kw('aura','Aura',src)+' +'+E.aura.v+(E.aura.m?' de resistencia mágica · ':' de armadura · ')+RGV(f(E.aura.r/K)));if(E.howl)ef.push(kw('howl','Aullido',src));if(E.blow)ef.push(kw('blow','Soplido',src));if(E.breath)ef.push(kw('breath','Aliento de fuego',src));if(E.pierce)ef.push(kw('pierce','Perforante',src));if(E.dodge)ef.push(kw('dodge','Escurridizo',src));if(E.steal)ef.push(kw('steal','Saqueo',src));if(E.curse)ef.push(kw('curse','Maldición',src));if(E.charm)ef.push(kw('charm','Embeleso',src));if(E.upois)ef.push(kw('poison','Veneno',src)+' a tus unidades · '+f(E.upois)+' por golpe');if(E.regen)ef.push(kw('regen','Sangre de troll',src));if(E.shield)ef.push(kw('shield','Escudo frontal',src));if(E.banner)ef.push(kw('banner','Estandarte',src));if(E.tele)ef.push(kw('tele','Teletransporte',src));if(E.camo)ef.push(kw('camo','Camuflaje',src));if(E.adapt)ef.push(kw('adapt','Adaptación',src));if(E.burst)ef.push(kw('burst','Puesta',src));if(E.launch)ef.push(kw('launch','Hangar',src));if(E.jam)ef.push(kw('jam','Interferencia',src));if(E.splashU)ef.push(kw('arcsh','Disparo en arco',src));if(E.fly&&E.rg==='ranged')ef.push(kw('airatk','Ataque aéreo',src));if(E.sk&&typeof ESK!=='undefined')ef.push(kw(E.sk,ESK[E.sk].n,src));if(E.eheal)ef.push(kw('eheal','Curación tribal',src));if(E.rift)ef.push(kw('rift','Portal del abismo',src));if(E.penta)ef.push(kw('penta','Pentagrama',src));if(E.wings)ef.push(kw('wings','Alas',src));if(E.shell)ef.push(kw('shell','Caparazón',src));if(E.pulse)ef.push(kw('pulse','Pulso',src));if(E.core2)ef.push(kw('core2','Núcleo',src));if(E.abregen)ef.push(kw('regen','Sangre de troll',src));if(E.stomp)ef.push(kw('stomp','Pisotón',src));if(E.line)ef.push(kw('line','Cadena de montaje',src));if(E.throne)ef.push(kw('throne','Trono',src));if(E.riches)ef.push(kw('riches','Lluvia de riquezas',src));if(E.scepter)ef.push(kw('scepter','Cetrazo real',src));if(E.gens)ef.push(kw('gens','Escudo de generadores',src));if(E.anchor)ef.push(kw('anchor','Anclado',src));if(k==='boss'||k==='colossus'||E.story)ef.push(kw('bres','Resistencia a control',src)+' '+Math.round(BOSSRES*100)+'%');return ef.length?R('cf',kst('eeff','Efectos',src),ef.join('<br>')):'';})()+R('gd',kst('egold','Oro por baja',src),E.gold+' 🪙')+R('cf',kst('exv','Experiencia',src),E.xp);
 }
+// ==================== v359 · Ficha del héroe nueva (Nogal, 17 y 18-nov; maqueta en la Mesa, «Ficha del héroe nueva») ====================
+// Mismas piezas que la ficha de torre (ftChip, ftFold, ftdps): nombre con retrato pequeño y Nv, reaparición arriba a la derecha,
+// descripción corta, vida en barra ancha (con el héroe caído se parte en trozos que se rellenan cada segundo), Daño · Enfriamiento ·
+// su tercera tarjeta, efectos, experiencia y DPS real. En el mapa, debajo, las Habilidades pasivas (Nv 4 y Nv 8; sin alcanzar, «???»).
+// Las activas solo salen en el compendio y al elegir héroe (en el mapa ya tienen su retrato junto al del héroe).
+// una o dos líneas por héroe, como mucho
+var HDESC1={reinhart:'Caballero cuerpo a cuerpo: aguanta en primera línea y frena a varios enemigos a la vez.',
+ sylvana:'Arquera élfica: dispara rápido y desde lejos.',radagast:'Mago enano: golpes lentos de daño mágico a distancia.',
+ yrsa:'Guerrera cuerpo a cuerpo que alterna golpes de fuego y de hielo.',korr:'Luchador cuerpo a cuerpo de daño mágico, muy duro contra la magia.',
+ ferro:'Robot que dispara daño elemental a distancia.',kai:'Asesina muy rápida: mucho daño a un solo objetivo, poco aguante.',vega:'Tiradora de largo alcance con su dron.'};
+// la tercera tarjeta de cada héroe (lo que más lo distingue); sin dato: Rango los de distancia y Armadura los de cuerpo a cuerpo
+var HST3={reinhart:'ap',yrsa:'ap',korr:'mr',kai:'spd',sylvana:'rng',radagast:'rng',ferro:'rng',vega:'rng'};
+// efectos del héroe: icono y valor en la misma pastilla; el nombre, en el bocadillo de su palabra clave
+var HFXP={yrsa:[['burn','×2'],['chill','×2']],korr:[['tmagic',''],['umr','30'],['mrbrk','−5']],radagast:[['tmagic',''],['mrbrk','−5']],ferro:[['telem','']]};
+function fhPill(ic,v,src){return fxPill(ic,v,src);}
+// mismas piezas que la ficha de torre, pero como funciones (la ficha del héroe se pinta ya al cargar el libro, antes de ficha_torre.js)
+function fhChip(cls,lab,val){return `<div class="ftchip"><span>${lab}</span><b class="${cls}">${val}</b></div>`;}
+var FHOPEN={hpas:true};
+function fhFold(id,sum,body){return `<details class="ftfold" data-fh="${id}"${FHOPEN[id]?' open':''}><summary>${sum}</summary><div class="ftin">${body}</div></details>`;}
+document.addEventListener('toggle',ev=>{const d=ev.target;if(d&&d.dataset&&d.dataset.fh&&d.closest('#hinfo'))FHOPEN[d.dataset.fh]=d.open;},true);
+function fhThird(id,x,arm,src){const D=HEROES[id],k=HST3[id]||(D.ranged?'rng':'ap');
+ if(k==='mr')return ['cmg',kst('umr','Resist. mág.',src),D.mr||0];
+ if(k==='spd')return ['cs',kst('espd','Velocidad',src),cas(D.spd)+'/s'];
+ if(k==='rng')return ['cg',kst('hrng','Rango',src),cas(D.base.range)];
+ return ['cph',kst('aphys','Armadura',src),armTxt(Math.round(arm*10)/10)];}
+function fhSeg(rez,left){const n=Math.max(1,Math.min(15,Math.round(rez))),done=Math.max(0,Math.min(n,Math.round((rez-left)/rez*n)));
+ return `<div class="fhseg">${Array.from({length:n},(_,i)=>`<i class="${i<done?'on':''}"></i>`).join('')}</div>`;}
+function heroInfo(id,quiet){
+ const D=HEROES[id],H=!quiet&&S&&S.hero&&S.hero.id===id?S.hero:null,l=H?H.lvl:1,x=hsAt(id,l),x10=hsAt(id,HLMAX),src='hero:'+id,q=H?H.s:null;
+ const arm=x.ap+(H?RELARM()+auraAP(H.s):0),amr=H?auraAP(H.s):0,dead=!!(H&&q&&q.hp<=0),left=dead?Math.ceil(q.rt):0,rez=x.rez;
+ const k3=fhThird(id,x,arm,src),dt=DT[D.dt||'phys'];
+ let h=`<div class="${quiet===1?'ttl':'ttl fhttl'}">${quiet===1?'':`<span class="hpsm fhpor">${portrait(id,1)}</span>`}<b>${D.n}</b><span class="fhlv">${kst('hlv','Nv '+l,src)}</span><span class="fhrez">${kw('hrez',(dead?left:rez)+' s',src)}</span></div>`;
+ h+=`<div class="ftc fhc">`+(HDESC1[id]?`<div class="ftdesc">${HDESC1[id]}</div>`:'');
+ // vida: barra ancha; caído, cuenta atrás en trozos
+ const max=Math.round(H&&q?q.max:x.hp),hp=Math.round(H&&q?Math.max(0,q.hp):x.hp);
+ h+=dead?`<div class="fhbox fhhp dead"><div class="fhl"><span>${kst('hhp','Vida',src)}</span><span class="fhdv">Caído · vuelve en ${left} s</span></div>${fhSeg(rez,q.rt)}</div>`
+  :`<div class="fhbox fhhp"><div class="fhl"><span>${kst('hhp','Vida',src)}</span><b>${hp} / ${max}</b></div><div class="ftbar"><i style="width:${max?hp/max*100:0}%"${hp/max<.35?' class="low"':''}></i></div></div>`;
+ h+=`<div class="ftchips n3">${fhChip('cd',kst('hdmg','Daño',src),f(x.dmg))}${fhChip('cr',kst('hcd','Enfriam.',src),f(x.cd)+' s')}${fhChip(k3[0],k3[1],k3[2])}</div>`;
+ const fx=(HFXP[id]||[]).map(([ic,v])=>fhPill(ic,v,src)).join('');if(fx)h+=`<div class="ftfx fhfx">${fx}</div>`;
+ h+='<div class="ftgap"></div>';
+ if(H){const top=H.lvl>=HLMAX,need=top?1:xpNeed(H.lvl+1),xp=top?need:Math.floor(H.xp);
+  h+=`<div class="fhbox fhxp"><div class="fhl"><span>${kst('hxp','Experiencia',src)}</span><b>${top?'Nivel máximo':xp+' / '+need}</b></div><div class="ftbar"><i style="width:${Math.min(100,xp/need*100)}%"></i></div></div>`;
+  const theo=x.dmg/x.cd;h+=`<div class="ftdps fhdps" data-theo="${theo}"><div class="ftdl"><span>${kst('dpsr','DPS real',src)}</span><span class="ftdv">—</span></div><div class="ftbar"><i></i></div><div class="ftdn"></div></div>`;
+  // habilidades pasivas (las activas tienen su retrato junto al del héroe)
+  const A=HAB[id]||{},pas=(a,n)=>!a?'':l>=n?`<details class="fhpas" open><summary><span class="fhpn">Nv ${n}</span><b>${a.ic} ${a.n}</b></summary><div class="fhpt">${a.t()}</div></details>`:`<div class="fhpas no"><span class="fhpn">Nv ${n}</span><b>???</b></div>`;
+  h+=fhFold('hpas','<span>Habilidades pasivas</span>',pas(A.p4,4)+pas(A.p8,8));}
+ // más detalles: el resto de datos
+ const k3k=HST3[id]||(D.ranged?'rng':'ap');
+ let more=(k3k!=='ap'&&arm>0?R('cph',kst('aphys','Armadura',src),armTxt(Math.round(arm*10)/10)):'')+(k3k!=='mr'&&(amr>0||D.mr)?R('cmg',kst('umr','Resistencia mágica',src),armTxt(amr+(D.mr||0))):'')+
+  (D.ranged?R('cd',kst('hmel','Daño cuerpo a cuerpo',src),f(x.dmg*HMELEE)):'')+R(dt.cls,kst('dtype','Tipo de daño',src),dt.n)+(D.area?R('ca',kst('harea','Área',src),cas(D.area)+' de radio'):'')+objRow(!D.ranged,src)+
+  (D.ranged&&k3k!=='rng'?R('cg',kst('hrng','Rango',src),cas(D.base.range)):'')+(HFX[id]?R('cf','Efectos',HFX[id](src)):'')+R('',kst('hblk','Corpulencia',src),D.w>1?'Bloquea hasta '+D.w:'1')+
+  (k3k!=='spd'?R('cs',kst('espd','Velocidad',src),cas(D.spd)+'/s'):'')+`<small style="margin:0 0 2px">En combate se mueve un ${Math.round((1-COMBM)*100)}% más lento.</small>`+
+  (!H&&quiet===1?R('cf',kst('hxp','Experiencia por nivel',src),xpNeed(2)+' → '+xpNeed(10)):'')+
+  `<small>Nv ${HLMAX}: ${Math.round(x10.hp)} de vida, ${f(x10.dmg)} de daño, ${f(x10.ap)} de armadura.</small>`;
+ if(!quiet)more+=`<div class="tgt"><small>Pulsa su icono y luego una casilla del camino para recolocarlo.</small></div>`;
+ h+=quiet?`<div class="fhmore">${more}</div>`:fhFold('hmore','<span>Más detalles</span>',more);
+ return h+'</div>';}
+// DPS real del héroe: igual que el de las torres (ventana de 3 s en oleada; entre oleadas, la media de la última, en gris)
+var HRD={s:[],d0:null,t0:0,last:null,ph:null};
+function fhSample(){const H=S&&S.hero;if(!H||!H.pt)return;const now=S.wt||0,wave=S.phase==='wave',d=H.pt.dmgT||0;
+ if(wave&&HRD.ph!=='wave'){HRD.d0=d;HRD.t0=now;HRD.s=[];}
+ if(!wave&&HRD.ph==='wave'&&HRD.d0!=null){const dt=now-HRD.t0;HRD.last=dt>.5?(d-HRD.d0)/dt:null;}
+ HRD.ph=S.phase;if(!wave)return;HRD.s.push([now,d]);while(HRD.s.length>2&&now-HRD.s[1][0]>=FTWIN)HRD.s.shift();}
+function fhReal(){if(S.phase!=='wave')return HRD.last==null?null:{v:HRD.last,frozen:1};const s=HRD.s;if(s.length<2)return {v:0,warm:1};const a=s[0],b=s[s.length-1],dt=b[0]-a[0];return {v:dt>0?(b[1]-a[1])/dt:0,warm:dt<FTWIN*.6};}
+setInterval(()=>{try{if(!S)return;fhSample();const dp=document.querySelector('#hinfo .ftdps');if(!dp)return;const H=S.hero,theo=+dp.dataset.theo,r=H&&H.s.hp>0?fhReal():null,bi=dp.querySelector('.ftbar i'),dv=dp.querySelector('.ftdv'),dn=dp.querySelector('.ftdn');
+ let pc=0,v='—',n='';if(r){pc=Math.round(r.v/theo*100);v=f(r.v);n=r.frozen?'Media de la última oleada · '+pc+'% del teórico':(r.warm?'Midiendo…':pc+'% de su DPS teórico ('+f(theo)+')');}
+ else n=H&&H.s.hp<=0?'Caído':S.phase==='wave'?'':'Se mide durante las oleadas';
+ dp.classList.toggle('frozen',!r||!!r.frozen);dp.classList.toggle('over',pc>100);bi.style.width=Math.min(100,pc)+'%';if(dv.textContent!==v)dv.textContent=v;if(dn.textContent!==n)dn.textContent=n;}catch(e){}},200);
 // Filtros del compendio por pestaña: key, etiqueta (keyword), opciones y test(id,valor). Añadir un filtro = una entrada.
 const CFILTERS={tw:[{key:'dt',label:'Tipo de daño',kw:'dtype',opts:[...Object.keys(DT).map(k=>[k,DT[k].n,DT[k].cls]),['sup','Apoyo','']],test:(id,v)=>v==='sup'?!!TW[id].bufo:TW[id].dt===v&&!TW[id].bufo}],
  en:[{key:'erg',label:'Ataque',kw:'erg',opts:[['melee','Cuerpo a cuerpo',''],['ranged','A distancia','']],test:(id,v)=>ET[id].rg===v},{key:'eorg',label:'Origen',kw:'eorg',opts:[['n','Normales',''],['e','De evento','']],test:(id,v)=>(v==='e')===!!ET[id].evn}]};
@@ -4731,7 +4857,7 @@ function bkDetail(t,id){
   LVT_NOSPEC=1;let si;try{si=shopInfo(id,1);}finally{LVT_NOSPEC=0;}
   return bkDescTop(bkSheet(bi,si.replace(/<\/b> · [^<]*<br>/,'</b><br>')),twDescHtml(id))+bkPrevBtn('cprev',id)+bkSpecs(id);}
  if(t==='hr'){const D=HEROES[id];if(!D)return'';if(D.lockTxt&&!UNLOCK_ALL)return `<div class="bkun bkhun"><span class="bkpor lk">${portrait(id,0,1)}</span><h4>???</h4>${heroLockBox(id)}</div>`;
-  return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`,heroInfo(id,1).replace(/<b>[^<]*? /,'<b>'))+bkPrevBtn('chprev',id)+(D.d?'<div class="ddesc">'+D.d+'</div>':'')+`<div class="esec" style="margin-top:12px">Reliquia inicial</div><div class="ce bkce bkg">${relicInfo(D.relic,1)}</div><div class="ce bkce">${heroAbHtml(id)}</div>`;}
+  return bkSheet(`<span class="bkpor" style="background:${D.col}">${portrait(id)}</span>`,heroInfo(id,1))+bkPrevBtn('chprev',id)+(D.d?'<div class="ddesc">'+D.d+'</div>':'')+`<div class="esec" style="margin-top:12px">Reliquia inicial</div><div class="ce bkce bkg">${relicInfo(D.relic,1)}</div><div class="ce bkce">${heroAbHtml(id)}</div>`;}
  if(t==='pc'){const i=+id,o=PIECES[i];if(!o)return'';if(!seen('pc',o.n))return sh(icU('m_c_pc','🧩'),'Aún no descubierta.');
   return `<div class="ce bkce"><div class="ttl">${(SOLARES[o.n]||[]).length>1?`<button class="stbtn lvbtn" data-a="cpcv" data-v="${i}" title="Ver la otra disposición de solares">V${((CP.pcv||{})[i]||0)+1}</button>`:''}<b>${o.n}</b> · ${opens(o.p)} salidas</div><canvas width="168" height="168" data-pi="${i}" style="margin:8px auto"></canvas><small>Solares en partida: <b>${SOLN[o.n]||'—'}</b></small><small>Las piezas pueden salir giradas, con casillas especiales y con otra decoración. Solo se construye en los solares.</small></div>`;}
  if(t==='bf'){if(!seen('bf',id))return sh('✨','Aún no descubierta.');return `<div class="fbar"><button class="${CP.sup[id]?'on':''}" data-a="csup" data-v="${id}">${CP.sup[id]?'★':'☆'} Versión super</button></div><div class="ce bkce">${typeof bfTileSvg==='function'?`<div class="bftbig">${bfTileSvg(CP.sup[id]?id+'+':id,null,null,88)}</div>`:''}${buffInfo(CP.sup[id]?id+'+':id,1)}</div>`;}
@@ -5689,7 +5815,7 @@ function tutEnd(){const clean=TUTR===0,perfect=clean&&!(S.hpEn>0);try{localStora
 function heroCard(){let el=$('hinfo');const H=S&&S.hero,on=!!(H&&S.aim==='hero'&&!RL.open&&!LB.open&&!document.body.classList.contains('inmenu'));
  if(!el){if(!on)return;el=document.createElement('div');el.id='hinfo';el.className='tipc';document.body.appendChild(el);}
  if(!on){el.classList.remove('on');el._sg='';return;}
- const sg=H.id+'|'+H.lvl+'|'+Math.round(H.s.hp)+'|'+Math.floor(H.xp);if(el._sg!==sg){el._sg=sg;el.innerHTML=heroInfo(H.id).replace(/<div class="tgt">[\s\S]*?<\/div>/,'')+heroAbHtml(H.id,H.lvl);}
+ const sg=H.id+'|'+H.lvl+'|'+Math.round(H.s.hp)+'|'+Math.floor(H.xp)+'|'+(H.s.hp<=0?Math.ceil(H.s.rt):0);if(el._sg!==sg){el._sg=sg;el.innerHTML=heroInfo(H.id).replace(/<div class="tgt">[\s\S]*?<\/div>/,'');}
  el.classList.add('on');const p=document.querySelector('#mbr .hpan');const r=p?p.getBoundingClientRect():{top:innerHeight-100,right:innerWidth-8};
  const h=el.offsetHeight;el.style.right=Math.max(8,innerWidth-r.right)+'px';el.style.top=Math.max(8,r.top-h-10)+'px';}
 // ==================== AYUDA, ELECCIÓN INICIAL Y TUTORIAL RÁPIDO ====================
@@ -5925,8 +6051,10 @@ let EVLAY='b';
 function evScroll(left,right,res,ttl){return `<div class="pscr evscr"><div class="ppap evp ev${EVLAY}${res?' evrsl':''}">${ttl?`<div class="evtt">${ttl}</div>`:''}<div class="evl">${left}</div><div class="evrc">${right}</div></div></div>`;}
 function openEvent(id,bk){const E=EVENTS[id];if(!E)return;see('ev',id);achieve('event');EVK=bk;RL.ev=id;closePrim();RL.open=true;const el=$('relic');el.classList.add('open');el.scrollTop=0;
  const img=evImg(id),B=EVLAY==='b',opts=`<div class="evopts">`+E.opts.map((o,i)=>optHtml(id,o,i,true)).join('')+'</div>';
- el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?'':`<p>${E.txt}</p>`}`,
-  B?`${evBanner()}<div class="esec">Evento</div><p class="evtx">${E.txt}</p><div class="esec">Opciones</div>${opts}`:`${evBanner()}${opts}<small class="evps">Evento · el juego está en pausa.</small>`,
+ /* v359 (Nogal, 19-nov): en PC (pergamino), la descripción va debajo de la imagen con hueco fijo para 4 líneas y las opciones solas a la derecha */
+ const dl=B&&!document.body.classList.contains('mfs')&&document.documentElement.dataset.skin!=='holo',desc=`<div class="esec">Evento</div><p class="evtx">${E.txt}</p>`;
+ el.innerHTML=evScroll(`${img?`<div class="evimg">${img}</div>`:''}${B?(dl?`<div class="evdesc">${desc}</div>`:''):`<p>${E.txt}</p>`}`,
+  B?`${evBanner()}${dl?'':desc}<div class="esec">Opciones</div>${opts}`:`${evBanner()}${opts}<small class="evps">Evento · el juego está en pausa.</small>`,
   0,`<div class="evhead big">${img?'':`<span class="evic">${E.ic}</span>`}<b>${E.n}</b></div>`)+wcompBtn('ev');}
 function chooseEvent(i){const id=RL.ev,E=EVENTS[id],o=E&&E.opts[i];if(!o||(o.req&&o.req()))return;const keys=o.run()||[];remember(id,i,keys);
  const img=evImg(id,i,keys),tale=evRes(id,i,keys),B=EVLAY==='b';
@@ -6596,7 +6724,7 @@ function quickFlag(t){if(!t||!S.list.includes(t)||!(S.phase==='build'||S.phase==
  try{tmClose();}catch(e){}S.selT=null;
  if(TW[t.type].faro){const cd=S.phase==='wave'?((t.lzcd||[0,0])[0]||0):0;if(cd>0){errBubble('La luz se podrá mover en '+Math.ceil(cd)+' s.');return true;}S.aim='faroz';S.flzSel={id:t.id,i:0};S.msg='Elige dónde proyectar la luz del Faro (Esc para cancelar).';renderRelics();ui();return true;}
  if(tmHas(t,'flag')){startFlag(t);return true;}return false;}
-function startFlag(t){/* casas de los cerditos en Nv 4: el cerdito se mueve como un héroe, por todo el mapa (junto a los demás) */if(TW[t.type]&&TW[t.type].pig&&t.pigT&&pigsOn()){closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino a la que mover a los cerditos (Esc o el mismo botón para cancelar).';renderRelics();ui();return;}
+function startFlag(t){/* casas de los cerditos en Nv 4: el cerdito se mueve como un héroe, por todo el mapa (junto a los demás) */if(TW[t.type]&&TW[t.type].pig&&t.pigT&&pigsOn()){closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino para los cerditos.';renderRelics();ui();return;}
  closePrim();S.aim='flag';S.aimT=t;S.msg='Elige una casilla del camino dentro del rango. Haz clic fuera del círculo para cancelar.';renderRelics();ui();}
 // ---- oleadas ----
 // Reintentar: al empezar la oleada se guarda una copia de la partida; reintentar vuelve a ella (fase de construcción) y gasta una carga
@@ -7681,11 +7809,12 @@ function openKw(a,pl){
  closeKS(pl);
  const d=document.createElement('div');d.className='kpanel tipc';d.dataset.level=pl+1;d.innerHTML=kwHtml(a.dataset.kw,a.dataset.src);d.dataset.kself=a.dataset.kw||'';if(a.closest('#comp')||a.closest('.kpanel.inbk'))d.classList.add('inbk');d.style.setProperty('--kc',getComputedStyle(a).color);
  document.body.appendChild(d);
- const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth,ht=d.offsetHeight;
+ /* v359 (Nogal, 19-nov): en los menús (el libro) los bocadillos crecen con la pantalla, como el libro; en el mapa no, para no tapar la partida */const BZ=d.classList.contains('inbk')?bkZ():1;if(BZ>1)d.style.zoom=BZ;
+ const par=a.closest('.kpanel')||a.closest('#tip')||a.closest('#side')||a.closest('.hmsg')||a.closest('#hpop'),ar=a.getBoundingClientRect(),br=par?par.getBoundingClientRect():ar,wd=d.offsetWidth*BZ,ht=d.offsetHeight*BZ;
  // la caja sale junto a la palabra (debajo; si no cabe, encima), aunque tape parte del panel del que sale: así no se va lejos de donde miras
  let l=Math.max(6,Math.min(innerWidth-6-wd,ar.left-12));
  let t=ar.bottom+6;if(t+ht>innerHeight-6)t=ar.top-6-ht;if(t<6)t=Math.max(6,Math.min(innerHeight-6-ht,ar.bottom+6));
- d.style.left=l+'px';d.style.top=t+'px';
+ d.style.left=(l/BZ)+'px';d.style.top=(t/BZ)+'px';
  KS.push({el:d,anchor:a,dead:0});KD.el=null;KD.t=0;
 }
 
@@ -7746,14 +7875,18 @@ function hoverTick(rdt){
  const tip=$('tip');
  if(PMN()&&PR.open&&!(HQ.cur&&document.body.classList.contains('mfs'))){
   tip.style.display='block';
-  const wd=tip.offsetWidth,ht=tip.offsetHeight;let r=PR.rect;
+  /* v359: con el libro abierto (menús), el bocadillo crece con la pantalla; en el mapa, no */const TZ=typeof LB!=='undefined'&&LB.open?bkZ():1;if((parseFloat(tip.style.zoom)||1)!==TZ)tip.style.zoom=TZ>1?TZ:'';
+  const wd=tip.offsetWidth*TZ,ht=tip.offsetHeight*TZ;
+  /* v359: la ficha fijada de una torre sigue a la torre si mueves o acercas la cámara (antes se quedaba donde se abrió) */
+  if(PR.pinned&&String(PR.key).startsWith('tw:')){const t=S.list.find(o=>'tw:'+o.id===PR.key);if(t)PR.rect=cellRect(t.x-1,t.y-1,K);}
+  let r=PR.rect;
   /* si el anillo de controles de la torre (o del solar) está abierto, el panel se coloca fuera de él para no taparlo */
   for(const id of ['tmenu','bmenu']){const m=$(id);if(m&&m.classList.contains('on')&&m.offsetParent!==null){let u=null;m.querySelectorAll('button').forEach(b=>{const q=b.getBoundingClientRect();if(!q.width)return;u=u?{l:Math.min(u.l,q.left),t:Math.min(u.t,q.top),r:Math.max(u.r,q.right),b:Math.max(u.b,q.bottom)}:{l:q.left,t:q.top,r:q.right,b:q.bottom};});if(u)r={l:Math.min(r.l,u.l),t:r.t,r:Math.max(r.r,u.r),b:r.b};}}
   let l=r.r+8;if(l+wd>innerWidth-6)l=r.l-8-wd;if(l<6)l=6;
   let t=PR.dom?(r.t+r.b)/2-ht/2:r.t;if(t+ht>innerHeight-6)t=innerHeight-6-ht;if(t<6)t=6;
   /* v332: algunos bocadillos salen justo debajo de lo que señalan (la línea de rondas) */
   if(PR.below){l=Math.max(6,Math.min(innerWidth-6-wd,(r.l+r.r)/2-wd/2));t=r.b+8;if(t+ht>innerHeight-6)t=Math.max(6,r.t-8-ht);}
-  tip.style.left=l+'px';tip.style.top=t+'px';
+  tip.style.left=(l/TZ)+'px';tip.style.top=(t/TZ)+'px';
  }else tip.style.display='none';
  if(!S.hover&&PR.open&&PR.cell)S.hover=PR.cell;
  HV.sl=PR.pinned?(onPin?1:0):(PR.open?1:HV.t);
@@ -7764,10 +7897,13 @@ function hoverTick(rdt){
 function kwSelf(k){try{const id=k.dataset.kw;if(!id)return false;const kp=k.closest('.kpanel');if(kp&&kp.dataset.kself===id)return true;
  if(k.closest('#comp')&&typeof CP!=='undefined'&&CP.open&&CP.tab==='mc'&&CP.sel&&CP.sel.mc===id)return true;}catch(e){}return false;}
 setInterval(()=>{try{document.querySelectorAll('.kpanel .kw:not(.kwself),#comp .kw:not(.kwself)').forEach(k=>{if(kwSelf(k))k.classList.add('kwself');});document.querySelectorAll('.kwself').forEach(k=>{if(!kwSelf(k))k.classList.remove('kwself');});}catch(e){}},200);
+
+// v359: escala de los menús en pantallas grandes (la misma que --uiz); 1 en móvil
+function bkZ(){const B=document.body.classList;if(!B.contains('dsk')||B.contains('mfs'))return 1;return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--uiz'))||1;}
 // ---- interfaz ----
 function ui(){
  try{if(S.msg){const t=String(S.msg).replace(/<[^>]+>/g,'');if(ERRRX.test(t)&&!/^(Elige|Pulsa)/.test(t)){S.msg='';LMSG='';errBubble(t);}}}catch(e){}
- $('panel').style.display=S.hero?'':'none';$('msg').textContent=S.msg;let h='';$('ui').classList.toggle('lock',!!S.aim);
+ $('panel').style.display=S.hero?'':'none';$('msg').textContent=S.msg;$('msg').classList.toggle('err',!!S.msg&&S.msg===S.msgErr);let h='';$('ui').classList.toggle('lock',!!S.aim);
  const sp=[[0,'Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2'],[3,'×3']];
  $('ctl').innerHTML='';
  const sl=S.speed;const MF=document.body.classList.contains('mfs');if(S.speed>0)S.lspd=S.speed;
@@ -7823,7 +7959,7 @@ setInterval(()=>{try{for(const el of document.querySelectorAll(SMSEL)){const on=
 
 // habilidades en la selección de héroe: se abren al tocar o pasar el ratón (antes no mostraban nada)
 (()=>{const p=document.createElement('div');p.id='hpop';p.className='tipc';document.body.appendChild(p);let cur=null;
- const show=a=>{clearTimeout(p._ht);const tg=resolve(a);if(!tg)return;p.innerHTML=tg.html();p.style.display='block';const r=a.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight;let l=r.right+8;if(l+w>innerWidth-8)l=r.left-8-w;if(l<8)l=Math.max(8,Math.min(innerWidth-8-w,r.left));let t=r.top;if(t+h>innerHeight-8)t=innerHeight-8-h;if(t<8)t=8;p.style.left=l+'px';p.style.top=t+'px';cur=a;};
+ const show=a=>{clearTimeout(p._ht);const tg=resolve(a);if(!tg)return;p.innerHTML=tg.html();/* v359: en el libro, el bocadillo crece con la pantalla */const Z=a.closest('#comp')?bkZ():1;p.style.zoom=Z>1?Z:'';p.style.display='block';const r=a.getBoundingClientRect(),w=p.offsetWidth*Z,h=p.offsetHeight*Z;let l=r.right+8;if(l+w>innerWidth-8)l=r.left-8-w;if(l<8)l=Math.max(8,Math.min(innerWidth-8-w,r.left));let t=r.top;if(t+h>innerHeight-8)t=innerHeight-8-h;if(t<8)t=8;p.style.left=(l/Z)+'px';p.style.top=(t/Z)+'px';cur=a;};
  const hide=()=>{clearTimeout(p._ht);p.style.display='none';cur=null;};
  /* se queda abierto un momento al salir, para poder entrar en él y consultar sus palabras clave */
  const hideSoon=()=>{clearTimeout(p._ht);p._ht=setTimeout(()=>{if(!p.matches(':hover')&&!document.querySelector('.kpanel:hover'))hide();},260);};
@@ -8159,6 +8295,12 @@ cv.addEventListener('contextmenu',e=>{e.preventDefault();if(!S||!S.list)return;i
 // móvil: mantener pulsada una torre ~0,5 s = mover su bandera
 {let lp=null;cv.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||!S||!S.list||S.aim)return;const c=cell(e),t=S.occ[c.x+','+c.y];if(!t)return;const x=e.clientX,y=e.clientY;lp={x,y,tm:setTimeout(()=>{if(lp&&quickFlag(t)){LPF=performance.now();try{navigator.vibrate&&navigator.vibrate(25);}catch(er){}}lp=null;},500)};});
  const cancel=e=>{if(lp&&(!e||e.type!=='pointermove'||Math.hypot(e.clientX-lp.x,e.clientY-lp.y)>10)){clearTimeout(lp.tm);lp=null;}};cv.addEventListener('pointermove',cancel);cv.addEventListener('pointerup',cancel);cv.addEventListener('pointercancel',cancel);}
+// v359 (Nogal, 18-nov): moviendo al héroe (o a los cerditos), si pulsas fuera del camino algo que se pueda seleccionar (una torre,
+// un solar o un enemigo; los cofres y eventos no se seleccionan) se suelta el héroe y se selecciona eso; si no, aviso en rojo.
+// Los botones de la interfaz y tus reliquias también lo sueltan (ver act).
+function aimSwap(c){if(!inb(c.x,c.y))return false;const q=sqOf(c.x,c.y);let some=!!S.occ[c.x+','+c.y]||bmFree(q);
+ if(!some){const fx=c.fx-.5,fy=c.fy-.5;some=S.enemies.some(o=>Math.hypot(o.x-fx,o.y-fy)<1.4);}
+ if(!some)return false;S.aim=null;S.msg='';S.msgErr='';return true;}
 let LPF=0;
 cv.addEventListener('click',e=>{
  if(DRAGGED)return;if(performance.now()-LPF<700)return;
@@ -8168,8 +8310,8 @@ cv.addEventListener('click',e=>{
  if(S.aim==='frost'){if(inb(c.x,c.y))castFreeze(c);return;}
  if(S.aim==='harpoon'){if(inb(c.x,c.y))castHarpoon(c);return;}
  if(S.aim==='faroz'){const f=S.list.find(o=>o.id===S.flzSel.id);if(f&&inb(c.x,c.y)){faroZones(f);f.lz[S.flzSel.i]={x:c.x,y:c.y};f.lzcd=f.lzcd||[0,0];f.lzcd[S.flzSel.i]=S.phase==='wave'?FCD[(f.lvl||1)-1]:0;try{sfx('ui');}catch(er){}}S.aim=null;S.msg='';renderRelics();ui();return;}
- if(S.aim==='pigs'){if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2){for(const t of pigHouses())if(t&&t.pigT)setFlag(t,c);S.aim=null;S.msg='';try{sfx('ui');}catch(e){}}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
- if(S.aim==='hero'){const H=S.hero;/* v307: solo cancela si pulsas su propia casilla; antes un radio de 1,35 se comía la casilla de al lado y no dejaba moverlo un paso */if(H&&H.s.hp>0&&c&&c.x===Math.round(H.s.x)&&c.y===Math.round(H.s.y)){S.aim=null;S.msg='';renderRelics();ui();return;}if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);if(S.st)S.st.hmv=1;S.aim=null;S.msg='';heroSay(fr,c);}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
+ if(S.aim==='pigs'){let sw=false;if(inb(c.x,c.y)&&S.cells[c.y][c.x]===2){for(const t of pigHouses())if(t&&t.pigT)setFlag(t,c);S.aim=null;S.msg='';try{sfx('ui');}catch(e){}}else if(aimSwap(c)){sw=true;renderRelics();}else S.msg=S.msgErr='Elige una casilla del camino.';if(!sw){renderRelics();ui();return;}}
+ if(S.aim==='hero'){const H=S.hero;/* v307: solo cancela si pulsas su propia casilla; antes un radio de 1,35 se comía la casilla de al lado y no dejaba moverlo un paso */if(H&&H.s.hp>0&&c&&c.x===Math.round(H.s.x)&&c.y===Math.round(H.s.y)){S.aim=null;S.msg='';renderRelics();ui();return;}let sw=false;if(H&&inb(c.x,c.y)&&S.cells[c.y][c.x]===2){const fr={x:H.s.x,y:H.s.y};setFlag(H.pt,c);if(S.st)S.st.hmv=1;S.aim=null;S.msg='';heroSay(fr,c);}else if(aimSwap(c)){sw=true;renderRelics();/* v359: pulsar una torre u otra cosa del mapa cambia la selección a eso: sigue abajo como un clic normal */}else S.msg=S.msgErr='Elige una casilla del camino.';if(!sw){renderRelics();ui();return;}}
  if(!S.aim&&heroAt(c)&&(S.phase==='build'||S.phase==='wave'||S.phase==='place')){bmClose();S.selT=null;try{tmClose();}catch(er){}clickA('[data-a="hero"]');return;}
  if(S.aim==='barricade'){const bp=barrPick(c.x,c.y);if(bp){S.barr.push({t:5,...bp});const st=S.rs.barricade;setCD('barricade');st.t=5;S.aim=null;S.msg='';}else S.msg='Elige una casilla del camino.';renderRelics();ui();return;}
  if(S.aim==='uplace'){uPlaceAt(c);return;}
@@ -8214,7 +8356,7 @@ document.addEventListener('click',e=>{
 });
 // un clic fuera del panel fijado y de su torre lo suelta
 document.addEventListener('click',e=>{
- if(!PR.pinned)return;const tg=e.target;
+ /* v359: soltar después de arrastrar el mapa no es un clic fuera: la ficha se queda */if(!PR.pinned||DRAGGED)return;const tg=e.target;
  if(tg.closest&&(tg.closest('#tip')||tg.closest('#side')||tg.closest('.kpanel')))return;
  if(tg===cv){const c=cell(e),t=S.occ[c.x+','+c.y];if(t&&PR.key==='tw:'+t.id)return;}
  closePrim();
@@ -8237,6 +8379,7 @@ function act(e){
  const b=e.target.closest('button')||(e.target.closest&&!e.target.closest('summary')&&!e.target.closest('.kw')?e.target.closest('[data-a="hsel"]'):null);if(!b)return;const a=b.dataset.a;
  /* con una ventana (oferta, cofre, evento) abierta solo valen sus botones… salvo dentro del libro abierto encima (compendio desde el mazo, las reliquias o el 📖) */
  if(RL.open&&!(LB.open&&b.closest&&b.closest('#comp'))&&!['tutok','tutplay','tutmenu','relic','pickhero','evopt','evok','hsel','hdet','hnav','hgo','hconf','hcancel','towpick','towskip','towok','dreroll','erasel','era2hok','wincomp','tdet','clv','cbr','clvs','menuask','menu','peek'].includes(a))return;
+ /* v359: moviendo al héroe o a los cerditos, un botón de la interfaz o una reliquia lo suelta y hace lo suyo */if((S.aim==='hero'||S.aim==='pigs')&&a!=='hero'&&a!=='pigs'&&(AIMLOCK.includes(a)||a==='ract'||a==='vch'||a==='hab'||a==='hult')){S.aim=null;S.msg='';S.msgErr='';renderRelics();}
  if(S.aim&&(AIMLOCK.includes(a)||(a==='ract'&&b.dataset.id!==S.aim&&S.aim!=='mimic')||(a==='hero'&&S.aim!=='hero')||(a==='vch'&&S.aim!=='vch')||(a==='hab'&&S.aim!=='habb')||(a==='hult'&&S.aim!=='habu'))){S.msg='Primero termina o cancela la acción en curso.';ui();return;}
  if(a==='pick'){const i=+b.dataset.i;S.pi=S.pi===i?null:i;S.pexp=false;ui();}
  else if(a==='lupa'){const tg=LUPA.tg;hideLupa();if(tg){openPrim({key:tg.key,html:tg.html,rect:tg.rect||{l:0,t:0,r:0,b:0},dom:tg.dom,cell:tg.cell});PR.pinned=true;refreshPrim();ui();}}
@@ -8338,8 +8481,8 @@ function act(e){
  else if(a==='hab'){if(S.hero&&!RL.open)startHab('b');}
  else if(a==='mecha'){if(!RL.open)startMecha();}
  else if(a==='hult'){if(S.hero&&!RL.open)startHab('u');}
- else if(a==='pigs'){if(RL.open||!pigsOn())return;if(S.aim==='pigs'){S.aim=null;S.msg='';}else{closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino a la que mover a los cerditos (Esc o el mismo botón para cancelar).';}renderRelics();ui();}
- else if(a==='hero'){if(!S.hero||RL.open)return;if(S.aim==='hero'){S.aim=null;S.msg='';}else{closePrim();S.aim='hero';S.aimT=null;/* v307: en el tutorial, el héroe se explica en cuanto lo tocas */if(S.tut&&!S.tut.heroT){S.tut.heroT=1;hint('hero','Tu héroe',HEROTXT2,null);}S.msg='Elige una casilla del camino donde colocar a '+S.hero.def.n+' (clic; Esc o el mismo icono para cancelar).';}renderRelics();ui();}
+ else if(a==='pigs'){if(RL.open||!pigsOn())return;if(S.aim==='pigs'){S.aim=null;S.msg='';}else{closePrim();S.aim='pigs';S.aimT=null;S.msg='Elige una casilla del camino para los cerditos.';}renderRelics();ui();}
+ else if(a==='hero'){if(!S.hero||RL.open)return;if(S.aim==='hero'){S.aim=null;S.msg='';}else{closePrim();S.aim='hero';S.aimT=null;/* v307: en el tutorial, el héroe se explica en cuanto lo tocas */if(S.tut&&!S.tut.heroT){S.tut.heroT=1;hint('hero','Tu héroe',HEROTXT2,null);}S.msg='Elige una casilla del camino para '+S.hero.def.n+'.';}renderRelics();ui();}
  else if(a==='pickhero'){if(b.dataset.id)chooseHero(b.dataset.id);}
  else if(a==='hdet'){RL.hdet=!RL.hdet;RL.dman={};RL.rman={};const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
  else if(a==='hsel'){if(RL.hsel!==b.dataset.id&&!RL.hdet)RL.dman={};RL.rman={};RL.hsel=b.dataset.id;const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
@@ -8414,7 +8557,7 @@ const lbHasNew=k=>(k==='cp'||k==='lg')&&typeof nfArea==='function'?nfArea(k):!!L
 const icU=(k,fb)=>typeof ICU!=='undefined'&&ICU[k]?ICU[k]:fb;
 const LBAREAS=[['cp','Compendio','📖'],['lg','Logros','🏆'],['st','Estadísticas','📊'],['pt','Partidas','📚'],['op','Opciones','⚙️'],['hp','Ayuda','❓'],['cr','Créditos','📜']];
 const lbInGame=()=>!document.body.classList.contains('inmenu')&&!!(S&&S.list);
-const lbAreas=()=>LBAREAS.filter(([k])=>k!=='st'||lbInGame());
+/* v359: en la pausa no salen Partidas ni Créditos (siguen en el menú principal) */const lbAreas=()=>LBAREAS.filter(([k])=>lbInGame()?k!=='pt'&&k!=='cr':k!=='st');
 const lbMob=()=>TOUCH||bkNarrow();
 function lbOpen(area,cover){
  LB.exit=0;
@@ -8447,7 +8590,7 @@ function lbClose(resume,now){
 // volver a la portada (X, Esc o clic fuera). Fuera de partida la portada es el menú principal. En la preparación de partida no se sale así
 function lbBack(){LB.ask=0;if(!LB.open||LB.area==='prep')return;if(LB.area==='msg'){const f=LB.msg&&LB.msg.onBack;LB.msg=null;if(f)f();else if(document.body.classList.contains('inmenu'))lbOpen(null,true);else lbClose(true);return;}if(LB.fromWin){LB.fromWin=0;lbClose(true);return;}if(LB.area==='end'){lbClose(true);return;}if(LB.end&&S&&(S.phase==='won'||S.phase==='lost')){lbOpen('end');return;}CP.prev=null;PV=null;CP.eprev=null;PE=null;CP.hprev=null;PHV=null;CP.pageR=false;PMU.ask=0;lbOpen(null,true);}
 const lbMarks=(list,cur,act)=>list.length<2?'':`<div class="bkmarks">${kcOn()?'<span class="kcap bkq">Q</span>':''}${list.map(([v,l,i])=>`<button class="bkmk${v===cur?' on':''}${typeof nfMark==='function'&&nfMark(act,v)?' new':''}" data-a="${act}" data-v="${v}" title="${l}">${i}<span class="bkml">${l}</span></button>`).join('')}${kcOn()?'<span class="kcap bkq">E</span>':''}</div>`;
-const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`;
+const lbRibs=()=>`<div class="bkribs">${lbAreas().map(([k,l,i])=>`<button class="bkrib${k===LB.area&&!LB.cover?' on':''}${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}"${lbInGame()?'':` title="${l}"`}>${i}<span>${l}</span></button>`).join('')}</div>`;
 // flechas de pasar página: al anterior / siguiente de la sección en la que estás (sin fondo, solo trazo)
 const lbArrows=()=>lbStepList()?`<button class="bkarr l" data-a="lbprev" title="Anterior">‹</button><button class="bkarr r" data-a="lbnext" title="Siguiente">›</button>`:'';
 function lbStepList(){const a=LB.area;
@@ -8460,14 +8603,14 @@ function lbStepList(){const a=LB.area;
 function lbStep(d){const s=lbStepList();if(!s)return;const i=s.L.indexOf(s.cur),n=s.L[((i<0?0:i)+d+s.L.length)%s.L.length];if(n!==undefined){try{sfx('page');}catch(e){}s.go(n);}}
 function lbCoverHTML(){
  const inG=lbInGame(),B=lbMob(),H=inG&&S.hero?HEROES[S.hero.id]:null;
- const chips=inG?[`${icU('dur','⏳')} Ronda ${Math.min(S.round,ROUNDS)}/${ROUNDS}`,`${icU('ehp','❤️')} ${S.hp}`,`🪙 ${Math.floor(S.gold)}`,H?`<i class="lbsvpor" style="background:${H.col||'#8a5a2e'}">${portrait(S.hero.id,1)}</i> ${H.n} · Nv ${S.hero.lvl}`:'',`${icU('cool','🕒')} ${fClk(GT.r)}`].filter(Boolean).map(x=>`<span>${x}</span>`).join(''):'';
+ const chips=inG?[`${icU('dur','⏳')} Ronda ${Math.min(S.round,ROUNDS)}/${ROUNDS}`,`${icU('ehp','❤️')} ${S.hp}`,`<svg class="lbgold" viewBox="-4 -4 56 56">${typeof ICKW!=='undefined'&&ICKW.egold||''}</svg> ${Math.floor(S.gold)}`,H?`<i class="lbsvpor" style="background:${H.col||'#8a5a2e'}">${portrait(S.hero.id,1)}</i> ${H.n} · Nv ${S.hero.lvl}`:'',`${icU('cool','🕒')} ${fClk(GT.r)}`].filter(Boolean).map(x=>`<span>${x}</span>`).join(''):'';
  const sv=!inG&&SAV.meta;
  const main=inG?`<button class="lbmain" data-a="lbcont">${icU('play','▶')} Continuar</button>`:sv?`<button class="lbmain" data-a="lbload">${icU('play','▶')} Continuar partida</button><div class="lbsv">${sv.tut?icU('cap','🎓')+' Tutorial':icU('dur','⏳')+' Ronda '+sv.round+'/'+sv.rounds}${sv.heroN?' · '+(sv.hero&&HEROES[sv.hero]&&typeof portrait==='function'?`<i class="lbsvpor" style="background:${HEROES[sv.hero].col||'#8a5a2e'}">${portrait(sv.hero,1)}</i>`:sv.heroIc)+' '+sv.heroN:''} · ${svWhen(sv.t)}</div><button class="lbnew${LB.ask?' warn':''}" data-a="newgame">${LB.ask?'¿Seguro? Se perderá la partida guardada':'Nueva partida'}</button>`:`<button class="lbmain" data-a="newgame">${icU('play','▶')} Nueva partida</button>`;
  const areas=lbAreas();
  const tiles=`<div class="lbtiles">${areas.map(([k,l,i])=>`<button data-a="lbarea" data-v="${k}" class="${k==='cp'&&!compOk()?'dim':''}${lbHasNew(k)?' new':''}"><em>${i}</em>${l}</button>`).join('')}${(FSOK||IOS)&&B?`<button data-a="pfs"><em>⛶</em>${IOS?'Pantalla completa en iPhone':isFS()?'Salir de pantalla completa':'Pantalla completa'}</button>`:''}</div>`;
  const rt=inG&&S.phase==='wave'&&S.snap&&S.rc>0;
  const bot=inG?`<div class="lbbot">${rt?`<button data-a="pretry">↺ Reintentar oleada <small>· ${S.rc} carga${S.rc===1?'':'s'}</small></button>`:''}${svOk()?`<button data-a="psave" title="${S.phase==='wave'?'Se guardará el principio de esta oleada':'Guarda la partida tal como está'}">${icU('save','💾')} Guardar y salir</button>`:''}<button data-a="pquit" class="pquit">${PMU.ask?'¿Seguro? Se perderá la partida':icU('flag','🏳')+' Abandonar partida'}</button></div>`:`<div class="lbbot"><button data-a="pexit" class="pquit">${LB.exit?'¿Seguro? Pulsa otra vez para salir':icU('door','🚪')+' Salir del juego'}</button></div>`;
- return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:icU('m_castle','🏰')}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}" title="${l}">${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
+ return `<div class="lbcv ${B?'b':'a'}${inG?' ing':''}"><div class="lbcvin"><div class="lbtit"><b>Towerize</b><span class="lbsub">${inG?'Pausa':'Expande. Mejora. Resiste.'}</span></div><div class="lbemb">${H?`<span class="lbpor">${portrait(S.hero.id,1)}</span>`:icU('m_castle','🏰')}</div>${chips?`<div class="lbchips">${chips}</div>`:''}${main}${B?tiles:''}${bot}${inG?`<button class="bkx lbcx" data-a="lbcont" title="Continuar">✕</button>`:''}</div>${B?'':`<div class="lbribs">${areas.map(([k,l,i])=>`<button class="bkrib${k==='cp'&&!compOk()?' lk':''}${lbHasNew(k)?' new':''}" data-a="lbarea" data-v="${k}"${inG?'':` title="${l}"`}>${i}<span>${l}</span></button>`).join('')}</div>`}</div>`;
 }
 // ---- estadísticas: tabla a la izquierda, cifras grandes y resumen a la derecha ----
 function statParts(){const T=STABS.find(t=>t[0]===STW.tab)||STABS[0],st=S.st||{};
@@ -8557,7 +8700,7 @@ function credParts(){const ver=($('ver')&&$('ver').textContent)||'Towerize';
 // ---- montaje ----
 function lbRender(){
  const el=$('comp');if(!LB.open){el.classList.remove('open');return;}
- el.classList.add('bkm','open');el.classList.toggle('lbtouch',!!TOUCH);const nar0=bkNarrow(),two=nar0&&LB.area==='prep'&&prepTwo(),nar=nar0&&!two;el.classList.toggle('two',two);el.classList.toggle('narrow',nar0);el.classList.toggle('lbcv0',LB.cover);
+ el.classList.add('bkm','open');el.classList.toggle('lbtouch',!!TOUCH);const nar0=bkNarrow(),two=nar0&&LB.area==='prep'&&prepTwo(),nar=nar0&&!two;el.classList.toggle('two',two);el.classList.toggle('narrow',nar0);el.classList.toggle('lbcv0',LB.cover);el.classList.toggle('lbing',lbInGame());
  if(LB.cover){CP.open=false;OP.open=false;lbSetOrigin();el.innerHTML=lbCoverHTML();if(LB.grow){el.firstElementChild.classList.add('lbgrow');LB.grow=false;}return;}
  LB.grow=false;
  if(LB.area==='st'&&!lbInGame())LB.area='cp';
@@ -11231,6 +11374,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:359,f:'19 nov 2026',t:'Fichas nuevas, pausa y eventos',s:[['Fichas',['Ficha del héroe renovada: retrato, vida en barra (si cae, ves cuánto le falta para volver), sus datos principales, experiencia y DPS real.','Las fichas de las torres y del héroe ponen cada dato en su color, y los efectos van en una sola pastilla con su valor.','La ficha de una torre se queda junto a ella al mover la cámara, y ya no se cierra al arrastrar el mapa.']],['Menús',['Pausa más limpia: datos alineados, más aire y marcapáginas que asoman y salen al pasar el ratón.','Las barras de Opciones miden todas lo mismo y son más fáciles de ajustar.','En pantallas grandes, los bocadillos de los menús crecen con el libro.']],['Eventos y cofres',['Eventos más cómodos en PC: la imagen y la descripción a la izquierda y las opciones a la derecha, con el texto más grande.','En el móvil, las opciones de los eventos se desplazan dentro del pergamino y el cofre cabe entero en la pantalla.']],['Héroe',['Con el héroe elegido para moverlo, pulsar una torre, un solar, un enemigo o un botón cambia la selección a eso.','Avisos más cortos y, si pulsas fuera del camino, en rojo.']]]},
  {v:358,f:'17 nov 2026',t:'Clasificación, logros y eventos',s:[['Menú y logros',['Clasificación del menú bien colocada en pantallas grandes, con flechas ‹ › para pasar por las tablas en las que tienes puntuación (empieza en tu mejor partida y tu fila va marcada).','Página de cada logro más clara: «Fijar» en su propia línea y el progreso con las recompensas encima de la barra.','«Informar de un fallo» más grande en el menú principal.']],['Partida',['Los eventos se adaptan a tu partida: ya no te saldrá uno que no puedas aprovechar.','La Era Fantástica ya tiene nombre: Reinos de Leyenda.','Más iconos dibujados en lugar de emojis: ficha del héroe, medidor de daño, eras y recompensas.','Arreglado: las etiquetas del medidor de daño ya no se ven por encima del libro en la pausa.']]]},
  {v:357,f:'16 nov 2026',t:'Elegir héroe en el móvil',s:[['Móvil',['Elegir héroe: flechas ‹ › a los lados del retrato, y también puedes deslizar el dedo para cambiar de héroe.']]]},
  {v:356,f:'16 nov 2026',t:'Elegir pieza en el móvil',s:[['Móvil',['Elegir pieza: el pergamino se abre a todo lo ancho, con las piezas más grandes, y ya no tapa el resto de la pantalla de negro.']],['Mapa',['El terreno de alrededor del mapa llega hasta el borde de la pantalla.','La cámara se aleja y se acerca sola con una transición suave.']]]},
@@ -13831,6 +13975,14 @@ function cfPlay(rl,cards,sign,e2,chest){let fx=rl.querySelector('.cofx');if(fx)f
   CFA(c,[{transform:`translateY(${-up}px) scale(1.7)`},{transform:'translateY(0) scale(1)'}],{duration:450,delay:1650,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});t0=1.6;}
  setTimeout(()=>{if(fx.isConnected)fx.classList.add('back');},T(t0));
  showSign(t0+.35);showCards(t0,from);}
+// v359 (Nogal, 19-nov): en el móvil, el cofre cabe entero sin desplazar: se encoge lo justo el cartel y las cartas
+setInterval(()=>{try{const rl=$('relic');if(!rl||!rl.classList.contains('cofre')||!rl.classList.contains('open'))return;const ps=rl.querySelector('.pscr');if(!ps)return;
+ if(!document.body.classList.contains('mfs')){if(ps.style.zoom)ps.style.zoom='';rl.style.overflowY='';return;}
+ const cur=parseFloat(ps.style.zoom)||1,r=ps.getBoundingClientRect(),nat=r.height/cur,need=(innerHeight-20-Math.max(0,r.top))/nat,f=Math.max(.6,Math.min(1,need));
+ if(Math.abs(f-cur)>.01)ps.style.zoom=f<1?f.toFixed(3):'';
+ /* si cabe, sin desplazamiento ni barra (las sombras de las cartas giradas no cuentan) */rl.style.overflowY=need>=.6?'hidden':'';}catch(e){}},150);
+// al cerrar el cofre, la ventana vuelve a desplazarse como siempre
+setInterval(()=>{try{const rl=$('relic');if(rl&&rl.style.overflowY&&!rl.classList.contains('cofre'))rl.style.overflowY='';}catch(e){}},300);
 // ==================== v336 · Cofres y eventos del mapa (Mesa ay1g + ay1l, aprobados por Nogal) ====================
 // Fantástica: cofre A (el de la animación de apertura) con destellos; poste de madera con el «?» tallado que da la vuelta sobre su clavo.
 // Distópica: caja S.O.S. (la de la animación, sin paracaídas) con una baliza roja cuyo brillo llega lejos y se difumina suave;
@@ -14292,11 +14444,15 @@ function pgTick(now){const o=PGF.on;if(!o)return;const C=pgCfg[o.kind],h=C.host(
  if(w>2){s+=`<g clip-path="url(#pgpc)"><path d="${PD}" fill="url(#pgpp)"/><path d="${PD}" fill="#000" filter="url(#pgtx2)"/><path d="${PD}" fill="#000" filter="url(#pgtx)" opacity=".5"/><path d="${TOP}" stroke="#8a5a2a" stroke-width="1.4" fill="none" opacity=".55"/><path d="${BOT}" stroke="#8a5a2a" stroke-width="1.4" fill="none" opacity=".55"/><circle cx="${PGM+IX+PW*.12}" cy="${Y0+PH*.76}" r="34" fill="#a0723a" opacity=".07"/><circle cx="${PGM+IX+PW*.84}" cy="${Y0+PH*.18}" r="24" fill="#a0723a" opacity=".09"/>`;
   // cartas: el borde se traza a pluma y después aparece lo de dentro; con el ratón encima, borde dorado y destello
   const cs=C.cards(h);let hv=-1;cs.forEach((c,i)=>{if(c.matches(':hover'))hv=i;});if(hv!==o.hov){o.hov=hv;o.hovT=now;}
+  /* v359: si las opciones van en una zona que se desplaza (eventos en el móvil), sus marcos se recortan a esa zona y se marca si queda más por ver */
+  const scz=h.querySelector('.evrc'),scr=scz&&scz.scrollHeight>scz.clientHeight+2?scz:null;if(scz){const top=scr&&scr.scrollTop>2,bot=scr&&scr.scrollTop+scr.clientHeight<scr.scrollHeight-2;scz.classList.toggle('pgup',!!top);scz.classList.toggle('pgdn',!!bot);h.classList.toggle('pgmore',!!bot);if(bot){const q=scz.getBoundingClientRect();h.style.setProperty('--pgmx',((q.left+q.width/2-hr.left)/zx).toFixed(1)+'px');h.style.setProperty('--pgmy',((q.bottom-hr.top)/zy).toFixed(1)+'px');}}
+  if(scr){const q=scr.getBoundingClientRect();s+=`<clipPath id="pgec"><rect x="${(q.left-hr.left)/zx+PGM}" y="${(q.top-hr.top)/zy+PGM}" width="${q.width/zx}" height="${q.height/zy}"/></clipPath><g clip-path="url(#pgec)">`;}
   cs.forEach((c,i)=>{const r=c.getBoundingClientRect();const x=(r.left-hr.left)/zx+PGM,y=(r.top-hr.top)/zy+PGM,cw=r.width/zx,ch=r.height/zy,P=2*(cw+ch);
    const a=pgseg(t,base+i*.2,base+.65+i*.2),cc=pgseg(t,base+.45+i*.2,base+.8+i*.2),hot=i===hv||c.classList.contains('pgchosen');
    const cw0=c.closest('.cardw')||c;cw0.style.opacity=cc<1?cc.toFixed(2):'';
    s+=`<rect x="${x}" y="${y}" width="${cw}" height="${ch}" rx="10" fill="${hot?'rgba(240,200,110,.2)':'none'}" stroke="${hot?'url(#pgau)':'#6a4a2a'}" stroke-width="${hot?2.8:1.4}" stroke-dasharray="${P}" stroke-dashoffset="${(P*(1-a)).toFixed(1)}"/>`;
    if(i===hv){const u=pgcl(((now-o.hovT)/1000%3.6)/.9);if(u<1){const sx=x-60+(cw+120)*pgEio(u);s+=`<clipPath id="pgcc${i}"><rect x="${x}" y="${y}" width="${cw}" height="${ch}" rx="10"/></clipPath><g clip-path="url(#pgcc${i})"><rect x="${sx}" y="${y-40}" width="46" height="${ch+80}" fill="#fff6d0" opacity=".45" transform="rotate(18 ${sx+23} ${y+ch/2})"/></g>`;}}});
+  if(scr)s+='</g>';
   s+=`</g><rect x="${xl}" y="${Y0}" width="20" height="${PH}" fill="url(#pgsh)"/><rect x="${xr-20}" y="${Y0}" width="20" height="${PH}" fill="url(#pgsh)" transform="rotate(180 ${xr-10} ${CY})"/>`;}
  const R=12+12*(1-pgcl(op));for(const [x,d] of [[xl,-1],[xr,1]])s+=pgRoll2(x+d*R,R,Y0-6,Y0+PH+6);
  if(t<UN0+.5)s+=`<g transform="translate(${CX} ${CY})">${pgClosed(pgseg(t,SE,UN0+.15),54)}</g>`;
@@ -14538,7 +14694,7 @@ setInterval(()=>{try{if(typeof S==='undefined'||!S)return;
  // ventanas del pergamino (torres, eventos): el ojo de la barra pasa a la esquina del papel
  const rl=$('relic'),pp=rl&&rl.classList.contains('open')&&!rl.classList.contains('peek')?rl.querySelector('.pscr .ppap.pgf'):null,eb=rl&&rl.querySelector('.rlbar [data-a="peek"]');
  if(eb){if(pp){const hr=pp.getBoundingClientRect(),z=hr.width/(pp.offsetWidth||hr.width)||1,w=eb.offsetWidth;eb.classList.add('eyepg');
-   eb.style.left=(hr.right-(PGIX+20)*z-w)+"px";eb.style.top=(hr.top+(PGIY+16)*z)+"px";}
+   eb.style.left=(hr.right-(PGIX+20)*z-w)+"px";/* v359: a la altura del título (centrado con su cinta), sin pisar la línea de debajo */const tt=pp.querySelector('.ptt,.evhead b,.evtt'),tr=tt&&tt.getBoundingClientRect();eb.style.top=(tr&&tr.height?tr.top+tr.height/2-eb.offsetHeight/2:hr.top+(PGIY+16)*z)+"px";}
   else if(eb.classList.contains('eyepg')){eb.classList.remove('eyepg');eb.style.left='';eb.style.top='';}}}catch(e){}},80);
 // v349: si la ventana (pergamino o dron) no cabe entre los paneles del mazo y del cofre (pantallas estrechas, la tablet es más ancha), el panel que choca se oculta mientras está abierta
 setInterval(()=>{try{const ps=[...document.querySelectorAll('#mzside>.mzd,#mzside>.mzr')];if(!ps.length)return;
@@ -14864,7 +15020,9 @@ const ftFold=(id,sum,body)=>{const o=FT.open[id]!=null?FT.open[id]:FTFOLD[id];re
 function ftFx(T,src){const h=effHtml(T,src);if(!h)return '';const m=h.match(/data-kw="([^"]+)"/),id=m&&m[1],extra=h.replace(/<span[^>]*>[^<]*<\/span>/,'').trim();
  const ic=id&&typeof ICKW!=='undefined'&&ICKW[id];if(!ic)return `<div class="ftfx">${h}</div>`;
  const nm=(h.match(/>([^<]*)<\/span>/)||[])[1]||'';
- return `<div class="ftfx"><span class="kw gico ftfxi" data-kw="${id}" data-src="${src}" aria-label="${nm}"><svg viewBox="-4 -4 56 56" width="22" height="22">${ic}</svg></span>${extra?`<small>${extra}</small>`:''}</div>`;}
+ return `<div class="ftfx">${fxPill(id,extra,src,nm)}</div>`;}
+// v359: icono y valor en una sola pastilla (la misma en las torres y en el héroe)
+function fxPill(id,v,src,nm){const ic=typeof ICKW!=='undefined'&&ICKW[id];return `<span class="kw gico ftfxi fxpill" data-kw="${id}" data-src="${src}"${nm?` aria-label="${nm}"`:''}>${ic?`<svg viewBox="-4 -4 56 56">${ic}</svg>`:''}${v?`<b>${v}</b>`:''}</span>`;}
 function ftDpsBar(t,theo){if(!(theo>0))return '';const src='tw:'+t.id;
  return `<div class="ftdps" data-theo="${theo}"><div class="ftdl"><span>${kst('dpsr','DPS real',src)}</span><span class="ftdv">—</span></div><div class="ftbar"><i></i></div><div class="ftdn"></div></div>`;}
 function ftMechBox(t,M,txt){return `<div class="ftmech"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><div class="ftbar ftmb"><i style="width:${Math.round(M.v(t)*100)}%"></i></div><div class="ftml">${M.l(t)}</div></div>`;}
@@ -14889,8 +15047,9 @@ function fichaTorre(t){
  if(ss.range>0)ch.push(ftChip('cg',kst('rng','Rango',src),cas(ss.range/K)));
  if(ss.area)ch.push(ftChip('ca',kst('area','Área',src),f(ss.area/K)));else if(TT.burn&&TT.cone)ch.push(ftChip('ca',kst('area','Área',src),Math.round(Math.min(360,TT.cone*(ss.arm||1)))+'°'));
  if(ch.length)h+=`<div class="ftchips n${ch.length}">${ch.join('')}</div>`;
- h+=ftDpsBar(t,theo);
  h+=ftFx(TT,src);
+ // v359: lo del momento (DPS real) abajo, separado de los datos fijos
+ h+='<div class="ftgap"></div>'+ftDpsBar(t,theo);
  // botones de bandera de las torres con unidades (o de la nube), siempre a mano
  let rest=rows(ss,TT,src,T.unit?unitExtra(unitRows(T,src,t,PR.pinned&&PR.key===src,UA.hpm,UA.uap,usp),t.type,t.spec,t,UA.s,UA.hpm,UA.uap,usp,src):'');
  const tail=[];rest=rest.replace(/<div class="tgt"><button data-a="flag"[^]*?<\/div>|<small>Haz clic en la torre para mover su (bandera|nube)\.<\/small>/g,m=>{tail.push(m);return '';});
@@ -15021,7 +15180,7 @@ const DIC={dps:'<svg viewBox="0 0 16 16" width="14" height="14"><rect x="1" y="3
 const drwBtn=k=>`<span class="cl" data-drw="${k}" title="Plegar">‹</span>`;
 const drwTab=k=>`<button class="drt" data-drw="${k}" title="Desplegar">${DIC[k]}<i>›</i></button>`;
 function dpsMob(){return document.body.classList.contains('mfs');}
-function dpsOn(){return (hud4On()||dpsMob())&&S&&OPT.dps!==false&&!S.tut&&(S.phase==='wave'||S.phase==='build')&&!PREVIEWING&&!document.body.classList.contains('inmenu')&&!(typeof LB!=='undefined'&&LB.open);}
+function dpsOn(){return (hud4On()||dpsMob())&&S&&OPT.dps!==false&&!S.tut&&(S.phase==='wave'||S.phase==='build')&&!PREVIEWING&&!document.body.classList.contains('inmenu')&&!(typeof LB!=='undefined'&&LB.open)/* v359: tampoco con una ventana de elegir (evento, oferta, cofre, pieza) abierta, salvo mirando el mapa con el ojo */&&!(typeof RL!=='undefined'&&RL.open&&!RL.peek)&&!(document.body.classList.contains('pcpick')&&!document.body.classList.contains('pcpeek'));}
 function dpsData(){const out=[];let tot=0;const wt=Math.max(1,DPS.wt);
  for(const t of S.list){if(t.summ||t.hero||t.sold)continue;const d=ftD(t),dm=d.d0==null?0:Math.max(0,(t.dmgT||0)-d.d0);tot+=dm;out.push({t,dm,v:dm/wt});}
  return {rows:out.sort((a,b)=>b.dm-a.dm),tot};}
