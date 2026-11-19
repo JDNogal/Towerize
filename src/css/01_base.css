@@ -226,7 +226,7 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw:not(.st)[data-kw="curse"],.kw:not(.st)[data-kw="cursed"]{color:var(--tb07cff,#b07cff)}
 .kw:not(.st)[data-kw="poly"]{color:var(--tff8fd0,#ff8fd0)}
 .kw:not(.st)[data-kw="mark"]{color:var(--red)}
-.kw:not(.st)[data-kw="prey"],.kw:not(.st)[data-kw="push"],.kw:not(.st)[data-kw="logk"],.kw:not(.st)[data-kw="bwall"]{color:var(--td9c08a,#d9c08a)}
+.kw:not(.st)[data-kw="prey"],.kw:not(.st)[data-kw="push"],.kw:not(.st)[data-kw="logk"],.kw:not(.st)[data-kw="bwall"],.kw:not(.st)[data-kw="rroll"]{color:var(--td9c08a,#d9c08a)}
 .kw:not(.st)[data-kw="drunk"]{color:var(--te0a050,#e0a050)}
 .kw:not(.st)[data-kw="mheal"],.kw:not(.st)[data-kw="eheal"]{color:var(--t9be15d,#9be15d)}
 .kw:not(.st)[data-kw="mhit"],.kw:not(.st)[data-kw="tmagic"],.kw:not(.st)[data-kw="umr"],.kw:not(.st)[data-kw="penp"]{color:var(--t8f9bff,#8f9bff)}

@@ -155,7 +155,7 @@ function b6Botin(c,W,H,t,o,dt,tm){const r=abRank(t,'botin'),cof=!!r.cof,cn=Math.
   if(o.rep>0){const q=1-o.rep/1.3;y-=Math.sin(Math.min(1,q*1.4)*Math.PI)*(14+(k%5)*5);y=Math.max(rx*.9,y);/* v361: que no se corte por arriba */a=Math.max(0,1-Math.max(0,q-.6)/.4);}
   c.globalAlpha=a;b6Coin(c,p.x,y,rx);c.globalAlpha=1;}
  if(o.rep>0){const q=1-o.rep/1.3;c.font='700 13px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.globalAlpha=Math.min(1,o.rep*2);c.lineWidth=3;c.strokeStyle='#5a4000';const tx='+'+BOTN*r.g;c.strokeText(tx,cx,PH*.35-q*10);c.fillStyle='#ffd34a';c.fillText(tx,cx,PH*.35-q*10);c.globalAlpha=1;}
- {const tx=W-34,ty=PH*.5,nv=String(o.rep>0?BOTN:cn);c.textBaseline='middle';b6Coin(c,tx-14,ty-25,6);
+ {const tx=W-34,ty=PH*.5,nv=String(o.rep>0?BOTN:cn);c.textBaseline='middle';/* sin moneda: ya se ve la pila al lado (Nogal) */
   c.textAlign='right';c.fillStyle='#6b4a00';c.font='800 20px system-ui,sans-serif';c.fillText(nv,tx-2,ty-8);
   c.strokeStyle='#8a6a2a';c.lineWidth=2;c.lineCap='round';c.beginPath();c.moveTo(tx-4,ty+12);c.lineTo(tx+6,ty-6);c.stroke();
   c.textAlign='left';c.fillStyle='#8a6a2a';c.font='700 14px system-ui,sans-serif';c.fillText(String(BOTN),tx+6,ty+9);}/* v361: monedas como fracción en diagonal (Nogal): el número arriba a la izquierda, la raya y el 15 abajo a la derecha */
@@ -165,7 +165,7 @@ function b6Draw(now){B6.raf=0;const cs=document.querySelectorAll('canvas.b6c');i
   const rc=cv.getBoundingClientRect();if(!rc.width)continue;const dpr=Math.min(2,window.devicePixelRatio||1),W=Math.round(rc.width),H=Math.round(rc.height);
   if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
   const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);const o=b6S(t);
-  try{if(k==='racha')b6Racha(c,W,H,t,o,dt);else if(k==='concen')b6Concen(c,W,H,t,o,dt,tm);else if(k==='pres')b6Pres(c,W,H,t,o,dt,tm);else if(k==='resv')b6Resv(c,W,H,t,o,dt,tm);else if(k==='botin')b6Botin(c,W,H,t,o,dt,tm);}catch(e){}
+  try{if(k==='racha')b6Racha(c,W,H,t,o,dt);else if(k==='concen')b6Concen(c,W,H,t,o,dt,tm);else if(k==='pres')b6Pres(c,W,H,t,o,dt,tm);else if(k==='resv')b6Resv(c,W,H,t,o,dt,tm);else if(k==='botin')b6Botin(c,W,H,t,o,dt,tm);else if(B6DR[k])B6DR[k](c,W,H,t,o,dt,tm);}catch(e){}
   const lb=cv.parentElement&&cv.parentElement.querySelector('.ftml[data-b6]');if(lb){const l=M.l(t);if(lb.textContent!==l)lb.textContent=l;}}
  B6.raf=requestAnimationFrame(b6Draw);}
 setInterval(()=>{if(!B6.raf&&document.querySelector('canvas.b6c')){B6.last=performance.now();B6.raf=requestAnimationFrame(b6Draw);}},250);

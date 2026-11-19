@@ -22,3 +22,15 @@
 .fuubh.dead{height:auto;background:none;font:600 11px system-ui,sans-serif;opacity:.7}
 .fuub .fuubl{flex:none;width:22px;height:22px;display:grid;place-items:center}.fuubl svg,.fuubl img{width:22px;height:22px}
 .kw.noic::before{display:none!important}
+/* v361 · Omega: familias en huecos redondos (2 separados, 4 en fila, 6 en 4+2 como los aros olímpicos, 8 en 4+4) (Nogal) */
+.fuoms{display:grid;grid-template-columns:repeat(8,1fr);row-gap:4px;margin:6px auto 2px;max-width:232px;justify-items:center}
+.fuoms .fuoms1{grid-column:span 2;width:30px;height:30px;border-radius:50%;box-sizing:border-box;border:2px dashed color-mix(in srgb,currentColor 30%,transparent);display:flex;align-items:center;justify-content:center;padding:0;text-decoration:none}
+.fuoms .fuoms1.on{border:2px solid var(--c);background:color-mix(in srgb,var(--c) 22%,#241a0c);cursor:pointer}
+.fuoms .fuoms1 svg{width:22px;height:22px}
+.fuoms.c2 .fuoms1:nth-child(1),.fuoms.c6 .fuoms1:nth-child(5){grid-column:2/span 2}
+.fuoms.c2 .fuoms1:nth-child(2),.fuoms.c6 .fuoms1:nth-child(6){grid-column:6/span 2}
+.fuoms.c6 .fuoms1:nth-child(n+5){margin-top:-8px}
+/* v361: en móvil, la tarjeta de unidad se pega a la izquierda si a la derecha tapa a su unidad (Nogal) */
+body.mfs #tip.fuL{left:0!important;right:auto!important;border-radius:0 10px 10px 0}
+/* v361: la tarjeta de unidad, apartándose de su unidad con suavidad (Nogal) */
+#tip.fumv{transition:left .18s ease-out,top .18s ease-out}

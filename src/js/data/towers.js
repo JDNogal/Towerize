@@ -253,7 +253,7 @@ const SPECS={arrow:{
  xbow:{n:'Ballesteros',ic:'🎯',col:'#c9783a',lv:{dmg:L4D*2.8,cd:.7*1.4,range:1.2,area:1.3,hp:L4H,pen:15},ab:['charged','racha','mark'],d:'Disparan más lento, pero con mucho más daño y penetración de armadura.'}},
 cata:{
  treb:{n:'Trebuchet',ic:'🏯',col:'#b59a6a',lv:{dmg:L4D*1.9,cd:.7*1.45,range:1.2*1.3,area:1.3*1.2,hp:L4H,pen:0},ab:['arsenal','debris','breach'],d:'Alcance enorme y disparos muy lentos y potentes. Arma de asedio: lanza lo que tenga a mano.'},
- ogre:{n:'Ogros Lanzarrocas',ic:'👹',col:'#7e9a5a',lv:{dmg:L4D*.9,cd:.7*.75,range:1.2,area:1.3*.8,hp:L4H,pen:0},ab:['roll','crush','presion'],d:'Lanzan más a menudo. La roca rueda hacia los portales y golpea a hasta '+ROLLMX+' enemigos (45% del daño). Si pasa por brea ardiendo, quema; si pasa por veneno, envenena.'}},
+ ogre:{n:'Ogros Lanzarrocas',ic:'👹',col:'#7e9a5a',lv:{dmg:L4D*.9,cd:.7*.75,range:1.2,area:1.3*.8,hp:L4H,pen:0},ab:['roll','crush','presion'],d:'Lanzan más a menudo una <span class="kw" data-kw="rroll" data-src="">roca rodante</span> en dirección a los portales.'}},
 cannon:{
  rail:{n:'Cañón de riel',ic:'🔩',col:'#7ad8ff',lv:{dmg:L4D*3,cd:.7*2.2,range:1.2*1.35,area:1.3,hp:L4H,pen:20},rail:1,o:{splash:0,shape:'Línea',areaTxt:'Atraviesa a todos los enemigos de la línea de tiro.',fx:'Atraviesa'},ab:['perfor','recarga','estela'],d:'Carga lenta y mucho alcance. Dispara en línea recta por todo su alcance, en el ángulo que más enemigos atraviesa; pierde un 15% de daño por cada enemigo atravesado.'},
  bomb:{n:'Drones bombarderos',ic:'🛩️',col:'#e8a05a',lv:{dmg:L4D*.34,cd:.7*2/3*1.25,range:1.2*1.25,area:1.3*.75,hp:L4H,pen:0},custom:1,notgt:1,o:{ground:1,fx:'Drones autónomos'},ab:['escuad','picado','metafil'],d:'La torre ya no dispara: 2 drones vuelan solos por su alcance y sueltan bombas pequeñas y rápidas. Cada dron va a una escuadra distinta, empezando por la más adelantada.'}},
@@ -271,7 +271,7 @@ laser:{
  volt:{n:'Arco voltaico',ic:'⚡',col:'#fff08a',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{volt:1},ab:['hv','ground','jump'],d:'El arco carga de electricidad a su objetivo; con la carga llena, descarga: un golpe de 15× y lo aturde.'}},
 bunker:{
  sup:{n:'Supresión',ic:'🔩',col:'#c9b06a',lv:{dmg:L4D*1.2,cd:.7*.8,range:1.2,area:1.3,hp:L4H,pen:0},o:{mag:45,ramp:1.2},ab:['trigger','magz','expan'],d:'Cargadores de 45 balas y la cadencia sube mucho más mientras dispara. Pensada para hordas.'},
- nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*10,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['concen','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración. Para élites y jefes.'}},
+ nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*10,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['concen','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración.'}},
 robots:{
  mecha:{n:'Mechas',ic:'🦾',col:'#e0884a',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.5,pen:0},o:{mecha:1},ab:['drill','react','shoulder'],d:'Uno de los robots se transforma en un mecha élite: mucha más vida, corpulencia 2 y golpes en área. Los otros dos le apoyan.'},
  kami:{n:'Androides kamikaze',ic:'💥',col:'#ff6a5a',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H*.5,pen:0},o:{kami:1},uspd:1.5,ab:['reens','decoy','scrap'],d:'4 androides rápidos y frágiles. Al caer explotan (3× su daño en <span class="kw rgv" data-kw="rng" data-src="">1</span>) y la torre los reensambla enseguida.'}},

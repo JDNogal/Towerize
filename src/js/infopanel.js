@@ -384,7 +384,9 @@ function hoverTick(rdt){
   let t=PR.dom?(r.t+r.b)/2-ht/2:r.t;if(t+ht>innerHeight-6)t=innerHeight-6-ht;if(t<6)t=6;
   /* v332: algunos bocadillos salen justo debajo de lo que señalan (la línea de rondas) */
   if(PR.below){l=Math.max(6,Math.min(innerWidth-6-wd,(r.l+r.r)/2-wd/2));t=r.b+8;if(t+ht>innerHeight-6)t=Math.max(6,r.t-8-ht);}
+  /* v361: la tarjeta de una unidad no tapa a su unidad (Nogal) */if(typeof fuAvoid==='function'){const q=fuAvoid(l,t,wd,ht,r);if(q){l=q[0];t=q[1];}}
   tip.style.left=(l/TZ)+'px';tip.style.top=(t/TZ)+'px';
+  /* v361: en móvil la ficha va pegada a la derecha; si tapa a la unidad de su tarjeta, se pega a la izquierda */if(typeof fuUnitBox==='function'){let L=false;const ub=MFSQ()&&fuUnitBox();if(ub){const W=tip.offsetWidth;L=ub.r>innerWidth-W&&ub.l>W;}tip.classList.toggle('fuL',L);}
  }else tip.style.display='none';
  if(!S.hover&&PR.open&&PR.cell)S.hover=PR.cell;
  HV.sl=PR.pinned?(onPin?1:0):(PR.open?1:HV.t);

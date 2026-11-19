@@ -15,5 +15,9 @@
  ICKW.logk=`<g transform="translate(28 24) scale(1.25)"><path d="M-14 -7h26a4 7 0 0 1 0 14h-26a4 7 0 0 1 0-14z" fill="#a8743a" stroke="#1b1712" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M-12 -2h12M-8 3h14" fill="none" stroke="#7a4a2a" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="12" cy="0" rx="4" ry="7" fill="#e0b070" stroke="#1b1712" stroke-width="2.1"/><ellipse cx="12" cy="0" rx="2" ry="3.4" fill="none" stroke="#a8743a" stroke-width="1"/></g><path d="M1 17h5M0 24h6M1 31h5" fill="none" stroke="#1b1712" stroke-width="4.6" stroke-linecap="round"/><path d="M1 17h5M0 24h6M1 31h5" fill="none" stroke="#5ab8ff" stroke-width="2.2" stroke-linecap="round"/>`;/* el mismo tronco que «Troncos gordos» (Nogal) */
  // Fardo de paja (Casa de paja): un fardo con sus dos cuerdas y pajas sueltas
  ICKW.bale=`<g ${O}><path d="M6 14h36a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V18a4 4 0 0 1 4-4z" fill="#e8cf6a"/><path d="M15 14v22M33 14v22" fill="none" stroke="#9a6a2a" stroke-width="2.6"/><path d="M7 20h5M20 21h9M37 19h4M8 29h4M21 28h8M37 30h5" fill="none" stroke="#c4a640" stroke-width="1.5"/><path d="M4 12l-3-3M44 12l3-3M24 36l1 5" fill="none" stroke-width="1.6"/></g>`;
+ // Roca rodante (Ogros lanzarrocas): una roca con rayas de movimiento detrás
+ ICKW.rroll=`<g ${O}><path d="M4 18h10M2 26h10M5 34h9" fill="none" stroke="#7e9a5a" stroke-width="3"/><circle cx="30" cy="26" r="14" fill="#9a928a"/><path d="M24 20l5 3-2 6M34 30l4-1" fill="none" stroke-width="1.6"/></g>`;
+ // Llamarada: el mismo icono que su habilidad, Aliento abrasador (Nogal: lo que viene de una habilidad lleva el icono de la habilidad)
+ if(typeof AB!=='undefined'&&AB.dbreath&&ICSV[AB.dbreath.ic])ICKW.llama=ICSV[AB.dbreath.ic];
  // Muro (Casa de ladrillo): ya tiene dibujo aprobado (el de su casilla de evento, te_bwall): se usa ese
  if(typeof ICUIS!=='undefined'&&ICUIS.te_bwall)ICKW.bwall=ICUIS.te_bwall;}

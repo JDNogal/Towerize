@@ -4,8 +4,8 @@
 // vida en barra, números en tarjetas, efectos en pastilla y el resto plegado) con «← Torre» para volver.
 const FU={tid:null,i:-1};
 const fuNm=t=>(t.spec&&SPECS[t.type]&&SPECS[t.type][t.spec]&&SPECS[t.type][t.spec].n)||TW[t.type].n;/* nombre de la torre tal como sale en su ficha */
-// nombre en singular de cada unidad (propuesta de Claude, 19-nov; por confirmar con Nogal)
-const FUSG={bastion:'Soldado',pal:'Paladín',ass:'Asesino',monk:'Monje',fist:'Monje de batalla',drunk:'Maestro ebrio',robots:'Robot',mecha:'Mecha',kami:'K4M1-K4Z3',hack:'Robot',alien:'Alienígena',pred:'Depredador',hive:'Alienígena'};
+// nombre en singular de cada unidad (aprobados por Nogal, 19-nov)
+const FUSG={bastion:'Soldado',pal:'Paladín',ass:'Asesino',monk:'Monje',fist:'Monje de Batalla',drunk:'Maestro Ebrio',robots:'Robot',mecha:'Mecha',kami:'K4M1-K4Z3',hack:'Robot',alien:'Alienígena',pred:'Depredador',hive:'Alienígena'};
 const fuSing=t=>FUSG[t.spec]||FUSG[t.type]||fuNm(t);
 const fuTxt=h=>{const d=document.createElement('div');d.innerHTML=h;return d.textContent.trim();};
 // soldados vivos de cada bloque (para la vida en directo): normales, todos; Gremio, por clase; cerditos, el suyo
@@ -18,7 +18,7 @@ function fuList(t,w){const blocks=[...w.querySelectorAll('.ftfold[data-ft="more"
   const mx=/\s*×(\d+)$/.exec(nm);if(mx){n=+mx[1];nm=nm.slice(0,mx.index);}
   if(/^Estadísticas de unidades$/.test(nm)){nm=fuSing(t);const SD=fuSold(t,bi);n=Math.max(1,SD.length||((T.unit&&T.unit.n)||1));}
   const SD=fuSold(t,bi);for(let j=0;j<n;j++)L.push({bi,j,n,nm,ic:ic?ic.outerHTML:'',html:b.outerHTML,s:SD[j]||null});});
- const ic0=(L.find(u=>u.ic)||{}).ic||unitHead('tw:'+t.id)||'';L.forEach(u=>{if(!u.ic)u.ic=ic0;});
+ const ic0=(T.pig&&PIGU[t.type]?`<span class="tuic uhic" style="background:${T.col||'#5b8def'}">${icHtml(PIGU[t.type].ic)}</span>`:'')||(L.find(u=>u.ic)||{}).ic||unitHead('tw:'+t.id)||'';/* v361: los cerditos, con su icono en redondel (Nogal) */L.forEach(u=>{if(!u.ic)u.ic=ic0;});
  return {L,blocks};}
 function fuButtons(t,w){const R0=fuList(t,w);if(!R0.L)return [];const {L,blocks}=R0;if(!L.length)return [];const lupa=icU('m_lupa','🔍');
  const bh=u=>{const s=u.s;if(!s)return '';return s.hp>0?`<span class="fuubh"><i style="width:${Math.round(s.hp/s.max*100)}%"></i></span>`:`<span class="fuubh dead">Caído</span>`;};
@@ -67,3 +67,14 @@ function fuLine(){try{let sv=$('fuln');const k=String(PR.key||''),t=PR.open&&S&&
   sv.innerHTML=`<path d="M${x0} ${y0} C${mx} ${y0} ${mx} ${cy} ${cx} ${cy}" fill="none" stroke="#10202a" stroke-width="5" stroke-dasharray="6 5" stroke-linecap="round" opacity=".55"/><path d="M${x0} ${y0} C${mx} ${y0} ${mx} ${cy} ${cx} ${cy}" fill="none" stroke="#7ad8ff" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="${ur}" fill="none" stroke="#10202a" stroke-width="5" opacity=".55"/><circle cx="${cx}" cy="${cy}" r="${ur}" fill="none" stroke="#7ad8ff" stroke-width="2.5"/>`;sv.style.display='block';}
  else if(sv)sv.style.display='none';}catch(e){}setTimeout(()=>requestAnimationFrame(fuLine),50);}
 requestAnimationFrame(fuLine);
+// v361 · la tarjeta de una unidad sale a su lado, sin taparla (si no, el círculo y la línea quedan debajo de la tarjeta) (Nogal)
+function fuUnitBox(){const k=String(PR.key||''),t=PR.open&&S&&S.list&&S.list.find(o=>'tw:'+o.id===k);if(!t||FU.tid!==t.id||FU.i<0||typeof scrOf!=='function')return null;
+ /* la unidad se busca como mucho 4 veces por segundo (montar la ficha cada fotograma sería caro) */const now=performance.now();if(!FU.sc||FU.sc.k!==t.id+':'+FU.i||now-FU.sc.at>250){const w=document.createElement('div');w.innerHTML=fuBase(t);const u=fuButtons(t,w)[FU.i];FU.sc={k:t.id+':'+FU.i,at:now,s:u&&u.s};}const s=FU.sc.s;if(!s||s.hp<=0)return null;
+ const [x,y,wd]=scrOf(s),cz=wd/K,cx=x+cz/2,cy=y+cz/2,rr=Math.max(8,cz*.9)+10;return {l:cx-rr,r:cx+rr,t:cy-rr,b:cy+rr};}
+// si la unidad se mete debajo, la tarjeta se aparta lo justo, empujada por la unidad (así se mueve con ella, sin saltos);
+// sigue apartándose hacia el mismo lado mientras quepa, y una transición corta suaviza el resto (Nogal)
+function fuAvoid(l,t,wd,ht,r){const tip=$('tip'),ub=fuUnitBox(),k0=ub?FU.tid+':'+FU.i:null;/* al abrir la tarjeta, sale ya en su sitio; después, se aparta con suavidad */if(tip)tip.classList.toggle('fumv',!!ub&&FU.mk===k0);FU.mk=k0;if(!ub){FU.dir=null;return null;}
+ const hit=(L,T)=>L<ub.r&&L+wd>ub.l&&T<ub.b&&T+ht>ub.t,fit=(L,T)=>L>=6&&T>=6&&L+wd<=innerWidth-6&&T+ht<=innerHeight-6;
+ if(!hit(l,t))return null;const g=6,M={L:[ub.l-g-wd,t],R:[ub.r+g,t],U:[l,ub.t-g-ht],D:[l,ub.b+g]},dist=k=>Math.abs(M[k][0]-l)+Math.abs(M[k][1]-t);
+ if(FU.dir&&fit(...M[FU.dir]))return M[FU.dir];
+ const ks=Object.keys(M).filter(k=>fit(...M[k])).sort((a,b)=>dist(a)-dist(b));if(!ks.length)return null;FU.dir=ks[0];return M[ks[0]];}

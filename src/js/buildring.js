@@ -35,9 +35,12 @@ function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getB
  let bx=cx,by=cy,a0=-Math.PI/2;
  // v361: primero, el mismo anillo centrado en el solar pero girado hacia el lado libre (abajo, derecha, izquierda); solo si no cabe, desplazado
  let row=null;/* solar pegado arriba: las torres en fila, debajo del solar (Nogal) */
- const rowAt=y0=>{const gap=bz+14,L=[];for(let i=0;i<n;i++)L.push([px+(i-(n-1)/2)*gap,y0]);let h=0;for(const[x,y]of L){const b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h?null:L;};
- if(at(px,py)&&n<5){  if(at(px,py,-Math.PI/2)&&py<c.height*.4)row=rowAt(py+R*.95);
-  if(!row)for(const g of[Math.PI/2,0,Math.PI])if(!at(px,py,g)){bx=px;by=py;a0=g;break;}}else if(n<5&&!at(px,py)){bx=px;by=py;}
+ const rowAt=y0=>{const gap=bz+14,per=Math.max(1,Math.min(n,5,Math.floor((c.width-8)/gap))),L=[];/* v361: si no caben en una fila, otra debajo (Nogal) */
+  for(let i=0;i<n;i++){const r=Math.floor(i/per),k=i%per,m=Math.min(per,n-r*per),x0=Math.max(4+bz/2+(m-1)/2*gap,Math.min(c.width-4-bz/2-(m-1)/2*gap,px));L.push([x0+(k-(m-1)/2)*gap,y0+r*(bz+22)]);}
+  let h=0;for(const[x,y]of L){const b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h?null:L;};
+ if(at(px,py)&&py<c.height*.4)row=rowAt(py+R*.95);
+ if(!row&&at(px,py)&&n<5){
+  for(const g of[Math.PI/2,0,Math.PI])if(!at(px,py,g)){bx=px;by=py;a0=g;break;}}else if(n<5&&!at(px,py)){bx=px;by=py;}
  if(!row&&a0===-Math.PI/2&&at(bx,by)){let best=null;for(let r=0;r<=240&&!(best&&!best.h);r+=12)for(const[ux,uy]of[[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]){const x=cx+ux*r,y=cy+uy*r,h=at(x,y);if(!best||h<best.h)best={x,y,h};if(!h)break;}bx=best.x;by=best.y;}
  if(row){a0=0;bs.forEach((b,i)=>{b.style.left=row[i][0]+'px';b.style.top=row[i][1]+'px';});bx=px;by=py;}else bs.forEach((b,i)=>{const a=a0+(i-(n-1)/2)*d;b.style.left=bx+Math.cos(a)*R+'px';b.style.top=by+Math.sin(a)*R+'px';});
  m._p={px:bx,py:by,R,W:c.width,H:c.height};if(force||BM.hov||BM.arm)bmCardPos();}
