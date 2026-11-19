@@ -81,7 +81,7 @@ function guildBanner(t){if(!t.sd||t.sd.some(s=>s.cls==='flagb'))return;const U=T
 // Abanderado y Escamas: armadura y resistencia mágica extra (auraAP suma a la armadura y es toda la resistencia mágica de una unidad)
 {const _a=auraAP;auraAP=function(s){let b=_a.apply(this,arguments);try{let x=0;for(const t of S.list){if(!TW[t.type].guild||!t.sd)continue;const r=abRank(t,'gbanner');if(!r)continue;const q=t.sd.find(o=>o.cls==='flagb'&&o.hp>0);if(q&&Math.hypot(s.x-q.x,s.y-q.y)<=BNRR*K)x=Math.max(x,r.a);}
    if(s.air&&s.tw){const sc=abRank(s.tw,'dscales');if(sc)x+=sc.a;}b+=x;}catch(e){}return b;};}
-// Oro por baja del gremio: +25 % del oro de las bajas de sus aventureros (v360: Contratos lucrativos pasa a ser Botín, barras_v360.js)
+// Comisión del gremio: +25 % del oro de las bajas de sus aventureros (v360: Contratos lucrativos pasa a ser Botín, barras_v360.js)
 const guildLoot=src=>src&&src.type&&TW[src.type]&&TW[src.type].guild?1.25:1;
 
 // ================= Mímico glotón =================
