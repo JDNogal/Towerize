@@ -6,3 +6,5 @@
 .kw:not(.st)[data-kw="pres"],.ftmt .kw[data-kw="pres"]{color:var(--kpres,#6e5530)}
 .kw:not(.st)[data-kw="resv"],.ftmt .kw[data-kw="resv"]{color:var(--kresv,#1d65a0)}
 .kw:not(.st)[data-kw="botin"],.ftmt .kw[data-kw="botin"]{color:var(--kbotin,#8a6400)}
+/* v360 · «Saltar» marcado: el segundo clic salta */
+#relic button.skarm{background:linear-gradient(180deg,#c0503a,#8a2a1a)!important;color:#fff1d6!important;border-color:#6a1a0e!important}

@@ -350,7 +350,7 @@ function act(e){
  else if(a==='hdet'){RL.hdet=!RL.hdet;RL.dman={};RL.rman={};const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
  else if(a==='hsel'){if(RL.hsel!==b.dataset.id&&!RL.hdet)RL.dman={};RL.rman={};RL.hsel=b.dataset.id;const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
  else if(a==='towpick'){towerPick(b.dataset.k);}
- else if(a==='towskip'){towerSkip();}
+ else if(a==='towskip'){if(typeof skArm==='function'&&skArm(b))return;/* v360: el primer clic solo lo marca */towerSkip();}
  else if(a==='towok'){towerOk();}
  else if(a==='ppeek'){S.ppk=S.ppk?0:1;ui();}
  else if(a==='tdet'){/* detalles de todas las torres de la oferta a la vez */RL.tdet=!RL.tdet;$('relic').classList.toggle('tdeton',!!RL.tdet);b.textContent=RL.tdet?'− Ocultar detalles':'+ Ver detalles';}

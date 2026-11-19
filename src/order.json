@@ -203,6 +203,7 @@
   "hud_v354.js",
   "almas_v354.js",
   "barras_v360.js",
+  "ventanas_clic_v360.js",
   "eventos_cambio.js"
  ]
 }

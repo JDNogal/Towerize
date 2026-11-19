@@ -9,6 +9,7 @@ for(const era of [1,2]){const a=await go(era);await p.waitForTimeout(150);const 
 await p.screenshot({path:'tests/out/cofre_anim.png'});
 // v352 · salida: al elegir, la ventana sigue abierta mientras sale la animación y luego se aplica la elección
 const n0=await p.evaluate(()=>S.relics.length);const cc=await p.evaluate(()=>{const r=document.querySelectorAll('#relic .cgrid .rcard')[0].getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2];});
+/* v360: mientras se dibuja, los clics no eligen: se espera a que acabe */for(let k=0;k<40&&await p.evaluate(()=>typeof wlBusy==='function'&&wlBusy());k++)await p.waitForTimeout(100);
 await p.mouse.click(cc[0],cc[1]);await p.waitForTimeout(400);const exMid=await p.evaluate(n0=>document.getElementById('relic').classList.contains('open')&&S.relics.length===n0&&CFOUT.on,n0);
 await p.waitForTimeout(2400);const exEnd=await p.evaluate(n0=>!document.getElementById('relic').classList.contains('open')&&S.relics.length===n0+1&&!CFOUT.on,n0);r.exit={exMid,exEnd};
 const ok=r[1].cofre&&!r[1].e2&&r[2].e2&&r[1].sign&&r[2].sign&&!r[1].tipEarly&&r[1].ready&&r[2].ready&&r[1].cards>0&&r[1].mid&&r.exit.exMid&&r.exit.exEnd&&!errs.length;

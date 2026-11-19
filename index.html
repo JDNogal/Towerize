@@ -3140,6 +3140,8 @@ body.mfs.pcpick #ui .prow .cardw>.rbtn{position:absolute;left:66px;top:-6px}
 .kw:not(.st)[data-kw="pres"],.ftmt .kw[data-kw="pres"]{color:var(--kpres,#6e5530)}
 .kw:not(.st)[data-kw="resv"],.ftmt .kw[data-kw="resv"]{color:var(--kresv,#1d65a0)}
 .kw:not(.st)[data-kw="botin"],.ftmt .kw[data-kw="botin"]{color:var(--kbotin,#8a6400)}
+/* v360 · «Saltar» marcado: el segundo clic salta */
+#relic button.skarm{background:linear-gradient(180deg,#c0503a,#8a2a1a)!important;color:#fff1d6!important;border-color:#6a1a0e!important}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -5942,7 +5944,7 @@ const evCount=()=>(ROUNDS<19?2:ROUNDS<24?3:ROUNDS<29?4:5)+(Math.random()<.5?1:0)
 // v305: algunos eventos se desbloquean con un logro (el Nido abandonado, con «Todo arde»)
 const EVLOCK={nest:'pyro'},evLocked=k=>!!(EVLOCK[k]&&typeof ACHS!=='undefined'&&!ACHS[EVLOCK[k]]&&!(typeof OPT!=='undefined'&&OPT.u_ev));
 const evEraOk=k=>{const E=EVENTS[k];return !E.sub&&((S&&S.era===2)?E.era===2:E.era!==2);},evSeeEra=k=>EVENTS[k].era!==2||(typeof era2Ok==='function'&&era2Ok());
-function placeEvents(c,A){const pool=shuf(Object.keys(EVENTS).filter(k=>evEraOk(k)&&!evLocked(k))),n=Math.min(evCount(),pool.length),cand=[];
+function placeEvents(c,A){const all=shuf(Object.keys(EVENTS).filter(k=>evEraOk(k)&&!evLocked(k))),/* v360 (Nogal, 14-nov): primero los que nunca has abierto */pool=all.filter(k=>!seen('ev',k)).concat(all.filter(k=>seen('ev',k))),n=Math.min(evCount(),pool.length),cand=[];
  for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k]||(bx===c&&by===c))continue;if(Math.abs(bx-A[0])+Math.abs(by-A[1])<2)continue;cand.push(k);}
  shuf(cand);for(let i=0;i<n&&i<cand.length;i++)S.evts[cand[i]]=pool[i];}
 const relEra=r=>!(r.era===2&&!(typeof S!=='undefined'&&S&&S.era===2)),relSeeEra=r=>r.era!==2||(typeof era2Ok==='function'&&era2Ok());
@@ -8491,7 +8493,7 @@ function act(e){
  else if(a==='hdet'){RL.hdet=!RL.hdet;RL.dman={};RL.rman={};const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
  else if(a==='hsel'){if(RL.hsel!==b.dataset.id&&!RL.hdet)RL.dman={};RL.rman={};RL.hsel=b.dataset.id;const sc=$('relic').scrollTop;renderHeroPick();$('relic').scrollTop=sc;}
  else if(a==='towpick'){towerPick(b.dataset.k);}
- else if(a==='towskip'){towerSkip();}
+ else if(a==='towskip'){if(typeof skArm==='function'&&skArm(b))return;/* v360: el primer clic solo lo marca */towerSkip();}
  else if(a==='towok'){towerOk();}
  else if(a==='ppeek'){S.ppk=S.ppk?0:1;ui();}
  else if(a==='tdet'){/* detalles de todas las torres de la oferta a la vez */RL.tdet=!RL.tdet;$('relic').classList.toggle('tdeton',!!RL.tdet);b.textContent=RL.tdet?'− Ocultar detalles':'+ Ver detalles';}
@@ -15674,6 +15676,36 @@ function b6Draw(now){B6.raf=0;const cs=document.querySelectorAll('canvas.b6c');i
   const lb=cv.parentElement&&cv.parentElement.querySelector('.ftml[data-b6]');if(lb){const l=M.l(t);if(lb.textContent!==l)lb.textContent=l;}}
  B6.raf=requestAnimationFrame(b6Draw);}
 setInterval(()=>{if(!B6.raf&&document.querySelector('canvas.b6c')){B6.last=performance.now();B6.raf=requestAnimationFrame(b6Draw);}},250);
+// ==================== v360 · Clics durante las animaciones de las ventanas y «Saltar» con confirmación (Nogal, 15-nov y 19-nov) ====================
+// La gente salta las animaciones a base de clics. Para que un clic de más no elija una reliquia, una torre, una pieza u opción sin querer:
+//  · mientras la ventana (cofre o paquete, oferta de torres, evento, elegir pieza) se está dibujando, el primer clic (o Intro/Espacio)
+//    la acelera: todo sigue igual de fluido, pero el triple de rápido;
+//  · los clics siguientes dentro de la ventana no hacen nada hasta que ha salido todo; entonces ya se puede elegir.
+// Fuera de la ventana, el clic solo acelera. Es la misma regla para el pergamino (era 1), el dron (era 2) y el cofre.
+// «Saltar» la oferta de torres: el primer clic lo marca («Pulsa otra vez para saltar») y el segundo salta.
+const WLX=3;
+const wlHost=()=>{const rl=$('relic');if(rl&&rl.classList.contains('open'))return rl;if(document.body.classList.contains('pcpick'))return $('panel');return null;};
+// animaciones que están dibujando la ventana: las de una sola vez (no las que se repiten, como el balanceo de las cartas) y no las transiciones de pasar el ratón
+function wlAnims(h){try{return document.getAnimations().filter(a=>{if(typeof CSSTransition!=='undefined'&&a instanceof CSSTransition)return false;
+ const t=a.effect&&a.effect.target;if(!t||!h.contains(t))return false;const ti=a.effect.getComputedTiming();if(ti.iterations===Infinity||!isFinite(ti.endTime))return false;
+ return a.playState==='running'||a.playState==='pending';});}catch(e){return [];}}
+// el pergamino de la era 1 se dibuja con su propio reloj (pergamino_nuevo.js): ha terminado cuando la última carta está entera
+const wlPg=h=>{const o=typeof PGF!=='undefined'&&PGF.on;return o&&o.h&&(o.h===h||h.contains(o.h))?o:null;};
+const wlPgEnd=o=>{let n=1;try{n=pgCfg[o.kind].cards(o.h).length||1;}catch(e){}return 2.55+.8+.2*(n-1)+.05;};
+function wlBusy(){const h=wlHost();if(!h)return false;/* ya se ha elegido: la salida del cofre va a su aire */if(typeof CFOUT!=='undefined'&&CFOUT.on)return false;const o=wlPg(h);if(o&&o.t0>0&&(performance.now()-o.t0)/1000<wlPgEnd(o))return true;return wlAnims(h).length>0;}
+function wlAccel(h){if(!h)return;const o=wlPg(h);if(o&&!(o.spd>1)){o.spd=WLX;o.lastN=performance.now();}
+ for(const a of wlAnims(h))try{if(a.playbackRate!==WLX){if(a.updatePlaybackRate)a.updatePlaybackRate(WLX);else a.playbackRate=WLX;}}catch(e){}}
+// el reloj del pergamino corre WLX veces más deprisa una vez acelerado
+{const _pt=pgTick;pgTick=function(now){const o=PGF.on;if(o&&o.spd>1&&o.t0>0){if(o.lastN!=null)o.t0-=(now-o.lastN)*(o.spd-1);o.lastN=now;}return _pt.apply(this,arguments);};}
+{const inWin=(e,h)=>!!(h&&e.target&&e.target.nodeType===1&&h.contains(e.target));
+ const ptr=e=>{if(!e.isTrusted||!wlBusy())return;const h=wlHost();wlAccel(h);if(inWin(e,h))e.stopPropagation();};
+ /* en window (y no en document) para ir antes que los demás que escuchan en captura, como la salida del cofre */
+ for(const ty of ['pointerdown','mousedown','touchstart'])window.addEventListener(ty,ptr,true);
+ window.addEventListener('click',e=>{/* los clics que lanza el propio juego (p. ej. al acabar la salida del cofre) pasan siempre */if(!e.isTrusted||!wlBusy())return;const h=wlHost();wlAccel(h);if(inWin(e,h)){e.stopPropagation();e.preventDefault();}},true);
+ window.addEventListener('keydown',e=>{if(!e.isTrusted)return;if(!(e.key==='Enter'||e.key===' '||e.key==='Spacebar'||/^[1-9]$/.test(e.key)))return;if(!wlBusy())return;wlAccel(wlHost());e.stopPropagation();e.preventDefault();},true);}
+// «Saltar» con confirmación: devuelve true si este clic solo lo ha marcado
+function skArm(b){if(!b)return false;if(b.dataset.arm==='1')return false;b.dataset.arm='1';b.dataset.lbl=b.innerHTML;b.classList.add('skarm');b.innerHTML='Pulsa otra vez para saltar';
+ try{sfx('ui');}catch(e){}clearTimeout(b._skT);b._skT=setTimeout(()=>{if(b.isConnected&&b.dataset.arm==='1'){b.dataset.arm='';b.classList.remove('skarm');b.innerHTML=b.dataset.lbl;}},4000);return true;}
 // ==================== v358 · Eventos que no se pueden jugar bien se cambian por otro (Nogal, 15 y 17-nov) ====================
 // Los eventos se reparten al crear la partida, pero en el mapa solo se ve «?»: qué evento es se decide de verdad al colocar la pieza
 // encima (que es cuando se abre). Justo en ese momento se comprueba:
