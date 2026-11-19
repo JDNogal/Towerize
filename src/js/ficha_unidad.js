@@ -5,7 +5,7 @@
 const FU={tid:null,i:-1};
 const fuNm=t=>(t.spec&&SPECS[t.type]&&SPECS[t.type][t.spec]&&SPECS[t.type][t.spec].n)||TW[t.type].n;/* nombre de la torre tal como sale en su ficha */
 // nombre en singular de cada unidad (propuesta de Claude, 19-nov; por confirmar con Nogal)
-const FUSG={bastion:'Soldado',pal:'Paladín',ass:'Asesino',monk:'Monje',fist:'Monje de batalla',drunk:'Maestro ebrio',robots:'Robot',mecha:'Mecha',kami:'Androide kamikaze',hack:'Robot',alien:'Alienígena',pred:'Depredador',hive:'Alienígena'};
+const FUSG={bastion:'Soldado',pal:'Paladín',ass:'Asesino',monk:'Monje',fist:'Monje de batalla',drunk:'Maestro ebrio',robots:'Robot',mecha:'Mecha',kami:'K4M1-K4Z3',hack:'Robot',alien:'Alienígena',pred:'Depredador',hive:'Alienígena'};
 const fuSing=t=>FUSG[t.spec]||FUSG[t.type]||fuNm(t);
 const fuTxt=h=>{const d=document.createElement('div');d.innerHTML=h;return d.textContent.trim();};
 // soldados vivos de cada bloque (para la vida en directo): normales, todos; Gremio, por clase; cerditos, el suyo
