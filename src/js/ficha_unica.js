@@ -40,6 +40,14 @@ TMECH.push(
 function fuVida(t,src){const T=TW[t.type],u=T.glut?glutU(t):(t.sd&&t.sd[0]);if(!u||!u.max)return '';
  if(u.hp<=0){const rz=T.dragon?DRREZ:Math.max(1,u.rtM||10);return `<div class="fhbox fhhp dead fuhp"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><span class="fhdv">Caído · vuelve en ${Math.ceil(u.rt||0)} s</span></div>${fhSeg(rz,u.rt||0)}</div>`;}
  const hp=Math.ceil(u.hp),mx=Math.round(u.max);return `<div class="fhbox fhhp fuhp"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><b>${hp} / ${mx}</b></div><div class="ftbar"><i style="width:${hp/mx*100}%"${hp/mx<.35?' class="low"':''}></i></div></div>`;}
+// torres que ilumina este Faro ahora mismo (las que reciben su mejora)
+const fuIlN=f=>S.list.filter(o=>o!==f&&!o.hero&&TW[o.type]&&!TW[o.type].faro&&faroIn(f,o)>0).length;
+const fuIl=f=>{const n=fuIlN(f);return n?'Ilumina '+n+(n===1?' torre':' torres'):'No ilumina ninguna torre';};
+setInterval(()=>{try{const t=typeof FT!=='undefined'&&FT.t;if(!t||!TW[t.type]||!TW[t.type].faro)return;const e=document.querySelector('#side .fuil,#tip .fuil');if(e){const x=fuIl(t);if(e.textContent!==x)e.textContent=x;}}catch(e){}},300);
+// DPS teórico del Omega por tipo de daño, con las mismas cuentas que omegaTick (omega.js): ametralladoras (físico), rayo (mágico) y arco (elemental, al primero)
+function omDps(t){const fam=t.fam||[],L=t.lvl||1,st=stats(t),M=[0,1,1.3,1.6,2][L]*(st.dmg/TW.omega.dmg/lvMods('omega',L,null).dmg||1)*(t.xd||1),o={};
+ if(fam.includes('fis')){const guns=L>=4?3:L>=2?2:1;o.fis=(L>=3?5.5:4)*guns*3*(L>=4?1.4:1)*M;}
+ if(fam.includes('mag'))o.mag=(L>=2?22:14)*M/1.2;if(fam.includes('ele'))o.ele=8*M;return o;}
 // ---- ficha ----
 const fuChips=a=>`<div class="ftchips n${a.length}">${a.join('')}</div>`;
 function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lvl||1;
@@ -56,6 +64,8 @@ function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lv
  const M=ftMech(t);if(M&&M.pips){const c=M.pips(t),mb=q('.ftmb');if(mb)mb.outerHTML=`<div class="fupips">${Array.from({length:c.n},(_,i)=>`<i class="${i<c.d?'on':''}"></i>`).join('')}</div>`;}
  // vida en barra (dragón con forma y Mímico), con aire debajo de la mecánica
  if((T.dragon&&(t.stage||0)>=1)||T.glut){const vh=fuVida(t,src),at=q('.ftmech')||q('.ftdesc');if(vh&&at)at.insertAdjacentHTML('afterend',vh);}
+ // Faro: «Ilumina N torres» al otro lado de la línea de la barra (o solo, a Nv 4) y la barra en color luz
+ if(T.faro){const mb=q('.ftmech');const il=`<span class="fuil">${fuIl(t)}</span>`;if(mb){mb.classList.add('fu-luz');const ml=mb.querySelector('.ftml');if(ml)ml.outerHTML=`<div class="furow">${il}${ml.outerHTML}</div>`;}else{const d0=q('.ftdesc');if(d0)d0.insertAdjacentHTML('afterend',`<div class="furow solo">${il}</div>`);}}
  // números propios
  const chips=q('.ftchips'),setChips=a=>{if(chips)chips.outerHTML=fuChips(a);else{const fx=q('.ftfx')||q('.ftgap');if(fx)fx.insertAdjacentHTML('beforebegin',fuChips(a));}};
  if(T.faro){const L=FARO[lv-1],a=[ftChip('ca',kst('area','Radio',src),f(L.r)),ftChip('cg',kst('rng','Alcance',src),'+'+Math.round(L.rg*100)+'%')];
@@ -65,15 +75,23 @@ function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lv
    const dp=q('.ftdps');if(dp)dp.dataset.theo=dps;else{const g=q('.ftgap');if(g)g.insertAdjacentHTML('afterend',ftDpsBar(t,dps));}}}
  if(T.wall){const s=stats(t),a=[ftChip('cr',kst('cool','Enfriam.',src),f(1/s.rate)+' s'),ftChip('cg',kst('rng','Rango',src),cas(s.range/K))];
   a.push(ftChip('ca',kst('dur','Duración',src),durOf(T,s)));setChips(a);}
- if(T.omega){const fam=t.fam||[];setChips([ftChip('cg',kst('rng','Rango',src),cas(stats(t).range/K))]);rm('.ftdps');rm('.ftfold[data-ft="obj"]');
-  const c=q('.ftchips');if(c)c.insertAdjacentHTML('afterend',fam.length?`<div class="fuom">${OMORD.filter(k=>fam.includes(k)).map(k=>`<div class="omf"><span class="omi">${omPc(k)}</span><span><b style="color:${OMF[k].col}">${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small></span></div>`).join('')}</div>`:'<small>Todavía no ha absorbido ninguna torre: solo lanza un pulso muy débil.</small>');}
+ if(T.omega){const fam=t.fam||[],D=omDps(t),a=[];
+  if(D.fis)a.push(ftChip(dtCls('phys'),kst('tphys','Físico',src),f(D.fis)));if(D.mag)a.push(ftChip(dtCls('magic'),kst('tmagic','Mágico',src),f(D.mag)));if(D.ele)a.push(ftChip(dtCls('elem'),kst('telem','Elemental',src),f(D.ele)));
+  a.push(ftChip('cg',kst('rng','Rango',src),cas(stats(t).range/K)));setChips(a.slice(0,4));rm('.ftfold[data-ft="obj"]');
+  // efectos que no son daño directo (quemadura, veneno, control, apoyo), en su pastilla
+  const fx=[];if(fam.includes('fue'))fx.push(fxPill('burn','',src,'Quemadura'));if(fam.includes('ven'))fx.push(fxPill('poison','',src,'Veneno'));if(fam.includes('con'))fx.push(fxPill('slow','30%',src,'Ralentiza'));if(fam.includes('ele')&&lv>=4)fx.push(fxPill('ez','',src,'Electrizado'));
+  const ofx=q('.ftfx');if(ofx)ofx.remove();if(fx.length){const c=q('.ftchips');if(c)c.insertAdjacentHTML('afterend',`<div class="ftfx">${fx.join('')}</div>`);}
+  const tot=(D.fis||0)+(D.mag||0)+(D.ele||0),dp=q('.ftdps');if(dp){if(tot>0)dp.outerHTML=ftDpsBar(t,tot);else dp.remove();}else if(tot>0){const g=q('.ftchips');if(g)g.insertAdjacentHTML('afterend',ftDpsBar(t,tot));}
+  // las familias, en pips del color de cada una, en el orden en que las metiste
+  const mb=q('.ftmech .ftmb');if(mb)mb.outerHTML=`<div class="fupips om">${Array.from({length:omCap(t)},(_,i)=>{const k=fam[i];return k?`<i class="on" style="background:${OMF[k].col}" title=""></i>`:'<i></i>';}).join('')}</div>`;
+  const c=q('.ftdps')||q('.ftfx')||q('.ftchips');if(c)c.insertAdjacentHTML('afterend',fam.length?`<div class="fuom">${fam.map(k=>`<div class="omf"><span class="omi">${omPc(k)}</span><span><b style="color:color-mix(in srgb,${OMF[k].col} 65%,#2a1d08)">${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small></span></div>`).join('')}</div>`:'<small>Todavía no ha absorbido ninguna torre: solo lanza un pulso muy débil.</small>');}
  if(T.log){const fx=q('.ftfx');if(fx)fx.insertAdjacentHTML('beforeend',fxPill('push','0,5',src,'Empuje'));}
  // Más detalles propios (sacados de la ficha antigua, que ya tiene las cifras bien)
  const more=[];
  if(T.guild){const o=document.createElement('div');o.innerHTML=uniqInfo(t,t.type);o.querySelectorAll('.usub').forEach(e=>more.push(e.outerHTML));
   more.push(R('gd','Recompensa por ronda',[10,20,35,50][lv-1]+' 🪙')+R('gd','Comisión','+25%'));if(lv>=4)more.push(`<small><b>Renombre</b>: cuando un aventurero mata a una Mini-élite, una Élite o un Jefe, todo el grupo gana daño y vida.</small>`);}
  if(T.dragon&&(t.stage||0)>=1)more.push(dragRows(t,t.stage,src));
- if(T.pig&&lv>=4){const P=PIGU[t.type];more.push(R('',kst('usol','Unidad',src),`<span class="kw" data-kw="pigu" data-src="${src}">${P.n}</span>`));}
+ if(T.pig&&lv>=4){const P=PIGU[t.type];let h=kwHtml0('pigu',src)||'';h=h.replace(/^<b>[\s\S]*?<\/b>/,'').replace(/^<small[^>]*>[\s\S]*?<\/small>/,'');more.push(`<div class="usub"><b>${P.n}</b>${h}</div>`);}/* v361: su tarjeta de unidad (ficha_unidad.js) */
  if(more.length){let mf=q('.ftfold[data-ft="more"]');if(T.guild||T.dragon){if(mf)mf.remove();mf=null;}
   if(mf)mf.querySelector('.ftin').insertAdjacentHTML('afterbegin',more.join(''));else{const c=q('.ftc');if(c)c.insertAdjacentHTML('beforeend',ftFold('more','<span>Más detalles</span>',more.join('')));}}
  // fuera lo repetido arriba y las cifras que valen 0

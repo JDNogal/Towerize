@@ -163,6 +163,7 @@
   "ventanas_barra.js",
   "regen_resmag.js",
   "iconos_svg.js",
+  "iconos_v361.js",
   "torres_evento_nv4.js",
   "logros_niveles.js",
   "puntuacion.js",
@@ -205,6 +206,7 @@
   "almas_v354.js",
   "barras_v360.js",
   "ficha_unica.js",
+  "ficha_unidad.js",
   "ventanas_clic_v360.js",
   "eventos_cambio.js"
  ]

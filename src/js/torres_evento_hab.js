@@ -152,7 +152,7 @@ function dragonAdults(dt){for(const t of S.list){if(!t.fly||!t.flag)continue;con
 
 // filas de la ficha del dragón volador (vida, armadura, reaparición)
 function dragRows(t,sg,src){const sc=t&&abRank(t,'dscales'),a=sc?sc.a:0,s=t&&t.sd&&t.sd[0]&&t.sd[0].air?t.sd[0]:null;
- return R('chp',kst('uhp','Vida',src),s&&s.hp>0&&s.hp<s.max?Math.ceil(s.hp)+' / '+DRHP[sg]:DRHP[sg])+R('cph',kst('aphys','Armadura',src),TW.dragon.unit.ap+a)+(a?R('cmg',kst('umr','Resistencia mágica',src),a):'')+R('cr','Reaparece',DRREZ+' s');}
+ return R('chp',kst('uhp','Vida',src),s&&s.hp>0&&s.hp<s.max?Math.ceil(s.hp)+' / '+DRHP[sg]:DRHP[sg])+R('cph',kst('aphys','Armadura',src),TW.dragon.unit.ap+a)+(a?R('cmg',kst('umr','Resistencia mágica',src),a):'')+R('cr',kst('urez','Reaparición',src),DRREZ+' s');}
 // habilidades en la ficha de una torre de evento: en partida, con sus botones; en el compendio (Nv Máx), la lista con precios
 function uabSheet(t,k,CL,lvo,pin){if(!UAB[k])return '';
  if(t&&!lvo){if(!uabOk(t))return '';t.ab=t.ab||{};t.acd=t.acd||{};return '<div style="margin-top:8px"><b>Habilidades</b></div>'+abListIds(UAB[k],t,pin);}

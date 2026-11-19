@@ -3,3 +3,16 @@
 .fuom{margin:6px 0 4px}.fuom .omf small{display:block;font-size:12.5px;line-height:1.35}
 .fupips{display:flex;gap:5px;margin:6px 0 2px}.fupips i{flex:1;height:10px;border-radius:5px;background:color-mix(in srgb,currentColor 15%,transparent)}.fupips i.on{background:var(--acc,#c2560e)}
 .fuhp{margin-top:10px}
+.furow{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.furow .ftml{margin-left:auto}.fuil{font-size:12.5px;font-weight:600;color:#8a6a10}
+.furow.solo{margin:2px 0 6px}
+.fu-luz .ftmb i{background:linear-gradient(90deg,#fff4c2,#ffe27a 55%,#ffcc2e)!important;box-shadow:0 0 6px rgba(255,214,90,.75)}
+:root[data-skin="holo"] .fuil{color:#ffe79a}
+/* tarjeta de unidad (ficha_unidad.js) */
+.fuubs{display:flex;flex-direction:column;gap:6px;margin:4px 0 8px}
+.fuub{display:flex;align-items:center;gap:8px;width:100%;padding:6px 10px;border-radius:9px;border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 45%,transparent);background:color-mix(in srgb,#fff 55%,transparent);color:var(--ink,#2a2118);font:600 13.5px system-ui,sans-serif;cursor:pointer;text-align:left}
+.fuub:hover{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc,#c2560e) 35%,transparent)}.fuub span{flex:1}.fuub i{font-style:normal;font-weight:800;opacity:.6}.fuub .tuic{width:24px;height:24px;flex:none}
+.fuback{display:inline-flex;align-items:center;gap:4px;margin:0 0 6px;padding:3px 10px;border-radius:8px;border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 45%,transparent);background:color-mix(in srgb,#fff 55%,transparent);color:var(--ink,#2a2118);font:700 12.5px system-ui,sans-serif;cursor:pointer}
+.fuu .ttl{display:flex;align-items:center;gap:6px}.fuu .ttl .tuic{width:26px;height:26px}
+.fuhps .ftbar{margin-top:5px;position:relative}.fuhps .ftbar.dead{background:color-mix(in srgb,#888 25%,transparent)}.fuhps .ftbar em{position:absolute;inset:0;font:600 11px system-ui,sans-serif;font-style:normal;display:flex;align-items:center;justify-content:center;opacity:.75}
+.fudsc small{display:block;font-size:12.5px}
+:root[data-skin="holo"] .fuub,:root[data-skin="holo"] .fuback{background:color-mix(in srgb,#fff 8%,transparent);color:#e8f4ff}
