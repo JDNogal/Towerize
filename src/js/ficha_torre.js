@@ -2,7 +2,7 @@
 // Corta y con lo importante arriba: qué hace en una línea; su mecánica en directo con barra (solo las torres que la tienen);
 // 4 números (DPS, enfriamiento, rango, área; los que valen 0 no salen); debajo, el DPS real en directo comparado con el teórico
 // (entre oleadas, congelado con la media de la última, en gris); los efectos solo con su icono (el bocadillo los explica);
-// Objetivo y Más detalles plegados, Habilidades abierta. Lo desplegado no se recuerda entre fichas: cada ficha se abre siempre igual.
+// Objetivo y Más detalles plegados; sin Habilidades (v361: se miran en el anillo). Lo desplegado no se recuerda entre fichas: cada ficha se abre siempre igual.
 const FT={key:null,t:null,open:{}};
 const FTFOLD={obj:false,ab:true,more:false};
 // ---- mecánicas con barra en directo: v = 0..1, l = texto de la derecha, base = se ve también la descripción de la torre ----
@@ -69,10 +69,7 @@ function fichaTorre(t){
  // Objetivo (plegado): a quién ataca y, en la ficha fijada, el selector
  if(!T.unit){const notgt=SP&&SP.notgt,tg=notgt?'':tgtRow(t,src,PR.pinned&&PR.key===src),tw=tg.replace(/<div class="row[^>]*><span>[^]*?<\/span><span>[^<]*<\/span><\/div>/,'').replace(/(<div class="tgt">)<div>[^]*?<\/span><\/div>/,'$1');
   h+=ftFold('obj',`<span>${kst('tgt','Objetivo',src)}${notgt?'':' <em>· '+TGT[t.mode].n+'</em>'}</span>`,tw+R('cg',kst('tgts','Ataca a',src),objIc(!!T.ground,src)));}
- // Habilidades (abierta)
- const ids=abIds(t);if(ids.length){t.ab=t.ab||{};const nOn=ids.filter(id=>t.ab[id]).length;
-  h+=ftFold('ab',`<span>Habilidades <em>· ${nOn} de ${ids.length}</em></span>`,ids.map(id=>{const D=AB[id],rk=t.ab[id]||0,n=D.ranks.length;
-   return `<div class="row ftab${rk?'':' cno'}"><span>${kst('ab_'+id,D.n,src)}</span><span class="ftpip">${Array.from({length:n},(_,i)=>`<i class="${i<rk?'on':''}"></i>`).join('')}</span></div>`;}).join(''));}
+ // Habilidades: en partida NO van en la ficha (v361, Nogal): se miran en los botones del anillo; en el compendio, sí
  // Más detalles (plegado): el resto de datos, cada uno con su icono y su color
  const more=ftStrip(rest,T.unit?['rng','eff','tgt','cool','dps']:['cool','rng','area','eff','tgts','tgt','dps'])+(ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!ss.area&&!T.cone&&!(t.type==='robots'&&t.spec==='mecha')?' (sin efecto aquí)':''}</div>`).join(''):'');
  if(more.replace(/<[^>]+>/g,'').trim())h+=ftFold('more','<span>Más detalles</span>',more);

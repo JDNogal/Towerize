@@ -1,3 +1,5 @@
 /* v361 · ficha nueva de las torres de evento (ficha_unica.js) */
 .fuRk{margin-left:auto;font-size:13px;font-weight:600;white-space:nowrap}.fuRk b{font:700 16px Georgia,serif;color:var(--acc,#c2560e)}
 .fuom{margin:6px 0 4px}.fuom .omf small{display:block;font-size:12.5px;line-height:1.35}
+.fupips{display:flex;gap:5px;margin:6px 0 2px}.fupips i{flex:1;height:10px;border-radius:5px;background:color-mix(in srgb,currentColor 15%,transparent)}.fupips i.on{background:var(--acc,#c2560e)}
+.fuhp{margin-top:10px}

@@ -1,5 +1,5 @@
 // v352 · Ficha de torre nueva: qué hace, mecánica con barra (solo las que la tienen), 4 números, DPS real en directo
-// (congelado entre oleadas), efectos solo con icono, Objetivo y Más detalles plegados, Habilidades abierta, sin recordar lo desplegado
+// (congelado entre oleadas), efectos solo con icono, Objetivo y Más detalles plegados, sin Habilidades (v361), sin recordar lo desplegado
 const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const errs=[];
 const p=await b.newPage({viewport:{width:1280,height:720}});p.on('pageerror',e=>errs.push(e.message));
 await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');localStorage.setItem('rt-story',JSON.stringify({p:3,name:'Test',intro:1,e2n:1,e2a:1,e2v:1}));}catch(e){}});
@@ -15,7 +15,7 @@ const card=k=>p.evaluate(k=>{pinTower(_T[k]);const el=document.querySelector('#s
   dup:[...el.querySelectorAll('.ftfold[data-ft="more"] .row [data-kw]')].map(x=>x.dataset.kw).filter(x=>['cool','rng','area','dps'].includes(x)),sel:!!el.querySelector('.ftfold[data-ft="obj"] select')};},k);
 const out={},A=await card('arrow'),V=await card('sala'),L=await card('altar'),B=await card('bastion');
 out.arrow=A.chips===3&&!A.mech&&A.dps&&A.desc&&A.fo.obj===false&&A.fo.more===false&&!A.dup.length&&A.sel;
-out.volc=V.chips===4&&V.mech&&V.dps&&V.fx&&V.fo.ab===true&&V.fo.more===false;
+out.volc=V.chips===4&&V.mech&&V.dps&&V.fx&&V.fo.ab===undefined&&V.fo.more===false;
 out.altarNoDps=!L.dps&&!L.mech;out.bastion=B.dps&&B.chips>=3;
 // lo desplegado se mantiene al refrescar la misma ficha, pero no al abrir otra
 out.keep=await p.evaluate(()=>{pinTower(_T.arrow);const d=document.querySelector('#side .ftfold[data-ft="more"],#tip .ftfold[data-ft="more"]');d.open=true;d.dispatchEvent(new Event('toggle'));refreshPrim();
