@@ -78,6 +78,7 @@ const T=[
  ['eventos_cambio.js','Eventos que no se pueden jugar bien (casilla especial, héroe al máximo, oro y vida a la vez) se cambian por otro al abrirse'],
  ['revision_v351.js','Revisión de eventos, reliquias y héroes: duplicados, avisos, Yunque, Moneda, Reinhart, huellas, Implante y versión'],
  ['ficha_unidad_v361.js','v361: tarjeta de unidad con «Volver» en las torres con unidades (Baluarte, Gremio, cerditos; PC y móvil)'],
+ ['sos_coordenadas_v362.js','v362: Señal de socorro › Pedirles coordenadas (cofre y evento lejos y separados; sin sitio, se cambia el evento)'],
  ['ficha_reintentar_v362.js','v362: la ficha de una torre no tapa «Reintentar» ni el resto de la interfaz'],
  ['barras_palabra_v361.js','v361: el nombre de cada barra de mecánica abre el bocadillo de su propia palabra clave'],
  ['anillo_bordes_v361.js','v361: el anillo de la torre no queda debajo de la interfaz con la torre en cualquier borde (PC y móvil)'],

@@ -21,7 +21,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  let el=S.portals[0].plan.elite||0;ev('lab',0);done();out.labRel=S.relics.includes('repro')&&(S.portals[0].plan.elite||0)===el+1;
  ev('lab',1);done();out.labVch=S.vch.up===1;const rnd=Math.random;Math.random=()=>.1;g=S.gold;ev('lab',2);done();out.labWin=S.gold===g+200;Math.random=()=>.9;hp=S.hp;ev('lab',2);done();Math.random=rnd;out.labLose=S.hp===hp-3;
  // Señal de socorro
- g=S.gold;ev('sos',0);done();out.sosSq=S.resc===1&&S.gold===g-100;ev('sos',1);done();out.sosRel=S.relics.includes('jammer');for(const id of S.relics)S.rs[id].cd=50;ev('sos',2);done();out.sosCh=S.relics.every(id=>S.rs[id].cd===0);
+ g=S.gold;ev('sos',0);done();out.sosSq=S.resc===1&&S.gold===g-100;ev('sos',1);done();out.sosRel=S.relics.includes('jammer');{const nc=Object.keys(S.chests).filter(k=>S.chests[k]).length;ev('sos',2);done();out.sosCh=Object.keys(S.chests).filter(k=>S.chests[k]).length===nc+1;}/* v362: la tercera opción ya no recarga reliquias: da coordenadas (cofre y evento lejos) */
  // Cámara criogénica
  const lv=S.hero.lvl;g=S.gold;ev('cryocam',0);done();out.cryLvl=S.hero.lvl===lv+1&&S.gold===g-120;ev('cryocam',1);done();out.cryRel=S.relics.includes('cryo');
  g=S.gold;ev('cryocam',2);done();out.cryBank=S.gold===g-150&&S.bank&&S.bank.g===300&&S.bank.at===S.round+3;

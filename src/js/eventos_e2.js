@@ -7,7 +7,7 @@
 {const _c=chip;chip=function(k){const[a,b]=k.split(':');
  if(a==='ally')return '👽 una criatura alienígena lucha contigo toda la partida';if(a==='hero')return HEROES[b]?`<span class="cf">🦸 héroe nuevo: ${HEROES[b].n}</span>`:'';
  if(a==='vch')return VCH[b]?`<span class="gd">${VCH[b].ic} ${VCH[b].n}</span>`:'';if(a==='squad')return '💂 2 soldados contigo toda la partida';
- if(a==='recharge')return '⚡ todas tus reliquias se recargan';if(a==='bank')return `<span class="gd">🏦 +${b} 🪙 dentro de 3 rondas</span>`;if(a==='next')return '🚪 entras en el hangar';
+ if(a==='recharge')return '⚡ todas tus reliquias se recargan';if(a==='coords')return '📍 un cofre y un evento lejos, uno a cada lado';if(a==='bank')return `<span class="gd">🏦 +${b} 🪙 dentro de 3 rondas</span>`;if(a==='next')return '🚪 entras en el hangar';
  return _c.apply(this,arguments);};}
 const ev2Relic=(id,alt)=>{if(S.relics.includes(id)){goldEv(alt||100);return['gold:'+(alt||100)];}gainRelic(id);return['relic:'+id];};
 const ev2Real=()=>!S.tut&&!S.pvE&&!S.pvH;
@@ -23,7 +23,7 @@ Object.assign(EVENTS,{
  sos:{n:'Señal de socorro',ic:'🆘',era:2,txt:'Una patrulla de la Resistencia lleva días escondida en un sótano. Han sobrevivido gracias a un aparato que confunde a las escuadras enemigas. «¿Nos sacáis de aquí?»',opts:[
   {l:'Rescatarlos',c:'Pagas 100 🪙',req:()=>S.gold<100?'Necesitas 100 🪙':'',run:()=>{S.gold-=100;S.resc=1;return['squad'];}},
   {l:'Quedarte su equipo',c:'La próxima oleada trae una Élite extra (los que los buscaban vienen a por ti)',run:()=>{addNow('elite',1);return ev2Relic('jammer').concat(['elite']);}},
-  {l:'Darles tu radio de repuesto',run:()=>{for(const id of S.relics){S.rs[id].cd=0;}renderRelics();return['recharge'];}}]},
+  {l:'Pedirles coordenadas',c:'Un cofre y un evento aparecen lejos de tus piezas, cada uno por un lado',req:()=>sosPair(true)?'':'No quedan sitios lejos de tus piezas',run:()=>sosCoords()}]},/* v362 (Nogal, 20-nov): sustituye a «Darles tu radio de repuesto» */
  cryocam:{n:'Cámara criogénica',ic:'🥶',era:2,txt:'Bajo los escombros, una cámara criogénica sigue encendida. Dentro duerme alguien con uniforme de antes del cataclismo. El refrigerante gotea, azul y helado.',opts:[
   {l:'Despertar al superviviente',c:'Pagas 120 🪙 (la energía para descongelarlo)',req:()=>!S.hero||S.hero.lvl>=HLMAX?'Tu héroe ya está al nivel máximo':S.gold<120?'Necesitas 120 🪙':'',run:()=>{S.gold-=120;heroUp();return['lvl'];}},
   {l:'Quedarte el refrigerante',c:'Pierdes 2 de vida (quemaduras por frío)',req:()=>S.hp<3?'Necesitas al menos 3 de vida':'',run:()=>{hpLoss(2);return['hp:-2'].concat(ev2Relic('cryo'));}},
@@ -45,7 +45,7 @@ Object.assign(EVRES,{
   k=>k[0]&&k[0].startsWith('gold')?'El reactor tose, se estabiliza y escupe un lingote de aleación pura. Vale una fortuna.':'El reactor tose… y te lanza contra la pared. Sales tosiendo humo, con menos cejas que antes.'],
  sos:['Los sacas uno a uno entre los escombros. No hacen preguntas: recargan y ocupan posiciones junto al núcleo.',
   'Les quitas el aparato «para estudiarlo». En cuanto lo apagas, algo grande cambia de rumbo hacia ti.',
-  'Les das tu radio de repuesto y, a cambio, te pasan todas sus baterías. Tus reliquias vuelven a zumbar.'],
+  'Te dictan dos coordenadas antes de cortar la radio: un alijo de suministros y algo que no supieron identificar. Uno a cada lado del mapa.'],
  cryocam:['La cámara silba y se abre. El superviviente parpadea, mira a tu héroe y le enseña un par de trucos de antes del cataclismo.',
   'Vacías el depósito en un bidón. Se te quedan los dedos azules, pero el refrigerante es tuyo.',
   'Metes el oro dentro y sellas la puerta. Nadie va a tocarlo ahí: ni tú, durante tres rondas.'],
@@ -75,3 +75,17 @@ function rescPatrol(){const c=S.core;let b=null,bd=1e9;for(let y=0;y<N;y++)for(l
  const hp=sdHp(t)*k;t.sd=[0,1].map(i=>({i,x:b.x,y:b.y,hp,max:hp,en:null,cd:0,rt:0,tw:t,lock:false,fight:false,rng:1,pat:1}));S.summ.push(t);}
 {const _sw=startWave;startWave=function(){const was=S.phase;const r=_sw.apply(this,arguments);try{if(was!=='wave'&&S.phase==='wave'){if(S.resc)rescPatrol();if(S.allyOn){const o=S.ally;if(!o)mkAlly();else{const k=1+.06*Math.max(0,S.round-1),s=o.sd[0],m=150*k;o.uov.hp=m;o.ovr.dmg=11*k;if(s.hp>0)s.hp+=m-s.max;s.max=m;}}}}catch(e){}return r;};}
 {const _nr=nextRound;nextRound=function(){const r=_nr.apply(this,arguments);try{if(S.bank&&S.round>=S.bank.at){const g=S.bank.g;S.bank=null;goldEv(g);toast('🏦 La cámara criogénica se abre: <b>+'+g+' 🪙</b>.');ui();}}catch(e){}return r;};}
+
+// v362 · Señal de socorro › «Pedirles coordenadas» (Nogal, 20-nov): un cofre y un evento, los dos a 2 casillas como mínimo de todo lo que ya
+// hay en el mapa (o lo más lejos posible si no cabe) y lo más separados entre sí que se pueda, para que normalmente haya que elegir hacia cuál ir.
+function sosPair(strict){const c=Math.floor(BN/2),free=[],dist=(bx,by)=>{let d=99;for(const k in S.blocks){if(!S.blocks[k])continue;const[x,y]=k.split(',').map(Number);d=Math.min(d,Math.max(Math.abs(x-bx),Math.abs(y-by)));}return d;};
+ for(let by=0;by<BN;by++)for(let bx=0;bx<BN;bx++){const k=bx+','+by;if(S.blocks[k]||S.chests[k]||(S.evts&&S.evts[k])||(bx===c&&by===c))continue;free.push({k,bx,by,d:dist(bx,by)});}
+ let best=null;
+ for(const a of free)for(const b of free){if(a===b)continue;const ok=Math.min(Math.min(a.d,2),Math.min(b.d,2)),sep=Math.abs(a.bx-b.bx)+Math.abs(a.by-b.by),v=ok*1000+(ok>=2?sep*10-(a.d+b.d):Math.min(a.d,b.d)*10+sep);/* a 2 o más: lo más separados entre sí y sin irse más lejos de lo necesario */if(!best||v>best.v)best={a,b,v,ok};}
+ return best&&(!strict||best.ok>=2)?best:null;}
+// si no hay sitio a 2 casillas, la opción queda bloqueada y la regla de cambiar eventos (eventos_cambio.js) cambia la Señal de socorro por otro (Nogal, 20-nov)
+function sosCoords(){const best=sosPair(false);if(!best)return['coords'];
+ S.chests[best.a.k]=1;
+ const on=new Set(Object.values(S.evts||{})),all=Object.keys(EVENTS).filter(k=>evEraOk(k)&&!evLocked(k)&&!on.has(k)&&k!==RL.ev),pool=shuf(all.filter(k=>!seen('ev',k))).concat(shuf(all.filter(k=>seen('ev',k))));
+ if(pool.length){S.evts=S.evts||{};S.evts[best.b.k]=pool[0];}
+ return['coords'];}
