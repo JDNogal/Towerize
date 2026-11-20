@@ -385,6 +385,7 @@ function hoverTick(rdt){
   /* v332: algunos bocadillos salen justo debajo de lo que señalan (la línea de rondas) */
   if(PR.below){l=Math.max(6,Math.min(innerWidth-6-wd,(r.l+r.r)/2-wd/2));t=r.b+8;if(t+ht>innerHeight-6)t=Math.max(6,r.t-8-ht);}
   /* v361: la tarjeta de una unidad no tapa a su unidad (Nogal) */if(typeof fuAvoid==='function'){const q=fuAvoid(l,t,wd,ht,r);if(q){l=q[0];t=q[1];}}
+  /* v362: la ficha no tapa la interfaz (p. ej. «Reintentar» abajo en el centro durante la oleada): se aparta lo justo (Nogal) */if(typeof tmObs==='function'&&!MFSQ()){const q=primAvoidHud(l,t,wd,ht);if(q){l=q[0];t=q[1];}}
   tip.style.left=(l/TZ)+'px';tip.style.top=(t/TZ)+'px';
   /* v361: en móvil la ficha va pegada a la derecha; si tapa a la unidad de su tarjeta, se pega a la izquierda */if(typeof fuUnitBox==='function'){let L=false;const ub=MFSQ()&&fuUnitBox();if(ub){const W=tip.offsetWidth;L=ub.r>innerWidth-W&&ub.l>W;}tip.classList.toggle('fuL',L);}
  }else tip.style.display='none';
@@ -400,3 +401,9 @@ setInterval(()=>{try{document.querySelectorAll('.kpanel .kw:not(.kwself),#comp .
 
 // v359: escala de los menús en pantallas grandes (la misma que --uiz); 1 en móvil
 function bkZ(){const B=document.body.classList;if(!B.contains('dsk')||B.contains('mfs'))return 1;return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--uiz'))||1;}
+
+// v362 · la ficha flotante se aparta de la interfaz que pisa (barras, columnas, «Reintentar»…): busca el movimiento más corto que la deja libre
+function primAvoidHud(l,t,wd,ht){const ob=tmObs({left:0,top:0}),hit=(L,T)=>ob.some(q=>L<q[2]&&L+wd>q[0]&&T<q[3]&&T+ht>q[1]),fit=(L,T)=>L>=6&&T>=6&&L+wd<=innerWidth-6&&T+ht<=innerHeight-6;
+ if(!hit(l,t))return null;let best=null;const tryP=(L,T)=>{if(!fit(L,T)||hit(L,T))return;const d=Math.abs(L-l)+Math.abs(T-t);if(!best||d<best.d)best={L,T,d};};
+ for(const q of ob){if(!(l<q[2]&&l+wd>q[0]&&t<q[3]&&t+ht>q[1]))continue;tryP(l,q[1]-ht-2);tryP(l,q[3]+2);tryP(q[0]-wd-2,t);tryP(q[2]+2,t);}
+ return best?[best.L,best.T]:null;}
