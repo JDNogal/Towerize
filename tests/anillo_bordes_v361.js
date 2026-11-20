@@ -46,6 +46,12 @@ for(const [dev,opt] of [['pc',{viewport:{width:1280,height:720}}],['movil',devic
    if(top!==null&&top>sy)bad.push('girado');
    return {n,bad};},[edge,OBS]);
   await p.waitForTimeout(150);await p.screenshot({path:`tests/out/anillo_construir_${dev}_${edge}.png`});
+  // v361 (Nogal, 20-nov): al ABRIR el anillo con el solar en el borde, la cámara se aleja (o se desplaza) con suavidad hasta que cabe entero
+  const fit=await p.evaluate(async edge=>{bmClose();const q=_q,cvr=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),ox=cvr.left-c.left,oy=cvr.top-c.top;CAM.z=Math.min(ZMAX,2.4);clampCam();const k=sc()/VIEW*cvr.width;
+   const want={arriba:[c.width/2,40],abajo:[c.width/2,c.height-40],izquierda:[90,c.height/2],derecha:[c.width-90,c.height/2]}[edge];
+   CAM.x=(q.x+.5)*CS-(want[0]-ox)/k;CAM.y=(q.y+.5)*CS-(want[1]-oy)/k;clampCam();const z0=CAM.z;bmOpen(q);bmTick();await new Promise(r=>setTimeout(r,900));bmTick();const f=bmFitBad();return {bad:f.bad,z0,z:CAM.z};},edge);
+  await p.screenshot({path:`tests/out/anillo_construir_ajuste_${dev}_${edge}.png`});
+  r.fit=fit;ck(!fit.bad,`${dev} ${edge}: al abrir el anillo de construir en el borde, la cámara no lo deja entero a la vista`);
   out['construir_'+dev+'_'+edge]=r;ck(r.n>=2,`${dev} ${edge}: no sale el anillo de construir`);ck(!r.bad.length,`${dev} ${edge}: el anillo de construir ${[...new Set(r.bad)].join(', ')}`);}
  await c.close();}
 ck(!errs.length,'errores: '+errs.join(' | '));

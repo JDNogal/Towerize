@@ -14,4 +14,5 @@
 {const sd=(k,s,d)=>{if(SPECS[k]&&SPECS[k][s])SPECS[k][s].d=d;},K=id=>`<span class="kw" data-kw="${id}" data-src="">`;
  sd('augur','herald','No dispara: acumula '+K('juicio')+'carga del juicio</span> y, llena, lanza un rayo al enemigo con más vida.');
  sd('cannon','rail','Carga lenta y mucho alcance. Su '+K('riel')+'disparo de riel</span> atraviesa todo lo que encuentra en línea recta.');
- sd('laser','red','Se une con arcos a las demás Redes eléctricas de su alcance. Los enemigos que cruzan un arco sufren.');}
+ sd('laser','red','Se une mediante una '+K('conex')+'conexión</span> a las demás '+icOf(SPECS.laser.red)+' Redes eléctricas de su alcance. Los enemigos que cruzan un arco sufren.');
+ sd('sala','volc','Acumula '+K('calor')+'calor</span> mientras dispara: el cono se abre y aplica más stacks. Sin objetivo, se enfría.');}

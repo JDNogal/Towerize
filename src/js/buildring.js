@@ -7,7 +7,7 @@ const bmCost=k=>S.half?Math.ceil(TW[k].cost/2):TW[k].cost;
 function bmFree(q){return q&&inbc(q.kx,q.ky)&&S.cc[q.ky][q.kx]===1&&!S.occ[q.x+','+q.y];}
 function bmVis(){return !!(BM.s&&S&&(S.phase==='build'||S.phase==='wave')&&bmFree(BM.s)&&!RL.open&&!PR.pinned&&!S.aim&&!FO.open&&!LB.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof PMU!=='undefined'&&PMU.open));}
 function bmClose(){BM.s=null;BM.arm=null;BM.hov=null;BM.sig='';const m=$('bmenu');if(m)m.classList.remove('on');const c=$('bmcard');if(c)c.classList.remove('on');}
-function bmOpen(q){S.selT=null;try{tmClose();}catch(e){}if(PR.pinned)closePrim();BM.s=q;BM.arm=null;BM.hov=null;BM.sig='';try{sfx('ui');}catch(e){}}
+function bmOpen(q){S.selT=null;try{tmClose();}catch(e){}if(PR.pinned)closePrim();BM.s=q;BM.arm=null;BM.hov=null;BM.sig='';BM.fit=1;try{sfx('ui');}catch(e){}}
 function bmTap(c){const q=sqOf(c.x,c.y);if(!inb(c.x,c.y)||!bmFree(q)){if(BM.s){bmClose();}return false;}
  if(BM.s&&BM.s.x===q.x&&BM.s.y===q.y){bmClose();return true;}
  if(tutLockBlock(q.x,q.y))return true;
@@ -19,7 +19,7 @@ function bmBuild(){let m=$('bmenu');if(!m){m=document.createElement('div');m.id=
   /* v343: el ratón por encima lo lleva tarjeta_gracia.js (la ficha aguanta un poco al salir, para poder ir hasta ella y mirar sus palabras clave) */}
  const q=BM.s;m.innerHTML=bmDeck().map(k=>{const T=TW[k],arm=BM.arm===k,wish=(S.wish||[]).some(w=>w.a==='build'&&w.v===k&&w.x===q.x&&w.y===q.y);
   return `<button class="tmb${arm?' arm':''}${wish?' wish':''}" data-k="${k}" data-tm="build" data-v="${k}" data-sx="${q.x}" data-sy="${q.y}">${arm?'✓':`<span class="ic tw twd" style="background:${T.col}">${icHtml(twIcO(T))}</span>`}<span class="p">${bmCost(k)} 🪙</span></button>`;}).join('');
- m.classList.add('on');bmPos(true);bmCard();}
+ m.classList.add('on');bmPos(true);bmCard();if(BM.fit&&!BM.sim){BM.fit=0;try{bmAutoFit();}catch(e){}}}
 function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*r.width;
  const px=((q.x+.5)*CS-CAM.x)*k+(r.left-c.left),py=((q.y+.5)*CS-CAM.y)*k+(r.top-c.top),bs=m.querySelectorAll('.tmb'),n=bs.length;
  // tamaño según el zoom: alejado, compacto; acercándote, crece con el solar
@@ -56,3 +56,25 @@ function bmKey(i){if(!S||!(S.phase==='build'||S.phase==='wave'))return false;con
  bmBuildNow(k,q);if(BM.s&&!bmFree(BM.s))bmClose();return true;}
 addEventListener('keydown',e=>{if(e.key==='Escape'&&BM.s&&bmVis()&&!e.defaultPrevented){if(BM.arm){BM.arm=null;BM.sig='';}else bmClose();}});
 
+
+// v361 · si el anillo de construir no cabe entero (fuera de la pantalla o debajo de la interfaz), la cámara se aleja con suavidad
+// lo justo para que quepan el solar y el anillo; si ya no se puede alejar más, se desplaza lo justo (Nogal, 20-nov: mejor alejar que
+// mover, para no quitarle de la vista lo que estaba mirando). Lo hace al abrir el anillo, no mientras está abierto.
+function bmFitBad(){const m=$('bmenu'),c=$('cw').getBoundingClientRect(),bz=parseFloat(m.style.getPropertyValue('--bs'))||60,ob=typeof tmObs==='function'?tmObs(c):[];
+ let bad=0,ex={l:0,r:0,t:0,b:0};const P=m._p;const L=[...m.querySelectorAll('.tmb')].map(b=>[parseFloat(b.style.left),parseFloat(b.style.top)]);if(P)L.push([P.px,P.py]);
+ for(const [x,y] of L){const b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];ex.l=Math.max(ex.l,2-b[0]);ex.t=Math.max(ex.t,2-b[1]);ex.r=Math.max(ex.r,b[2]-(c.width-2));ex.b=Math.max(ex.b,b[3]-(c.height-2));
+  if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){bad++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){bad++;
+   // cuánto habría que mover para librar este obstáculo (hacia el lado más corto)
+   const dl=b[2]-q[0],dr=q[2]-b[0],dt=b[3]-q[1],dd=q[3]-b[1],mn=Math.min(dl,dr,dt,dd);if(mn===dl)ex.r=Math.max(ex.r,dl);else if(mn===dr)ex.l=Math.max(ex.l,dr);else if(mn===dt)ex.b=Math.max(ex.b,dt);else ex.t=Math.max(ex.t,dd);break;}}
+ return {bad,ex};}
+function bmAutoFit(){if(!BM.s||!$('bmenu'))return;BM.sim=1;const S0={z:CAM.z,x:CAM.x,y:CAM.y},ctr=()=>({x:(CAM.x+VIEW/sc()/2-CS/2)/CS,y:(CAM.y+VH/sc()/2-CS/2)/CS});
+ try{if(!bmFitBad().bad)return;const c0=ctr();let goal=null;
+  // 1) alejar (desde el centro de la pantalla, para que lo del borde venga hacia dentro)
+  /* como mucho un 30% menos de zoom: alejar más dejaría el mapa diminuto; el resto lo hace el desplazamiento */const zl=Math.max(ZMIN,CAM.z*.7);
+  for(let z=CAM.z;z>=zl-1e-6;z=Math.max(zl,z*.93)){CAM.z=z;camCenter(c0.x,c0.y);bmPos(true);if(!bmFitBad().bad){goal={z,...ctr()};break;}if(z<=zl)break;}
+  // 2) alejado lo que se puede y sin caber: desplazar lo justo (desde el zoom ya alejado)
+  if(!goal){for(let i=0;i<6&&!goal;i++){const {bad,ex}=bmFitBad();if(!bad){goal={z:CAM.z,...ctr()};break;}const k=$('cv')?cv.getBoundingClientRect().width/VIEW*sc():sc();
+    const dx=(ex.r>0?ex.r+6:0)-(ex.l>0?ex.l+6:0),dy=(ex.b>0?ex.b+6:0)-(ex.t>0?ex.t+6:0);CAM.x+=dx/k;CAM.y+=dy/k;clampCam();bmPos(true);}
+   if(!goal)goal={z:CAM.z,...ctr()};}
+  CAM.z=S0.z;CAM.x=S0.x;CAM.y=S0.y;bmPos(true);if(goal&&(Math.abs(goal.z-S0.z)>1e-3||Math.hypot(goal.x-c0.x,goal.y-c0.y)>.01))camGoT(goal.z,goal.x,goal.y,.35);}
+ finally{CAM.z=CAM.z;BM.sim=0;}}
