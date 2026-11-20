@@ -9,7 +9,7 @@ const sol=await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.
  let best=null;for(let gy=0;gy<NC;gy++)for(let gx=0;gx<NC;gx++)if(S.cc[gy][gx]===1){const d=Math.hypot(gx*K-S.core.x,gy*K-S.core.y);if(!best||d<best[2])best=[gx,gy,d];}
  window._pl=best;const r=cellRect(best[0]*K,best[1]*K,K);return [(r.l+r.r)/2,(r.t+r.b)/2];});
 async function hover(){await p.evaluate(()=>{try{bmClose();}catch(e){}});await p.waitForTimeout(150);
- const s=await p.evaluate(()=>{const r=cellRect(_pl[0]*K,_pl[1]*K,K);return [(r.l+r.r)/2,(r.t+r.b)/2];});await p.mouse.click(s[0],s[1]);await p.waitForTimeout(350);
+ const s=await p.evaluate(()=>{const r=cellRect(_pl[0]*K,_pl[1]*K,K);return [(r.l+r.r)/2,(r.t+r.b)/2];});await p.mouse.click(s[0],s[1]);await p.waitForTimeout(650);/* v361: al abrir el anillo la cámara puede alejarse un poco (0,35 s) */
  const bt=await p.evaluate(()=>{const q=document.querySelector('#bmenu .tmb[data-k="arrow"]').getBoundingClientRect();return[q.x+q.width/2,q.y+q.height/2];});await p.mouse.move(bt[0],bt[1]);await p.waitForTimeout(400);
  return p.evaluate(()=>{const c=$('bmcard'),r=c.getBoundingClientRect(),t=document.querySelector('#bmenu .tmb[data-k="arrow"]').getBoundingClientRect();
   const gap=Math.min(Math.abs(r.right-t.left),Math.abs(t.right-r.left),Math.abs(r.bottom-t.top),Math.abs(t.bottom-r.top));return {on:c.classList.contains('on'),w:r.width,gap,link:!!c.querySelector('.fzlink'),inV:r.left>=0&&r.top>=0&&r.right<=innerWidth&&r.bottom<=innerHeight};});}
@@ -17,7 +17,7 @@ await hover();const far=await hover();
 await p.evaluate(()=>{CAM.z=ZMAX;try{clampCam&&clampCam();}catch(e){}const h=_pl;const r=cellRect(h[0]*K,h[1]*K,K);});
 await p.evaluate(()=>{const r=cellRect(_pl[0]*K,_pl[1]*K,K);const a=sc();CAM.x+=((r.l+r.r)/2-innerWidth/2)/a;CAM.y+=((r.t+r.b)/2-innerHeight/2)/a;});await p.waitForTimeout(200);
 const near=await hover();
-const out={};out.far=far.on&&far.link&&far.inV&&far.gap<30;out.near=near.on&&near.inV;out.grows=near.w>far.w*1.3;
+const out={};out.far=far.on&&far.link&&far.inV&&far.gap<60;/* v361: si su sitio pisa la interfaz, la ficha se aparta unos píxeles */out.near=near.on&&near.inV;out.grows=near.w>far.w*1.3;
 // L abre el compendio en esa torre
 await p.keyboard.press('l');await p.waitForTimeout(500);out.compL=await p.evaluate(()=>!!document.querySelector('.book.open,#book.open,body.lbopen'));
 // sin «casillas» en descripciones de torres y en la ficha; el bocadillo de Rango lo explica
