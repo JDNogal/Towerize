@@ -218,22 +218,22 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw{font-weight:700;cursor:help}
 .kw.st{font-weight:700}
 .kw:not(.gico):hover{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
-.kw:not(.st)[data-kw="burn"],.kw:not(.st)[data-kw="flam"],.kw:not(.st)[data-kw="breath"]{color:var(--tff9a4a,#ff9a4a)}
+.kw:not(.st)[data-kw="burn"],.kw:not(.st)[data-kw="calor"],.kw:not(.st)[data-kw="flam"],.kw:not(.st)[data-kw="breath"]{color:var(--tff9a4a,#ff9a4a)}
 .kw:not(.st)[data-kw="poison"]{color:var(--t5fdc7a,#5fdc7a)}
 .kw:not(.st)[data-kw="sticky"]{color:var(--tc8a060,#c8a060)}
-.kw:not(.st)[data-kw="chill"]{color:var(--t9fe4ff,#9fe4ff)}
+.kw:not(.st)[data-kw="chill"],.kw:not(.st)[data-kw="riel"]{color:var(--t9fe4ff,#9fe4ff)}
 .kw:not(.st)[data-kw="freeze"]{color:var(--tcdf2ff,#cdf2ff)}
 .kw:not(.st)[data-kw="slow"]{color:var(--t7fb4d9,#7fb4d9)}.kw:not(.st)[data-kw="fly"],.kw:not(.st)[data-kw="tair"]{color:var(--ta8d8ff,#a8d8ff)}.kw:not(.st)[data-kw="tgnd"]{color:var(--td2b48c,#d2b48c)}
 .kw:not(.st)[data-kw="stun"]{color:var(--tfff2a0,#fff2a0)}
 .kw:not(.st)[data-kw="bleed"]{color:var(--tff5a64,#ff5a64)}
-.kw:not(.st)[data-kw="ez"],.kw:not(.st)[data-kw="chain"]{color:var(--tffe14d,#ffe14d)}
+.kw:not(.st)[data-kw="ez"],.kw:not(.st)[data-kw="juicio"],.kw:not(.st)[data-kw="conex"],.kw:not(.st)[data-kw="chain"]{color:var(--tffe14d,#ffe14d)}
 .kw:not(.st)[data-kw="wet"]{color:var(--t5ab4ff,#5ab4ff)}
 .kw:not(.st)[data-kw="root"]{color:var(--t7ad06a,#7ad06a)}
 .kw:not(.st)[data-kw="fear"]{color:var(--td0a0ff,#d0a0ff)}
 .kw:not(.st)[data-kw="curse"],.kw:not(.st)[data-kw="cursed"]{color:var(--tb07cff,#b07cff)}
 .kw:not(.st)[data-kw="poly"]{color:var(--tff8fd0,#ff8fd0)}
 .kw:not(.st)[data-kw="mark"]{color:var(--red)}
-.kw:not(.st)[data-kw="prey"],.kw:not(.st)[data-kw="push"],.kw:not(.st)[data-kw="logk"],.kw:not(.st)[data-kw="bwall"]{color:var(--td9c08a,#d9c08a)}
+.kw:not(.st)[data-kw="prey"],.kw:not(.st)[data-kw="push"],.kw:not(.st)[data-kw="logk"],.kw:not(.st)[data-kw="bwall"],.kw:not(.st)[data-kw="rroll"]{color:var(--td9c08a,#d9c08a)}
 .kw:not(.st)[data-kw="drunk"]{color:var(--te0a050,#e0a050)}
 .kw:not(.st)[data-kw="mheal"],.kw:not(.st)[data-kw="eheal"]{color:var(--t9be15d,#9be15d)}
 .kw:not(.st)[data-kw="mhit"],.kw:not(.st)[data-kw="tmagic"],.kw:not(.st)[data-kw="umr"],.kw:not(.st)[data-kw="penp"]{color:var(--t8f9bff,#8f9bff)}
@@ -241,7 +241,7 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw:not(.st)[data-kw="tphys"],.kw:not(.st)[data-kw="aphys"],.kw:not(.st)[data-kw="brk"],.kw:not(.st)[data-kw="hblk"],.kw:not(.st)[data-kw="aura"],.kw:not(.st)[data-kw="pierce"],.kw:not(.st)[data-kw="bres"]{color:var(--fg1)}
 .kw:not(.st)[data-kw="crit"]{color:var(--tff4fa8,#ff4fa8)}
 .kw:not(.st)[data-kw="area"]{color:var(--tff9a3c,#ff9a3c)}
-.kw:not(.st)[data-kw="spect"]{color:var(--tb8c4ff,#b8c4ff)}
+.kw:not(.st)[data-kw="spect"],.kw:not(.st)[data-kw="almas"]{color:var(--tb8c4ff,#b8c4ff)}
 .kw:not(.st)[data-kw="call"],.kw:not(.st)[data-kw="howl"],.kw:not(.st)[data-kw="blow"],.kw:not(.st)[data-kw="dodge"]{color:var(--te0b8ff,#e0b8ff)}
 .kw:not(.st)[data-kw="steal"],.kw:not(.st)[data-kw="vch"]{color:var(--hl)}
 .kw:not(.st)[data-kw="rcd"]{color:var(--tf3e7a1,#f3e7a1)}
@@ -2976,9 +2976,6 @@ table.lbrkt tr.pk td{background:#e9c46a!important;font-weight:800}
 .ftfold[open]>summary::after{transform:rotate(90deg)}
 .ftfold>summary em{font-style:normal;font-weight:500;opacity:.75;font-size:13px}
 .ftin{padding:0 2px 6px}
-.ftab .ftpip{display:flex;gap:3px;align-items:center}
-.ftab .ftpip i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,currentColor 18%,transparent)}
-.ftab .ftpip i.on{background:var(--acc,#c9893a)}
 
 /* v353 · barras de mecánica dibujadas (ficha_barras.js) */
 .ftmech canvas.fbc{display:block;width:100%;margin-top:5px}
@@ -3144,6 +3141,45 @@ body.mfs.pcpick #ui .prow .cardw>.rbtn{position:absolute;left:66px;top:-6px}
 #relic button.skarm{background:linear-gradient(180deg,#c0503a,#8a2a1a)!important;color:#fff1d6!important;border-color:#6a1a0e!important}
 /* v360 (Nogal, 19-nov): en el móvil, con una ventana abierta (oferta, evento, cofre) el botón de fallos va a la izquierda del todo, para no tapar el rodillo del pergamino */
 body.mfs:has(#relic.open) #bugfab.ingame{left:6px}
+
+/* v361: el Botín lleva sus cuentas dentro del dibujo (monedas al lado, cofres debajo): sin línea de texto debajo */
+.b6-botin .ftml{display:none}
+/* v361 · ficha nueva de las torres de evento (ficha_unica.js) */
+.fuRk{margin-left:auto;font-size:13px;font-weight:600;white-space:nowrap}.fuRk b{font:700 16px Georgia,serif;color:var(--acc,#c2560e)}
+.fuom{margin:6px 0 4px}.fuom .omf small{display:block;font-size:12.5px;line-height:1.35}
+.fupips{display:flex;gap:5px;margin:6px 0 2px}.fupips i{flex:1;height:10px;border-radius:5px;background:color-mix(in srgb,currentColor 15%,transparent)}.fupips i.on{background:var(--acc,#c2560e)}
+.fuhp{margin-top:10px}
+.furow{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.furow .ftml{margin-left:auto}.fuil{font-size:12.5px;font-weight:600;color:#8a6a10}
+.furow.solo{margin:2px 0 6px}
+.fu-luz .ftmb i{background:linear-gradient(90deg,#fff4c2,#ffe27a 55%,#ffcc2e)!important;box-shadow:0 0 6px rgba(255,214,90,.75)}
+:root[data-skin="holo"] .fuil{color:#ffe79a}
+/* tarjeta de unidad (ficha_unidad.js) */
+.fuubs{display:flex;flex-direction:column;gap:6px;margin:4px 0 8px}
+.fuub{display:flex;align-items:center;gap:8px;width:100%;padding:6px 10px;border-radius:9px;border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 45%,transparent);background:color-mix(in srgb,#fff 55%,transparent);color:var(--ink,#2a2118);font:600 13.5px system-ui,sans-serif;cursor:pointer;text-align:left}
+.fuub:hover{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc,#c2560e) 35%,transparent)}.fuub span{flex:1}.fuub .tuic{width:24px;height:24px;flex:none}
+.fuback{display:inline-flex;align-items:center;gap:4px;margin:0 0 6px;padding:3px 10px;border-radius:8px;border:1.5px solid color-mix(in srgb,var(--acc,#c2560e) 45%,transparent);background:color-mix(in srgb,#fff 55%,transparent);color:var(--ink,#2a2118);font:700 12.5px system-ui,sans-serif;cursor:pointer}
+.fuu .ttl{display:flex;align-items:center;gap:6px}.fuu .ttl .tuic{width:26px;height:26px}
+.fuhps .ftbar{margin-top:5px;position:relative}.fuhps .ftbar.dead{background:color-mix(in srgb,#888 25%,transparent)}.fuhps .ftbar em{position:absolute;inset:0;font:600 11px system-ui,sans-serif;font-style:normal;display:flex;align-items:center;justify-content:center;opacity:.75}
+.fudsc small{display:block;font-size:12.5px}
+:root[data-skin="holo"] .fuub,:root[data-skin="holo"] .fuback{background:color-mix(in srgb,#fff 8%,transparent);color:#e8f4ff}
+#fuln{position:fixed;inset:0;width:100vw;height:100vh;z-index:55;pointer-events:none;display:none}
+.fuub .fuubn{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}.fuub .fuubn b{font-weight:600}
+.fuub .fuubh{flex:none}.fuubh{display:block;height:5px;border-radius:3px;background:color-mix(in srgb,#888 25%,transparent);overflow:hidden}.fuubh i{display:block;height:100%;background:linear-gradient(90deg,#3cb84a,#7ad85a)}
+.fuubh.dead{height:auto;background:none;font:600 11px system-ui,sans-serif;opacity:.7}
+.fuub .fuubl{flex:none;width:22px;height:22px;display:grid;place-items:center}.fuubl svg,.fuubl img{width:22px;height:22px}
+.kw.noic::before{display:none!important}
+/* v361 · Omega: familias en huecos redondos (2 separados, 4 en fila, 6 en 4+2 como los aros olímpicos, 8 en 4+4) (Nogal) */
+.fuoms{display:grid;grid-template-columns:repeat(8,1fr);row-gap:4px;margin:6px auto 2px;max-width:232px;justify-items:center}
+.fuoms .fuoms1{grid-column:span 2;width:30px;height:30px;border-radius:50%;box-sizing:border-box;border:2px dashed color-mix(in srgb,currentColor 30%,transparent);display:flex;align-items:center;justify-content:center;padding:0;text-decoration:none}
+.fuoms .fuoms1.on{border:2px solid var(--c);background:color-mix(in srgb,var(--c) 22%,#241a0c);cursor:pointer}
+.fuoms .fuoms1 svg{width:22px;height:22px}
+.fuoms.c2 .fuoms1:nth-child(1),.fuoms.c6 .fuoms1:nth-child(5){grid-column:2/span 2}
+.fuoms.c2 .fuoms1:nth-child(2),.fuoms.c6 .fuoms1:nth-child(6){grid-column:6/span 2}
+.fuoms.c6 .fuoms1:nth-child(n+5){margin-top:-8px}
+/* v361: en móvil, la tarjeta de unidad se pega a la izquierda si a la derecha tapa a su unidad (Nogal) */
+body.mfs #tip.fuL{left:0!important;right:auto!important;border-radius:0 10px 10px 0}
+/* v361: la tarjeta de unidad, apartándose de su unidad con suavidad (Nogal) */
+#tip.fumv{transition:left .18s ease-out,top .18s ease-out}
 </style></head><body>
 <div id="dlg"></div>
 <div id="intro" class="dark"><div class="ist" data-i="0"><div class="imade">Hecho con ayuda de</div><div class="iclaude">Claude</div></div><div class="ist" data-i="1"><div class="igd"><svg class="igdi" viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="gdm" x1="0" x2="1"><stop offset="0" stop-color="#5d6a72"/><stop offset=".45" stop-color="#d9e4ea"/><stop offset=".6" stop-color="#9fb0b9"/><stop offset="1" stop-color="#46525a"/></linearGradient><clipPath id="gdc"><path d="M60 4 L108 128 Q60 146 12 128 Z"/></clipPath></defs><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="#1f2a30"/><g clip-path="url(#gdc)"><g class="igdb" fill="url(#gdm)" stroke="#0e1418" stroke-width="2.5" stroke-linejoin="round"><path d="M0 10 L120 -14 L120 -1 L0 23 Z"/><path d="M0 40 L120 16 L120 29 L0 53 Z"/><path d="M0 70 L120 46 L120 59 L0 83 Z"/><path d="M0 100 L120 76 L120 89 L0 113 Z"/><path d="M0 130 L120 106 L120 119 L0 143 Z"/><path d="M0 160 L120 136 L120 149 L0 173 Z"/><path d="M0 190 L120 166 L120 179 L0 203 Z"/></g><path d="M60 4 L72 140 L64 142 Z" fill="#e8f2f6" opacity=".55"/></g><path d="M60 4 L108 128 Q60 146 12 128 Z" fill="none" stroke="#0e1418" stroke-width="4" stroke-linejoin="round"/></svg><div class="igdt"><div class="igdw">GigaDrill</div><div class="igds"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span>S</span></div></div></div><div class="itag">presenta</div></div><div class="ist" data-i="2"><div class="ititle">Towerize</div><div class="ipress"></div></div><div class="iskip">Toca para saltar</div></div>
@@ -3158,7 +3194,7 @@ body.mfs:has(#relic.open) #bugfab.ingame{left:6px}
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v360</div>
+<div id="ver">Towerize v361</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -3602,7 +3638,7 @@ const SPECS={arrow:{
  xbow:{n:'Ballesteros',ic:'🎯',col:'#c9783a',lv:{dmg:L4D*2.8,cd:.7*1.4,range:1.2,area:1.3,hp:L4H,pen:15},ab:['charged','racha','mark'],d:'Disparan más lento, pero con mucho más daño y penetración de armadura.'}},
 cata:{
  treb:{n:'Trebuchet',ic:'🏯',col:'#b59a6a',lv:{dmg:L4D*1.9,cd:.7*1.45,range:1.2*1.3,area:1.3*1.2,hp:L4H,pen:0},ab:['arsenal','debris','breach'],d:'Alcance enorme y disparos muy lentos y potentes. Arma de asedio: lanza lo que tenga a mano.'},
- ogre:{n:'Ogros Lanzarrocas',ic:'👹',col:'#7e9a5a',lv:{dmg:L4D*.9,cd:.7*.75,range:1.2,area:1.3*.8,hp:L4H,pen:0},ab:['roll','crush','presion'],d:'Lanzan más a menudo. La roca rueda hacia los portales y golpea a hasta '+ROLLMX+' enemigos (45% del daño). Si pasa por brea ardiendo, quema; si pasa por veneno, envenena.'}},
+ ogre:{n:'Ogros Lanzarrocas',ic:'👹',col:'#7e9a5a',lv:{dmg:L4D*.9,cd:.7*.75,range:1.2,area:1.3*.8,hp:L4H,pen:0},ab:['roll','crush','presion'],d:'Lanzan más a menudo una <span class="kw" data-kw="rroll" data-src="">roca rodante</span> en dirección a los portales.'}},
 cannon:{
  rail:{n:'Cañón de riel',ic:'🔩',col:'#7ad8ff',lv:{dmg:L4D*3,cd:.7*2.2,range:1.2*1.35,area:1.3,hp:L4H,pen:20},rail:1,o:{splash:0,shape:'Línea',areaTxt:'Atraviesa a todos los enemigos de la línea de tiro.',fx:'Atraviesa'},ab:['perfor','recarga','estela'],d:'Carga lenta y mucho alcance. Dispara en línea recta por todo su alcance, en el ángulo que más enemigos atraviesa; pierde un 15% de daño por cada enemigo atravesado.'},
  bomb:{n:'Drones bombarderos',ic:'🛩️',col:'#e8a05a',lv:{dmg:L4D*.34,cd:.7*2/3*1.25,range:1.2*1.25,area:1.3*.75,hp:L4H,pen:0},custom:1,notgt:1,o:{ground:1,fx:'Drones autónomos'},ab:['escuad','picado','metafil'],d:'La torre ya no dispara: 2 drones vuelan solos por su alcance y sueltan bombas pequeñas y rápidas. Cada dron va a una escuadra distinta, empezando por la más adelantada.'}},
@@ -3619,8 +3655,8 @@ laser:{
  red:{n:'Red eléctrica',ic:'🔗',col:'#9fe8ff',lv:{dmg:L4D*1.0,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{net:1},ab:['fence','shortc','overload'],d:'Se une con un arco a las demás Redes eléctricas que estén dentro de su alcance: cada torre conectada da +15% de daño a todas. Los enemigos que cruzan un arco sufren.'},
  volt:{n:'Arco voltaico',ic:'⚡',col:'#fff08a',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{volt:1},ab:['hv','ground','jump'],d:'El arco carga de electricidad a su objetivo; con la carga llena, descarga: un golpe de 15× y lo aturde.'}},
 bunker:{
- sup:{n:'Supresión',ic:'🔩',col:'#c9b06a',lv:{dmg:L4D*1.2,cd:.7*.8,range:1.2,area:1.3,hp:L4H,pen:0},o:{mag:45,ramp:1.2},ab:['trigger','magz','expan'],d:'Cargadores de 45 balas y la cadencia sube mucho más mientras dispara. Pensada para hordas.'},
- nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*10,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['concen','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración. Para élites y jefes.'}},
+ sup:{n:'Supresión',ic:'🔩',col:'#c9b06a',lv:{dmg:L4D*1.2,cd:.7*.8,range:1.2,area:1.3,hp:L4H,pen:0},o:{mag:45,ramp:1.2},ab:['trigger','magz','expan'],d:'Cargadores de 45 balas y la cadencia sube mucho más mientras dispara.'},
+ nido:{n:'Nido de francotirador',ic:'🔭',col:'#8fb0a0',lv:{dmg:L4D*10,cd:.7*5,range:1.2*2.2,area:1.3,hp:L4H,pen:20},o:{mag:0,ps:60},ab:['concen','lmark','blink'],d:'Alcance enorme y disparos lentos y muy potentes con penetración.'}},
 robots:{
  mecha:{n:'Mechas',ic:'🦾',col:'#e0884a',lv:{dmg:L4D*1.2,cd:.7,range:1.2,area:1.3,hp:L4H*1.5,pen:0},o:{mecha:1},ab:['drill','react','shoulder'],d:'Uno de los robots se transforma en un mecha élite: mucha más vida, corpulencia 2 y golpes en área. Los otros dos le apoyan.'},
  kami:{n:'Androides kamikaze',ic:'💥',col:'#ff6a5a',lv:{dmg:L4D*.8,cd:.7,range:1.2,area:1.3,hp:L4H*.5,pen:0},o:{kami:1},uspd:1.5,ab:['reens','decoy','scrap'],d:'4 androides rápidos y frágiles. Al caer explotan (3× su daño en <span class="kw rgv" data-kw="rng" data-src="">1</span>) y la torre los reensambla enseguida.'}},
@@ -3643,11 +3679,11 @@ bastion:{
  pal:{n:'Paladines',ic:'⚜️',col:'#f0d36a',lv:{dmg:L4D*.7,cd:.7,range:1.2,area:1.3,hp:L4H*1.6,pen:0},uap:15,uspd:.8,ab:['heal','wall','sacred'],d:'Soldados con más vida y armadura y menos daño. Se curan y bloquean mejor.'},
  ass:{n:'Asesinos',ic:'🗡️',col:'#9a4bd6',lv:{dmg:L4D*1.6,cd:.7*.6,range:1.2,area:1.3,hp:L4H*.6,pen:0},uspd:1.5,ab:['dodge','cut','back'],d:'Soldados rápidos y frágiles que golpean mucho. Esquivan y provocan sangrado.'}},
 tesla:{
- cad:{n:'Cadena',ic:'🔗',col:'#fff08a',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:{n:5,f:.8}},ab:['cond','disch','storm'],d:'El rayo salta hasta 5 veces entre enemigos, con un 20% menos de daño por salto. Pensada para hordas.'},
- ele:{n:'Electrocutor',ic:'🔌',col:'#e8c21f',lv:{dmg:L4D*2.3,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:null,ez:1},ab:['accum','short','reson'],d:'Sin rebotes: golpea a un solo enemigo y lo electriza (+5% de daño eléctrico por stack, máx. 10). Para élites y jefes.'}},
+ cad:{n:'Cadena',ic:'🔗',col:'#fff08a',lv:{dmg:L4D*1.4,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:{n:5,f:.8}},ab:['cond','disch','storm'],d:'El rayo salta hasta 5 veces entre enemigos, con un 20% menos de daño por salto.'},
+ ele:{n:'Electrocutor',ic:'🔌',col:'#e8c21f',lv:{dmg:L4D*2.3,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},o:{chain:null,ez:1},ab:['accum','short','reson'],d:'Sin rebotes: golpea a un solo enemigo y lo electriza (+5% de daño eléctrico por stack, máx. 10).'}},
 sala:{
  volc:{n:'Corazón Volcánico',ic:'❤️‍🔥',col:'#ff6a2e',lv:{dmg:L4D*.75,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['erupt','flare','embr'],d:'Acumula Calor mientras dispara (lleno en 8 s): el cono se abre hasta 110° y aplica hasta un 50% más de stacks. Sin objetivo, se enfría.'},
- forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*5.3,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo. Para élites, jefes y enemigos con armadura.'}},
+ forge:{n:'Aliento de Forja',ic:'🫠',col:'#ffb347',lv:{dmg:L4D*5.3,cd:.7,range:1.2*1.3,area:1.3,hp:L4H,pen:0},o:{cone:0,shape:'Línea',areaTxt:'Solo afecta al enemigo objetivo.'},ab:['melt','blue','sbite'],d:'Llama estrecha que funde el metal, sobre un solo enemigo.'}},
 flame:{
  detn:{n:'Detonador',ic:'🎆',col:'#ff8a3c',lv:{dmg:L4D*1.1,cd:.7,range:1.2,area:1.3,hp:L4H,pen:0},ab:['overp','chainr','tarb'],d:'Cuando un enemigo acumula 30 stacks de quemadura de esta torre, explota: pierde la mitad de sus stacks y hace daño en área (<span class="kw rgv" data-kw="rng" data-src="">1</span>).'},
  muro:{n:'Muro de fuego',ic:'🌋',col:'#ff5f3a',lv:{dmg:L4D*1.25,cd:.7,range:1.2*1.2,area:1.3,hp:L4H,pen:0},o:{cone:0,fwall:1,shape:'Franja',areaTxt:'La franja ocupa toda la anchura del camino.'},ab:['morew','densef','ash'],d:'Ya no lanza llamas: enciende una franja de fuego en el camino, delante de su objetivo, que quema durante 4 s a todo el que la cruza.'}},
@@ -4663,7 +4699,7 @@ GCOL.cel='#4fd6b8';
 const DTSVG={magic:'<svg class="dti" viewBox="0 0 16 16" width="1.05em" height="1.05em" aria-hidden="true"><path d="M3 14.2L10.2 7" stroke="#2c3a8a" stroke-width="3" stroke-linecap="round"/><path d="M3 14.2L10.2 7" stroke="#6f84ff" stroke-width="1.6" stroke-linecap="round"/><path d="M9.2 5.2a3 3 0 1 0 4.4-1.6" fill="none" stroke="#2c3a8a" stroke-width="2.6" stroke-linecap="round"/><path d="M9.2 5.2a3 3 0 1 0 4.4-1.6" fill="none" stroke="#8f9bff" stroke-width="1.3" stroke-linecap="round"/><circle cx="11.6" cy="4.6" r="1.7" fill="#cfe0ff" stroke="#3a4cc0" stroke-width=".7"/></svg>',
  elem:'<svg class="dti" viewBox="0 0 16 16" width="1.05em" height="1.05em" aria-hidden="true"><g transform="scale(.5)"><path d="M8 1.5c.6 2.2 3.4 3.4 3.4 6.6A3.4 3.4 0 0 1 4.6 8.1c0-1.4.8-2.3 1.5-2.9 0 1.1.5 1.7 1.1 1.9C7 5 7.2 3.2 8 1.5z" fill="#ff8a3a" stroke="#3a1a08" stroke-width=".8"/></g><g transform="translate(8 0) scale(.5)"><path d="M9.4 1.5L4.2 9h3.3l-1 5.5L11.8 7H8.4z" fill="#ffe14d" stroke="#4a3a06" stroke-width=".8" stroke-linejoin="round"/></g><g transform="translate(0 8) scale(.5)"><path d="M8 1.8C9.8 4.6 11.6 6.5 11.6 9a3.6 3.6 0 0 1-7.2 0C4.4 6.5 6.2 4.6 8 1.8z" fill="#6fdc5a" stroke="#16380e" stroke-width=".8"/></g><g transform="translate(8 8) scale(.5)"><g stroke="#0e3a4a" stroke-width="2.6" stroke-linecap="round"><path d="M8 2v12M2.8 5l10.4 6M2.8 11l10.4-6"/></g><g stroke="#9fe4ff" stroke-width="1.3" stroke-linecap="round"><path d="M8 2v12M2.8 5l10.4 6M2.8 11l10.4-6"/></g></g></svg>',
  phys:'<span class="dti">🗡️</span>'};
-const dtOf=(T,TT)=>(TT&&TT.dt)||(T&&T.dt)||'phys',dtCls=dt=>(DT[dt]||DT.phys).cls,dtLab=(dt,lab)=>(DTSVG[dt]||'')+lab;
+const dtOf=(T,TT)=>(TT&&TT.dt)||(T&&T.dt)||'phys',dtCls=dt=>(DT[dt]||DT.phys).cls,dtLab=(dt,lab)=>{const ic=DTSVG[dt]||'';return ic+(ic?String(lab).replace(/class="kw( st)?" data-kw="dmg"/g,(m,a)=>`class="kw${a||''} noic" data-kw="dmg"`):lab);};/* v361: con el icono de su tipo de daño, sin el de daño genérico (Nogal) */
 const gRow=(lab,cls,v,m,txt,col)=>`<div class="grow"><span class="${cls}">${lab}</span><div class="gtr"><i style="width:${Math.max(3,Math.min(100,m>0?100*v/m:0))}%;background:${col||GCOL[cls]}"></i></div><span class="${cls} gv">${txt}</span></div>`;
 const gTxt=(lab,cls,html)=>`<div class="grow gt"><span class="${cls}">${lab}</span><span class="gv2">${html}</span></div>`;
 const GARM=60,gArm=(ap,am,src)=>ap>0&&!am?gRow(kst('aphys','Armadura',src),'cph',ap,GARM,ap):am>0&&!ap?gRow(kst('umr','Resistencia mágica',src),'cmg',am,GARM,am):(ap>0||am>0)?`<div class="grow"><span>${kst('aphys','Arm.',src)} / ${kst('umr','Res. mág.',src).replace('class="kw st"','class="kw st cmg"')}</span><div class="gtr"><i style="width:${Math.min(50,ap*50/GARM)}%;background:${GCOL.cph}"></i><i style="width:${Math.min(50,am*50/GARM)}%;background:${GCOL.cmg};left:auto;right:0"></i></div><span class="gv"><b class="cph">${ap}</b> / <b class="cmg">${am}</b></span></div>`:'';
@@ -6265,7 +6301,7 @@ function uniqInfo(t,k,lvo){const T=TW[k],src=t?'tw:'+t.id:'shop:'+k,X=t?tinfo(t)
   h+=rows(s,T,src,ur)+(t&&lv<4&&!lvo?R('gd','Comida',(t.food||0)+' / '+GLUT[lv]):'')+'<small>Un cofre que se planta en el camino, donde pongas su bandera: bloquea y muerde a todo lo que se le acerca. No se mejora con oro: sube de nivel con las bajas que hace él mismo ('+GLUT.slice(1).join(', ')+' para Nv 2, 3 y 4).</small>';}
  else if(T.guild){const lv=CL,Lm=lvMods(k,lv,null),bd=T.dmg*Lm.dmg,bh=T.unit.hp*Lm.hp;h+=(GP=>{const seen=[];let o=R('',kst('usol','Aventureros',src),GP.length);
    GP.forEach((c,i)=>{if(seen.includes(c))return;seen.push(c);const C=CLS[c],n=GP.filter(q=>q===c).length,ap=T.unit.ap+(C.ap||0),ren=t&&!lvo&&t.sd?Math.max(0,...t.sd.filter(q=>q.cls===c).map(q=>q.ren||0)):0;
-    o+='<div class="usub"><b>'+(i===0?unitHead('shop:guild'):'')+C.n+(n>1?' ×'+n:'')+'</b>'+R(c==='mage'?'cmg':'cph',kst('dmg','Daño',src)+(C.rng?' (a distancia)':''),f(bd*C.d*(1+ren)))+R('ccl',kst('cool','Enfriamiento',src),f(1/(T.rate/Lm.cd*C.rt))+' s')+R('chp',kst('uhp','Vida',src),Math.round(bh*C.hp*(1+ren)))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+R('cg',kst('espd','Velocidad',src),cas(Math.round(T.unit.spd/K*(C.sp||1)*100)/100)+'/s')+(C.cr?R('cc',kst('crit','Crítico',src),'+'+Math.round(C.cr*100)+'%'):'')+(c==='tank'?R('',kst('hblk','Corpulencia',src),'Bloquea hasta 2'):'')+(ren?R('gd','Renombre','+'+f(ren*100)+'%'):'')+
+    o+='<div class="usub"><b>'+(i===0?unitHead('shop:guild'):'')+C.n+(n>1?' ×'+n:'')+'</b>'+R(c==='mage'?'cmg':'cph',dtLab(c==='mage'?'magic':'phys',kst('dmg','Daño',src))+(C.rng?' (a distancia)':''),f(bd*C.d*(1+ren)))+R('ccl',kst('cool','Enfriamiento',src),f(1/(T.rate/Lm.cd*C.rt))+' s')+R('chp',kst('uhp','Vida',src),Math.round(bh*C.hp*(1+ren)))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+R('cg',kst('espd','Velocidad',src),cas(Math.round(T.unit.spd/K*(C.sp||1)*100)/100)+'/s')+(C.cr?R('cc',kst('crit','Crítico',src),'+'+Math.round(C.cr*100)+'%'):'')+(c==='tank'?R('',kst('hblk','Corpulencia',src),'Bloquea hasta 2'):'')+(ren?R('gd','Renombre','+'+f(ren*100)+'%'):'')+
      (c==='heal'?'<small>Cada 4 s cura un 15% de su vida al aventurero más herido.</small>':c==='flagb'?'<small>Su estandarte da +'+BNRA+' de armadura y resistencia mágica a tus unidades y a tu héroe a '+cas(BNRR)+'.</small>':'')+'</div>';});return o;})(t&&!lvo?guildParty(t):PARTY[lv])+(lv>=4?(t&&!lvo&&abRank(t,'glegend')?'<small><b>Renombre</b>: cuando un aventurero mata a una Mini-élite, una Élite o un Jefe (que no sea el final), todo el grupo gana un 7,5%, 15% o 22,5% de daño y vida, sin límite. Quien cae pierde la mitad del suyo.</small>':'<small><b>Renombre</b>: cuando un aventurero mata a una Mini-élite, una Élite o un Jefe (que no sea el final), todo el grupo gana un 5%, 10% o 15% de daño y vida, sin límite. Quien cae pierde el suyo.</small>'):'')+R('gd','Recompensa por ronda',[10,20,35,50][lv-1]+' 🪙')+R('gd','Comisión','+25%');
   if(pin){if(lv<4){const c=T.upc[lv+1];h+=`<div class="tgt"><button data-a="gup" data-id="${t.id}">⬆ Subir a rango ${RANKS[lv]} (<span class="gd">−${c} 🪙</span>)</button></div>`;}h+=`<div class="tgt"><button data-a="flag" data-id="${t.id}">${FLAGI} Mover bandera</button></div>`;}}
  else{const lv=T.pig?CL:Math.min(3,CL),L=lvMods(k,lv,null),s=t&&!lvo?stats(t):{dmg:T.dmg*L.dmg,rate:T.rate/L.cd,range:T.range*L.range,crit:CRIT,critm:2,area:(T.splash||0)*L.area,pen:0,ldur:T.log?logDur(lv):0};
@@ -6282,7 +6318,7 @@ function guildUp(t){if(!t||!TW[t.type].guild||t.lvl>=4||!(S.phase==='build'||S.p
 
 // v337b · ficha propia del cerdito de Nv 4 (se abre desde la de su casa)
 {const _k=kwHtml0;kwHtml0=function(id,src){if(id!=='pigu')return _k.apply(this,arguments);try{src=String(src||'');let k=null;if(src.startsWith('shop:'))k=src.slice(5);else if(src.startsWith('tw:')){const t=S&&S.list&&S.list.find(o=>'tw:'+o.id===src);k=t&&t.type;}const P=k&&PIGU[k];if(!P)return '';
- return `<b>${P.ic} ${P.n}</b><small style="margin:0 0 4px">Unidad de la casa a Nv 4</small>`+R('chp','Vida',P.hp)+R('cph',kst('aphys','Armadura',src),P.ap)+R('cg',kst('espd','Velocidad',src),cas(P.spd||2)+'/s')+R('cd',kst('dmg','Daño',src),f(P.dmg)+(P.rng?' (a distancia)':' (cuerpo a cuerpo)'))+R('ccl','Enfriamiento',f(1/P.rate)+' s')+R('',kst('hblk','Corpulencia',src),'Bloquea hasta 2')+R('cr','Reaparece','10 s')+'<small>'+P.d+' Pelea en la bandera de la casa, dentro de su rango.</small>'+(revd('mech')?'<small>Con las tres casas a Nv 4, los cerditos pueden unirse en el 🤖 <b>¡Mecha Cerdito!</b></small>':'');}catch(e){return '';}};}
+ return `<b>${P.ic} ${P.n}</b><small style="margin:0 0 4px">Unidad de la casa a Nv 4</small>`+R('chp',kst('uhp','Vida',src),P.hp)+(P.ap?R('cph',kst('aphys','Armadura',src),P.ap):'')+R('cg',kst('espd','Velocidad',src),cas(P.spd||2)+'/s')+R('cd',dtLab(P.dt||'phys',kst('dmg','Daño',src)),f(P.dmg)+(P.rng?' (a distancia)':' (cuerpo a cuerpo)'))+R('ccl',kst('cool','Enfriamiento',src),f(1/P.rate)+' s')+R('',kst('hblk','Corpulencia',src),'Bloquea hasta 2')+R('cr',kst('urez','Reaparición',src),'10 s')+'<small>'+P.d+'</small>'/* v361: se mueven por todo el camino, como el héroe (Nogal) */+(revd('mech')?'<small>Con las tres casas a Nv 4, los cerditos pueden unirse en el 🤖 <b>¡Mecha Cerdito!</b></small>':'');}catch(e){return '';}};}
 // tiempos de partida: real (todo incluido) y de combate (tiempo de juego, con la velocidad); FPS
 const GT={r:0,c:0},FPS={n:0,t:0,v:0};
 const fClk=s=>{s=Math.floor(s);const h=Math.floor(s/3600),m=Math.floor(s/60)%60,x=s%60;return(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0');};
@@ -7708,7 +7744,7 @@ function abRows(t){const ids=abIds(t);if(!ids.length)return '';const src='tw:'+t
 const uxT=(k,sp)=>k==='robots'&&sp==='mecha'?{...twm(k,sp),unit:{...TW[k].unit,n:2}}:twm(k,sp);
 function uxAdj(k,sp,s,hpm,uap){const X=sp&&SPECS[k]&&SPECS[k][sp],C=X&&X.ucls&&CLS[X.ucls];return C?{s:{...s,dmg:s.dmg*(C.d||1),rate:s.rate*(C.rt||1),crit:s.crit+(C.cr||0)},hpm:hpm*(C.hp||1),uap:(uap||0)+(C.ap||0)}:{s,hpm,uap};}
 function clsBlock(title,nTxt,C,k,s,hpm,uap,uspd,src,extra){const T=TW[k],U=T.unit,ap=U.ap+(uap||0)+(C.ap||0);
- return '<div class="usub"><b>'+title+'</b>'+(nTxt!==''?R('',kst('usol','Nº de unidades',src),nTxt):'')+R(dtCls(dtOf(T)),kst('dmg','Daño',src),f(s.dmg*(C.d||1)))+R('ccl',kst('cool','Enfriamiento',src),f(1/(s.rate*(C.rt||1)))+' s')+R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm*(C.hp||1)))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+R('cg',kst('espd','Velocidad',src),cas(Math.round(U.spd/K*(uspd||1)*(C.sp||1)*100)/100)+'/s')+(extra||'')+R('cc',kst('crit','Crítico',src),Math.round((s.crit+(C.cr||0))*100)+'% (×'+s.critm+')')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(s.dmg*(C.d||1)*s.rate*(C.rt||1)*(1+(s.crit+(C.cr||0))*(s.critm-1))*(+nTxt>0?+nTxt:1))}</span></div>`+'</div>';}
+ return '<div class="usub"><b>'+title+'</b>'+(nTxt!==''?R('',kst('usol','Nº de unidades',src),nTxt):'')+R(dtCls(dtOf(T)),dtLab(dtOf(T),kst('dmg','Daño',src)),f(s.dmg*(C.d||1)))+R('ccl',kst('cool','Enfriamiento',src),f(1/(s.rate*(C.rt||1)))+' s')+R('chp',kst('uhp','Vida',src),Math.round(U.hp*hpm*(C.hp||1)))+(ap?R('cph',kst('aphys','Armadura',src),armTxt(ap)):'')+R('cg',kst('espd','Velocidad',src),cas(Math.round(U.spd/K*(uspd||1)*(C.sp||1)*100)/100)+'/s')+(extra||'')+R('cc',kst('crit','Crítico',src),Math.round((s.crit+(C.cr||0))*100)+'% (×'+s.critm+')')+`<div class="row cd"><span>${kst('dps','DPS',src)}</span><span>≈ ${f(s.dmg*(C.d||1)*s.rate*(C.rt||1)*(1+(s.crit+(C.cr||0))*(s.critm-1))*(+nTxt>0?+nTxt:1))}</span></div>`+'</div>';}
 function unitExtra(r,k,sp,t,s,hpm,uap,uspd,src){try{
   if(k==='robots'&&sp==='mecha'){r.title='Robots';r.n=R('',kst('usol','Nº de unidades',src),2);r.tail=clsBlock('🦾 Mecha',1,CLS.mecha,k,s,hpm,uap,uspd,src,R('',kst('hblk','Corpulencia',src),'Bloquea hasta 2')+R('ca',kst('area','Área',src),f(.7*((s&&s.arm)||1))+' de radio')+'<small>Uno de los tres robots. Sus golpes alcanzan también a los enemigos pegados al que ataca (la mitad del daño).</small>')+r.tail;}
   if(k==='alien'&&sp==='hive'&&t&&abRank(t,'larva')){const lv=abRank(t,'larva');r.title='Criaturas';r.tail=clsBlock('Larvas',lv.n+' por criatura caída',CLS.larva,k,s,hpm,uap,uspd,src,R('cr',kst('dur','Duración',src),lv.t+' s'))+r.tail;}
@@ -7894,7 +7930,9 @@ function hoverTick(rdt){
   let t=PR.dom?(r.t+r.b)/2-ht/2:r.t;if(t+ht>innerHeight-6)t=innerHeight-6-ht;if(t<6)t=6;
   /* v332: algunos bocadillos salen justo debajo de lo que señalan (la línea de rondas) */
   if(PR.below){l=Math.max(6,Math.min(innerWidth-6-wd,(r.l+r.r)/2-wd/2));t=r.b+8;if(t+ht>innerHeight-6)t=Math.max(6,r.t-8-ht);}
+  /* v361: la tarjeta de una unidad no tapa a su unidad (Nogal) */if(typeof fuAvoid==='function'){const q=fuAvoid(l,t,wd,ht,r);if(q){l=q[0];t=q[1];}}
   tip.style.left=(l/TZ)+'px';tip.style.top=(t/TZ)+'px';
+  /* v361: en móvil la ficha va pegada a la derecha; si tapa a la unidad de su tarjeta, se pega a la izquierda */if(typeof fuUnitBox==='function'){let L=false;const ub=MFSQ()&&fuUnitBox();if(ub){const W=tip.offsetWidth;L=ub.r>innerWidth-W&&ub.l>W;}tip.classList.toggle('fuL',L);}
  }else tip.style.display='none';
  if(!S.hover&&PR.open&&PR.cell)S.hover=PR.cell;
  HV.sl=PR.pinned?(onPin?1:0):(PR.open?1:HV.t);
@@ -7991,7 +8029,7 @@ const bmCost=k=>S.half?Math.ceil(TW[k].cost/2):TW[k].cost;
 function bmFree(q){return q&&inbc(q.kx,q.ky)&&S.cc[q.ky][q.kx]===1&&!S.occ[q.x+','+q.y];}
 function bmVis(){return !!(BM.s&&S&&(S.phase==='build'||S.phase==='wave')&&bmFree(BM.s)&&!RL.open&&!PR.pinned&&!S.aim&&!FO.open&&!LB.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof PMU!=='undefined'&&PMU.open));}
 function bmClose(){BM.s=null;BM.arm=null;BM.hov=null;BM.sig='';const m=$('bmenu');if(m)m.classList.remove('on');const c=$('bmcard');if(c)c.classList.remove('on');}
-function bmOpen(q){S.selT=null;try{tmClose();}catch(e){}if(PR.pinned)closePrim();BM.s=q;BM.arm=null;BM.hov=null;BM.sig='';try{sfx('ui');}catch(e){}}
+function bmOpen(q){S.selT=null;try{tmClose();}catch(e){}if(PR.pinned)closePrim();BM.s=q;BM.arm=null;BM.hov=null;BM.sig='';BM.fit=1;try{sfx('ui');}catch(e){}}
 function bmTap(c){const q=sqOf(c.x,c.y);if(!inb(c.x,c.y)||!bmFree(q)){if(BM.s){bmClose();}return false;}
  if(BM.s&&BM.s.x===q.x&&BM.s.y===q.y){bmClose();return true;}
  if(tutLockBlock(q.x,q.y))return true;
@@ -8003,7 +8041,7 @@ function bmBuild(){let m=$('bmenu');if(!m){m=document.createElement('div');m.id=
   /* v343: el ratón por encima lo lleva tarjeta_gracia.js (la ficha aguanta un poco al salir, para poder ir hasta ella y mirar sus palabras clave) */}
  const q=BM.s;m.innerHTML=bmDeck().map(k=>{const T=TW[k],arm=BM.arm===k,wish=(S.wish||[]).some(w=>w.a==='build'&&w.v===k&&w.x===q.x&&w.y===q.y);
   return `<button class="tmb${arm?' arm':''}${wish?' wish':''}" data-k="${k}" data-tm="build" data-v="${k}" data-sx="${q.x}" data-sy="${q.y}">${arm?'✓':`<span class="ic tw twd" style="background:${T.col}">${icHtml(twIcO(T))}</span>`}<span class="p">${bmCost(k)} 🪙</span></button>`;}).join('');
- m.classList.add('on');bmPos(true);bmCard();}
+ m.classList.add('on');bmPos(true);bmCard();if(BM.fit&&!BM.sim){BM.fit=0;try{bmAutoFit();}catch(e){}}}
 function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*r.width;
  const px=((q.x+.5)*CS-CAM.x)*k+(r.left-c.left),py=((q.y+.5)*CS-CAM.y)*k+(r.top-c.top),bs=m.querySelectorAll('.tmb'),n=bs.length;
  // tamaño según el zoom: alejado, compacto; acercándote, crece con el solar
@@ -8011,10 +8049,10 @@ function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getB
  const gap=bz*1.22,R=Math.max(sp*.5+bz*.8,n>1?gap/(2*Math.sin(Math.min(Math.PI/n,Math.PI/2)/1)):0),T0=58;
  // el anillo empieza arriba y se va cerrando hacia abajo: con 2 torres, las dos arriba; con 3, una en medio y dos a los lados…
  const d=n>=5?2*Math.PI/n:Math.min(2*Math.PI/n,gap/R);/* v305: con 5 o más, polígono regular completo (pentágono, hexágono…) */
- // si se sale de la pantalla, se desplaza hacia dentro (sin dejar de rodear el solar)
- const pad=bz/2+6,cx=Math.max(R+pad,Math.min(c.width-R-pad,px)),cy=Math.max(T0+R+pad,Math.min(c.height-pad-bz*.35-(n*d>Math.PI?R:0),py));
- bs.forEach((b,i)=>{const a=-Math.PI/2+(i-(n-1)/2)*d;b.style.left=cx+Math.cos(a)*R+'px';b.style.top=cy+Math.sin(a)*R+'px';});
- m._p={px:cx,py:cy,R,W:c.width,H:c.height};if(force||BM.hov||BM.arm)bmCardPos();}
+ // v361: siempre el mismo anillo alrededor del solar, como en PC: ni se desplaza, ni se gira, ni se pone en fila. Cerca del borde,
+ // el jugador mueve un poco la vista (el mapa tiene margen de sobra para eso) (Nogal, 20-nov)
+ const bx=px,by=py;bs.forEach((b,i)=>{const a=-Math.PI/2+(i-(n-1)/2)*d;b.style.left=bx+Math.cos(a)*R+'px';b.style.top=by+Math.sin(a)*R+'px';});
+ m._p={px:bx,py:by,R,W:c.width,H:c.height};if(force||BM.hov||BM.arm)bmCardPos();}
 const DTN={phys:'Físico',magic:'Mágico',elem:'Elemental'};
 function bmInfo(k){const T=TW[k],a=twAt(k,1,null),M=twMax(1),src='shop:'+k;
  const tags=T.bufo?['Apoyo']:[DTN[T.dt]||'',T.unit?'Unidades':T.splash||T.pr?'Área':T.beam||T.chain?'Rayo':'Un objetivo'].filter(Boolean);
@@ -8040,6 +8078,28 @@ function bmKey(i){if(!S||!(S.phase==='build'||S.phase==='wave'))return false;con
  bmBuildNow(k,q);if(BM.s&&!bmFree(BM.s))bmClose();return true;}
 addEventListener('keydown',e=>{if(e.key==='Escape'&&BM.s&&bmVis()&&!e.defaultPrevented){if(BM.arm){BM.arm=null;BM.sig='';}else bmClose();}});
 
+
+// v361 · si el anillo de construir no cabe entero (fuera de la pantalla o debajo de la interfaz), la cámara se aleja con suavidad
+// lo justo para que quepan el solar y el anillo; si ya no se puede alejar más, se desplaza lo justo (Nogal, 20-nov: mejor alejar que
+// mover, para no quitarle de la vista lo que estaba mirando). Lo hace al abrir el anillo, no mientras está abierto.
+function bmFitBad(){const m=$('bmenu'),c=$('cw').getBoundingClientRect(),bz=parseFloat(m.style.getPropertyValue('--bs'))||60,ob=typeof tmObs==='function'?tmObs(c):[];
+ let bad=0,ex={l:0,r:0,t:0,b:0};const P=m._p;const L=[...m.querySelectorAll('.tmb')].map(b=>[parseFloat(b.style.left),parseFloat(b.style.top)]);if(P)L.push([P.px,P.py]);
+ for(const [x,y] of L){const b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];ex.l=Math.max(ex.l,2-b[0]);ex.t=Math.max(ex.t,2-b[1]);ex.r=Math.max(ex.r,b[2]-(c.width-2));ex.b=Math.max(ex.b,b[3]-(c.height-2));
+  if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){bad++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){bad++;
+   // cuánto habría que mover para librar este obstáculo (hacia el lado más corto)
+   const dl=b[2]-q[0],dr=q[2]-b[0],dt=b[3]-q[1],dd=q[3]-b[1],mn=Math.min(dl,dr,dt,dd);if(mn===dl)ex.r=Math.max(ex.r,dl);else if(mn===dr)ex.l=Math.max(ex.l,dr);else if(mn===dt)ex.b=Math.max(ex.b,dt);else ex.t=Math.max(ex.t,dd);break;}}
+ return {bad,ex};}
+function bmAutoFit(){if(!BM.s||!$('bmenu'))return;BM.sim=1;const S0={z:CAM.z,x:CAM.x,y:CAM.y},ctr=()=>({x:(CAM.x+VIEW/sc()/2-CS/2)/CS,y:(CAM.y+VH/sc()/2-CS/2)/CS});
+ try{if(!bmFitBad().bad)return;const c0=ctr();let goal=null;
+  // 1) alejar (desde el centro de la pantalla, para que lo del borde venga hacia dentro)
+  /* como mucho un 30% menos de zoom: alejar más dejaría el mapa diminuto; el resto lo hace el desplazamiento */const zl=Math.max(ZMIN,CAM.z*.7);
+  for(let z=CAM.z;z>=zl-1e-6;z=Math.max(zl,z*.93)){CAM.z=z;camCenter(c0.x,c0.y);bmPos(true);if(!bmFitBad().bad){goal={z,...ctr()};break;}if(z<=zl)break;}
+  // 2) alejado lo que se puede y sin caber: desplazar lo justo (desde el zoom ya alejado)
+  if(!goal){for(let i=0;i<6&&!goal;i++){const {bad,ex}=bmFitBad();if(!bad){goal={z:CAM.z,...ctr()};break;}const k=$('cv')?cv.getBoundingClientRect().width/VIEW*sc():sc();
+    const dx=(ex.r>0?ex.r+6:0)-(ex.l>0?ex.l+6:0),dy=(ex.b>0?ex.b+6:0)-(ex.t>0?ex.t+6:0);CAM.x+=dx/k;CAM.y+=dy/k;clampCam();bmPos(true);}
+   if(!goal)goal={z:CAM.z,...ctr()};}
+  CAM.z=S0.z;CAM.x=S0.x;CAM.y=S0.y;bmPos(true);if(goal&&(Math.abs(goal.z-S0.z)>1e-3||Math.hypot(goal.x-c0.x,goal.y-c0.y)>.01))camGoT(goal.z,goal.x,goal.y,.35);}
+ finally{CAM.z=CAM.z;BM.sim=0;}}
 // ---- menú de torre: al pulsar una torre salen botones pegados a ella (mejorar / especializar / habilidades, ficha, vender, bandera) ----
 const TM={t:null,arm:null,hov:null,sig:''};
 function tmHas(t,a){const pp=PR.pinned,pk=PR.key;PR.pinned=true;PR.key='tw:'+t.id;let h='';try{h=towerInfo(t)||'';}catch(e){}finally{PR.pinned=pp;PR.key=pk;}return h.includes('data-a="'+a+'"');}
@@ -8068,13 +8128,33 @@ function tmBuild(){let m=$('tmenu');if(!m){m=document.createElement('div');m.id=
  o.bot.forEach(x=>{const arm=TM.arm===tmKey(x),un=x.k==='sell'&&undoOk(t);let cd=0;if(x.k==='flz')cd=S.phase==='wave'?Math.ceil((t.lzcd||[0,0])[+x.v]||0):0;h+=B(x,(x.k==='sell'?'sell ':'')+(arm?'arm':'')+(cd>0?' mx':''),(arm?'✓':`<span class="ic">${un?'↶':x.ic}</span>`)+(x.k==='sell'?`<span class="p">+${x.sv}</span>`:x.k==='flz'?`<span class="p">${cd>0?cd+' s':(+x.v?'2.ª':'Luz')}</span>`:''));});
  if(o.side)h+=B(o.side,'flag',`<span class="ic">${o.side.ic}</span>${kcap(kbN('flag'))}`);
  m.innerHTML=h;m._o=o;m.classList.add('on');tmPos(true);tmCard();try{wishDeco();}catch(e){}}
+// v361: zonas de la interfaz que el anillo de la torre no puede tapar (relativas a #cw)
+const TMOBS=['stats','rtl','mtl','mbl','mbr','zm','relics','dpsmb','dpsc','emap','pkbar','rtyb'];
+function tmObs(c){const o=[];for(const id of TMOBS){const e=$(id);if(!e)continue;const s=getComputedStyle(e);if(s.display==='none'||s.visibility==='hidden'||+s.opacity===0)continue;
+ const r=e.getBoundingClientRect();if(r.width<2||r.height<2)continue;o.push([r.left-c.left-4,r.top-c.top-4,r.right-c.left+4,r.bottom-c.top+4]);}return o;}
 function tmPos(force){const m=$('tmenu'),t=TM.t;if(!m||!t||!m._o)return;const r=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*r.width;
  const px=((t.x+.5)*CS-CAM.x)*k+(r.left-c.left),py=((t.y+.5)*CS-CAM.y)*k+(r.top-c.top),R=Math.max(16,K*CS*.44*k),o=m._o;
- const bs=m.querySelectorAll('.tmb');let i=0;const put=(x,y)=>{const b=bs[i++];if(b){b.style.left=x+'px';b.style.top=y+'px';}};
- const ty=py-R-42,by=py+R+28,n=o.top.length;
- o.top.forEach((x,j)=>{if(n===3)put(px+(j-1)*50,ty-(j===1?12:0));else if(n===2)put(px+(j?26:-26),ty);else put(px,ty);});
- o.bot.forEach((x,j)=>{put(px+(j-(o.bot.length-1)/2)*52,by);});
- if(o.side)put(px+R+34,py);
+ const bs=m.querySelectorAll('.tmb'),n=o.top.length,ty0=py-R-42,by0=py+R+28;
+ // v361: el anillo nunca se queda debajo de la interfaz (barra de arriba, columnas de los lados, barra de abajo) ni fuera de la pantalla:
+ // si choca, primero cambia arriba ↔ abajo y luego se desplaza a los lados lo justo, sin dejar de rodear la torre
+ // modos: 0 normal, 1 arriba ↔ abajo, 2 las dos filas arriba, 3 las dos filas abajo
+ const lay=(sw,dx,dy=0)=>{const P=[];
+  // 4 / 5: el mismo anillo girado hacia la derecha / la izquierda (torre pegada a un lado): habilidades en una columna junto a la torre y el resto en otra, más fuera
+  if(sw===4||sw===5){const g=sw===4?1:-1,xa=px+g*(R+44),xb=xa+g*58,m=o.bot.length;
+   o.top.forEach((x,j)=>{if(n===3)P.push([xa+(j===1?g*12:0)+dx,py+(j-1)*56+dy]);else if(n===2)P.push([xa+dx,py+(j?29:-29)+dy]);else P.push([xa+dx,py+dy]);});
+   o.bot.forEach((x,j)=>P.push([xb+dx,py+(j-(m-1)/2)*56+dy]));if(o.side)P.push([px,py+R+34]);return {P,ty:py-R-42,by:py+R+28,rot:g};}
+  /* 2 / 3: todo arriba / todo abajo, con la misma forma que de lado: las habilidades junto a la torre y el resto más fuera */
+  const ty=(sw===1?by0+8:sw===3?by0+8:ty0)+dy,by=(sw===1?ty0-8:sw===2?ty0-62:sw===3?by0+80:by0)+dy;
+  o.top.forEach((x,j)=>{if(n===3)P.push([px+(j-1)*50+dx,ty-(j===1?(sw===1||sw===3?-12:12):0)]);/* el arco de las habilidades, siempre hacia fuera de la torre */else if(n===2)P.push([px+(j?26:-26)+dx,ty]);else P.push([px+dx,ty]);});
+  o.bot.forEach((x,j)=>P.push([px+(j-(o.bot.length-1)/2)*52+dx,by]));if(o.side)P.push([px+R+34,py]);return {P,ty,by};};
+ const obs=tmObs(c),hits=L=>{let h=0;for(const[x,y]of L.P){const b=[x-21,y-21,x+21,y+33];if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of obs)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h;};
+ // orden de preferencia: la forma de siempre; si no cabe, todo hacia el lado libre (abajo, arriba, derecha, izquierda) con la misma forma; y solo al final, volteada o desplazada
+ let best=null;const C=[[0,0,0],[3,0,0],[2,0,0],[4,0,0],[5,0,0],[1,0,0]];for(const dy of[-30,30,-60,60,-90,90])C.push([4,0,dy],[5,0,dy]);
+ for(const dy of[24,48,72])for(const dx of[0,40,-40,80,-80]){C.push([3,dx,dy]);C.push([2,dx,-dy]);}/* la torre está casi debajo de la interfaz: el anillo se separa un poco más */
+ for(const dx of[30,-30,60,-60,90,-90,120,-120,150,-150])for(const sw of[0,1,2,3])C.push([sw,dx,0]);
+ for(const[sw,dx,dy]of C){const L=lay(sw,dx,dy),h=hits(L);if(!best||h<best.h)best=Object.assign(L,{h});if(!h)break;}
+ best.P.forEach(([x,y],i)=>{const b=bs[i];if(b){b.style.left=x+'px';b.style.top=y+'px';}});
+ const ty=best.ty,by=best.by;
  m._p={px,py,R,ty,by,W:c.width,H:c.height};if(force||TM.hov||TM.arm)tmCardPos();}
 // antes → después al mejorar un nivel
 function upCmp(t){const T=TW[t.type];if(T.uniq||t.lvl>=3)return'';let a,b;try{a=stats(t);b=stats(Object.assign({},t,{lvl:t.lvl+1}));}catch(e){return'';}
@@ -11383,6 +11463,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:361,f:'20 nov 2026',t:'Fichas de unidades y torres de evento',s:[['Fichas',['Las torres de evento estrenan la ficha nueva, con barras propias para lo que las hace especiales.','Cada unidad tiene su propia tarjeta: púlsala en «Más detalles» para ver su vida en directo y sus datos, con una línea que te señala dónde está en el mapa.','Las habilidades ya no alargan la ficha en partida: las tienes en los botones del anillo de la torre.','Descripciones más cortas: los detalles van en el bocadillo de cada palabra clave, y cada barra abre el suyo.','«Daño» lleva solo el icono de su tipo, y «Ataca a» pasa a «Más detalles».']],['Mapa',['Si abres el anillo de construir junto al borde, la cámara se aleja un poco para que lo veas entero.','El anillo de una torre pegada al borde ya no queda debajo de la interfaz.']]]},
  {v:360,f:'19 nov 2026',t:'Barras nuevas y ventanas sin sustos',s:[['Torres',['Cinco habilidades de Nv 4 cambian por otras nuevas, y cada una trae su propia barra en la ficha de la torre. Descúbrelas en tu próxima partida y ya nos contarás.','Las rocas que ruedan ya tienen un máximo de enemigos que pueden arrollar.']],['Ventanas',['Mientras se abre un cofre, una oferta o un evento, el primer clic acelera la animación y los siguientes no eligen nada hasta que está todo a la vista: se acabó coger algo sin querer.','«Saltar» la oferta de torres pide un segundo clic.','Los eventos que no has visto nunca salen antes.','En el móvil, con una ventana abierta, el botón de fallos se aparta a la esquina.']]]},
  {v:359,f:'19 nov 2026',t:'Fichas nuevas, pausa y eventos',s:[['Fichas',['Ficha del héroe renovada: retrato, vida en barra (si cae, ves cuánto le falta para volver), sus datos principales, experiencia y DPS real.','Las fichas de las torres y del héroe ponen cada dato en su color, y los efectos van en una sola pastilla con su valor.','La ficha de una torre se queda junto a ella al mover la cámara, y ya no se cierra al arrastrar el mapa.']],['Menús',['Pausa más limpia: datos alineados, más aire y marcapáginas que asoman y salen al pasar el ratón.','Las barras de Opciones miden todas lo mismo y son más fáciles de ajustar.','En pantallas grandes, los bocadillos de los menús crecen con el libro.']],['Eventos y cofres',['Eventos más cómodos en PC: la imagen y la descripción a la izquierda y las opciones a la derecha, con el texto más grande.','En el móvil, las opciones de los eventos se desplazan dentro del pergamino y el cofre cabe entero en la pantalla.']],['Héroe',['Con el héroe elegido para moverlo, pulsar una torre, un solar, un enemigo o un botón cambia la selección a eso.','Avisos más cortos y, si pulsas fuera del camino, en rojo.']]]},
  {v:358,f:'17 nov 2026',t:'Clasificación, logros y eventos',s:[['Menú y logros',['Clasificación del menú bien colocada en pantallas grandes, con flechas ‹ › para pasar por las tablas en las que tienes puntuación (empieza en tu mejor partida y tu fila va marcada).','Página de cada logro más clara: «Fijar» en su propia línea y el progreso con las recompensas encima de la barra.','«Informar de un fallo» más grande en el menú principal.']],['Partida',['Los eventos se adaptan a tu partida: ya no te saldrá uno que no puedas aprovechar.','La Era Fantástica ya tiene nombre: Reinos de Leyenda.','Más iconos dibujados en lugar de emojis: ficha del héroe, medidor de daño, eras y recompensas.','Arreglado: las etiquetas del medidor de daño ya no se ven por encima del libro en la pausa.']]]},
@@ -12275,7 +12356,7 @@ function dragonAdults(dt){for(const t of S.list){if(!t.fly||!t.flag)continue;con
 
 // filas de la ficha del dragón volador (vida, armadura, reaparición)
 function dragRows(t,sg,src){const sc=t&&abRank(t,'dscales'),a=sc?sc.a:0,s=t&&t.sd&&t.sd[0]&&t.sd[0].air?t.sd[0]:null;
- return R('chp',kst('uhp','Vida',src),s&&s.hp>0&&s.hp<s.max?Math.ceil(s.hp)+' / '+DRHP[sg]:DRHP[sg])+R('cph',kst('aphys','Armadura',src),TW.dragon.unit.ap+a)+(a?R('cmg',kst('umr','Resistencia mágica',src),a):'')+R('cr','Reaparece',DRREZ+' s');}
+ return R('chp',kst('uhp','Vida',src),s&&s.hp>0&&s.hp<s.max?Math.ceil(s.hp)+' / '+DRHP[sg]:DRHP[sg])+R('cph',kst('aphys','Armadura',src),TW.dragon.unit.ap+a)+(a?R('cmg',kst('umr','Resistencia mágica',src),a):'')+R('cr',kst('urez','Reaparición',src),DRREZ+' s');}
 // habilidades en la ficha de una torre de evento: en partida, con sus botones; en el compendio (Nv Máx), la lista con precios
 function uabSheet(t,k,CL,lvo,pin){if(!UAB[k])return '';
  if(t&&!lvo){if(!uabOk(t))return '';t.ab=t.ab||{};t.acd=t.acd||{};return '<div style="margin-top:8px"><b>Habilidades</b></div>'+abListIds(UAB[k],t,pin);}
@@ -12470,7 +12551,7 @@ function specTxt(t){if(!t||!t.spec)return '';const s=stats(t),sl=abRank(t,'sello
  return '';}
 {const _ti=towerInfo;towerInfo=function(t){let h=_ti.apply(this,arguments);try{if(t&&t.type==='cannon'&&t.spec){let x='';
    if(t.spec==='bomb'){const n=t.bd?t.bd.length:2+((abRank(t,'escuad')||{}).n||0);x=`<small>Drones: <b>${n}</b>. El daño, el enfriamiento y el DPS son los de cada dron. No se elige objetivo: cada dron va a una escuadra distinta, empezando por la más adelantada.</small>`;}
-   else if(t.spec==='rail'){x=`<small>Dispara en línea recta por todo su alcance, en el ángulo que más enemigos atraviesa.${abRank(t,'perfor')?'':' Pierde un 15% de daño por cada enemigo atravesado.'}${t.hot>0?' Recarga en caliente: <b>+'+Math.round(t.hot*100)+'%</b>.':''}</small>`;}
+   else if(t.spec==='rail'){x=t.hot>0?`<small>Recarga en caliente: <b>+${Math.round(t.hot*100)}%</b>.</small>`:'';}/* v361: cómo dispara va en el bocadillo de «disparo de riel» (Nogal) */
    if(x){const i=h.indexOf('<div class="esec"');h=i>=0?h.slice(0,i)+x+h.slice(i):h+x;}}}catch(e){}return h;};}
 // mecánicas del compendio
 try{const add=(id,r)=>{MECUSE[id]=MECUSE[id]||[];if(!MECUSE[id].includes(r))MECUSE[id].push(r);};
@@ -12996,6 +13077,33 @@ if(typeof LATSVG!=='undefined')for(const sk in ICLAT)for(const k in ICLAT[sk])if
  const KB={zin:'zin',zout:'zout',hab:'k_hab',ult:'k_ult',hero:'k_flag',ally:'k_flag',pigs:'k_flag',wave:'k_wave',flag:'k_flag',ptips:'ptips',peek:'k_peek'};for(const[g,rows]of KBL)for(const r of rows)if(KB[r[0]]&&m(KB[r[0]]))r[2]=m(KB[r[0]]);
 }catch(e){console.error(e);}}
 if(typeof LB!=='undefined'&&LB.open)try{lbRender();}catch(e){}
+// ==================== v361 · ICONOS PROVISIONALES de las torres de evento (dibujados por Claude; Mesa «iconos v361», por aprobar) ====================
+// Mismo estilo que el resto de ICKW: lienzo 48×48, contorno #1b1712 de 2,1 y colores planos.
+{const O='stroke="#1b1712" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"';
+ // Luz (Faro): un destello con rayos
+ ICKW.luz=`<g ${O}>${[0,45,90,135,180,225,270,315].map(a=>`<path d="M24 ${a%90?9:5}l3 8h-6z" fill="#ffd54a" transform="rotate(${a} 24 24)"/>`).join('')}<circle cx="24" cy="24" r="9.5" fill="#fff3b0"/><circle cx="21" cy="21" r="3" fill="#ffffff" stroke-width="0"/></g>`;
+ // Crecimiento (dragón): huevo con grieta y flecha hacia arriba
+ ICKW.crece=`<g ${O}><g transform="translate(-2 0)"><path d="M17 7c-7 0-12 12-12 21a12 12 0 0 0 24 0c0-9-5-21-12-21z" fill="#9fdc7a"/><path d="M9 25l4 3 3-4 4 4 3-3" fill="none"/><circle cx="12" cy="16" r="2" fill="#5fa84a" stroke-width="0"/><circle cx="21" cy="35" r="2.2" fill="#5fa84a" stroke-width="0"/></g><path d="M40 40V20h-4.5l8-10 8 10H47v20z" fill="#5ce05a"/></g>`;
+ // Llamarada (dragón anciano): llamarada en cono, saliendo a la derecha
+ ICKW.llama=`<g ${O}><path d="M4 24c6-3 10-9 18-12 6-2 12 0 15-4 3 6 8 9 7 16 1 7-4 10-7 16-3-4-9-2-15-4-8-3-12-9-18-12z" fill="#ff7a2e"/><path d="M14 24c5-2 8-6 13-7 4 0 7-1 9-3 2 4 4 6 4 10s-2 6-4 10c-2-2-5-3-9-3-5-1-8-5-13-7z" fill="#ffd75a" stroke-width="1.4"/></g>`;
+ // Comida (Mímico): muslo de pollo
+ ICKW.comida=`<g ${O}><g transform="rotate(-45 24 24)"><path d="M20.5 26h7v11h-7z" fill="#f4ead8"/><circle cx="20.5" cy="40" r="3.6" fill="#f4ead8"/><circle cx="27.5" cy="40" r="3.6" fill="#f4ead8"/><path d="M21 37.5h6" fill="none" stroke="#f4ead8" stroke-width="3"/><path d="M24 4c8 0 12 7 12 13 0 7-5 11-12 11s-12-4-12-11c0-6 4-13 12-13z" fill="#c9773a"/><path d="M18 11c2-3 6-4 9-3" fill="none" stroke="#f0b27a" stroke-width="2.2"/></g></g>`;
+ // Familias (Omega): hexágono con tres huecos de colores
+ ICKW.omfam=`<g ${O}><path d="M24 4l18 10v20L24 44 6 34V14z" fill="#8a94a6"/><circle cx="24" cy="15" r="5.5" fill="#ff7a2e"/><circle cx="15" cy="30" r="5.5" fill="#c070ff"/><circle cx="33" cy="30" r="5.5" fill="#7ad8ff"/></g>`;
+ // Tronco rodante (Casa de madera): el dibujo de «Troncos gordos» con rayas de movimiento
+ ICKW.logk=`<g transform="translate(28 24) scale(1.25)"><path d="M-14 -7h26a4 7 0 0 1 0 14h-26a4 7 0 0 1 0-14z" fill="#a8743a" stroke="#1b1712" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M-12 -2h12M-8 3h14" fill="none" stroke="#7a4a2a" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="12" cy="0" rx="4" ry="7" fill="#e0b070" stroke="#1b1712" stroke-width="2.1"/><ellipse cx="12" cy="0" rx="2" ry="3.4" fill="none" stroke="#a8743a" stroke-width="1"/></g><path d="M1 17h5M0 24h6M1 31h5" fill="none" stroke="#1b1712" stroke-width="4.6" stroke-linecap="round"/><path d="M1 17h5M0 24h6M1 31h5" fill="none" stroke="#5ab8ff" stroke-width="2.2" stroke-linecap="round"/>`;/* el mismo tronco que «Troncos gordos» (Nogal) */
+ // Fardo de paja (Casa de paja): un fardo con sus dos cuerdas y pajas sueltas
+ ICKW.bale=`<g ${O}><path d="M6 14h36a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V18a4 4 0 0 1 4-4z" fill="#e8cf6a"/><path d="M15 14v22M33 14v22" fill="none" stroke="#9a6a2a" stroke-width="2.6"/><path d="M7 20h5M20 21h9M37 19h4M8 29h4M21 28h8M37 30h5" fill="none" stroke="#c4a640" stroke-width="1.5"/><path d="M4 12l-3-3M44 12l3-3M24 36l1 5" fill="none" stroke-width="1.6"/></g>`;
+ // Roca rodante (Ogros lanzarrocas): una roca con rayas de movimiento detrás
+ ICKW.rroll=`<g ${O}><path d="M4 18h10M2 26h10M5 34h9" fill="none" stroke="#7e9a5a" stroke-width="3"/><circle cx="30" cy="26" r="14" fill="#9a928a"/><path d="M24 20l5 3-2 6M34 30l4-1" fill="none" stroke-width="1.6"/></g>`;
+ // Llamarada: el mismo icono que su habilidad, Aliento abrasador (Nogal: lo que viene de una habilidad lleva el icono de la habilidad)
+ if(typeof AB!=='undefined'&&AB.dbreath&&ICSV[AB.dbreath.ic])ICKW.llama=ICSV[AB.dbreath.ic];
+ // Barras con palabra propia (provisionales): Calor y Carga del juicio usan el dibujo que ya llevaba su barra; Conexión, el de la barra de la Red; Almas, el del espectro
+ ICKW.calor=ICKW.burn;ICKW.juicio=ICKW.ez;ICKW.conex=ICKW.chain;if(typeof SPECT!=="undefined"&&SPECT.spectre&&ICSV[SPECT.spectre.ic])ICKW.almas=ICSV[SPECT.spectre.ic];
+ // Disparo de riel: un proyectil alargado entre dos raíles
+ ICKW.riel=`<g ${O}><path d="M4 16h40M4 32h40" fill="none" stroke="#6a737d" stroke-width="3"/><path d="M8 20h26l8 4-8 4H8z" fill="#7ad8ff"/></g>`;
+ // Muro (Casa de ladrillo): ya tiene dibujo aprobado (el de su casilla de evento, te_bwall): se usa ese
+ if(typeof ICUIS!=='undefined'&&ICUIS.te_bwall)ICKW.bwall=ICUIS.te_bwall;}
 // Dibujos de las torres de evento a Nv 4 y fases del huevo de dragón (maquetas/torres_evento_final.json)
 const EVTSVG={"faro4": "<svg viewBox=\"-4 -4 56 56\"><defs><clipPath id=\"fcfaro40\"><path d=\"M11 38l2-18h6l2 18z\" fill=\"#b3aca2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></clipPath><clipPath id=\"fcfaro41\"><path d=\"M27 38l2-18h6l2 18z\" fill=\"#b3aca2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></clipPath></defs><g transform=\"translate(16 10) rotate(200)\"><path d=\"M0 -2L16 -6L16 6L0 2z\" fill=\"#d8c8ff\" opacity=\".55\"></path></g><g transform=\"translate(32 10) rotate(-20)\"><path d=\"M0 -2L16 -6L16 6L0 2z\" fill=\"#d8c8ff\" opacity=\".55\"></path></g><path d=\"M8 46h32v-4H8z\" fill=\"#857f76\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M10 42h28v-4H10z\" fill=\"#b3aca2\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M11 38l2-18h6l2 18z\" fill=\"#b3aca2\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><g clip-path=\"url(#fcfaro40)\"><path d=\"M12.6 31h6.8M13.2 24h5.6\" fill=\"none\" stroke=\"#857f76\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></g><path d=\"M11 38l2-18h6l2 18z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M27 38l2-18h6l2 18z\" fill=\"#b3aca2\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><g clip-path=\"url(#fcfaro41)\"><path d=\"M28.6 31h6.8M29.2 24h5.6\" fill=\"none\" stroke=\"#857f76\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></g><path d=\"M27 38l2-18h6l2 18z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M21 34h6v-3h-6z\" fill=\"#857f76\" stroke=\"#1b1712\" stroke-width=\"1.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><g transform=\"translate(16 14) scale(0.82)\"><path d=\"M-7 6h14v-3H-7z\" fill=\"#857f76\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><g transform=\"translate(0 -2) scale(0.55)\"><path d=\"M0 -14C4 -7 10 -4 9 4a9 9 0 01-18 0c-1-6 4-8 4-13 2 2 3 4 3 6 2-3 3-7 2-11z\" fill=\"#9a7dff\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M0 -2c2 3 4 4 4 7a4 4 0 01-8 0c0-3 2-4 4-7z\" fill=\"#d8c8ff\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></g></g><g transform=\"translate(32 14) scale(0.82)\"><path d=\"M-7 6h14v-3H-7z\" fill=\"#857f76\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><g transform=\"translate(0 -2) scale(0.55)\"><path d=\"M0 -14C4 -7 10 -4 9 4a9 9 0 01-18 0c-1-6 4-8 4-13 2 2 3 4 3 6 2-3 3-7 2-11z\" fill=\"#9a7dff\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M0 -2c2 3 4 4 4 7a4 4 0 01-8 0c0-3 2-4 4-7z\" fill=\"#d8c8ff\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></g></g></svg>", "straw4": "<svg viewBox=\"-4 -4 56 56\"><path d=\"M10 46V30h28v16z\" fill=\"#d8b860\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M10 36h28M10 41h28\" fill=\"none\" stroke=\"#a88a40\" stroke-width=\"1.2\" stroke-linecap=\"round\" /><path d=\"M10 46V30h28v16z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M12 30V18h24v12z\" fill=\"#d8b860\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M6 30l18-6 18 6z\" fill=\"#c9a24a\" stroke=\"#1b1712\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M8 18L24 4l16 14z\" fill=\"#c9a24a\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M12 14l4-2M22 8l4 2M32 14l-4-2\" fill=\"none\" stroke=\"#a88a40\" stroke-width=\"1.4\" stroke-linecap=\"round\" /><path d=\"M8 18L24 4l16 14z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M21 46v-8h6v8z\" fill=\"#7a5a2a\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M21 20h6v5h-6z\" fill=\"#5a3a20\" stroke=\"#1b1712\" stroke-width=\"1.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /></svg>", "wood4": "<svg viewBox=\"-4 -4 56 56\"><path d=\"M8 46V28h32v18z\" fill=\"#b07a42\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M8 33h32M8 38h32M8 43h32\" fill=\"none\" stroke=\"#7a4a2a\" stroke-width=\"1.2\" stroke-linecap=\"round\" /><path d=\"M8 46V28h32v18z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M6 28h36v3H6z\" fill=\"#7a4a2a\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M11 28V16h26v12z\" fill=\"#b07a42\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M11 20h26M11 24h26\" fill=\"none\" stroke=\"#7a4a2a\" stroke-width=\"1.2\" stroke-linecap=\"round\" /><path d=\"M11 28V16h26v12z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M7 16L24 4l17 12z\" fill=\"#6a3a1a\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M33 10V3h4v10z\" fill=\"#9aa3ad\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M21 46v-8h6v8z\" fill=\"#4a2a12\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><circle cx=\"24\" cy=\"21\" r=\"2.4\" fill=\"#ffd75a\" stroke=\"#1b1712\" stroke-width=\"1.2\" /></svg>", "brick4": "<svg viewBox=\"-4 -4 56 56\"><path d=\"M8 46V14h32v32z\" fill=\"#c05a3a\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M8 20h32M8 26h32M8 34h32M8 40h32M16 14v6M28 20v6M20 34v6M32 40v6\" fill=\"none\" stroke=\"#8a3a22\" stroke-width=\"1.1\" stroke-linecap=\"round\" /><path d=\"M8 46V14h32v32z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M7 29h34v3H7z\" fill=\"#d8d0c0\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M12 18h6v6h-6zM30 18h6v6h-6zM12 34h6v6h-6z\" fill=\"#ffe8a0\" stroke=\"#1b1712\" stroke-width=\"1.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M26 46v-10h6v10z\" fill=\"#4a2a12\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M5 14L24 2l19 12z\" fill=\"#5a6270\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M33 8V0h5v10z\" fill=\"#8a3a22\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /></svg>", "glut4": "<svg viewBox=\"-4 -4 56 56\"><g transform=\"translate(0.07 -2.45) scale(0.983)\"><path d=\"M9.5 22.0V40A6.5 2.3 0 0 0 22.5 40V22.0z\" fill=\"#f2c94c\" stroke=\"#1b1712\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><clipPath id=\"s4t16405\"><path d=\"M9.5 22.0V40A6.5 2.3 0 0 0 22.5 40V22.0z\"/></clipPath><g clip-path=\"url(#s4t16405)\"><path d=\"M11.5 38.6A4.5 1.6999999999999997 0 0 0 20.5 38.6\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M11.5 35.0A4.5 1.6999999999999997 0 0 0 20.5 35.0\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M11.5 31.399999999999995A4.5 1.6999999999999997 0 0 0 20.5 31.399999999999995\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M11.5 27.799999999999997A4.5 1.6999999999999997 0 0 0 20.5 27.799999999999997\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M11.5 24.2A4.5 1.6999999999999997 0 0 0 20.5 24.2\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M9.5 36.4A6.5 2.3 0 0 0 22.5 36.4\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M9.5 32.8A6.5 2.3 0 0 0 22.5 32.8\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M9.5 29.2A6.5 2.3 0 0 0 22.5 29.2\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M9.5 25.6A6.5 2.3 0 0 0 22.5 25.6\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/></g><path d=\"M9.5 22.0V40A6.5 2.3 0 0 0 22.5 40V22.0z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"16\" cy=\"22.0\" rx=\"6.5\" ry=\"2.3\" fill=\"#f2c94c\" stroke=\"#1b1712\" stroke-width=\"1.7\"/><ellipse cx=\"16\" cy=\"22.0\" rx=\"3.575\" ry=\"1.15\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\"1.1\"/><path d=\"M24.5 14.8V40A6.5 2.3 0 0 0 37.5 40V14.8z\" fill=\"#f2c94c\" stroke=\"#1b1712\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><clipPath id=\"s4t31407\"><path d=\"M24.5 14.8V40A6.5 2.3 0 0 0 37.5 40V14.8z\"/></clipPath><g clip-path=\"url(#s4t31407)\"><path d=\"M26.5 38.6A4.5 1.6999999999999997 0 0 0 35.5 38.6\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M26.5 35.0A4.5 1.6999999999999997 0 0 0 35.5 35.0\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M26.5 31.399999999999995A4.5 1.6999999999999997 0 0 0 35.5 31.399999999999995\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M26.5 27.799999999999997A4.5 1.6999999999999997 0 0 0 35.5 27.799999999999997\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M26.5 24.2A4.5 1.6999999999999997 0 0 0 35.5 24.2\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M26.5 20.599999999999998A4.5 1.6999999999999997 0 0 0 35.5 20.599999999999998\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M26.5 16.999999999999996A4.5 1.6999999999999997 0 0 0 35.5 16.999999999999996\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M24.5 36.4A6.5 2.3 0 0 0 37.5 36.4\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M24.5 32.8A6.5 2.3 0 0 0 37.5 32.8\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M24.5 29.2A6.5 2.3 0 0 0 37.5 29.2\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M24.5 25.6A6.5 2.3 0 0 0 37.5 25.6\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M24.5 22.0A6.5 2.3 0 0 0 37.5 22.0\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M24.5 18.4A6.5 2.3 0 0 0 37.5 18.4\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/></g><path d=\"M24.5 14.8V40A6.5 2.3 0 0 0 37.5 40V14.8z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"31\" cy=\"14.8\" rx=\"6.5\" ry=\"2.3\" fill=\"#f2c94c\" stroke=\"#1b1712\" stroke-width=\"1.7\"/><ellipse cx=\"31\" cy=\"14.8\" rx=\"3.575\" ry=\"1.15\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\"1.1\"/><path d=\"M17.0 34.2V45A7.0 2.3 0 0 0 31.0 45V34.2z\" fill=\"#f2c94c\" stroke=\"#1b1712\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><clipPath id=\"s4t24453\"><path d=\"M17.0 34.2V45A7.0 2.3 0 0 0 31.0 45V34.2z\"/></clipPath><g clip-path=\"url(#s4t24453)\"><path d=\"M19.0 43.6A5.0 1.6999999999999997 0 0 0 29.0 43.6\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M19.0 40.0A5.0 1.6999999999999997 0 0 0 29.0 40.0\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M19.0 36.4A5.0 1.6999999999999997 0 0 0 29.0 36.4\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\".9\"/><path d=\"M17.0 41.4A7.0 2.3 0 0 0 31.0 41.4\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M17.0 37.8A7.0 2.3 0 0 0 31.0 37.8\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.2\"/></g><path d=\"M17.0 34.2V45A7.0 2.3 0 0 0 31.0 45V34.2z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"24\" cy=\"34.2\" rx=\"7.0\" ry=\"2.3\" fill=\"#f2c94c\" stroke=\"#1b1712\" stroke-width=\"1.7\"/><ellipse cx=\"24\" cy=\"34.2\" rx=\"3.8500000000000005\" ry=\"1.15\" fill=\"none\" stroke=\"#c8962a\" stroke-width=\"1.1\"/><path d=\"M41 37L44.3 40L41 43L37.7 40z\" fill=\"#3fd0e0\" stroke=\"#1b1712\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M37.7 40L41 37L41 43z\" fill=\"#fff\" opacity=\".35\"/><path d=\"M41 37L44.3 40L41 43L37.7 40z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M5 24.2L8.08 27L5 29.8L1.92 27z\" fill=\"#e05a6a\" stroke=\"#1b1712\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M1.92 27L5 24.2L5 29.8z\" fill=\"#fff\" opacity=\".35\"/><path d=\"M5 24.2L8.08 27L5 29.8L1.92 27z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><g transform=\"translate(28 30) rotate(-20) scale(0.9)\"><path d=\"M-11 -3.4h31v6.8h-31z\" fill=\"#f2c94c\" stroke=\"#1b1712\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M12 3.4h4.4v7h-4.4zM4.6 3.4h4.4v4.6h-4.6z\" fill=\"#f2c94c\" stroke=\"#1b1712\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M-29 0a9.5 9.5 0 1 0 19 0a9.5 9.5 0 1 0 -19 0zM-24.2 0a4.7 4.7 0 1 1 9.4 0a4.7 4.7 0 1 1 -9.4 0z\" fill=\"#f2c94c\" fill-rule=\"evenodd\" stroke=\"#1b1712\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M-26 -3.5a7 7 0 0 1 5-4.5\" fill=\"none\" stroke=\"#ffe9a0\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></g><g transform=\"translate(31 11) rotate(0) scale(0.8)\"><path d=\"M-10 4l-2-10l6 4l6-8l6 8l6-4l-2 10z\" fill=\"#ffd75a\" stroke=\"#1b1712\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M-10 4h20v3.4h-20z\" fill=\"#e8b030\" stroke=\"#1b1712\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"0\" cy=\"-3\" r=\"1.6\" fill=\"#e0453a\" stroke=\"#1b1712\" stroke-width=\"1\"/><circle cx=\"-6\" cy=\"1\" r=\"1.1\" fill=\"#3fd0e0\" stroke=\"#1b1712\" stroke-width=\"0.8\"/><circle cx=\"6\" cy=\"1\" r=\"1.1\" fill=\"#3fd0e0\" stroke=\"#1b1712\" stroke-width=\"0.8\"/></g><path d=\"M24 45.2L27.08 48L24 50.8L20.92 48z\" fill=\"#5fd060\" stroke=\"#1b1712\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M20.92 48L24 45.2L24 50.8z\" fill=\"#fff\" opacity=\".35\"/><path d=\"M24 45.2L27.08 48L24 50.8L20.92 48z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g></svg>", "omega4": "<svg viewBox=\"-4 -4 56 56\"><svg x=\"-4\" y=\"-4\" width=\"56\" height=\"56\" viewBox=\"-30 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"17.1,33 -6,58 -6,108 17.1,63\" fill=\"#3e4554\" stroke=\"#14101e\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polygon points=\"17.1,63 -6,108 50,134 50,78\" fill=\"#4f5868\" stroke=\"#14101e\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polygon points=\"50,78 50,134 106,108 82.9,63\" fill=\"#5f6878\" stroke=\"#14101e\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polygon points=\"82.9,33 82.9,63 106,108 106,58\" fill=\"#3e4554\" stroke=\"#14101e\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"4.395\" y1=\"46.75\" x2=\"4.395\" y2=\"87.75\" stroke=\"#3fe8ff\" stroke-width=\"2.2\"/><line x1=\"4.395\" y1=\"87.75\" x2=\"50\" y2=\"108.80000000000001\" stroke=\"#3fe8ff\" stroke-width=\"2.2\"/><line x1=\"50\" y1=\"108.80000000000001\" x2=\"95.605\" y2=\"87.75\" stroke=\"#3fe8ff\" stroke-width=\"2.2\"/><line x1=\"95.605\" y1=\"87.75\" x2=\"95.605\" y2=\"46.75\" stroke=\"#3fe8ff\" stroke-width=\"2.2\"/><polygon points=\"82.9,63.0 50.0,78.0 17.1,63.0 17.1,33.0 50.0,18.0 82.9,33.0\" fill=\"#8a94a6\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><circle cx=\"50.0\" cy=\"28.0\" r=\"8\" fill=\"#2a2f3a\" stroke=\"#d8c49a\" stroke-width=\"2\"/><g transform=\"translate(50.0 28.0) scale(.8)\"><path d=\"M-3 9 V-2 Q-3 -9 0 -10 Q3 -9 3 -2 V9Z\" fill=\"#d8a84a\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M-3 4 H3\" stroke=\"#14101e\" stroke-width=\"1.2\"/></g><circle cx=\"69.1\" cy=\"33.9\" r=\"8\" fill=\"#2a2f3a\" stroke=\"#ffe14d\" stroke-width=\"2\"/><g transform=\"translate(69.1 33.9) scale(.8)\"><g transform=\"scale(1.18)\"><path d=\"M2 -9 L-6 1 H-1 L-3 9 L6 -2 H1Z\" fill=\"#ffe14d\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g></g><circle cx=\"77.0\" cy=\"48.0\" r=\"8\" fill=\"#2a2f3a\" stroke=\"#ff7a2e\" stroke-width=\"2\"/><g transform=\"translate(77.0 48.0) scale(.8)\"><path d=\"M0 9 Q-8 7 -7 0 Q-6 -5 -2 -9 Q-2 -4 1 -3 Q2 -7 5 -8 Q8 -2 7 3 Q6 8 0 9Z\" fill=\"#ff7a2e\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M0 7 Q-3 6 -3 2 Q-2 -1 0 -2 Q1 1 3 2 Q3 6 0 7Z\" fill=\"#ffe14d\"/></g><circle cx=\"69.1\" cy=\"62.1\" r=\"8\" fill=\"#2a2f3a\" stroke=\"#6aff8a\" stroke-width=\"2\"/><g transform=\"translate(69.1 62.1) scale(.8)\"><path d=\"M0 -9 Q7 -1 7 3 Q7 9 0 9 Q-7 9 -7 3 Q-7 -1 0 -9Z\" fill=\"#6aff8a\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M-3.5 2 Q-3.5 -1 -1.5 -3.5\" stroke=\"#fff\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\" opacity=\".9\"/><circle cx=\"-3.4\" cy=\"4.6\" r=\".9\" fill=\"#fff\" opacity=\".9\"/></g><circle cx=\"50.0\" cy=\"68.0\" r=\"8\" fill=\"#2a2f3a\" stroke=\"#c070ff\" stroke-width=\"2\"/><g transform=\"translate(50.0 68.0) scale(.8)\"><g transform=\"scale(1.25)\"><path d=\"M-5 5 L0 1 L5 5Z\" fill=\"#5a6474\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"0\" cy=\"-3\" r=\"5\" fill=\"#c070ff\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"-1.5\" cy=\"-4.5\" r=\"1.4\" fill=\"#fff\"/></g></g><circle cx=\"30.9\" cy=\"62.1\" r=\"8\" fill=\"#2a2f3a\" stroke=\"#9aa4b4\" stroke-width=\"2\"/><g transform=\"translate(30.9 62.1) scale(.8)\"><circle cx=\"0\" cy=\"-3.2\" r=\"4.4\" fill=\"#d8dee8\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M-8 9 Q-8 1.5 0 1.5 Q8 1.5 8 9Z\" fill=\"#d8dee8\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g><circle cx=\"23.0\" cy=\"48.0\" r=\"8\" fill=\"#2a2f3a\" stroke=\"#7ad8ff\" stroke-width=\"2\"/><g transform=\"translate(23.0 48.0) scale(.8)\"><path d=\"M0 0 Q2 -2 0 -3.5 Q-4 -3.5 -4 0 Q-4 5 1 5 Q7 5 7 -1 Q7 -8 0 -8.5 Q-9 -8.5 -9 0\" stroke=\"#14101e\" stroke-width=\"3.6\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M0 0 Q2 -2 0 -3.5 Q-4 -3.5 -4 0 Q-4 5 1 5 Q7 5 7 -1 Q7 -8 0 -8.5 Q-9 -8.5 -9 0\" stroke=\"#7ad8ff\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></g><circle cx=\"30.9\" cy=\"33.9\" r=\"8\" fill=\"#2a2f3a\" stroke=\"#ffb43a\" stroke-width=\"2\"/><g transform=\"translate(30.9 33.9) scale(.8)\"><path d=\"M0 -10 L8 -1 H3 V4 H-3 V-1 H-8Z\" fill=\"#ffb43a\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M-6 9 H6\" stroke=\"#14101e\" stroke-width=\"3.2\" stroke-linecap=\"round\"/><path d=\"M-6 9 H6\" stroke=\"#ffb43a\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></g><circle cx=\"50\" cy=\"48\" r=\"13\" fill=\"#13222e\" stroke=\"#14101e\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><circle cx=\"50\" cy=\"48\" r=\"10\" fill=\"#3fe8ff\"/><text x=\"50\" y=\"53.5\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\" font-size=\"15\" fill=\"#13222e\">Ω</text></svg></svg>", "dr_1": "<svg viewBox=\"-4 -4 56 56\"><ellipse cx=\"24\" cy=\"44\" rx=\"14\" ry=\"3\" fill=\"#6a4a2a\" stroke=\"#1b1712\" stroke-width=\"1.6\" /><g transform=\"translate(24 28) scale(1.1)\"><path d=\"M0 -16c8 0 12 12 12 19a12 12 0 01-24 0c0-7 4-19 12-19z\" fill=\"#3f9a5a\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M-4 -6l3 4-2 4 3 4\" fill=\"none\" stroke=\"#ffd75a\" stroke-width=\"1.8\" stroke-linecap=\"round\" /><path d=\"M0 -16c8 0 12 12 12 19a12 12 0 01-24 0c0-7 4-19 12-19z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M-9 4q3 2 6 0t6 0 6 0\" fill=\"none\" stroke=\"#2a6a3a\" stroke-width=\"1.4\" stroke-linecap=\"round\" /><path d=\"M0 -16c8 0 12 12 12 19a12 12 0 01-24 0c0-7 4-19 12-19z\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /></g></svg>", "dr_2": "<svg viewBox=\"-4 -4 56 56\"><ellipse cx=\"24\" cy=\"44\" rx=\"16\" ry=\"3.5\" fill=\"#6a4a2a\" stroke=\"#1b1712\" stroke-width=\"1.6\"/><path d=\"M10 30c0 10 6 14 14 14s14-4 14-14l-4 3-3-5-4 4-3-5-3 5-4-4-3 5z\" fill=\"#3f9a5a\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M14 12l4 6-2 4z\" fill=\"#3f9a5a\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><g transform=\"translate(23 24) scale(0.55)\"><path d=\"M-12 -2q0-12 12-12t12 10l8 4-4 6h-8q-4 6-12 6-8 0-8-14z\" fill=\"#e07a3a\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M-8 -12l-4-8 8 4zM4 -14l2-8 4 7z\" fill=\"#f4e4c0\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"2\" cy=\"-4\" r=\"2.4\" fill=\"#ffd23a\" stroke=\"#1b1712\" stroke-width=\"1.2\"/><path d=\"M2 -5.6v3.2\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linecap=\"round\"/><path d=\"M14 4h6\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linecap=\"round\"/><circle cx=\"17\" cy=\"-1\" r=\"1\" fill=\"#1b1712\" stroke=\"#1b1712\" stroke-width=\"0\"/></g><path d=\"M32 8l5 4-3 3z\" fill=\"#3f9a5a\" stroke=\"#1b1712\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "dr_3": "<svg viewBox=\"-4 -4 56 56\"><path d=\"M2 46c0-24 10-38 22-38s22 14 22 38z\" fill=\"#7a6a5a\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><path d=\"M12 46c0-14 5-22 12-22s12 8 12 22z\" fill=\"#1a1210\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\" /><circle cx=\"19\" cy=\"34\" r=\"2\" fill=\"#ffd23a\" stroke=\"#1b1712\" stroke-width=\"0\" /><circle cx=\"29\" cy=\"34\" r=\"2\" fill=\"#ffd23a\" stroke=\"#1b1712\" stroke-width=\"0\" /><path d=\"M8 24l4 2M38 20l-3 3M24 12v4\" fill=\"none\" stroke=\"#5a4a3a\" stroke-width=\"1.6\" stroke-linecap=\"round\" /><circle cx=\"29\" cy=\"34\" r=\"2\" fill=\"none\" stroke=\"#1b1712\" stroke-width=\"0\" /></svg>", "dr_4": "<svg viewBox=\"-4 -4 56 56\"><path d=\"M10 14l3-12 4 12zM31 14l4-12 3 12zM20 10l4-10 4 10z\" fill=\"#5a4a3a\" stroke=\"#1b1712\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M2 44c0-24 10-34 22-34s22 10 22 34z\" fill=\"#5a4a3a\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M12 44c0-14 5-22 12-22s12 8 12 22z\" fill=\"#1a0a08\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"19\" cy=\"32\" r=\"2.2\" fill=\"#e0453a\" stroke=\"#1b1712\" stroke-width=\"0\"/><circle cx=\"29\" cy=\"32\" r=\"2.2\" fill=\"#e0453a\" stroke=\"#1b1712\" stroke-width=\"0\"/><g transform=\"translate(24 49) rotate(25) scale(1.25)\"><path d=\"M-5 -1h10v2h-10z\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"-5\" cy=\"-1.2\" r=\"1.4\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\"/><circle cx=\"-5\" cy=\"1.2\" r=\"1.4\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\"/><circle cx=\"5\" cy=\"-1.2\" r=\"1.4\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\"/><circle cx=\"5\" cy=\"1.2\" r=\"1.4\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\"/></g><g transform=\"translate(24 49) rotate(-25) scale(1.25)\"><path d=\"M-5 -1h10v2h-10z\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"-5\" cy=\"-1.2\" r=\"1.4\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\"/><circle cx=\"-5\" cy=\"1.2\" r=\"1.4\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\"/><circle cx=\"5\" cy=\"-1.2\" r=\"1.4\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\"/><circle cx=\"5\" cy=\"1.2\" r=\"1.4\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"1\"/></g><g transform=\"translate(24 46) scale(0.55)\"><path d=\"M-9 2a9 9 0 1118 0v3l-3 2v4h-12v-4l-3-2z\" fill=\"#fff4dc\" stroke=\"#1b1712\" stroke-width=\"2.1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"-4\" cy=\"1\" r=\"2.6\" fill=\"#1b1712\" stroke=\"#1b1712\" stroke-width=\"0\"/><circle cx=\"4\" cy=\"1\" r=\"2.6\" fill=\"#1b1712\" stroke=\"#1b1712\" stroke-width=\"0\"/><path d=\"M-2 11v-3M2 11v-3\" stroke=\"#1b1712\" stroke-width=\"1.4\"/></g></svg>"};
 const EVNV4={faro:'faro4',straw:'straw4',wood:'wood4',brick:'brick4',glut:'glut4',omega:'omega4'};
@@ -14915,6 +15023,11 @@ function fzPlace(c,m,it){const P=m._p;if(!P||!it)return false;const Z=cardZ(c),w
  const right=[ix+r.width+g,cy-h/2],left=[ix-g-w,cy-h/2],up=[cx-w/2,iy-g-h],down=[cx-w/2,iy+r.height+g];
  const order=Math.abs(dx)>=Math.abs(dy)?(dx<0?[left,up,down,right]:[right,up,down,left]):(dy<0?[up,dx<0?left:right,dx<0?right:left,down]:[down,dx<0?left:right,dx<0?right:left,up]);
  const fit=([x,y])=>x>=6&&y>=T0&&x+w<=P.W-6&&y+h<=P.H-6;let [x,y]=order.find(fit)||order[0];
+ // v361: la ficha no tapa la interfaz (barras y columnas) ni los botones del anillo: si el sitio de siempre pisa algo, se busca el que menos pise
+ if(typeof tmObs==='function'){const ob=tmObs(op);for(const b of m.querySelectorAll('.tmb')){const q=b.getBoundingClientRect();if(q.width)ob.push([q.left-op.left-3,q.top-op.top-3,q.right-op.left+3,q.bottom-op.top+16]);}
+  const cl=([a,b])=>[Math.max(6,Math.min(P.W-w-6,a)),Math.max(6,Math.min(P.H-h-6,b))],pis=([a,b])=>{let s=0;for(const q of ob){const ix=Math.min(a+w,q[2])-Math.max(a,q[0]),iy=Math.min(b+h,q[3])-Math.max(b,q[1]);if(ix>0&&iy>0)s+=ix*iy;}return s;};
+  if(pis(cl([x,y]))>0){const all=order.filter(fit).concat(order);for(const[ax,ay]of order)for(let d=20;d<=300;d+=20){all.push([ax+d,ay],[ax-d,ay],[ax,ay+d],[ax,ay-d]);for(let e=20;e<=d;e+=20)all.push([ax+d,ay+e],[ax-d,ay+e],[ax+d,ay-e],[ax-d,ay-e],[ax+e,ay+d],[ax-e,ay+d],[ax+e,ay-d],[ax-e,ay-d]);}/* v361: también en diagonal, para no quedarse pisando unos píxeles */
+   let best=null;for(const q of all){const k=cl(q),v=pis(k);if(!best||v<best.v)best={k,v};if(!v)break;}[x,y]=best.k;}}
  x=Math.max(6,Math.min(P.W-w-6,x));y=Math.max(T0,Math.min(P.H-h-6,y));c.style.left=x+'px';c.style.top=y+'px';return true;}
 {const _p=bmCardPos;bmCardPos=function(){const c=$('bmcard'),m=$('bmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const k=BM.arm||BM.hov,it=k&&m.querySelector(`.tmb[data-k="${k}"]`);if(!fzPlace(c,m,it))return _p.apply(this,arguments);};}
 {const _p=tmCardPos;tmCardPos=function(){const c=$('tmcard'),m=$('tmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const k=c.dataset.k,it=k&&[...m.querySelectorAll('.tmb[data-k]')].find(b=>b.dataset.k===k);if(!fzPlace(c,m,it))return _p.apply(this,arguments);};}
@@ -15001,7 +15114,7 @@ document.addEventListener('click',e=>{const rl=$('relic');if(!rl||!rl.classList.
 // Corta y con lo importante arriba: qué hace en una línea; su mecánica en directo con barra (solo las torres que la tienen);
 // 4 números (DPS, enfriamiento, rango, área; los que valen 0 no salen); debajo, el DPS real en directo comparado con el teórico
 // (entre oleadas, congelado con la media de la última, en gris); los efectos solo con su icono (el bocadillo los explica);
-// Objetivo y Más detalles plegados, Habilidades abierta. Lo desplegado no se recuerda entre fichas: cada ficha se abre siempre igual.
+// Objetivo y Más detalles plegados; sin Habilidades (v361: se miran en el anillo). Lo desplegado no se recuerda entre fichas: cada ficha se abre siempre igual.
 const FT={key:null,t:null,open:{}};
 const FTFOLD={obj:false,ab:true,more:false};
 // ---- mecánicas con barra en directo: v = 0..1, l = texto de la derecha, base = se ve también la descripción de la torre ----
@@ -15036,7 +15149,9 @@ function ftFx(T,src){const h=effHtml(T,src);if(!h)return '';const m=h.match(/dat
 function fxPill(id,v,src,nm){const ic=typeof ICKW!=='undefined'&&ICKW[id];return `<span class="kw gico ftfxi fxpill" data-kw="${id}" data-src="${src}"${nm?` aria-label="${nm}"`:''}>${ic?`<svg viewBox="-4 -4 56 56">${ic}</svg>`:''}${v?`<b>${v}</b>`:''}</span>`;}
 function ftDpsBar(t,theo){if(!(theo>0))return '';const src='tw:'+t.id;
  return `<div class="ftdps" data-theo="${theo}"><div class="ftdl"><span>${kst('dpsr','DPS real',src)}</span><span class="ftdv">—</span></div><div class="ftbar"><i></i></div><div class="ftdn"></div></div>`;}
-function ftMechBox(t,M,txt){return `<div class="ftmech"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><div class="ftbar ftmb"><i style="width:${Math.round(M.v(t)*100)}%"></i></div><div class="ftml">${M.l(t)}</div></div>`;}
+// v361: la palabra clave del nombre de una barra es la suya (M.kw); el icono (M.ic) puede ser de otra (Nogal: que no salga el bocadillo de otra palabra)
+const ftMkw=M=>M.kw||M.ic;
+function ftMechBox(t,M,txt){return `<div class="ftmech"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><div class="ftbar ftmb"><i style="width:${Math.round(M.v(t)*100)}%"></i></div><div class="ftml">${M.l(t)}</div></div>`;}
 // quita de un trozo de HTML las filas cuyo dato ya está arriba (números, efectos, objetivo, DPS)
 function ftStrip(html,drop){const w=document.createElement('div');w.innerHTML=html;
  for(const r of [...w.querySelectorAll('.row')]){const k=r.querySelector('[data-kw]'),id=k&&k.dataset.kw;if(r.classList.contains('dps')||(id&&drop.includes(id)))r.remove();}
@@ -15049,8 +15164,8 @@ function fichaTorre(t){
  // cabecera
  let h=`<div class="ttl ttlg"><b>${icOf(evIcX(t,X))} ${X.n}</b>${galSvg(t.lvl,twFull(t),1.05)}</div>`+(SP?`<div class="ftsub">${T.n} · especialización</div>`:'');
  // qué hace + su mecánica
- const desc=M?(M.base?base:''):(SP?SP.d||base:base);
- h+=`<div class="ftc">`+(desc?`<div class="ftdesc">${desc}</div>`:'')+(M?ftMechBox(t,M,M.x?M.x(t):(SP?SP.d:'')):'')+'<div class="row ftanc"></div><div class="esec" data-ftanc></div>';
+ const desc=SP?SP.d||base:base;/* v361: la barra va sin frase (Nogal); lo que hace la especialización, aquí arriba; la mecánica, en el bocadillo de su palabra */
+ h+=`<div class="ftc">`+(desc?`<div class="ftdesc">${desc}</div>`:'')+(M?ftMechBox(t,M,''):'')+'<div class="row ftanc"></div><div class="esec" data-ftanc></div>';
  // los 4 números (sin los que valen 0)
  const hit=ss.dmg>0||TT.dot||TT.burn,theo=hit&&!(TT.bufo&&!(ss.dmg>0))?dpsOf(ss,TT):0,ch=[];
  if(theo>0)ch.push(ftChip('cd',kst('dps','DPS',src),f(theo)));
@@ -15067,13 +15182,10 @@ function fichaTorre(t){
  h+=tail.join('');
  // Objetivo (plegado): a quién ataca y, en la ficha fijada, el selector
  if(!T.unit){const notgt=SP&&SP.notgt,tg=notgt?'':tgtRow(t,src,PR.pinned&&PR.key===src),tw=tg.replace(/<div class="row[^>]*><span>[^]*?<\/span><span>[^<]*<\/span><\/div>/,'').replace(/(<div class="tgt">)<div>[^]*?<\/span><\/div>/,'$1');
-  h+=ftFold('obj',`<span>${kst('tgt','Objetivo',src)}${notgt?'':' <em>· '+TGT[t.mode].n+'</em>'}</span>`,tw+R('cg',kst('tgts','Ataca a',src),objIc(!!T.ground,src)));}
- // Habilidades (abierta)
- const ids=abIds(t);if(ids.length){t.ab=t.ab||{};const nOn=ids.filter(id=>t.ab[id]).length;
-  h+=ftFold('ab',`<span>Habilidades <em>· ${nOn} de ${ids.length}</em></span>`,ids.map(id=>{const D=AB[id],rk=t.ab[id]||0,n=D.ranks.length;
-   return `<div class="row ftab${rk?'':' cno'}"><span>${kst('ab_'+id,D.n,src)}</span><span class="ftpip">${Array.from({length:n},(_,i)=>`<i class="${i<rk?'on':''}"></i>`).join('')}</span></div>`;}).join(''));}
+  if(!notgt||tw.replace(/<[^>]+>/g,'').trim())h+=ftFold('obj',`<span>${kst('tgt','Objetivo',src)}${notgt?'':' <em>· '+TGT[t.mode].n+'</em>'}</span>`,tw);}/* v361: «Ataca a» va en Más detalles (Nogal) */
+ // Habilidades: en partida NO van en la ficha (v361, Nogal): se miran en los botones del anillo; en el compendio, sí
  // Más detalles (plegado): el resto de datos, cada uno con su icono y su color
- const more=ftStrip(rest,T.unit?['rng','eff','tgt','cool','dps']:['cool','rng','area','eff','tgts','tgt','dps'])+(ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!ss.area&&!T.cone&&!(t.type==='robots'&&t.spec==='mecha')?' (sin efecto aquí)':''}</div>`).join(''):'');
+ const more=ftStrip(rest,T.unit?['rng','eff','tgt','cool','dps']:['cool','rng','area','eff','tgts','tgt','dps'])+(T.unit?'':R('cg',kst('tgts','Ataca a',src),objIc(!!T.ground,src)))+(ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!ss.area&&!T.cone&&!(t.type==='robots'&&t.spec==='mecha')?' (sin efecto aquí)':''}</div>`).join(''):'');
  if(more.replace(/<[^>]+>/g,'').trim())h+=ftFold('more','<span>Más detalles</span>',more);
  return h+'</div>';
 }
@@ -15102,7 +15214,7 @@ const fbS=t=>{let o=FB.st.get(t);if(!o){o={fly:[],bub:[],spk:[],orbs:[],lastN:nu
 const fbEase=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
 const FBH={mag:50,volc:28,herald:24,net:30};
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||!M.k||!FBH[M.k])return _mb.apply(this,arguments);
- return `<div class="ftmech fbm fb-${M.k}"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="fbc" data-k="${M.k}" style="height:${FBH[M.k]}px"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
+ return `<div class="ftmech fbm fb-${M.k}"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="fbc" data-k="${M.k}" style="height:${FBH[M.k]}px"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
 // ---- Búnker ----
 function fbBullet(c,x,y,s,rot){c.save();c.translate(x,y);if(rot)c.rotate(rot);c.scale(s,s);c.lineWidth=1;c.strokeStyle='#2a1a10';
  c.fillStyle='#c9824a';c.beginPath();c.moveTo(-3,-3);c.quadraticCurveTo(0,-12,3,-3);c.closePath();c.fill();c.stroke();
@@ -15492,7 +15604,7 @@ const almaImg=k=>(k==='spectre'||k==='knight')?ALMA.img(k):null;
 TMECH.unshift({k:'almas',on:t=>t.type==='orb'&&!!abRank(t,'knight'),n:'Almas',ic:'spect',v:t=>(t.raised||0)/((abRank(t,'knight')||{n:10}).n),
  l:t=>{const kn=abRank(t,'knight')||{n:10},hv=abRank(t,'harvest');const kl=almaKn(t);return (kl?'¡Caballero Espectral!':(t.raised||0)+' / '+kn.n)+(hv?' · Cosecha: '+(t.souls||0)+((t.souls||0)===1?' alma':' almas')+' (+'+Math.round(soulB(t)*100)+'%)':'');}});
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||M.k!=='almas')return _mb.apply(this,arguments);
- return `<div class="ftmech fbm fb-almas"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="albc" style="height:52px;width:100%;display:block"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
+ return `<div class="ftmech fbm fb-almas"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="albc" style="height:52px;width:100%;display:block"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
 const almaKn=t=>(S.summ||[]).find(q=>q.spOwner===t&&q.beast==='knight'&&q.sd[0]&&q.sd[0].hp>0&&q.ttl>0);
 const ALB={st:new WeakMap()};
 function almaBar(c,t,now){const W=c.width,H=c.height,dpr=W/c.clientWidth;const g=c.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);const w=W/dpr,h=H/dpr;g.clearRect(0,0,w,h);
@@ -15584,8 +15696,8 @@ const B6M=[
   x:t=>'Cada '+BOTK+' bajas del grupo cae una moneda; con '+BOTN+', el grupo reparte oro.'}];
 for(let i=B6M.length-1;i>=0;i--)TMECH.unshift(B6M[i]);
 const B6K={};for(const m of B6M)B6K[m.k]=m;
-const b6H=(k,t)=>k==='botin'?(abRank(t,'botin')&&abRank(t,'botin').cof?92:70):B6H[k];
-const b6Box=(t,M,txt)=>`<div class="ftmech fbm b6m b6-${M.k}"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="b6c" data-k="${M.k}" data-tid="${t.id}" style="height:${b6H(M.k,t)}px"></canvas><div class="ftml" data-b6="${M.k}">${M.l(t)}</div></div>`;
+const b6H=(k,t)=>k==='botin'?(abRank(t,'botin')&&abRank(t,'botin').cof?120:98):B6H[k];/* v361: más alto para que la pirámide y las monedas que caen no se corten (Nogal) */
+const b6Box=(t,M,txt)=>`<div class="ftmech fbm b6m b6-${M.k}"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="b6c" data-k="${M.k}" data-tid="${t.id}" style="height:${b6H(M.k,t)}px"></canvas><div class="ftml" data-b6="${M.k}">${M.l(t)}</div></div>`;
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||!B6K[M.k])return _mb.apply(this,arguments);return b6Box(t,M,txt);};}
 // la Sede del Gremio aún usa la ficha antigua (uniqInfo): el Botín va justo debajo del título
 {const _ui=uniqInfo;uniqInfo=function(t,k){const h=_ui.apply(this,arguments);try{if(t&&B6K.botin.on(t)){const i=h.indexOf('</div>')+6;return h.slice(0,i)+'<div class="b6uq">'+b6Box(t,B6K.botin,B6K.botin.x(t))+'</div>'+h.slice(i);}}catch(e){}return h;};}
@@ -15662,23 +15774,300 @@ function b6Botin(c,W,H,t,o,dt,tm){const r=abRank(t,'botin'),cof=!!r.cof,cn=Math.
  if((t.btRel||0)!==o.lastRel){o.lastRel=t.btRel||0;o.rel=2.2;}
  o.rep=Math.max(0,o.rep-dt);o.rel=Math.max(0,o.rel-dt);
  if(cn>o.lastCoins)for(let k=o.lastCoins;k<cn;k++)o.coins.push({k,t0:tm});o.lastCoins=cn;o.coins=o.coins.filter(q=>tm-q.t0<.6);
- const rx=Math.min(15,(W*.62)/10),ry=rx*.42,dy=ry*2.3,cx=W/2,L=[];for(let row=0;row<5;row++){const n=5-row;for(let k=0;k<n;k++)L.push({x:cx+(k-(n-1)/2)*rx*2.05,y:PH-ry-rx*.32-row*dy});}
+ const rx=Math.min(13.5,(W*.55)/10),ry=rx*.42,dy=ry*2.3,cx=W/2,L=[];for(let row=0;row<5;row++){const n=5-row;for(let k=0;k<n;k++)L.push({x:cx+(k-(n-1)/2)*rx*2.05,y:PH-ry-rx*.32-row*dy});}
  c.fillStyle='rgba(60,40,10,.16)';c.beginPath();c.ellipse(cx,PH-ry*.4,rx*5.6,ry*1.2,0,0,7);c.fill();
  const show=o.rep>0?o.repN:cn;
- for(let k=0;k<show&&k<L.length;k++){const p=L[k];let y=p.y,a=1;const fl=o.coins.find(q=>q.k===k);if(fl){const q=Math.min(1,(tm-fl.t0)/.45);y=p.y-(1-b6E(q))*30;}
-  if(o.rep>0){const q=1-o.rep/1.3;y-=Math.sin(Math.min(1,q*1.4)*Math.PI)*(14+(k%5)*5);a=Math.max(0,1-Math.max(0,q-.6)/.4);}
+ for(let k=0;k<show&&k<L.length;k++){const p=L[k];let y=p.y,a=1;const fl=o.coins.find(q=>q.k===k);if(fl){const q=Math.min(1,(tm-fl.t0)/.45);y=p.y-(1-b6E(q))*Math.min(30,Math.max(0,p.y-rx*1.2));}
+  if(o.rep>0){const q=1-o.rep/1.3;y-=Math.sin(Math.min(1,q*1.4)*Math.PI)*(14+(k%5)*5);y=Math.max(rx*.9,y);/* v361: que no se corte por arriba */a=Math.max(0,1-Math.max(0,q-.6)/.4);}
   c.globalAlpha=a;b6Coin(c,p.x,y,rx);c.globalAlpha=1;}
  if(o.rep>0){const q=1-o.rep/1.3;c.font='700 13px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.globalAlpha=Math.min(1,o.rep*2);c.lineWidth=3;c.strokeStyle='#5a4000';const tx='+'+BOTN*r.g;c.strokeText(tx,cx,PH*.35-q*10);c.fillStyle='#ffd34a';c.fillText(tx,cx,PH*.35-q*10);c.globalAlpha=1;}
+ {const tx=W-34,ty=PH*.5,nv=String(o.rep>0?BOTN:cn);c.textBaseline='middle';/* sin moneda: ya se ve la pila al lado (Nogal) */
+  c.textAlign='right';c.fillStyle='#6b4a00';c.font='500 20px system-ui,sans-serif';c.fillText(nv,tx-2,ty-8);
+  c.strokeStyle='#8a6a2a';c.lineWidth=2;c.lineCap='round';c.beginPath();c.moveTo(tx-4,ty+12);c.lineTo(tx+6,ty-6);c.stroke();
+  c.textAlign='left';c.fillStyle='#8a6a2a';c.font='500 14px system-ui,sans-serif';c.fillText(String(BOTN),tx+6,ty+9);/* los dos sin negrita (Nogal) */}/* v361: monedas como fracción en diagonal (Nogal): el número arriba a la izquierda, la raya y el 15 abajo a la derecha */
  if(cof){const cw=Math.min(26,(W-20)/6.5),y=H-12,n=o.rel>0?BOTC:(t.btC||0);for(let k=0;k<BOTC;k++){const x=cx+(k-(BOTC-1)/2)*cw*1.35;b6Chest(c,x,y,cw,k<n,o.rel>0&&Math.floor(tm/.15)%2===0);}}}
 function b6Draw(now){B6.raf=0;const cs=document.querySelectorAll('canvas.b6c');if(!cs.length)return;const tm=now/1000,dt=Math.min(.05,(now-(B6.last||now))/1000);B6.last=now;
  for(const cv of cs){if(!cv.isConnected)continue;const t=S&&S.list&&S.list.find(q=>String(q.id)===cv.dataset.tid);if(!t)continue;const k=cv.dataset.k,M=B6K[k];if(!M||!M.on(t))continue;
   const rc=cv.getBoundingClientRect();if(!rc.width)continue;const dpr=Math.min(2,window.devicePixelRatio||1),W=Math.round(rc.width),H=Math.round(rc.height);
   if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
   const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);const o=b6S(t);
-  try{if(k==='racha')b6Racha(c,W,H,t,o,dt);else if(k==='concen')b6Concen(c,W,H,t,o,dt,tm);else if(k==='pres')b6Pres(c,W,H,t,o,dt,tm);else if(k==='resv')b6Resv(c,W,H,t,o,dt,tm);else if(k==='botin')b6Botin(c,W,H,t,o,dt,tm);}catch(e){}
+  try{if(k==='racha')b6Racha(c,W,H,t,o,dt);else if(k==='concen')b6Concen(c,W,H,t,o,dt,tm);else if(k==='pres')b6Pres(c,W,H,t,o,dt,tm);else if(k==='resv')b6Resv(c,W,H,t,o,dt,tm);else if(k==='botin')b6Botin(c,W,H,t,o,dt,tm);else if(B6DR[k])B6DR[k](c,W,H,t,o,dt,tm);}catch(e){}
   const lb=cv.parentElement&&cv.parentElement.querySelector('.ftml[data-b6]');if(lb){const l=M.l(t);if(lb.textContent!==l)lb.textContent=l;}}
  B6.raf=requestAnimationFrame(b6Draw);}
 setInterval(()=>{if(!B6.raf&&document.querySelector('canvas.b6c')){B6.last=performance.now();B6.raf=requestAnimationFrame(b6Draw);}},250);
+// ==================== v361 · FICHA NUEVA DE LAS TORRES DE EVENTO (en prueba: rama wip, sin aprobar) ====================
+// En partida, las torres de evento usan la misma ficha que las demás (fichaTorre): qué hace en una línea, su mecánica con barra,
+// números de colores, efectos en pastilla, DPS real abajo, Habilidades y Más detalles plegados. Cada torre ajusta lo suyo aquí.
+// El compendio sigue con uniqInfo (como las torres normales siguen con shopInfo).
+const FUQ={
+ faro:t=>(t.lvl||1)>=4?'No ataca: proyecta dos zonas de luz que puedes mover. Mejoran las torres de dentro; si las juntas, se suman.':'No ataca: proyecta una zona de luz que puedes mover. Mejora las torres de dentro y crece con el daño que hacen.',
+ dragon:t=>['Todavía no hace nada.','Bloquea en el camino y escupe fuego; de cerca, ataca con garras. Si cae, reaparece.','Vuela alrededor de su bandera y lanza bolas de fuego. Solo le atacan los enemigos a distancia.','Vuela y lanza bolas de fuego; cada cierto tiempo, una llamarada que deja el camino ardiendo.'][t.stage||0],
+ guild:()=>'Un grupo de aventureros que pelea en el camino y te trae oro cada ronda.',
+ straw:()=>'Lanza fardos de paja que dañan y ralentizan mucho a todos los del área.',
+ wood:()=>'Lanza troncos que ruedan por el camino hacia los portales: dañan y empujan a todos los que pillan.',
+ brick:()=>'Un cerdito albañil levanta un muro delante del enemigo más avanzado de su rango.',
+ glut:()=>'Un cofre que se planta en el camino: bloquea y muerde. Sube de Nv comiendo, con las bajas que hace él.',
+ omega:()=>'Absorbe torres de tu mazo y gana sus piezas. Cada Nv admite 2 familias más.'};
+// ---- barras nuevas (en prueba): Luz, Comida, Crecimiento (en pips, una por ronda), Llamarada y Familias ----
+// Como en las torres normales: la barra sin frase; lo que es y sus cifras, en el bocadillo de su palabra clave.
+const fuTw=src=>{const m=/^tw:(\d+)$/.exec(src||'');return m&&S&&S.list?S.list.find(t=>t.id==m[1]):null;};
+const fuCrec=t=>{const sg=t.stage||0,n=DRGAT[sg+1]-DRGAT[sg],d=Math.max(0,Math.min(n,S.round-t.born-DRGAT[sg]));return {n,d};};
+TMECH.push(
+ {k:'luz',on:t=>!!TW[t.type].faro&&(t.lvl||1)<4,n:'Luz',ic:'luz',v:t=>Math.min(1,(t.light||0)/FARO[t.lvl].need),l:t=>fi(t.light||0)+' / '+fi(FARO[t.lvl].need)},
+ {k:'comida',on:t=>!!TW[t.type].glut&&(t.lvl||1)<4,n:'Comida',ic:'comida',v:t=>Math.min(1,(t.food||0)/GLUT[t.lvl]),l:t=>(t.food||0)+' / '+GLUT[t.lvl]+' bajas'},
+ {k:'crece',on:t=>!!TW[t.type].dragon&&(t.stage||0)<3,n:'Crecimiento',ic:'crece',pips:fuCrec,v:t=>{const c=fuCrec(t);return c.d/c.n;},
+  l:t=>{const c=fuCrec(t),r=c.n-c.d;return r<=1?'Cambia de forma la próxima ronda':'Faltan '+r+' rondas';}},
+ {k:'llama',on:t=>!!TW[t.type].dragon&&(t.stage||0)>=3,n:'Llamarada',ic:'llama',v:t=>{const b=t.fly&&t.fly.br!=null?t.fly.br:DBRCD;return Math.max(0,Math.min(1,1-b/DBRCD));},
+  l:t=>{const b=t.fly&&t.fly.br!=null?t.fly.br:DBRCD;return b<=1.5?'¡Lista!':'Cargando…';}},
+ {k:'omfam',on:t=>!!TW[t.type].omega,n:'Familias',ic:'omfam',v:t=>Math.min(1,(t.fam||[]).length/omCap(t)),l:t=>(t.fam||[]).length+' / '+omCap(t)});
+{const _k0=kwHtml0;kwHtml0=function(id,src){const t=fuTw(src);
+ if(id==='luz')return '<b>Luz</b><small>Cada punto de daño que hacen las torres iluminadas por el Faro suma luz. Con '+FARO.slice(1).map(L=>fi(L.need)).join(', ')+' de luz, el Faro sube a Nv 2, 3 y 4.</small>';
+ if(id==='comida')return '<b>Comida</b><small>Cada enemigo que mata el propio Mímico suma 1. Con '+GLUT.slice(1).join(', ')+' bajas sube a Nv 2, 3 y 4. No se mejora con oro.</small>';
+ if(id==='crece'){let x='<b>Crecimiento</b><small>El huevo eclosiona a las 3 rondas de conseguirlo y después sigue creciendo solo, con las rondas. Cada punto es una ronda.';
+  if(t&&TW[t.type].dragon&&(t.stage||0)<3){const sg=t.stage||0,nx=['','drag1','drag2','drag3'][sg+1],ok=sg===0||revd(nx);x+=' '+(ok?'Se convierte en '+DRAG[sg+1].n:'Cambia de forma')+' en la ronda '+(t.born+DRGAT[sg+1])+'.';}
+  return x+'</small>';}
+ if(id==='llama'){const br=t&&abRank(t,'dbreath'),bm=1+(br?br.b:0),L=DBRL+(br?br.L:0),T2=DBRT+(br?br.t:0);
+  return '<b>Llamarada</b><small>Cada bola de fuego la carga (unos '+DBRCD+' s disparando). Llena, la siguiente bola lleva llamarada: pasa en línea recta sobre el camino, aplica '+f(DBRN*bm)+' stacks de '+kw('burn','quemadura',src)+' a los que pilla y deja una franja de fuego de '+cas(L)+' que dura '+f(T2)+' s y quema a quien la pisa.</small>';}
+ if(id==='bale')return '<b>Fardo de paja</b><small>La Casa de paja lanza fardos de paja que caen en un área: dañan y ralentizan mucho a todos los que pilla.</small>';
+ if(/^omf_/.test(id)){const k=id.slice(4),lv=t&&t.lvl||1;return OMF[k]?`<b>${OMF[k].n}</b><small>${OMF[k].d[lv-1]}</small>`:'';}
+ if(id==='rroll')return '<b>Roca rodante</b><small>Al caer, la roca sigue rodando por el camino hacia los portales unas '+cas(ROLLB)+' y golpea a hasta '+ROLLMX+' enemigos con el '+Math.round(ROLLM*100)+'% del daño. Si pasa por brea ardiendo, se prende y quema; si pasa por veneno, envenena.</small>';
+ if(id==='omfam')return '<b>Familias</b><small>Cada torre que absorbe le da la pieza de su familia (Físico, Fuego, Veneno…). Cada Nv admite 2 familias más.</small>';
+ if(id==='logk'&&t&&TW[t.type].log){const h=_k0.apply(this,arguments),rows=document.createElement('div');rows.innerHTML=uniqInfo(t,t.type);
+  const d=[...rows.querySelectorAll('.row')].find(r=>{const k=r.querySelector('[data-kw]');return k&&k.dataset.kw==='dur';});
+  const v=d?d.lastElementChild.textContent.replace(/\s*\(rodando\)/,''):'';return v?h.replace(/<\/small>$/,' Rueda durante '+v+'.</small>'):h;}
+ return _k0.apply(this,arguments);};}
+// vida en barra ancha, como la del héroe (dragón y Mímico); caído, cuenta atrás en trozos
+function fuVida(t,src){const T=TW[t.type],u=T.glut?glutU(t):(t.sd&&t.sd[0]);if(!u||!u.max)return '';
+ if(u.hp<=0){const rz=T.dragon?DRREZ:Math.max(1,u.rtM||10);return `<div class="fhbox fhhp dead fuhp"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><span class="fhdv">Caído · vuelve en ${Math.ceil(u.rt||0)} s</span></div>${fhSeg(rz,u.rt||0)}</div>`;}
+ const hp=Math.ceil(u.hp),mx=Math.round(u.max);return `<div class="fhbox fhhp fuhp"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><b>${hp} / ${mx}</b></div><div class="ftbar"><i style="width:${hp/mx*100}%"${hp/mx<.35?' class="low"':''}></i></div></div>`;}
+// torres que ilumina este Faro ahora mismo (las que reciben su mejora)
+const fuIlN=f=>S.list.filter(o=>o!==f&&!o.hero&&TW[o.type]&&!TW[o.type].faro&&faroIn(f,o)>0).length;
+const fuIl=f=>{const n=fuIlN(f);return 'Iluminando '+n+(n===1?' torre':' torres');};/* v361: «Iluminando», que se entienda que es ahora (Nogal) */
+setInterval(()=>{try{const t=typeof FT!=='undefined'&&FT.t;if(!t||!TW[t.type]||!TW[t.type].faro)return;const e=document.querySelector('#side .fuil,#tip .fuil');if(e){const x=fuIl(t);if(e.textContent!==x)e.textContent=x;}}catch(e){}},300);
+// color de cada familia en la ficha; Físico, el mismo gris del daño físico (Nogal: el de la pieza parecía color carne)
+const fuOmC=k=>k==='fis'?'var(--sp,#8a8f96)':OMF[k].col;
+// DPS teórico del Omega por tipo de daño, con las mismas cuentas que omegaTick (omega.js): ametralladoras (físico), rayo (mágico) y arco (elemental, al primero)
+function omDps(t){const fam=t.fam||[],L=t.lvl||1,st=stats(t),M=[0,1,1.3,1.6,2][L]*(st.dmg/TW.omega.dmg/lvMods('omega',L,null).dmg||1)*(t.xd||1),o={};
+ if(fam.includes('fis')){const guns=L>=4?3:L>=2?2:1;o.fis=(L>=3?5.5:4)*guns*3*(L>=4?1.4:1)*M;}
+ if(fam.includes('mag'))o.mag=(L>=2?22:14)*M/1.2;if(fam.includes('ele'))o.ele=8*M;return o;}
+// ---- ficha ----
+const fuChips=a=>`<div class="ftchips n${a.length}">${a.join('')}</div>`;
+function fichaUnica(t){const T=TW[t.type],src='tw:'+t.id,ev=EVENTS[T.ev],lv=t.lvl||1;
+ const w=document.createElement('div');w.innerHTML=fichaTorre(t);
+ const q=s=>w.querySelector(s),rm=s=>w.querySelectorAll(s).forEach(e=>e.remove());
+ // cabecera: subtítulo con el evento; el Gremio lleva rango (C, B, A, S) y el dragón su forma, no galones
+ const ttl=q('.ttl');if(ttl){if(T.guild||T.dragon){const g=ttl.querySelector('.gal');if(g)g.remove();}
+  if(T.guild)ttl.insertAdjacentHTML('beforeend',`<span class="fuRk">Rango <b>${RANKS[lv-1]}</b></span>`);
+  ttl.insertAdjacentHTML('afterend',`<div class="ftsub">Torre de evento · «${ev?ev.n:''}»</div>`);}
+ // qué hace
+ const dtx=FUQ[t.type]?FUQ[t.type](t):'',d=q('.ftdesc');if(d)d.innerHTML=dtx;else if(dtx){const c=q('.ftc');if(c)c.insertAdjacentHTML('afterbegin',`<div class="ftdesc">${dtx}</div>`);}
+ // barra de mecánica sin frase (como en las torres normales) y el Crecimiento en pips
+ const mt=q('.ftmt');if(mt){const b0=mt.querySelector('b');mt.innerHTML=b0?b0.outerHTML:'';}
+ const M=ftMech(t);if(M&&M.pips){const c=M.pips(t),mb=q('.ftmb');if(mb)mb.outerHTML=`<div class="fupips">${Array.from({length:c.n},(_,i)=>`<i class="${i<c.d?'on':''}"></i>`).join('')}</div>`;}
+ // vida en barra (dragón con forma y Mímico), con aire debajo de la mecánica
+ if((T.dragon&&(t.stage||0)>=1)||T.glut){const vh=fuVida(t,src),at=q('.ftmech')||q('.ftdesc');if(vh&&at)at.insertAdjacentHTML('afterend',vh);}
+ // Faro: «Ilumina N torres» al otro lado de la línea de la barra (o solo, a Nv 4) y la barra en color luz
+ if(T.faro){const mb=q('.ftmech');const il=`<span class="fuil">${fuIl(t)}</span>`;if(mb){mb.classList.add('fu-luz');const ml=mb.querySelector('.ftml');if(ml)ml.outerHTML=`<div class="furow">${il}${ml.outerHTML}</div>`;}else{const d0=q('.ftdesc');if(d0)d0.insertAdjacentHTML('afterend',`<div class="furow solo">${il}</div>`);}}
+ // números propios
+ const chips=q('.ftchips'),setChips=a=>{if(chips)chips.outerHTML=fuChips(a);else{const fx=q('.ftfx')||q('.ftgap');if(fx)fx.insertAdjacentHTML('beforebegin',fuChips(a));}};
+ if(T.faro){const L=FARO[lv-1],a=[ftChip('ca',kst('area','Radio',src),f(L.r)),ftChip('cg',kst('rng','Alcance',src),'+'+Math.round(L.rg*100)+'%')];
+  if(lv>=2)a.push(ftChip('cd',kst('dmg','Daño',src),'+'+Math.round(L.d*100)+'%'));if(lv>=3)a.push(ftChip('cr',kst('cool','Enfriam.',src),'−'+Math.round(L.c*100)+'%'));setChips(a);rm('.ftfold[data-ft="obj"]');}
+ if(T.dragon){const sg=t.stage||0,st=stats(t),D=[null,{d:8,cd:1.2,r:2.5,a:.4},{d:18,cd:1.5,r:3.5,a:1},{d:22,cd:1.5,r:3.5,a:1.2}][sg];
+  if(!D){setChips([]);rm('.ftdps');}else{const dps=D.d/D.cd*(1+(st.crit||0)*((st.critm||2)-1));setChips([ftChip('cd',kst('dps','DPS',src),f(dps)),ftChip('cr',kst('cool','Enfriam.',src),f(D.cd)+' s'),ftChip('cg',kst('rng','Rango',src),cas(D.r)),ftChip('ca',kst('area','Área',src),f(D.a))]);
+   const dp=q('.ftdps');if(dp)dp.dataset.theo=dps;else{const g=q('.ftgap');if(g)g.insertAdjacentHTML('afterend',ftDpsBar(t,dps));}}}
+ if(T.wall){const s=stats(t),a=[ftChip('cr',kst('cool','Enfriam.',src),f(1/s.rate)+' s'),ftChip('cg',kst('rng','Rango',src),cas(s.range/K))];
+  a.push(ftChip('ca',kst('dur','Duración',src),durOf(T,s)));setChips(a);}
+ if(T.omega){const fam=t.fam||[],D=omDps(t),a=[];
+  if(D.fis)a.push(ftChip(dtCls('phys'),kst('tphys','Físico',src),f(D.fis)));if(D.mag)a.push(ftChip(dtCls('magic'),kst('tmagic','Mágico',src),f(D.mag)));if(D.ele)a.push(ftChip(dtCls('elem'),kst('telem','Elemental',src),f(D.ele)));
+  a.push(ftChip('cg',kst('rng','Rango',src),cas(stats(t).range/K)));setChips(a.slice(0,4));rm('.ftfold[data-ft="obj"]');
+  // efectos que no son daño directo (quemadura, veneno, control, apoyo), en su pastilla
+  const fx=[];if(fam.includes('fue'))fx.push(fxPill('burn','',src,'Quemadura'));if(fam.includes('ven'))fx.push(fxPill('poison','',src,'Veneno'));if(fam.includes('con'))fx.push(fxPill('slow','30%',src,'Ralentiza'));if(fam.includes('ele')&&lv>=4)fx.push(fxPill('ez','',src,'Electrizado'));
+  const ofx=q('.ftfx');if(ofx)ofx.remove();if(fx.length){const c=q('.ftchips');if(c)c.insertAdjacentHTML('afterend',`<div class="ftfx">${fx.join('')}</div>`);}
+  const tot=(D.fis||0)+(D.mag||0)+(D.ele||0),dp=q('.ftdps');if(dp){if(tot>0)dp.outerHTML=ftDpsBar(t,tot);else dp.remove();}else if(tot>0){const g=q('.ftchips');if(g)g.insertAdjacentHTML('afterend',ftDpsBar(t,tot));}
+  // las familias, en pips del color de cada una, en el orden en que las metiste
+  // las familias, en huecos redondos: vacíos sin color; llenos, con el icono de su familia en el orden en que las metiste.
+  // Al pulsar uno, su bocadillo dice qué hace. 2 huecos separados, 4 en fila, 6 en 4+2 (como los aros olímpicos), 8 en 4+4 (Nogal)
+  const cap=omCap(t),mb=q('.ftmech .ftmb');
+  if(mb)mb.outerHTML=`<div class="fuoms c${cap}">${Array.from({length:cap},(_,i)=>{const k=fam[i];return k?`<span class="kw noic fuoms1 on" data-kw="omf_${k}" data-src="${src}" style="--c:${fuOmC(k)}">${omPc(k)}</span>`:'<span class="fuoms1"></span>';}).join('')}</div>`;}
+ if(T.log){const fx=q('.ftfx');if(fx)fx.insertAdjacentHTML('beforeend',fxPill('push','0,5',src,'Empuje'));}
+ // las tres casas: primero lo que lanzan (fardo, tronco, muro) y después sus efectos (Nogal)
+ if(T.pig&&!T.log&&!T.wall){const fx=q('.ftfx');if(fx)fx.insertAdjacentHTML('afterbegin',fxPill('bale','',src,'Fardo de paja'));else{const c=q('.ftchips');if(c)c.insertAdjacentHTML('afterend',`<div class="ftfx">${fxPill('bale','',src,'Fardo de paja')}</div>`);}}
+ // Más detalles propios (sacados de la ficha antigua, que ya tiene las cifras bien)
+ const more=[];
+ if(T.guild){const o=document.createElement('div');o.innerHTML=uniqInfo(t,t.type);o.querySelectorAll('.usub').forEach(e=>more.push(e.outerHTML));
+  more.push(R('gd','Recompensa por ronda',[10,20,35,50][lv-1]+' 🪙')+R('gd','Comisión','+25%'));if(lv>=4)more.push(`<small><b>Renombre</b>: cuando un aventurero mata a una Mini-élite, una Élite o un Jefe, todo el grupo gana daño y vida.</small>`);}
+ if(T.dragon&&(t.stage||0)>=1)more.push(dragRows(t,t.stage,src));
+ if(T.pig&&lv>=4){const P=PIGU[t.type];let h=kwHtml0('pigu',src)||'';h=h.replace(/^<b>[\s\S]*?<\/b>/,'').replace(/^<small[^>]*>[\s\S]*?<\/small>/,'');more.push(`<div class="usub"><b>${P.n}</b>${h}</div>`);}/* v361: su tarjeta de unidad (ficha_unidad.js) */
+ if(more.length){let mf=q('.ftfold[data-ft="more"]');if(T.guild||T.dragon){if(mf)mf.remove();mf=null;}
+  if(mf)mf.querySelector('.ftin').insertAdjacentHTML('afterbegin',more.join(''));else{const c=q('.ftc');if(c)c.insertAdjacentHTML('beforeend',ftFold('more','<span>Más detalles</span>',more.join('')));}}
+ // fuera lo repetido arriba y las cifras que valen 0
+ if(T.faro)rm('.ftfold[data-ft="more"]');/* v361: el Omega, con su «Más detalles» como el resto de torres; las familias van en sus huecos (Nogal) */
+ w.querySelectorAll('.ftfold[data-ft="more"] .row').forEach(r=>{const k=r.querySelector('[data-kw]'),id=k&&k.dataset.kw,v=(r.lastElementChild&&r.lastElementChild.textContent||'').trim();
+  if(v==='0'||((T.dragon||T.glut)&&id==='uhp')||(T.glut&&id==='usol')||(T.wall&&id==='dur')||(T.log&&(id==='push'||id==='dur'))||(T.omega&&id==='dmg'))r.remove();/* Omega: su daño ya va por tipos arriba */});
+ return w.innerHTML;}
+{const _ti=towerInfo;towerInfo=function(t){if(t&&TW[t.type]&&TW[t.type].uniq){try{return fichaUnica(t);}catch(e){console.error(e);}}return _ti.apply(this,arguments);};}
+// ==================== v361 · TARJETA DE UNIDAD (Nogal, 19-nov) ====================
+// En la ficha de una torre con unidades (Baluarte, Gremio, cerditos…), «Más detalles» ya no despliega sus bloques de cifras:
+// lleva un botón por unidad. Al pulsarlo, la ficha se cambia por la tarjeta de esa unidad (mismo diseño que la de la torre:
+// vida en barra, números en tarjetas, efectos en pastilla y el resto plegado) con «← Torre» para volver.
+const FU={tid:null,i:-1};
+const fuNm=t=>(t.spec&&SPECS[t.type]&&SPECS[t.type][t.spec]&&SPECS[t.type][t.spec].n)||TW[t.type].n;/* nombre de la torre tal como sale en su ficha */
+// nombre en singular de cada unidad (aprobados por Nogal, 19-nov)
+const FUSG={bastion:'Soldado',pal:'Paladín',ass:'Asesino',monk:'Monje',fist:'Monje de Batalla',drunk:'Maestro Ebrio',robots:'Robot',mecha:'Mecha',kami:'K4M1-K4Z3',hack:'Robot',alien:'Alienígena',pred:'Depredador',hive:'Alienígena'};
+const fuSing=t=>FUSG[t.spec]||FUSG[t.type]||fuNm(t);
+const fuTxt=h=>{const d=document.createElement('div');d.innerHTML=h;return d.textContent.trim();};
+// soldados vivos de cada bloque (para la vida en directo): normales, todos; Gremio, por clase; cerditos, el suyo
+function fuSold(t,i,blocks){const T=TW[t.type];if(T.pig)return t.pigT&&t.pigT.sd||[];if(!t.sd)return [];
+ if(T.guild){const seen=[];for(const c of guildParty(t))if(!seen.includes(c))seen.push(c);const c=seen[i];return t.sd.filter(s=>s.cls===c);}
+ return i===0&&!T.glut?t.sd:[];}
+// quita los bloques de unidad de «Más detalles» y deja un botón por cada unidad (debajo de las cifras de la torre)
+function fuList(t,w){const blocks=[...w.querySelectorAll('.ftfold[data-ft="more"] .usub')];if(!blocks.length||TW[t.type].glut)return [];const T=TW[t.type],L=[];
+ blocks.forEach((b,bi)=>{const hd=b.querySelector(':scope>b'),ic=hd&&hd.querySelector('.tuic');let nm=fuTxt(hd?hd.innerHTML.replace(/<span class="tuic[\s\S]*?<\/span>/,''):'Unidad');let n=1;
+  const mx=/\s*×(\d+)$/.exec(nm);if(mx){n=+mx[1];nm=nm.slice(0,mx.index);}
+  if(/^Estadísticas de unidades$/.test(nm)){nm=fuSing(t);const SD=fuSold(t,bi);n=Math.max(1,SD.length||((T.unit&&T.unit.n)||1));}
+  const SD=fuSold(t,bi);for(let j=0;j<n;j++)L.push({bi,j,n,nm,ic:ic?ic.outerHTML:'',html:b.outerHTML,s:SD[j]||null});});
+ const ic0=(T.pig&&PIGU[t.type]?`<span class="tuic uhic" style="background:${T.col||'#5b8def'}">${icHtml(PIGU[t.type].ic)}</span>`:'')||(L.find(u=>u.ic)||{}).ic||unitHead('tw:'+t.id)||'';/* v361: los cerditos, con su icono en redondel (Nogal) */L.forEach(u=>{if(!u.ic)u.ic=ic0;});
+ return {L,blocks};}
+function fuButtons(t,w){const R0=fuList(t,w);if(!R0.L)return [];const {L,blocks}=R0;if(!L.length)return [];const lupa=icU('m_lupa','🔍');
+ const bh=u=>{const s=u.s;if(!s)return '';return s.hp>0?`<span class="fuubh"><i style="width:${Math.round(s.hp/s.max*100)}%"></i></span>`:`<span class="fuubh dead">Caído</span>`;};
+ const html=`<div class="fuubs">${L.map((u,k)=>`<button class="fuub" data-a="fuunit" data-v="${k}">${u.ic}<span class="fuubn"><b>${u.nm}</b>${bh(u)}</span><span class="fuubl">${lupa}</span></button>`).join('')}</div>`;
+ const fin=blocks[0].closest('.ftin');blocks.forEach(b=>b.remove());if(fin)fin.insertAdjacentHTML('beforeend',html);return L;}
+// tarjeta de la unidad i de la torre t
+function fuCard(t,i){const T=TW[t.type],src='tw:'+t.id,w=document.createElement('div');w.innerHTML=fuBase(t);const bl=fuButtons(t,w),u=bl[i];if(!u)return null;
+ const d=document.createElement('div');d.innerHTML=u.html;const rows=[...d.querySelectorAll('.usub>.row')],sm=[...d.querySelectorAll('.usub>small')].map(e=>e.outerHTML).join('');
+ const get=id=>{const r=rows.find(r=>{const k=r.querySelector('[data-kw]');return k&&k.dataset.kw===id;});if(r)rows.splice(rows.indexOf(r),1);return r;};
+ const chip=(r,lab)=>{const v=r.lastElementChild,l=r.firstElementChild;return ftChip(v.className||r.className.replace('row','').trim(),lab||l.innerHTML.replace(/\s*\(a distancia\)/,''),v.innerHTML.replace(/\s*\((a distancia|cuerpo a cuerpo)\)/,''));};
+ const nm=get('usol'),hp=get('uhp'),dm=get('dmg'),cd=get('cool'),ap=get('aphys'),rg=get('rng'),sp=get('espd'),ef=get('eff');get('dps');
+ const ch=[];if(dm)ch.push(chip(dm));if(cd)ch.push(chip(cd,kst('cool','Enfriam.',src)));else if(dm&&!T.guild){try{ch.push(ftChip('ccl',kst('cool','Enfriam.',src),f(1/stats(t).rate)+' s'));}catch(x){}}/* la ficha de la torre ya lo quitó de «Más detalles»: es el de la torre */
+ if(ap)ch.push(chip(ap));if(rg)rows.unshift(rg);if(sp)rows.unshift(sp);/* tres números arriba (como mucho); velocidad y rango, en «Más detalles» */
+ // vida de esta unidad, en directo; sin unidad en el mapa, su vida máxima
+ const s0=u.s,mx=hp?fuTxt(hp.lastElementChild.innerHTML):'';
+ const vida=s0?`<div class="fhbox fhhp fuhp fuhps"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><b class="fuhv">${s0.hp>0?Math.ceil(s0.hp)+' / '+Math.round(s0.max):''}</b></div>${s0.hp>0?`<div class="ftbar"><i style="width:${Math.round(s0.hp/s0.max*100)}%"${s0.hp/s0.max<.35?' class="low"':''}></i></div>`:`<div class="ftbar dead"><i style="width:0"></i><em>Caído · vuelve en ${Math.ceil(s0.rt||0)} s</em></div>`}</div>`
+  :hp?`<div class="fhbox fhhp fuhp"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><b>${mx}</b></div><div class="ftbar"><i style="width:100%"></i></div></div>`:'';
+ const fx=ef?`<div class="ftfx">${ef.lastElementChild.innerHTML}</div>`:'';
+ // «Ataca a» en Más detalles, también en las unidades (Nogal, 20-nov): las que disparan desde lejos (s.rng) atacan también a voladores
+ get('tgts');/* la fila «Objetivos» que ya traían algunas unidades dice lo mismo: se cambia por «Ataca a», al final */
+ {let air=false;if(u.s)air=!!u.s.rng;else if(T.pig)air=!!(PIGU[t.type]||{}).rng;else if(T.guild){const seen=[];for(const c of guildParty(t))if(!seen.includes(c))seen.push(c);const c=seen[u.bi];air=!!(CLS[c]||{}).rng;}
+  const d=document.createElement('div');d.innerHTML=R('cg',kst('tgts','Ataca a',src),objIc(!air,src));rows.push(d.firstElementChild);}
+ return `<div class="ftc fuu"><button class="fuback" data-a="fuback">← ${fuNm(t)}</button>
+  <div class="ttl">${u.ic}<b>${u.nm}</b></div><div class="ftsub">Unidad de ${fuNm(t)}${u.n>1?' · '+(u.j+1)+' de '+u.n:''}</div>${sm?`<div class="ftdesc fudsc">${sm}</div>`:''}
+  ${vida}<div class="ftchips n${ch.length}">${ch.join('')}</div>${fx}${rows.length?ftFold('umore','<span>Más detalles</span>',rows.map(r=>r.outerHTML).join('')):''}</div>`;}
+// la ficha de la torre sin la tarjeta de unidad (la que había antes de este archivo)
+let fuBase=null;
+{const _ti=towerInfo;fuBase=t=>_ti(t);towerInfo=function(t){try{if(t&&S&&S.list&&S.list.includes(t)){
+  if(FU.tid===t.id&&FU.i>=0){const h=fuCard(t,FU.i);if(h)return h;FU.tid=null;FU.i=-1;}
+  const w=document.createElement('div');w.innerHTML=_ti.apply(this,arguments);if(fuButtons(t,w).length)return w.innerHTML;}}catch(e){console.error(e);}
+ return _ti.apply(this,arguments);};}
+{const _c=closePrim;closePrim=function(){FU.tid=null;FU.i=-1;return _c.apply(this,arguments);};}
+addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="fuunit"],[data-a="fuback"]');if(!b)return;const k=String(PR.key||''),t=S&&S.list&&S.list.find(o=>'tw:'+o.id===k);if(!t)return;
+ e.preventDefault();e.stopPropagation();try{sfx('ui');}catch(x){}if(b.dataset.a==='fuunit'){FU.tid=t.id;FU.i=+b.dataset.v;}else{FU.tid=null;FU.i=-1;}refreshPrim();},true);
+// la vida de la tarjeta (y de los botones), en directo
+function fuUnits(){const t=S&&S.list&&FU.tid!=null&&S.list.find(o=>o.id===FU.tid);return t;}
+setInterval(()=>{try{const box=document.querySelector('#tip .ftc,#side .ftc');if(!box||!box.querySelector('.fuub,.fuhps'))return;const k=String(PR.key||''),t=S&&S.list&&S.list.find(o=>'tw:'+o.id===k);if(!t)return;
+ const w=document.createElement('div');w.innerHTML=fuBase(t);const L=fuButtons(t,w);
+ if(FU.tid===t.id&&FU.i>=0){const u=L[FU.i],s=u&&u.s,bx=box.querySelector('.fuhps');if(!s||!bx)return;const dead=s.hp<=0,was=!!bx.querySelector('.ftbar.dead');if(dead!==was){refreshPrim();return;}
+  if(dead){const em=bx.querySelector('em');if(em)em.textContent='Caído · vuelve en '+Math.ceil(s.rt||0)+' s';}else{const i=bx.querySelector('.ftbar i'),v=bx.querySelector('.fuhv');i.style.width=Math.round(s.hp/s.max*100)+'%';i.classList.toggle('low',s.hp/s.max<.35);if(v)v.textContent=Math.ceil(s.hp)+' / '+Math.round(s.max);}return;}
+ box.querySelectorAll('.fuub').forEach((b,k)=>{const u=L[k],s=u&&u.s,h=b.querySelector('.fuubh');if(!s||!h)return;const dead=s.hp<=0;if(dead!==h.classList.contains('dead')){h.outerHTML=dead?'<span class="fuubh dead">Caído</span>':'<span class="fuubh"><i></i></span>';return;}if(!dead)h.querySelector('i').style.width=Math.round(s.hp/s.max*100)+'%';});}catch(e){}},250);
+// línea punteada (como la del medidor de daño) del botón o de la tarjeta abierta a su unidad en el mapa
+const FUH={k:-1};addEventListener('mouseover',e=>{const b=e.target.closest&&e.target.closest('.fuub');FUH.k=b?+b.dataset.v:-1;FUH.el=b||null;});
+function fuLine(){try{let sv=$('fuln');const k=String(PR.key||''),t=PR.open&&S&&S.list&&S.list.find(o=>'tw:'+o.id===k);let el=null,i=-1;
+ if(t&&FU.tid===t.id&&FU.i>=0){el=document.querySelector('#tip .fuu,#side .fuu');i=FU.i;}else if(t&&FUH.el&&document.body.contains(FUH.el)){el=FUH.el;i=FUH.k;}
+ let s=null;if(el&&i>=0){const w=document.createElement('div');w.innerHTML=fuBase(t);const u=fuButtons(t,w)[i];s=u&&u.s;}
+ if(s&&s.hp>0&&typeof scrOf==='function'){if(!sv){sv=document.createElementNS('http://www.w3.org/2000/svg','svg');sv.id='fuln';document.body.appendChild(sv);}
+  const a=el.getBoundingClientRect(),[x,y,wd]=scrOf(s),cz=wd/K,cx=x+cz/2,cy=y+cz/2,lft=cx<a.left,x0=lft?a.left-4:a.right+4,y0=Math.max(a.top+12,Math.min(a.bottom-12,cy)),mx=(x0+cx)/2;
+  const ur=Math.max(8,cz*.9);/* solo alrededor de esa unidad; azul claro con borde oscuro para que no se confunda con la bandera ni con el alcance (Nogal) */
+  sv.innerHTML=`<path d="M${x0} ${y0} C${mx} ${y0} ${mx} ${cy} ${cx} ${cy}" fill="none" stroke="#10202a" stroke-width="5" stroke-dasharray="6 5" stroke-linecap="round" opacity=".55"/><path d="M${x0} ${y0} C${mx} ${y0} ${mx} ${cy} ${cx} ${cy}" fill="none" stroke="#7ad8ff" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="${ur}" fill="none" stroke="#10202a" stroke-width="5" opacity=".55"/><circle cx="${cx}" cy="${cy}" r="${ur}" fill="none" stroke="#7ad8ff" stroke-width="2.5"/>`;sv.style.display='block';}
+ else if(sv)sv.style.display='none';}catch(e){}setTimeout(()=>requestAnimationFrame(fuLine),50);}
+requestAnimationFrame(fuLine);
+// v361 · la tarjeta de una unidad sale a su lado, sin taparla (si no, el círculo y la línea quedan debajo de la tarjeta) (Nogal)
+function fuUnitBox(){const k=String(PR.key||''),t=PR.open&&S&&S.list&&S.list.find(o=>'tw:'+o.id===k);if(!t||FU.tid!==t.id||FU.i<0||typeof scrOf!=='function')return null;
+ /* la unidad se busca como mucho 4 veces por segundo (montar la ficha cada fotograma sería caro) */const now=performance.now();if(!FU.sc||FU.sc.k!==t.id+':'+FU.i||now-FU.sc.at>250){const w=document.createElement('div');w.innerHTML=fuBase(t);const u=fuButtons(t,w)[FU.i];FU.sc={k:t.id+':'+FU.i,at:now,s:u&&u.s};}const s=FU.sc.s;if(!s||s.hp<=0)return null;
+ const [x,y,wd]=scrOf(s),cz=wd/K,cx=x+cz/2,cy=y+cz/2,rr=Math.max(8,cz*.9)+10;return {l:cx-rr,r:cx+rr,t:cy-rr,b:cy+rr};}
+// si la unidad se mete debajo, la tarjeta se aparta lo justo, empujada por la unidad (así se mueve con ella, sin saltos);
+// sigue apartándose hacia el mismo lado mientras quepa, y una transición corta suaviza el resto (Nogal)
+function fuAvoid(l,t,wd,ht,r){const tip=$('tip'),ub=fuUnitBox(),k0=ub?FU.tid+':'+FU.i:null;/* al abrir la tarjeta, sale ya en su sitio; después, se aparta con suavidad */if(tip)tip.classList.toggle('fumv',!!ub&&FU.mk===k0);FU.mk=k0;if(!ub){FU.dir=null;return null;}
+ const hit=(L,T)=>L<ub.r&&L+wd>ub.l&&T<ub.b&&T+ht>ub.t,fit=(L,T)=>L>=6&&T>=6&&L+wd<=innerWidth-6&&T+ht<=innerHeight-6;
+ if(!hit(l,t))return null;const g=6,M={L:[ub.l-g-wd,t],R:[ub.r+g,t],U:[l,ub.t-g-ht],D:[l,ub.b+g]},dist=k=>Math.abs(M[k][0]-l)+Math.abs(M[k][1]-t);
+ if(FU.dir&&fit(...M[FU.dir]))return M[FU.dir];
+ const ks=Object.keys(M).filter(k=>fit(...M[k])).sort((a,b)=>dist(a)-dist(b));if(!ks.length)return null;FU.dir=ks[0];return M[ks[0]];}
+// ==================== v361 · BARRAS DE MURO Y COMIDA (maquetas Muro B y Comida A, aprobadas por Nogal el 19-nov) ====================
+// Muro (Casa de ladrillo): un muro de ladrillos que se agrieta mientras aguanta (grietas distintas cada vez, que nacen en momentos
+// distintos y avanzan en zigzag con ramas), tiembla y se derrumba; tras una pausa, se vuelve a levantar desde abajo hasta el siguiente.
+// Comida (Mímico): el Mímico a un lado; por cada baja aparece una bolita de la nada en el otro extremo y vuela a su boca; al morder
+// baja la tapa y se llena una casilla del contador de abajo (en grupos de 5).
+// guarda la duración inicial de cada muro, para saber cuánto le queda
+{const _w=wallShot;wallShot=function(t){const n0=S.barr.length;const r=_w.apply(this,arguments);if(S.barr.length>n0){const b=S.barr[S.barr.length-1];b.src=b.src||t;b.t0=b.t;}return r;};}
+const B6DR={};
+const b7Brick=(c,x,y,w,h,col,a=1)=>{c.globalAlpha=a;c.fillStyle=col;c.strokeStyle='#1b1712';c.lineWidth=1.4;c.beginPath();c.roundRect(x,y,w,h,2);c.fill();c.stroke();c.globalAlpha=1;};
+const b7Wall=t=>S&&S.barr&&S.barr.find(b=>b.brick&&b.src===t&&b.t>0);
+function b7Cracks(x0,y0,WW,HH){const L=[],N=5+Math.floor(Math.random()*3);for(let j=0;j<N;j++){
+ let x=x0+WW*(.08+Math.random()*.84),y=Math.random()<.5?y0:y0+HH*(.2+Math.random()*.6),a=Math.PI/2+(Math.random()-.5)*1.6;if(y>y0)a=(Math.random()<.5?0:Math.PI)+(Math.random()-.5)*1.2;
+ const p=[[x,y]],steps=6+Math.floor(Math.random()*8);for(let i=0;i<steps;i++){a+=(Math.random()-.5)*1.4;const d=3+Math.random()*6;x+=Math.cos(a)*d;y+=Math.sin(a)*d;x=Math.max(x0+1,Math.min(x0+WW-1,x));y=Math.max(y0+1,Math.min(y0+HH-1,y));p.push([x,y]);}
+ const br=[];for(let i=2;i<p.length-1;i++)if(Math.random()<.3){let bx=p[i][0],by=p[i][1],ba=a+(Math.random()<.5?1:-1)*(.6+Math.random()*.8);const q=[[bx,by]];for(let s=0;s<3+Math.floor(Math.random()*3);s++){ba+=(Math.random()-.5)*1.2;bx+=Math.cos(ba)*(2+Math.random()*4);by+=Math.sin(ba)*(2+Math.random()*4);q.push([bx,by]);}br.push({at:i,p:q});}
+ L.push({t0:j/N*.75+Math.random()*.08,p,br});}return L;}
+const b7Parts=(c,o,dt)=>{o.pt=(o.pt||[]).filter(p=>p.t>0);for(const p of o.pt){p.t-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=(p.b?260:40)*dt;if(p.rot!=null)p.rot+=p.vr*dt;
+ c.globalAlpha=Math.max(0,Math.min(1,p.t*1.5));if(p.b){c.save();c.translate(p.x+p.w/2,p.y+p.h/2);c.rotate(p.rot);b7Brick(c,-p.w/2,-p.h/2,p.w,p.h,p.col);c.restore();}else{c.fillStyle=p.col+Math.max(0,p.t)+')';c.beginPath();c.arc(p.x,p.y,p.r,0,7);c.fill();}c.globalAlpha=1;}};
+const PAUSE7=1.3;
+function b7Muro(c,W,H,t,o,dt,tm){const b=b7Wall(t),cols=Math.max(6,Math.min(11,Math.floor((W-24)/26))),bw=Math.min(26,(W-24)/cols),bh=14,rows=4,WW=cols*bw,HH=rows*bh,x0=(W-WW)/2,y0=H-8-HH;
+ c.fillStyle='rgba(60,40,10,.15)';c.beginPath();c.ellipse(W/2,H-6,WW/2+8,4,0,0,7);c.fill();
+ if(b){if(o.mb!==b){o.mb=b;o.cr=b7Cracks(x0,y0,WW,HH);o.cw=W;}if(o.cw!==W){o.cr=b7Cracks(x0,y0,WW,HH);o.cw=W;}o.up=1;const D=b.t0||4,k=Math.max(0,Math.min(1,1-b.t/D));
+  const sh=b.t<.6?(Math.random()-.5)*3*(1-b.t/.6):0;c.save();c.translate(sh,0);
+  c.save();c.beginPath();c.rect(x0-1,y0-1,WW+2,HH+2);c.clip();for(let r=0;r<rows;r++)for(let i=0;i<=cols;i++)b7Brick(c,x0+i*bw-(r%2?bw/2:0),y0+r*bh,bw,bh,'#c8553d');
+  for(const q0 of o.cr){const q=Math.max(0,Math.min(1,(k-q0.t0)/(1-q0.t0)*1.3));if(q<=0)continue;const n=Math.max(1,Math.floor(q*q0.p.length)),P=q0.p;
+   const ln=()=>{c.beginPath();c.moveTo(P[0][0],P[0][1]);for(let i=1;i<n;i++)c.lineTo(P[i][0],P[i][1]);c.stroke();};c.lineJoin='round';
+   c.strokeStyle='rgba(20,12,8,.45)';c.lineWidth=3.2;ln();c.strokeStyle='#1b1712';c.lineWidth=1.3+q*.7;ln();
+   for(const br of q0.br)if(br.at<n){const m=Math.max(1,Math.floor(Math.min(1,(n-br.at)/4)*br.p.length));c.lineWidth=1;c.beginPath();c.moveTo(br.p[0][0],br.p[0][1]);for(let i=1;i<m;i++)c.lineTo(br.p[i][0],br.p[i][1]);c.stroke();}}
+  c.restore();c.strokeStyle='#1b1712';c.lineWidth=1.6;c.strokeRect(x0,y0,WW,HH);c.restore();}
+ else{if(o.up){o.up=0;o.down=tm;o.mb=null;o.pt=o.pt||[];for(let i=0;i<14;i++)o.pt.push({x:x0+Math.random()*(WW-bw),y:y0+Math.random()*HH*.6,w:bw,h:bh,vx:(Math.random()-.5)*30,vy:-20,t:1.1,col:'#c8553d',rot:0,vr:(Math.random()-.5)*6,b:1});
+   for(let i=0;i<18;i++)o.pt.push({x:W/2,y:y0+HH*.6,vx:(Math.random()-.5)*40,vy:-Math.random()*30,t:.7,r:2+Math.random()*3,col:'rgba(200,180,150,'});}
+  // se vuelve a levantar desde abajo: tras una pausa, al ritmo que le queda de enfriamiento
+  const cd=Math.max(0,t.cd||0),el=o.down!=null?tm-o.down:99,ph=cd<=0?1:Math.max(0,Math.min(1,(el-PAUSE7)/Math.max(.1,el+cd-PAUSE7))),hh=HH*ph;
+  if(ph>0){c.save();c.beginPath();c.rect(x0,y0+HH-hh,WW,hh);c.clip();for(let r=0;r<rows;r++)for(let i=0;i<=cols;i++)b7Brick(c,x0+i*bw-(r%2?bw/2:0),y0+r*bh,bw,bh,'#d9b49a',.85);c.restore();}
+  c.setLineDash([3,3]);c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=1.2;c.strokeRect(x0,y0,WW,HH);c.setLineDash([]);}
+ b7Parts(c,o,dt);}
+function b7Comida(c,W,H,t,o,dt,tm){const lv=t.lvl||1,NEED=GLUT[lv]||1,food=Math.min(NEED,t.food||0);
+ if(o.glv!==lv){o.glv=lv;o.lf=food;o.eat=food;o.bt=[];o.jmp=lv>1&&o.seen?1:0;}o.seen=1;
+ if(food>o.lf)for(let i=o.lf;i<food;i++)o.bt.push({t:-(i-o.lf)*.18});else if(food<o.lf)o.eat=food;o.lf=food;
+ for(const b of o.bt){const was=b.t;b.t+=dt;if(was<.62&&b.t>=.62)o.eat=Math.min(food,o.eat+1);}o.bt=o.bt.filter(b=>b.t<.8);if(o.eat>food)o.eat=food;o.jmp=Math.max(0,(o.jmp||0)-dt*.8);
+ // el contador, aparte: casillas en grupos de 5 (más de 40, en dos filas)
+ const rowsN=NEED>40?2:1,perRow=Math.ceil(NEED/rowsN),G=Math.ceil(perRow/5),bw0=W-12,gw=bw0/G,cw=Math.min(12,(gw-4)/5),ch=rowsN>1?9:12,gy=H-4-rowsN*(ch+3);
+ for(let k=0;k<NEED;k++){const r=Math.floor(k/perRow),kk=k%perRow,gi=Math.floor(kk/5),j=kk%5,x=6+gi*gw+(gw-5*cw)/2+j*cw,y=gy+r*(ch+3),on=k<o.eat;
+  c.fillStyle=on?'#e0903a':'rgba(0,0,0,.09)';c.strokeStyle=on?'#1b1712':'rgba(0,0,0,.2)';c.lineWidth=1;c.beginPath();c.roundRect(x,y,cw-1.5,ch,2);c.fill();c.stroke();}
+ const Z=1.35,MW=40,mx=8,my=Math.max(2,gy-6-44*Z),ex=mx+MW*Z/2,ey=my+16*Z;/* el Mímico, a escala Z */
+ // las bolitas: aparecen de la nada en el otro extremo (destello) y vuelan en arco hasta la boca
+ for(const b of o.bt){if(b.t<0)continue;const q=Math.min(1,b.t/.6),sx=W-18,sy=my+10;if(q<.18){const pp=q/.18;c.fillStyle=`rgba(255,240,180,${1-pp})`;c.beginPath();c.arc(sx,sy,4+pp*10,0,7);c.fill();}
+  const e=Math.min(1,Math.max(0,(q-.12)/.88)),x=sx+(ex-sx)*e,y=sy+(ey-sy)*e-Math.sin(e*Math.PI)*Math.min(18,my+2),r=5.5*Math.min(1,q/.12);if(q<1){c.fillStyle='#e0a060';c.strokeStyle='#1b1712';c.lineWidth=1.3;c.beginPath();c.arc(x,y,r,0,7);c.fill();c.stroke();}}
+ // el Mímico: el cuerpo quieto y la tapa baja para morder (Nogal)
+ const chomp=o.bt.some(b=>b.t>.55&&b.t<.75),jy=-Math.sin(o.jmp*Math.PI*3)*6*o.jmp,LY=my+(chomp?9:0),BY=my+23;
+ c.save();c.translate(mx,my+jy);c.scale(Z,Z);c.translate(-mx,-my);c.fillStyle='#8a5a2e';c.strokeStyle='#1b1712';c.lineWidth=1.8;c.beginPath();c.roundRect(mx,BY,MW,20,3);c.fill();c.stroke();
+ c.fillStyle='#f4ead8';for(let i=0;i<5;i++){const tx=mx+2+i*7.2;c.beginPath();c.moveTo(tx,BY);c.lineTo(tx+3.6,BY-5);c.lineTo(tx+7.2,BY);c.fill();c.stroke();}
+ c.fillStyle='#a8743a';c.beginPath();c.roundRect(mx,LY,MW,13,[7,7,2,2]);c.fill();c.stroke();
+ c.fillStyle='#f4ead8';for(let i=0;i<5;i++){const tx=mx+2+i*7.2;c.beginPath();c.moveTo(tx,LY+13);c.lineTo(tx+3.6,LY+18);c.lineTo(tx+7.2,LY+13);c.fill();c.stroke();}
+ c.fillStyle='#ffd34a';c.fillRect(mx+MW/2-3,BY+5,6,5);c.fillStyle='#1b1712';c.beginPath();c.arc(mx+11,LY+6,1.8,0,7);c.arc(mx+MW-11,LY+6,1.8,0,7);c.fill();c.restore();}
+B6DR.muro=b7Muro;B6DR.comida=b7Comida;B6H.muro=74;B6H.comida=104;
+// las barras: la de Comida ya existía (ficha_unica.js) con dibujo genérico; la de Muro es nueva
+{const i=TMECH.findIndex(m=>m.k==='comida');if(i>=0)B6K.comida=TMECH[i];
+ const M={k:'muro',on:t=>!!(TW[t.type]&&TW[t.type].wall),n:'Muro',ic:'bwall',v:t=>{const b=b7Wall(t);return b?b.t/(b.t0||4):0;},
+  l:t=>{const b=b7Wall(t);if(b)return 'Quedan '+f(Math.ceil(b.t*10)/10)+' s';const cd=t.cd||0;return cd>0?'Siguiente muro en '+f(Math.ceil(cd*10)/10)+' s':'¡Listo!';}};
+ TMECH.push(M);B6K.muro=M;}
+// ==================== v361 · PALABRAS CLAVE PROPIAS DE LAS BARRAS (Nogal, 20-nov) ====================
+// Cada barra abre el bocadillo de SU palabra (M.kw); antes Calor abría Quemadura, Carga del juicio Electrizado, la Red Rebote y Almas Espectro.
+// Las palabras clave van en minúscula dentro de las frases (solo mayúscula al principio): «carga del juicio», «disparo de riel».
+{const _k=kwHtml0;kwHtml0=function(id,src){const t=(typeof fuTw==='function')?fuTw(src):null;
+ if(id==='calor')return '<b>Calor</b><small>Sube mientras dispara (lleno en 8 s): el cono se abre hasta 110° y aplica hasta un 50% más de stacks de quemadura. Sin objetivo, se enfría.</small>';
+ if(id==='juicio')return '<b>Carga del juicio</b><small>Sube 1 por segundo y '+f(HCHK)+' por cada baja de otra torre cercana (las suyas no cuentan). Llena ('+HCH+'), lanza un rayo al enemigo con más vida que hace '+HJM+'× su daño. Se vacía al acabar la oleada.</small>';
+ if(id==='riel')return '<b>Disparo de riel</b><small>Recorre todo su alcance en línea recta, en el ángulo que más enemigos atraviesa. '+(t&&abRank(t,'perfor')?'Con Perforación total no pierde daño al atravesarlos.':'Pierde un '+Math.round((1-RAILF)*100)+'% de daño por cada enemigo que atraviesa.')+'</small>';
+ if(id==='conex')return '<b>Conexión</b><small>Cada Red eléctrica unida a esta con un arco le da +15% de daño (como mucho 4 conexiones: +60%).</small>';
+ if(id==='almas'){const r=t&&abRank(t,'knight'),n=(r&&r.n)||10;return '<b>Almas</b><small>Cada espectro que alzan sus orbes suma un alma. Con '+n+', aparece un Caballero Espectral.</small>';}
+ return _k.apply(this,arguments);};}
+{const set=(k,o)=>{const M=TMECH.find(m=>m.k===k);if(M)Object.assign(M,o);};
+ set('volc',{kw:'calor'});set('herald',{n:'Carga del juicio',kw:'juicio'});set('net',{n:'Conexión',kw:'conex'});set('almas',{kw:'almas'});}
+// descripciones cortas: la mecánica en su palabra clave (Nogal, 20-nov)
+{const sd=(k,s,d)=>{if(SPECS[k]&&SPECS[k][s])SPECS[k][s].d=d;},K=id=>`<span class="kw" data-kw="${id}" data-src="">`;
+ sd('augur','herald','No dispara: acumula '+K('juicio')+'carga del juicio</span> y, llena, lanza un rayo al enemigo con más vida.');
+ sd('cannon','rail','Carga lenta y mucho alcance. Su '+K('riel')+'disparo de riel</span> atraviesa todo lo que encuentra en línea recta.');
+ sd('laser','red','Se une mediante una '+K('conex')+'conexión</span> a las demás '+icOf(SPECS.laser.red)+' Redes eléctricas de su alcance. Los enemigos que cruzan un arco sufren.');
+ sd('sala','volc','Acumula '+K('calor')+'calor</span> mientras dispara: el cono se abre y aplica más stacks. Sin objetivo, se enfría.');}
 // ==================== v360 · Clics durante las animaciones de las ventanas y «Saltar» con confirmación (Nogal, 15-nov y 19-nov) ====================
 // La gente salta las animaciones a base de clics. Para que un clic de más no elija una reliquia, una torre, una pieza u opción sin querer:
 //  · mientras la ventana (cofre o paquete, oferta de torres, evento, elegir pieza) se está dibujando, el primer clic (o Intro/Espacio)
