@@ -37,7 +37,9 @@ function ftFx(T,src){const h=effHtml(T,src);if(!h)return '';const m=h.match(/dat
 function fxPill(id,v,src,nm){const ic=typeof ICKW!=='undefined'&&ICKW[id];return `<span class="kw gico ftfxi fxpill" data-kw="${id}" data-src="${src}"${nm?` aria-label="${nm}"`:''}>${ic?`<svg viewBox="-4 -4 56 56">${ic}</svg>`:''}${v?`<b>${v}</b>`:''}</span>`;}
 function ftDpsBar(t,theo){if(!(theo>0))return '';const src='tw:'+t.id;
  return `<div class="ftdps" data-theo="${theo}"><div class="ftdl"><span>${kst('dpsr','DPS real',src)}</span><span class="ftdv">—</span></div><div class="ftbar"><i></i></div><div class="ftdn"></div></div>`;}
-function ftMechBox(t,M,txt){return `<div class="ftmech"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><div class="ftbar ftmb"><i style="width:${Math.round(M.v(t)*100)}%"></i></div><div class="ftml">${M.l(t)}</div></div>`;}
+// v361: la palabra clave del nombre de una barra es la suya (M.kw); el icono (M.ic) puede ser de otra (Nogal: que no salga el bocadillo de otra palabra)
+const ftMkw=M=>M.kw||M.ic;
+function ftMechBox(t,M,txt){return `<div class="ftmech"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><div class="ftbar ftmb"><i style="width:${Math.round(M.v(t)*100)}%"></i></div><div class="ftml">${M.l(t)}</div></div>`;}
 // quita de un trozo de HTML las filas cuyo dato ya está arriba (números, efectos, objetivo, DPS)
 function ftStrip(html,drop){const w=document.createElement('div');w.innerHTML=html;
  for(const r of [...w.querySelectorAll('.row')]){const k=r.querySelector('[data-kw]'),id=k&&k.dataset.kw;if(r.classList.contains('dps')||(id&&drop.includes(id)))r.remove();}

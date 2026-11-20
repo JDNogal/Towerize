@@ -19,5 +19,9 @@
  ICKW.rroll=`<g ${O}><path d="M4 18h10M2 26h10M5 34h9" fill="none" stroke="#7e9a5a" stroke-width="3"/><circle cx="30" cy="26" r="14" fill="#9a928a"/><path d="M24 20l5 3-2 6M34 30l4-1" fill="none" stroke-width="1.6"/></g>`;
  // Llamarada: el mismo icono que su habilidad, Aliento abrasador (Nogal: lo que viene de una habilidad lleva el icono de la habilidad)
  if(typeof AB!=='undefined'&&AB.dbreath&&ICSV[AB.dbreath.ic])ICKW.llama=ICSV[AB.dbreath.ic];
+ // Barras con palabra propia (provisionales): Calor y Carga del juicio usan el dibujo que ya llevaba su barra; Conexión, el de la barra de la Red; Almas, el del espectro
+ ICKW.calor=ICKW.burn;ICKW.juicio=ICKW.ez;ICKW.conex=ICKW.chain;if(typeof SPECT!=="undefined"&&SPECT.spectre&&ICSV[SPECT.spectre.ic])ICKW.almas=ICSV[SPECT.spectre.ic];
+ // Disparo de riel: un proyectil alargado entre dos raíles
+ ICKW.riel=`<g ${O}><path d="M4 16h40M4 32h40" fill="none" stroke="#6a737d" stroke-width="3"/><path d="M8 20h26l8 4-8 4H8z" fill="#7ad8ff"/></g>`;
  // Muro (Casa de ladrillo): ya tiene dibujo aprobado (el de su casilla de evento, te_bwall): se usa ese
  if(typeof ICUIS!=='undefined'&&ICUIS.te_bwall)ICKW.bwall=ICUIS.te_bwall;}

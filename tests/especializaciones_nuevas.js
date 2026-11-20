@@ -21,7 +21,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  const ALL=S.list.slice(),solo=(...ts)=>{S.list=ts;S.incS=null;const far=path.slice().sort((a,b)=>Math.hypot(b.x-ts[0].x,b.y-ts[0].y)-Math.hypot(a.x-ts[0].x,a.y-ts[0].y))[0];const H=S.hero;H.pt.flag={x:far.x,y:far.y};H.s.x=far.x;H.s.y=far.y;};
  PR.pinned=true;PR.key='tw:'+bomb.id;const hb=towerInfo(bomb);PR.key='tw:'+rail.id;const hr=towerInfo(rail);PR.pinned=false;
  out.noTgt=!hb.includes('data-a="tgt"')&&hr.includes('data-a="tgt"')&&hb.includes('Drones: <b>4</b>');
- out.sheets=towerInfo(senda).includes('explosiva')&&towerInfo(petro).includes('brea')&&towerInfo(senda).includes('Cadena rúnica');
+ out.sheets=towerInfo(senda).includes('explosiva')&&towerInfo(petro).includes('brea');/* v361: las habilidades ya no van en la ficha en partida (se miran en el anillo) */
  out.stats=[stats(senda).dmg>0,stats(petro).dmg>0,TW.altar.dmg===0&&TW.dron.dmg===0,stats(rail).pen>=20];
  startWave();path=path.filter(c=>S.field[c.y][c.x]<1e9&&S.field[c.y][c.x]>4);
  const near=(q,n)=>path.slice().sort((a,b)=>Math.hypot(a.x-q.x,a.y-q.y)-Math.hypot(b.x-q.x,b.y-q.y)).slice(0,n||1);

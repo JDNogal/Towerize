@@ -10,7 +10,7 @@ const fbS=t=>{let o=FB.st.get(t);if(!o){o={fly:[],bub:[],spk:[],orbs:[],lastN:nu
 const fbEase=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
 const FBH={mag:50,volc:28,herald:24,net:30};
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||!M.k||!FBH[M.k])return _mb.apply(this,arguments);
- return `<div class="ftmech fbm fb-${M.k}"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="fbc" data-k="${M.k}" style="height:${FBH[M.k]}px"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
+ return `<div class="ftmech fbm fb-${M.k}"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="fbc" data-k="${M.k}" style="height:${FBH[M.k]}px"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
 // ---- Búnker ----
 function fbBullet(c,x,y,s,rot){c.save();c.translate(x,y);if(rot)c.rotate(rot);c.scale(s,s);c.lineWidth=1;c.strokeStyle='#2a1a10';
  c.fillStyle='#c9824a';c.beginPath();c.moveTo(-3,-3);c.quadraticCurveTo(0,-12,3,-3);c.closePath();c.fill();c.stroke();

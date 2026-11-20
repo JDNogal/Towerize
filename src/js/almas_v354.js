@@ -222,7 +222,7 @@ const almaImg=k=>(k==='spectre'||k==='knight')?ALMA.img(k):null;
 TMECH.unshift({k:'almas',on:t=>t.type==='orb'&&!!abRank(t,'knight'),n:'Almas',ic:'spect',v:t=>(t.raised||0)/((abRank(t,'knight')||{n:10}).n),
  l:t=>{const kn=abRank(t,'knight')||{n:10},hv=abRank(t,'harvest');const kl=almaKn(t);return (kl?'¡Caballero Espectral!':(t.raised||0)+' / '+kn.n)+(hv?' · Cosecha: '+(t.souls||0)+((t.souls||0)===1?' alma':' almas')+' (+'+Math.round(soulB(t)*100)+'%)':'');}});
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||M.k!=='almas')return _mb.apply(this,arguments);
- return `<div class="ftmech fbm fb-almas"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="albc" style="height:52px;width:100%;display:block"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
+ return `<div class="ftmech fbm fb-almas"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="albc" style="height:52px;width:100%;display:block"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
 const almaKn=t=>(S.summ||[]).find(q=>q.spOwner===t&&q.beast==='knight'&&q.sd[0]&&q.sd[0].hp>0&&q.ttl>0);
 const ALB={st:new WeakMap()};
 function almaBar(c,t,now){const W=c.width,H=c.height,dpr=W/c.clientWidth;const g=c.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);const w=W/dpr,h=H/dpr;g.clearRect(0,0,w,h);

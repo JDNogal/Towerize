@@ -78,6 +78,7 @@ const T=[
  ['eventos_cambio.js','Eventos que no se pueden jugar bien (casilla especial, héroe al máximo, oro y vida a la vez) se cambian por otro al abrirse'],
  ['revision_v351.js','Revisión de eventos, reliquias y héroes: duplicados, avisos, Yunque, Moneda, Reinhart, huellas, Implante y versión'],
  ['ficha_unidad_v361.js','v361: tarjeta de unidad con «Volver» en las torres con unidades (Baluarte, Gremio, cerditos; PC y móvil)'],
+ ['barras_palabra_v361.js','v361: el nombre de cada barra de mecánica abre el bocadillo de su propia palabra clave'],
  ['anillo_bordes_v361.js','v361: el anillo de la torre no queda debajo de la interfaz con la torre en cualquier borde (PC y móvil)'],
  ['tarjeta_gracia.js','Fichas del anillo y del menú de torre: aguantan al salir y dejan mirar sus palabras clave'],
  ['historia_kai.js','Historia de Kai: aparece con Vega en la ronda de jefe y se une si la oleada sale perfecta'],

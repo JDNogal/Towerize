@@ -71,7 +71,7 @@ const B6M=[
 for(let i=B6M.length-1;i>=0;i--)TMECH.unshift(B6M[i]);
 const B6K={};for(const m of B6M)B6K[m.k]=m;
 const b6H=(k,t)=>k==='botin'?(abRank(t,'botin')&&abRank(t,'botin').cof?120:98):B6H[k];/* v361: más alto para que la pirámide y las monedas que caen no se corten (Nogal) */
-const b6Box=(t,M,txt)=>`<div class="ftmech fbm b6m b6-${M.k}"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="b6c" data-k="${M.k}" data-tid="${t.id}" style="height:${b6H(M.k,t)}px"></canvas><div class="ftml" data-b6="${M.k}">${M.l(t)}</div></div>`;
+const b6Box=(t,M,txt)=>`<div class="ftmech fbm b6m b6-${M.k}"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="b6c" data-k="${M.k}" data-tid="${t.id}" style="height:${b6H(M.k,t)}px"></canvas><div class="ftml" data-b6="${M.k}">${M.l(t)}</div></div>`;
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||!B6K[M.k])return _mb.apply(this,arguments);return b6Box(t,M,txt);};}
 // la Sede del Gremio aún usa la ficha antigua (uniqInfo): el Botín va justo debajo del título
 {const _ui=uniqInfo;uniqInfo=function(t,k){const h=_ui.apply(this,arguments);try{if(t&&B6K.botin.on(t)){const i=h.indexOf('</div>')+6;return h.slice(0,i)+'<div class="b6uq">'+b6Box(t,B6K.botin,B6K.botin.x(t))+'</div>'+h.slice(i);}}catch(e){}return h;};}

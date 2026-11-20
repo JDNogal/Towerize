@@ -153,7 +153,7 @@ function specTxt(t){if(!t||!t.spec)return '';const s=stats(t),sl=abRank(t,'sello
  return '';}
 {const _ti=towerInfo;towerInfo=function(t){let h=_ti.apply(this,arguments);try{if(t&&t.type==='cannon'&&t.spec){let x='';
    if(t.spec==='bomb'){const n=t.bd?t.bd.length:2+((abRank(t,'escuad')||{}).n||0);x=`<small>Drones: <b>${n}</b>. El daño, el enfriamiento y el DPS son los de cada dron. No se elige objetivo: cada dron va a una escuadra distinta, empezando por la más adelantada.</small>`;}
-   else if(t.spec==='rail'){x=`<small>Dispara en línea recta por todo su alcance, en el ángulo que más enemigos atraviesa.${abRank(t,'perfor')?'':' Pierde un 15% de daño por cada enemigo atravesado.'}${t.hot>0?' Recarga en caliente: <b>+'+Math.round(t.hot*100)+'%</b>.':''}</small>`;}
+   else if(t.spec==='rail'){x=t.hot>0?`<small>Recarga en caliente: <b>+${Math.round(t.hot*100)}%</b>.</small>`:'';}/* v361: cómo dispara va en el bocadillo de «disparo de riel» (Nogal) */
    if(x){const i=h.indexOf('<div class="esec"');h=i>=0?h.slice(0,i)+x+h.slice(i):h+x;}}}catch(e){}return h;};}
 // mecánicas del compendio
 try{const add=(id,r)=>{MECUSE[id]=MECUSE[id]||[];if(!MECUSE[id].includes(r))MECUSE[id].push(r);};

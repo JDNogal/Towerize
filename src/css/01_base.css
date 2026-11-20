@@ -211,15 +211,15 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw{font-weight:700;cursor:help}
 .kw.st{font-weight:700}
 .kw:not(.gico):hover{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
-.kw:not(.st)[data-kw="burn"],.kw:not(.st)[data-kw="flam"],.kw:not(.st)[data-kw="breath"]{color:var(--tff9a4a,#ff9a4a)}
+.kw:not(.st)[data-kw="burn"],.kw:not(.st)[data-kw="calor"],.kw:not(.st)[data-kw="flam"],.kw:not(.st)[data-kw="breath"]{color:var(--tff9a4a,#ff9a4a)}
 .kw:not(.st)[data-kw="poison"]{color:var(--t5fdc7a,#5fdc7a)}
 .kw:not(.st)[data-kw="sticky"]{color:var(--tc8a060,#c8a060)}
-.kw:not(.st)[data-kw="chill"]{color:var(--t9fe4ff,#9fe4ff)}
+.kw:not(.st)[data-kw="chill"],.kw:not(.st)[data-kw="riel"]{color:var(--t9fe4ff,#9fe4ff)}
 .kw:not(.st)[data-kw="freeze"]{color:var(--tcdf2ff,#cdf2ff)}
 .kw:not(.st)[data-kw="slow"]{color:var(--t7fb4d9,#7fb4d9)}.kw:not(.st)[data-kw="fly"],.kw:not(.st)[data-kw="tair"]{color:var(--ta8d8ff,#a8d8ff)}.kw:not(.st)[data-kw="tgnd"]{color:var(--td2b48c,#d2b48c)}
 .kw:not(.st)[data-kw="stun"]{color:var(--tfff2a0,#fff2a0)}
 .kw:not(.st)[data-kw="bleed"]{color:var(--tff5a64,#ff5a64)}
-.kw:not(.st)[data-kw="ez"],.kw:not(.st)[data-kw="chain"]{color:var(--tffe14d,#ffe14d)}
+.kw:not(.st)[data-kw="ez"],.kw:not(.st)[data-kw="juicio"],.kw:not(.st)[data-kw="conex"],.kw:not(.st)[data-kw="chain"]{color:var(--tffe14d,#ffe14d)}
 .kw:not(.st)[data-kw="wet"]{color:var(--t5ab4ff,#5ab4ff)}
 .kw:not(.st)[data-kw="root"]{color:var(--t7ad06a,#7ad06a)}
 .kw:not(.st)[data-kw="fear"]{color:var(--td0a0ff,#d0a0ff)}
@@ -234,7 +234,7 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw:not(.st)[data-kw="tphys"],.kw:not(.st)[data-kw="aphys"],.kw:not(.st)[data-kw="brk"],.kw:not(.st)[data-kw="hblk"],.kw:not(.st)[data-kw="aura"],.kw:not(.st)[data-kw="pierce"],.kw:not(.st)[data-kw="bres"]{color:var(--fg1)}
 .kw:not(.st)[data-kw="crit"]{color:var(--tff4fa8,#ff4fa8)}
 .kw:not(.st)[data-kw="area"]{color:var(--tff9a3c,#ff9a3c)}
-.kw:not(.st)[data-kw="spect"]{color:var(--tb8c4ff,#b8c4ff)}
+.kw:not(.st)[data-kw="spect"],.kw:not(.st)[data-kw="almas"]{color:var(--tb8c4ff,#b8c4ff)}
 .kw:not(.st)[data-kw="call"],.kw:not(.st)[data-kw="howl"],.kw:not(.st)[data-kw="blow"],.kw:not(.st)[data-kw="dodge"]{color:var(--te0b8ff,#e0b8ff)}
 .kw:not(.st)[data-kw="steal"],.kw:not(.st)[data-kw="vch"]{color:var(--hl)}
 .kw:not(.st)[data-kw="rcd"]{color:var(--tf3e7a1,#f3e7a1)}

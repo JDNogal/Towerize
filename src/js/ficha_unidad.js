@@ -37,6 +37,10 @@ function fuCard(t,i){const T=TW[t.type],src='tw:'+t.id,w=document.createElement(
  const vida=s0?`<div class="fhbox fhhp fuhp fuhps"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><b class="fuhv">${s0.hp>0?Math.ceil(s0.hp)+' / '+Math.round(s0.max):''}</b></div>${s0.hp>0?`<div class="ftbar"><i style="width:${Math.round(s0.hp/s0.max*100)}%"${s0.hp/s0.max<.35?' class="low"':''}></i></div>`:`<div class="ftbar dead"><i style="width:0"></i><em>Caído · vuelve en ${Math.ceil(s0.rt||0)} s</em></div>`}</div>`
   :hp?`<div class="fhbox fhhp fuhp"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><b>${mx}</b></div><div class="ftbar"><i style="width:100%"></i></div></div>`:'';
  const fx=ef?`<div class="ftfx">${ef.lastElementChild.innerHTML}</div>`:'';
+ // «Ataca a» en Más detalles, también en las unidades (Nogal, 20-nov): las que disparan desde lejos (s.rng) atacan también a voladores
+ get('tgts');/* la fila «Objetivos» que ya traían algunas unidades dice lo mismo: se cambia por «Ataca a», al final */
+ {let air=false;if(u.s)air=!!u.s.rng;else if(T.pig)air=!!(PIGU[t.type]||{}).rng;else if(T.guild){const seen=[];for(const c of guildParty(t))if(!seen.includes(c))seen.push(c);const c=seen[u.bi];air=!!(CLS[c]||{}).rng;}
+  const d=document.createElement('div');d.innerHTML=R('cg',kst('tgts','Ataca a',src),objIc(!air,src));rows.push(d.firstElementChild);}
  return `<div class="ftc fuu"><button class="fuback" data-a="fuback">← ${fuNm(t)}</button>
   <div class="ttl">${u.ic}<b>${u.nm}</b></div><div class="ftsub">Unidad de ${fuNm(t)}${u.n>1?' · '+(u.j+1)+' de '+u.n:''}</div>${sm?`<div class="ftdesc fudsc">${sm}</div>`:''}
   ${vida}<div class="ftchips n${ch.length}">${ch.join('')}</div>${fx}${rows.length?ftFold('umore','<span>Más detalles</span>',rows.map(r=>r.outerHTML).join('')):''}</div>`;}
