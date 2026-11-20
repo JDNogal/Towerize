@@ -66,12 +66,12 @@ warlock:{n:'Brujo',gold:10,hp:1.4,sp:.8,r:.3,col:'#5a2a7a',dmg:2,ap:5,am:30,dt:'
 shaman:{n:'Chamán',gold:8,hp:1.2,sp:.8,r:.28,col:'#4aa07a',dmg:1,ap:5,am:20,dt:'magic',eheal:1},
 mini:{n:'Mini-élite',hp:6,sp:.8,r:.4,col:'#e08a2e',dmg:5,gold:25,el:1,ap:15,am:15},elite:{n:'Élite',hp:12,sp:.6,r:.48,col:'#7a4be0',dmg:8,gold:50,el:1,ap:25,am:25},
 boss:{n:'Jefe',hp:30,sp:.5,r:.55,col:'#8f1f2e',dmg:10,gold:60,ap:40,am:40},
-bob:{n:'Bob',hp:14,sp:.5,r:.52,col:'#c0607a',dmg:5,gold:60,ap:20,am:20},
-momdrg:{n:'Mamá dragona',hp:17,sp:.6,r:.55,col:'#a8402e',dmg:5,gold:60,el:1,ap:25,am:25,evn:1,breath:1},
-cub:{n:'Lobato',gold:4,hp:.55,sp:1.9,r:.22,col:'#9a8f80',dmg:1,ap:0,am:0,evn:1},
-greyw:{n:'Lobo gris',hp:6,sp:.95,r:.4,col:'#7d828a',dmg:3,gold:25,el:1,ap:15,am:15,evn:1,howl:1},
-bigw:{n:'El Lobo',hp:14,sp:.75,r:.52,col:'#4a4540',dmg:5,gold:50,el:1,ap:25,am:25,evn:1,blow:1},
-colossus:{n:'Coloso',hp:45,sp:.45,r:.68,col:'#4a0d18',dmg:20,gold:150,ap:60,am:60,call:1}};
+bob:{n:'Bob',hp:14,hf:6000,sp:.5,r:.52,col:'#c0607a',dmg:5,gold:60,ap:20,am:20},
+momdrg:{n:'Mamá dragona',hp:17,hf:1300,sp:.6,r:.55,col:'#a8402e',dmg:5,gold:60,el:1,ap:25,am:25,evn:1,breath:1},
+cub:{n:'Lobato',gold:4,hp:.55,hf:15,sp:1.9,r:.22,col:'#9a8f80',dmg:1,ap:0,am:0,evn:1},
+greyw:{n:'Lobo gris',hp:6,hf:300,sp:.95,r:.4,col:'#7d828a',dmg:3,gold:25,el:1,ap:15,am:15,evn:1,howl:1},
+bigw:{n:'El Lobo',hp:14,hf:1300,sp:.75,r:.52,col:'#4a4540',dmg:5,gold:50,el:1,ap:25,am:25,evn:1,blow:1},
+/* v363: hf = vida fija (Nogal, 20-nov): Lobato como un Goblin, Lobo gris como una mini-élite, El Lobo y Mamá dragona como una élite; Bob, algo menos de la mitad que los demás jefes */colossus:{n:'Coloso',hp:45,sp:.45,r:.68,col:'#4a0d18',dmg:20,gold:150,ap:60,am:60,call:1}};
 // Combate cuerpo a cuerpo: ud = daño a unidades, ac = enfriamiento, rg = 'melee' | 'ranged' (se detiene al tener una unidad en su alcance), need = soldados necesarios para detenerlo
 const HPOLD=r=>r<=15?Math.pow(HPG,r):Math.pow(HPG,15)*(1+.2*(r-15));
 // vida fija (hf) de los enemigos normales; tutorial y eventos siguen escalando por ronda como antes

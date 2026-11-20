@@ -15,6 +15,8 @@ const rndRelic=()=>{const p=RELICS.filter(r=>!r.ini&&!r.evr&&relEra(r)&&!(r.ach&
 const relOr=id=>{if(S.relics.includes(id)){goldEv(100);return['gold:100'];}gainRelic(id);return['relic:'+id];};
 function gainRelic(id){if(S.relics.includes(id))return;S.relics.push(id);S.rs[id]={cd:0,t:0};if(id==='mimic')setTimeout(mimPlace,0);see('rl',id);relicHints(id);if(id==='badge')heroSync();renderRelics();}
 function goldEv(v){S.gold+=v;if(S.st&&v>0)S.st.gEv+=v;}
+// v363: con vida fija, lo que crece con la ronda es cuántos salen (misma regla que los escuadrones: desde la ronda 9, hasta ×2 en la 15). Los que salen solos no cambian
+const evN=n=>n>=2&&typeof sqSz==='function'?Math.round(n*sqSz()):n;
 function addNow(k,v){const p=S.portals[0];if(p)p.plan[k]=(p.plan[k]||0)+v;}
 function blockBuffs(bk){if(!bk)return false;const[bx,by]=bk.split(',').map(Number),NB=N/BN;for(let y=by*NB;y<(by+1)*NB;y++)for(let x=bx*NB;x<(bx+1)*NB;x++)if(S.buff[y]&&BF[S.buff[y][x]])return true;return false;}
 function lessEnemies(f){for(const p of S.portals)for(const k of REGT)if(p.plan[k])p.plan[k]=Math.max(1,Math.round(p.plan[k]*(1-f)));}
@@ -74,10 +76,10 @@ const EVENTS={
   {l:'Aceptar un encargo',c:'Dentro de 2 rondas llega una Élite extra',run:()=>{S.sched.push({r:S.round+2,add:{wanted:1}});return['wanted'];}},
   {l:'Reclutar un mercenario',c:'Pagas 80 🪙',req:()=>S.gold<80?'Necesitas 80 🪙':'',run:()=>{S.gold-=80;return relOr('badge');}}]},
  pigs:{n:'Los tres cerditos',ic:'🐷',txt:'Tres cerditos corren hacia ti: «¡El lobo viene a por nuestras casas!» Cada uno te ruega que defiendas la suya.',opts:[
-  {l:'Defender la casa de ladrillo',c:'Fácil: la próxima oleada trae una manada de Lobatos',run:()=>{addNow('cub',8);S.pend.push({r:S.round,bk:EVK,towers:['brick']});return['tower:brick'];}},
+  {l:'Defender la casa de ladrillo',c:'Fácil: la próxima oleada trae una manada de Lobatos',run:()=>{addNow('cub',evN(8));S.pend.push({r:S.round,bk:EVK,towers:['brick']});return['tower:brick'];}},
   {l:'Defender la casa de madera',c:'Media: la próxima oleada trae un Lobo gris',run:()=>{addNow('greyw',1);S.pend.push({r:S.round,bk:EVK,towers:['wood']});return['tower:wood'];}},
   {l:'Defender la casa de paja',c:'Difícil: la próxima oleada trae a El Lobo',run:()=>{addNow('bigw',1);S.pend.push({r:S.round,bk:EVK,towers:['straw']});return['tower:straw'];}},
-  {l:'¡Defender todas las casas!',c:'La próxima oleada trae Lobatos, un Lobo gris y El Lobo',req:()=>pigDone()?'':'Se desbloquea al ganar una partida con cada una de las tres casas',run:()=>{addNow('cub',8);addNow('greyw',1);addNow('bigw',1);S.pend.push({r:S.round,bk:EVK,towers:['brick','wood','straw']});return['tower:brick','tower:wood','tower:straw'];}}]}
+  {l:'¡Defender todas las casas!',c:'La próxima oleada trae Lobatos, un Lobo gris y El Lobo',req:()=>pigDone()?'':'Se desbloquea al ganar una partida con cada una de las tres casas',run:()=>{addNow('cub',evN(8));addNow('greyw',1);addNow('bigw',1);S.pend.push({r:S.round,bk:EVK,towers:['brick','wood','straw']});return['tower:brick','tower:wood','tower:straw'];}}]}
 };
 // texto que «resuelve» cada opción (como en Slay the Spire): se lee tras elegir, antes de Continuar. Puede depender del resultado (keys)
 const EVRES={

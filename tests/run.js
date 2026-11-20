@@ -55,6 +55,7 @@ const T=[
  ['compendio_enlace.js','Compendio enlazado: botón 📖, pestaña Mecánicas, flechas de evolución y aviso de enemigo nuevo'],
  ['casillas_nuevas.js','Casillas especiales nuevas: Precisión, Perforación, Eco, Persistencia, Taller y Cuartel'],
  ['enemigos.js','Enemigos por facciones: tipos nuevos, iconos, escuadras con líder y cadena de mando'],
+ ['vida_fija_v363.js','Vida fija (v363): Lobos, Mamá dragona y Bob como el resto; Lobatos según la ronda',null,1],
  ['habilidades_enemigos.js','Habilidades de los enemigos: embeleso, interferencia, golpes de campeón, disparos en arco y voladores que atacan',null,2],
  ['elites.js','Mini-élites y élites de cada era con sus habilidades'],
  ['jefes.js','Jefes de historia: los tres de cada era y su orden'],
