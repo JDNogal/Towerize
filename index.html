@@ -5228,7 +5228,7 @@ const SQUADS={
  squad:{n:'Pelotón',min:999,tut:1,m:{norm:3,fast:2}},/* v307: solo del tutorial (las usa TUTW); con tut:1 no se borran al montar las facciones */
  scouts:{n:'Avanzadilla',min:3,m:{fast:4,sling:1}},
  vanguard:{n:'Vanguardia',min:999,tut:1,m:{tank:1,norm:4}},
- /* v363 (Nogal, 21-nov): con vida fija, el tutorial sube con enemigos mejores en vez de con vida creciente. Cada ronda trae una mejora nueva: Orco → Orco veterano (5), Goblin → Jinete de lobo (6), Ogro → Ogro acorazado (7), Tamborilero con aura (8), Caudillo con habilidad (9) */
+ /* v363 (Nogal, 21-nov): con vida fija, el tutorial sube con enemigos mejores en vez de con vida creciente. Cada ronda trae una mejora nueva, con pocos enemigos: Orco → Orco veterano (5), Goblin → Jinete de lobo (6), Ogro → Ogro acorazado (7), Tamborilero con aura (8), Caudillo con habilidad (9) */
  tvet:{n:'Veteranos (tutorial)',min:999,tut:1,m:{norm:4,vet:3}},trunner:{n:'Jinetes (tutorial)',min:999,tut:1,m:{fast:3,runner:3}},tarmor:{n:'Ogros (tutorial)',min:999,tut:1,m:{tank:2,armored:1}},theavy:{n:'Acorazados (tutorial)',min:999,tut:1,m:{tank:1,armored:2}},tdrum:{n:'Tambores (tutorial)',min:999,tut:1,m:{norm:4,vet:2,custodian:1}},tchamp:{n:'Caudillo (tutorial)',min:999,tut:1,m:{champ:1,vet:4}},
  escort:{n:'Escolta',min:5,m:{sling:3,custodian:1}},
  conclave:{n:'Cónclave',min:5,m:{acolyte:2,norm:3}},
@@ -5667,7 +5667,7 @@ if(IOS&&!navigator.webdriver){const iv=setInterval(()=>{if(typeof INTRO!=='undef
 // Partida guionizada de 10 rondas: el guion controla lo que se ofrece (piezas, torres, oleadas) y el jugador siempre elige.
 let TUTON=false,TUTR=0,TUTHS={};
 const TUTP={1:['Recta','Esquina','Arco'],2:['Esquina','Arco','Recta'],3:['Bifurcación','Serpiente','Esquina'],4:['Cruce','Arco','Recta'],5:['Bifurcación','Anillo','Esquina'],6:['Bifurcación','Cruce','Abanico'],7:['Serpiente','Bifurcación','Arco'],8:['Cruce','Anillo','Esquina'],9:['Anillo','Bifurcación','Abanico'],10:['Recta','Esquina','Cruce']};
-const TUTW={1:['patrol'],2:['patrol','patrol'],3:['patrol','squad'],4:['squad','squad'],5:['tvet','tvet'],6:['tvet','trunner','tvet','trunner'],7:['tsling','tarmor','tvet','tsling','trunner'],8:['tdrum','tarmor','tvet','tsling','tarmor','trunner','tvet'],9:['tchamp','theavy','tdrum','tchamp','trunner','tsling','tvet'],10:['tchamp','theavy','tdrum','tvet','trunner','tsling']};
+const TUTW={1:['patrol'],2:['patrol','patrol'],3:['patrol','squad'],4:['squad','squad'],5:['tvet','squad'],6:['trunner','tvet'],7:['tarmor','tsling','trunner'],8:['tdrum','tarmor','tsling','trunner'],9:['tchamp','theavy','tdrum','tsling'],10:['tchamp','tarmor','tvet']};/* v363 (Nogal, 21-nov): pocos enemigos; lo importante es que salga el nuevo de cada ronda, no que sea tan duro como una partida normal */
 const adjPath=(p,x,y)=>D.some(([a,b])=>p[y+b]&&p[y+b][x+a]==='.');
 function tutDeal(){const r=S.round,names=TUTP[r]||['Recta','Esquina'];let any=null,best=null;S.offers=[];
  for(let t=0;t<80;t++){const of=names.map((n,i)=>{const P0=PIECES.find(p=>p.n===n),o={n,p:P0.p,b:[]};solarize(o,0,1);decorate(o);

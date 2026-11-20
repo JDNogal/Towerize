@@ -2,7 +2,7 @@
 // Partida guionizada de 10 rondas: el guion controla lo que se ofrece (piezas, torres, oleadas) y el jugador siempre elige.
 let TUTON=false,TUTR=0,TUTHS={};
 const TUTP={1:['Recta','Esquina','Arco'],2:['Esquina','Arco','Recta'],3:['Bifurcación','Serpiente','Esquina'],4:['Cruce','Arco','Recta'],5:['Bifurcación','Anillo','Esquina'],6:['Bifurcación','Cruce','Abanico'],7:['Serpiente','Bifurcación','Arco'],8:['Cruce','Anillo','Esquina'],9:['Anillo','Bifurcación','Abanico'],10:['Recta','Esquina','Cruce']};
-const TUTW={1:['patrol'],2:['patrol','patrol'],3:['patrol','squad'],4:['squad','squad'],5:['tvet','tvet'],6:['tvet','trunner','tvet','trunner'],7:['tsling','tarmor','tvet','tsling','trunner'],8:['tdrum','tarmor','tvet','tsling','tarmor','trunner','tvet'],9:['tchamp','theavy','tdrum','tchamp','trunner','tsling','tvet'],10:['tchamp','theavy','tdrum','tvet','trunner','tsling']};
+const TUTW={1:['patrol'],2:['patrol','patrol'],3:['patrol','squad'],4:['squad','squad'],5:['tvet','squad'],6:['trunner','tvet'],7:['tarmor','tsling','trunner'],8:['tdrum','tarmor','tsling','trunner'],9:['tchamp','theavy','tdrum','tsling'],10:['tchamp','tarmor','tvet']};/* v363 (Nogal, 21-nov): pocos enemigos; lo importante es que salga el nuevo de cada ronda, no que sea tan duro como una partida normal */
 const adjPath=(p,x,y)=>D.some(([a,b])=>p[y+b]&&p[y+b][x+a]==='.');
 function tutDeal(){const r=S.round,names=TUTP[r]||['Recta','Esquina'];let any=null,best=null;S.offers=[];
  for(let t=0;t<80;t++){const of=names.map((n,i)=>{const P0=PIECES.find(p=>p.n===n),o={n,p:P0.p,b:[]};solarize(o,0,1);decorate(o);
