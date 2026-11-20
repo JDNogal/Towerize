@@ -218,15 +218,15 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw{font-weight:700;cursor:help}
 .kw.st{font-weight:700}
 .kw:not(.gico):hover{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
-.kw:not(.st)[data-kw="burn"],.kw:not(.st)[data-kw="flam"],.kw:not(.st)[data-kw="breath"]{color:var(--tff9a4a,#ff9a4a)}
+.kw:not(.st)[data-kw="burn"],.kw:not(.st)[data-kw="calor"],.kw:not(.st)[data-kw="flam"],.kw:not(.st)[data-kw="breath"]{color:var(--tff9a4a,#ff9a4a)}
 .kw:not(.st)[data-kw="poison"]{color:var(--t5fdc7a,#5fdc7a)}
 .kw:not(.st)[data-kw="sticky"]{color:var(--tc8a060,#c8a060)}
-.kw:not(.st)[data-kw="chill"]{color:var(--t9fe4ff,#9fe4ff)}
+.kw:not(.st)[data-kw="chill"],.kw:not(.st)[data-kw="riel"]{color:var(--t9fe4ff,#9fe4ff)}
 .kw:not(.st)[data-kw="freeze"]{color:var(--tcdf2ff,#cdf2ff)}
 .kw:not(.st)[data-kw="slow"]{color:var(--t7fb4d9,#7fb4d9)}.kw:not(.st)[data-kw="fly"],.kw:not(.st)[data-kw="tair"]{color:var(--ta8d8ff,#a8d8ff)}.kw:not(.st)[data-kw="tgnd"]{color:var(--td2b48c,#d2b48c)}
 .kw:not(.st)[data-kw="stun"]{color:var(--tfff2a0,#fff2a0)}
 .kw:not(.st)[data-kw="bleed"]{color:var(--tff5a64,#ff5a64)}
-.kw:not(.st)[data-kw="ez"],.kw:not(.st)[data-kw="chain"]{color:var(--tffe14d,#ffe14d)}
+.kw:not(.st)[data-kw="ez"],.kw:not(.st)[data-kw="juicio"],.kw:not(.st)[data-kw="conex"],.kw:not(.st)[data-kw="chain"]{color:var(--tffe14d,#ffe14d)}
 .kw:not(.st)[data-kw="wet"]{color:var(--t5ab4ff,#5ab4ff)}
 .kw:not(.st)[data-kw="root"]{color:var(--t7ad06a,#7ad06a)}
 .kw:not(.st)[data-kw="fear"]{color:var(--td0a0ff,#d0a0ff)}
@@ -241,7 +241,7 @@ button.dim{border-color:var(--acc);opacity:.55}
 .kw:not(.st)[data-kw="tphys"],.kw:not(.st)[data-kw="aphys"],.kw:not(.st)[data-kw="brk"],.kw:not(.st)[data-kw="hblk"],.kw:not(.st)[data-kw="aura"],.kw:not(.st)[data-kw="pierce"],.kw:not(.st)[data-kw="bres"]{color:var(--fg1)}
 .kw:not(.st)[data-kw="crit"]{color:var(--tff4fa8,#ff4fa8)}
 .kw:not(.st)[data-kw="area"]{color:var(--tff9a3c,#ff9a3c)}
-.kw:not(.st)[data-kw="spect"]{color:var(--tb8c4ff,#b8c4ff)}
+.kw:not(.st)[data-kw="spect"],.kw:not(.st)[data-kw="almas"]{color:var(--tb8c4ff,#b8c4ff)}
 .kw:not(.st)[data-kw="call"],.kw:not(.st)[data-kw="howl"],.kw:not(.st)[data-kw="blow"],.kw:not(.st)[data-kw="dodge"]{color:var(--te0b8ff,#e0b8ff)}
 .kw:not(.st)[data-kw="steal"],.kw:not(.st)[data-kw="vch"]{color:var(--hl)}
 .kw:not(.st)[data-kw="rcd"]{color:var(--tf3e7a1,#f3e7a1)}
@@ -3194,7 +3194,7 @@ body.mfs #tip.fuL{left:0!important;right:auto!important;border-radius:0 10px 10p
 <div id="opt"></div>
 <div id="relics"></div>
 <div id="panel"><div id="msg"></div><div id="ui"></div></div>
-<div id="ver">Towerize v360</div>
+<div id="ver">Towerize v361</div>
 </main></div>
 <div id="tip" class="tipc"></div><div id="wheel"></div>
 <script>
@@ -8029,7 +8029,7 @@ const bmCost=k=>S.half?Math.ceil(TW[k].cost/2):TW[k].cost;
 function bmFree(q){return q&&inbc(q.kx,q.ky)&&S.cc[q.ky][q.kx]===1&&!S.occ[q.x+','+q.y];}
 function bmVis(){return !!(BM.s&&S&&(S.phase==='build'||S.phase==='wave')&&bmFree(BM.s)&&!RL.open&&!PR.pinned&&!S.aim&&!FO.open&&!LB.open&&!(typeof DLG!=='undefined'&&DLG.on)&&!(typeof PMU!=='undefined'&&PMU.open));}
 function bmClose(){BM.s=null;BM.arm=null;BM.hov=null;BM.sig='';const m=$('bmenu');if(m)m.classList.remove('on');const c=$('bmcard');if(c)c.classList.remove('on');}
-function bmOpen(q){S.selT=null;try{tmClose();}catch(e){}if(PR.pinned)closePrim();BM.s=q;BM.arm=null;BM.hov=null;BM.sig='';try{sfx('ui');}catch(e){}}
+function bmOpen(q){S.selT=null;try{tmClose();}catch(e){}if(PR.pinned)closePrim();BM.s=q;BM.arm=null;BM.hov=null;BM.sig='';BM.fit=1;try{sfx('ui');}catch(e){}}
 function bmTap(c){const q=sqOf(c.x,c.y);if(!inb(c.x,c.y)||!bmFree(q)){if(BM.s){bmClose();}return false;}
  if(BM.s&&BM.s.x===q.x&&BM.s.y===q.y){bmClose();return true;}
  if(tutLockBlock(q.x,q.y))return true;
@@ -8041,7 +8041,7 @@ function bmBuild(){let m=$('bmenu');if(!m){m=document.createElement('div');m.id=
   /* v343: el ratón por encima lo lleva tarjeta_gracia.js (la ficha aguanta un poco al salir, para poder ir hasta ella y mirar sus palabras clave) */}
  const q=BM.s;m.innerHTML=bmDeck().map(k=>{const T=TW[k],arm=BM.arm===k,wish=(S.wish||[]).some(w=>w.a==='build'&&w.v===k&&w.x===q.x&&w.y===q.y);
   return `<button class="tmb${arm?' arm':''}${wish?' wish':''}" data-k="${k}" data-tm="build" data-v="${k}" data-sx="${q.x}" data-sy="${q.y}">${arm?'✓':`<span class="ic tw twd" style="background:${T.col}">${icHtml(twIcO(T))}</span>`}<span class="p">${bmCost(k)} 🪙</span></button>`;}).join('');
- m.classList.add('on');bmPos(true);bmCard();}
+ m.classList.add('on');bmPos(true);bmCard();if(BM.fit&&!BM.sim){BM.fit=0;try{bmAutoFit();}catch(e){}}}
 function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getBoundingClientRect(),c=$('cw').getBoundingClientRect(),k=sc()/VIEW*r.width;
  const px=((q.x+.5)*CS-CAM.x)*k+(r.left-c.left),py=((q.y+.5)*CS-CAM.y)*k+(r.top-c.top),bs=m.querySelectorAll('.tmb'),n=bs.length;
  // tamaño según el zoom: alejado, compacto; acercándote, crece con el solar
@@ -8049,22 +8049,9 @@ function bmPos(force){const m=$('bmenu'),q=BM.s;if(!m||!q)return;const r=cv.getB
  const gap=bz*1.22,R=Math.max(sp*.5+bz*.8,n>1?gap/(2*Math.sin(Math.min(Math.PI/n,Math.PI/2)/1)):0),T0=58;
  // el anillo empieza arriba y se va cerrando hacia abajo: con 2 torres, las dos arriba; con 3, una en medio y dos a los lados…
  const d=n>=5?2*Math.PI/n:Math.min(2*Math.PI/n,gap/R);/* v305: con 5 o más, polígono regular completo (pentágono, hexágono…) */
- // si se sale de la pantalla, se desplaza hacia dentro (sin dejar de rodear el solar)
- const pad=bz/2+6,cx=Math.max(R+pad,Math.min(c.width-R-pad,px)),cy=Math.max(T0+R+pad,Math.min(c.height-pad-bz*.35-(n*d>Math.PI?R:0),py));
- // v361: si algún botón cae debajo de la interfaz (barras, columnas), el anillo se desplaza lo justo para librarla
- const ob=typeof tmObs==='function'?tmObs(c):[],at=(x0,y0,a0=-Math.PI/2)=>{let h=0;for(let i=0;i<n;i++){const a=a0+(i-(n-1)/2)*d,x=x0+Math.cos(a)*R,y=y0+Math.sin(a)*R,b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];
-   if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h;};
- let bx=cx,by=cy,a0=-Math.PI/2;
- // v361: primero, el mismo anillo centrado en el solar pero girado hacia el lado libre (abajo, derecha, izquierda); solo si no cabe, desplazado
- let row=null;/* solar pegado arriba: las torres en fila, debajo del solar (Nogal) */
- const rowAt=y0=>{const gap=bz+14,per=Math.max(1,Math.min(n,5,Math.floor((c.width-8)/gap))),L=[];/* v361: si no caben en una fila, otra debajo (Nogal) */
-  for(let i=0;i<n;i++){const r=Math.floor(i/per),k=i%per,m=Math.min(per,n-r*per),x0=Math.max(4+bz/2+(m-1)/2*gap,Math.min(c.width-4-bz/2-(m-1)/2*gap,px));L.push([x0+(k-(m-1)/2)*gap,y0+r*(bz+22)]);}
-  let h=0;for(const[x,y]of L){const b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){h++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){h++;break;}}return h?null:L;};
- if(at(px,py)&&py<c.height*.4)row=rowAt(py+R*.95);
- if(!row&&at(px,py)&&n<5){
-  for(const g of[Math.PI/2,0,Math.PI])if(!at(px,py,g)){bx=px;by=py;a0=g;break;}}else if(n<5&&!at(px,py)){bx=px;by=py;}
- if(!row&&a0===-Math.PI/2&&at(bx,by)){let best=null;for(let r=0;r<=240&&!(best&&!best.h);r+=12)for(const[ux,uy]of[[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]){const x=cx+ux*r,y=cy+uy*r,h=at(x,y);if(!best||h<best.h)best={x,y,h};if(!h)break;}bx=best.x;by=best.y;}
- if(row){a0=0;bs.forEach((b,i)=>{b.style.left=row[i][0]+'px';b.style.top=row[i][1]+'px';});bx=px;by=py;}else bs.forEach((b,i)=>{const a=a0+(i-(n-1)/2)*d;b.style.left=bx+Math.cos(a)*R+'px';b.style.top=by+Math.sin(a)*R+'px';});
+ // v361: siempre el mismo anillo alrededor del solar, como en PC: ni se desplaza, ni se gira, ni se pone en fila. Cerca del borde,
+ // el jugador mueve un poco la vista (el mapa tiene margen de sobra para eso) (Nogal, 20-nov)
+ const bx=px,by=py;bs.forEach((b,i)=>{const a=-Math.PI/2+(i-(n-1)/2)*d;b.style.left=bx+Math.cos(a)*R+'px';b.style.top=by+Math.sin(a)*R+'px';});
  m._p={px:bx,py:by,R,W:c.width,H:c.height};if(force||BM.hov||BM.arm)bmCardPos();}
 const DTN={phys:'Físico',magic:'Mágico',elem:'Elemental'};
 function bmInfo(k){const T=TW[k],a=twAt(k,1,null),M=twMax(1),src='shop:'+k;
@@ -8091,6 +8078,28 @@ function bmKey(i){if(!S||!(S.phase==='build'||S.phase==='wave'))return false;con
  bmBuildNow(k,q);if(BM.s&&!bmFree(BM.s))bmClose();return true;}
 addEventListener('keydown',e=>{if(e.key==='Escape'&&BM.s&&bmVis()&&!e.defaultPrevented){if(BM.arm){BM.arm=null;BM.sig='';}else bmClose();}});
 
+
+// v361 · si el anillo de construir no cabe entero (fuera de la pantalla o debajo de la interfaz), la cámara se aleja con suavidad
+// lo justo para que quepan el solar y el anillo; si ya no se puede alejar más, se desplaza lo justo (Nogal, 20-nov: mejor alejar que
+// mover, para no quitarle de la vista lo que estaba mirando). Lo hace al abrir el anillo, no mientras está abierto.
+function bmFitBad(){const m=$('bmenu'),c=$('cw').getBoundingClientRect(),bz=parseFloat(m.style.getPropertyValue('--bs'))||60,ob=typeof tmObs==='function'?tmObs(c):[];
+ let bad=0,ex={l:0,r:0,t:0,b:0};const P=m._p;const L=[...m.querySelectorAll('.tmb')].map(b=>[parseFloat(b.style.left),parseFloat(b.style.top)]);if(P)L.push([P.px,P.py]);
+ for(const [x,y] of L){const b=[x-bz/2,y-bz/2,x+bz/2,y+bz/2+12];ex.l=Math.max(ex.l,2-b[0]);ex.t=Math.max(ex.t,2-b[1]);ex.r=Math.max(ex.r,b[2]-(c.width-2));ex.b=Math.max(ex.b,b[3]-(c.height-2));
+  if(b[0]<2||b[1]<2||b[2]>c.width-2||b[3]>c.height-2){bad++;continue;}for(const q of ob)if(b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]){bad++;
+   // cuánto habría que mover para librar este obstáculo (hacia el lado más corto)
+   const dl=b[2]-q[0],dr=q[2]-b[0],dt=b[3]-q[1],dd=q[3]-b[1],mn=Math.min(dl,dr,dt,dd);if(mn===dl)ex.r=Math.max(ex.r,dl);else if(mn===dr)ex.l=Math.max(ex.l,dr);else if(mn===dt)ex.b=Math.max(ex.b,dt);else ex.t=Math.max(ex.t,dd);break;}}
+ return {bad,ex};}
+function bmAutoFit(){if(!BM.s||!$('bmenu'))return;BM.sim=1;const S0={z:CAM.z,x:CAM.x,y:CAM.y},ctr=()=>({x:(CAM.x+VIEW/sc()/2-CS/2)/CS,y:(CAM.y+VH/sc()/2-CS/2)/CS});
+ try{if(!bmFitBad().bad)return;const c0=ctr();let goal=null;
+  // 1) alejar (desde el centro de la pantalla, para que lo del borde venga hacia dentro)
+  /* como mucho un 30% menos de zoom: alejar más dejaría el mapa diminuto; el resto lo hace el desplazamiento */const zl=Math.max(ZMIN,CAM.z*.7);
+  for(let z=CAM.z;z>=zl-1e-6;z=Math.max(zl,z*.93)){CAM.z=z;camCenter(c0.x,c0.y);bmPos(true);if(!bmFitBad().bad){goal={z,...ctr()};break;}if(z<=zl)break;}
+  // 2) alejado lo que se puede y sin caber: desplazar lo justo (desde el zoom ya alejado)
+  if(!goal){for(let i=0;i<6&&!goal;i++){const {bad,ex}=bmFitBad();if(!bad){goal={z:CAM.z,...ctr()};break;}const k=$('cv')?cv.getBoundingClientRect().width/VIEW*sc():sc();
+    const dx=(ex.r>0?ex.r+6:0)-(ex.l>0?ex.l+6:0),dy=(ex.b>0?ex.b+6:0)-(ex.t>0?ex.t+6:0);CAM.x+=dx/k;CAM.y+=dy/k;clampCam();bmPos(true);}
+   if(!goal)goal={z:CAM.z,...ctr()};}
+  CAM.z=S0.z;CAM.x=S0.x;CAM.y=S0.y;bmPos(true);if(goal&&(Math.abs(goal.z-S0.z)>1e-3||Math.hypot(goal.x-c0.x,goal.y-c0.y)>.01))camGoT(goal.z,goal.x,goal.y,.35);}
+ finally{CAM.z=CAM.z;BM.sim=0;}}
 // ---- menú de torre: al pulsar una torre salen botones pegados a ella (mejorar / especializar / habilidades, ficha, vender, bandera) ----
 const TM={t:null,arm:null,hov:null,sig:''};
 function tmHas(t,a){const pp=PR.pinned,pk=PR.key;PR.pinned=true;PR.key='tw:'+t.id;let h='';try{h=towerInfo(t)||'';}catch(e){}finally{PR.pinned=pp;PR.key=pk;}return h.includes('data-a="'+a+'"');}
@@ -11454,6 +11463,7 @@ H2D.push((g,lw)=>{if(!S||!S.ally||S.aim!=='ally')return;const s=S.ally.sd&&S.all
 // guardada encima de los botones; debajo, «Novedades» con el registro de cambios de cada versión (el mismo que se publica en Discord).
 // Al publicar una versión: añadir su entrada arriba del todo en NOVL.
 const NOVL=[
+ {v:361,f:'20 nov 2026',t:'Fichas de unidades y torres de evento',s:[['Fichas',['Las torres de evento estrenan la ficha nueva, con barras propias para lo que las hace especiales.','Cada unidad tiene su propia tarjeta: púlsala en «Más detalles» para ver su vida en directo y sus datos, con una línea que te señala dónde está en el mapa.','Las habilidades ya no alargan la ficha en partida: las tienes en los botones del anillo de la torre.','Descripciones más cortas: los detalles van en el bocadillo de cada palabra clave, y cada barra abre el suyo.','«Daño» lleva solo el icono de su tipo, y «Ataca a» pasa a «Más detalles».']],['Mapa',['Si abres el anillo de construir junto al borde, la cámara se aleja un poco para que lo veas entero.','El anillo de una torre pegada al borde ya no queda debajo de la interfaz.']]]},
  {v:360,f:'19 nov 2026',t:'Barras nuevas y ventanas sin sustos',s:[['Torres',['Cinco habilidades de Nv 4 cambian por otras nuevas, y cada una trae su propia barra en la ficha de la torre. Descúbrelas en tu próxima partida y ya nos contarás.','Las rocas que ruedan ya tienen un máximo de enemigos que pueden arrollar.']],['Ventanas',['Mientras se abre un cofre, una oferta o un evento, el primer clic acelera la animación y los siguientes no eligen nada hasta que está todo a la vista: se acabó coger algo sin querer.','«Saltar» la oferta de torres pide un segundo clic.','Los eventos que no has visto nunca salen antes.','En el móvil, con una ventana abierta, el botón de fallos se aparta a la esquina.']]]},
  {v:359,f:'19 nov 2026',t:'Fichas nuevas, pausa y eventos',s:[['Fichas',['Ficha del héroe renovada: retrato, vida en barra (si cae, ves cuánto le falta para volver), sus datos principales, experiencia y DPS real.','Las fichas de las torres y del héroe ponen cada dato en su color, y los efectos van en una sola pastilla con su valor.','La ficha de una torre se queda junto a ella al mover la cámara, y ya no se cierra al arrastrar el mapa.']],['Menús',['Pausa más limpia: datos alineados, más aire y marcapáginas que asoman y salen al pasar el ratón.','Las barras de Opciones miden todas lo mismo y son más fáciles de ajustar.','En pantallas grandes, los bocadillos de los menús crecen con el libro.']],['Eventos y cofres',['Eventos más cómodos en PC: la imagen y la descripción a la izquierda y las opciones a la derecha, con el texto más grande.','En el móvil, las opciones de los eventos se desplazan dentro del pergamino y el cofre cabe entero en la pantalla.']],['Héroe',['Con el héroe elegido para moverlo, pulsar una torre, un solar, un enemigo o un botón cambia la selección a eso.','Avisos más cortos y, si pulsas fuera del camino, en rojo.']]]},
  {v:358,f:'17 nov 2026',t:'Clasificación, logros y eventos',s:[['Menú y logros',['Clasificación del menú bien colocada en pantallas grandes, con flechas ‹ › para pasar por las tablas en las que tienes puntuación (empieza en tu mejor partida y tu fila va marcada).','Página de cada logro más clara: «Fijar» en su propia línea y el progreso con las recompensas encima de la barra.','«Informar de un fallo» más grande en el menú principal.']],['Partida',['Los eventos se adaptan a tu partida: ya no te saldrá uno que no puedas aprovechar.','La Era Fantástica ya tiene nombre: Reinos de Leyenda.','Más iconos dibujados en lugar de emojis: ficha del héroe, medidor de daño, eras y recompensas.','Arreglado: las etiquetas del medidor de daño ya no se ven por encima del libro en la pausa.']]]},
@@ -12541,7 +12551,7 @@ function specTxt(t){if(!t||!t.spec)return '';const s=stats(t),sl=abRank(t,'sello
  return '';}
 {const _ti=towerInfo;towerInfo=function(t){let h=_ti.apply(this,arguments);try{if(t&&t.type==='cannon'&&t.spec){let x='';
    if(t.spec==='bomb'){const n=t.bd?t.bd.length:2+((abRank(t,'escuad')||{}).n||0);x=`<small>Drones: <b>${n}</b>. El daño, el enfriamiento y el DPS son los de cada dron. No se elige objetivo: cada dron va a una escuadra distinta, empezando por la más adelantada.</small>`;}
-   else if(t.spec==='rail'){x=`<small>Dispara en línea recta por todo su alcance, en el ángulo que más enemigos atraviesa.${abRank(t,'perfor')?'':' Pierde un 15% de daño por cada enemigo atravesado.'}${t.hot>0?' Recarga en caliente: <b>+'+Math.round(t.hot*100)+'%</b>.':''}</small>`;}
+   else if(t.spec==='rail'){x=t.hot>0?`<small>Recarga en caliente: <b>+${Math.round(t.hot*100)}%</b>.</small>`:'';}/* v361: cómo dispara va en el bocadillo de «disparo de riel» (Nogal) */
    if(x){const i=h.indexOf('<div class="esec"');h=i>=0?h.slice(0,i)+x+h.slice(i):h+x;}}}catch(e){}return h;};}
 // mecánicas del compendio
 try{const add=(id,r)=>{MECUSE[id]=MECUSE[id]||[];if(!MECUSE[id].includes(r))MECUSE[id].push(r);};
@@ -13088,6 +13098,10 @@ if(typeof LB!=='undefined'&&LB.open)try{lbRender();}catch(e){}
  ICKW.rroll=`<g ${O}><path d="M4 18h10M2 26h10M5 34h9" fill="none" stroke="#7e9a5a" stroke-width="3"/><circle cx="30" cy="26" r="14" fill="#9a928a"/><path d="M24 20l5 3-2 6M34 30l4-1" fill="none" stroke-width="1.6"/></g>`;
  // Llamarada: el mismo icono que su habilidad, Aliento abrasador (Nogal: lo que viene de una habilidad lleva el icono de la habilidad)
  if(typeof AB!=='undefined'&&AB.dbreath&&ICSV[AB.dbreath.ic])ICKW.llama=ICSV[AB.dbreath.ic];
+ // Barras con palabra propia (provisionales): Calor y Carga del juicio usan el dibujo que ya llevaba su barra; Conexión, el de la barra de la Red; Almas, el del espectro
+ ICKW.calor=ICKW.burn;ICKW.juicio=ICKW.ez;ICKW.conex=ICKW.chain;if(typeof SPECT!=="undefined"&&SPECT.spectre&&ICSV[SPECT.spectre.ic])ICKW.almas=ICSV[SPECT.spectre.ic];
+ // Disparo de riel: un proyectil alargado entre dos raíles
+ ICKW.riel=`<g ${O}><path d="M4 16h40M4 32h40" fill="none" stroke="#6a737d" stroke-width="3"/><path d="M8 20h26l8 4-8 4H8z" fill="#7ad8ff"/></g>`;
  // Muro (Casa de ladrillo): ya tiene dibujo aprobado (el de su casilla de evento, te_bwall): se usa ese
  if(typeof ICUIS!=='undefined'&&ICUIS.te_bwall)ICKW.bwall=ICUIS.te_bwall;}
 // Dibujos de las torres de evento a Nv 4 y fases del huevo de dragón (maquetas/torres_evento_final.json)
@@ -15012,7 +15026,7 @@ function fzPlace(c,m,it){const P=m._p;if(!P||!it)return false;const Z=cardZ(c),w
  // v361: la ficha no tapa la interfaz (barras y columnas) ni los botones del anillo: si el sitio de siempre pisa algo, se busca el que menos pise
  if(typeof tmObs==='function'){const ob=tmObs(op);for(const b of m.querySelectorAll('.tmb')){const q=b.getBoundingClientRect();if(q.width)ob.push([q.left-op.left-3,q.top-op.top-3,q.right-op.left+3,q.bottom-op.top+16]);}
   const cl=([a,b])=>[Math.max(6,Math.min(P.W-w-6,a)),Math.max(6,Math.min(P.H-h-6,b))],pis=([a,b])=>{let s=0;for(const q of ob){const ix=Math.min(a+w,q[2])-Math.max(a,q[0]),iy=Math.min(b+h,q[3])-Math.max(b,q[1]);if(ix>0&&iy>0)s+=ix*iy;}return s;};
-  if(pis(cl([x,y]))>0){const all=order.filter(fit).concat(order);for(const[ax,ay]of order)for(let d=20;d<=300;d+=20)all.push([ax+d,ay],[ax-d,ay],[ax,ay+d],[ax,ay-d]);
+  if(pis(cl([x,y]))>0){const all=order.filter(fit).concat(order);for(const[ax,ay]of order)for(let d=20;d<=300;d+=20){all.push([ax+d,ay],[ax-d,ay],[ax,ay+d],[ax,ay-d]);for(let e=20;e<=d;e+=20)all.push([ax+d,ay+e],[ax-d,ay+e],[ax+d,ay-e],[ax-d,ay-e],[ax+e,ay+d],[ax-e,ay+d],[ax+e,ay-d],[ax-e,ay-d]);}/* v361: también en diagonal, para no quedarse pisando unos píxeles */
    let best=null;for(const q of all){const k=cl(q),v=pis(k);if(!best||v<best.v)best={k,v};if(!v)break;}[x,y]=best.k;}}
  x=Math.max(6,Math.min(P.W-w-6,x));y=Math.max(T0,Math.min(P.H-h-6,y));c.style.left=x+'px';c.style.top=y+'px';return true;}
 {const _p=bmCardPos;bmCardPos=function(){const c=$('bmcard'),m=$('bmenu');if(!c||!m||!m._p||!c.classList.contains('on'))return;const k=BM.arm||BM.hov,it=k&&m.querySelector(`.tmb[data-k="${k}"]`);if(!fzPlace(c,m,it))return _p.apply(this,arguments);};}
@@ -15135,7 +15149,9 @@ function ftFx(T,src){const h=effHtml(T,src);if(!h)return '';const m=h.match(/dat
 function fxPill(id,v,src,nm){const ic=typeof ICKW!=='undefined'&&ICKW[id];return `<span class="kw gico ftfxi fxpill" data-kw="${id}" data-src="${src}"${nm?` aria-label="${nm}"`:''}>${ic?`<svg viewBox="-4 -4 56 56">${ic}</svg>`:''}${v?`<b>${v}</b>`:''}</span>`;}
 function ftDpsBar(t,theo){if(!(theo>0))return '';const src='tw:'+t.id;
  return `<div class="ftdps" data-theo="${theo}"><div class="ftdl"><span>${kst('dpsr','DPS real',src)}</span><span class="ftdv">—</span></div><div class="ftbar"><i></i></div><div class="ftdn"></div></div>`;}
-function ftMechBox(t,M,txt){return `<div class="ftmech"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><div class="ftbar ftmb"><i style="width:${Math.round(M.v(t)*100)}%"></i></div><div class="ftml">${M.l(t)}</div></div>`;}
+// v361: la palabra clave del nombre de una barra es la suya (M.kw); el icono (M.ic) puede ser de otra (Nogal: que no salga el bocadillo de otra palabra)
+const ftMkw=M=>M.kw||M.ic;
+function ftMechBox(t,M,txt){return `<div class="ftmech"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><div class="ftbar ftmb"><i style="width:${Math.round(M.v(t)*100)}%"></i></div><div class="ftml">${M.l(t)}</div></div>`;}
 // quita de un trozo de HTML las filas cuyo dato ya está arriba (números, efectos, objetivo, DPS)
 function ftStrip(html,drop){const w=document.createElement('div');w.innerHTML=html;
  for(const r of [...w.querySelectorAll('.row')]){const k=r.querySelector('[data-kw]'),id=k&&k.dataset.kw;if(r.classList.contains('dps')||(id&&drop.includes(id)))r.remove();}
@@ -15166,10 +15182,10 @@ function fichaTorre(t){
  h+=tail.join('');
  // Objetivo (plegado): a quién ataca y, en la ficha fijada, el selector
  if(!T.unit){const notgt=SP&&SP.notgt,tg=notgt?'':tgtRow(t,src,PR.pinned&&PR.key===src),tw=tg.replace(/<div class="row[^>]*><span>[^]*?<\/span><span>[^<]*<\/span><\/div>/,'').replace(/(<div class="tgt">)<div>[^]*?<\/span><\/div>/,'$1');
-  h+=ftFold('obj',`<span>${kst('tgt','Objetivo',src)}${notgt?'':' <em>· '+TGT[t.mode].n+'</em>'}</span>`,tw+R('cg',kst('tgts','Ataca a',src),objIc(!!T.ground,src)));}
+  if(!notgt||tw.replace(/<[^>]+>/g,'').trim())h+=ftFold('obj',`<span>${kst('tgt','Objetivo',src)}${notgt?'':' <em>· '+TGT[t.mode].n+'</em>'}</span>`,tw);}/* v361: «Ataca a» va en Más detalles (Nogal) */
  // Habilidades: en partida NO van en la ficha (v361, Nogal): se miran en los botones del anillo; en el compendio, sí
  // Más detalles (plegado): el resto de datos, cada uno con su icono y su color
- const more=ftStrip(rest,T.unit?['rng','eff','tgt','cool','dps']:['cool','rng','area','eff','tgts','tgt','dps'])+(ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!ss.area&&!T.cone&&!(t.type==='robots'&&t.spec==='mecha')?' (sin efecto aquí)':''}</div>`).join(''):'');
+ const more=ftStrip(rest,T.unit?['rng','eff','tgt','cool','dps']:['cool','rng','area','eff','tgts','tgt','dps'])+(T.unit?'':R('cg',kst('tgts','Ataca a',src),objIc(!!T.ground,src)))+(ks.length?'<small>Casillas bajo la torre:</small>'+ks.map(k=>`<div><i style="background:${BF[k].col}"></i>${bfkw(k)}: ${bfT(k,t.x,t.y)}${bkey(k)==='aoe'&&!ss.area&&!T.cone&&!(t.type==='robots'&&t.spec==='mecha')?' (sin efecto aquí)':''}</div>`).join(''):'');
  if(more.replace(/<[^>]+>/g,'').trim())h+=ftFold('more','<span>Más detalles</span>',more);
  return h+'</div>';
 }
@@ -15198,7 +15214,7 @@ const fbS=t=>{let o=FB.st.get(t);if(!o){o={fly:[],bub:[],spk:[],orbs:[],lastN:nu
 const fbEase=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
 const FBH={mag:50,volc:28,herald:24,net:30};
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||!M.k||!FBH[M.k])return _mb.apply(this,arguments);
- return `<div class="ftmech fbm fb-${M.k}"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="fbc" data-k="${M.k}" style="height:${FBH[M.k]}px"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
+ return `<div class="ftmech fbm fb-${M.k}"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="fbc" data-k="${M.k}" style="height:${FBH[M.k]}px"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
 // ---- Búnker ----
 function fbBullet(c,x,y,s,rot){c.save();c.translate(x,y);if(rot)c.rotate(rot);c.scale(s,s);c.lineWidth=1;c.strokeStyle='#2a1a10';
  c.fillStyle='#c9824a';c.beginPath();c.moveTo(-3,-3);c.quadraticCurveTo(0,-12,3,-3);c.closePath();c.fill();c.stroke();
@@ -15588,7 +15604,7 @@ const almaImg=k=>(k==='spectre'||k==='knight')?ALMA.img(k):null;
 TMECH.unshift({k:'almas',on:t=>t.type==='orb'&&!!abRank(t,'knight'),n:'Almas',ic:'spect',v:t=>(t.raised||0)/((abRank(t,'knight')||{n:10}).n),
  l:t=>{const kn=abRank(t,'knight')||{n:10},hv=abRank(t,'harvest');const kl=almaKn(t);return (kl?'¡Caballero Espectral!':(t.raised||0)+' / '+kn.n)+(hv?' · Cosecha: '+(t.souls||0)+((t.souls||0)===1?' alma':' almas')+' (+'+Math.round(soulB(t)*100)+'%)':'');}});
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||M.k!=='almas')return _mb.apply(this,arguments);
- return `<div class="ftmech fbm fb-almas"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="albc" style="height:52px;width:100%;display:block"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
+ return `<div class="ftmech fbm fb-almas"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="albc" style="height:52px;width:100%;display:block"></canvas><div class="ftml">${M.l(t)}</div></div>`;};}
 const almaKn=t=>(S.summ||[]).find(q=>q.spOwner===t&&q.beast==='knight'&&q.sd[0]&&q.sd[0].hp>0&&q.ttl>0);
 const ALB={st:new WeakMap()};
 function almaBar(c,t,now){const W=c.width,H=c.height,dpr=W/c.clientWidth;const g=c.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);const w=W/dpr,h=H/dpr;g.clearRect(0,0,w,h);
@@ -15681,7 +15697,7 @@ const B6M=[
 for(let i=B6M.length-1;i>=0;i--)TMECH.unshift(B6M[i]);
 const B6K={};for(const m of B6M)B6K[m.k]=m;
 const b6H=(k,t)=>k==='botin'?(abRank(t,'botin')&&abRank(t,'botin').cof?120:98):B6H[k];/* v361: más alto para que la pirámide y las monedas que caen no se corten (Nogal) */
-const b6Box=(t,M,txt)=>`<div class="ftmech fbm b6m b6-${M.k}"><div class="ftmt"><b>${kw(M.ic,M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="b6c" data-k="${M.k}" data-tid="${t.id}" style="height:${b6H(M.k,t)}px"></canvas><div class="ftml" data-b6="${M.k}">${M.l(t)}</div></div>`;
+const b6Box=(t,M,txt)=>`<div class="ftmech fbm b6m b6-${M.k}"><div class="ftmt"><b>${kw(ftMkw(M),M.n,'tw:'+t.id,'st')}</b>${txt?' · '+txt:''}</div><canvas class="b6c" data-k="${M.k}" data-tid="${t.id}" style="height:${b6H(M.k,t)}px"></canvas><div class="ftml" data-b6="${M.k}">${M.l(t)}</div></div>`;
 {const _mb=ftMechBox;ftMechBox=function(t,M,txt){if(!M||!B6K[M.k])return _mb.apply(this,arguments);return b6Box(t,M,txt);};}
 // la Sede del Gremio aún usa la ficha antigua (uniqInfo): el Botín va justo debajo del título
 {const _ui=uniqInfo;uniqInfo=function(t,k){const h=_ui.apply(this,arguments);try{if(t&&B6K.botin.on(t)){const i=h.indexOf('</div>')+6;return h.slice(0,i)+'<div class="b6uq">'+b6Box(t,B6K.botin,B6K.botin.x(t))+'</div>'+h.slice(i);}}catch(e){}return h;};}
@@ -15766,9 +15782,9 @@ function b6Botin(c,W,H,t,o,dt,tm){const r=abRank(t,'botin'),cof=!!r.cof,cn=Math.
   c.globalAlpha=a;b6Coin(c,p.x,y,rx);c.globalAlpha=1;}
  if(o.rep>0){const q=1-o.rep/1.3;c.font='700 13px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.globalAlpha=Math.min(1,o.rep*2);c.lineWidth=3;c.strokeStyle='#5a4000';const tx='+'+BOTN*r.g;c.strokeText(tx,cx,PH*.35-q*10);c.fillStyle='#ffd34a';c.fillText(tx,cx,PH*.35-q*10);c.globalAlpha=1;}
  {const tx=W-34,ty=PH*.5,nv=String(o.rep>0?BOTN:cn);c.textBaseline='middle';/* sin moneda: ya se ve la pila al lado (Nogal) */
-  c.textAlign='right';c.fillStyle='#6b4a00';c.font='800 20px system-ui,sans-serif';c.fillText(nv,tx-2,ty-8);
+  c.textAlign='right';c.fillStyle='#6b4a00';c.font='500 20px system-ui,sans-serif';c.fillText(nv,tx-2,ty-8);
   c.strokeStyle='#8a6a2a';c.lineWidth=2;c.lineCap='round';c.beginPath();c.moveTo(tx-4,ty+12);c.lineTo(tx+6,ty-6);c.stroke();
-  c.textAlign='left';c.fillStyle='#8a6a2a';c.font='700 14px system-ui,sans-serif';c.fillText(String(BOTN),tx+6,ty+9);}/* v361: monedas como fracción en diagonal (Nogal): el número arriba a la izquierda, la raya y el 15 abajo a la derecha */
+  c.textAlign='left';c.fillStyle='#8a6a2a';c.font='500 14px system-ui,sans-serif';c.fillText(String(BOTN),tx+6,ty+9);/* los dos sin negrita (Nogal) */}/* v361: monedas como fracción en diagonal (Nogal): el número arriba a la izquierda, la raya y el 15 abajo a la derecha */
  if(cof){const cw=Math.min(26,(W-20)/6.5),y=H-12,n=o.rel>0?BOTC:(t.btC||0);for(let k=0;k<BOTC;k++){const x=cx+(k-(BOTC-1)/2)*cw*1.35;b6Chest(c,x,y,cw,k<n,o.rel>0&&Math.floor(tm/.15)%2===0);}}}
 function b6Draw(now){B6.raf=0;const cs=document.querySelectorAll('canvas.b6c');if(!cs.length)return;const tm=now/1000,dt=Math.min(.05,(now-(B6.last||now))/1000);B6.last=now;
  for(const cv of cs){if(!cv.isConnected)continue;const t=S&&S.list&&S.list.find(q=>String(q.id)===cv.dataset.tid);if(!t)continue;const k=cv.dataset.k,M=B6K[k];if(!M||!M.on(t))continue;
@@ -15929,6 +15945,10 @@ function fuCard(t,i){const T=TW[t.type],src='tw:'+t.id,w=document.createElement(
  const vida=s0?`<div class="fhbox fhhp fuhp fuhps"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><b class="fuhv">${s0.hp>0?Math.ceil(s0.hp)+' / '+Math.round(s0.max):''}</b></div>${s0.hp>0?`<div class="ftbar"><i style="width:${Math.round(s0.hp/s0.max*100)}%"${s0.hp/s0.max<.35?' class="low"':''}></i></div>`:`<div class="ftbar dead"><i style="width:0"></i><em>Caído · vuelve en ${Math.ceil(s0.rt||0)} s</em></div>`}</div>`
   :hp?`<div class="fhbox fhhp fuhp"><div class="fhl"><span>${kst('uhp','Vida',src)}</span><b>${mx}</b></div><div class="ftbar"><i style="width:100%"></i></div></div>`:'';
  const fx=ef?`<div class="ftfx">${ef.lastElementChild.innerHTML}</div>`:'';
+ // «Ataca a» en Más detalles, también en las unidades (Nogal, 20-nov): las que disparan desde lejos (s.rng) atacan también a voladores
+ get('tgts');/* la fila «Objetivos» que ya traían algunas unidades dice lo mismo: se cambia por «Ataca a», al final */
+ {let air=false;if(u.s)air=!!u.s.rng;else if(T.pig)air=!!(PIGU[t.type]||{}).rng;else if(T.guild){const seen=[];for(const c of guildParty(t))if(!seen.includes(c))seen.push(c);const c=seen[u.bi];air=!!(CLS[c]||{}).rng;}
+  const d=document.createElement('div');d.innerHTML=R('cg',kst('tgts','Ataca a',src),objIc(!air,src));rows.push(d.firstElementChild);}
  return `<div class="ftc fuu"><button class="fuback" data-a="fuback">← ${fuNm(t)}</button>
   <div class="ttl">${u.ic}<b>${u.nm}</b></div><div class="ftsub">Unidad de ${fuNm(t)}${u.n>1?' · '+(u.j+1)+' de '+u.n:''}</div>${sm?`<div class="ftdesc fudsc">${sm}</div>`:''}
   ${vida}<div class="ftchips n${ch.length}">${ch.join('')}</div>${fx}${rows.length?ftFold('umore','<span>Más detalles</span>',rows.map(r=>r.outerHTML).join('')):''}</div>`;}
@@ -15988,7 +16008,7 @@ function b7Cracks(x0,y0,WW,HH){const L=[],N=5+Math.floor(Math.random()*3);for(le
 const b7Parts=(c,o,dt)=>{o.pt=(o.pt||[]).filter(p=>p.t>0);for(const p of o.pt){p.t-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=(p.b?260:40)*dt;if(p.rot!=null)p.rot+=p.vr*dt;
  c.globalAlpha=Math.max(0,Math.min(1,p.t*1.5));if(p.b){c.save();c.translate(p.x+p.w/2,p.y+p.h/2);c.rotate(p.rot);b7Brick(c,-p.w/2,-p.h/2,p.w,p.h,p.col);c.restore();}else{c.fillStyle=p.col+Math.max(0,p.t)+')';c.beginPath();c.arc(p.x,p.y,p.r,0,7);c.fill();}c.globalAlpha=1;}};
 const PAUSE7=1.3;
-function b7Muro(c,W,H,t,o,dt,tm){const b=b7Wall(t),cols=Math.max(6,Math.min(12,Math.floor((W-12)/22))),bw=Math.min(22,(W-12)/cols),bh=10,rows=4,WW=cols*bw,HH=rows*bh,x0=(W-WW)/2,y0=H-8-HH;
+function b7Muro(c,W,H,t,o,dt,tm){const b=b7Wall(t),cols=Math.max(6,Math.min(11,Math.floor((W-24)/26))),bw=Math.min(26,(W-24)/cols),bh=14,rows=4,WW=cols*bw,HH=rows*bh,x0=(W-WW)/2,y0=H-8-HH;
  c.fillStyle='rgba(60,40,10,.15)';c.beginPath();c.ellipse(W/2,H-6,WW/2+8,4,0,0,7);c.fill();
  if(b){if(o.mb!==b){o.mb=b;o.cr=b7Cracks(x0,y0,WW,HH);o.cw=W;}if(o.cw!==W){o.cr=b7Cracks(x0,y0,WW,HH);o.cw=W;}o.up=1;const D=b.t0||4,k=Math.max(0,Math.min(1,1-b.t/D));
   const sh=b.t<.6?(Math.random()-.5)*3*(1-b.t/.6):0;c.save();c.translate(sh,0);
@@ -16010,26 +16030,44 @@ function b7Comida(c,W,H,t,o,dt,tm){const lv=t.lvl||1,NEED=GLUT[lv]||1,food=Math.
  if(food>o.lf)for(let i=o.lf;i<food;i++)o.bt.push({t:-(i-o.lf)*.18});else if(food<o.lf)o.eat=food;o.lf=food;
  for(const b of o.bt){const was=b.t;b.t+=dt;if(was<.62&&b.t>=.62)o.eat=Math.min(food,o.eat+1);}o.bt=o.bt.filter(b=>b.t<.8);if(o.eat>food)o.eat=food;o.jmp=Math.max(0,(o.jmp||0)-dt*.8);
  // el contador, aparte: casillas en grupos de 5 (más de 40, en dos filas)
- const rowsN=NEED>40?2:1,perRow=Math.ceil(NEED/rowsN),G=Math.ceil(perRow/5),bw0=W-12,gw=bw0/G,cw=Math.min(9,(gw-4)/5),ch=rowsN>1?7:9,gy=H-4-rowsN*(ch+3);
+ const rowsN=NEED>40?2:1,perRow=Math.ceil(NEED/rowsN),G=Math.ceil(perRow/5),bw0=W-12,gw=bw0/G,cw=Math.min(12,(gw-4)/5),ch=rowsN>1?9:12,gy=H-4-rowsN*(ch+3);
  for(let k=0;k<NEED;k++){const r=Math.floor(k/perRow),kk=k%perRow,gi=Math.floor(kk/5),j=kk%5,x=6+gi*gw+(gw-5*cw)/2+j*cw,y=gy+r*(ch+3),on=k<o.eat;
   c.fillStyle=on?'#e0903a':'rgba(0,0,0,.09)';c.strokeStyle=on?'#1b1712':'rgba(0,0,0,.2)';c.lineWidth=1;c.beginPath();c.roundRect(x,y,cw-1.5,ch,2);c.fill();c.stroke();}
- const MW=40,mx=8,my=Math.max(2,gy-44),ex=mx+MW/2,ey=my+16;
+ const Z=1.35,MW=40,mx=8,my=Math.max(2,gy-6-44*Z),ex=mx+MW*Z/2,ey=my+16*Z;/* el Mímico, a escala Z */
  // las bolitas: aparecen de la nada en el otro extremo (destello) y vuelan en arco hasta la boca
- for(const b of o.bt){if(b.t<0)continue;const q=Math.min(1,b.t/.6),sx=W-18,sy=my+6;if(q<.18){const pp=q/.18;c.fillStyle=`rgba(255,240,180,${1-pp})`;c.beginPath();c.arc(sx,sy,4+pp*10,0,7);c.fill();}
-  const e=Math.min(1,Math.max(0,(q-.12)/.88)),x=sx+(ex-sx)*e,y=sy+(ey-sy)*e-Math.sin(e*Math.PI)*Math.min(18,my+2),r=4.5*Math.min(1,q/.12);if(q<1){c.fillStyle='#e0a060';c.strokeStyle='#1b1712';c.lineWidth=1.3;c.beginPath();c.arc(x,y,r,0,7);c.fill();c.stroke();}}
+ for(const b of o.bt){if(b.t<0)continue;const q=Math.min(1,b.t/.6),sx=W-18,sy=my+10;if(q<.18){const pp=q/.18;c.fillStyle=`rgba(255,240,180,${1-pp})`;c.beginPath();c.arc(sx,sy,4+pp*10,0,7);c.fill();}
+  const e=Math.min(1,Math.max(0,(q-.12)/.88)),x=sx+(ex-sx)*e,y=sy+(ey-sy)*e-Math.sin(e*Math.PI)*Math.min(18,my+2),r=5.5*Math.min(1,q/.12);if(q<1){c.fillStyle='#e0a060';c.strokeStyle='#1b1712';c.lineWidth=1.3;c.beginPath();c.arc(x,y,r,0,7);c.fill();c.stroke();}}
  // el Mímico: el cuerpo quieto y la tapa baja para morder (Nogal)
  const chomp=o.bt.some(b=>b.t>.55&&b.t<.75),jy=-Math.sin(o.jmp*Math.PI*3)*6*o.jmp,LY=my+(chomp?9:0),BY=my+23;
- c.save();c.translate(0,jy);c.fillStyle='#8a5a2e';c.strokeStyle='#1b1712';c.lineWidth=1.8;c.beginPath();c.roundRect(mx,BY,MW,20,3);c.fill();c.stroke();
+ c.save();c.translate(mx,my+jy);c.scale(Z,Z);c.translate(-mx,-my);c.fillStyle='#8a5a2e';c.strokeStyle='#1b1712';c.lineWidth=1.8;c.beginPath();c.roundRect(mx,BY,MW,20,3);c.fill();c.stroke();
  c.fillStyle='#f4ead8';for(let i=0;i<5;i++){const tx=mx+2+i*7.2;c.beginPath();c.moveTo(tx,BY);c.lineTo(tx+3.6,BY-5);c.lineTo(tx+7.2,BY);c.fill();c.stroke();}
  c.fillStyle='#a8743a';c.beginPath();c.roundRect(mx,LY,MW,13,[7,7,2,2]);c.fill();c.stroke();
  c.fillStyle='#f4ead8';for(let i=0;i<5;i++){const tx=mx+2+i*7.2;c.beginPath();c.moveTo(tx,LY+13);c.lineTo(tx+3.6,LY+18);c.lineTo(tx+7.2,LY+13);c.fill();c.stroke();}
  c.fillStyle='#ffd34a';c.fillRect(mx+MW/2-3,BY+5,6,5);c.fillStyle='#1b1712';c.beginPath();c.arc(mx+11,LY+6,1.8,0,7);c.arc(mx+MW-11,LY+6,1.8,0,7);c.fill();c.restore();}
-B6DR.muro=b7Muro;B6DR.comida=b7Comida;B6H.muro=56;B6H.comida=76;
+B6DR.muro=b7Muro;B6DR.comida=b7Comida;B6H.muro=74;B6H.comida=104;
 // las barras: la de Comida ya existía (ficha_unica.js) con dibujo genérico; la de Muro es nueva
 {const i=TMECH.findIndex(m=>m.k==='comida');if(i>=0)B6K.comida=TMECH[i];
  const M={k:'muro',on:t=>!!(TW[t.type]&&TW[t.type].wall),n:'Muro',ic:'bwall',v:t=>{const b=b7Wall(t);return b?b.t/(b.t0||4):0;},
   l:t=>{const b=b7Wall(t);if(b)return 'Quedan '+f(Math.ceil(b.t*10)/10)+' s';const cd=t.cd||0;return cd>0?'Siguiente muro en '+f(Math.ceil(cd*10)/10)+' s':'¡Listo!';}};
  TMECH.push(M);B6K.muro=M;}
+// ==================== v361 · PALABRAS CLAVE PROPIAS DE LAS BARRAS (Nogal, 20-nov) ====================
+// Cada barra abre el bocadillo de SU palabra (M.kw); antes Calor abría Quemadura, Carga del juicio Electrizado, la Red Rebote y Almas Espectro.
+// Las palabras clave van en minúscula dentro de las frases (solo mayúscula al principio): «carga del juicio», «disparo de riel».
+{const _k=kwHtml0;kwHtml0=function(id,src){const t=(typeof fuTw==='function')?fuTw(src):null;
+ if(id==='calor')return '<b>Calor</b><small>Sube mientras dispara (lleno en 8 s): el cono se abre hasta 110° y aplica hasta un 50% más de stacks de quemadura. Sin objetivo, se enfría.</small>';
+ if(id==='juicio')return '<b>Carga del juicio</b><small>Sube 1 por segundo y '+f(HCHK)+' por cada baja de otra torre cercana (las suyas no cuentan). Llena ('+HCH+'), lanza un rayo al enemigo con más vida que hace '+HJM+'× su daño. Se vacía al acabar la oleada.</small>';
+ if(id==='riel')return '<b>Disparo de riel</b><small>Recorre todo su alcance en línea recta, en el ángulo que más enemigos atraviesa. '+(t&&abRank(t,'perfor')?'Con Perforación total no pierde daño al atravesarlos.':'Pierde un '+Math.round((1-RAILF)*100)+'% de daño por cada enemigo que atraviesa.')+'</small>';
+ if(id==='conex')return '<b>Conexión</b><small>Cada Red eléctrica unida a esta con un arco le da +15% de daño (como mucho 4 conexiones: +60%).</small>';
+ if(id==='almas'){const r=t&&abRank(t,'knight'),n=(r&&r.n)||10;return '<b>Almas</b><small>Cada espectro que alzan sus orbes suma un alma. Con '+n+', aparece un Caballero Espectral.</small>';}
+ return _k.apply(this,arguments);};}
+{const set=(k,o)=>{const M=TMECH.find(m=>m.k===k);if(M)Object.assign(M,o);};
+ set('volc',{kw:'calor'});set('herald',{n:'Carga del juicio',kw:'juicio'});set('net',{n:'Conexión',kw:'conex'});set('almas',{kw:'almas'});}
+// descripciones cortas: la mecánica en su palabra clave (Nogal, 20-nov)
+{const sd=(k,s,d)=>{if(SPECS[k]&&SPECS[k][s])SPECS[k][s].d=d;},K=id=>`<span class="kw" data-kw="${id}" data-src="">`;
+ sd('augur','herald','No dispara: acumula '+K('juicio')+'carga del juicio</span> y, llena, lanza un rayo al enemigo con más vida.');
+ sd('cannon','rail','Carga lenta y mucho alcance. Su '+K('riel')+'disparo de riel</span> atraviesa todo lo que encuentra en línea recta.');
+ sd('laser','red','Se une mediante una '+K('conex')+'conexión</span> a las demás '+icOf(SPECS.laser.red)+' Redes eléctricas de su alcance. Los enemigos que cruzan un arco sufren.');
+ sd('sala','volc','Acumula '+K('calor')+'calor</span> mientras dispara: el cono se abre y aplica más stacks. Sin objetivo, se enfría.');}
 // ==================== v360 · Clics durante las animaciones de las ventanas y «Saltar» con confirmación (Nogal, 15-nov y 19-nov) ====================
 // La gente salta las animaciones a base de clics. Para que un clic de más no elija una reliquia, una torre, una pieza u opción sin querer:
 //  · mientras la ventana (cofre o paquete, oferta de torres, evento, elegir pieza) se está dibujando, el primer clic (o Intro/Espacio)
