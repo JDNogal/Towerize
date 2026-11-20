@@ -5,6 +5,8 @@ const SQUADS={
  squad:{n:'Pelotón',min:999,tut:1,m:{norm:3,fast:2}},/* v307: solo del tutorial (las usa TUTW); con tut:1 no se borran al montar las facciones */
  scouts:{n:'Avanzadilla',min:3,m:{fast:4,sling:1}},
  vanguard:{n:'Vanguardia',min:999,tut:1,m:{tank:1,norm:4}},
+ /* v363 (Nogal, 21-nov): con vida fija, el tutorial sube con enemigos mejores en vez de con vida creciente. Cada ronda trae una mejora nueva: Orco → Orco veterano (5), Goblin → Jinete de lobo (6), Ogro → Ogro acorazado (7), Tamborilero con aura (8), Caudillo con habilidad (9) */
+ tvet:{n:'Veteranos (tutorial)',min:999,tut:1,m:{norm:4,vet:3}},trunner:{n:'Jinetes (tutorial)',min:999,tut:1,m:{fast:3,runner:3}},tarmor:{n:'Ogros (tutorial)',min:999,tut:1,m:{tank:2,armored:1}},theavy:{n:'Acorazados (tutorial)',min:999,tut:1,m:{tank:1,armored:2}},tdrum:{n:'Tambores (tutorial)',min:999,tut:1,m:{norm:4,vet:2,custodian:1}},tchamp:{n:'Caudillo (tutorial)',min:999,tut:1,m:{champ:1,vet:4}},
  escort:{n:'Escolta',min:5,m:{sling:3,custodian:1}},
  conclave:{n:'Cónclave',min:5,m:{acolyte:2,norm:3}},
  phalanx:{n:'Falange',min:7,m:{tank:2,shaman:1,norm:2}},

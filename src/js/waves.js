@@ -76,8 +76,8 @@ function startWave(){
   S.furyAt=sp+tr+60;}
  ui();tutPhase('wave');
 }
-/* v363 (Nogal, 20-nov): una sola regla de vida para todos: fija hasta la ronda 15 (hf) y +12 % por ronda después. Los de evento y Bob ya no crecen ×1,25 por ronda. El tutorial sigue con la regla vieja (salvo Bob) hasta decidir cómo rehacer sus oleadas */
-const oldHP=t=>(S.tut&&t!=='bob')||!ET[t].hf,ehpOf=(t,r)=>oldHP(t)?HP0*HPOLD(r)*ET[t].hp:ET[t].hf*hpR(r);
+/* v363 (Nogal, 20-nov): una sola regla de vida para todos: fija hasta la ronda 15 (hf) y +12 % por ronda después. Los de evento y Bob ya no crecen ×1,25 por ronda. El tutorial también (sus oleadas se rehicieron con enemigos mejores en vez de vida creciente) */
+const oldHP=t=>!ET[t].hf,ehpOf=(t,r)=>oldHP(t)?HP0*HPOLD(r)*ET[t].hp:ET[t].hf*hpR(r);
 function spawnEnemy(t,p,fo){
  let wanted=0;if(t==='wanted'){t='elite';wanted=1;}
  see('en',t);if(ET[t].fly&&!S.tut)hint('fly','Enemigos voladores','Los enemigos <b>voladores</b> no se pueden bloquear y no les afecta nada que golpee el suelo. El resto de tus ataques sí les dan.');
