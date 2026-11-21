@@ -23,10 +23,12 @@ const drwSave=()=>{try{localStorage.setItem('rt-drw',JSON.stringify(DRW));}catch
 const DIC={dps:'<svg viewBox="0 0 16 16" width="14" height="14"><rect x="1" y="3" width="10" height="3" rx="1.5" fill="#f0c060"/><rect x="1" y="7" width="14" height="3" rx="1.5" fill="#f0c060"/><rect x="1" y="11" width="6" height="3" rx="1.5" fill="#f0c060"/></svg>',
  emap:'<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="#f0c060" stroke-width="1.8" stroke-linecap="round"><path d="M3 13 13 3M10 3h3v3M13 13 3 3M3 6V3h3"/></svg>',
  fij:'<svg viewBox="0 0 16 16" width="14" height="14"><path d="M6 1.5h4l-.6 4 2.6 2.5H4l2.6-2.5z" fill="#e0533a" stroke="#5a1a0e" stroke-width=".8"/><path d="M8 8v6.5" stroke="#ddd" stroke-width="1.4" stroke-linecap="round"/></svg>'};
-const drwBtn=k=>`<span class="cl" data-drw="${k}" title="Plegar">‹</span>`;
+/* v363: flecha dibujada (el carácter «‹» quedaba descentrado en su cuadrado) */const drwBtn=k=>`<span class="cl" data-drw="${k}" title="Plegar"><svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true"><path d="M6.3 1.8 3.2 5l3.1 3.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
 const drwTab=k=>`<button class="drt" data-drw="${k}" title="Desplegar">${DIC[k]}<i>›</i></button>`;
 function dpsMob(){return document.body.classList.contains('mfs');}
 function dpsOn(){return (hud4On()||dpsMob())&&S&&OPT.dps!==false&&!S.tut&&(S.phase==='wave'||S.phase==='build')&&!PREVIEWING&&!document.body.classList.contains('inmenu')&&!(typeof LB!=='undefined'&&LB.open)/* v359: tampoco con una ventana de elegir (evento, oferta, cofre, pieza) abierta, salvo mirando el mapa con el ojo */&&!(typeof RL!=='undefined'&&RL.open&&!RL.peek)&&!(document.body.classList.contains('pcpick')&&!document.body.classList.contains('pcpeek'));}
+/* v363: del medidor a las Estadísticas del menú de pausa (la versión larga del medidor) */
+function dpsStats(){if(!S)return;PMU.ask=0;PMU.svask=0;STW.tab='dmg';lbOpen('st');}
 function dpsData(){const out=[];let tot=0;const wt=Math.max(1,DPS.wt);
  for(const t of S.list){if(t.summ||t.hero||t.sold)continue;const d=ftD(t),dm=d.d0==null?0:Math.max(0,(t.dmgT||0)-d.d0);tot+=dm;out.push({t,dm,v:dm/wt});}
  return {rows:out.sort((a,b)=>b.dm-a.dm),tot};}
@@ -35,7 +37,7 @@ function dpsTick(){let el=$('dpsc');const on=dpsOn();
  dpsMBtn(on);const mob=dpsMob();document.body.classList.toggle('dpsmo',on&&mob&&DPS.mopen);
  if(!on||(mob&&!DPS.mopen)){if(el)el.classList.remove('on');dpsBadges(null);return;}
  if(!el){el=document.createElement('div');el.id='dpsc';el.className='lcard';
-  el.addEventListener('click',e=>{const tb=e.target.closest('[data-dtab]');if(tb){DPS.tab=tb.dataset.dtab;DPS.more=false;DPS.sg='';dpsTick();return;}if(e.target.closest('.dmore')){DPS.more=!DPS.more;DPS.sg='';dpsTick();}});
+  el.addEventListener('click',e=>{const tb=e.target.closest('[data-dtab]');if(tb){DPS.tab=tb.dataset.dtab;DPS.more=false;DPS.sg='';dpsTick();return;}if(e.target.closest('.dmore')){DPS.more=!DPS.more;DPS.sg='';dpsTick();return;}if(e.target.closest('.dstat'))dpsStats();});
   el.addEventListener('mouseover',e=>{const r=e.target.closest('.dr');DPS.hl=r?DPS.rowT[+r.dataset.i]:null;});el.addEventListener('mouseleave',()=>{DPS.hl=null;});}
  if(mob){if(el.parentNode!==document.body)document.body.appendChild(el);}else{const st=lstack();if(el.parentNode!==st||st.firstElementChild!==el)st.prepend(el);}el.classList.toggle('mob',mob);el.classList.add('on');
  if(S.phase==='wave')DPS.wt=S.wt||0;
@@ -47,7 +49,7 @@ function dpsTick(){let el=$('dpsc');const on=dpsOn();
  const h=fold?drwTab('dps'):`<div class="dtabs${types.length+1>5?' many':''}"><button class="dtb${DPS.tab==='all'?' on':''}" data-dtab="all" data-n="Todas" title="Todas las torres">Σ</button>${types.map(k=>`<button class="dtb${DPS.tab===k?' on':''}" data-dtab="${k}" data-n="${TW[k]?TW[k].n:k}" title="${TW[k]?TW[k].n:k}">${tabIc(k)}</button>`).join('')}</div>`+
   `<div class="lh">${DIC.dps} DPS · ${ttl}${mob?'':drwBtn('dps')}</div>`+
   (list.length?'<div class="drs">'+list.map((r,i)=>`<div class="dr" data-i="${i}"><i class="dic">${icOf(tinfo(r.t))}</i><span class="dn">${DPS.tab==='all'?'':'#'+(i+1)}</span><span class="db"><i style="width:${Math.max(3,r.v/mx*100).toFixed(1)}%"></i></span><b>${dpsFmt(r.v)}</b><small>${tot>0?Math.round(r.dm/tot*100):0}%</small></div>`).join('')+'</div>':'<div class="dempty">Aún no hay daño en esta ronda.</div>')+
-  (DPS.tab==='all'&&n>4?`<button class="dmore">${DPS.more?'▴ ver menos':'▾ ver las '+n}</button>`:'');
+  /* v363: abajo, «ver las N» a la izquierda y «Ver más» (pausa y abre Estadísticas) a la derecha */`<div class="dfoot">${DPS.tab==='all'&&n>4?`<button class="dmore">${DPS.more?'▴ ver menos':'▾ ver las '+n}</button>`:'<span></span>'}<button class="dstat">📊 Ver más</button></div>`;
  if(h!==DPS.sg){DPS.sg=h;el.innerHTML=h;}el.classList.toggle('drwF',fold);
  dpsBadges(DPS.tab!=='all'&&!fold?rows.filter(r=>r.t.type===DPS.tab).map(r=>r.t):null);}
 // números #1, #2… sobre las torres del tipo abierto, y la línea a la torre de la fila señalada

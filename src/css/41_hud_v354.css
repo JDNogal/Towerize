@@ -25,8 +25,8 @@ body.hud4 #lstack>*{transition:width .28s ease,max-height .3s ease,padding .28s 
 #dpsc{display:none;position:relative;margin-top:22px}#dpsc.on{display:block}
 .lcard .lh,#pinbar.pc4 .lh{display:flex;align-items:center;gap:5px;font-weight:700;font-size:12.5px;margin-bottom:4px}
 .lh small{font-weight:500;opacity:.75;font-size:10.5px;margin-left:2px}
-#lstack .cl{margin-left:auto;width:18px;height:18px;border-radius:5px;display:grid;place-items:center;background:rgba(0,0,0,.25);cursor:pointer;font-size:14px;line-height:1}
-#lstack .cl:hover{background:rgba(0,0,0,.45)}
+#lstack .cl{margin-left:auto;width:18px;height:18px;border-radius:5px;display:grid;place-items:center;flex:none;padding:0;background:rgba(0,0,0,.25);cursor:pointer;font-size:14px;line-height:1}
+#lstack .cl:hover{background:rgba(0,0,0,.45)}#lstack .cl svg{display:block}
 body.hud4 #emap .emh{display:flex;align-items:center;gap:4px}
 /* pestañas de carpeta encima del medidor */
 #dpsc .dtabs{position:absolute;left:8px;right:8px;top:-21px;display:flex;gap:3px;overflow:hidden}
@@ -74,3 +74,8 @@ body.mfs #fps{background:linear-gradient(180deg,var(--paper1,#f6ecd3),var(--pape
 /* v354 · pantalla de «Gira el teléfono»: el texto salía oscuro sobre el fondo oscuro (iPhone) */
 #rot{color:#f6ecd3!important}#rot b{color:#f6ecd3}#rot span{opacity:1!important;color:#e9d6a8}#rot .rlink{color:#f0c060!important;opacity:1!important}
 #rot .rph{font-size:0;line-height:0}
+
+/* v363: pie del medidor de daño: «ver las N» y «Ver más» (Estadísticas) */
+#dpsc .dfoot{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:3px}#dpsc .dfoot .dmore{margin:0}
+#dpsc .dstat{margin:0;padding:1px 7px;height:20px;border-radius:6px;border:1px solid var(--lea2);background:color-mix(in srgb,var(--lea) 80%,#fff 20%);color:var(--leatxt);font:600 11px system-ui,sans-serif;display:inline-flex;align-items:center;gap:3px;cursor:pointer}
+#dpsc .dstat:hover{background:color-mix(in srgb,var(--lea) 65%,#fff 35%)}
