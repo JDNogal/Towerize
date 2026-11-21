@@ -142,7 +142,6 @@ function romaChk(){const c=BN>>1;let ex=null;for(let y=0;y<P;y++)for(let x=0;x<P
  if(!ex||!S.core)return;for(const p of S.portals){const v=(p.x-S.core.x)*ex[0]+(p.y-S.core.y)*ex[1];if(v<-P*K*.75){achieve('roma');return;}}}
 function achTick(dt){if(S.pvE||!S.list)return;
  {const pe=S.enemies.find(e=>e.hp>0&&(ET[e.t].need||1)>1&&e.ct>0&&!e.stopped);if(pe){const tg=()=>{const r=cv.getBoundingClientRect(),k=sc()/VIEW*r.width;return{x:((pe.x+.5)*CS-CAM.x)*k+r.left,y:((pe.y+.5)*CS-CAM.y)*k+r.top,r:40};};hint('pblock','Enemigos corpulentos',[['Este enemigo es <b>corpulento</b>: para pararlo necesita ser bloqueado por <b>'+ET[pe.t].need+' unidades</b>. Menos unidades solo lo frenarán.',tg],['El 🛡️ sobre él indica cuántas unidades lo están frenando.',tg]]);}}
- if(!S.tut&&S.round>=Math.ceil(ROUNDS/2)){let td=null,qd=null;try{td=localStorage.getItem('rt-tutdone');qd=localStorage.getItem('rt-qdone');}catch(e){}if(!td&&!qd)hint('optsx','Personaliza tu juego',OPTTXT,tgEl('#mtl [data-a="opts"]'));}
  for(const f of S.list){if(!TW[f.type]||!TW[f.type].faro||(f.lvl||1)<4)continue;reveal('faro4');let n=0;for(const t of S.list)if(t!==f&&!TW[t.type].faro&&!t.hero&&faroIn(f,t))n++;if(!S.tut)recBest('faro',n);if(n>=4&&!S.tut)achieve('faro');}
  // tutorial, ronda 10: si no has usado aún la reliquia del cofre, te pide usarla cuando Bob entra en tu zona de fuego
  if(S.tut&&S.round===10&&S.phase==='wave'&&S.chestRel&&S.chestRel.length&&!S.chestUsed){const e=S.enemies.find(q=>q.t==='bob'&&q.hp>0);if(!e)return;

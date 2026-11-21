@@ -17,6 +17,7 @@ for(const mode of ['tutfull','tutquick','quickskip','skip']){const p=await b.new
    if(s.intro||s.story)fails.push('rápido: la historia sale antes del repaso');
    if(mode==='quickskip')await p.evaluate(()=>{const b=[...document.querySelectorAll('#msetup button')].find(x=>/^Saltar$/.test(x.textContent.trim()));if(b)b.click();});
    else for(let i=0;i<12;i++){if(!(await st()).qs)break;await p.evaluate(()=>{const b=[...document.querySelectorAll('#msetup button')].find(x=>/Continuar|jugar/i.test(x.textContent));if(b)b.click();});await p.waitForTimeout(250);}
+   await p.waitForTimeout(800);/* v363: al acabar el repaso sale antes la guía «Juega a tu manera» */if(mode==='tutquick'){const g=await p.evaluate(()=>!!(LB.open&&LB.msg&&LB.msg.key==='guia'));if(!g)fails.push('rápido: al acabarlo no sale la guía de opciones');await p.evaluate(()=>{const c=document.querySelector('#comp [data-a="guiacont"]');if(c)c.click();});}
    await p.waitForTimeout(1500);}}
  const s=await st();if(!s.intro&&!s.story)fails.push(mode+': no sale la historia');
  await p.close();}

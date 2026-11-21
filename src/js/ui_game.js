@@ -314,7 +314,7 @@ function act(e){
  else if(a==='kbreset'){KB=Object.assign({},KBDEF);KB2=Object.assign({},KB2DEF);kbSave();KBC.on=null;KBC.note='Atajos restablecidos.';renderOpts();}
  else if(a==='otab'){KBC.on=null;KBC.note='';OP.tab=b.dataset.v;OP.keepS=0;renderOpts();}
  else if(a==='sname'){const v=($('cname').value||'').trim().slice(0,16);if(v){STO.name=v;saveSto();toast('ÉTER te llamará <b>'+escH(v)+'</b>.');}renderOpts();}
- else if(a==='preset'){if(!OP.rst){OP.rst=1;renderOpts();return;}for(const k of['rt-alks','rt-story','rt-ach','rt-seen','rt-hlv','rt-evmem','rt-rev','rt-runl','rt-rounds','rt-tutdone','rt-win1','rt-tutchoice','rt-qdone','rt-hints','rt-lasthero','rt-achpin','rt-achbest','rt-cur','rt-hwin','rt-newu','rt-ruse','rt-tlv','rt-era','rt-novo','rt-meck','rt-lbnew','rt-save','rt-pcvs','rt-sv'])try{localStorage.removeItem(k);}catch(e){}
+ else if(a==='preset'){if(!OP.rst){OP.rst=1;renderOpts();return;}for(const k of['rt-alks','rt-story','rt-ach','rt-seen','rt-hlv','rt-evmem','rt-rev','rt-runl','rt-rounds','rt-tutdone','rt-win1','rt-tutchoice','rt-qdone','rt-guia','rt-hints','rt-lasthero','rt-achpin','rt-achbest','rt-cur','rt-hwin','rt-newu','rt-ruse','rt-tlv','rt-era','rt-novo','rt-meck','rt-lbnew','rt-save','rt-pcvs','rt-sv'])try{localStorage.removeItem(k);}catch(e){}
   // también lo que es progreso dentro de las opciones: desbloqueos y personalización
   for(const k of Object.keys(OPT))if(k.startsWith('u_'))OPT[k]=false;OPT.pal='perg';OPT.skin='auto';OPT.core='base';OPT.decoff={};saveOpt();location.reload();}
  else if(a==='opt'){const o=OPTS[+b.dataset.i];OPT[o.key]=!OPT[o.key];saveOpt();if(o.key.startsWith('u_'))applyUnl();renderOpts();}
@@ -357,8 +357,8 @@ function act(e){
  else if(a==='wincomp'){CP.tab=b.dataset.v||'tw';CP.pageR=false;LB.fromWin=1;lbOpen('cp');}
  else if(a==='hnav'){heroNav(+b.dataset.v);}
  else if(a==='tutok'){RL.open=false;$('relic').classList.remove('open');ui();}
- else if(a==='tutmenu'){showMenu();}
- else if(a==='tutplay'){showMenu();renderEra();}
+ else if(a==='tutmenu'){guiaThen(()=>showMenu());}
+ else if(a==='tutplay'){guiaThen(()=>{showMenu();renderEra();});}
  else if(a==='hgo'){const ids=HIDS(),d=ids.indexOf(b.dataset.id)-ids.indexOf(RL.hsel);if(d){RL.hconf=null;RL.hsel=b.dataset.id;RL.hdir=d>0?1:-1;renderHeroPick();}}
  else if(a==='hconf'){if(b.dataset.id){RL.hconf=b.dataset.id;renderHeroPick();}}
  else if(a==='hcancel'){RL.hconf=null;renderHeroPick();}
@@ -387,7 +387,7 @@ function act(e){
  else if(a==='tutquick'){const first=!tutChosen();try{localStorage.setItem('rt-tutchoice','quick');}catch(e){}openQuick(first?'setup':'help');}
  else if(a==='qprev'){if(QS.i>0){QS.i--;renderQuick();}}
  else if(a==='qnext'){if(QS.i<QSL.length-1){QS.i++;renderQuick();}}
- else if(a==='qend'||a==='qskip'){if(QS.on)quickSeen();if(a==='qend'){try{localStorage.setItem('rt-qdone','1');}catch(e){}}closeQuick();if(QS.after==='setup'){renderEra();}else renderHelp();}
+ else if(a==='qend'||a==='qskip'){if(QS.on)quickSeen();if(a==='qend'){try{localStorage.setItem('rt-qdone','1');}catch(e){}}closeQuick();const af=QS.after,go=()=>{if(af==='setup')renderEra();else renderHelp();};/* v363: al acabarlo, antes la guía «Juega a tu manera» */if(a==='qend')guiaThen(go);else go();}
  else if(a==='hreset'){HSEEN={};try{localStorage.removeItem('rt-hints');}catch(e){}LB.note='Pistas restablecidas ✓';lbRender();}
  else if(a==='begin')startGame();
  else if(a==='herobk'){/* v335: desde elegir héroe se vuelve a la pantalla anterior (duración), no al menú */RL.hpick=false;showMenu();renderSetup();}

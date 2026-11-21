@@ -56,6 +56,7 @@ const T=[
  ['casillas_nuevas.js','Casillas especiales nuevas: Precisión, Perforación, Eco, Persistencia, Taller y Cuartel'],
  ['enemigos.js','Enemigos por facciones: tipos nuevos, iconos, escuadras con líder y cadena de mando'],
  ['velocidad_v363.js','Velocidad (v363): a mano como mucho ×2; ×3 solo con el avance rápido automático',null,1],
+ ['guia_opciones_v363.js','Guía «Juega a tu manera» (v363) y «Ver más» del medidor de daño',null,1],
  ['vida_fija_v363.js','Vida fija (v363): Lobos, Mamá dragona y Bob como el resto; Lobatos según la ronda',null,1],
  ['habilidades_enemigos.js','Habilidades de los enemigos: embeleso, interferencia, golpes de campeón, disparos en arco y voladores que atacan',null,2],
  ['elites.js','Mini-élites y élites de cada era con sus habilidades'],

@@ -37,10 +37,6 @@ body.dsk.inmenu #stats,body.dsk.inmenu #relics,body.dsk.inmenu #panel,body.dsk.i
 body.dsk #fps{position:fixed;top:44px;right:8px}body.inmenu #fps{display:none!important}
 #stR,#stC{color:var(--fg1)}
 /* miniatura del menú de Opciones (para enseñar la personalización) */
-.omk{display:inline-block;text-align:left;background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:8px 10px;margin:6px auto;font-size:12px;min-width:250px;max-width:320px}
-.omk .ot{display:flex;gap:5px;margin-bottom:6px}.omk .ot span{padding:2px 7px;border-radius:5px;border:1px solid var(--line2);font-size:11px;opacity:.7}.omk .ot span.on{border-color:var(--acc);opacity:1}
-.omk .orw{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0;border-top:1px solid var(--line)}.omk .orw.hl{color:var(--hl)}
-.omk .tg{width:26px;height:14px;border-radius:8px;background:var(--line2);position:relative;flex:0 0 26px}.omk .tg::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--fg1)}.omk .tg.on{background:var(--acc)}.omk .tg.on::after{left:14px;background:var(--panel2)}
 /* siluetas de recompensas por conseguir */
 .sil{display:inline-block;font-size:22px;line-height:1;filter:brightness(0) invert(.38) drop-shadow(0 0 1px rgba(255,255,255,.7));font-size:26px;cursor:help}
 

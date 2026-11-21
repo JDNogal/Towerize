@@ -149,9 +149,7 @@ function tutCompare(){const T=S.tut,t2=S.list.find(t=>t.id===T.t2id),t1=S.list.f
   row('Casilla',a.tile,b.tile)+row('Daño por golpe',a.hit,b.hit)+row('Golpes por segundo',a.rate,b.rate)+row('Daño en esta oleada',a.dmg,b.dmg)+`</table><small>El daño total también depende de cuántos enemigos tenía cada torre a su alcance.</small><button class="go" data-a="tutok">Continuar</button></div>`;}
 function tutRetry(){const snap=S.snap;if(!snap)return false;TUTR++;closePrim();closeFocus();RL.open=false;$('relic').classList.remove('open');
  S=structuredClone(snap);S.snap=snap;S.phase='build';S.selT=null;S.aim=null;S.dn=[];S.msg='El núcleo ha caído… En el tutorial no se pierde: la oleada vuelve a empezar. Prueba otra estrategia.';renderRelics();ui();return true;}
-const optsMock=()=>`<div class="omk"><div class="ot"><span class="on">Juego</span><span>Volumen</span><span>Gráficos</span><span>Accesibilidad</span></div>`+
- [['Mostrar tiempo real',0,1],['Mostrar tiempo de combate',0,1],['Mostrar FPS',0,1],['Pistas',1,0],['Números de daño',1,0]].map(([l,on,hl])=>`<div class="orw${hl?' hl':''}"><span>${l}</span><span class="tg${on?' on':''}"></span></div>`).join('')+'</div>';
-const OPTTXT='En <b>⚙ Opciones</b> puedes adaptar el juego a tu gusto: mostrar el tiempo de partida o los FPS, desactivar las pistas, cambiar dónde aparece la información y mucho más.';
+
 function tutEnd(){const clean=TUTR===0,perfect=clean&&!(S.hpEn>0);try{localStorage.setItem('rt-tutdone','1');}catch(e){}if(HEROES.radagast)delete HEROES.radagast.lockTxt;
  if(clean)achieve('tut_m');if(perfect)achieve('tut_e');S.phase='won';S.proj=[];S.fx=[];
  closePrim();RL.open=false;$('relic').classList.remove('open');
@@ -167,8 +165,7 @@ function tutEnd(){const clean=TUTR===0,perfect=clean&&!(S.hpEn>0);try{localStora
    `<li>⏩ <b>Velocidad</b>: pausa o acelera la oleada. En pausa puedes construir, mejorar y mover a tu héroe con calma.</li>`+
    `<li>↺ <b>Reintentar</b>: si una oleada sale mal, puedes repetirla desde el principio. Tiene cargas limitadas.</li>`+
    `<li>📖 <b>Compendio</b>: consulta en cualquier momento las torres, héroes y enemigos que ya conoces.</li>`+
-   (MFSQ()?`<li>☰ <b>Menú de pausa</b>: desde ahí tienes el compendio, los logros, las opciones y la ayuda.</li>`:'')+`</ul>`+
-   `<div class="bksec">Personaliza tu juego</div><p class="bknote" style="margin-top:0">${OPTTXT}</p>`,
+   (MFSQ()?`<li>☰ <b>Menú de pausa</b>: desde ahí tienes el compendio, los logros, las opciones y la ayuda.</li>`:'')+`</ul>`,
   footL:`<button class="lbbk" data-a="tutmenu">‹ Menú principal</button>`,footR:`<button class="gbtn" data-a="tutplay">Empezar una partida ›</button>`};
  lbOpen('msg');}
 

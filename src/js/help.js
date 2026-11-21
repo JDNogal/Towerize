@@ -30,10 +30,9 @@ const QSL=[
  {t:'Casillas especiales',h:['tile'],d:'Algunas piezas traen casillas de colores. La torre que pongas encima gana su bonus: más daño, más alcance, más velocidad…'},
  {t:'Héroe',h:['hero'],d:'Tu héroe lucha en el camino y bloquea enemigos. Puedes moverlo en cualquier momento, también durante la oleada, pulsando su retrato.'},
  {t:'Cofres y eventos',h:['chest','evtile'],d:'Si tu camino llega a un <b>cofre</b>, eliges una reliquia. Si llega a una casilla de <b>evento</b>, ocurrirá algo y tendrás que decidir.'},
- {t:'Daño y defensas',h:['armor','mres'],d:'El daño <b>físico</b> lo reduce la <b>armadura</b>; el <b>mágico</b>, la <b>resistencia mágica</b>. Combina tipos de daño según los enemigos que vengan.'},
- {t:'Personaliza tu juego',h:['optsx'],d:OPTTXT,mock:1}];
+ {t:'Daño y defensas',h:['armor','mres'],d:'El daño <b>físico</b> lo reduce la <b>armadura</b>; el <b>mágico</b>, la <b>resistencia mágica</b>. Combina tipos de daño según los enemigos que vengan.'}];
 function openQuick(after){QS.i=0;QS.mx=0;QS.on=true;QS.after=after||null;QS.t0=performance.now();renderQuick();cancelAnimationFrame(QS.raf);const lp=t=>{if(!QS.on)return;drawQuick(t);QS.raf=requestAnimationFrame(lp);};QS.raf=requestAnimationFrame(lp);}
-function renderQuick(){const s=QSL[QS.i];QS.mx=Math.max(QS.mx||0,QS.i);$('msetup').innerHTML=`<div class="qsw"><small>Tutorial rápido · ${QS.i+1}/${QSL.length}</small><h3>${s.t}</h3>${s.mock?optsMock():'<canvas id="qsc" width="420" height="220"></canvas>'}<p class="qsd">${s.d}</p>`+
+function renderQuick(){const s=QSL[QS.i];QS.mx=Math.max(QS.mx||0,QS.i);$('msetup').innerHTML=`<div class="qsw"><small>Tutorial rápido · ${QS.i+1}/${QSL.length}</small><h3>${s.t}</h3><canvas id="qsc" width="420" height="220"></canvas><p class="qsd">${s.d}</p>`+
  `<div class="qsn"><button data-a="qprev"${QS.i?'':' disabled'}>‹ Anterior</button><span class="hdots">${QSL.map((_,i)=>`<span class="qdot${i===QS.i?' on':''}"></span>`).join('')}</span>${QS.i<QSL.length-1?'<button data-a="qnext">Continuar</button>':'<button class="go" data-a="qend">¡A jugar!</button>'}</div><button data-a="qskip" class="qsk">Saltar</button></div>`;$('menu').classList.add('setup');QS.t0=performance.now();}
 // las pistas que ya explican las diapositivas vistas no se repiten en la partida
 function quickSeen(){for(let i=0;i<=(QS.mx||0)&&i<QSL.length;i++)for(const id of QSL[i].h||[])HSEEN[id]=1;try{localStorage.setItem('rt-hints',JSON.stringify(HSEEN));}catch(e){}}

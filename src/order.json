@@ -44,7 +44,8 @@
   "42_iphone_app.css",
   "43_pieza_movil.css",
   "44_barras_v360.css",
-  "45_ficha_unica.css"
+  "45_ficha_unica.css",
+  "46_guia_opciones.css"
  ],
  "js": [
   "00_config.js",
@@ -210,6 +211,8 @@
   "barras_v361.js",
   "palabras_v361.js",
   "ventanas_clic_v360.js",
-  "eventos_cambio.js"
+  "eventos_cambio.js",
+  "data/guia_img.js",
+  "guia_opciones.js"
  ]
 }
