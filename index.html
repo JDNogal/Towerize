@@ -5332,6 +5332,15 @@ const ECOL={"norm": "#5a8a3a", "vet": "#4a7a30", "champ": "#3e6a28", "fast": "#7
  for(const f in FAC)for(const k of FAC[f])ET[k].fac=f;}
 const FACN={g:'Pieles verdes',d:'Demonios'};
 // iconos SVG: van dentro del círculo de color (enIcDraw / icHtml); se pintan desde una imagen en caché
+// v363 (Nogal, 21-nov): Bob tiene icono propio (orco bobalicón, aprobado en la Mesa); antes llevaba el emoji del cerdo
+ESVG.bob=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M14 30 Q14 12 32 12 Q50 12 50 30 L50 40 Q50 54 32 54 Q14 54 14 40Z" fill="#b9d98e" stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M10 26 L15 31 M54 26 L49 31" stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M20 25 q4 1 8 0 M44 25 q-4 1-8 0" fill="none" stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M21.5 30 a3.5 3.5 0 0 0 7 0Z" fill="#fff" stroke="#1b1712" stroke-width="2" stroke-linejoin="round"/><path d="M35.5 30 a3.5 3.5 0 0 0 7 0Z" fill="#fff" stroke="#1b1712" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="25" cy="31.4" r="1.5" fill="#1b1712"/><circle cx="39" cy="31.4" r="1.5" fill="#1b1712"/>
+<path d="M24 43 Q32 46.4 39 43.6" fill="none" stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M26.4 44.3 Q26.6 41 28.1 39.6 Q28.9 42 30.2 44.6Z" fill="#f4ecd6" stroke="#1b1712" stroke-width="1.4" stroke-linejoin="round"/>
+<path transform="translate(-2.3 .9)" d="M38.8 43.6 Q39.4 45.4 40.2 46.6 A1.7 1.7 0 1 1 37.2 46.8 Q37.8 45.4 38.8 43.6Z" fill="#bfe6ff" stroke="#1b1712" stroke-width="1.3" stroke-linejoin="round"/>
+<path d="M28 10 Q32 4 36 10" fill="#3a2a1a" stroke="#1b1712" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
 for(const k in ESVG)EIC[k]={esvg:ESVG[k]};
 const SVGIM={};const svgIm=s=>{let im=SVGIM[s];if(!im){im=SVGIM[s]=new Image();try{im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s);}catch(e){}}return im;};
 {const _d=icDraw;icDraw=function(c,ic,x,y,sz){if(ic&&ic.esvg){const im=svgIm(ic.esvg);if(im.complete&&im.naturalWidth)try{c.drawImage(im,x-sz*.6,y-sz*.6,sz*1.2,sz*1.2);}catch(e){}return;}return _d(c,ic,x,y,sz);};}
