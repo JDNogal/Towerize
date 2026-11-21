@@ -101,6 +101,7 @@ const T=[
  ['eventos_imagenes.js','Eventos en pergamino: dibujo de cada evento y de cada opción'],
  ['sonidos_e2.js','Sonidos nuevos de la era 2 y música por era'],
  ['sonidos_andres.js','Sonidos de Andres: conjunto Andres/Claude, eras, bolsa barajada'],
+ ['volumen_interfaz_v364.js','Volumen: barra Interfaz aparte de Efectos'],
  ['ficha_torre.js','Ficha de torre nueva: mecánica con barra, 4 números, DPS real en directo y pliegues'],
  ['pergamino_v353.js','Pergamino nuevo en la oferta de torres y en todos los eventos de la era 1, sin rodillos viejos ni scroll'],
  ['hud_v354.js','Interfaz de PC v354: fila ☰ F3 X, Reintentar abajo, medidor de daño, cajones y barra de Almas'],

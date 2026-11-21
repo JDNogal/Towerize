@@ -44,9 +44,10 @@ const OPTS=[
  {tab:'un',type:'toggle',key:'u_cpa',def:false,label:'Abrir el Compendio',desc:'Solo da acceso al Compendio, como al conseguir Mente curiosa: verás lo que hayas descubierto y el resto en sombra.'},
  {tab:'un',type:'toggle',key:'u_cp',def:false,label:'Compendio completo',desc:'Desbloquea el Compendio y muestra todas sus entradas, incluidos los niveles secretos de las torres de evento.'},
  {tab:'un',type:'toggle',key:'u_sec',def:false,label:'Revelar logros secretos',desc:'Muestra la descripción de los logros ocultos.'},
- {tab:'vol',type:'slider',key:'vm',def:80,min:0,max:100,step:1,fmt:v=>v+'%',label:'Volumen general',desc:'Volumen de todo el sonido del juego. Los otros dos se aplican sobre este.'},
+ {tab:'vol',type:'slider',key:'vm',def:80,min:0,max:100,step:1,fmt:v=>v+'%',label:'Volumen general',desc:'Volumen de todo el sonido del juego. Los demás se aplican sobre este.'},
  {tab:'vol',type:'slider',key:'vu',def:60,min:0,max:100,step:1,fmt:v=>v+'%',label:'Música',desc:'Volumen de la música de fondo. Empieza a sonar con el primer clic o tecla y vuelve a empezar al terminar.'},
- {tab:'vol',type:'slider',key:'vf',def:80,min:0,max:100,step:1,fmt:v=>v+'%',label:'Efectos',desc:'Volumen de los efectos: disparos, impactos, botones, avisos y pasar página.'},
+ {tab:'vol',type:'slider',key:'vf',def:80,min:0,max:100,step:1,fmt:v=>v+'%',label:'Efectos',desc:'Volumen de los efectos de la partida: disparos, impactos, bajas, oro, construir y avisos.'},
+ {tab:'vol',type:'slider',key:'vi',def:80,min:0,max:100,step:1,fmt:v=>v+'%',label:'Interfaz',desc:'Volumen de los menús: botones, pasar el ratón, cerrar, pasar página y abrir o cerrar el libro.'},
  {tab:'vol',type:'slider',key:'fq_coin',def:100,min:0,max:100,step:1,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · oro por baja',desc:'Cuántas veces suena la moneda al matar a un enemigo. Al 100% suena siempre (con un pequeño límite para que no se amontone); más bajo, solo algunas veces.'},
  {tab:'vol',type:'slider',key:'fq_kill',def:100,min:0,max:100,step:1,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · bajas',desc:'Cuántas veces suena la muerte de los enemigos. Los jefes suenan siempre.'},
  {tab:'vol',type:'slider',key:'fq_hit',def:100,min:0,max:100,step:1,fmt:v=>v?v+'%':'Nunca',label:'Frecuencia · ataques',desc:'Cuántas veces suenan los disparos e impactos de torres, unidades y héroe.'},
@@ -62,7 +63,7 @@ const OPTS=[
  {tab:'ac',type:'slider',key:'delay',def:.7,min:.1,max:2,step:.01,fmt:v=>f(v)+' s',label:'Tiempo de apertura del panel de información',descT:'Lo que tarda en completarse la rueda de carga al mantener pulsado algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.',desc:'Lo que tarda en completarse la rueda de carga al señalar algo. Las palabras clave dentro de un panel usan un 58% de este tiempo.'}];
 const OTABS=[['jg','Juego','⚙️'],['kb','Atajos','⌨️'],['ps','Personalización','🎨'],['hs','Diálogos','💬'],['vol','Sonido','🔊'],['gf','Gráficos','🖥️'],['ac','Accesibilidad','♿'],['un','Desbloqueos','🔓']];
 // icono y apartado de cada opción en la ventana de opciones
-const OIC={kcap:'🔤',pm:'📌',fs:'⛶',dnum:'💥',hints:'💡',ptip:'🎯',ptipw:'🌀',treal:'🕒',tcomb:'⏱️',slow:'🐢',keys:'⌨️',reset:'🗑️',dspd:'✍️',dtype:'📝',dauto:'⏩',dwait:'⏳',dglitch:'📺',dbig:'🔠',cname:'🪪',u_tw:'🗼',u_hr:'🦸',u_rl:'💎',u_ev:'🗺️',u_cs:'🎨',u_rd:'📅',u_cp:'📖',u_cpa:'📘',u_sec:'🕵️',vm:'🔊',vu:'🎵',vf:'💫',fps:'📈',fx:'✨',dpsx:'🧮',dabbr:'🔢',dsci:'🔬',delay:'⌛'};
+const OIC={kcap:'🔤',pm:'📌',fs:'⛶',dnum:'💥',hints:'💡',ptip:'🎯',ptipw:'🌀',treal:'🕒',tcomb:'⏱️',slow:'🐢',keys:'⌨️',reset:'🗑️',dspd:'✍️',dtype:'📝',dauto:'⏩',dwait:'⏳',dglitch:'📺',dbig:'🔠',cname:'🪪',u_tw:'🗼',u_hr:'🦸',u_rl:'💎',u_ev:'🗺️',u_cs:'🎨',u_rd:'📅',u_cp:'📖',u_cpa:'📘',u_sec:'🕵️',vm:'🔊',vu:'🎵',vf:'💫',vi:'🔘',fps:'📈',fx:'✨',dpsx:'🧮',dabbr:'🔢',dsci:'🔬',delay:'⌛'};
 const OSEC={kcap:'Interfaz',pm:'Interfaz',fs:'Interfaz',dnum:'Interfaz',keys:'Interfaz',hints:'Ayudas',slow:'Tiempo',ptip:'Ayudas',ptipw:'Ayudas',treal:'Tiempo',tcomb:'Tiempo'};
 const oKey=o=>o.key||(o.type==='choice'&&o.tab==='jg'?'pm':o.type==='choice'&&o.tab==='hs'?'dspd':o.type);
 // cada sección sale una sola vez: se ordenan las opciones de Juego por sección (las de otras pestañas no se mueven)
@@ -196,7 +197,7 @@ function drawDeco2(c,ch,x,y,s){const h=((x*73+y*151)|0)%5,X=f=>x+s*f,Y=f=>y+s*f,
  if(ch==='z'){c.fillStyle='#62656e';c.beginPath();c.ellipse(X(.5),Y(.65),s*.3,s*.18,0,0,7);c.fill();const cr=(bx,top,col)=>{c.fillStyle=col;c.beginPath();c.moveTo(bx-s*.06,Y(.62));c.lineTo(bx,top);c.lineTo(bx+s*.06,Y(.62));c.closePath();c.fill();};cr(X(.42),Y(.3),h%2?'#7fe0f0':'#c07fff');cr(X(.56),Y(.38),h%2?'#b0f4ff':'#e0b0ff');return;}
  if(ch==='b'){const bar=(bx,by)=>{c.fillStyle='#8a5a2a';c.beginPath();c.ellipse(bx,by,s*.13,s*.17,0,0,7);c.fill();c.strokeStyle='#3a2a1a';c.lineWidth=L;c.beginPath();c.moveTo(bx-s*.13,by-s*.06);c.lineTo(bx+s*.13,by-s*.06);c.moveTo(bx-s*.13,by+s*.06);c.lineTo(bx+s*.13,by+s*.06);c.stroke();};if(h<3){bar(X(.38),Y(.6));bar(X(.64),Y(.62));}else{c.fillStyle='#7a5230';c.fillRect(X(.22),Y(.45),s*.56,s*.22);c.fillStyle='#3a2a1a';c.beginPath();c.arc(X(.32),Y(.72),s*.08,0,7);c.arc(X(.68),Y(.72),s*.08,0,7);c.fill();}return;}}
 
-try{Object.assign(OPT,JSON.parse(localStorage.getItem('rt-opts'))||{});}catch(e){}
+try{const o=JSON.parse(localStorage.getItem('rt-opts'))||{};Object.assign(OPT,o);if(o.vi==null&&o.vf!=null)OPT.vi=o.vf;}catch(e){}
 const saveOpt=()=>{try{localStorage.setItem('rt-opts',JSON.stringify(OPT));}catch(e){}};
 // Opciones por dispositivo: dev:'touch' solo en móvil/tablet, dev:'pc' solo con ratón, show:()=>bool para condiciones extra; descT sustituye a desc en táctil.
 const optVis=o=>!(o.dev==='touch'&&!TOUCH||o.dev==='pc'&&TOUCH||o.show&&!o.show());

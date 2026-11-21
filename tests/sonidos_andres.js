@@ -5,7 +5,9 @@ await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tut
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);await p.mouse.click(400,300);await p.waitForTimeout(400);
 const r=await p.evaluate(async()=>{const out={};const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;
  out.def=OPT.sndset==='andres'&&sndSet()==='andres';
- out.andres=['ui','uih','uix','boss'].every(k=>sfxDef(k)===SNDA[k]);
+ out.andres=['ui','uix','boss'].every(k=>sfxDef(k)===SNDA[k]);
+ // pasar el ratón: sin versión de Andres (Nogal, 21-nov), suena el de Claude más bajo
+ out.uih=!SNDA.uih&&sfxDef('uih')===sfxDefC('uih')&&sfxDef('uih').s==='n_uih'&&sfxDef('uih').v<=.25;
  out.fallback=sfxDef('build')===sfxDefC('build')&&sfxDef('h_arrow')===sfxDefC('h_arrow');
  OPT.sndset='claude';out.claude=['ui','uih','uix','boss'].every(k=>sfxDef(k)===sfxDefC(k))&&sfxDef('boss').y==='boss3A';
  // por era: una clave _e2 de Claude se usa en la era 2 y la general en la era 1
@@ -16,7 +18,7 @@ const r=await p.evaluate(async()=>{const out={};const i=document.getElementById(
  const d=SNDA.ui,seq=[];for(let k=0;k<400;k++)seq.push(sfxPick(d));out.bag=new Set(seq.slice(0,9)).size===9&&seq.every((s,k)=>!k||s!==seq[k-1]);
  const u=SNDA.uix,s2=[];for(let k=0;k<300;k++)s2.push(sfxPick(u));out.bag3=s2.every((s,k)=>!k||s!==s2[k-1]);
  sndInit();await new Promise(r=>setTimeout(r,1500));const ks=Object.keys(SNDB64).filter(k=>k.startsWith('a_'));
- out.decoded=ks.length===17&&ks.every(k=>SND.buf[k]);out.boss2ch=!!SND.buf.a_boss&&SND.buf.a_boss.numberOfChannels===2&&SND.buf.a_boss.duration>6.3;
+ out.decoded=ks.length===13&&ks.every(k=>SND.buf[k]);out.boss2ch=!!SND.buf.a_boss&&SND.buf.a_boss.numberOfChannels===2&&SND.buf.a_boss.duration>6.3;
  out.uiLen=SNDA.ui.s.every(k=>SND.buf[k]&&SND.buf[k].duration<.08);
  let thrown=0;for(const k of['ui','uih','uix','boss']){try{sfx(k,{force:1});}catch(e){thrown++;}}out.play=thrown===0;
  out.panel=/Andres/.test(sfxTestHTML())&&!/la última que pruebes/.test(sfxTestHTML());

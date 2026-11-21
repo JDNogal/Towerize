@@ -8,7 +8,7 @@ let SV={};try{SV=JSON.parse(localStorage.getItem('rt-sv'))||{};}catch(e){}
 const SFXG=[
  ['Interfaz',[
   ['ui','Botón',[{s:'n_ui',v:0.7,cd:.04,mx:2,pv:.04,vv:.12,n:'Nuevo'},{y:'bopD',v:.55,cd:.04,mx:2,pv:.04,n:'Actual'}]],
-  ['uih','Pasar el ratón (menús)',[{s:'n_uih',v:0.32,cd:.015,mx:6,pv:.05,vv:.15,n:'Nuevo'},{y:'hov',v:.35,cd:.015,mx:6,pv:.05,n:'Actual'}]],
+  ['uih','Pasar el ratón (menús)',[{s:'n_uih',v:0.22,cd:.015,mx:6,pv:.05,vv:.15,n:'Nuevo'},{y:'hov',v:.35,cd:.015,mx:6,pv:.05,n:'Actual'}]],
   ['uix','Cerrar / volver',[{s:'n_uix',v:0.53,cd:.04,mx:2,pv:.04,vv:.12,n:'Nuevo'},{y:'bopDx',v:.5,cd:.04,mx:2,pv:.04,n:'Actual'}]],
   ['page','Pasar página',[{s:['bookFlip1','bookFlip2','bookFlip3'],v:.6,cd:.08,mx:2,pv:.05,n:'Libro'},{y:'pageA',v:.5,cd:.08,mx:2,pv:.06,n:'Soplido A'},{y:'pageB',v:.5,cd:.08,mx:2,pv:.06,n:'Soplido B'}]],
   ['bkopen','Abrir el libro',[{s:'bookOpen',v:.65,cd:.2,mx:1,pv:.04}]],
@@ -70,7 +70,9 @@ function sndInit(){if(SND.ctx)return;try{const C=window.AudioContext||window.web
  SND.m=SND.ctx.createGain();SND.m.connect(SND.ctx.destination);SND.fx=SND.ctx.createGain();SND.fx.connect(SND.m);
  for(const k in SNDB64){const b=Uint8Array.from(atob(SNDB64[k]),c=>c.charCodeAt(0)).buffer;SND.ctx.decodeAudioData(b,d=>{SND.buf[k]=d;},()=>{});}}catch(e){SND.ctx=null;}}
 ['pointerdown','keydown','touchend'].forEach(ev=>document.addEventListener(ev,()=>{sndInit();if(SND.ctx&&SND.ctx.state==='suspended')SND.ctx.resume();},{capture:true,passive:true}));
-const sndVol=()=>((OPT.vm??80)/100)*((OPT.vf??80)/100);
+// sonidos de la interfaz (grupo «Interfaz» de Probar sonidos): van con su propia barra de volumen (Interfaz); el resto, con Efectos
+const SFXUI=new Set(['ui','uih','uix','page','bkopen','bkclose','err']);
+const sndVol=k=>((OPT.vm??80)/100)*((SFXUI.has(k)?(OPT.vi??OPT.vf??80):(OPT.vf??80))/100);
 function synth(kind,t0,out,v,r){const c=SND.ctx;
  const tone=(type,f0,f1,at,a,d,pk,o2)=>{const o=c.createOscillator(),g=c.createGain(),t=t0+at;o.type=type;o.frequency.setValueAtTime(f0*r,t);if(f1!==f0)o.frequency.exponentialRampToValueAtTime(Math.max(20,f1*r),t+a+d*.7);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(pk*v,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d);o.connect(g);g.connect(o2||out);o.start(t);o.stop(t+a+d+.05);};
  const noise=(ftype,f0,f1,q,at,a,d,pk,o2)=>{const n=c.createBufferSource(),len=Math.ceil(c.sampleRate*(a+d+.05)),bf=c.createBuffer(1,len,c.sampleRate),ch=bf.getChannelData(0);for(let i=0;i<len;i++)ch[i]=Math.random()*2-1;n.buffer=bf;const fl=c.createBiquadFilter(),t=t0+at;fl.type=ftype;fl.frequency.setValueAtTime(f0*r,t);if(f1!==f0)fl.frequency.exponentialRampToValueAtTime(f1*r,t+a+d);fl.Q.value=q;const g=c.createGain();g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(pk*v,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d);n.connect(fl);fl.connect(g);g.connect(o2||out);n.start(t);};
@@ -127,7 +129,7 @@ function synth(kind,t0,out,v,r){const c=SND.ctx;
 // frecuencia por tipo de sonido (opciones de Sonido): al bajarla suena solo una parte de las veces y con más hueco entre sonidos
 const SFQ=k=>k==='coin'?'fq_coin':(k.startsWith('kill_')&&k!=='kill_b')?'fq_kill':k.startsWith('h_')?'fq_hit':null;
 function sfx(k,o){o=o||{};const d=o.def||sfxDef(k);if(!d)return;if(!o.force){const q=SFQ(k);if(q){const f=(OPT[q]??100)/100;if(f<=0||Math.random()>f)return;}}if(!SND.ctx){if(!o.force)return;sndInit();if(!SND.ctx)return;}
- const c=SND.ctx;if(c.state!=='running')return;const now=c.currentTime,vol=sndVol()*(d.v||1)*(o.v||1)*(1+(Math.random()*2-1)*(o.force?0:(d.vv||0)));if(vol<=0.001)return;
+ const c=SND.ctx;if(c.state!=='running')return;const now=c.currentTime,vol=sndVol(k)*(d.v||1)*(o.v||1)*(1+(Math.random()*2-1)*(o.force?0:(d.vv||0)));if(vol<=0.001)return;
  if(!o.force){const q=SFQ(k),fm=q?1/Math.max(.25,(OPT[q]??100)/100):1;if(now-(SND.last[k]||-9)<(d.cd||0)*fm)return;SND.act[k]=(SND.act[k]||[]).filter(t=>t>now);if(SND.act[k].length>=(d.mx||4))return;}
  SND.last[k]=now;const r=(d.r||1)*(o.r||1)*(1+(Math.random()*2-1)*(d.pv||0));const out=d.dk?SND.m:SND.fx;let len=.3;
  if(d.dk){const g=SND.fx.gain;g.cancelScheduledValues(now);g.setValueAtTime(g.value,now);g.linearRampToValueAtTime(.35,now+.04);g.linearRampToValueAtTime(1,now+.7);}
