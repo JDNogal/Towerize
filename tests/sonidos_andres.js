@@ -7,7 +7,7 @@ const r=await p.evaluate(async()=>{const out={};const i=document.getElementById(
  out.def=OPT.sndset==='andres'&&sndSet()==='andres';
  out.andres=['ui','uix','boss'].every(k=>sfxDef(k)===SNDA[k]);
  // pasar el ratón: sin versión de Andres (Nogal, 21-nov), suena el de Claude más bajo
- out.uih=!SNDA.uih&&sfxDef('uih')===sfxDefC('uih')&&sfxDef('uih').s==='n_uih'&&sfxDef('uih').v<=.25;
+ out.uih=!SNDA.uih&&sfxDef('uih')===sfxDefC('uih')&&sfxDef('uih').s==='n_uih'&&sfxDef('uih').v<=.1;
  out.fallback=sfxDef('build')===sfxDefC('build')&&sfxDef('h_arrow')===sfxDefC('h_arrow');
  OPT.sndset='claude';out.claude=['ui','uih','uix','boss'].every(k=>sfxDef(k)===sfxDefC(k))&&sfxDef('boss').y==='boss3A';
  // por era: una clave _e2 de Claude se usa en la era 2 y la general en la era 1

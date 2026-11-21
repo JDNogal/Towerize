@@ -8,7 +8,7 @@ let SV={};try{SV=JSON.parse(localStorage.getItem('rt-sv'))||{};}catch(e){}
 const SFXG=[
  ['Interfaz',[
   ['ui','Botón',[{s:'n_ui',v:0.7,cd:.04,mx:2,pv:.04,vv:.12,n:'Nuevo'},{y:'bopD',v:.55,cd:.04,mx:2,pv:.04,n:'Actual'}]],
-  ['uih','Pasar el ratón (menús)',[{s:'n_uih',v:0.22,cd:.015,mx:6,pv:.05,vv:.15,n:'Nuevo'},{y:'hov',v:.35,cd:.015,mx:6,pv:.05,n:'Actual'}]],
+  ['uih','Pasar el ratón (menús)',[{s:'n_uih',v:0.08,cd:.06,mx:2,pv:.05,vv:.15,n:'Nuevo'},{y:'hov',v:.12,cd:.06,mx:2,pv:.05,n:'Actual'}]],
   ['uix','Cerrar / volver',[{s:'n_uix',v:0.53,cd:.04,mx:2,pv:.04,vv:.12,n:'Nuevo'},{y:'bopDx',v:.5,cd:.04,mx:2,pv:.04,n:'Actual'}]],
   ['page','Pasar página',[{s:['bookFlip1','bookFlip2','bookFlip3'],v:.6,cd:.08,mx:2,pv:.05,n:'Libro'},{y:'pageA',v:.5,cd:.08,mx:2,pv:.06,n:'Soplido A'},{y:'pageB',v:.5,cd:.08,mx:2,pv:.06,n:'Soplido B'}]],
   ['bkopen','Abrir el libro',[{s:'bookOpen',v:.65,cd:.2,mx:1,pv:.04}]],
