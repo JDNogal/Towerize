@@ -27,10 +27,10 @@ function guiaGo(back){const f=GUIA.after;GUIA.after=null;if(!back)LB.msg=null;
 function guiaOpts(){const f=GUIA.after;GUIA.after=null;LB.msg=null;if(f)f();OP.tab='jg';lbOpen('op');}
 // lo que tocaba hacer, pasando antes por la guía si aún no se ha visto
 function guiaThen(f){if(guiaSeen())f();else guiaOpen(f);}
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="guiasw"],[data-a="guiacont"],[data-a="guiaopts"]');if(!b)return;
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="guiasw"],[data-a="guiacont"],[data-a="guiaopts"],[data-a="guiaver"]');if(!b)return;
  e.stopPropagation();e.preventDefault();const a=b.dataset.a;
  if(a==='guiasw'){const k=b.dataset.v;OPT[k]=OPT[k]===false;saveOpt();try{sfx('click');}catch(_){}lbRender();if(typeof S!=='undefined'&&S)ui();}
- else if(a==='guiacont')guiaGo();else guiaOpts();},true);
+ else if(a==='guiacont')guiaGo();else if(a==='guiaver')guiaOpen(()=>{LB.hp='tut';lbOpen('hp');});/* desde Ayuda › Tutoriales: al continuar, vuelve ahí */else guiaOpts();},true);
 // quien salta los tutoriales: al acabar su primera partida, antes de volver al menú
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="menu"]');if(!b||e.defaultPrevented||!LB.open||LB.area!=='end'||guiaSeen())return;
  if(typeof S==='undefined'||!S||S.tut)return;e.stopPropagation();e.preventDefault();guiaOpen(()=>{LB.end=null;showMenu();});},true);

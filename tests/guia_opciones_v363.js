@@ -66,6 +66,14 @@ const st=p=>p.evaluate(()=>({open:LB.open,area:LB.area,key:LB.msg&&LB.msg.key,se
  await p.evaluate(()=>document.querySelector('#dpsc .dstat').click());await p.waitForTimeout(500);
  const s=await p.evaluate(()=>({open:LB.open,area:LB.area,tab:STW.tab,speed:S.speed}));ck(s.open&&s.area==='st'&&s.tab==='dmg'&&s.speed===0,'«Ver más» pausa y abre Estadísticas › Daño ('+JSON.stringify(s)+')');
  await p.context().close();}
+// 7) Ayuda › Tutoriales: botón «Juega a tu manera» para volver a verla (en el menú y en partida); «Continuar» vuelve ahí
+for(const inG of [false,true]){const p=await pg(null,true);
+ await p.evaluate(g=>{if(g){startGame(15);chooseHero('reinhart');for(let i=0;i<5&&DLG.on;i++)dlgEnd();HQ.q=[];RL.open=false;$('relic').classList.remove('open');}LB.hp='tut';lbOpen('hp');},inG);await p.waitForTimeout(600);
+ await p.screenshot({path:OUT+'/guia_ayuda_'+(inG?'partida':'menu')+'.png'});
+ const has=await p.evaluate(()=>!!document.querySelector('#comp [data-a="guiaver"]'));ck(has,'Ayuda › Tutoriales tiene «Juega a tu manera» ('+(inG?'partida':'menú')+')');
+ if(has){await p.evaluate(()=>document.querySelector('#comp [data-a="guiaver"]').click());await p.waitForTimeout(500);let s=await st(p);ck(s.area==='msg'&&s.key==='guia','el botón abre la guía');
+  await p.evaluate(()=>document.querySelector('#comp [data-a="guiacont"]').click());await p.waitForTimeout(500);s=await p.evaluate(()=>({open:LB.open,area:LB.area,hp:LB.hp}));ck(s.open&&s.area==='hp'&&s.hp==='tut','«Continuar» vuelve a Ayuda › Tutoriales ('+JSON.stringify(s)+')');}
+ await p.context().close();}
 // 6) Móvil: la guía se ve y se puede continuar
 {const p=await pg({...devices['iPhone 13 landscape']});
  await p.evaluate(()=>{guiaOpen();});await p.waitForTimeout(700);await p.screenshot({path:OUT+'/guia_opciones_movil.png'});

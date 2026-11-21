@@ -105,7 +105,9 @@ function helpParts(){
   ].filter(Boolean).map(([i,t,d])=>`<h4><span class="lbti">${i}</span>${t}</h4><p>${d}</p>`).join('');}
  else if(LB.hp==='tut'){
   h=inG?`<p>Los tutoriales se empiezan desde el menú principal, porque abren una partida nueva.</p>`:`<div class="lbtut"><button class="lbbig" data-a="tutfull"><b>🎓 Tutorial completo</b><small>Unas 10 rondas guiadas: aprende jugando, paso a paso. Al completarlo desbloqueas a Radagast.</small></button><button class="lbbig" data-a="tutquick"><b>⚡ Tutorial rápido</b><small>Un repaso de unos 2 minutos con imágenes animadas. Las pistas te explican el resto sobre la marcha.</small></button></div>`;
-  h+=`<p class="lbnote">Puedes repetirlos las veces que quieras.</p>`;}
+  h+=`<p class="lbnote">Puedes repetirlos las veces que quieras.</p>`;
+  /* v363: la guía «Juega a tu manera» (la que sale al acabar los tutoriales), para volver a verla; también en partida */
+  h+=`<div class="lbtut"><button class="lbbig" data-a="guiaver"><b>⚙️ Juega a tu manera</b><small>La guía de las opciones más útiles: avance rápido, números y medidor de daño y avisos de logros. Ninguna cambia la dificultad.</small></button></div>`;}
  else if(LB.hp==='hints')h=`<p>La primera vez que pasa algo nuevo (un enemigo con armadura, un cofre, una reliquia…) una pista corta te lo explica. Si sale en plena oleada, el juego frena un poco hasta que la cierras. Cada pista sale una sola vez.</p><div class="lbtut"><button class="lbbig" data-a="htog"><b>💡 Pistas: ${OPT.hints?'activadas':'desactivadas'}</b><small>${OPT.hints?'Pulsa para desactivarlas.':'Pulsa para volver a activarlas.'}</small></button><button class="lbbig" data-a="hreset"><b>♻️ Restablecer pistas</b><small>Vuelven a salir todas desde el principio.</small></button></div>${LB.note?`<p class="lbnote lbok">✓ ${LB.note}</p>`:''}`;
  const marks={list:LBHELP.map(([k,l,i])=>[k,l,i]),cur:LB.hp,act:'lbhp'};
  return {marks,spread:`<h3>${sec[2]} ${sec[1]}</h3><div class="bksub">Ayuda</div><div class="lbcols">${h}</div>`,key:'hp'+LB.hp};
