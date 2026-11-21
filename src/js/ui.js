@@ -2,7 +2,8 @@
 function ui(){
  try{if(S.msg){const t=String(S.msg).replace(/<[^>]+>/g,'');if(ERRRX.test(t)&&!/^(Elige|Pulsa)/.test(t)){S.msg='';LMSG='';errBubble(t);}}}catch(e){}
  $('panel').style.display=S.hero?'':'none';$('msg').textContent=S.msg;$('msg').classList.toggle('err',!!S.msg&&S.msg===S.msgErr);let h='';$('ui').classList.toggle('lock',!!S.aim);
- const sp=[[0,'Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2'],[3,'×3']];
+ /* v363 (Nogal, 21-nov): a mano, máximo ×2 (a ×3 no se ven venir las mecánicas de los enemigos); ×3 solo con el avance rápido automático en los tramos sin enemigos a tiro */
+ const sp=[[0,'Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2']];if(S.speed>SPDMAX)S.speed=SPDMAX;if(S.lspd>SPDMAX)S.lspd=SPDMAX;
  $('ctl').innerHTML='';
  const sl=S.speed;const MF=document.body.classList.contains('mfs');if(S.speed>0)S.lspd=S.speed;
  $('mbl').innerHTML=MF?`<button data-a="spdt" class="${sl===0?'on':''}" title="${sl===0?'Reanudar':'Pausa'}">${sl===0?'<i class="pplay"></i>':'<i class="pbar"></i>'}</button><button data-a="spdc" title="Cambiar velocidad">×${String(S.lspd||1).replace('.',',')}</button>`:sp.map(([v,l])=>`<button class="${sl===v?'on':''}" data-a="spd" data-v="${v}" title="${v===0?'Pausa':'Velocidad '+l}">${v===0?'<i class="pbar"></i>':l}</button>`).join('');

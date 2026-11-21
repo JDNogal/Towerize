@@ -21,6 +21,8 @@ function lstack(){let c=document.getElementById('lstack');if(!c){c=document.crea
 
 // el avance rápido automático empieza en la ronda 5: antes el camino es corto y las oleadas ya duran poco
 const FFR0=5;
+// v363: velocidad máxima a mano (Nogal, 21-nov); ×3 queda para el avance rápido automático
+const SPDMAX=2;
 // ¿hay algún enemigo vivo al alcance de alguna torre, unidad o del héroe? (si no, el avance rápido acelera)
 function ffIdle(){if(!S.enemies||!S.enemies.length){return S.portals&&S.portals.some(p=>p.q&&p.q.length);}
  const live=S.enemies.filter(e=>e.hp>0&&!e.leak);if(!live.length)return false;
@@ -38,7 +40,7 @@ function loop(t){
  const sp=S.speed,held=LB.open||RL.open||FO.open||(typeof NEC!=='undefined'&&NEC.open),forced=held||S.phase!=='wave',slw=(OPT.slow&&S.phase==='wave')?(HV.sl||0):0;
  // avance rápido: nadie en rango de torres ni del héroe → ×3 (se calcula cada cuarto de segundo)
  if(S.phase==='wave'&&OPT.ffwd!==false&&sp>0&&sp<3&&!held&&!PREVIEWING&&S.round>=FFR0){FF.t-=raw;if(FF.t<=0){FF.t=.25;FF.on=ffIdle();}}else FF.on=false;
- const sp2=FF.on&&!slw?3:sp;
+ const sp2=FF.on&&!slw?3:Math.min(sp,SPDMAX);
  {let fe=document.getElementById('ffwd');if(FF.on&&!fe){fe=document.createElement('div');fe.id='ffwd';fe.textContent='⏩ ×3 · ningún enemigo a tiro';document.body.appendChild(fe);}if(fe)fe.classList.toggle('on',FF.on);}
  const eff=((sp===0||held)?0:sp2+(Math.min(sp2,.25)-sp2)*slw)*HQ.f;
  const st=forced?'F':(OPT.slow&&sp>.25&&slw>=.95?'S':'N');if(st!==SPA){SPA=st;markSpeed();}

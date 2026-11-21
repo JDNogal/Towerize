@@ -253,7 +253,7 @@ function act(e){
  else if(a==='wave'){if(b.dataset.now||(WARM&&performance.now()-WARM<3000)){WARM=0;startWave();}else{WARM=performance.now();try{sfx('ui');}catch(e){}ui();setTimeout(()=>{if(WARM&&performance.now()-WARM>=3000){WARM=0;ui();}},3050);}}
  else if(a==='spd'){S.speed=+b.dataset.v;ui();}
  else if(a==='spdt'){if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
- else if(a==='spdc'){const L=[.5,1,2,3],c=S.lspd||1,n=L[(L.indexOf(c)+1)%L.length]||1;S.lspd=n;S.speed=n;ui();}
+ else if(a==='spdc'){const L=[.5,1,2],c=S.lspd||1,n=L[(L.indexOf(c)+1)%L.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(a==='pause')openPause();
  else if(a==='pcont')closePause(true);
  else if(a==='phelp')lbOpen('hp');

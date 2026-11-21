@@ -3261,7 +3261,7 @@ addEventListener('keydown',e=>{if(!keyOK(e)||e.ctrlKey||e.metaKey||e.altKey||e.r
  else if(kbIs('pigs',k)){clickA('[data-a="pigs"]');e.preventDefault();}
  else if(kbIs('ally',k)){if(clickA('[data-a="ally"]'))e.preventDefault();}
  else if(kbIs('pause',k)){e.preventDefault();if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
- else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2,3],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
+ else if(kbIs('speed',k)){e.preventDefault();const Lv=[.5,1,2],cu=S.speed||S.lspd||1,n=Lv[(Lv.indexOf(cu)+1)%Lv.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(kbIs('wave',k)&&S.phase==='build'){const wb=document.querySelector('[data-a="wave"]');if(wb&&hitOk(wb)){WARM=0;startWave();}e.preventDefault();}
  else if(kbIs('ptips',k)){togglePtips();e.preventDefault();}
  else if(kbIs('flag',k)&&S.selT&&!S.aim){quickFlag(S.selT);e.preventDefault();}
@@ -7971,7 +7971,8 @@ function primAvoidHud(l,t,wd,ht){const ob=tmObs({left:0,top:0}),hit=(L,T)=>ob.so
 function ui(){
  try{if(S.msg){const t=String(S.msg).replace(/<[^>]+>/g,'');if(ERRRX.test(t)&&!/^(Elige|Pulsa)/.test(t)){S.msg='';LMSG='';errBubble(t);}}}catch(e){}
  $('panel').style.display=S.hero?'':'none';$('msg').textContent=S.msg;$('msg').classList.toggle('err',!!S.msg&&S.msg===S.msgErr);let h='';$('ui').classList.toggle('lock',!!S.aim);
- const sp=[[0,'Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2'],[3,'×3']];
+ /* v363 (Nogal, 21-nov): a mano, máximo ×2 (a ×3 no se ven venir las mecánicas de los enemigos); ×3 solo con el avance rápido automático en los tramos sin enemigos a tiro */
+ const sp=[[0,'Pausa'],[.25,'×0,25'],[.5,'×0,5'],[1,'×1'],[2,'×2']];if(S.speed>SPDMAX)S.speed=SPDMAX;if(S.lspd>SPDMAX)S.lspd=SPDMAX;
  $('ctl').innerHTML='';
  const sl=S.speed;const MF=document.body.classList.contains('mfs');if(S.speed>0)S.lspd=S.speed;
  $('mbl').innerHTML=MF?`<button data-a="spdt" class="${sl===0?'on':''}" title="${sl===0?'Reanudar':'Pausa'}">${sl===0?'<i class="pplay"></i>':'<i class="pbar"></i>'}</button><button data-a="spdc" title="Cambiar velocidad">×${String(S.lspd||1).replace('.',',')}</button>`:sp.map(([v,l])=>`<button class="${sl===v?'on':''}" data-a="spd" data-v="${v}" title="${v===0?'Pausa':'Velocidad '+l}">${v===0?'<i class="pbar"></i>':l}</button>`).join('');
@@ -8499,7 +8500,7 @@ function act(e){
  else if(a==='wave'){if(b.dataset.now||(WARM&&performance.now()-WARM<3000)){WARM=0;startWave();}else{WARM=performance.now();try{sfx('ui');}catch(e){}ui();setTimeout(()=>{if(WARM&&performance.now()-WARM>=3000){WARM=0;ui();}},3050);}}
  else if(a==='spd'){S.speed=+b.dataset.v;ui();}
  else if(a==='spdt'){if(S.speed===0)S.speed=S.lspd||1;else{S.lspd=S.speed;S.speed=0;}ui();}
- else if(a==='spdc'){const L=[.5,1,2,3],c=S.lspd||1,n=L[(L.indexOf(c)+1)%L.length]||1;S.lspd=n;S.speed=n;ui();}
+ else if(a==='spdc'){const L=[.5,1,2],c=S.lspd||1,n=L[(L.indexOf(c)+1)%L.length]||1;S.lspd=n;S.speed=n;ui();}
  else if(a==='pause')openPause();
  else if(a==='pcont')closePause(true);
  else if(a==='phelp')lbOpen('hp');
@@ -9037,6 +9038,8 @@ function lstack(){let c=document.getElementById('lstack');if(!c){c=document.crea
 
 // el avance rápido automático empieza en la ronda 5: antes el camino es corto y las oleadas ya duran poco
 const FFR0=5;
+// v363: velocidad máxima a mano (Nogal, 21-nov); ×3 queda para el avance rápido automático
+const SPDMAX=2;
 // ¿hay algún enemigo vivo al alcance de alguna torre, unidad o del héroe? (si no, el avance rápido acelera)
 function ffIdle(){if(!S.enemies||!S.enemies.length){return S.portals&&S.portals.some(p=>p.q&&p.q.length);}
  const live=S.enemies.filter(e=>e.hp>0&&!e.leak);if(!live.length)return false;
@@ -9054,7 +9057,7 @@ function loop(t){
  const sp=S.speed,held=LB.open||RL.open||FO.open||(typeof NEC!=='undefined'&&NEC.open),forced=held||S.phase!=='wave',slw=(OPT.slow&&S.phase==='wave')?(HV.sl||0):0;
  // avance rápido: nadie en rango de torres ni del héroe → ×3 (se calcula cada cuarto de segundo)
  if(S.phase==='wave'&&OPT.ffwd!==false&&sp>0&&sp<3&&!held&&!PREVIEWING&&S.round>=FFR0){FF.t-=raw;if(FF.t<=0){FF.t=.25;FF.on=ffIdle();}}else FF.on=false;
- const sp2=FF.on&&!slw?3:sp;
+ const sp2=FF.on&&!slw?3:Math.min(sp,SPDMAX);
  {let fe=document.getElementById('ffwd');if(FF.on&&!fe){fe=document.createElement('div');fe.id='ffwd';fe.textContent='⏩ ×3 · ningún enemigo a tiro';document.body.appendChild(fe);}if(fe)fe.classList.toggle('on',FF.on);}
  const eff=((sp===0||held)?0:sp2+(Math.min(sp2,.25)-sp2)*slw)*HQ.f;
  const st=forced?'F':(OPT.slow&&sp>.25&&slw>=.95?'S':'N');if(st!==SPA){SPA=st;markSpeed();}
