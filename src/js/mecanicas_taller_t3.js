@@ -49,7 +49,7 @@ function ferryTick(e,dt,SL){if(!(e.fcar>0))return;
   const ua=(typeof uapOf==='function'&&tg.tw?uapOf(tg.tw):0)+(typeof auraAP==='function'?auraAP(tg):0);hitUnit(tg,(H.ud||3)*(typeof udM==='function'?udM(e):1)*(1-ua/(ua+ARM_K)),e);
   S.fx.push({x:tg.x+(Math.random()-.5)*.6,y:tg.y+(Math.random()-.5)*.6,t:.2,m:.2,r:.3*K,col:'#d9c08a'});}}
 // ---- Ogro glotón ----
-function devourTick(e,dt){if(e.eat>0){e.eat-=dt;const g=e.eatT;if(e.eat<=0){e.eat=0;e.eatT=null;if(g&&g.hp>0&&S.enemies.includes(g)){S.enemies.splice(S.enemies.indexOf(g),1);e.hp=Math.min(e.max,e.hp+e.max*GLOTH);e.eatN=(e.eatN||0)+1;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:1*K,col:'#9fe07a'});}e.eatc=1.5;}return;}
+function devourTick(e,dt){if(e.eat>0){e.eat-=dt;const g=e.eatT;if(e.eat<=0){e.eat=0;e.eatT=null;if(g&&g.hp>0&&S.enemies.includes(g)){S.enemies.splice(S.enemies.indexOf(g),1)/* sin oro: no pasa por achDeath */;const h0=e.hp;e.hp=Math.min(e.max,e.hp+e.max*GLOTH);e.healB=1.2;e.healN=Math.round(e.hp-h0);e.eatN=(e.eatN||0)+1;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:1*K,col:'#9fe07a'});}e.eatc=1.5;}return;}
  if(e.eatc>0){e.eatc-=dt;return;}if((e.eatN||0)>=GLOTN||e.hp>=e.max*.5)return;let b=null,bd=GLOTR;
  for(const o of S.enemies){if(o===e||o.hp<=0||!GOBS.includes(o.t)||isFly(o))continue;const d=Math.hypot(o.x-e.x,o.y-e.y);if(d<=bd){bd=d;b=o;}}
  if(b){e.eat=1;e.eatT=b;e.fsp=0;}else e.eatc=.5;}
@@ -77,7 +77,11 @@ function t3Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
    if(low){g.fillStyle='rgba(255,240,160,.35)';g.beginPath();g.arc(px,py,r*1.45,0,7);g.fill();}}
   if(E.ferry&&e.fcar>0){if(e.fdX!=null){const x=X(e.fdX),y=X(e.fdY),s=CS*1.1;g.strokeStyle='rgba(255,90,60,.8)';g.lineWidth=lw(3);g.beginPath();g.moveTo(x-s,y-s);g.lineTo(x+s,y+s);g.moveTo(x+s,y-s);g.lineTo(x-s,y+s);g.stroke();}
    g.fillStyle='#4a6a2a';g.strokeStyle='#1b1712';g.lineWidth=lw(1);for(let i=0;i<e.fcar;i++){const a=i/e.fcar*6.283+now;g.beginPath();g.arc(px+Math.cos(a)*r*.55,py+Math.sin(a)*r*.35+r*.5,r*.16,0,7);g.fill();g.stroke();}}
-  if(e.eat>0&&e.eatT){const q=e.eatT;g.strokeStyle='rgba(150,220,100,.9)';g.lineWidth=lw(2.5);g.beginPath();g.moveTo(px,py);g.lineTo(X(q.x),X(q.y));g.stroke();g.beginPath();g.arc(X(q.x),X(q.y),CS*.9*(.6+.4*e.eat),0,7);g.stroke();}
+  if(e.eat>0&&e.eatT){const q=e.eatT,qx=X(q.x),qy=X(q.y),k=1-e.eat,R=CS*1.1;g.strokeStyle='rgba(150,220,100,.9)';g.lineWidth=lw(2.5);g.beginPath();g.moveTo(px,py);g.lineTo(qx,qy);g.stroke();
+   // mordisco: dos filas de dientes que se cierran sobre el goblin
+   const o=R*(1-k)*.9;g.fillStyle='#f4ecd8';g.strokeStyle='#1b1712';g.lineWidth=lw(1.4);for(const sg of[-1,1]){g.beginPath();for(let i=0;i<4;i++){const x0=qx-R+i*R/2;g.moveTo(x0,qy+sg*o);g.lineTo(x0+R/4,qy+sg*(o-R*.55));g.lineTo(x0+R/2,qy+sg*o);}g.closePath();g.fill();g.stroke();}}
+  if(e.healB>0){e.healB-=1/60;const a=Math.min(1,e.healB);g.globalAlpha=a;g.fillStyle='#7de05a';g.strokeStyle='#1b1712';g.lineWidth=lw(3);g.font='bold '+Math.round(CS*1.1)+'px sans-serif';g.textAlign='center';const ty=py-r*1.6-(1.2-e.healB)*CS*1.5;g.strokeText('+'+e.healN,px,ty);g.fillText('+'+e.healN,px,ty);g.globalAlpha=1;
+   g.strokeStyle='rgba(125,224,90,'+(.8*a).toFixed(2)+')';g.lineWidth=lw(3);g.beginPath();g.arc(px,py,r*(1.2+(1.2-e.healB)*1.2),0,7);g.stroke();}
   if(e.sacM)for(const m of e.sacM)if(m&&m.hp>0){const k=1-(e.sacW||0);g.strokeStyle='rgba(220,40,50,'+(.5+.5*k).toFixed(2)+')';g.lineWidth=lw(2.5);g.beginPath();g.arc(X(m.x),X(m.y),CS*(1.4-.5*k),0,7);g.stroke();g.beginPath();g.moveTo(px,py);g.lineTo(X(m.x),X(m.y));g.stroke();}
   if(E.rage){g.fillStyle='rgba(220,60,40,.07)';g.strokeStyle='rgba(220,60,40,.45)';g.lineWidth=lw(1.4);g.beginPath();g.arc(px,py,RAGER*CS,0,7);g.fill();g.stroke();
    for(const o of S.enemies)if(o.hp>0&&!isFly(o)&&o!==e&&Math.hypot(o.x-e.x,o.y-e.y)<=RAGER){g.strokeStyle='rgba(255,200,120,.35)';g.lineWidth=lw(1);g.beginPath();g.moveTo(px,py);g.lineTo(X(o.x),X(o.y));g.stroke();}

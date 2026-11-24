@@ -39,7 +39,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   const g2=pon('i05guardian',TR[M],1),g3=pon('i05guardian',TR[M+1],1);run(.2);hurt(g3,1e9,null,'phys');run(.2);out.guardianNoSeProtege=!S.enemies.includes(g3);}
  // ---------- Ogro glotón ----------
  limpio();{const og=pon('i33gloton',TR[M],1),gb=pon('sling',TR[M+2],1),gb2=pon('fast',TR[M+3],1),gb3=pon('fast',TR[M+4],1);run(.5);out.glotonNoCome=S.enemies.includes(gb)&&!(og.eat>0);
-  og.hp=og.max*.4;const ok=run(1,()=>og.eat>0);const x0=og.x,y0=og.y;run(1.1);out.gloton=ok&&og.hp>og.max*.69&&og.hp<og.max*.71&&S.enemies.filter(e=>GOBS.includes(e.t)).length===2;
+  const g0=S.gold;og.hp=og.max*.4;const ok=run(1,()=>og.eat>0);const x0=og.x,y0=og.y;run(1.1);out.glotonSinOro=S.gold===g0;out.gloton=ok&&og.hp>og.max*.69&&og.hp<og.max*.71&&S.enemies.filter(e=>GOBS.includes(e.t)).length===2;
   og.hp=og.max*.4;run(3);og.hp=og.max*.4;run(3);out.glotonMax=og.eatN===2&&S.enemies.filter(e=>GOBS.includes(e.t)).length===1;}
  // ---------- Sacrificador ----------
  limpio();{const sc=pon('i34sacrificador',TR[M],1),m1=pon('minion',TR[M+1],1),m2=pon('minion',TR[M+2],1);sc.sacC=0;const mk=run(1,()=>!!sc.sacM);run(1.1);

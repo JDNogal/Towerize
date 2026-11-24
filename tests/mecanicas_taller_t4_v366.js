@@ -50,5 +50,11 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   out.escupidor=ch&&den.length>=1&&den.every(s=>{const i=B.sd.indexOf(s);return h1[i]-s.hp>ET.i42escupidor.ud*.8;});
   for(const s of B.sd){s.x=p.x+5;s.lock=true;}const h2=B.sd.map(s=>s.hp);es.spc=99;for(let i=0;i<20;i++){for(const s of B.sd)s.x=p.x+5;update(.05);}out.escupidorApartar=B.sd.every((s,i)=>s.hp>=h2[i]-.01);
   run(SPITT);out.charcoSeca=!S.tmp2.length;}
+ // las avispas se reparten entre las unidades
+ limpio();for(const s of B.sd){s.hp=s.max=9999;s.rt=0;s.ps=[];}run(1.2);{const fl=B.flag||B,q=pathNear(fl.x,fl.y),av=[];for(let i=0;i<6;i++){const a=pon('i38avispa',q,1);a.hp=a.max=1e6;a.wcd=0;av.push(a);}
+  update(.05);const tg=new Set(av.filter(a=>a.wsp).map(a=>a.wsp.s));out.avispasReparten=tg.size===Math.min(3,B.sd.filter(s=>s.hp>0).length);}
+ // el Escupidor alado se para mientras tiene unidades a tiro
+ limpio();for(const s of B.sd){s.hp=s.max=9999;s.rt=0;}run(1.2);{const fl=B.flag||B,es=pon('i42escupidor',pathNear(fl.x,fl.y));es.hp=es.max=1e6;run(.3);const x0=es.x,y0=es.y;run(1.5);out.escupidorSePara=Math.hypot(es.x-x0,es.y-y0)<.05;
+  for(const s of B.sd){s.hp=0;s.rt=999;}run(.3);const x1=es.x;run(1);out.escupidorSigue=Math.hypot(es.x-x1,es.y-es.y)>.5||Math.abs(es.y-y0)>.5;}
  return out;});
 const bad=Object.keys(r).filter(k=>r[k]!==true&&!/V$/.test(k));console.log(JSON.stringify(r));console.log(bad.length?'FALLA: '+bad.join(', '):'mecanicas_taller_t4 ok');console.log(errs.length?'ERRS '+JSON.stringify(errs.slice(0,5)):'ERRS []');await b.close();process.exit(bad.length||errs.length?1:0);})();

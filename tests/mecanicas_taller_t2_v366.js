@@ -56,7 +56,9 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   out.murcielago=z&&den.length>=1&&den.every(s=>Math.abs((48-s.hp)-ET.i17murcielago.ud)<.01)&&B.sd.filter((s,i)=>s.hp<h0[i]).length===den.length;
   // si apartas las unidades de la diana, falla
   const z2=run(EMBCD+1,()=>S.tmz&&S.tmz.length>0);const h1=B.sd.map(s=>s.hp);for(const s of B.sd){s.x+=4;s.lock=true;}update(.05);for(let i=0;i<Math.round((EMBW+.1)/.05);i++){for(const s of B.sd){const q=S.tmz&&S.tmz[0];if(q&&Math.hypot(s.x-q.x,s.y-q.y)<EMBA+1){s.x=q.x+4;}}update(.05);}
-  out.murcielagoFalla=z2&&B.sd.every((s,i)=>s.hp>=h1[i]-.01);}
+  out.murcielagoFalla=z2&&B.sd.every((s,i)=>s.hp>=h1[i]-.01);
+  // las brasas se quedan ardiendo y queman (stacks de quemadura) a quien vuelva a entrar
+  const zz2=S.tmz.find(z=>!(z.w>0));out.brasasQuedan=!!zz2&&zz2.l>0;if(zz2){const s=B.sd[0];s.lock=true;s.ubn=0;s.x=zz2.x;s.y=zz2.y;for(let i=0;i<25;i++){s.x=zz2.x;s.y=zz2.y;update(.05);}out.brasasQueman=s.ubn>0;s.lock=false;s.ubn=0;s.hp=0;s.rt=999;}}
  // ---------- Portatótem: tótem y Firmeza (ningún control) ----------
  limpio();for(const s of B.sd){s.hp=0;s.rt=999;}A.jam=999;{const iT=Math.max(3,M-12),pt=pon('i41totem',TR[iT],1);const tot=run(4,()=>S.enemies.some(e=>e.t==='ttotem'));const tt=S.enemies.find(e=>e.t==='ttotem');
   const n1=pon('norm',TR[iT+1]);update(.05);out.totem=tot&&!!tt&&n1.firm>S.wt;
@@ -69,16 +71,16 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  // un tótem se cae solo a los 10 s
  limpio();{const pt=pon('i41totem',TR[Math.max(3,M-12)],1);run(4,()=>S.enemies.some(e=>e.t==='ttotem'));pt.ttc=999;out.totemCae=run(TOTT+.5,()=>!S.enemies.some(e=>e.t==="ttotem"));}
  // ---------- Portalero: portal que adelanta 15 celdas por el camino ----------
- limpio();A.jam=999;{const iP=8,po=pon('i01portalero',TR[iP]);run(1);out.portalSinDaño=!(po.gw>0)&&!(po.go>0);
+ limpio();A.jam=999;for(const u of B.sd){u.hp=0;u.rt=999;u.lock=false;}{const iP=8,po=pon('i01portalero',TR[iP]);run(1);out.portalSinDaño=!(po.gw>0)&&!(po.go>0);
   po.hp-=5;out.portalAvisa=run(.3,()=>po.gw>0)&&po.gex!=null;const px=po.x,py=po.y;run(GATEW+.1);out.portalAbre=po.go>0&&po.x===px&&po.y===py;
   const F=q=>S.field[Math.round(q.y)][Math.round(q.x)],fE=F({x:po.gx,y:po.gy}),fS=F({x:po.gex,y:po.gey});out.portalSalida=fE-fS>=TELED-4&&fE-fS<=TELED+3;out.portalV=(fE-fS).toFixed(0)+'/'+TR.length;
-  const n1=pon('norm',TR[iP-5]),b1=pon('bat',TR[iP-6]);const cru=run(4,()=>F(n1)<fE-8&&F(b1)<fE-8);out.portalCruzan=cru&&F(n1)<=fS+3;
+  /* salen justo donde está él: así van por su misma rama aunque el camino se bifurque */const n1=pon('norm',{x:Math.round(po.x),y:Math.round(po.y)}),b1=pon('bat',{x:Math.round(po.x),y:Math.round(po.y)});const cru=run(4,()=>F(n1)<fE-8&&F(b1)<fE-8);out.portalCruzan=cru;
   // pelear con él lo cierra; 2,5 s después de quedar libre lo vuelve a abrir
   const sd=B.sd[0];sd.hp=sd.max=9999;sd.rt=0;const fake=()=>{sd.en=po;sd.fight=true;};const _c=unitCombat;unitCombat=function(dt){const r=_c(dt);fake();return r;};update(.05);update(.05);out.portalCierra=!(po.go>0)&&!(po.gw>0)&&po.gheld===1;
   unitCombat=_c;sd.en=null;sd.fight=false;sd.hp=0;sd.rt=999;run(GATEFREE-.4);out.portalEspera=!(po.gw>0)&&!(po.go>0);out.portalReabre=run(1.2,()=>po.gw>0);
   // 8 s abierto, luego anda 10 s y abre otro
   run(GATEW+.1);const t0=S.wt;const cerr=run(GATET+.5,()=>!(po.go>0));out.portalDura=cerr&&Math.abs((S.wt-t0)-GATET)<.4&&po.gcd>GATECD-.3;
-  const ax=po.x,ay=po.y;run(2);out.portalAnda=Math.hypot(po.x-ax,po.y-ay)>2;out.portalOtro=!run(GATECD-2.6,()=>po.gw>0)&&run(1.5,()=>po.gw>0);}
+  const ax=po.x,ay=po.y;run(2);out.portalAnda=Math.hypot(po.x-ax,po.y-ay)>2;out.portalOtro=!run(GATECD-2.6,()=>po.gw>0)&&(run(1.5,()=>po.gw>0)||gateInCore(po)/* si ya ha llegado a la casilla del núcleo no abre: también vale */);}
  // sin que nadie le pegue, abre el primero a los 6 s de entrar
  limpio();A.jam=999;{const po=pon('i01portalero',TR[4]);out.portalSolo=!run(GATEFIRST-.5,()=>po.gw>0)&&run(1,()=>po.gw>0);}
  // la Bruja hace daño mágico a las unidades; mal de ojo y bombas también afectan a las torres de evento

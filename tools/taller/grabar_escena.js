@@ -50,11 +50,11 @@ await p.evaluate(async(esc)=>{{const i=document.getElementById('intro');if(i)i.s
  if(esc==='limo'){__sp('i07divisor',2,3000,40);}
  if(esc==='cuervo'){setTimeout(()=>{arr();keep();[[0,0],[450,-1],[450,1],[900,-2],[900,2],[1350,-1],[1350,1]].forEach(([d,l])=>setTimeout(()=>{spawnEnemy('i03directo',P0,{r:0,l,sp:ET.i03directo.sp,sid:'cv'});const e=S.enemies[S.enemies.length-1];e.hp=e.max=400;},d));},9500);}
  if(esc==='sobrecarga'){setTimeout(()=>{const fo=sqForm('qmarea',SQUADS.qmarea.m),sp=Math.min(...fo.map(o=>ET[o.t].sp));for(const o of fo){spawnEnemy(o.t,P0,{r:o.r,l:o.l,sp,sid:'d9',lead:o.lead});const e=S.enemies[S.enemies.length-1];e.hp=e.max=o.t==='i19sobrecarga'?3000:200;}},3000);}
- if(esc==='avispa'){__sp('i38avispa',8,250,300);}
+ if(esc==='avispa'){__sp('i38avispa',8,250,300);setInterval(()=>{for(const t of S.list)if(t.sd)for(const s of t.sd)if(s.hp>0&&s.hp<s.max*.4)s.hp=s.max;},500);}
  if(esc==='caza'){__sp('i45caza',6,700,400);}
  if(esc==='escupidor'){__sp('i42escupidor',2,2500,800);}
  if(esc==='guardian'){__sp('i05guardian',1,1,2500);setTimeout(()=>__sp('norm',8,500,60),300);}
- if(esc==='gloton'){__sp('i33gloton',1,1,900);setTimeout(()=>{const o=S.enemies.find(e=>e.t==='i33gloton');if(o)o.hp=o.max*.56;},4700);setTimeout(()=>__sp('sling',6,450,200),300);}
+ if(esc==='gloton'){__sp('i33gloton',1,1,900);setInterval(()=>{const o=S.enemies.find(e=>e.t==='i33gloton');if(o&&!(o.eat>0)&&o.hp>o.max*.3)o.hp-=o.max*.05;for(const t of S.list)t.jam=9;},400);setTimeout(()=>__sp('sling',6,450,200),300);}
  if(esc==='sacrificador'){__sp('i34sacrificador',1,1,1500);setTimeout(()=>__sp('minion',8,350,900),200);}
  if(esc==='golem'){__sp('i44golem',2,6000,3000);}
  if(esc==='transporte'){__sp('i14transporte',1,1,2000);}

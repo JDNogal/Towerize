@@ -3,9 +3,9 @@
 //  · Microbot: sin mecánica propia (la masa que empuja el Sobrecargador).
 //  · Sobrecargador (ovl): cada 12 s carga a las máquinas de su escuadrón (si va suelto, a las que tiene a 10 celdas). Las cargadas: 4 s +30 % de velocidad y +20 de armadura;
 //    después 4 s recalentadas: −20 % de velocidad y −20 de armadura. Solo afecta a las que haya cargado (Nogal). No rompe la formación.
-//  · Avispa de colmena (sting): cada 3 s pica a tu unidad más cercana (7,5 celdas; también al héroe): su golpe y un stack de veneno (el del Escupidor). Va y vuelve volando.
+//  · Avispa de colmena (sting): cada 3 s pica a una unidad a 7,5 celdas (también al héroe), repartiéndose: la que tenga menos avispas encima: su golpe y un stack de veneno (el del Escupidor). Va y vuelve volando.
 //  · Caza interceptor (aburn): la primera vez que recibe daño, postcombustión: el doble de rápido 2 s. Solo el que recibe el golpe.
-//  · Escupidor alado (spit2): cada 4 s escupe a tu unidad más cercana (7,5 celdas) y deja un charco de ácido de 2 celdas 4 s: su golpe por segundo a las unidades encima.
+//  · Escupidor alado (spit2): se para mientras tenga unidades a tiro; cada 4 s escupe a tu unidad más cercana (7,5 celdas) y deja un charco de ácido de 2 celdas 4 s: su golpe por segundo a las unidades encima.
 Object.assign(TMEC,{i29microbot:{},i19sobrecarga:{ovl:1},i38avispa:{sting:1},i45caza:{aburn:1},i42escupidor:{spit2:1}});
 const OVLCD=12,OVLT=4,OVHT=4,OVLM=1.3,OVHM=.8,OVLA=20,OVLR=2*K,STGCD=3,STGR=1.5*K,STGV=5*K,ABM=2,ABT=2,SPITCD=4,SPITR=1.5*K,SPITA=2,SPITT=4,SPITW=.5;
 // ---- Sobrecargador ----
@@ -14,17 +14,22 @@ function ovlTick(e,dt){if(e.ovB>0)e.ovB-=dt;e.ovc=(e.ovc===undefined?4:e.ovc)-dt
   if(m===e||(e.sqid&&m.sqid===e.sqid&&((!m.loose&&!e.loose)||near))||(!e.sqid&&near)){m.ovU=u;m.ohU=h;n++;}}
  e.ovB=.8;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:OVLR,col:'#ff5a3a'});}
 // ---- Avispa de colmena ----
+// se reparten: cada avispa va a la unidad con menos avispas encima; a las que ya llevan 3 stacks de veneno solo si no queda otra (Nogal, 24-nov)
+function stingPick(e,SL){let b=null,bs=1e9;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d>STGR)continue;let n=0;for(const o of S.enemies)if(o!==e&&o.wsp&&o.wsp.s===s&&!o.wsp.back)n++;
+  const sc=n*100+((s.ps||[]).length>=3?1000:0)+d;if(sc<bs){bs=sc;b=s;}}return b;}
 function stingTick(e,E,dt,SL){const g=e.wsp;
  if(g){const s=g.s,tx=g.back?g.hx:s.x,ty=g.back?g.hy:s.y,dx=tx-e.x,dy=ty-e.y,d=Math.hypot(dx,dy),st=STGV*dt;
   if(d<=st){e.x=tx;e.y=ty;if(!g.back){if(s.hp>0){hitUnit(s,(E.ud||0)*(typeof udM==='function'?udM(e):1),e);if(typeof uAddPois==='function')uAddPois(s,1.5,e);S.fx.push({x:s.x,y:s.y,t:.25,m:.25,r:.35*K,col:'#c0e04a'});}g.back=1;}else{e.wsp=null;e.wcd=STGCD;}}
   else{e.x+=dx/d*st;e.y+=dy/d*st;}return;}
- e.wcd=(e.wcd===undefined?Math.random()*.4:e.wcd)-dt;/* la primera picada en cuanto tiene una unidad a tiro (antes esperaba 1-3 s y algunas pasaban de largo) */if(e.wcd>0)return;let b=null,bd=STGR;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}
+ e.wcd=(e.wcd===undefined?Math.random()*.4:e.wcd)-dt;/* la primera picada en cuanto tiene una unidad a tiro (antes esperaba 1-3 s y algunas pasaban de largo) */if(e.wcd>0)return;const b=stingPick(e,SL);
  if(b)e.wsp={s:b,hx:e.x,hy:e.y,back:0};else e.wcd=.3;}
 // ---- Escupidor alado ----
-function spitTick(e,E,dt,SL){e.rw=9;/* su ataque son los charcos */e.spc=(e.spc===undefined?2:e.spc)-dt;if(e.spc>0)return;let b=null,bd=SPITR;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}
+// se queda quieto escupiendo mientras tenga unidades a tiro; sin unidades sigue volando (Nogal, 24-nov: distinto del Murciélago, que suelta las brasas al pasar)
+function spitTick(e,E,dt,SL){e.rw=9;/* su ataque son los charcos */let b=null,bd=SPITR;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}
+ e.spAim=!!b;e.spc=(e.spc===undefined?.6:e.spc)-dt;if(e.spc>0)return;
  if(!b){e.spc=.3;return;}e.spc=SPITCD;(S.tmp2=S.tmp2||[]).push({x:b.x,y:b.y,w:SPITW,t:SPITT,d:(E.ud||0)*(typeof udM==='function'?udM(e):1),src:e,x0:e.x,y0:e.y});}
 function puddleTick(dt){if(!S.tmp2||!S.tmp2.length)return;for(const p of S.tmp2){if(p.w>0){p.w-=dt;continue;}p.t-=dt;for(const s of liveUnits())if(Math.hypot(s.x-p.x,s.y-p.y)<=SPITA)hitUnit(s,p.d*dt,p.src);}S.tmp2=S.tmp2.filter(p=>p.w>0||p.t>0);}
-{const _m=move;move=function(e,dt){if(e.wsp)return false;return _m(e,dt);};}
+{const _m=move;move=function(e,dt){if(e.wsp)return false;if(e.spAim&&ET[e.t]&&ET[e.t].spit2)return false;return _m(e,dt);};}
 // ---- tick general ----
 function t4Tick(dt){const SL=liveUnits().filter(s=>!s.charm);puddleTick(dt);
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];if(!E)continue;
@@ -50,7 +55,7 @@ function t4Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
  if(id==='eovl')return '<b>Sobrecarga</b><small>Cada '+OVLCD+' s carga a las máquinas de su escuadrón: '+OVLT+' s un '+Math.round((OVLM-1)*100)+' % más rápidas y con +'+OVLA+' de armadura. Después quedan recalentadas '+OVHT+' s: un '+Math.round((1-OVHM)*100)+' % más lentas y con −'+OVLA+' de armadura.</small>';
  if(id==='esting')return '<b>Aguijón</b><small>Cada '+STGCD+' s se lanza contra tu unidad más cercana (a '+R(STGR)+' o menos), le pica y la envenena, y vuelve con el enjambre.</small>';
  if(id==='eaburn')return '<b>Postcombustión</b><small>La primera vez que recibe daño va el doble de rápido durante '+ABT+' s.</small>';
- if(id==='espit2')return '<b>Charco de ácido</b><small>Cada '+SPITCD+' s escupe a tu unidad más cercana (a '+R(SPITR)+' o menos) y deja un charco de ácido durante '+SPITT+' s: hace daño a las unidades que sigan encima.</small>';
+ if(id==='espit2')return '<b>Charco de ácido</b><small>Se para mientras tenga a tiro alguna unidad tuya. Cada '+SPITCD+' s escupe a la más cercana (a '+R(SPITR)+' o menos) y deja un charco de ácido durante '+SPITT+' s: hace daño a las unidades que sigan encima.</small>';
  return _k(id,src);};}
 {const KW4={ovl:['eovl','Sobrecarga','⚡'],sting:['esting','Aguijón','🐝'],aburn:['eaburn','Postcombustión','🔥'],spit2:['espit2','Charco de ácido','🧪']};   // iconos provisionales: falta dibujarlos (prioritario)
  Object.assign(TMECKW,KW4);if(typeof MECG2!=='undefined')for(const k in KW4)MECG2.push(KW4[k]);
