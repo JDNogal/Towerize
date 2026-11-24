@@ -16,7 +16,7 @@ const r=await p.evaluate(async()=>{const out={};INTRO.on=false;STO.intro=1;OPT.h
  startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
  RL.open=false;S.phase='build';
- for(const p of S.portals){p.sq=['muro'];p.sqm=[{norm:3,custodian:1,sling:2}];p.plan={norm:3,custodian:1,sling:2,fast:0,tank:0,mini:0,elite:0,boss:0,colossus:0};}
+ for(const p of S.portals){p.sq=['muro'];p.sqm=[{norm:3,custodian:1,sling:2}];p.plan={norm:3,custodian:1,sling:2,fast:0,tank:0,mini:0,elite:0,boss:0};}
  startWave();for(const p of S.portals){p.sq=['muro'];p.sqm=[{norm:3,custodian:1,sling:2}];}
  for(let i=0;i<400&&!(S.sqL&&Object.values(S.sqL).length&&S.enemies.length>=6);i++)update(.05);
  const L=Object.values(S.sqL||{})[0];out.leader=!!L&&L.t==='custodian';
@@ -24,7 +24,7 @@ const r=await p.evaluate(async()=>{const out={};INTRO.on=false;STO.intro=1;OPT.h
  if(L){L.hp=0;for(let i=0;i<4;i++)update(.05);}
  out.loose=mates.length>0&&mates.every(e=>e.loose&&e.fsp===0&&e.scat);
  // corro de los demonios: los que rodean a su guía cambian de carril de verdad y no se alejan de él
- S.enemies=[];for(const p of S.portals){p.q=[];p.qf=[];p.sq=['circulo'];p.sqm=[{seal:1,acolyte:3,minion:3}];p.plan={seal:1,acolyte:3,minion:3,norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}
+ S.enemies=[];for(const p of S.portals){p.q=[];p.qf=[];p.sq=['circulo'];p.sqm=[{seal:1,acolyte:3,minion:3}];p.plan={seal:1,acolyte:3,minion:3,norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0};}
  S.phase='build';startWave();for(const p of S.portals.slice(1)){p.q=[];p.qf=[];}
  for(let i=0;i<500&&S.enemies.length<7;i++)update(.05);const Lr=S.enemies.find(e=>e.sqlead&&e.t==='seal');const lanes={};let far=0;
  if(Lr){for(let i=0;i<260;i++){update(.05);for(const e of S.enemies)if(e.sqid===Lr.sqid&&e!==Lr&&e.hp>0){(lanes[S.enemies.indexOf(e)]=lanes[S.enemies.indexOf(e)]||new Set()).add(e.fln);far=Math.max(far,Math.hypot(e.x-Lr.x,e.y-Lr.y));}}}

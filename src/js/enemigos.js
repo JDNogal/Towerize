@@ -51,7 +51,7 @@ Object.assign(FORM,{minion:1,demon:1,dchamp:1,hound:1,raptor:2,seal:2});
 for(const k of['minion','hound','seal'])if(!REGT.includes(k))REGT.push(k);
 // familias del compendio
 EFAM.splice(0,EFAM.length,['Guerreros',['norm','vet','champ']],['Guerreros infernales',['minion','demon','dchamp']],['Rápidos',['fast','runner','hound','raider']],['Tanques',['tank','armored']],['Voladores',['bat','raptor','harpy','griffin']],
- ['A distancia',['sling','javelin']],['Místicos',['acolyte','warlock']],['Apoyo',['custodian','seal','shaman']],['Élites',['mini','elite']],['Jefes',['bob','boss','colossus']],['Lobos',['cub','greyw','bigw']],['Dragones',['momdrg']]);
+ ['A distancia',['sling','javelin']],['Místicos',['acolyte','warlock']],['Apoyo',['custodian','seal','shaman']],['Élites',['mini','elite']],['Jefes',['bob','boss']],['Lobos',['cub','greyw','bigw']],['Dragones',['momdrg']]);
 // ---- escuadras por facción. lead = tipo que hace de líder (si no, el de más vida) ----
 for(const k of Object.keys(SQUADS))if(!SQUADS[k].tut){delete SQUADS[k];delete SQF[k];}
 Object.assign(SQUADS,{

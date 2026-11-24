@@ -9,7 +9,7 @@ function update(dt){
  const iv=Math.max(.3,.7-S.round*.03);
  for(const p of S.portals){p.t-=dt;let gd=0;while(p.q.length&&p.t<=0&&gd++<12){let t=p.q.shift();const fo=p.qf?p.qf.shift():null;if(t==='|'){p.t=SQGAP*Math.max(1,1/(p.lsp||1));continue;}const esc=t.endsWith('#');if(esc)t=t.slice(0,-1);spawnEnemy(t,p,fo);
   // dentro de una formación, la siguiente fila sale cuando esta ha avanzado su distancia (a la velocidad común); las de la misma fila, a la vez
-  const nf=p.qf&&p.qf[0];if(fo){p.lsp=fo.sp;p.t+=nf&&nf.sid===fo.sid?(nf.r-fo.r)*SQROW/fo.sp:iv;}else{p.lsp=0;p.t=(t==='boss'||t==='colossus')?.25:esc?.22:iv;}if(p.t>0)break;}}
+  const nf=p.qf&&p.qf[0];if(fo){p.lsp=fo.sp;p.t+=nf&&nf.sid===fo.sid?(nf.r-fo.r)*SQROW/fo.sp:iv;}else{p.lsp=0;p.t=t==='boss'?.25:esc?.22:iv;}if(p.t>0)break;}}
  S.pools=S.pools.filter(p=>(p.t-=dt)>0);
  for(const q of S.rain){if(!S.list.includes(q.src)){q.left=0;continue;}q.tk-=dt;while(q.tk<=0&&q.left>0){q.tk+=.12;q.left--;const c=S.enemies.filter(e=>e.hp>0&&Math.hypot(e.x-q.x,e.y-q.y)<=q.r);if(c.length){const e=c[Math.floor(Math.random()*c.length)],ty=q.ty||'phys',hit=[e];strike(e,q.dm,q.src,ty,q.pen);
    if(q.ar)for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=q.ar){hurt(o,q.dm*(q.af||1),q.src,ty,q.pen);hit.push(o);}
@@ -112,12 +112,6 @@ function update(dt){
   if(p.cata)cataHit(p);if(p.uab)uabProjHit(p);
   return false;});
  rollTick(dt);czTick(dt);augTick(dt);
- // Coloso · Vástagos: al perder cada 25% de su vida, un trozo se desprende y se convierte en 2 Mini-élites (los trozos salen volando hasta su sitio)
- for(const e of S.enemies.slice())if(e.t==='colossus'&&e.hp>0){e.calls=e.calls||0;
-  while(e.calls<3&&e.hp<=e.max*(1-.25*(e.calls+1))){e.calls++;see('en','mini');const mh=ehpOf('mini',S.round),tr=e.trail||[];
-   for(let i=0;i<2;i++){const pt=tr.length>i+1?tr[tr.length-1-i]:[e.tx,e.ty],m={t:'mini',x:pt[0],y:pt[1],tx:pt[0],ty:pt[1],trail:tr.slice(0,Math.max(0,tr.length-1-i)),hp:mh,max:mh,fx:{},src:null};
-    S.enemies.push(m);S.fx.push({frag:1,x0:e.x,y0:e.y,x:pt[0],y:pt[1],t:.45,m:.45,col:ET.colossus.col,sd:Math.random()});}
-   S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:1.2*K,col:'#c0304a'});}}
  wolfTick(dt);dragonAdults(dt);guildHeal(dt);furyTick();orbTick(dt);heroAbTick(dt);mechaTick(dt);achTick(dt);logTick(dt);if(typeof e2TowersTick==='function')e2TowersTick(dt);if(typeof bufoTick==='function')bufoTick(dt);
  let bossDead=false;
  S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(!e.leak)S.wk=(S.wk||0)+1;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=250)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);

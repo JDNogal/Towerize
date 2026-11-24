@@ -26,7 +26,7 @@ const MECUSE={burn:['tw:sala','tw:flame','tw:monk','hr:yrsa'],poison:['tw:poison
  sticky:['tw:cata'],flam:['tw:cata'],wet:['tw:augur'],cursed:['tw:orb'],poly:['tw:orb'],fear:['tw:orb'],mark:['tw:arrow'],prey:['hr:sylvana'],inf:['tw:nano'],lmk:['tw:bunker'],vc:['tw:laser'],
  racha:['tw:arrow:xbow'],concen:['tw:bunker:nido'],pres:['tw:cata:ogre'],resv:['tw:frost:vent'],botin:['tw:guild'],
  chain:['tw:tesla'],beam:['tw:orb','tw:laser'],push:['tw:sonic','tw:cannon','tw:wood'],mag:['tw:bunker'],
- dodge:['en:raider'],steal:['en:raider'],pierce:['en:javelin'],curse:['en:warlock'],eheal:['en:shaman'],aura:['en:custodian'],fly:['en:bat','en:harpy','en:griffin'],bres:['en:boss','en:colossus']};
+ dodge:['en:raider'],steal:['en:raider'],pierce:['en:javelin'],curse:['en:warlock'],eheal:['en:shaman'],aura:['en:custodian'],fly:['en:bat','en:harpy','en:griffin'],bres:['en:boss']};
 // v334: habilidades de las torres de evento que ya has comprado alguna vez (para «Lo usan»)
 let ABSEEN={};try{ABSEEN=JSON.parse(localStorage.getItem('rt-abseen'))||{};}catch(e){}
 const abSee=id=>{if(ABSEEN[id])return;ABSEEN[id]=1;try{localStorage.setItem('rt-abseen',JSON.stringify(ABSEEN));}catch(e){}};
@@ -45,7 +45,7 @@ const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barre
  acolyte:'Resiste la magia y daña a tus unidades con ella: usa daño físico.',warlock:'Embelesa a tus soldados para que luchen contra ti: mátala pronto con torres. El héroe es inmune.',
  shaman:'Cura a los enemigos de alrededor: elimínalo antes que al resto.',custodian:'Su tambor da armadura a los de alrededor: mátalo primero o usa daño mágico.',
  mini:'Mucha vida y daño: concentra el fuego y frénalo.',elite:'Muy resistente y peligroso: prepara daño fuerte y control.',
- boss:'Si llega al núcleo, pierdes. Resiste el control: necesitas mucho daño.',colossus:'Al perder vida suelta mini-élites: guarda daño para ellas.',bob:'Usa tu reliquia cuando esté en tu zona de fuego.',
+ boss:'Si llega al núcleo, pierdes. Resiste el control: necesitas mucho daño.',bob:'Usa tu reliquia cuando esté en tu zona de fuego.',
  cub:'Cachorros rápidos en manada: daño en área.',greyw:'Al bajar de la mitad aúlla y acelera a los lobatos.',bigw:'Derriba barricadas y muros y aparta a tus soldados.',momdrg:'Escupe fuego a tus unidades: mantenlas lejos o usa torres.'};
 if(typeof ETIP2!=='undefined')Object.assign(ETIP,ETIP2);if(typeof MECG2!=='undefined'){const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(...MECG2);}if(typeof MECUSE2!=='undefined')Object.assign(MECUSE,MECUSE2);
 const efamOf=k=>{const f=EFAM.find(([n,l])=>l.includes(k));return f?f[0]:'';};

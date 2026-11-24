@@ -214,6 +214,7 @@
   "eventos_cambio.js",
   "data/guia_img.js",
   "guia_opciones.js",
-  "tamanos.js"
+  "tamanos.js",
+  "taller_aplicar.js"
  ]
 }

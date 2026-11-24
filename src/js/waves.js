@@ -15,13 +15,13 @@ function baseQueue(p,qf){const q=[],f=[],cnt={};
  if(qf){qf.length=0;f.forEach((x,i)=>{if(keep[i])qf.push(x);});}
  return q.filter((t,i)=>keep[i]);}
 // ---- bocadillos de los portales: una fila por escuadra (las iguales seguidas se agrupan con ×N) ----
-const PSPEC=['mini','elite','wanted','greyw','bigw','momdrg','boss','colossus','bob'];let PTAP=null,PTSIG='';
+const PSPEC=['mini','elite','wanted','greyw','bigw','momdrg','boss','bob'];let PTAP=null,PTSIG='';
 const portalAt=c=>S.portals.find(p=>Math.abs(c.x-p.x)<=KC&&Math.abs(c.y-p.y)<=KC)||null;
 function qGroups(list){const gs=[[]];for(let t of list){if(t==='|'){gs.push([]);continue;}t=t.replace('#','');gs[gs.length-1].push(t);}return gs.filter(g=>g.length);}
 function rowOf(g){const o=[];for(const t of g){const r=o.find(x=>x[0]===t);if(r)r[1]++;else o.push([t,1]);}return o;}
 function rowHtml(r){return `<div class="pbr">${r.map(([t,c])=>`<span class="${PSPEC.includes(t)?'pbs':''}"><i style="background:${ET[t==='wanted'?'elite':t].col}"></i>${t==='wanted'?'Élite (encargo)':ET[t].n} <b class="pbc">×${c}</b></span>`).join('')}</div>`;}
 function portalRows(p,lim){
- let gs;if(S.phase==='wave')gs=qGroups(p.q||[]);else{gs=qGroups(baseQueue(p));const sp=[];for(const t of PSPEC)for(let i=0;i<(p.plan[t]||0);i++)sp.push(t);if(sp.length)gs.push(sp);}
+ let gs;if(S.phase==='wave')gs=qGroups(p.q||[]);else{gs=qGroups(baseQueue(p));const sp=[];for(const t of PSPEC)for(let i=0;i<(p.plan[t]||0);i++)sp.push(t);if(sp.length)gs.push(sp);if(p.bsq&&SQUADS[p.bsq]){const bt=SQUADS[p.bsq].boss,m=SQUADS[p.bsq].m,es=[];for(const t in m)if(t!==bt)for(let i=0;i<m[t];i++)es.push(t);if(es.length)gs.push(es);}}
  const tot=gs.reduce((a,g)=>a+g.length,0),pl=(n,s)=>n+' '+s+(n===1?'':'s');
  // en oleada: solo lo que viene ahora (dos escuadras como mucho) y cuántos quedan
  if(S.phase==='wave'){if(!gs.length)return '';const k=lim?1:2,rest=gs.length-k;return (lim?'':`<div class="pbh">Quedan ${pl(tot,'enemigo')} · siguientes:</div>`)+gs.slice(0,k).map(g=>rowHtml(rowOf(g))).join('')+(!lim&&rest>0?`<div class="pbmore">y ${pl(rest,'escuadra')} más</div>`:'');}
@@ -63,15 +63,17 @@ function startWave(){
   for(const t of['mini','elite','greyw','bigw','wanted','momdrg'])for(let i=0;i<(p.plan[t]||0);i++){const cut=[];for(let j=0;j<=p.q.length;j++)if(j===p.q.length||p.q[j]==='|'||!p.qf[j]||(j>0&&p.qf[j-1]&&p.qf[j-1].sid!==p.qf[j].sid))cut.push(j);
    const lo=cut.filter(j=>j>=p.q.length*.5),at=lo.length?lo[Math.floor(Math.random()*lo.length)]:p.q.length;p.q.splice(at,0,t);p.qf.splice(at,0,null);}
   // v305: el jefe (con su escolta) ya no sale el último, cuando el resto ha muerto: entra entre escuadras hacia la mitad de la oleada
-  const blk=[];const add=t=>blk.push(t);
-  if(p.plan.boss)add('boss');for(const bk of(typeof SBALL!=='undefined'?SBALL:[]))if(p.plan[bk])add(bk);if(p.plan.colossus)add('colossus');if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');if(p.plan.bob)add('bob');
+  const blk=[];const add=t=>blk.push(t);let bf=null;
+  /* v366 · jefe con escolta: el escuadrón del jefe (Taller) sale formado, con el jefe de líder y toda la escolta a su paso aunque sea más rápida */
+  if(p.bsq&&SQUADS[p.bsq]&&p.plan[SQUADS[p.bsq].boss]){const bt=SQUADS[p.bsq].boss,fo=sqForm(p.bsq,SQUADS[p.bsq].m);if(fo&&fo.some(o=>o.t===bt)){const sp=ET[bt].sp;bf=fo.map(o=>({r:o.r,l:o.l,sp,sid:'jefe',lead:o.t===bt?1:0}));for(const o of fo)add(o.t);}}
+  if(!bf){if(p.plan.boss)add('boss');for(const bk of(typeof SBALL!=='undefined'?SBALL:[]))if(p.plan[bk])add(bk);if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');}if(p.plan.bob)add('bob');
   if(blk.length){const cut=[];for(let j=0;j<=p.q.length;j++)if(j===p.q.length||p.q[j]==='|'||!p.qf[j]||(j>0&&p.qf[j-1]&&p.qf[j-1].sid!==p.qf[j].sid))cut.push(j);
    const L=p.q.length,mid=cut.filter(j=>j>=L*.3&&j<=L*.6),at=L<6?L:mid.length?mid[Math.floor(Math.random()*mid.length)]:(cut.filter(j=>j>=L*.3)[0]??L);
-   p.q.splice(at,0,...blk);p.qf.splice(at,0,...blk.map(()=>null));}
+   p.q.splice(at,0,...blk);p.qf.splice(at,0,...blk.map((_,i)=>bf&&bf[i]||null));}
   p.t=0;}
  if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.forks={};S.fbag={};S.fsq={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
  // duración prevista: lo que tarda en salir toda la cola + lo que tarda el enemigo más lento en recorrer el camino más largo
- {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:(t==='boss'||t==='colossus')?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
+ {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:t==='boss'?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
    const ds=S.field&&S.field[p.y]?S.field[p.y][p.x]:60,slow=Math.min(...p.q.filter(t=>t!=='|').map(t=>ET[t==='wanted'?'elite':t.replace('#','')].sp),9);if(ds<1e9)tr=Math.max(tr,ds/Math.max(.1,slow));}
   S.furyAt=sp+tr+60;}
  ui();tutPhase('wave');
@@ -81,7 +83,7 @@ const oldHP=t=>!ET[t].hf,ehpOf=(t,r)=>oldHP(t)?HP0*HPOLD(r)*ET[t].hp:ET[t].hf*hp
 function spawnEnemy(t,p,fo){
  let wanted=0;if(t==='wanted'){t='elite';wanted=1;}
  see('en',t);if(ET[t].fly&&!S.tut)hint('fly','Enemigos voladores','Los enemigos <b>voladores</b> no se pueden bloquear y no les afecta nada que golpee el suelo. El resto de tus ataques sí les dan.');
- const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus'||(ET[t]&&ET[t].story))&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%K)-KC;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
+ const hp=ehpOf(t,S.round)*((t==='boss'||(ET[t]&&ET[t].story))&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%K)-KC;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
  const dest=p.split?p.split[(p.si=(p.si||0)+1)%p.split.length]:null;
  // pv: «venía de fuera del portal», para que el primer paso siga recto hacia dentro y conserve su carril
  S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest,fsp:fo?fo.sp:0,sqid:fo?(p.sqn=(p.sqn||0),p.x+'.'+p.y+'.'+S.round+'.'+fo.sid):null,pv:[x+da,y+db]});

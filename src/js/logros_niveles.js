@@ -69,7 +69,7 @@ const twMk=k=>PRG.twm[k]||(PRG.twm[k]={});
 // cada poco: héroe a Nv 10, torre a Nv 4, torres al máximo con su especialización, descubrirlo todo de una era
 const eraAll=era=>{const sn=(t,k)=>!!(SEEN[t]&&SEEN[t][k]),E=x=>(x&&x.era||1)===era;
  return Object.keys(HEROES).filter(h=>E(HEROES[h])).every(h=>sn('hr',h))&&Object.keys(TW).filter(k=>E(TW[k])&&!TW[k].hidden&&!TW[k].summ&&(TW[k].cost!=null||TW[k].uniq)).every(k=>sn('tw',k))
-  &&Object.keys(ET).filter(k=>E(ET[k])&&!ET[k].hidden&&!ET[k].call).every(k=>sn('en',k))&&RELICS.filter(r=>E(r)).every(r=>sn('rl',r.id));};
+  &&Object.keys(ET).filter(k=>E(ET[k])&&!ET[k].hidden).every(k=>sn('en',k))&&RELICS.filter(r=>E(r)).every(r=>sn('rl',r.id));};
 setInterval(()=>{try{if(!prgOn()||!S.list)return;if(S.hero&&S.hero.lvl>=10)achieve('h10');try{if(typeof pigHouses==='function'&&pigHouses().every(h=>h))achieve('pigs');}catch(_){}let ch=0;
  for(const t of S.list){if(t.lvl>=4&&!t.hero&&!t.summ&&!t.pigU)achieve('tw4');if(twMaxOK(t)){const m=twMk(t.type),key=t.spec?'s_'+t.spec:'s_nv4';if(!m[key]){m[key]=1;ch=1;}}}
  if(ch)prgSave();}catch(e){}},1500);

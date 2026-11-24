@@ -7,7 +7,7 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
  const setup=(era,hero)=>{let sol=[];for(let tr=0;tr<8&&sol.length<2;tr++){ERA=era;OPT.u_era=1;startGame(15);chooseHero(hero);if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
   for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
   RL.open=false;S.phase='build';S.gold=99999;S.deck=['arrow','bastion'];sol=[];for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===1&&!S.occ[x+','+y]){const q=sqOf(x,y);if(q.x===x&&q.y===y)sol.push([x,y]);}}
-  for(const p of S.portals){p.sq=[];p.sqm=[];p.plan={norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}S.round=15;startWave();S.enemies=[];return sol;};
+  for(const p of S.portals){p.sq=[];p.sqm=[];p.plan={norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0};}S.round=15;startWave();S.enemies=[];return sol;};
  // Rey Goblin
  const sol=setup(1,'reinhart');S.tsel='bastion';build(sol[0][0],sol[0][1]);const bt=S.list[S.list.length-1];S.phase='wave';
  spawnEnemy('boss',S.portals[0],null);const k=S.enemies.find(e=>e.t==='kgob');out.kgob=!!k;out.porters=S.enemies.filter(e=>e.t==='porter').length===4;out.isBoss=!!k&&isBoss(k);

@@ -7,7 +7,7 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
  startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
  RL.open=false;S.phase='build';S.round=8;
- for(const p of S.portals){p.sq=[];p.sqm=[];p.plan={norm:0,fast:0,tank:0,custodian:0,mini:1,elite:1,boss:0,colossus:0};}
+ for(const p of S.portals){p.sq=[];p.sqm=[];p.plan={norm:0,fast:0,tank:0,custodian:0,mini:1,elite:1,boss:0};}
  startWave();for(let i=0;i<600&&S.enemies.length<2;i++)update(.05);out.e1=S.enemies.map(e=>e.t);out.v1=S.enemies.length>0&&S.enemies.every(e=>['troll','hknight','warlord','wander'].includes(e.t));
  const P=S.enemies[0]||{x:5,y:5,tx:5,ty:5};S.enemies=[];const mk=t=>{const e={t,x:P.x,y:P.y,tx:P.tx,ty:P.ty,hp:100,max:200,fx:{}};S.enemies.push(e);return e;};
  const tr=mk('troll');for(let i=0;i<21;i++)eliteTick(.05);out.regen=tr.hp>100;tr.hp=100;tr.bn=3;for(let i=0;i<21;i++)eliteTick(.05);out.noregen=tr.hp===100;S.enemies=[];
@@ -21,7 +21,7 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
  const br=mk('brood');achDeath(br);eliteTick(.05);out.burst=S.enemies.filter(e=>e.t==='stalk').length===8;
  ERA=2;OPT.u_era=1;startGame(15);chooseHero('vega');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
- RL.open=false;S.phase='build';S.round=8;for(const p of S.portals){p.sq=[];p.sqm=[];p.plan={norm:0,fast:0,tank:0,custodian:0,mini:1,elite:1,boss:0,colossus:0};}
+ RL.open=false;S.phase='build';S.round=8;for(const p of S.portals){p.sq=[];p.sqm=[];p.plan={norm:0,fast:0,tank:0,custodian:0,mini:1,elite:1,boss:0};}
  startWave();for(let i=0;i<600&&S.enemies.length<2;i++)update(.05);out.e2=S.enemies.map(e=>e.t);out.v2=S.enemies.length>0&&S.enemies.some(e=>['infil','mutant','brood','carrier'].includes(e.t))&&!S.enemies.some(e=>['troll','hknight','warlord','wander'].includes(e.t));
  out.kw=['regen','shield','banner','tele','camo','adapt','burst','launch'].every(k=>kwHtml0(k,'').includes('<b>'));
  return out;});

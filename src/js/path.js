@@ -108,7 +108,7 @@ function placePiece(bx,by){
  /* v305: si la pieza cierra el camino y ya hay un portal en medio, no se abre otro de relleno en la pieza */if(S.ends.some(e=>e.mid)&&S.ends.some(e=>e.fake))S.ends=S.ends.filter(e=>!e.fake);
  /* v305: si la pieza cierra el camino (sin extremo propio), el jefe sale del portal de en medio y no de un portal aparte solo para él */const boss=bossRound(S.round)?(S.ends.find(e=>e.nw&&!e.fake)||S.ends.find(e=>e.mid)||S.ends[0]||any):null;
  makePortals(boss);S.phase='build';if(solF&&showSolarFocus(bx,by)){S.tut.solf=1;FO.after=()=>setTimeout(()=>tutPhase('build'),0);}else setTimeout(()=>tutPhase('build'),0);
- S.msg=(S.round===ROUNDS&&ROUNDS===30?'¡Se ha abierto un portal enorme… algo peor que el jefe se acerca! ':bossRound(S.round)?'¡Se ha abierto el portal del jefe! ':'')+(ELITES[S.round]&&!bossRound(S.round)?'Esta ronda trae '+Object.entries(ELITES[S.round]).map(([t,n])=>n+' '+ET[t].n.toLowerCase()).join(' y ')+'.':'');ui();
+ S.msg=(bossRound(S.round)?'¡Se ha abierto el portal del jefe! ':'')+(ELITES[S.round]&&!bossRound(S.round)?'Esta ronda trae '+Object.entries(ELITES[S.round]).map(([t,n])=>n+' '+ET[t].n.toLowerCase()).join(' y ')+'.':'');ui();
  pieceWarn(p);S.lastBk=bx+','+by;
  if(S.hero)hint('hero','Tu héroe',HEROTXT,tgEl('#mbr .hpport'));
  if(S.chests[bx+','+by]){delete S.chests[bx+','+by];S.chOpen=(S.chOpen||0)+1;if(S.chOpen>=3&&S.round<7&&!S.tut)achieve('treasure');openRelic();RL.fromChest=!!(RL.open&&RL.choices&&RL.choices.length);}
@@ -194,14 +194,15 @@ function posFocus(){
 function makePortals(boss){
  if(S.tut)boss=null;const sqs=S.tut?(TUTW[S.round]||['patrol']):waveSquads(S.round),X=sqs.reduce((a,k)=>a+sqN(k),0);
  let k=S.ends.length;while(k>1&&X/k<MINP)k--;/* v334: a partir del 40 % de la partida, si el camino tiene al menos dos extremos, salen por dos portales como mínimo */if(!S.tut&&S.round>=Math.ceil(ROUNDS*.4))k=Math.max(k,Math.min(2,S.ends.length));
- const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],split:e.split||null,si:0,ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0},q:[],t:0});
+ const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],split:e.split||null,si:0,ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0},q:[],t:0});
  /* los portales de tramo muerto siempre se abren (si no, ese tramo seguiría sin usarse) */const mids=S.ends.filter(e=>e.mid),rest=S.ends.filter(e=>!e.mid),ps=rest.slice(0,Math.max(1,k-mids.length)).concat(mids).map(mk);
- sqs.forEach((sq,i)=>{const q=ps[i%ps.length];(q.sq=q.sq||[]).push(sq);const tr=typeof sqTierOf==='function'?sqTierOf(i,sqs.length,S.round):0,m=typeof sqTierM==='function'?sqTierM(sq,tr,S.round):sqM(sq);(q.sqt=q.sqt||[]).push(tr);(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});
+ sqs.forEach((sq,i)=>{const q=ps[i%ps.length];const tr=typeof sqTierOf==='function'?sqTierOf(i,sqs.length,S.round):0,vk=!S.tut&&typeof sqVer==='function'?sqVer(sq,tr,S.round):null,m=typeof sqTierM==='function'?sqTierM(sq,tr,S.round):sqM(sq);/* v366: si el escuadrón tiene versiones diseñadas, a la cola va la clave de su versión (con su formación) */(q.sq=q.sq||[]).push(vk||sq);(q.sqt=q.sqt||[]).push(tr);(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});
  if(S.tut&&S.round===10)ps[0].plan.bob=1;
  if(!boss&&!S.tut&&ELITES[S.round])for(const t in ELITES[S.round])ps[0].plan[t]+=ELITES[S.round][t];
  for(const sc of S.sched||[])if(sc.r===S.round)for(const k in sc.add)ps[0].plan[k]=(ps[0].plan[k]||0)+sc.add[k];
- if(boss){let q=ps.find(q=>q.x===boss.x&&q.y===boss.y);if(!q){q=mk(boss);ps.push(q);}q.plan[ROUNDS===30&&S.round===30?'colossus':(typeof storyBoss==='function'&&!S.tut?storyBoss():'boss')]=1;
-  /* jefe final: sale con su escolta (una escuadra grande pegada a él) */if(S.round===ROUNDS&&!S.tut){const E=q.esc=[];const B=(S.era===2?['brutep','techm','auto','brutep','drone','weaver','auto','drone','brutep','auto']:['tank','custodian','norm','tank','norm','custodian','norm','norm','tank','norm']),n=Math.min(B.length,6+Math.floor(ROUNDS/5));for(let i=0;i<n;i++){const u=promote(B[i],S.round);E.push(u);q.plan[u]=(q.plan[u]||0)+1;}}}
+ if(boss){let q=ps.find(q=>q.x===boss.x&&q.y===boss.y);if(!q){q=mk(boss);ps.push(q);}/* v366: el Coloso ya no existe; la ronda 30 de las partidas largas trae al jefe de historia de la era, más fuerte (bossB y la vida por ronda) */q.plan[typeof storyBoss==='function'&&!S.tut?storyBoss():'boss']=1;
+  /* v366: si el jefe tiene su escuadrón con escolta (Taller), sale formado con él en todas sus rondas; la escolta genérica de la última ronda queda para los jefes que no lo tienen */{const bt=typeof storyBoss==='function'&&!S.tut?storyBoss():'boss',bk=!S.tut&&Object.keys(SQUADS).find(k=>SQUADS[k].boss===bt);if(bk)q.bsq=bk;}
+  /* jefe final: sale con su escolta (una escuadra grande pegada a él) */if(S.round===ROUNDS&&!S.tut&&!q.bsq){const E=q.esc=[];const B=(S.era===2?['brutep','techm','auto','brutep','drone','weaver','auto','drone','brutep','auto']:['tank','custodian','norm','tank','norm','custodian','norm','norm','tank','norm']),n=Math.min(B.length,6+Math.floor(ROUNDS/5));for(let i=0;i<n;i++){const u=promote(B[i],S.round);E.push(u);q.plan[u]=(q.plan[u]||0)+1;}}}
  {const cap=S.round<14?1:S.round<=15?2:2+Math.floor((S.round-15)/5);let n=0;for(const q of ps)for(const m of (q.sqm||[])){const g=m.griffin||0;if(!g)continue;const ok=Math.min(g,cap-n),ex=g-ok;n+=ok;m.griffin=ok;if(ex){m.harpy=(m.harpy||0)+ex;q.plan.griffin-=ex;q.plan.harpy=(q.plan.harpy||0)+ex;}}}
  S.portals=ps;
 }

@@ -45,9 +45,15 @@ const SQF={
  coven:[[['norm',0,-1],['norm',0,0],['norm',0,1],['acolyte',1.4,-1],['acolyte',1.4,1],['warlock',2,0],['acolyte',2.8,0]]],
  stampede:[[['fast',0,0],['fast',1,0],['fast',2,0],['runner',.5,-1],['runner',.5,1],['raider',1.6,-1],['raider',1.6,1]],[['fast',0,0],['runner',1,-1],['runner',1,1],['raider',2,-1],['raider',2,1],['fast',3,-1],['fast',3,1]]]};
 const SQFAM={vet:'norm',champ:'norm',runner:'fast',armored:'tank'},SQROW=1.15;
+/* v366 · escuadrones del Taller de enemigos. Un escuadrón puede llevar:
+   t5:1   → su formación viene del Taller: filas medidas en carriles (1 fila = 1 casilla pequeña) y carriles de -2 a 2;
+   de, nv → es la versión Nv 2 o Nv 3 de otro escuadrón (no se sortea como tema: la elige sqVer);
+   boss   → es el escuadrón de un jefe de historia con su escolta (sale en la ronda del jefe, no se sortea).
+   Valor de un enemigo para el presupuesto de la oleada: su vida × su factor (ET[t].vf: lo que vale de más por su mecánica, por volar o por disparar) + lo que lleva dentro (ET[t].lleva). */
+const enVal=t=>{const E=ET[t];if(!E)return 0;let v=(S&&!S.tut&&E.hf?E.hf:E.hp)*(E.vf||1);if(E.lleva)for(const k in E.lleva)v+=E.lleva[k]*enVal(k);return v;};
 // reparte las unidades reales (m, ya ascendidas) en los huecos de la formación; devuelve [{t,r,l}] ordenado por fila
 function sqForm(k,m){const fs=SQF[k];const units=[];for(const t in m)for(let i=0;i<m[t];i++)units.push(t);if(!fs)return null;
- const f=fs[Math.floor(Math.random()*fs.length)],depth=Math.max(...f.map(s=>s[1]))+1.3,out=[],left=units.slice();
+ const rs=SQUADS[k]&&SQUADS[k].t5?1/SQROW:1,f=fs[Math.floor(Math.random()*fs.length)].map(s=>[s[0],s[1]*rs,s[2]]),depth=Math.max(...f.map(s=>s[1]))+1.3,out=[],left=units.slice();
  for(let c=0;left.length&&c<6;c++){let got=0;for(const[st,r,l]of f){let i=left.indexOf(st);if(i<0)i=left.findIndex(u=>SQFAM[u]===st);if(i<0)i=left.findIndex(u=>SQFAM[st]&&SQFAM[st]===SQFAM[u]);if(i<0)continue;out.push({t:left.splice(i,1)[0],r:r+c*depth,l});got++;}if(!got)break;}
  let r0=out.length?Math.max(...out.map(o=>o.r))+1:0;for(let i=0;i<left.length;i++)out.push({t:left[i],r:r0+Math.floor(i/2),l:i%2?1:-1});
  return out.sort((a,b)=>a.r-b.r||a.l-b.l);}
@@ -55,7 +61,7 @@ function sqForm(k,m){const fs=SQF[k];const units=[];for(const t in m)for(let i=0
 const FORM={raider:0,tank:0,armored:0,norm:1,vet:1,champ:1,fast:1,runner:1,bat:2,harpy:2,griffin:1,custodian:2,shaman:2,javelin:3,sling:3,acolyte:3,warlock:3};
 const REGT=['norm','fast','tank','custodian','sling','javelin','raider','acolyte','warlock','shaman'],SQGAP=1.6;
 const sqSz=()=>S&&!S.tut&&S.round>8?1+.15*(Math.min(S.round,15)-8):1,sqM=k=>{const m=SQUADS[k].m,z=sqSz(),o={};for(const t in m)o[t]=m[t]>=2?Math.round(m[t]*z):m[t];return o;};
-let sqValT=null;const sqVal=k=>sqValT?sqValT(k):Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*(S&&!S.tut&&ET[t].hf?ET[t].hf*promoF(t,S.round):ET[t].hp),0),sqN=k=>Object.values(sqM(k)).reduce((a,b)=>a+b,0);
+let sqValT=null;const sqVal=k=>sqValT?sqValT(k):Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*enVal(t)*(S&&!S.tut&&ET[t].hf?promoF(t,S.round):1),0),sqN=k=>Object.values(sqM(k)).reduce((a,b)=>a+b,0);
 // presupuesto (en «vida de Guerrero») equivalente a la composición antigua, para no romper la dificultad
 let WB=315,WG=1.47,WG2=1.65,WG3=1.38;
 // crecimiento acumulado de la vida total de las oleadas hasta la ronda r (tres tramos)
@@ -68,7 +74,7 @@ const PROMO={norm:[[6,'vet',.3],[9,'vet',.55],[11,'champ',.3],[13,'champ',.55]],
 function promote(t,r){const P=PROMO[t];if(!P||S.tut)return t;let out=t;for(const[r0,u,p]of P)if(r>=r0&&Math.random()<p)out=u;return out;}
 function promoF(t,r){const P=PROMO[t];if(!P)return 1;let v=1;for(const[r0,u,p]of P)if(r>=r0)v+=p*((ET[u].hf||0)/ET[t].hf-1)*.5;return v;}
 function waveSquads(r){
- const av0=Object.keys(SQUADS).filter(k=>SQUADS[k].min<=r&&!SQUADS[k].tut&&(SQUADS[k].era||1)===((S&&S.era)||1)&&(typeof pzOk!=='function'||pzOk(SQUADS[k].pz))),av=av0.filter(k=>!SQUADS[k].once),nt=Math.min(av.length,r<4?1:r<11?2:3),last=S.lastTh||[];
+ const av0=Object.keys(SQUADS).filter(k=>SQUADS[k].min<=r&&!SQUADS[k].tut&&!SQUADS[k].de&&!SQUADS[k].boss&&(SQUADS[k].era||1)===((S&&S.era)||1)&&(typeof pzOk!=='function'||pzOk(SQUADS[k].pz))),av=av0.filter(k=>!SQUADS[k].once),nt=Math.min(av.length,r<4?1:r<11?2:3),last=S.lastTh||[];
  // las escuadras de una sola aparición van aparte: salen siempre en su ronda de estreno y luego a veces, sin ocupar hueco de escuadra
  const ext=av0.filter(k=>SQUADS[k].once&&(SQUADS[k].min===r||Math.random()<.3));
  const fresh=av.filter(k=>SQUADS[k].min===r&&r>1);let th=fresh.slice(0,nt);

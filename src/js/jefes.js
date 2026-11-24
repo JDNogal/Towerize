@@ -1,5 +1,5 @@
 // ---- v293 · Primeros jefes de historia: Rey Goblin (Fantástica) y ARGOS (Distópica) ----
-// Sustituyen al «Jefe» genérico en las rondas de jefe de su era (el Coloso de la ronda 30 se queda igual).
+// Sustituyen al «Jefe» genérico en las rondas de jefe de su era (v366: también en la ronda 30 de las partidas largas; el Coloso ya no existe).
 // · Rey Goblin: va en su trono a hombros de 4 Porteadores (matables). Mientras quede alguno va rápido y lanza «Lluvia de riquezas» a tus unidades;
 //   los tesoros quedan brillando en el camino y, si lo matas, te los quedas. Sin porteadores se cae (atontado 3 s) y sigue a pie, lento, con «Cetrazo real».
 // · ARGOS: invulnerable mientras vivan sus Generadores de escudo, que salen de otros portales con escolta, avanzan despacio con su escolta y le apuntan con un láser.
@@ -13,7 +13,7 @@ const ESVG4={"kgob": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64
  ET.boss.gen=1;}
 const KGP=4,RICHCD=6,RICHR=3.5*K,RICHA=.8*K,FALLT=3,SCEPCD=8,SCEPR=1.3*K,GENN=3,GENWALK=4*K,GENESC=4,GENSP=.7,ARGOSCALL=60;
 let storyBoss=()=>S&&S.era===2?'argos':'kgob';
-{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','argos','gen','bob','colossus'];}
+{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','argos','gen','bob'];}
 for(const k of['kgob','argos','porter','gen'])DNIMP.add(k);DNBOSS.add('kgob');DNBOSS.add('argos');
 for(const k of['kgob','argos'])if(!PSPEC.includes(k))PSPEC.push(k);
 // ---- aparición: el jefe genérico pasa a ser el de la era; con él salen sus porteadores o sus generadores ----
@@ -88,7 +88,7 @@ const ABREG=.015,ABST=[1,.4,.25,.15],ABBLK=.75,STOMPCD=7,STOMPR=1.6*K,STOMPST=1.
 storyBoss=function(){const era=S&&S.era===2?2:1,L=SBOSS[era],pr=era===2?(STO.bb||0):(STO.p||0),fin=S.round>=ROUNDS;
  if(pr>=3){if(!S.sbP){const ix=shuf(L.map((_,i)=>i));S.sbP={one:ix[0],two:ix.slice(0,2).sort((a,b)=>a-b)};}return L[ROUNDS<=15?S.sbP.one:fin?S.sbP.two[S.sbP.two.length-1]:S.sbP.two[0]];}
  const i=Math.min(pr,L.length-1);if(!fin&&pr===0)return 'egroup';return L[fin?i:Math.max(0,i-1)];};
-{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','atroll','argos','gen','forge','bob','colossus'];}
+{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','atroll','argos','gen','forge','bob'];}
 for(const k of['atroll','forge']){DNIMP.add(k);DNBOSS.add(k);if(!PSPEC.includes(k))PSPEC.push(k);}
 function boss2Tick(dt){const SL=liveUnits().filter(s=>!s.charm);
  for(const e of S.enemies){if(e.hp<=0)continue;
@@ -110,7 +110,7 @@ const ESVG6={"alord": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6
 {const B=ET.boss;ET.alord=Object.assign({},B,{n:'Señor del Abismo',col:'#2a0a10',fac:'d',story:1,el:0,gen:0,hf:Math.round(B.hf*1.2),ap:25,am:45,rift:1,penta:1,wings:1});EIC.alord={esvg:ESVG6.alord};
  ET.symb=Object.assign({},B,{n:'El Simbionte',col:'#3a1e4a',fac:'a',story:1,era:2,el:0,gen:0,hf:Math.round(B.hf*1.35),ap:80,am:10,shell:1,pulse:1,core2:1});EIC.symb={esvg:ESVG6.symb};}
 SBOSS[1].push('alord');SBOSS[2].push('symb');SBALL.push('alord','symb');
-{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','atroll','alord','argos','gen','forge','symb','bob','colossus'];}
+{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','atroll','alord','argos','gen','forge','symb','bob'];}
 for(const k of['alord','symb']){DNIMP.add(k);DNBOSS.add(k);if(!PSPEC.includes(k))PSPEC.push(k);}
 const RIFTCD=12,RIFTN=3,PENTCD=18,PENTW=1.5,PENTT=4,PENTR=3*K,WINGT=12,PULSECD=20,PULSEW=1.5,PULSET=3,PULSER=2.5*K,EATCD=6,EATR=1.5*K,EATH=.04,SYREG=.004,SHELL=[80,10],CORE=[10,70];
 // velocidad propia de un enemigo concreto (e.spx): se aplica como una prisa momentánea al moverse

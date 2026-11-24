@@ -15,7 +15,7 @@ mbrkAdd=function(e,a,mx){if(!e||!(a>0)||!(e.hp>0))return;mx=mx||a;e.mbrk=e.mbrk|
 // ---- regeneración de los enemigos fuertes ----
 const RGHIT=2.5,RGEN={};
 for(const[v,L]of[[.003,['champ','dchamp','armored','centu','praet','brute','titan']],[.004,['mini','hknight','greyw','infil','mutant']],
- [.005,['elite','warlord','wander','griffin','momdrg','bigw','brood','carrier','manta']],[.006,['boss','kgob','alord','colossus','bob','forge','symb']]])for(const k of L)if(ET[k])RGEN[k]=v;
+ [.005,['elite','warlord','wander','griffin','momdrg','bigw','brood','carrier','manta']],[.006,['boss','kgob','alord','bob','forge','symb']]])for(const k of L)if(ET[k])RGEN[k]=v;
 const rgPct=v=>String(Math.round(v*1000)/10).replace('.',',')+' %';
 // Emisor de interferencias (pasivo «Sin señal»): los enemigos con la resistencia mágica rota no regeneran
 const sinSenal=e=>!!(S&&S.relics&&S.relics.includes('emisor')&&rp('emisor')&&mbrkOf(e)>0);

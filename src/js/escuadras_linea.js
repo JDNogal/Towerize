@@ -7,11 +7,18 @@
 //  · de élite: lo de la veterana y, además, uno de ellos sube a la tercera fase (como mucho un campeón por escuadra).
 //    Si la escuadra no tiene tercera fase (o aún no toca), sale como la veterana.
 // Los básicos nunca desaparecen. En los tanques, como mucho uno acorazado por escuadra.
-const SQTIER=r=>r<6?[0,0]:r<=8?[.25,0]:r<=12?[.4,.1]:[.45,.2];   // [fracción veterana, fracción de élite]
+/* v366 (Nogal, 23-nov): al principio solo Nv 1; luego algunas Nv 2; después mitad y mitad; luego aparecen pocas Nv 3; al final pocas Nv 1 (de 10 escuadrones: 2 / 4 / 4) */
+const SQTIER=r=>r<6?[0,0]:r<=8?[.25,0]:r<=10?[.5,0]:r<=12?[.45,.15]:r<=14?[.45,.25]:[.4,.4];   // [fracción Nv 2, fracción Nv 3]
+/* v366 · versiones diseñadas en el Taller: si un escuadrón tiene sus Nv 2 y Nv 3 hechas a mano (documentos con «de» y «nv»), la fase ya no se calcula
+   subiendo unidades sueltas: sale el escuadrón de esa versión, entero, con su propia formación. sqVer devuelve su clave (la del Nv 1 si esa versión
+   aún no toca por ronda) o null si el escuadrón no tiene versiones diseñadas (entonces vale el cálculo de siempre) */
+const SQVER={n:-1,m:{}};
+function sqVer(sq,tier,r){const ks=Object.keys(SQUADS);if(SQVER.n!==ks.length){SQVER.n=ks.length;SQVER.m={};for(const k of ks){const q=SQUADS[k];if(q.de&&SQUADS[q.de])(SQVER.m[q.de]=SQVER.m[q.de]||{})[q.nv]=k;}}
+ const V=SQVER.m[sq];if(!V)return null;for(let n=(tier||0)+1;n>=2;n--){const k=V[n];if(k&&SQUADS[k].min<=r)return k;}return sq;}
 const SQTN=['','veterana','de élite'];
 // la línea de cada básico: [segunda fase, ronda desde la que sale], [tercera fase, ronda]
 function lineOf(t){const P=PROMO[t];if(!P)return null;const L=[];for(const[r0,u]of P)if(!L.some(x=>x[0]===u))L.push([u,r0]);return L;}
-function sqTierM(sq,tier,r){const m=Object.assign({},sqM(sq));if(!tier||S.tut)return m;
+function sqTierM(sq,tier,r){{const vk=!S.tut&&sqVer(sq,tier,r);if(vk)return Object.assign({},sqM(vk));}const m=Object.assign({},sqM(sq));if(!tier||S.tut)return m;
  const bases=Object.keys(m).filter(t=>{const L=lineOf(t);return L&&L[0]&&r>=L[0][1];});if(!bases.length)return m;
  const tot=bases.reduce((a,t)=>a+m[t],0);let up=Math.max(1,Math.round(tot/3));const out=Object.assign({},m);
  // reparte los ascensos entre los grupos, de mayor a menor (los tanques, como mucho uno)
@@ -29,5 +36,5 @@ function sqTierOf(i,n,r){const[pv,pe]=SQTIER(r),nE=Math.round(n*pe),nV=Math.roun
  const rank=Array.from({length:n},(_,j)=>j).sort((a,b)=>((a*.6180339887)%1)-((b*.6180339887)%1)).indexOf(i);
  return rank<nE?2:rank<nE+nV?1:0;}
 // valor de una escuadra para el presupuesto: la media de sus versiones en esta ronda
-{const val=m=>Object.entries(m).reduce((a,[t,n])=>a+n*(ET[t].hf||ET[t].hp),0);
+{const val=m=>Object.entries(m).reduce((a,[t,n])=>a+n*enVal(t),0);
  sqValT=k=>{if(!S||S.tut)return Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*ET[t].hp,0);const r=S.round,[pv,pe]=SQTIER(r);return (1-pv-pe)*val(sqTierM(k,0,r))+pv*val(sqTierM(k,1,r))+pe*val(sqTierM(k,2,r));};}

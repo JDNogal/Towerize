@@ -71,15 +71,15 @@ momdrg:{n:'Mamá dragona',hp:17,hf:1300,sp:.6,r:.55,col:'#a8402e',dmg:5,gold:60,
 cub:{n:'Lobato',gold:4,hp:.55,hf:15,sp:1.9,r:.22,col:'#9a8f80',dmg:1,ap:0,am:0,evn:1},
 greyw:{n:'Lobo gris',hp:6,hf:300,sp:.95,r:.4,col:'#7d828a',dmg:3,gold:25,el:1,ap:15,am:15,evn:1,howl:1},
 bigw:{n:'El Lobo',hp:14,hf:1300,sp:.75,r:.52,col:'#4a4540',dmg:5,gold:50,el:1,ap:25,am:25,evn:1,blow:1},
-/* v363: hf = vida fija (Nogal, 20-nov): Lobato como un Goblin, Lobo gris como una mini-élite, El Lobo y Mamá dragona como una élite; Bob, algo menos de la mitad que los demás jefes */colossus:{n:'Coloso',hp:45,sp:.45,r:.68,col:'#4a0d18',dmg:20,gold:150,ap:60,am:60,call:1}};
+/* v363: hf = vida fija (Nogal, 20-nov): Lobato como un Goblin, Lobo gris como una mini-élite, El Lobo y Mamá dragona como una élite; Bob, algo menos de la mitad que los demás jefes */};
 // Combate cuerpo a cuerpo: ud = daño a unidades, ac = enfriamiento, rg = 'melee' | 'ranged' (se detiene al tener una unidad en su alcance), need = soldados necesarios para detenerlo
 const HPOLD=r=>r<=15?Math.pow(HPG,r):Math.pow(HPG,15)*(1+.2*(r-15));
 // vida fija (hf) de los enemigos normales; tutorial y eventos siguen escalando por ronda como antes
-{const HF={"norm": 25, "fast": 15, "tank": 75, "custodian": 50, "sling": 20, "javelin": 90, "raider": 70, "acolyte": 45, "warlock": 110, "shaman": 55, "mini": 300, "elite": 1300, "boss": 13000, "colossus": 20000};for(const k in HF)ET[k].hf=HF[k];}
-const ESTAT={vet:[8,1.2,1],champ:[14,1.3,1],runner:[5,1,1],armored:[14,1.6,2],bat:[2,.8,1],harpy:[4,1,1],griffin:[8,1.2,1],norm:[5,1,1],fast:[3,.6,1],tank:[8,1.5,1],custodian:[2,1.2,1],mini:[10,1.2,1],elite:[18,1.4,2],boss:[35,1.5,3],colossus:[35,1.5,3],bob:[20,1.5,2],cub:[3,.6,1],greyw:[10,1.2,1],bigw:[18,1.4,2],momdrg:[18,1.4,2],sling:[3,.7,1],javelin:[12,2.2,1],raider:[0,1,1],acolyte:[5,1.2,1],warlock:[6,1.4,1],shaman:[3,1.2,1]};
+{const HF={"norm": 25, "fast": 15, "tank": 75, "custodian": 50, "sling": 20, "javelin": 90, "raider": 70, "acolyte": 45, "warlock": 110, "shaman": 55, "mini": 300, "elite": 1300, "boss": 13000};for(const k in HF)ET[k].hf=HF[k];}
+const ESTAT={vet:[8,1.2,1],champ:[14,1.3,1],runner:[5,1,1],armored:[14,1.6,2],bat:[2,.8,1],harpy:[4,1,1],griffin:[8,1.2,1],norm:[5,1,1],fast:[3,.6,1],tank:[8,1.5,1],custodian:[2,1.2,1],mini:[10,1.2,1],elite:[18,1.4,2],boss:[35,1.5,3],bob:[20,1.5,2],cub:[3,.6,1],greyw:[10,1.2,1],bigw:[18,1.4,2],momdrg:[18,1.4,2],sling:[3,.7,1],javelin:[12,2.2,1],raider:[0,1,1],acolyte:[5,1.2,1],warlock:[6,1.4,1],shaman:[3,1.2,1]};
 for(const k in ESTAT)Object.assign(ET[k],{ud:ESTAT[k][0],ac:ESTAT[k][1],need:ESTAT[k][2],rg:'melee'});for(const k of['sling','javelin','acolyte','warlock','shaman'])ET[k].rg='ranged';
 // XP que vale cada enemigo: se reparte entre los héroes según el daño que le hacen (proporción de su vida máxima).
-const XPV={vet:5,champ:12,runner:4,armored:15,bat:1,harpy:5,griffin:14,norm:2,fast:1,tank:4,custodian:3,mini:12,elite:25,boss:60,colossus:150,bob:30,cub:1,greyw:12,bigw:25,momdrg:30,sling:2,javelin:3,raider:3,acolyte:3,warlock:5,shaman:4};for(const k in XPV)ET[k].xp=XPV[k];for(const k in ET)if(ET[k].xp===undefined)ET[k].xp=2;
+const XPV={vet:5,champ:12,runner:4,armored:15,bat:1,harpy:5,griffin:14,norm:2,fast:1,tank:4,custodian:3,mini:12,elite:25,boss:60,bob:30,cub:1,greyw:12,bigw:25,momdrg:30,sling:2,javelin:3,raider:3,acolyte:3,warlock:5,shaman:4};for(const k in XPV)ET[k].xp=XPV[k];for(const k in ET)if(ET[k].xp===undefined)ET[k].xp=2;
 // Niveles de torre: multiplicadores acumulados respecto a Nv 1 (cd = multiplicador del enfriamiento). Coste: Nv 2 = 60% del coste base, Nv 3 = 100%.
 // Curva de potencia: el DPS se multiplica ~2,2× en Nv 2, ~3,8× en Nv 3 y ~5,5× en Nv 4 (antes de habilidades)
 const L4D=3.2,L4H=2.7,LVMAX=3,LV={1:{dmg:1,cd:1,range:1,area:1,hp:1},2:{dmg:1.85,cd:.85,range:1.1,area:1.15,hp:1.6},3:{dmg:2.65,cd:.7,range:1.2,area:1.3,hp:2.2}};

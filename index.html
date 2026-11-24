@@ -3473,15 +3473,15 @@ momdrg:{n:'Mamá dragona',hp:17,hf:1300,sp:.6,r:.55,col:'#a8402e',dmg:5,gold:60,
 cub:{n:'Lobato',gold:4,hp:.55,hf:15,sp:1.9,r:.22,col:'#9a8f80',dmg:1,ap:0,am:0,evn:1},
 greyw:{n:'Lobo gris',hp:6,hf:300,sp:.95,r:.4,col:'#7d828a',dmg:3,gold:25,el:1,ap:15,am:15,evn:1,howl:1},
 bigw:{n:'El Lobo',hp:14,hf:1300,sp:.75,r:.52,col:'#4a4540',dmg:5,gold:50,el:1,ap:25,am:25,evn:1,blow:1},
-/* v363: hf = vida fija (Nogal, 20-nov): Lobato como un Goblin, Lobo gris como una mini-élite, El Lobo y Mamá dragona como una élite; Bob, algo menos de la mitad que los demás jefes */colossus:{n:'Coloso',hp:45,sp:.45,r:.68,col:'#4a0d18',dmg:20,gold:150,ap:60,am:60,call:1}};
+/* v363: hf = vida fija (Nogal, 20-nov): Lobato como un Goblin, Lobo gris como una mini-élite, El Lobo y Mamá dragona como una élite; Bob, algo menos de la mitad que los demás jefes */};
 // Combate cuerpo a cuerpo: ud = daño a unidades, ac = enfriamiento, rg = 'melee' | 'ranged' (se detiene al tener una unidad en su alcance), need = soldados necesarios para detenerlo
 const HPOLD=r=>r<=15?Math.pow(HPG,r):Math.pow(HPG,15)*(1+.2*(r-15));
 // vida fija (hf) de los enemigos normales; tutorial y eventos siguen escalando por ronda como antes
-{const HF={"norm": 25, "fast": 15, "tank": 75, "custodian": 50, "sling": 20, "javelin": 90, "raider": 70, "acolyte": 45, "warlock": 110, "shaman": 55, "mini": 300, "elite": 1300, "boss": 13000, "colossus": 20000};for(const k in HF)ET[k].hf=HF[k];}
-const ESTAT={vet:[8,1.2,1],champ:[14,1.3,1],runner:[5,1,1],armored:[14,1.6,2],bat:[2,.8,1],harpy:[4,1,1],griffin:[8,1.2,1],norm:[5,1,1],fast:[3,.6,1],tank:[8,1.5,1],custodian:[2,1.2,1],mini:[10,1.2,1],elite:[18,1.4,2],boss:[35,1.5,3],colossus:[35,1.5,3],bob:[20,1.5,2],cub:[3,.6,1],greyw:[10,1.2,1],bigw:[18,1.4,2],momdrg:[18,1.4,2],sling:[3,.7,1],javelin:[12,2.2,1],raider:[0,1,1],acolyte:[5,1.2,1],warlock:[6,1.4,1],shaman:[3,1.2,1]};
+{const HF={"norm": 25, "fast": 15, "tank": 75, "custodian": 50, "sling": 20, "javelin": 90, "raider": 70, "acolyte": 45, "warlock": 110, "shaman": 55, "mini": 300, "elite": 1300, "boss": 13000};for(const k in HF)ET[k].hf=HF[k];}
+const ESTAT={vet:[8,1.2,1],champ:[14,1.3,1],runner:[5,1,1],armored:[14,1.6,2],bat:[2,.8,1],harpy:[4,1,1],griffin:[8,1.2,1],norm:[5,1,1],fast:[3,.6,1],tank:[8,1.5,1],custodian:[2,1.2,1],mini:[10,1.2,1],elite:[18,1.4,2],boss:[35,1.5,3],bob:[20,1.5,2],cub:[3,.6,1],greyw:[10,1.2,1],bigw:[18,1.4,2],momdrg:[18,1.4,2],sling:[3,.7,1],javelin:[12,2.2,1],raider:[0,1,1],acolyte:[5,1.2,1],warlock:[6,1.4,1],shaman:[3,1.2,1]};
 for(const k in ESTAT)Object.assign(ET[k],{ud:ESTAT[k][0],ac:ESTAT[k][1],need:ESTAT[k][2],rg:'melee'});for(const k of['sling','javelin','acolyte','warlock','shaman'])ET[k].rg='ranged';
 // XP que vale cada enemigo: se reparte entre los héroes según el daño que le hacen (proporción de su vida máxima).
-const XPV={vet:5,champ:12,runner:4,armored:15,bat:1,harpy:5,griffin:14,norm:2,fast:1,tank:4,custodian:3,mini:12,elite:25,boss:60,colossus:150,bob:30,cub:1,greyw:12,bigw:25,momdrg:30,sling:2,javelin:3,raider:3,acolyte:3,warlock:5,shaman:4};for(const k in XPV)ET[k].xp=XPV[k];for(const k in ET)if(ET[k].xp===undefined)ET[k].xp=2;
+const XPV={vet:5,champ:12,runner:4,armored:15,bat:1,harpy:5,griffin:14,norm:2,fast:1,tank:4,custodian:3,mini:12,elite:25,boss:60,bob:30,cub:1,greyw:12,bigw:25,momdrg:30,sling:2,javelin:3,raider:3,acolyte:3,warlock:5,shaman:4};for(const k in XPV)ET[k].xp=XPV[k];for(const k in ET)if(ET[k].xp===undefined)ET[k].xp=2;
 // Niveles de torre: multiplicadores acumulados respecto a Nv 1 (cd = multiplicador del enfriamiento). Coste: Nv 2 = 60% del coste base, Nv 3 = 100%.
 // Curva de potencia: el DPS se multiplica ~2,2× en Nv 2, ~3,8× en Nv 3 y ~5,5× en Nv 4 (antes de habilidades)
 const L4D=3.2,L4H=2.7,LVMAX=3,LV={1:{dmg:1,cd:1,range:1,area:1,hp:1},2:{dmg:1.85,cd:.85,range:1.1,area:1.15,hp:1.6},3:{dmg:2.65,cd:.7,range:1.2,area:1.3,hp:2.2}};
@@ -4633,7 +4633,7 @@ function toggleOpts(v){const on=v===undefined?!(LB.open&&!LB.cover&&OP.open):v;i
 // heroInfo: ficha del héroe, en ficha_heroe.js (v359)
 function enemyInfo(k){
  const E=ET[k],src='en:'+k,hp=r=>Math.round(E.hf?E.hf*hpR(r):HP0*HPOLD(r)*E.hp);
- return `<div class="ttl"><b><i style="background:${E.col};border-radius:50%"></i>${E.n}</b></div>`+(E.hf?R('chp',kst('ehp','Vida',src),hp(1))+(E.fly?R('',kst('fly','Volador',src),'Sí'):''):(E.call?'':R('chp',kst('ehp','Vida (ronda 1)',src),hp(1)))+R('chp',kst('ehp','Vida (ronda '+(E.call?30:ROUNDS)+')',src),hp(E.call?30:ROUNDS)))+R('cvl',kst('espd','Velocidad',src),f(E.sp/K)+'/s')+R('cd',kst('edmg','Daño al núcleo',src),(['boss','colossus','bob'].includes(k)||E.story)?20:E.dmg)+R('cd',kst('eud','Daño a unidades',src),E.ud)+R('ccl',kst('eac','Enfriamiento',src),f(E.ac)+' s')+R('cg',kst('erg','Rango',src),E.rg==='ranged'?'A distancia':'Melee')+R(DT[E.dt||'phys'].cls,kst('dtype','Tipo de daño',src),kw(DT[E.dt||'phys'].kw,DT[E.dt||'phys'].n,src,'st'))+R('',kst('eblk','Corpulencia',src),E.need)+(E.ap?R('cph',kst('aphys','Armadura',src),armTxt(E.ap)):'')+(E.am?R('cmg',kst('amagic','Resistencia mágica',src),armTxt(E.am)):'')+(()=>{const ef=[];if(E.call)ef.push(kw('call','Vástagos',src));if(E.aura)ef.push(kw('aura','Aura',src)+' +'+E.aura.v+(E.aura.m?' de resistencia mágica · ':' de armadura · ')+RGV(f(E.aura.r/K)));if(E.howl)ef.push(kw('howl','Aullido',src));if(E.blow)ef.push(kw('blow','Soplido',src));if(E.breath)ef.push(kw('breath','Aliento de fuego',src));if(E.pierce)ef.push(kw('pierce','Perforante',src));if(E.dodge)ef.push(kw('dodge','Escurridizo',src));if(E.steal)ef.push(kw('steal','Saqueo',src));if(E.curse)ef.push(kw('curse','Maldición',src));if(E.charm)ef.push(kw('charm','Embeleso',src));if(E.upois)ef.push(kw('poison','Veneno',src)+' a tus unidades · '+f(E.upois)+' por golpe');if(E.regen)ef.push(kw('regen','Sangre de troll',src));if(E.shield)ef.push(kw('shield','Escudo frontal',src));if(E.banner)ef.push(kw('banner','Estandarte',src));if(E.tele)ef.push(kw('tele','Teletransporte',src));if(E.camo)ef.push(kw('camo','Camuflaje',src));if(E.adapt)ef.push(kw('adapt','Adaptación',src));if(E.burst)ef.push(kw('burst','Puesta',src));if(E.launch)ef.push(kw('launch','Hangar',src));if(E.jam)ef.push(kw('jam','Interferencia',src));if(E.splashU)ef.push(kw('arcsh','Disparo en arco',src));if(E.fly&&E.rg==='ranged')ef.push(kw('airatk','Ataque aéreo',src));if(E.sk&&typeof ESK!=='undefined')ef.push(kw(E.sk,ESK[E.sk].n,src));if(E.eheal)ef.push(kw('eheal','Curación tribal',src));if(E.rift)ef.push(kw('rift','Portal del abismo',src));if(E.penta)ef.push(kw('penta','Pentagrama',src));if(E.wings)ef.push(kw('wings','Alas',src));if(E.shell)ef.push(kw('shell','Caparazón',src));if(E.pulse)ef.push(kw('pulse','Pulso',src));if(E.core2)ef.push(kw('core2','Núcleo',src));if(E.abregen)ef.push(kw('regen','Sangre de troll',src));if(E.stomp)ef.push(kw('stomp','Pisotón',src));if(E.line)ef.push(kw('line','Cadena de montaje',src));if(E.throne)ef.push(kw('throne','Trono',src));if(E.riches)ef.push(kw('riches','Lluvia de riquezas',src));if(E.scepter)ef.push(kw('scepter','Cetrazo real',src));if(E.gens)ef.push(kw('gens','Escudo de generadores',src));if(E.anchor)ef.push(kw('anchor','Anclado',src));if(k==='boss'||k==='colossus'||E.story)ef.push(kw('bres','Resistencia a control',src)+' '+Math.round(BOSSRES*100)+'%');return ef.length?R('cf',kst('eeff','Efectos',src),ef.join('<br>')):'';})()+R('gd',kst('egold','Oro por baja',src),E.gold+' 🪙')+R('cf',kst('exv','Experiencia',src),E.xp);
+ return `<div class="ttl"><b><i style="background:${E.col};border-radius:50%"></i>${E.n}</b></div>`+(E.hf?R('chp',kst('ehp','Vida',src),hp(1))+(E.fly?R('',kst('fly','Volador',src),'Sí'):''):R('chp',kst('ehp','Vida (ronda 1)',src),hp(1))+R('chp',kst('ehp','Vida (ronda '+ROUNDS+')',src),hp(ROUNDS)))+R('cvl',kst('espd','Velocidad',src),f(E.sp/K)+'/s')+R('cd',kst('edmg','Daño al núcleo',src),(['boss','bob'].includes(k)||E.story)?20:E.dmg)+R('cd',kst('eud','Daño a unidades',src),E.ud)+R('ccl',kst('eac','Enfriamiento',src),f(E.ac)+' s')+R('cg',kst('erg','Rango',src),E.rg==='ranged'?'A distancia':'Melee')+R(DT[E.dt||'phys'].cls,kst('dtype','Tipo de daño',src),kw(DT[E.dt||'phys'].kw,DT[E.dt||'phys'].n,src,'st'))+R('',kst('eblk','Corpulencia',src),E.need)+(E.ap?R('cph',kst('aphys','Armadura',src),armTxt(E.ap)):'')+(E.am?R('cmg',kst('amagic','Resistencia mágica',src),armTxt(E.am)):'')+(()=>{const ef=[];if(E.aura)ef.push(kw('aura','Aura',src)+' +'+E.aura.v+(E.aura.m?' de resistencia mágica · ':' de armadura · ')+RGV(f(E.aura.r/K)));if(E.howl)ef.push(kw('howl','Aullido',src));if(E.blow)ef.push(kw('blow','Soplido',src));if(E.breath)ef.push(kw('breath','Aliento de fuego',src));if(E.pierce)ef.push(kw('pierce','Perforante',src));if(E.dodge)ef.push(kw('dodge','Escurridizo',src));if(E.steal)ef.push(kw('steal','Saqueo',src));if(E.curse)ef.push(kw('curse','Maldición',src));if(E.charm)ef.push(kw('charm','Embeleso',src));if(E.upois)ef.push(kw('poison','Veneno',src)+' a tus unidades · '+f(E.upois)+' por golpe');if(E.regen)ef.push(kw('regen','Sangre de troll',src));if(E.shield)ef.push(kw('shield','Escudo frontal',src));if(E.banner)ef.push(kw('banner','Estandarte',src));if(E.tele)ef.push(kw('tele','Teletransporte',src));if(E.camo)ef.push(kw('camo','Camuflaje',src));if(E.adapt)ef.push(kw('adapt','Adaptación',src));if(E.burst)ef.push(kw('burst','Puesta',src));if(E.launch)ef.push(kw('launch','Hangar',src));if(E.jam)ef.push(kw('jam','Interferencia',src));if(E.splashU)ef.push(kw('arcsh','Disparo en arco',src));if(E.fly&&E.rg==='ranged')ef.push(kw('airatk','Ataque aéreo',src));if(E.sk&&typeof ESK!=='undefined')ef.push(kw(E.sk,ESK[E.sk].n,src));if(E.eheal)ef.push(kw('eheal','Curación tribal',src));if(E.rift)ef.push(kw('rift','Portal del abismo',src));if(E.penta)ef.push(kw('penta','Pentagrama',src));if(E.wings)ef.push(kw('wings','Alas',src));if(E.shell)ef.push(kw('shell','Caparazón',src));if(E.pulse)ef.push(kw('pulse','Pulso',src));if(E.core2)ef.push(kw('core2','Núcleo',src));if(E.abregen)ef.push(kw('regen','Sangre de troll',src));if(E.stomp)ef.push(kw('stomp','Pisotón',src));if(E.line)ef.push(kw('line','Cadena de montaje',src));if(E.throne)ef.push(kw('throne','Trono',src));if(E.riches)ef.push(kw('riches','Lluvia de riquezas',src));if(E.scepter)ef.push(kw('scepter','Cetrazo real',src));if(E.gens)ef.push(kw('gens','Escudo de generadores',src));if(E.anchor)ef.push(kw('anchor','Anclado',src));if(k==='boss'||E.story)ef.push(kw('bres','Resistencia a control',src)+' '+Math.round(BOSSRES*100)+'%');return ef.length?R('cf',kst('eeff','Efectos',src),ef.join('<br>')):'';})()+R('gd',kst('egold','Oro por baja',src),E.gold+' 🪙')+R('cf',kst('exv','Experiencia',src),E.xp);
 }
 // ==================== v359 · Ficha del héroe nueva (Nogal, 17 y 18-nov; maqueta en la Mesa, «Ficha del héroe nueva») ====================
 // Mismas piezas que la ficha de torre (ftChip, ftFold, ftdps): nombre con retrato pequeño y Nv, reaparición arriba a la derecha,
@@ -4746,8 +4746,8 @@ function heroGlance(id){const D=HEROES[id],x=hsAt(id,1),src='hero:'+id,R2=RELIC[
  return `<div class="cport">${portrait(id)}</div><div class="ttl"><b>${D.n}</b></div><div class="gbody">`+gRow(kst('hhp','Vida',src),'chp',x.hp,mx('hp'),Math.round(x.hp))+gArm(Math.round(x.ap),0,src)+gRow(kst('hdmg','Daño',src),'cd',x.dmg,mx('dmg'),f(x.dmg))+
   gRow(kst('hcd','Enfriamiento',src),'ccl',1/x.cd,mrate,f(x.cd)+' s')+gTxt('Ataque','',D.ranged?'A distancia':'Cuerpo a cuerpo')+
   gTxt(kst('hrel','Reliquia inicial',src),'cf',kw('rl_'+D.relic,R2.ic+' '+R2.n,src,'st'))+'</div>';}
-const EFAM=[['Guerreros',['norm','vet','champ']],['Rápidos',['fast','runner','raider']],['Tanques',['tank','armored']],['Voladores',['bat','harpy','griffin']],['A distancia',['sling','javelin']],['Místicos',['acolyte','warlock']],['Apoyo',['custodian','shaman']],['Élites',['mini','elite']],['Jefes',['bob','boss','colossus']],['Lobos',['cub','greyw','bigw']],['Dragones',['momdrg']]];
-const ehp1=k=>{const E=ET[k];return Math.round(E.hf?E.hf*hpR(1):HP0*HPOLD(1)*E.hp);},ecore=k=>['boss','colossus','bob'].includes(k)?20:ET[k].dmg;
+const EFAM=[['Guerreros',['norm','vet','champ']],['Rápidos',['fast','runner','raider']],['Tanques',['tank','armored']],['Voladores',['bat','harpy','griffin']],['A distancia',['sling','javelin']],['Místicos',['acolyte','warlock']],['Apoyo',['custodian','shaman']],['Élites',['mini','elite']],['Jefes',['bob','boss']],['Lobos',['cub','greyw','bigw']],['Dragones',['momdrg']]];
+const ehp1=k=>{const E=ET[k];return Math.round(E.hf?E.hf*hpR(1):HP0*HPOLD(1)*E.hp);},ecore=k=>['boss','bob'].includes(k)?20:ET[k].dmg;
 function enGlance(k,M){const E=ET[k],src='en:'+k;
  return `<div class="ttl"><b><i style="background:${E.col};border-radius:50%"></i>${E.n}</b>${E.fly?' <small>✈ volador</small>':''}</div><div class="gbody">`+gRow(kst('ehp','Vida',src),'chp',ehp1(k),M.hp,ehp1(k))+gArm(E.ap||0,E.am||0,src)+
   gRow(kst('espd','Velocidad',src),'cvl',E.sp,M.sp,f(E.sp/K)+' cas./s')+gTxt(kst('edmg','Daño al núcleo',src),'cd','<b class="gheart">❤️×'+ecore(k)+'</b>')+'</div>';}
@@ -4808,7 +4808,7 @@ function compBodyOld(){setTimeout(()=>{if(!ALKNEW.size)return;for(const id of AL
   const card=(k,M)=>seen('en',k)?`<div class="ce tcard">${enGlance(k,M)}<div class="pvrow"><button class="pvbtn" data-a="ceprev" data-v="${k}" title="Ver toda la información y una previsualización del enemigo peleando con un héroe"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="6.8" cy="6.8" r="4.6"/><path d="M10.3 10.3L14 14"/></svg></button></div></div>`:shd('<span class="lsd"></span>');
   const nm=Object.keys(ET).filter(k=>!ET[k].evn&&ok(k)),ev=Object.keys(ET).filter(k=>ET[k].evn&&ok(k));
   const fams=ks=>{const out=EFAM.map(([n,l])=>[n,l.filter(k=>ks.includes(k))]).filter(x=>x[1].length),used=new Set(EFAM.flatMap(x=>x[1])),rest=ks.filter(k=>!used.has(k));if(rest.length)out.push(['Otros',rest]);return out;};
-  const big=new Set(['mini','elite','boss','colossus']),mxOf=ks=>({hp:Math.max(1,...ks.map(ehp1)),sp:Math.max(.01,...ks.map(k=>ET[k].sp))}),Mn=mxOf(nm.filter(k=>!big.has(k)));
+  const big=new Set(['mini','elite','boss']),mxOf=ks=>({hp:Math.max(1,...ks.map(ehp1)),sp:Math.max(.01,...ks.map(k=>ET[k].sp))}),Mn=mxOf(nm.filter(k=>!big.has(k)));
   const famHtml=ks=>fams(ks).map(([n,l])=>{const M=l.some(k=>big.has(k))||ET[l[0]].evn?mxOf(l):Mn;return `<div class="efam">${n}</div><div class="cgrid efg">`+l.map(k=>card(k,M)).join('')+'</div>';}).join('');
   body=fbarHtml(fl)+(nm.length?csec('Enemigos normales','Aparecen en las oleadas de los portales. Las barras comparan cada enemigo con los demás normales (los élites y jefes, entre sí).')+famHtml(nm):'')+(ev.length?csec('Enemigos de evento','Solo aparecen por opciones de eventos.')+famHtml(ev):'')+(nm.length||ev.length?'':'<small style="display:block;margin-top:8px">Ningún enemigo cumple ese filtro.</small>')+'<small style="display:block;margin-top:8px">Pulsar la lupa de una tarjeta amplía la información del enemigo.</small>';}
  return body;
@@ -5063,7 +5063,7 @@ function drawEPrev(){
  const cv2=document.getElementById('pvc');if(!cv2||!PE)return;const c=cv2.getContext('2d'),s=PE.S,X=x=>(x-PVX+.5)*PVC,Y=y=>(y-PVY+.5)*PVC;
  for(let y=0;y<PVN;y++)for(let x=0;x<PVN;x++){c.fillStyle=s.cells[PVY+y][PVX+x]===2?'#a8854a':'#2e3441';c.fillRect(x*PVC,y*PVC,PVC,PVC);}
  c.fillStyle='#3dd6c4';c.fillRect(X(s.core.x)-PVC*.4*K,Y(s.core.y)-PVC*.4*K,PVC*.8*K,PVC*.8*K);
- for(const q of s.fx){if(q.bolt||q.frag)continue;if(q.mk){const k=1-q.t/q.m;c.globalAlpha=Math.min(1,q.t/q.m*2);c.font='bold 20px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textAlign='center';c.textBaseline='middle';c.lineWidth=3;c.strokeStyle='#fff';c.fillStyle='#e8262e';const tx=X(q.x)+12,ty=Y(q.y)-8-k*14;c.strokeText('!',tx,ty);c.fillText('!',tx,ty);c.globalAlpha=1;continue;}c.globalAlpha=Math.max(0,q.t/q.m)*.7;c.fillStyle=q.col;c.beginPath();c.arc(X(q.x),Y(q.y),q.r*PVC,0,7);c.fill();c.globalAlpha=1;}
+ for(const q of s.fx){if(q.bolt)continue;if(q.mk){const k=1-q.t/q.m;c.globalAlpha=Math.min(1,q.t/q.m*2);c.font='bold 20px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textAlign='center';c.textBaseline='middle';c.lineWidth=3;c.strokeStyle='#fff';c.fillStyle='#e8262e';const tx=X(q.x)+12,ty=Y(q.y)-8-k*14;c.strokeText('!',tx,ty);c.fillText('!',tx,ty);c.globalAlpha=1;continue;}c.globalAlpha=Math.max(0,q.t/q.m)*.7;c.fillStyle=q.col;c.beginPath();c.arc(X(q.x),Y(q.y),q.r*PVC,0,7);c.fill();c.globalAlpha=1;}
  for(const b of s.barr){c.save();c.beginPath();b.poly.forEach((p,i)=>i?c.lineTo((p[0]-PVX)*PVC,(p[1]-PVY)*PVC):c.moveTo((p[0]-PVX)*PVC,(p[1]-PVY)*PVC));c.closePath();c.fillStyle=b.brick?'#b0503a':'#8a5a2b';c.fill();c.strokeStyle='#f0c040';c.lineWidth=2;c.stroke();c.restore();}
  drawUnits(c,s,PVC,-PVX*PVC,-PVY*PVC);
  for(const e of s.enemies){const E=ET[e.t],px=X(e.x),py=Y(e.y),r=E.r*PVC;c.fillStyle=E.col;c.beginPath();c.arc(px,py,r,0,7);c.fill();
@@ -5173,7 +5173,7 @@ function icHtml(ic){if(!ic||typeof ic!=='object')return ic;const o=ic,bx=o.bx!=n
 const EIC={norm:'👺',fast:'🐀',runner:'🐗',vet:'👹',champ:{b:'⚔️',f:'👹',bs:1.1,bx:0,by:0,fs:.8,fx:0,fy:.04},armored:{b:'🧌',f:'🛡️',bx:0,by:0,fs:.55,fx:.3,fy:.24},tank:'🦣',custodian:'🗿',sling:'🐒',
  javelin:{b:'🔱',f:'👺',bs:1.15,br:40,bx:.05,by:-.05,fs:.75,fx:-.1,fy:.1},raider:{b:'🥷',f:'💰',bx:0,by:0,fs:.55,fx:.32,fy:.28},acolyte:'💀',warlock:'😈',shaman:{b:'💀',f:'🌿',bx:0,by:0,fs:.55,fx:.3,fy:.28},bat:'🦇',
  harpy:{b:'🪽',f:'🧝‍♀️',w2:1,fs:.75,fx:0,fy:.04},griffin:'🦅',mini:{b:'😈',f:'🔥',bx:0,by:0,fs:.55,fx:.3,fy:.24},elite:{b:'🧌',f:'🔥',bx:0,by:0,fs:.55,fx:.3,fy:.24},cub:'🐺',greyw:{b:'🐺',f:'🌙',bx:0,by:0,fs:.55,fx:.3,fy:.24},
- bigw:{b:'🐺',f:'👑',bx:0,by:.04,fs:.5,fx:0,fy:-.5},momdrg:'🐲',boss:{b:'👹',f:'👑',bx:0,by:.04,fs:.5,fx:0,fy:-.5},bob:'🐷',colossus:{b:'🗿',f:'👑',bx:0,by:.04,fs:.5,fx:0,fy:-.64}};
+ bigw:{b:'🐺',f:'👑',bx:0,by:.04,fs:.5,fx:0,fy:-.5},momdrg:'🐲',boss:{b:'👹',f:'👑',bx:0,by:.04,fs:.5,fx:0,fy:-.5},bob:'🐷'};
 const enIc=k=>EIC[k]||(ET[k]&&ET[k].ic)||null;
 // caché de iconos ya dibujados (muchos enemigos a la vez): un lienzo por tipo y tamaño
 const ENC={};function enIcDraw(c,k,x,y,sz){const ic=enIc(k);if(!ic)return;const s=Math.max(8,Math.round(sz*2)),key=k+':'+s;let cv=ENC[key];
@@ -5223,7 +5223,7 @@ c.fillStyle="#2e3441";c.fillRect(0,0,PVN*PVC,PVN*PVC);
  if(tw.rays){c.lineWidth=2;for(const r of tw.rays)if(r.e.hp>0){c.strokeStyle=r.el.col;c.beginPath();c.moveTo(X(tw.x),Y(tw.y));c.lineTo(X(r.e.x),Y(r.e.y));c.stroke();}}
  else if(tw.tgt&&tw.tgt.hp>0){c.strokeStyle=T.col;c.lineWidth=3;c.beginPath();c.moveTo(X(tw.x),Y(tw.y));c.lineTo(X(tw.tgt.x),Y(tw.tgt.y));c.stroke();}
  for(const q of s.fx)if(q.bolt)drawBolt(c,q,X,Y,2,3);
- for(const q of s.fx){if(q.bolt||q.frag)continue;if(q.mk){const k=1-q.t/q.m;c.globalAlpha=Math.min(1,q.t/q.m*2);c.font='bold 20px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textAlign='center';c.textBaseline='middle';c.lineWidth=3;c.strokeStyle='#fff';c.fillStyle='#e8262e';const tx=X(q.x)+12,ty=Y(q.y)-8-k*14;c.strokeText('!',tx,ty);c.fillText('!',tx,ty);c.globalAlpha=1;continue;}c.globalAlpha=Math.max(0,q.t/q.m)*.7;c.fillStyle=q.col;c.beginPath();c.arc(X(q.x),Y(q.y),q.r*PVC,0,7);c.fill();c.globalAlpha=1;}
+ for(const q of s.fx){if(q.bolt)continue;if(q.mk){const k=1-q.t/q.m;c.globalAlpha=Math.min(1,q.t/q.m*2);c.font='bold 20px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textAlign='center';c.textBaseline='middle';c.lineWidth=3;c.strokeStyle='#fff';c.fillStyle='#e8262e';const tx=X(q.x)+12,ty=Y(q.y)-8-k*14;c.strokeText('!',tx,ty);c.fillText('!',tx,ty);c.globalAlpha=1;continue;}c.globalAlpha=Math.max(0,q.t/q.m)*.7;c.fillStyle=q.col;c.beginPath();c.arc(X(q.x),Y(q.y),q.r*PVC,0,7);c.fill();c.globalAlpha=1;}
  for(const b of s.barr||[]){if(!b.poly)continue;c.save();c.beginPath();b.poly.forEach((p,i)=>i?c.lineTo((p[0]-PVX)*PVC,(p[1]-PVY)*PVC):c.moveTo((p[0]-PVX)*PVC,(p[1]-PVY)*PVC));c.closePath();c.fillStyle=b.brick?'#b0503a':'#8a5a2b';c.fill();c.strokeStyle='#f0c040';c.lineWidth=2;c.stroke();c.restore();}
  for(const L of s.logs||[]){if(L.x===undefined)continue;c.save();c.translate(X(L.x),Y(L.y));c.rotate(L.ang+Math.PI/2);const len=K*PVC*.86,th=K*PVC*.32;c.fillStyle='#8a5a2b';c.fillRect(-len/2,-th/2,len,th);c.strokeStyle='#5a3a1a';c.lineWidth=1.5;c.strokeRect(-len/2,-th/2,len,th);c.restore();}
  drawUnits(c,s,PVC,-PVX*PVC,-PVY*PVC);
@@ -5285,9 +5285,15 @@ const SQF={
  coven:[[['norm',0,-1],['norm',0,0],['norm',0,1],['acolyte',1.4,-1],['acolyte',1.4,1],['warlock',2,0],['acolyte',2.8,0]]],
  stampede:[[['fast',0,0],['fast',1,0],['fast',2,0],['runner',.5,-1],['runner',.5,1],['raider',1.6,-1],['raider',1.6,1]],[['fast',0,0],['runner',1,-1],['runner',1,1],['raider',2,-1],['raider',2,1],['fast',3,-1],['fast',3,1]]]};
 const SQFAM={vet:'norm',champ:'norm',runner:'fast',armored:'tank'},SQROW=1.15;
+/* v366 · escuadrones del Taller de enemigos. Un escuadrón puede llevar:
+   t5:1   → su formación viene del Taller: filas medidas en carriles (1 fila = 1 casilla pequeña) y carriles de -2 a 2;
+   de, nv → es la versión Nv 2 o Nv 3 de otro escuadrón (no se sortea como tema: la elige sqVer);
+   boss   → es el escuadrón de un jefe de historia con su escolta (sale en la ronda del jefe, no se sortea).
+   Valor de un enemigo para el presupuesto de la oleada: su vida × su factor (ET[t].vf: lo que vale de más por su mecánica, por volar o por disparar) + lo que lleva dentro (ET[t].lleva). */
+const enVal=t=>{const E=ET[t];if(!E)return 0;let v=(S&&!S.tut&&E.hf?E.hf:E.hp)*(E.vf||1);if(E.lleva)for(const k in E.lleva)v+=E.lleva[k]*enVal(k);return v;};
 // reparte las unidades reales (m, ya ascendidas) en los huecos de la formación; devuelve [{t,r,l}] ordenado por fila
 function sqForm(k,m){const fs=SQF[k];const units=[];for(const t in m)for(let i=0;i<m[t];i++)units.push(t);if(!fs)return null;
- const f=fs[Math.floor(Math.random()*fs.length)],depth=Math.max(...f.map(s=>s[1]))+1.3,out=[],left=units.slice();
+ const rs=SQUADS[k]&&SQUADS[k].t5?1/SQROW:1,f=fs[Math.floor(Math.random()*fs.length)].map(s=>[s[0],s[1]*rs,s[2]]),depth=Math.max(...f.map(s=>s[1]))+1.3,out=[],left=units.slice();
  for(let c=0;left.length&&c<6;c++){let got=0;for(const[st,r,l]of f){let i=left.indexOf(st);if(i<0)i=left.findIndex(u=>SQFAM[u]===st);if(i<0)i=left.findIndex(u=>SQFAM[st]&&SQFAM[st]===SQFAM[u]);if(i<0)continue;out.push({t:left.splice(i,1)[0],r:r+c*depth,l});got++;}if(!got)break;}
  let r0=out.length?Math.max(...out.map(o=>o.r))+1:0;for(let i=0;i<left.length;i++)out.push({t:left[i],r:r0+Math.floor(i/2),l:i%2?1:-1});
  return out.sort((a,b)=>a.r-b.r||a.l-b.l);}
@@ -5295,7 +5301,7 @@ function sqForm(k,m){const fs=SQF[k];const units=[];for(const t in m)for(let i=0
 const FORM={raider:0,tank:0,armored:0,norm:1,vet:1,champ:1,fast:1,runner:1,bat:2,harpy:2,griffin:1,custodian:2,shaman:2,javelin:3,sling:3,acolyte:3,warlock:3};
 const REGT=['norm','fast','tank','custodian','sling','javelin','raider','acolyte','warlock','shaman'],SQGAP=1.6;
 const sqSz=()=>S&&!S.tut&&S.round>8?1+.15*(Math.min(S.round,15)-8):1,sqM=k=>{const m=SQUADS[k].m,z=sqSz(),o={};for(const t in m)o[t]=m[t]>=2?Math.round(m[t]*z):m[t];return o;};
-let sqValT=null;const sqVal=k=>sqValT?sqValT(k):Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*(S&&!S.tut&&ET[t].hf?ET[t].hf*promoF(t,S.round):ET[t].hp),0),sqN=k=>Object.values(sqM(k)).reduce((a,b)=>a+b,0);
+let sqValT=null;const sqVal=k=>sqValT?sqValT(k):Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*enVal(t)*(S&&!S.tut&&ET[t].hf?promoF(t,S.round):1),0),sqN=k=>Object.values(sqM(k)).reduce((a,b)=>a+b,0);
 // presupuesto (en «vida de Guerrero») equivalente a la composición antigua, para no romper la dificultad
 let WB=315,WG=1.47,WG2=1.65,WG3=1.38;
 // crecimiento acumulado de la vida total de las oleadas hasta la ronda r (tres tramos)
@@ -5308,7 +5314,7 @@ const PROMO={norm:[[6,'vet',.3],[9,'vet',.55],[11,'champ',.3],[13,'champ',.55]],
 function promote(t,r){const P=PROMO[t];if(!P||S.tut)return t;let out=t;for(const[r0,u,p]of P)if(r>=r0&&Math.random()<p)out=u;return out;}
 function promoF(t,r){const P=PROMO[t];if(!P)return 1;let v=1;for(const[r0,u,p]of P)if(r>=r0)v+=p*((ET[u].hf||0)/ET[t].hf-1)*.5;return v;}
 function waveSquads(r){
- const av0=Object.keys(SQUADS).filter(k=>SQUADS[k].min<=r&&!SQUADS[k].tut&&(SQUADS[k].era||1)===((S&&S.era)||1)&&(typeof pzOk!=='function'||pzOk(SQUADS[k].pz))),av=av0.filter(k=>!SQUADS[k].once),nt=Math.min(av.length,r<4?1:r<11?2:3),last=S.lastTh||[];
+ const av0=Object.keys(SQUADS).filter(k=>SQUADS[k].min<=r&&!SQUADS[k].tut&&!SQUADS[k].de&&!SQUADS[k].boss&&(SQUADS[k].era||1)===((S&&S.era)||1)&&(typeof pzOk!=='function'||pzOk(SQUADS[k].pz))),av=av0.filter(k=>!SQUADS[k].once),nt=Math.min(av.length,r<4?1:r<11?2:3),last=S.lastTh||[];
  // las escuadras de una sola aparición van aparte: salen siempre en su ronda de estreno y luego a veces, sin ocupar hueco de escuadra
  const ext=av0.filter(k=>SQUADS[k].once&&(SQUADS[k].min===r||Math.random()<.3));
  const fresh=av.filter(k=>SQUADS[k].min===r&&r>1);let th=fresh.slice(0,nt);
@@ -5373,7 +5379,7 @@ Object.assign(FORM,{minion:1,demon:1,dchamp:1,hound:1,raptor:2,seal:2});
 for(const k of['minion','hound','seal'])if(!REGT.includes(k))REGT.push(k);
 // familias del compendio
 EFAM.splice(0,EFAM.length,['Guerreros',['norm','vet','champ']],['Guerreros infernales',['minion','demon','dchamp']],['Rápidos',['fast','runner','hound','raider']],['Tanques',['tank','armored']],['Voladores',['bat','raptor','harpy','griffin']],
- ['A distancia',['sling','javelin']],['Místicos',['acolyte','warlock']],['Apoyo',['custodian','seal','shaman']],['Élites',['mini','elite']],['Jefes',['bob','boss','colossus']],['Lobos',['cub','greyw','bigw']],['Dragones',['momdrg']]);
+ ['A distancia',['sling','javelin']],['Místicos',['acolyte','warlock']],['Apoyo',['custodian','seal','shaman']],['Élites',['mini','elite']],['Jefes',['bob','boss']],['Lobos',['cub','greyw','bigw']],['Dragones',['momdrg']]);
 // ---- escuadras por facción. lead = tipo que hace de líder (si no, el de más vida) ----
 for(const k of Object.keys(SQUADS))if(!SQUADS[k].tut){delete SQUADS[k];delete SQF[k];}
 Object.assign(SQUADS,{
@@ -6500,7 +6506,7 @@ function placePiece(bx,by){
  /* v305: si la pieza cierra el camino y ya hay un portal en medio, no se abre otro de relleno en la pieza */if(S.ends.some(e=>e.mid)&&S.ends.some(e=>e.fake))S.ends=S.ends.filter(e=>!e.fake);
  /* v305: si la pieza cierra el camino (sin extremo propio), el jefe sale del portal de en medio y no de un portal aparte solo para él */const boss=bossRound(S.round)?(S.ends.find(e=>e.nw&&!e.fake)||S.ends.find(e=>e.mid)||S.ends[0]||any):null;
  makePortals(boss);S.phase='build';if(solF&&showSolarFocus(bx,by)){S.tut.solf=1;FO.after=()=>setTimeout(()=>tutPhase('build'),0);}else setTimeout(()=>tutPhase('build'),0);
- S.msg=(S.round===ROUNDS&&ROUNDS===30?'¡Se ha abierto un portal enorme… algo peor que el jefe se acerca! ':bossRound(S.round)?'¡Se ha abierto el portal del jefe! ':'')+(ELITES[S.round]&&!bossRound(S.round)?'Esta ronda trae '+Object.entries(ELITES[S.round]).map(([t,n])=>n+' '+ET[t].n.toLowerCase()).join(' y ')+'.':'');ui();
+ S.msg=(bossRound(S.round)?'¡Se ha abierto el portal del jefe! ':'')+(ELITES[S.round]&&!bossRound(S.round)?'Esta ronda trae '+Object.entries(ELITES[S.round]).map(([t,n])=>n+' '+ET[t].n.toLowerCase()).join(' y ')+'.':'');ui();
  pieceWarn(p);S.lastBk=bx+','+by;
  if(S.hero)hint('hero','Tu héroe',HEROTXT,tgEl('#mbr .hpport'));
  if(S.chests[bx+','+by]){delete S.chests[bx+','+by];S.chOpen=(S.chOpen||0)+1;if(S.chOpen>=3&&S.round<7&&!S.tut)achieve('treasure');openRelic();RL.fromChest=!!(RL.open&&RL.choices&&RL.choices.length);}
@@ -6586,14 +6592,15 @@ function posFocus(){
 function makePortals(boss){
  if(S.tut)boss=null;const sqs=S.tut?(TUTW[S.round]||['patrol']):waveSquads(S.round),X=sqs.reduce((a,k)=>a+sqN(k),0);
  let k=S.ends.length;while(k>1&&X/k<MINP)k--;/* v334: a partir del 40 % de la partida, si el camino tiene al menos dos extremos, salen por dos portales como mínimo */if(!S.tut&&S.round>=Math.ceil(ROUNDS*.4))k=Math.max(k,Math.min(2,S.ends.length));
- const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],split:e.split||null,si:0,ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0},q:[],t:0});
+ const mk=e=>({x:e.x,y:e.y,dir:e.dir||[0,0],split:e.split||null,si:0,ln:0,plan:{norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0},q:[],t:0});
  /* los portales de tramo muerto siempre se abren (si no, ese tramo seguiría sin usarse) */const mids=S.ends.filter(e=>e.mid),rest=S.ends.filter(e=>!e.mid),ps=rest.slice(0,Math.max(1,k-mids.length)).concat(mids).map(mk);
- sqs.forEach((sq,i)=>{const q=ps[i%ps.length];(q.sq=q.sq||[]).push(sq);const tr=typeof sqTierOf==='function'?sqTierOf(i,sqs.length,S.round):0,m=typeof sqTierM==='function'?sqTierM(sq,tr,S.round):sqM(sq);(q.sqt=q.sqt||[]).push(tr);(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});
+ sqs.forEach((sq,i)=>{const q=ps[i%ps.length];const tr=typeof sqTierOf==='function'?sqTierOf(i,sqs.length,S.round):0,vk=!S.tut&&typeof sqVer==='function'?sqVer(sq,tr,S.round):null,m=typeof sqTierM==='function'?sqTierM(sq,tr,S.round):sqM(sq);/* v366: si el escuadrón tiene versiones diseñadas, a la cola va la clave de su versión (con su formación) */(q.sq=q.sq||[]).push(vk||sq);(q.sqt=q.sqt||[]).push(tr);(q.sqm=q.sqm||[]).push(m);for(const t in m)q.plan[t]=(q.plan[t]||0)+m[t];});
  if(S.tut&&S.round===10)ps[0].plan.bob=1;
  if(!boss&&!S.tut&&ELITES[S.round])for(const t in ELITES[S.round])ps[0].plan[t]+=ELITES[S.round][t];
  for(const sc of S.sched||[])if(sc.r===S.round)for(const k in sc.add)ps[0].plan[k]=(ps[0].plan[k]||0)+sc.add[k];
- if(boss){let q=ps.find(q=>q.x===boss.x&&q.y===boss.y);if(!q){q=mk(boss);ps.push(q);}q.plan[ROUNDS===30&&S.round===30?'colossus':(typeof storyBoss==='function'&&!S.tut?storyBoss():'boss')]=1;
-  /* jefe final: sale con su escolta (una escuadra grande pegada a él) */if(S.round===ROUNDS&&!S.tut){const E=q.esc=[];const B=(S.era===2?['brutep','techm','auto','brutep','drone','weaver','auto','drone','brutep','auto']:['tank','custodian','norm','tank','norm','custodian','norm','norm','tank','norm']),n=Math.min(B.length,6+Math.floor(ROUNDS/5));for(let i=0;i<n;i++){const u=promote(B[i],S.round);E.push(u);q.plan[u]=(q.plan[u]||0)+1;}}}
+ if(boss){let q=ps.find(q=>q.x===boss.x&&q.y===boss.y);if(!q){q=mk(boss);ps.push(q);}/* v366: el Coloso ya no existe; la ronda 30 de las partidas largas trae al jefe de historia de la era, más fuerte (bossB y la vida por ronda) */q.plan[typeof storyBoss==='function'&&!S.tut?storyBoss():'boss']=1;
+  /* v366: si el jefe tiene su escuadrón con escolta (Taller), sale formado con él en todas sus rondas; la escolta genérica de la última ronda queda para los jefes que no lo tienen */{const bt=typeof storyBoss==='function'&&!S.tut?storyBoss():'boss',bk=!S.tut&&Object.keys(SQUADS).find(k=>SQUADS[k].boss===bt);if(bk)q.bsq=bk;}
+  /* jefe final: sale con su escolta (una escuadra grande pegada a él) */if(S.round===ROUNDS&&!S.tut&&!q.bsq){const E=q.esc=[];const B=(S.era===2?['brutep','techm','auto','brutep','drone','weaver','auto','drone','brutep','auto']:['tank','custodian','norm','tank','norm','custodian','norm','norm','tank','norm']),n=Math.min(B.length,6+Math.floor(ROUNDS/5));for(let i=0;i<n;i++){const u=promote(B[i],S.round);E.push(u);q.plan[u]=(q.plan[u]||0)+1;}}}
  {const cap=S.round<14?1:S.round<=15?2:2+Math.floor((S.round-15)/5);let n=0;for(const q of ps)for(const m of (q.sqm||[])){const g=m.griffin||0;if(!g)continue;const ok=Math.min(g,cap-n),ex=g-ok;n+=ok;m.griffin=ok;if(ex){m.harpy=(m.harpy||0)+ex;q.plan.griffin-=ex;q.plan.harpy=(q.plan.harpy||0)+ex;}}}
  S.portals=ps;
 }
@@ -6820,13 +6827,13 @@ function baseQueue(p,qf){const q=[],f=[],cnt={};
  if(qf){qf.length=0;f.forEach((x,i)=>{if(keep[i])qf.push(x);});}
  return q.filter((t,i)=>keep[i]);}
 // ---- bocadillos de los portales: una fila por escuadra (las iguales seguidas se agrupan con ×N) ----
-const PSPEC=['mini','elite','wanted','greyw','bigw','momdrg','boss','colossus','bob'];let PTAP=null,PTSIG='';
+const PSPEC=['mini','elite','wanted','greyw','bigw','momdrg','boss','bob'];let PTAP=null,PTSIG='';
 const portalAt=c=>S.portals.find(p=>Math.abs(c.x-p.x)<=KC&&Math.abs(c.y-p.y)<=KC)||null;
 function qGroups(list){const gs=[[]];for(let t of list){if(t==='|'){gs.push([]);continue;}t=t.replace('#','');gs[gs.length-1].push(t);}return gs.filter(g=>g.length);}
 function rowOf(g){const o=[];for(const t of g){const r=o.find(x=>x[0]===t);if(r)r[1]++;else o.push([t,1]);}return o;}
 function rowHtml(r){return `<div class="pbr">${r.map(([t,c])=>`<span class="${PSPEC.includes(t)?'pbs':''}"><i style="background:${ET[t==='wanted'?'elite':t].col}"></i>${t==='wanted'?'Élite (encargo)':ET[t].n} <b class="pbc">×${c}</b></span>`).join('')}</div>`;}
 function portalRows(p,lim){
- let gs;if(S.phase==='wave')gs=qGroups(p.q||[]);else{gs=qGroups(baseQueue(p));const sp=[];for(const t of PSPEC)for(let i=0;i<(p.plan[t]||0);i++)sp.push(t);if(sp.length)gs.push(sp);}
+ let gs;if(S.phase==='wave')gs=qGroups(p.q||[]);else{gs=qGroups(baseQueue(p));const sp=[];for(const t of PSPEC)for(let i=0;i<(p.plan[t]||0);i++)sp.push(t);if(sp.length)gs.push(sp);if(p.bsq&&SQUADS[p.bsq]){const bt=SQUADS[p.bsq].boss,m=SQUADS[p.bsq].m,es=[];for(const t in m)if(t!==bt)for(let i=0;i<m[t];i++)es.push(t);if(es.length)gs.push(es);}}
  const tot=gs.reduce((a,g)=>a+g.length,0),pl=(n,s)=>n+' '+s+(n===1?'':'s');
  // en oleada: solo lo que viene ahora (dos escuadras como mucho) y cuántos quedan
  if(S.phase==='wave'){if(!gs.length)return '';const k=lim?1:2,rest=gs.length-k;return (lim?'':`<div class="pbh">Quedan ${pl(tot,'enemigo')} · siguientes:</div>`)+gs.slice(0,k).map(g=>rowHtml(rowOf(g))).join('')+(!lim&&rest>0?`<div class="pbmore">y ${pl(rest,'escuadra')} más</div>`:'');}
@@ -6868,15 +6875,17 @@ function startWave(){
   for(const t of['mini','elite','greyw','bigw','wanted','momdrg'])for(let i=0;i<(p.plan[t]||0);i++){const cut=[];for(let j=0;j<=p.q.length;j++)if(j===p.q.length||p.q[j]==='|'||!p.qf[j]||(j>0&&p.qf[j-1]&&p.qf[j-1].sid!==p.qf[j].sid))cut.push(j);
    const lo=cut.filter(j=>j>=p.q.length*.5),at=lo.length?lo[Math.floor(Math.random()*lo.length)]:p.q.length;p.q.splice(at,0,t);p.qf.splice(at,0,null);}
   // v305: el jefe (con su escolta) ya no sale el último, cuando el resto ha muerto: entra entre escuadras hacia la mitad de la oleada
-  const blk=[];const add=t=>blk.push(t);
-  if(p.plan.boss)add('boss');for(const bk of(typeof SBALL!=='undefined'?SBALL:[]))if(p.plan[bk])add(bk);if(p.plan.colossus)add('colossus');if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');if(p.plan.bob)add('bob');
+  const blk=[];const add=t=>blk.push(t);let bf=null;
+  /* v366 · jefe con escolta: el escuadrón del jefe (Taller) sale formado, con el jefe de líder y toda la escolta a su paso aunque sea más rápida */
+  if(p.bsq&&SQUADS[p.bsq]&&p.plan[SQUADS[p.bsq].boss]){const bt=SQUADS[p.bsq].boss,fo=sqForm(p.bsq,SQUADS[p.bsq].m);if(fo&&fo.some(o=>o.t===bt)){const sp=ET[bt].sp;bf=fo.map(o=>({r:o.r,l:o.l,sp,sid:'jefe',lead:o.t===bt?1:0}));for(const o of fo)add(o.t);}}
+  if(!bf){if(p.plan.boss)add('boss');for(const bk of(typeof SBALL!=='undefined'?SBALL:[]))if(p.plan[bk])add(bk);if(p.esc&&p.esc.length)for(const t of p.esc)add(t+'#');}if(p.plan.bob)add('bob');
   if(blk.length){const cut=[];for(let j=0;j<=p.q.length;j++)if(j===p.q.length||p.q[j]==='|'||!p.qf[j]||(j>0&&p.qf[j-1]&&p.qf[j-1].sid!==p.qf[j].sid))cut.push(j);
    const L=p.q.length,mid=cut.filter(j=>j>=L*.3&&j<=L*.6),at=L<6?L:mid.length?mid[Math.floor(Math.random()*mid.length)]:(cut.filter(j=>j>=L*.3)[0]??L);
-   p.q.splice(at,0,...blk);p.qf.splice(at,0,...blk.map(()=>null));}
+   p.q.splice(at,0,...blk);p.qf.splice(at,0,...blk.map((_,i)=>bf&&bf[i]||null));}
   p.t=0;}
  if(PR.auto){PR.auto=0;closePrim();}S.field=field();S.bags={};S.cf=cfield();S.af={};S.forks={};S.fbag={};S.fsq={};S.wt=0;S.phase='wave';S.msg='';S.fury=0;S.hpW=S.hp;if(S.hero){S.hero.ucd=0;S.hero.bcd=0;}
  // duración prevista: lo que tarda en salir toda la cola + lo que tarda el enemigo más lento en recorrer el camino más largo
- {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:(t==='boss'||t==='colossus')?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
+ {const iv=Math.max(.3,.7-S.round*.03);let sp=0,tr=0;for(const p of S.portals){let d=0;for(const t of p.q)d+=t==='|'?SQGAP:t==='boss'?.25:t.endsWith('#')?.22:iv;sp=Math.max(sp,d);
    const ds=S.field&&S.field[p.y]?S.field[p.y][p.x]:60,slow=Math.min(...p.q.filter(t=>t!=='|').map(t=>ET[t==='wanted'?'elite':t.replace('#','')].sp),9);if(ds<1e9)tr=Math.max(tr,ds/Math.max(.1,slow));}
   S.furyAt=sp+tr+60;}
  ui();tutPhase('wave');
@@ -6886,7 +6895,7 @@ const oldHP=t=>!ET[t].hf,ehpOf=(t,r)=>oldHP(t)?HP0*HPOLD(r)*ET[t].hp:ET[t].hf*hp
 function spawnEnemy(t,p,fo){
  let wanted=0;if(t==='wanted'){t='elite';wanted=1;}
  see('en',t);if(ET[t].fly&&!S.tut)hint('fly','Enemigos voladores','Los enemigos <b>voladores</b> no se pueden bloquear y no les afecta nada que golpee el suelo. El resto de tus ataques sí les dan.');
- const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus'||(ET[t]&&ET[t].story))&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%K)-KC;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
+ const hp=ehpOf(t,S.round)*((t==='boss'||(ET[t]&&ET[t].story))&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%K)-KC;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
  const dest=p.split?p.split[(p.si=(p.si||0)+1)%p.split.length]:null;
  // pv: «venía de fuera del portal», para que el primer paso siga recto hacia dentro y conserve su carril
  S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest,fsp:fo?fo.sp:0,sqid:fo?(p.sqn=(p.sqn||0),p.x+'.'+p.y+'.'+S.round+'.'+fo.sid):null,pv:[x+da,y+db]});
@@ -6999,7 +7008,7 @@ function luckSet(k,v){LUCK[k]=Math.max(0,Math.min(1,v));try{localStorage.setItem
 // un número de 1 a max, tanto más alto cuanto mayor el empujón (con empujón 1, al menos uno sale al máximo)
 function luckHigh(k,max){const pt=luck(k);return 1+Math.floor((max-1)*Math.pow(Math.random(),1/(1+3*pt)));}
 // Efectos de control: los jefes reducen un 50% su fuerza (ralentización), duración (congelación) o distancia (empuje).
-const isBoss=e=>e.t==='boss'||e.t==='colossus'||e.t==='bob'||!!(ET[e.t]&&ET[e.t].story),udM=e=>isBoss(e)?(ROUNDS>=26?1+.1*S.round:1)*(1+Math.max(0,(e.blk||0)-BLKT0)*BLKUP):1;
+const isBoss=e=>e.t==='boss'||e.t==='bob'||!!(ET[e.t]&&ET[e.t].story),udM=e=>isBoss(e)?(ROUNDS>=26?1+.1*S.round:1)*(1+Math.max(0,(e.blk||0)-BLKT0)*BLKUP):1;
 // v307 · un jefe al que tus unidades tienen parado se enfurece: pasados 8 s seguidos bloqueado, pega un 15 % más a las unidades por cada segundo (se le pasa al volver a andar). Así no se le puede retener para siempre.
 const BLKT0=8,BLKUP=.15;
 function slowE(e,m,t){if(e.fx.freeze)return;if(isBoss(e))m=1-(1-m)*BOSSRES;const q=e.fx.slow;e.fx.slow={m:q&&q.t>0?Math.min(q.m,m):m,t};}
@@ -7255,7 +7264,7 @@ function update(dt){
  const iv=Math.max(.3,.7-S.round*.03);
  for(const p of S.portals){p.t-=dt;let gd=0;while(p.q.length&&p.t<=0&&gd++<12){let t=p.q.shift();const fo=p.qf?p.qf.shift():null;if(t==='|'){p.t=SQGAP*Math.max(1,1/(p.lsp||1));continue;}const esc=t.endsWith('#');if(esc)t=t.slice(0,-1);spawnEnemy(t,p,fo);
   // dentro de una formación, la siguiente fila sale cuando esta ha avanzado su distancia (a la velocidad común); las de la misma fila, a la vez
-  const nf=p.qf&&p.qf[0];if(fo){p.lsp=fo.sp;p.t+=nf&&nf.sid===fo.sid?(nf.r-fo.r)*SQROW/fo.sp:iv;}else{p.lsp=0;p.t=(t==='boss'||t==='colossus')?.25:esc?.22:iv;}if(p.t>0)break;}}
+  const nf=p.qf&&p.qf[0];if(fo){p.lsp=fo.sp;p.t+=nf&&nf.sid===fo.sid?(nf.r-fo.r)*SQROW/fo.sp:iv;}else{p.lsp=0;p.t=t==='boss'?.25:esc?.22:iv;}if(p.t>0)break;}}
  S.pools=S.pools.filter(p=>(p.t-=dt)>0);
  for(const q of S.rain){if(!S.list.includes(q.src)){q.left=0;continue;}q.tk-=dt;while(q.tk<=0&&q.left>0){q.tk+=.12;q.left--;const c=S.enemies.filter(e=>e.hp>0&&Math.hypot(e.x-q.x,e.y-q.y)<=q.r);if(c.length){const e=c[Math.floor(Math.random()*c.length)],ty=q.ty||'phys',hit=[e];strike(e,q.dm,q.src,ty,q.pen);
    if(q.ar)for(const o of S.enemies)if(o!==e&&o.hp>0&&Math.hypot(o.x-e.x,o.y-e.y)<=q.ar){hurt(o,q.dm*(q.af||1),q.src,ty,q.pen);hit.push(o);}
@@ -7358,12 +7367,6 @@ function update(dt){
   if(p.cata)cataHit(p);if(p.uab)uabProjHit(p);
   return false;});
  rollTick(dt);czTick(dt);augTick(dt);
- // Coloso · Vástagos: al perder cada 25% de su vida, un trozo se desprende y se convierte en 2 Mini-élites (los trozos salen volando hasta su sitio)
- for(const e of S.enemies.slice())if(e.t==='colossus'&&e.hp>0){e.calls=e.calls||0;
-  while(e.calls<3&&e.hp<=e.max*(1-.25*(e.calls+1))){e.calls++;see('en','mini');const mh=ehpOf('mini',S.round),tr=e.trail||[];
-   for(let i=0;i<2;i++){const pt=tr.length>i+1?tr[tr.length-1-i]:[e.tx,e.ty],m={t:'mini',x:pt[0],y:pt[1],tx:pt[0],ty:pt[1],trail:tr.slice(0,Math.max(0,tr.length-1-i)),hp:mh,max:mh,fx:{},src:null};
-    S.enemies.push(m);S.fx.push({frag:1,x0:e.x,y0:e.y,x:pt[0],y:pt[1],t:.45,m:.45,col:ET.colossus.col,sd:Math.random()});}
-   S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:1.2*K,col:'#c0304a'});}}
  wolfTick(dt);dragonAdults(dt);guildHeal(dt);furyTick();orbTick(dt);heroAbTick(dt);mechaTick(dt);achTick(dt);logTick(dt);if(typeof e2TowersTick==='function')e2TowersTick(dt);if(typeof bufoTick==='function')bufoTick(dt);
  let bossDead=false;
  S.enemies=S.enemies.filter(e=>{if(e.hp>0)return true;if(!e.leak)S.wk=(S.wk||0)+1;if(ET[e.t].el&&!e.leak&&S.relics.includes('trophy'))S.troN=Math.min(5,(S.troN||0)+1);if(!e.leak&&!S.tut&&!S.pvE){if(ET[e.t].fly){S.flyK=(S.flyK||0)+1;recBest('sky',S.flyK);if(S.flyK>=40)achieve('sky');}if(ET[e.t].el){S.eliK=(S.eliK||0)+1;recBest('hunt',S.eliK);if(S.eliK>=10)achieve('hunt');}}if(!e.leak){sfxKill(e);sfx('coin');}achDeath(e);orbDeath(e);heraldDeath(e);if(e.bn>0&&!S.tut&&!S.pvE){S.bk=(S.bk||0)+1;recBest('pyro',S.bk);if(S.bk>=250)achieve('pyro');}plague(e);epidemic(e);burnSpread(e);
@@ -7500,8 +7503,7 @@ function draw(){
  for(const q of S.fx)if(q.bolt)drawBolt(g,q,x=>x*CS+CS/2,y=>y*CS+CS/2,lw(2),lw(2.5));
  for(const q of S.fx)if(q.line){g.globalAlpha=Math.max(0,q.t/q.m);g.strokeStyle=q.col;g.lineWidth=lw(6);g.lineCap='round';g.beginPath();g.moveTo(q.line[0]*CS+CS/2,q.line[1]*CS+CS/2);g.lineTo(q.line[2]*CS+CS/2,q.line[3]*CS+CS/2);g.stroke();g.globalAlpha=1;}
  drawDragons();
- for(const q of S.fx)if(q.frag){const k=1-q.t/q.m,px=(q.x0+(q.x-q.x0)*k)*CS+CS/2,py=(q.y0+(q.y-q.y0)*k)*CS+CS/2-Math.sin(k*Math.PI)*CS*2.2,r=CS*(.9-.3*k);g.save();g.translate(px,py);g.rotate(k*6+q.sd*6);g.fillStyle=q.col;g.strokeStyle='#e8a0a8';g.lineWidth=lw(1.5);g.beginPath();g.moveTo(-r,-r*.6);g.lineTo(r*.8,-r);g.lineTo(r,r*.5);g.lineTo(-r*.4,r);g.closePath();g.fill();g.stroke();g.restore();}
- if(OPT.fx)for(const q of S.fx){if(q.mk||q.bolt||q.frag||q.line)continue;g.globalAlpha=Math.max(0,q.t/q.m)*.7;g.fillStyle=q.col;g.beginPath();g.arc(q.x*CS+CS/2,q.y*CS+CS/2,q.r*CS,0,7);g.fill();g.globalAlpha=1;}
+ if(OPT.fx)for(const q of S.fx){if(q.mk||q.bolt||q.line)continue;g.globalAlpha=Math.max(0,q.t/q.m)*.7;g.fillStyle=q.col;g.beginPath();g.arc(q.x*CS+CS/2,q.y*CS+CS/2,q.r*CS,0,7);g.fill();g.globalAlpha=1;}
  if(typeof eSkillsDraw==='function')eSkillsDraw(g,lw);if(typeof bossDrawPre==='function')bossDrawPre(g,lw);
  for(const e of S.enemies){if(e.sw)continue;const E=ET[e.t],wb=typeof eWob==='function'?eWob(e):null,px=(e.x+(wb?wb[0]:0))*CS+CS/2,py=(e.y+(wb?wb[1]:0))*CS+CS/2,r=E.r*CS*EVS;g.globalAlpha=typeof eAlpha==='function'?eAlpha(e):1;
   if(E.aura&&e.hp>0){const ac=E.aura.m?'176,106,255':'143,176,208';g.fillStyle='rgba('+ac+',.07)';g.strokeStyle='rgba('+ac+',.5)';g.lineWidth=lw(1.5);g.setLineDash&&g.setLineDash([lw(5),lw(4)]);g.beginPath();g.arc(px,py,E.aura.r*CS,0,7);g.fill();g.stroke();g.setLineDash&&g.setLineDash([]);}
@@ -7632,7 +7634,6 @@ function kwHtml0(id,src){
   if(id==='umr')return '<b class="cmg">Resistencia mágica</b><small>Reduce el daño mágico que recibe una unidad aliada (soldado o héroe): resistencia ÷ (resistencia + '+ARM_K+'). La necesitas contra los enemigos que pegan con daño mágico, que ignoran la armadura.</small>';
   if(id==='chill')return `<b>Hipotermia</b> · daño elemental`+R('cd','Daño de cada stack',CHILLD+' por segundo si está parado')+R('','Duración de cada stack',CHILLT+' s')+'<small>Lo contrario del sangrado: cada stack hace daño elemental según lo frenado que esté el enemigo. <b>Parado</b> (congelado, aturdido, inmovilizado o bloqueado por una unidad): daño completo. <b>Ralentizado</b>: la parte proporcional (con un 50% de ralentización, la mitad). Moviéndose a velocidad normal: nada. Los stacks se acumulan y caducan por separado.</small>';
   if(id==='bleed')return `<b>Sangrado</b> · daño elemental`+R('cd','Daño de cada stack',BLEEDD+' por casilla recorrida')+R('','Duración de cada stack',BLEEDT+' s')+'<small>Cada stack hace daño elemental (ignora la armadura) por cada casilla que recorre el enemigo. Si está quieto, bloqueado o congelado, no sufre nada. Los stacks se acumulan y caducan por separado.</small>';
-  if(id==='call')return '<b>Vástagos</b><small>Cada vez que el Coloso pierde un 25% de su vida, un trozo de él se desprende y se convierte en 2 Mini-élites. Solo aparece en la ronda 30 si eliges 30 rondas.</small>';
   if(id==='howl')return '<b>Aullido</b><small>Cuando el Lobo gris baja de la mitad de su vida, aúlla: los Lobatos a <span class="kw rgv" data-kw="rng" data-src="">3</span> o menos corren un 20% más rápido durante 3 s. Solo una vez.</small>';
   if(id==='blow')return '<b>Soplido</b><small>Cada 5 s, El Lobo sopla: derriba las barricadas y muros a <span class="kw rgv" data-kw="rng" data-src="">2</span> o menos y aparta a los soldados que le bloquean.</small>';
   if(id==='dur')return '<b>Duración</b><small>Cuánto dura lo que deja en el campo esta torre o habilidad: un charco, un muro, un tronco rodando… Cómo funciona cada estado se explica en el tooltip de su palabra clave.</small>';
@@ -9704,8 +9705,8 @@ function camAuto(){if(!S||PREVIEWING||S.pvE||S.pvH||!S.blocks)return;const nb=Ob
 //  · al costado: el contador sigue al enemigo por fuera del camino
 //  · encima: como antes, sobre el enemigo
 // Filtros: qué enemigos (todos / importantes / solo jefes), qué golpes (todos / críticos y grandes), opacidad y tamaño.
-const DNIMP=new Set(['mini','elite','greyw','bigw','wanted','momdrg','boss','colossus','bob','tank','armored','custodian','shaman','warlock','griffin','champ','dchamp','seal']);
-const DNBOSS=new Set(['boss','colossus','bob','momdrg']);
+const DNIMP=new Set(['mini','elite','greyw','bigw','wanted','momdrg','boss','bob','tank','armored','custodian','shaman','warlock','griffin','champ','dchamp','seal']);
+const DNBOSS=new Set(['boss','bob','momdrg']);
 const dnStyle=()=>OPT.dnst||'jump',dnSz=()=>({s:.8,n:1,l:1.25}[OPT.dnsz||'n']||1),dnOp=()=>+(OPT.dnop||1);
 function dnShowE(e){const w=OPT.dnwho||'all';if(!e.t)return w==='all';if(w==='all')return true;const E=ET[e.t]||{},bs=DNBOSS.has(e.t)||(typeof isBoss==='function'&&isBoss(e));if(w==='boss')return bs;return bs||DNIMP.has(e.t)||!!E.el||!!e.wanted;}
 // lado hacia el que salta/se coloca: perpendicular a la marcha, hacia el borde del camino más cercano a su carril
@@ -10188,7 +10189,7 @@ const MECUSE={burn:['tw:sala','tw:flame','tw:monk','hr:yrsa'],poison:['tw:poison
  sticky:['tw:cata'],flam:['tw:cata'],wet:['tw:augur'],cursed:['tw:orb'],poly:['tw:orb'],fear:['tw:orb'],mark:['tw:arrow'],prey:['hr:sylvana'],inf:['tw:nano'],lmk:['tw:bunker'],vc:['tw:laser'],
  racha:['tw:arrow:xbow'],concen:['tw:bunker:nido'],pres:['tw:cata:ogre'],resv:['tw:frost:vent'],botin:['tw:guild'],
  chain:['tw:tesla'],beam:['tw:orb','tw:laser'],push:['tw:sonic','tw:cannon','tw:wood'],mag:['tw:bunker'],
- dodge:['en:raider'],steal:['en:raider'],pierce:['en:javelin'],curse:['en:warlock'],eheal:['en:shaman'],aura:['en:custodian'],fly:['en:bat','en:harpy','en:griffin'],bres:['en:boss','en:colossus']};
+ dodge:['en:raider'],steal:['en:raider'],pierce:['en:javelin'],curse:['en:warlock'],eheal:['en:shaman'],aura:['en:custodian'],fly:['en:bat','en:harpy','en:griffin'],bres:['en:boss']};
 // v334: habilidades de las torres de evento que ya has comprado alguna vez (para «Lo usan»)
 let ABSEEN={};try{ABSEEN=JSON.parse(localStorage.getItem('rt-abseen'))||{};}catch(e){}
 const abSee=id=>{if(ABSEEN[id])return;ABSEEN[id]=1;try{localStorage.setItem('rt-abseen',JSON.stringify(ABSEEN));}catch(e){}};
@@ -10207,7 +10208,7 @@ const ETIP={norm:'Enemigo básico. Cualquier torre sirve; las de área los barre
  acolyte:'Resiste la magia y daña a tus unidades con ella: usa daño físico.',warlock:'Embelesa a tus soldados para que luchen contra ti: mátala pronto con torres. El héroe es inmune.',
  shaman:'Cura a los enemigos de alrededor: elimínalo antes que al resto.',custodian:'Su tambor da armadura a los de alrededor: mátalo primero o usa daño mágico.',
  mini:'Mucha vida y daño: concentra el fuego y frénalo.',elite:'Muy resistente y peligroso: prepara daño fuerte y control.',
- boss:'Si llega al núcleo, pierdes. Resiste el control: necesitas mucho daño.',colossus:'Al perder vida suelta mini-élites: guarda daño para ellas.',bob:'Usa tu reliquia cuando esté en tu zona de fuego.',
+ boss:'Si llega al núcleo, pierdes. Resiste el control: necesitas mucho daño.',bob:'Usa tu reliquia cuando esté en tu zona de fuego.',
  cub:'Cachorros rápidos en manada: daño en área.',greyw:'Al bajar de la mitad aúlla y acelera a los lobatos.',bigw:'Derriba barricadas y muros y aparta a tus soldados.',momdrg:'Escupe fuego a tus unidades: mantenlas lejos o usa torres.'};
 if(typeof ETIP2!=='undefined')Object.assign(ETIP,ETIP2);if(typeof MECG2!=='undefined'){const g=MECG.find(x=>x[0]==='Unidades y enemigos');if(g)g[1].push(...MECG2);}if(typeof MECUSE2!=='undefined')Object.assign(MECUSE,MECUSE2);
 const efamOf=k=>{const f=EFAM.find(([n,l])=>l.includes(k));return f?f[0]:'';};
@@ -10394,7 +10395,7 @@ Object.assign(ETIP,{troll:'Se regenera sin parar: quémalo, envenénalo o hazle 
  infil:'Camuflado: revélalo con daño en área o estados, o bloquéalo con tus unidades.',mutant:'Se adapta al daño que más recibe: mezcla tipos de daño.',
  brood:'Al morir suelta Acechadores: ten daño en área cerca de donde vaya a caer.',carrier:'Lanza drones sin parar: mátala pronto y ten torres que den al aire.'});
 // ---- v293 · Primeros jefes de historia: Rey Goblin (Fantástica) y ARGOS (Distópica) ----
-// Sustituyen al «Jefe» genérico en las rondas de jefe de su era (el Coloso de la ronda 30 se queda igual).
+// Sustituyen al «Jefe» genérico en las rondas de jefe de su era (v366: también en la ronda 30 de las partidas largas; el Coloso ya no existe).
 // · Rey Goblin: va en su trono a hombros de 4 Porteadores (matables). Mientras quede alguno va rápido y lanza «Lluvia de riquezas» a tus unidades;
 //   los tesoros quedan brillando en el camino y, si lo matas, te los quedas. Sin porteadores se cae (atontado 3 s) y sigue a pie, lento, con «Cetrazo real».
 // · ARGOS: invulnerable mientras vivan sus Generadores de escudo, que salen de otros portales con escolta, avanzan despacio con su escolta y le apuntan con un láser.
@@ -10408,7 +10409,7 @@ const ESVG4={"kgob": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64
  ET.boss.gen=1;}
 const KGP=4,RICHCD=6,RICHR=3.5*K,RICHA=.8*K,FALLT=3,SCEPCD=8,SCEPR=1.3*K,GENN=3,GENWALK=4*K,GENESC=4,GENSP=.7,ARGOSCALL=60;
 let storyBoss=()=>S&&S.era===2?'argos':'kgob';
-{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','argos','gen','bob','colossus'];}
+{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','argos','gen','bob'];}
 for(const k of['kgob','argos','porter','gen'])DNIMP.add(k);DNBOSS.add('kgob');DNBOSS.add('argos');
 for(const k of['kgob','argos'])if(!PSPEC.includes(k))PSPEC.push(k);
 // ---- aparición: el jefe genérico pasa a ser el de la era; con él salen sus porteadores o sus generadores ----
@@ -10483,7 +10484,7 @@ const ABREG=.015,ABST=[1,.4,.25,.15],ABBLK=.75,STOMPCD=7,STOMPR=1.6*K,STOMPST=1.
 storyBoss=function(){const era=S&&S.era===2?2:1,L=SBOSS[era],pr=era===2?(STO.bb||0):(STO.p||0),fin=S.round>=ROUNDS;
  if(pr>=3){if(!S.sbP){const ix=shuf(L.map((_,i)=>i));S.sbP={one:ix[0],two:ix.slice(0,2).sort((a,b)=>a-b)};}return L[ROUNDS<=15?S.sbP.one:fin?S.sbP.two[S.sbP.two.length-1]:S.sbP.two[0]];}
  const i=Math.min(pr,L.length-1);if(!fin&&pr===0)return 'egroup';return L[fin?i:Math.max(0,i-1)];};
-{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','atroll','argos','gen','forge','bob','colossus'];}
+{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','atroll','argos','gen','forge','bob'];}
 for(const k of['atroll','forge']){DNIMP.add(k);DNBOSS.add(k);if(!PSPEC.includes(k))PSPEC.push(k);}
 function boss2Tick(dt){const SL=liveUnits().filter(s=>!s.charm);
  for(const e of S.enemies){if(e.hp<=0)continue;
@@ -10505,7 +10506,7 @@ const ESVG6={"alord": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6
 {const B=ET.boss;ET.alord=Object.assign({},B,{n:'Señor del Abismo',col:'#2a0a10',fac:'d',story:1,el:0,gen:0,hf:Math.round(B.hf*1.2),ap:25,am:45,rift:1,penta:1,wings:1});EIC.alord={esvg:ESVG6.alord};
  ET.symb=Object.assign({},B,{n:'El Simbionte',col:'#3a1e4a',fac:'a',story:1,era:2,el:0,gen:0,hf:Math.round(B.hf*1.35),ap:80,am:10,shell:1,pulse:1,core2:1});EIC.symb={esvg:ESVG6.symb};}
 SBOSS[1].push('alord');SBOSS[2].push('symb');SBALL.push('alord','symb');
-{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','atroll','alord','argos','gen','forge','symb','bob','colossus'];}
+{const i=EFAM.findIndex(x=>x[0]==='Jefes');if(i>=0)EFAM[i][1]=['kgob','porter','atroll','alord','argos','gen','forge','symb','bob'];}
 for(const k of['alord','symb']){DNIMP.add(k);DNBOSS.add(k);if(!PSPEC.includes(k))PSPEC.push(k);}
 const RIFTCD=12,RIFTN=3,PENTCD=18,PENTW=1.5,PENTT=4,PENTR=3*K,WINGT=12,PULSECD=20,PULSEW=1.5,PULSET=3,PULSER=2.5*K,EATCD=6,EATR=1.5*K,EATH=.04,SYREG=.004,SHELL=[80,10],CORE=[10,70];
 // velocidad propia de un enemigo concreto (e.spx): se aplica como una prisa momentánea al moverse
@@ -12121,11 +12122,18 @@ const bufCap=r=>(r<=10?1:r<=15?2:3)+(r>=ROUNDS?1:0);
 //  · de élite: lo de la veterana y, además, uno de ellos sube a la tercera fase (como mucho un campeón por escuadra).
 //    Si la escuadra no tiene tercera fase (o aún no toca), sale como la veterana.
 // Los básicos nunca desaparecen. En los tanques, como mucho uno acorazado por escuadra.
-const SQTIER=r=>r<6?[0,0]:r<=8?[.25,0]:r<=12?[.4,.1]:[.45,.2];   // [fracción veterana, fracción de élite]
+/* v366 (Nogal, 23-nov): al principio solo Nv 1; luego algunas Nv 2; después mitad y mitad; luego aparecen pocas Nv 3; al final pocas Nv 1 (de 10 escuadrones: 2 / 4 / 4) */
+const SQTIER=r=>r<6?[0,0]:r<=8?[.25,0]:r<=10?[.5,0]:r<=12?[.45,.15]:r<=14?[.45,.25]:[.4,.4];   // [fracción Nv 2, fracción Nv 3]
+/* v366 · versiones diseñadas en el Taller: si un escuadrón tiene sus Nv 2 y Nv 3 hechas a mano (documentos con «de» y «nv»), la fase ya no se calcula
+   subiendo unidades sueltas: sale el escuadrón de esa versión, entero, con su propia formación. sqVer devuelve su clave (la del Nv 1 si esa versión
+   aún no toca por ronda) o null si el escuadrón no tiene versiones diseñadas (entonces vale el cálculo de siempre) */
+const SQVER={n:-1,m:{}};
+function sqVer(sq,tier,r){const ks=Object.keys(SQUADS);if(SQVER.n!==ks.length){SQVER.n=ks.length;SQVER.m={};for(const k of ks){const q=SQUADS[k];if(q.de&&SQUADS[q.de])(SQVER.m[q.de]=SQVER.m[q.de]||{})[q.nv]=k;}}
+ const V=SQVER.m[sq];if(!V)return null;for(let n=(tier||0)+1;n>=2;n--){const k=V[n];if(k&&SQUADS[k].min<=r)return k;}return sq;}
 const SQTN=['','veterana','de élite'];
 // la línea de cada básico: [segunda fase, ronda desde la que sale], [tercera fase, ronda]
 function lineOf(t){const P=PROMO[t];if(!P)return null;const L=[];for(const[r0,u]of P)if(!L.some(x=>x[0]===u))L.push([u,r0]);return L;}
-function sqTierM(sq,tier,r){const m=Object.assign({},sqM(sq));if(!tier||S.tut)return m;
+function sqTierM(sq,tier,r){{const vk=!S.tut&&sqVer(sq,tier,r);if(vk)return Object.assign({},sqM(vk));}const m=Object.assign({},sqM(sq));if(!tier||S.tut)return m;
  const bases=Object.keys(m).filter(t=>{const L=lineOf(t);return L&&L[0]&&r>=L[0][1];});if(!bases.length)return m;
  const tot=bases.reduce((a,t)=>a+m[t],0);let up=Math.max(1,Math.round(tot/3));const out=Object.assign({},m);
  // reparte los ascensos entre los grupos, de mayor a menor (los tanques, como mucho uno)
@@ -12143,7 +12151,7 @@ function sqTierOf(i,n,r){const[pv,pe]=SQTIER(r),nE=Math.round(n*pe),nV=Math.roun
  const rank=Array.from({length:n},(_,j)=>j).sort((a,b)=>((a*.6180339887)%1)-((b*.6180339887)%1)).indexOf(i);
  return rank<nE?2:rank<nE+nV?1:0;}
 // valor de una escuadra para el presupuesto: la media de sus versiones en esta ronda
-{const val=m=>Object.entries(m).reduce((a,[t,n])=>a+n*(ET[t].hf||ET[t].hp),0);
+{const val=m=>Object.entries(m).reduce((a,[t,n])=>a+n*enVal(t),0);
  sqValT=k=>{if(!S||S.tut)return Object.entries(sqM(k)).reduce((a,[t,n])=>a+n*ET[t].hp,0);const r=S.round,[pv,pe]=SQTIER(r);return (1-pv-pe)*val(sqTierM(k,0,r))+pv*val(sqTierM(k,1,r))+pe*val(sqTierM(k,2,r));};}
 // ==================== v307 · ÉTER habla en el menú principal (tableta) ====================
 // Al pulsar la pantallita «ÉTER · EN LÍNEA» de la consola, ÉTER suelta una frase en un bocadillo que sale del altavoz.
@@ -12708,7 +12716,7 @@ mbrkAdd=function(e,a,mx){if(!e||!(a>0)||!(e.hp>0))return;mx=mx||a;e.mbrk=e.mbrk|
 // ---- regeneración de los enemigos fuertes ----
 const RGHIT=2.5,RGEN={};
 for(const[v,L]of[[.003,['champ','dchamp','armored','centu','praet','brute','titan']],[.004,['mini','hknight','greyw','infil','mutant']],
- [.005,['elite','warlord','wander','griffin','momdrg','bigw','brood','carrier','manta']],[.006,['boss','kgob','alord','colossus','bob','forge','symb']]])for(const k of L)if(ET[k])RGEN[k]=v;
+ [.005,['elite','warlord','wander','griffin','momdrg','bigw','brood','carrier','manta']],[.006,['boss','kgob','alord','bob','forge','symb']]])for(const k of L)if(ET[k])RGEN[k]=v;
 const rgPct=v=>String(Math.round(v*1000)/10).replace('.',',')+' %';
 // Emisor de interferencias (pasivo «Sin señal»): los enemigos con la resistencia mágica rota no regeneran
 const sinSenal=e=>!!(S&&S.relics&&S.relics.includes('emisor')&&rp('emisor')&&mbrkOf(e)>0);
@@ -13247,7 +13255,7 @@ const twMk=k=>PRG.twm[k]||(PRG.twm[k]={});
 // cada poco: héroe a Nv 10, torre a Nv 4, torres al máximo con su especialización, descubrirlo todo de una era
 const eraAll=era=>{const sn=(t,k)=>!!(SEEN[t]&&SEEN[t][k]),E=x=>(x&&x.era||1)===era;
  return Object.keys(HEROES).filter(h=>E(HEROES[h])).every(h=>sn('hr',h))&&Object.keys(TW).filter(k=>E(TW[k])&&!TW[k].hidden&&!TW[k].summ&&(TW[k].cost!=null||TW[k].uniq)).every(k=>sn('tw',k))
-  &&Object.keys(ET).filter(k=>E(ET[k])&&!ET[k].hidden&&!ET[k].call).every(k=>sn('en',k))&&RELICS.filter(r=>E(r)).every(r=>sn('rl',r.id));};
+  &&Object.keys(ET).filter(k=>E(ET[k])&&!ET[k].hidden).every(k=>sn('en',k))&&RELICS.filter(r=>E(r)).every(r=>sn('rl',r.id));};
 setInterval(()=>{try{if(!prgOn()||!S.list)return;if(S.hero&&S.hero.lvl>=10)achieve('h10');try{if(typeof pigHouses==='function'&&pigHouses().every(h=>h))achieve('pigs');}catch(_){}let ch=0;
  for(const t of S.list){if(t.lvl>=4&&!t.hero&&!t.summ&&!t.pigU)achieve('tw4');if(twMaxOK(t)){const m=twMk(t.type),key=t.spec?'s_'+t.spec:'s_nv4';if(!m[key]){m[key]=1;ch=1;}}}
  if(ch)prgSave();}catch(e){}},1500);
@@ -16237,4 +16245,35 @@ setInterval(()=>{try{guiaTick();}catch(e){}},700);
 const TAM={norm:1.2,vet:1.3,champ:1.4,javelin:1,sling:.9,shaman:1.3,minion:1.1};
 const tamOf=k=>ET[k]?+(ET[k].r*2*EVS).toFixed(2):0;
 for(const k in TAM)if(ET[k])ET[k].r=TAM[k]/2/EVS;
+// ==================== v366 · Datos del Taller de enemigos ====================
+// El Taller (artefacto «Taller de enemigos») es donde Nogal diseña enemigos y escuadrones. tools/taller/importar.js convierte lo exportado del
+// Taller en src/js/data/taller_datos.js (const TALLER={…}) y este archivo lo mete en las tablas del juego al cargar:
+//  · tam: tamaño en carriles de enemigos que ya existen (TAM);
+//  · en:  enemigos nuevos (ET). Los que aún no tienen su mecánica programada (no están en TALLER_MEC) entran ocultos y no salen en ninguna oleada;
+//  · sq:  escuadrones: cambios a los del juego, escuadrones nuevos, versiones Nv 2 / Nv 3 («de», «nv») y escuadrones de jefe con escolta.
+//         Un escuadrón con algún enemigo que no existe o que no tiene la mecánica montada queda apagado (min 999, off) hasta que la tenga.
+// Sin datos (TALLER sin definir) no hace nada: el juego sigue con sus escuadrones de siempre.
+const TALLER_MEC={};   // id del Taller → 1 cuando la mecánica de ese enemigo ya está programada en el juego
+const TFAC={'Pieles verdes':'g','Demonios':'d','Máquinas':'m','Alienígenas':'a','Monstruos':'x'};
+if(typeof FACN!=='undefined'&&!FACN.x)FACN.x='Monstruos';
+function tallerAplicar(T){const rep={en:0,enOff:[],sq:0,ver:0,jefe:0,sqOff:[],tam:0};if(!T)return rep;
+ for(const k in T.tam||{})if(ET[k]&&T.tam[k]>0){TAM[k]=T.tam[k];ET[k].r=T.tam[k]/2/EVS;rep.tam++;}
+ for(const id in T.en||{}){const d=T.en[id],st=d.st||{};if(ET[id]||!d.fam||d.tipo==='agua')continue;const ok=!!TALLER_MEC[id],tam=d.tam||1.3;
+  ET[id]={n:d.n,era:d.era||1,fac:TFAC[d.fac]||undefined,gold:st.gold||1,hp:(st.hp||18)/HP0,hf:st.hp||18,sp:(st.sp||1)*K,r:tam/2/EVS,col:d.col||'#888',dmg:st.dmg||1,ap:st.ap||0,am:st.am||0,
+   ud:st.ud||0,ac:1.2,need:1,rg:d.rg==='A distancia'?'ranged':'melee',xp:Math.max(1,Math.round((st.gold||1)*.6)),taller:id,fam:d.fam};
+  if(d.tipo==='aire')ET[id].fly=1;if(d.lleva)ET[id].lleva=d.lleva;if(d.vf)ET[id].vf=d.vf;if(!ok){ET[id].hidden=1;ET[id].pend=1;rep.enOff.push(id);}
+  TAM[id]=tam;if(T.ic&&T.ic[id]&&typeof EIC!=='undefined')EIC[id]={esvg:T.ic[id]};rep.en++;}
+ const jefes=typeof SBALL!=='undefined'?SBALL.filter(k=>ET[k]&&ET[k].story):[];
+ for(const k in T.sq||{}){const d=T.sq[k],base=SQUADS[k]&&!SQUADS[k].tut?SQUADS[k]:null;if(SQUADS[k]&&SQUADS[k].tut)continue;if(!base&&!d.custom)continue;
+  const q=base||(SQUADS[k]={n:d.n||k,min:d.min||1,m:{}});
+  if(d.n)q.n=d.n;if(d.min)q.min=d.min;if(d.m)q.m=Object.assign({},d.m);if(d.lead!==undefined){if(d.lead)q.lead=d.lead;else delete q.lead;}
+  if(d.era)q.era=d.era;if(d.pz)q.pz=d.pz;if(d.de){q.de=d.de;q.nv=d.nv||2;rep.ver++;}
+  if(d.f&&d.f.length){SQF[k]=d.f.map(f=>f.map(u=>[u[0],+u[1]||0,+u[2]||0]));q.t5=1;}
+  const jb=Object.keys(q.m).find(t=>jefes.includes(t));if(jb){q.boss=jb;rep.jefe++;}
+  const bad=Object.keys(q.m).filter(t=>!ET[t]||ET[t].pend);if(bad.length){q.off=bad;q.min0=q.min;q.min=999;delete q.boss;rep.sqOff.push(k);}
+  rep.sq++;}
+ // una versión no puede salir si su Nv 1 está apagado
+ for(const k in SQUADS){const q=SQUADS[k];if(q.de&&SQUADS[q.de]&&SQUADS[q.de].off&&!q.off){q.off=['Nv 1'];q.min0=q.min;q.min=999;}}
+ if(typeof SQVER!=='undefined')SQVER.n=-1;return rep;}
+const TALLER_REP=tallerAplicar(typeof TALLER!=='undefined'?TALLER:null);
 </script></body></html>

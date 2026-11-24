@@ -1,0 +1,9 @@
+{"version":"muestra","enemigos":{"norm":{"tam":1.2},"sling":{"tam":0.9}},
+ "nuevos":{"i01portalero":{"n":"Portalero","era":1,"fac":"Demonios","fam":"Místicos","tipo":"tierra","rg":"No ataca","col":"#7a3ab8","st":{"am":20,"ap":10,"dmg":1,"gold":10,"hp":200,"sp":0.8,"ud":0},"mec":"Abre un portal…"},
+  "i99idea":{"n":"Idea","fam":"","st":{}}},
+ "escuadrones":{
+  "conclave":{"f":[[["minion",2,-2],["minion",2,2],["minion",1,0],["acolyte",0,-1],["acolyte",0,1]],[["minion",0,-2],["minion",0,2],["minion",0,0],["acolyte",1.5,-1],["acolyte",1.5,1]]]},
+  "conclave_n2":{"custom":true,"de":"conclave","nv":2,"era":1,"pz":2,"min":6,"n":"Cónclave","lead":"acolyte","m":{"acolyte":2,"demon":2,"minion":1},"f":[[["demon",2,-2],["demon",2,2],["minion",1,0],["acolyte",0,-1],["acolyte",0,1]],[["demon",0,-2],["demon",0,2],["minion",0,0],["acolyte",1.5,-1],["acolyte",1.5,1]]],"src":"x"},
+  "qatajo":{"custom":true,"era":1,"pz":2,"min":7,"n":"Atajo","lead":"i01portalero","m":{"i01portalero":1,"vet":4},"f":[[["vet",0,-1],["vet",0,1],["i01portalero",1.5,0],["vet",3,-1],["vet",3,1]]]},
+  "qmal":{"custom":true,"era":1,"min":3,"n":"Mal","m":{"norm":3},"f":[[["norm",0,-3],["norm",0,0]]]}},
+ "iconos":{"i01portalero":"<svg viewBox=\"0 0 64 64\"></svg>"}}

@@ -10,7 +10,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  // cada era, sus eventos
  let ok1=true,ok2=true;for(let k=0;k<6;k++){game(1,'reinhart');ok1=ok1&&Object.values(S.evts).every(id=>EVENTS[id].era!==2);game(2,'vega');ok2=ok2&&Object.values(S.evts).length>0&&Object.values(S.evts).every(id=>E2.includes(id));}out.era1=ok1;out.era2=ok2;
  S.evts={};for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
- RL.open=false;S.phase='build';S.hp=20;S.gold=5000;for(const q of S.portals){q.sq=[];q.sqm=[];q.plan={norm:3,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}
+ RL.open=false;S.phase='build';S.hp=20;S.gold=5000;for(const q of S.portals){q.sq=[];q.sqm=[];q.plan={norm:3,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0};}
  const bk=Object.keys(S.blocks).find(k=>uSpots(k).length>1);out.block=!!bk;
  const ev=(id,i)=>{S.evPlayed={};openEvent(id,bk);const o=RL.open&&RL.ev===id;chooseEvent(i);return o;};const done=()=>{closeEvent();};
  // Cápsula caída

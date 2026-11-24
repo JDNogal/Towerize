@@ -9,7 +9,7 @@ const r=await p.evaluate(()=>{const out={};INTRO.on=false;STO.intro=1;OPT.hints=
   RL.open=false;S.phase='build';S.gold=99999;S.deck=['arrow','bastion'];
   sol=[];for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===1&&!S.occ[x+','+y]){const q=sqOf(x,y);if(q.x===x&&q.y===y)sol.push([x,y]);}}
  S.tsel='bastion';build(sol[0][0],sol[0][1]);const bt=S.list[S.list.length-1];S.tsel='arrow';build(sol[1][0],sol[1][1]);const ar=S.list[S.list.length-1];
- for(const p of S.portals){p.sq=[];p.sqm=[];p.plan={norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}startWave();S.enemies=[];const mk=(t,x,y)=>{const e={t,x,y,tx:Math.round(x),ty:Math.round(y),hp:500,max:500,fx:{}};S.enemies.push(e);return e;};
+ for(const p of S.portals){p.sq=[];p.sqm=[];p.plan={norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0};}startWave();S.enemies=[];const mk=(t,x,y)=>{const e={t,x,y,tx:Math.round(x),ty:Math.round(y),hp:500,max:500,fx:{}};S.enemies.push(e);return e;};
  const sd=bt.sd;for(const s of sd){s.x=bt.x;s.y=bt.y;s.hp=s.max;}
  // Súcubo
  const su=mk('warlock',bt.x+1,bt.y);for(let i=0;i<70;i++)eSkillsTick(.05);out.charm=sd.some(s=>s.charm);

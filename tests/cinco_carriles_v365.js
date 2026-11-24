@@ -24,7 +24,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  // el encuadre automático no encoge el mapa por debajo de la escala de 3 carriles
  camFit(true);out.cam=CAM.z>=K/K3-1e-6;
  // carriles: los sueltos se reparten por los 5; setLane admite de -2 a 2
- for(const q of S.portals){q.sq=[];q.sqm=[];q.plan={norm:0,fast:0,tank:0,mini:0,elite:0,boss:0,colossus:0};}
+ for(const q of S.portals){q.sq=[];q.sqm=[];q.plan={norm:0,fast:0,tank:0,mini:0,elite:0,boss:0};}
  startWave();for(const q of S.portals){q.q=[];q.qf=[];}
  for(let i=0;i<10;i++)spawnEnemy('norm',P0,null);
  const lanes=new Set(),seen=new Set();let off=0,stop=0;
@@ -34,7 +34,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  // sin torres, los enemigos llegan al núcleo por el camino de 5 carriles
  const hp0=S.hp;for(let i=0;i<4000&&S.enemies.length&&S.phase==='wave'&&S.hp===hp0;i++)update(.05);out.leak=S.hp<hp0&&S.phase==='wave';
  // una torre de unidades para a los que van por los carriles de fuera
- S.gold=9999;let sol=null,bd=1e9;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1){const x=kx*K+KC,y=ky*K+KC,d=Math.hypot(x-P0.x,y-P0.y);if(d>2*K&&d<bd&&!S.occ[x+','+y]){bd=d;sol={x,y};}}
+ S.gold=9999;let sol=null,bd=1e9;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1){const x=kx*K+KC,y=ky*K+KC,d=Math.hypot(x-P0.x,y-P0.y);if(!S.occ[x+','+y]){const dd=d>2*K?d:d+1e3;/* mejor a más de 2 casillas del portal; si no hay, el que haya */if(dd<bd){bd=dd;sol={x,y};}}}
  S.deck=['bastion'];S.tsel='bastion';build(sol.x,sol.y);out.built=S.list.length===1;
  for(let i=0;i<6;i++){spawnEnemy('norm',P0,null);setLane(S.enemies[S.enemies.length-1],i%2?2:-2);}
  for(let i=0;i<900&&S.enemies.length;i++){update(.05);for(const e of S.enemies)if(e.stopped&&Math.abs(e.fln)===2)stop++;}
