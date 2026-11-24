@@ -46,6 +46,10 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  limpio();for(const s of B.sd){s.hp=0;s.rt=999;}{const og=pon('i15provocador',TR[Math.max(0,iA-2)],1),cebo=pon('norm',TR[Math.min(TR.length-1,iA+2)],1);og.tac=99;out.ogroAntes=true;
   {const c0=cebo.hp;run(1.2);out.ogroAntes=out.ogroAntes&&cebo.hp<c0;}og.tac=0;out.ogroGrita=run(1,()=>A.taunt===og);run(.3);const o1=og.hp,c1=cebo.hp;run(3);out.ogroApunta=og.hp<o1&&cebo.hp===c1;const o2=og.hp;run(9);out.ogroSigue=og.hp<o2&&cebo.hp===c1&&A.taunt===og;
   og.hp=0;S.enemies.splice(S.enemies.indexOf(og),1);const c3=cebo.hp;run(1.5);out.ogroMuere=!A.taunt&&cebo.hp<c3;}
+ // las torres con unidades también: los soldados dejan al que tenían y van a por el Ogro
+ limpio();A.jam=999;for(const s of B.sd){s.hp=s.max=9999;s.rt=0;s.lock=false;}run(1);{const fl=B.flag||B,q0=pathNear(fl.x,fl.y)||TR[iB],cebo=pon('norm',q0,1);run(1.5);out.ogroUnidadesAntes=B.sd.some(s=>s.en===cebo);
+  const iq=cerca(q0),og=pon('i15provocador',TR[Math.max(0,iq-3)],1);og.tac=0;run(.3);out.ogroUnidadesGrito=B.taunt===og;run(1);out.ogroUnidades=B.sd.every(s=>s.en===og);out.ogroUnidadesV=B.sd.map(s=>s.en?s.en.t:'-').join('/')+' '+Math.hypot(og.x-fl.x,og.y-fl.y).toFixed(1);
+  og.hp=0;S.enemies.splice(S.enemies.indexOf(og),1);run(1);out.ogroUnidadesMuere=!B.taunt&&B.sd.some(s=>s.en===cebo);for(const s of B.sd){s.en=null;s.fight=false;}}
  // ---------- Murciélago de fuego: diana bajo una unidad y brasas a las que sigan dentro ----------
  limpio();for(const s of B.sd){s.hp=s.max=48;s.rt=0;}run(1.2);{const fl=B.flag||B,mu=pon('i17murcielago',pathNear(fl.x,fl.y)||TR[iB],1);
   const z=run(3,()=>S.tmz&&S.tmz.length>0);const zz=z&&S.tmz[0],h0=B.sd.map(s=>s.hp),den=zz?B.sd.filter(s=>Math.hypot(s.x-zz.x,s.y-zz.y)<=EMBA):[];run(EMBW+.1);
@@ -77,6 +81,8 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   const ax=po.x,ay=po.y;run(2);out.portalAnda=Math.hypot(po.x-ax,po.y-ay)>2;out.portalOtro=!run(GATECD-2.6,()=>po.gw>0)&&run(1.5,()=>po.gw>0);}
  // sin que nadie le pegue, abre el primero a los 6 s de entrar
  limpio();A.jam=999;{const po=pon('i01portalero',TR[4]);out.portalSolo=!run(GATEFIRST-.5,()=>po.gw>0)&&run(1,()=>po.gw>0);}
+ // la Bruja hace daño mágico a las unidades; mal de ojo y bombas también afectan a las torres de evento
+ out.brujaMagica=ET.i40bruja.dt==='magic';{const tE={type:'faro',x:0,y:0};out.eventoAfectada=!!tm2Tw(tE);}
  // ---------- Cuervo de batalla: entra por el borde de tus piezas y va recto al núcleo ----------
  limpio();A.jam=0;{out.cuervoSinAviso=!crowNext();S.crowLeft=2;out.cuervoAviso=crowNext();S.crowLeft=0;{const ph=S.phase;S.phase='build';S.portals[0].sqm=[{i03directo:5}];out.cuervoAviso=out.cuervoAviso&&crowNext()&&crowPlan()===5;S.portals[0].sqm=[];out.cuervoSinAviso=out.cuervoSinAviso&&!crowNext();S.phase=ph;}
   S.crowIn=null;const c=crowEntry(),c2=crowEntry();let x0=1e9,y0=1e9,x1=-1,y1=-1;for(let ty=0;ty<NC;ty++)for(let tx=0;tx<NC;tx++)if(S.cc[ty][tx]){x0=Math.min(x0,tx);y0=Math.min(y0,ty);x1=Math.max(x1,tx);y1=Math.max(y1,ty);}

@@ -1,10 +1,11 @@
 // ==================== v366 · Mecánicas de los enemigos nuevos del Taller, tanda 2 ====================
 // Era Fantástica, partida 2 (acordado con Nogal el 24-nov). Las medidas van en celdas pequeñas (K = 5 celdas = el ancho del camino).
 // Regla de Nogal: ningún efecto de área de un enemigo puede ser más estrecho que el camino.
-//  · Bruja goblin (hex): cada 6 s echa mal de ojo a la torre más cercana (10 celdas): −20 % de alcance 5 s. No se acumula y la torre queda 10 s sin poder sufrirlo otra vez.
+//  · Bruja goblin (hex, daño mágico a las unidades): cada 6 s echa mal de ojo a la torre más cercana (10 celdas): −20 % de alcance 5 s. No se acumula y la torre queda 10 s sin poder sufrirlo otra vez.
 //  · Globo trasgo (bomb): cada 5 s marca la torre más cercana (7,5 celdas) y 1 s después cae la bomba: no dispara 2,5 s. Las torres con unidades no reponen a las caídas
 //    en ese tiempo; prefiere las torres sin unidades.
-//  · Ogro retador (taunt): cada 8 s grita; las torres a 12,5 celdas le apuntan a él mientras lo tengan a tiro, hasta que muera.
+//  · Ogro retador (taunt): cada 8 s grita; las torres a 12,5 celdas le apuntan a él mientras lo tengan a tiro, hasta que muera. Las torres con unidades también:
+//    sus soldados van a por él mientras esté en su zona (Nogal, 24-nov).
 //  · Murciélago de fuego (ember): cada 4 s marca el suelo bajo la unidad más cercana (7,5 celdas) y 0,8 s después caen brasas: su golpe a las unidades que sigan a 2 celdas (con 1,5 solo alcanzaba a un soldado de un Baluarte: están a 1,56 unos de otros).
 //  · Portatótem goblin (totem): cada 12 s planta un tótem (10 s, se puede romper). Quien pasa a 7,5 celdas gana Firmeza 4 s: no le entra ningún control
 //    (ralentizar, aturdir, congelar, enraizar, miedo, empujones, transformaciones, hackeo); solo se le para con unidades.
@@ -12,10 +13,10 @@
 //    siguiendo el camino.
 //  · Cuervo de batalla (direct): no sale del portal ni sigue el camino. Entra por el borde de tus piezas y va en línea recta al núcleo. El punto de entrada se decide al
 //    empezar la construcción y se avisa con flechas: su línea al núcleo pasa por encima de tus piezas y cerca de alguna torre, pero lejos del grueso de tus defensas. Después anda 6 s (24 celdas) antes de abrir otro: con 10 s recorría 40 celdas, casi un mapa pequeño entero. Si una unidad pelea con él, o lo aturden o congelan, se cierra; 2,5 s después de quedar libre lo reabre.
-Object.assign(TMEC,{i03directo:{direct:1},i40bruja:{hex:1},i04bombardero:{bomb:1},i15provocador:{taunt:1},i17murcielago:{ember:1},i41totem:{totem:1},i01portalero:{gate:1}});
+Object.assign(TMEC,{i03directo:{direct:1},i40bruja:{hex:1,dt:'magic'},i04bombardero:{bomb:1},i15provocador:{taunt:1},i17murcielago:{ember:1},i41totem:{totem:1},i01portalero:{gate:1}});
 const HEXCD=6,HEXR=2*K,OJOT=5,HEXIMM=10,HEXM=.8,BOMBCD=5,BOMBR=1.5*K,BOMBW=1,BOMBT=2.5,TAUCD=8,TAUR=2.5*K,EMBCD=4,EMBR=1.5*K,EMBW=.8,EMBA=2,
  TOTCD=12,TOTT=10,TOTR=1.5*K,FIRMT=4,GATEW=1.5,GATET=8,GATECD=6,GATER=KC+1.2,GATEFREE=2.5,GATEAH=1.5,GATEFIRST=6;
-const tm2Tw=t=>{const T=TW[t.type];return T&&!T.uniq&&!t.hero?T:null;};   // como la maldición y la interferencia de siempre: las torres de evento no se ven afectadas
+const tm2Tw=t=>{const T=TW[t.type];return T&&!t.hero?T:null;};   // las torres de evento se ven afectadas como las demás (Nogal, 24-nov)
 // ---- Bruja goblin: mal de ojo ----
 function hexTick(e,dt){e.hxc=(e.hxc===undefined?3:e.hxc)-dt;if(e.hxc>0)return;let b=null,bd=HEXR;for(const t of S.list){if(!tm2Tw(t)||t.hexr>0||t.heximm>0)continue;const d=Math.hypot(t.x-e.x,t.y-e.y);if(d<=bd){bd=d;b=t;}}
  if(b){e.hxc=HEXCD;b.hexr=OJOT;S.fx.push({x:b.x,y:b.y,t:.5,m:.5,r:1.2*K,col:'#6fe07a'});}else e.hxc=.5;}
@@ -26,11 +27,16 @@ function globoTick(e,dt){e.bmc=(e.bmc===undefined?2:e.bmc)-dt;if(e.bmc>0)return;
  if(b){e.bmc=BOMBCD;mk.push({t:b,w:BOMBW,x0:e.x,y0:e.y});}else e.bmc=.4;}
 // ---- Ogro retador: grito ----
 function tauntTick(e,dt){if(e.tauB>0)e.tauB-=dt;e.tac=(e.tac===undefined?2:e.tac)-dt;if(e.tac>0)return;let n=0;
- for(const t of S.list){const T=tm2Tw(t);if(!T||T.unit||T.support||Math.hypot(t.x-e.x,t.y-e.y)>TAUR)continue;t.taunt=e;n++;}
+ for(const t of S.list){const T=tm2Tw(t);if(!T||T.support)continue;const f=T.unit&&t.flag?t.flag:t;if(Math.min(Math.hypot(t.x-e.x,t.y-e.y),Math.hypot(f.x-e.x,f.y-e.y))>TAUR)continue;t.taunt=e;n++;}
  if(n){e.tac=TAUCD;e.tauB=.8;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:TAUR,col:'#ff5a4a'});}else e.tac=.5;}
 // las torres provocadas le apuntan mientras lo tengan a tiro (antes de que cada torre elija objetivo)
 function tauntHold(){if(!S||!S.list)return;for(const t of S.list){const e=t.taunt;if(!e)continue;if(!(e.hp>0)||!S.enemies.includes(e)){t.taunt=null;continue;}const T=TW[t.type];
-  if(T&&T.ground&&isFly(e))continue;if(Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range)t.tgt=e;}}
+  if(T&&T.unit)continue;if(T&&T.ground&&isFly(e))continue;if(Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range)t.tgt=e;}}
+// las torres con unidades provocadas: sus soldados van a por él mientras lo tengan en su zona (antes de que cada soldado elija enemigo)
+const tauntUnitIn=(t,e)=>{const f=t.flag||t;return !isFly(e)&&!e.nblk&&!(e.hk>0)&&Math.hypot(f.x-e.x,f.y-e.y)<=(t.alert||ALERT);};
+function tauntUnits(){if(!S||S.phase!=='wave')return;for(const t of unitTowers()){const e=t.taunt;if(!e||!t.sd)continue;if(!(e.hp>0)||!S.enemies.includes(e)){t.taunt=null;continue;}if(!tauntUnitIn(t,e))continue;
+  for(const s of t.sd)if(s.hp>0&&!s.lock&&!s.air&&!(s.udwn>0)&&s.en!==e){s.en=e;s.fight=false;s.en2=null;s.cd=0;}}}
+{const _c=unitCombat;unitCombat=function(dt){tauntUnits();return _c(dt);};}
 // ---- Murciélago de fuego: brasas ----
 function emberTick(e,E,dt,SL){e.rw=9;/* su ataque son las brasas: no dispara además como los demás enemigos a distancia */e.emc=(e.emc===undefined?2:e.emc)-dt;if(e.emc>0)return;let b=null,bd=EMBR;for(const s of SL){if(s.air||(s.H&&s.H.camo>0))continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}
  if(b){e.emc=EMBCD;(S.tmz||(S.tmz=[])).push({x:b.x,y:b.y,w:EMBW,d:(E.ud||0)*(typeof udM==='function'?udM(e):1),src:e,x0:e.x,y0:e.y});}else e.emc=.3;}
@@ -118,7 +124,7 @@ function tm2Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=perform
   if(e.firm>S.wt&&e.t!=='ttotem'){g.strokeStyle='rgba(205,198,186,.95)';g.lineWidth=lw(2.6);g.setLineDash([lw(6),lw(3)]);g.beginPath();g.arc(px,py,r*1.28,0,7);g.stroke();g.setLineDash([]);}
   // grito del Ogro: ondas y línea roja a las torres que le apuntan
   if(E.taunt){if(e.tauB>0){const a=e.tauB/.8;g.strokeStyle='rgba(255,90,70,'+(a*.9).toFixed(2)+')';g.lineWidth=lw(3);for(let i=1;i<=3;i++){g.beginPath();g.arc(px,py,r*(1+i*(1.5-a)),-2.4,-.7);g.stroke();}}
-   g.strokeStyle='rgba(255,70,60,.55)';g.lineWidth=lw(1.6);g.setLineDash([lw(5),lw(4)]);for(const t of S.list||[])if(t.taunt===e&&Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range){g.beginPath();g.moveTo(px,py);g.lineTo(X(t.x),X(t.y));g.stroke();}g.setLineDash([]);}
+   g.strokeStyle='rgba(255,70,60,.55)';g.lineWidth=lw(1.6);g.setLineDash([lw(5),lw(4)]);for(const t of S.list||[])if(t.taunt===e&&(TW[t.type]&&TW[t.type].unit?tauntUnitIn(t,e):Math.hypot(e.x-t.x,e.y-t.y)<=stats(t).range)){g.beginPath();g.moveTo(px,py);g.lineTo(X(t.x),X(t.y));g.stroke();}g.setLineDash([]);}
   // portal: entrada y salida (durante el aviso, tenues y creciendo)
   if(E.gate&&(e.gw>0||e.go>0)){const k=e.gw>0?1-e.gw/GATEW:1,w=CS*(KC+.4)*k,h=CS*.9*k+CS*.3,pt=(x,y,c1,c2)=>{const horiz=Math.abs((e.gex-e.gx))>=Math.abs((e.gey-e.gy));g.save();g.translate(X(x),X(y));if(horiz)g.rotate(Math.PI/2);g.fillStyle=c1;g.strokeStyle=c2;g.lineWidth=lw(2.5);g.beginPath();g.ellipse(0,0,w,h,0,0,7);g.fill();g.stroke();
      g.strokeStyle='rgba(235,210,255,.8)';g.lineWidth=lw(1.6);for(let i=0;i<3;i++){const a=now*3+i*2.094;g.beginPath();g.ellipse(0,0,w*(.25+.22*i),h*(.25+.22*i),0,a,a+2.2);g.stroke();}g.restore();};
@@ -126,9 +132,9 @@ function tm2Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=perform
 {const _d=eSkillsDraw;eSkillsDraw=function(g,lw){_d(g,lw);try{tm2Draw(g,lw);}catch(x){}};}
 // ---- palabras clave, fichas y Mecánicas del compendio ----
 {const _k=kwHtml0,R=v=>(typeof RGV==='function'&&typeof f==='function')?RGV(f(v/K)):String(v/K).replace('.',','),c=v=>String(v).replace('.',',');kwHtml0=function(id,src){
- if(id==='ehex')return '<b>Mal de ojo</b><small>Cada '+HEXCD+' s echa mal de ojo a la torre más cercana (a '+R(HEXR)+' o menos): durante '+OJOT+' s tiene un '+Math.round((1-HEXM)*100)+' % menos de alcance. No se acumula, y una torre que acaba de librarse no puede volver a sufrirlo en '+HEXIMM+' s. Las torres de evento no se ven afectadas.</small>';
- if(id==='ebomb')return '<b>Bombardeo</b><small>Cada '+BOMBCD+' s marca con una diana la torre más cercana (a '+R(BOMBR)+' o menos) y '+BOMBW+' s después le cae una bomba: la torre no dispara durante '+c(BOMBT)+' s. Una torre con unidades, en ese tiempo, no repone a las caídas. Prefiere las torres sin unidades. Las torres de evento no se ven afectadas.</small>';
- if(id==='etaunt')return '<b>Grito de desafío</b><small>Cada '+TAUCD+' s grita: las torres a '+R(TAUR)+' o menos le apuntan a él mientras lo tengan a tiro, hasta que muera, tengan el modo de objetivo que tengan.</small>';
+ if(id==='ehex')return '<b>Mal de ojo</b><small>Cada '+HEXCD+' s echa mal de ojo a la torre más cercana (a '+R(HEXR)+' o menos): durante '+OJOT+' s tiene un '+Math.round((1-HEXM)*100)+' % menos de alcance. No se acumula, y una torre que acaba de librarse no puede volver a sufrirlo en '+HEXIMM+' s. Sus disparos a tus unidades son de daño mágico.</small>';
+ if(id==='ebomb')return '<b>Bombardeo</b><small>Cada '+BOMBCD+' s marca con una diana la torre más cercana (a '+R(BOMBR)+' o menos) y '+BOMBW+' s después le cae una bomba: la torre no dispara durante '+c(BOMBT)+' s. Una torre con unidades, en ese tiempo, no repone a las caídas. Prefiere las torres sin unidades.</small>';
+ if(id==='etaunt')return '<b>Grito de desafío</b><small>Cada '+TAUCD+' s grita: las torres a '+R(TAUR)+' o menos le apuntan a él mientras lo tengan a tiro, hasta que muera, tengan el modo de objetivo que tengan. Los soldados de las torres con unidades van también a por él.</small>';
  if(id==='eember')return '<b>Brasas</b><small>Cada '+EMBCD+' s marca con una diana el suelo bajo tu unidad más cercana (a '+R(EMBR)+' o menos) y '+c(EMBW)+' s después caen las brasas: golpean a todas las unidades que sigan dentro.</small>';
  if(id==='etotem')return '<b>Tótem de firmeza</b><small>Cada '+TOTCD+' s planta un tótem que dura '+TOTT+' s y se puede destruir como un enemigo más (no se mueve ni ataca). Los enemigos que pasan a '+R(TOTR)+' o menos ganan Firmeza durante '+FIRMT+' s.</small>';
  if(id==='efirm')return '<b>Firmeza</b><small>No le afecta ningún control: ni ralentización, ni aturdimiento, ni congelación, ni enraizamiento, ni miedo, ni empujones. Solo se le puede parar con unidades.</small>';

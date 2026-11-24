@@ -279,7 +279,7 @@ function wallShot(t,s,prog){let be=null;for(const e of S.enemies){if(e.hp<=0||Ma
 // ---- lobos ----
 function wolfTick(dt){for(const t of S.list)if(t.curse>0)t.curse-=dt;
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];
- if(E.curse){e.cu=(e.cu===undefined?3:e.cu)-dt;if(e.cu<=0){let b=null,bd=4*K;for(const t of S.list){if(TW[t.type].uniq)continue;const d=Math.hypot(t.x-e.x,t.y-e.y);if(d<=bd){bd=d;b=t;}}if(b){e.cu=8;b.curse=5;S.fx.push({x:b.x,y:b.y,t:.5,m:.5,r:1.2*K,col:'#b05ad0'});}else e.cu=.5;}}
+ if(E.curse){e.cu=(e.cu===undefined?3:e.cu)-dt;if(e.cu<=0){let b=null,bd=4*K;for(const t of S.list){const d=Math.hypot(t.x-e.x,t.y-e.y);if(d<=bd){bd=d;b=t;}}if(b){e.cu=8;b.curse=5;S.fx.push({x:b.x,y:b.y,t:.5,m:.5,r:1.2*K,col:'#b05ad0'});}else e.cu=.5;}}
  if(E.eheal){e.eh=(e.eh===undefined?6:e.eh)-dt;if(e.eh<=0){e.eh=6;const nw=S.wt||0;for(const o of S.enemies)if(o.hp>0&&!(ET[o.t]&&ET[o.t].eheal)&&!(o.hlt!==undefined&&nw-o.hlt<5.9&&nw>=o.hlt)&&Math.hypot(o.x-e.x,o.y-e.y)<=2.5*K){o.hlt=nw;o.hp=Math.min(o.max,o.hp+o.max*.1);}S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:2.5*K,col:'#6fe0a0'});}}
  if(E.breath){e.br=(e.br||6)-dt;if(e.br<=0){e.br=6;let n=0;for(const t of unitTowers())for(const s of t.sd)if(s.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<=1.5*K){s.hp-=15;n++;if(S.pvE&&S.dn)dnAdd(s,15,'taken');if(s.hp<=0&&ra('banner'))s.hp=1;if(s.hp<=0){s.rt=unitOf(t).rez*(rp('banner')?.7:1);s.en=null;s.fight=false;}}S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:1.5*K,col:'#ff7a3c'});}}
  if(E.howl&&!e.howled&&e.hp<e.max/2){e.howled=1;for(const o of S.enemies)if(o.t==='cub'&&Math.hypot(o.x-e.x,o.y-e.y)<=3*K)o.fx.haste={m:1.2,t:3};S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:3*K,col:'#c8c8d0'});}

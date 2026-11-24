@@ -54,8 +54,8 @@ function withoutCharmed(fn){const saved=[];for(const t of unitTowers())if(t.sd&&
 {const _w=unitWalk;unitWalk=function(dt){return withoutCharmed(()=>_w(dt));};}
 {const _c=unitCombat;unitCombat=function(dt){return withoutCharmed(()=>_c(dt));};}
 // ---- Pirata de sistemas: campo de interferencia ----
-function jamTick(e,dt){if(e.chan>0){e.chan-=dt;if(e.chan<=0){for(const t of S.list){if(TW[t.type].uniq||TW[t.type].unit)continue;if(Math.hypot(t.x-e.x,t.y-e.y)<=JAMR)t.jam=Math.max(t.jam||0,JAMOFF);}S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:JAMR,col:'#3fe8ff'});e.jc=JAMREST-JAMT;}return;}
- e.jc=(e.jc===undefined?2:e.jc)-dt;if(e.jc>0)return;let any=false;for(const t of S.list)if(!TW[t.type].uniq&&!TW[t.type].unit&&Math.hypot(t.x-e.x,t.y-e.y)<=JAMR){any=true;break;}
+function jamTick(e,dt){if(e.chan>0){e.chan-=dt;if(e.chan<=0){for(const t of S.list){if(TW[t.type].unit)continue;/* v366: también las de evento (Nogal) */if(Math.hypot(t.x-e.x,t.y-e.y)<=JAMR)t.jam=Math.max(t.jam||0,JAMOFF);}S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:JAMR,col:'#3fe8ff'});e.jc=JAMREST-JAMT;}return;}
+ e.jc=(e.jc===undefined?2:e.jc)-dt;if(e.jc>0)return;let any=false;for(const t of S.list)if(!TW[t.type].unit&&Math.hypot(t.x-e.x,t.y-e.y)<=JAMR){any=true;break;}
  if(any){e.chan=JAMT;}else e.jc=.5;}
 // las torres interferidas no disparan (las de disparo normal se saltan; el resto ve su cadencia casi a cero)
 {const _s=stats;stats=function(t){const s=_s(t);if(t&&t.jam>0&&TW[t.type]&&!TW[t.type].unit){return Object.assign({},s,{rate:(s.rate||1)*1e-3});}return s;};}

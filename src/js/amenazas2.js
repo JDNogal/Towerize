@@ -40,7 +40,7 @@ setInterval(()=>{try{azFogTick();}catch(e){}},100);
 // Desde la ronda 3: 1 saboteador por oleada (2 desde la 9, 3 desde la 15). Va a por una torre cerca del camino;
 // él y la torre salen marcados y una línea de puntos aparece y se desvanece. Si llega a 2 casillas, la torre se apaga 6 s (interferencia).
 const SABR=2,SABT=6;
-function azSabTargets(){const out=[];for(const t of S.list){const T=TW[t.type];if(!T||T.unit||T.uniq||t.hero)continue;let ok=false;
+function azSabTargets(){const out=[];for(const t of S.list){const T=TW[t.type];if(!T||T.unit||t.hero)continue;/* v366: también las de evento (Nogal) */let ok=false;
   for(let y=Math.max(0,t.y-K);y<=Math.min(N-1,t.y+K)&&!ok;y++)for(let x=Math.max(0,t.x-K);x<=Math.min(N-1,t.x+K);x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=K-.5){ok=true;break;}
   if(ok)out.push(t);}return out;}
 {const _sw=startWave;startWave=function(){const r=_sw.apply(this,arguments);try{S.sabIdx=null;S.spN=0;S.flagSq={};

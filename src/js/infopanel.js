@@ -73,7 +73,7 @@ function kwHtml0(id,src){
   if(id==='pierce')return '<b>Perforante</b><small>Sus ataques ignoran la mitad de la armadura de tus unidades.</small>';
   if(id==='dodge')return '<b>Escurridizo</b><small>Esquiva a tus unidades: los soldados y el héroe no pueden bloquearlo ni atacarlo. Sí lo detienen las barricadas y los muros.</small>';
   if(id==='steal')return '<b>Saqueo</b><small>Si llega al núcleo, además de quitarte vida te roba 10 de oro.</small>';
-  if(id==='curse')return '<b>Maldición</b><small>Cada 8 s maldice a la torre más cercana (<span class="kw rgv" data-kw="rng" data-src="">4</span> o menos): durante 5 s tiene <span class="cr">+25% de enfriamiento</span>. Las torres de evento no se ven afectadas.</small>';
+  if(id==='curse')return '<b>Maldición</b><small>Cada 8 s maldice a la torre más cercana (<span class="kw rgv" data-kw="rng" data-src="">4</span> o menos): durante 5 s tiene <span class="cr">+25% de enfriamiento</span>.</small>';
   if(id==='eheal')return '<b>Curación tribal</b><small>Cada 6 s cura un 10% de su vida máxima a los enemigos a <span class="kw rgv" data-kw="rng" data-src="">2,5</span> o menos. No cura a otros sanadores ni a sí mismo, y un enemigo no puede recibir más de una curación cada 6 s.</small>';
   if(id==='eorg')return '<b>Origen</b><small><b class="cg">Normales:</b> salen en las oleadas de los portales. <b class="cg">De evento:</b> solo aparecen por opciones de eventos.</small>';
   if(id==='breath')return '<b>Aliento de fuego</b><small>Cada 6 s, la Mamá dragona escupe fuego y hace 15 de daño a tus unidades (soldados y héroe) a <span class="kw rgv" data-kw="rng" data-src="">1,5</span> o menos.</small>';
