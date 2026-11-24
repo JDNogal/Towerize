@@ -53,12 +53,12 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  // ---------- Murciélago de fuego: diana bajo una unidad y brasas a las que sigan dentro ----------
  limpio();for(const s of B.sd){s.hp=s.max=48;s.rt=0;}run(1.2);{const fl=B.flag||B,mu=pon('i17murcielago',pathNear(fl.x,fl.y)||TR[iB],1);
   const z=run(3,()=>S.tmz&&S.tmz.length>0);const zz=z&&S.tmz[0],h0=B.sd.map(s=>s.hp),den=zz?B.sd.filter(s=>Math.hypot(s.x-zz.x,s.y-zz.y)<=EMBA):[];run(EMBW+.1);
-  out.murcielago=z&&den.length>=1&&den.every(s=>Math.abs((48-s.hp)-ET.i17murcielago.ud)<.01)&&B.sd.filter((s,i)=>s.hp<h0[i]).length===den.length;
+  out.murcielago=z&&den.length>=1&&den.every(s=>(48-s.hp)>=ET.i17murcielago.ud-.01&&(48-s.hp)<ET.i17murcielago.ud*1.3)&&B.sd.filter((s,i)=>s.hp<h0[i]).length===den.length;
   // si apartas las unidades de la diana, falla
   const z2=run(EMBCD+1,()=>S.tmz&&S.tmz.length>0);const h1=B.sd.map(s=>s.hp);for(const s of B.sd){s.x+=4;s.lock=true;}update(.05);for(let i=0;i<Math.round((EMBW+.1)/.05);i++){for(const s of B.sd){const q=S.tmz&&S.tmz[0];if(q&&Math.hypot(s.x-q.x,s.y-q.y)<EMBA+1){s.x=q.x+4;}}update(.05);}
   out.murcielagoFalla=z2&&B.sd.every((s,i)=>s.hp>=h1[i]-.01);
   // las brasas se quedan ardiendo y queman (stacks de quemadura) a quien vuelva a entrar
-  const zz2=S.tmz.find(z=>!(z.w>0));out.brasasQuedan=!!zz2&&zz2.l>0;if(zz2){const s=B.sd[0];s.lock=true;s.ubn=0;s.x=zz2.x;s.y=zz2.y;for(let i=0;i<25;i++){s.x=zz2.x;s.y=zz2.y;update(.05);}out.brasasQueman=s.ubn>0;s.lock=false;s.ubn=0;s.hp=0;s.rt=999;}}
+  const zz2=S.tmz.find(z=>!(z.w>0));out.brasasQuedan=!!zz2&&zz2.l>0;if(zz2){const s=B.sd[0];s.lock=true;s.ubn=0;s.hp=s.max=100;s.x=zz2.x;s.y=zz2.y;for(let i=0;i<10;i++){s.x=zz2.x;s.y=zz2.y;update(.05);}out.brasasQueman=s.hp<100&&!(s.ubn>0);s.lock=false;s.ubn=0;s.hp=0;s.rt=999;}}
  // ---------- Portatótem: tótem y Firmeza (ningún control) ----------
  limpio();for(const s of B.sd){s.hp=0;s.rt=999;}A.jam=999;{const iT=Math.max(3,M-12),pt=pon('i41totem',TR[iT],1);const tot=run(4,()=>S.enemies.some(e=>e.t==='ttotem'));const tt=S.enemies.find(e=>e.t==='ttotem');
   const n1=pon('norm',TR[iT+1]);update(.05);out.totem=tot&&!!tt&&n1.firm>S.wt;

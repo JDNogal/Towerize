@@ -5,9 +5,9 @@
 //    después 4 s recalentadas: −20 % de velocidad y −20 de armadura. Solo afecta a las que haya cargado (Nogal). No rompe la formación.
 //  · Avispa de colmena (sting): cada 3 s pica a una unidad a 7,5 celdas (también al héroe), repartiéndose: la que tenga menos avispas encima: su golpe y un stack de veneno (el del Escupidor). Va y vuelve volando.
 //  · Caza interceptor (aburn): la primera vez que recibe daño, postcombustión: el doble de rápido 2 s. Solo el que recibe el golpe.
-//  · Escupidor alado (spit2): se para mientras tenga unidades a tiro; cada 4 s escupe a tu unidad más cercana (7,5 celdas) y deja un charco de ácido de 2 celdas 4 s: su golpe por segundo a las unidades encima.
+//  · Escupidor alado (spit2): se para mientras tenga unidades a tiro; cada 4 s escupe a tu unidad más cercana (7,5 celdas) y deja un charco de ácido de 2 celdas 4 s: cada segundo encima, un stack de veneno.
 Object.assign(TMEC,{i29microbot:{},i19sobrecarga:{ovl:1},i38avispa:{sting:1},i45caza:{aburn:1},i42escupidor:{spit2:1}});
-const OVLCD=12,OVLT=4,OVHT=4,OVLM=1.3,OVHM=.8,OVLA=20,OVLR=2*K,STGCD=3,STGR=1.5*K,STGV=5*K,ABM=2,ABT=2,SPITCD=4,SPITR=1.5*K,SPITA=2,SPITT=4,SPITW=.5;
+const OVLCD=12,OVLT=4,OVHT=4,OVLM=1.3,OVHM=.8,OVLA=20,OVLR=2*K,STGCD=3,STGR=1.5*K,STGV=5*K,ABM=2,ABT=2,SPITCD=4,SPITR=1.5*K,SPITA=2,SPITT=4,SPITW=.5,SPITP=1.5;
 // ---- Sobrecargador ----
 function ovlTick(e,dt){if(e.ovB>0)e.ovB-=dt;e.ovc=(e.ovc===undefined?4:e.ovc)-dt;if(e.ovc>0)return;e.ovc=OVLCD;const u=S.wt+OVLT,h=u+OVHT;let n=0;
  for(const m of S.enemies){if(m.hp<=0||!ET[m.t]||ET[m.t].fac!=='m')continue;const near=Math.hypot(m.x-e.x,m.y-e.y)<=OVLR;
@@ -28,7 +28,8 @@ function stingTick(e,E,dt,SL){const g=e.wsp;
 function spitTick(e,E,dt,SL){e.rw=9;/* su ataque son los charcos */let b=null,bd=SPITR;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}
  e.spAim=!!b;e.spc=(e.spc===undefined?.6:e.spc)-dt;if(e.spc>0)return;
  if(!b){e.spc=.3;return;}e.spc=SPITCD;(S.tmp2=S.tmp2||[]).push({x:b.x,y:b.y,w:SPITW,t:SPITT,d:(E.ud||0)*(typeof udM==='function'?udM(e):1),src:e,x0:e.x,y0:e.y});}
-function puddleTick(dt){if(!S.tmp2||!S.tmp2.length)return;for(const p of S.tmp2){if(p.w>0){p.w-=dt;continue;}p.t-=dt;for(const s of liveUnits())if(Math.hypot(s.x-p.x,s.y-p.y)<=SPITA)hitUnit(s,p.d*dt,p.src);}S.tmp2=S.tmp2.filter(p=>p.w>0||p.t>0);}
+// el charco envenena: cada segundo encima, un stack del veneno de siempre (se acumula si no apartas a tus unidades; Nogal, 24-nov)
+function puddleTick(dt){if(!S.tmp2||!S.tmp2.length)return;for(const p of S.tmp2){if(p.w>0){p.w-=dt;continue;}p.t-=dt;p.pt=(p.pt||0)+dt;if(p.pt>=1){p.pt-=1;if(typeof uAddPois==='function')for(const s of liveUnits())if(Math.hypot(s.x-p.x,s.y-p.y)<=SPITA)uAddPois(s,SPITP,p.src);}}S.tmp2=S.tmp2.filter(p=>p.w>0||p.t>0);}
 {const _m=move;move=function(e,dt){if(e.wsp)return false;if(e.spAim&&ET[e.t]&&ET[e.t].spit2)return false;return _m(e,dt);};}
 // ---- tick general ----
 function t4Tick(dt){const SL=liveUnits().filter(s=>!s.charm);puddleTick(dt);
@@ -55,7 +56,7 @@ function t4Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
  if(id==='eovl')return '<b>Sobrecarga</b><small>Cada '+OVLCD+' s carga a las máquinas de su escuadrón: '+OVLT+' s un '+Math.round((OVLM-1)*100)+' % más rápidas y con +'+OVLA+' de armadura. Después quedan recalentadas '+OVHT+' s: un '+Math.round((1-OVHM)*100)+' % más lentas y con −'+OVLA+' de armadura.</small>';
  if(id==='esting')return '<b>Aguijón</b><small>Cada '+STGCD+' s se lanza contra tu unidad más cercana (a '+R(STGR)+' o menos), le pica y la envenena, y vuelve con el enjambre.</small>';
  if(id==='eaburn')return '<b>Postcombustión</b><small>La primera vez que recibe daño va el doble de rápido durante '+ABT+' s.</small>';
- if(id==='espit2')return '<b>Charco de ácido</b><small>Se para mientras tenga a tiro alguna unidad tuya. Cada '+SPITCD+' s escupe a la más cercana (a '+R(SPITR)+' o menos) y deja un charco de ácido durante '+SPITT+' s: hace daño a las unidades que sigan encima.</small>';
+ if(id==='espit2')return '<b>Charco de ácido</b><small>Se para mientras tenga a tiro alguna unidad tuya. Cada '+SPITCD+' s escupe a la más cercana (a '+R(SPITR)+' o menos) y deja un charco de ácido durante '+SPITT+' s: cada segundo encima, tus unidades se envenenan un poco más.</small>';
  return _k(id,src);};}
 {const KW4={ovl:['eovl','Sobrecarga','⚡'],sting:['esting','Aguijón','🐝'],aburn:['eaburn','Postcombustión','🔥'],spit2:['espit2','Charco de ácido','🧪']};   // iconos provisionales: falta dibujarlos (prioritario)
  Object.assign(TMECKW,KW4);if(typeof MECG2!=='undefined')for(const k in KW4)MECG2.push(KW4[k]);

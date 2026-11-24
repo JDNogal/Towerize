@@ -47,8 +47,8 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  // ---------- Escupidor alado: charco de ácido bajo las unidades; si se apartan, deja de doler ----------
  limpio();for(const s of B.sd){s.hp=s.max=100;s.rt=0;s.ps=[];}run(1.2);{const fl=B.flag||B,es=pon('i42escupidor',pathNear(fl.x,fl.y),1);es.hp=es.max=1e6;es.spc=0;
   const ch=run(1,()=>S.tmp2&&S.tmp2.length>0);const p=S.tmp2[0];run(SPITW+.05);const h1=B.sd.map(s=>s.hp);run(1);const den=B.sd.filter((s,i)=>Math.hypot(s.x-p.x,s.y-p.y)<=SPITA);
-  out.escupidor=ch&&den.length>=1&&den.every(s=>{const i=B.sd.indexOf(s);return h1[i]-s.hp>ET.i42escupidor.ud*.8;});
-  for(const s of B.sd){s.x=p.x+5;s.lock=true;}const h2=B.sd.map(s=>s.hp);es.spc=99;for(let i=0;i<20;i++){for(const s of B.sd)s.x=p.x+5;update(.05);}out.escupidorApartar=B.sd.every((s,i)=>s.hp>=h2[i]-.01);
+  out.escupidor=ch&&den.length>=1&&den.every(s=>(s.ps||[]).length>=1);
+  for(const s of B.sd){s.x=p.x+5;s.lock=true;}const h2=B.sd.map(s=>(s.ps||[]).length);es.spc=99;for(let i=0;i<30;i++){for(const s of B.sd)s.x=p.x+5;update(.05);}out.escupidorApartar=B.sd.every((s,i)=>(s.ps||[]).length<=h2[i]);
   run(SPITT);out.charcoSeca=!S.tmp2.length;}
  // las avispas se reparten entre las unidades
  limpio();for(const s of B.sd){s.hp=s.max=9999;s.rt=0;s.ps=[];}run(1.2);{const fl=B.flag||B,q=pathNear(fl.x,fl.y),av=[];for(let i=0;i<6;i++){const a=pon('i38avispa',q,1);a.hp=a.max=1e6;a.wcd=0;av.push(a);}
@@ -56,5 +56,11 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  // el Escupidor alado se para mientras tiene unidades a tiro
  limpio();for(const s of B.sd){s.hp=s.max=9999;s.rt=0;}run(1.2);{const fl=B.flag||B,es=pon('i42escupidor',pathNear(fl.x,fl.y));es.hp=es.max=1e6;run(.3);const x0=es.x,y0=es.y;run(1.5);out.escupidorSePara=Math.hypot(es.x-x0,es.y-y0)<.05;
   for(const s of B.sd){s.hp=0;s.rt=999;}run(.3);const x1=es.x;run(1);out.escupidorSigue=Math.hypot(es.x-x1,es.y-es.y)>.5||Math.abs(es.y-y0)>.5;}
+ // enemigos a distancia: se reparten las unidades y, con una unidad encima, disparan a la mitad de ritmo
+ limpio();for(const s of B.sd){s.hp=s.max=9999;s.rt=0;s.lock=true;s.en=null;s.fight=false;}run(.2);{const fl=B.flag||B,q=pathNear(fl.x,fl.y),sl=[];for(let i=0;i<3;i++){const h=pon('sling',q,1);h.hp=h.max=1e6;sl.push(h);}
+  run(.6);out.distanciaReparte=new Set(sl.map(h=>h.rshT).filter(Boolean)).size===3;
+  const h=sl[0],u=B.sd[0];for(const o of sl.slice(1)){S.enemies.splice(S.enemies.indexOf(o),1);}const cnt=()=>{let n=0;const a=u.hp;for(let i=0;i<60;i++){u.en=null;u.fight=false;update(.05);}return a-u.hp;};
+  h.rshT=null;const d0=(()=>{u.hp=9999;let a=u.hp;for(let i=0;i<60;i++)update(.05);return a-u.hp;})();const tgd=h.rshT;
+  const d1=(()=>{tgd.hp=9999;const a=tgd.hp;for(let i=0;i<60;i++){tgd.en=h;tgd.fight=true;update(.05);}return a-tgd.hp;})();out.distanciaMelee=d0>0&&d1<d0*.7&&d1>0;out.distanciaV=d0.toFixed(1)+'/'+d1.toFixed(1);}
  return out;});
 const bad=Object.keys(r).filter(k=>r[k]!==true&&!/V$/.test(k));console.log(JSON.stringify(r));console.log(bad.length?'FALLA: '+bad.join(', '):'mecanicas_taller_t4 ok');console.log(errs.length?'ERRS '+JSON.stringify(errs.slice(0,5)):'ERRS []');await b.close();process.exit(bad.length||errs.length?1:0);})();
