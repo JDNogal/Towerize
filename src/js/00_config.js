@@ -1,6 +1,6 @@
 let VIEW=1000,VH=1000,PXR=1;
 const RGV=n=>`<span class="kw rgv" data-kw="rng" data-src="">${n}</span>`;/* v352: distancia con el icono de rango (sin «casillas») */
-const DECF=.5,P=7,K=3,CS=20,ENR=.6,POISD=3,GOLDR=.05,PTICK=1,FRZT=3,FRZCD=6,FRZR=3.5*K,MINP=10,BUFFS_FROM=2,SLOWT=1.5,SPLASH=.6,LINGER=.5,HP0=18,HPG=1.25,D=[[1,0],[-1,0],[0,1],[0,-1]];
+const DECF=.5,P=7,K=5,KC=K>>1,K3=3,CS=20,CT=CS*K/3/* tercio de casilla: para dibujos que van a escala de la casilla y estaban medidos con los 3 carriles */,ENR=.6,POISD=3,GOLDR=.05,PTICK=1,FRZT=3,FRZCD=6,FRZR=3.5*K,MINP=10,BUFFS_FROM=2,SLOWT=1.5,SPLASH=.6,LINGER=.5,HP0=18,HPG=1.25,D=[[1,0],[-1,0],[0,1],[0,-1]];
 let ERA=1; // era elegida para la próxima partida (1 Fantástica, 2 Distópica · Ruinas de Neón); ver era2.js
 // Partida: rondas elegidas (15-30), tamaño del mapa en piezas y cofres
 let BN=5,NC=P*BN,N=NC*K,ROUNDS=15,CHESTS=3;
@@ -11,8 +11,8 @@ const cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=cv.height=V
 // Cámara: z=1 muestra todo el mapa; CAM.x/y = esquina superior izquierda en píxeles de mundo
 // tamaño de dibujo de enemigos y unidades respecto a su tamaño real en el juego (solo visual)
 const EVS=1.4,UVS=1.15;
-let ZINI=1.5,ZMAX=4,BS=Math.min(VIEW,VH)/(N*CS);const CAM={z:ZINI,x:0,y:0},ZMIN=1;
-function setSize(bn){BN=bn;NC=P*BN;N=NC*K;BS=Math.min(VIEW,VH)/(N*CS);ZINI=1.5*BN/5;ZMAX=4*BN/5;}
+let ZINI=1.5*K/K3,ZMAX=4*K/K3,BS=Math.min(VIEW,VH)/(N*CS);const CAM={z:ZINI,x:0,y:0},ZMIN=1;
+function setSize(bn){BN=bn;NC=P*BN;N=NC*K;BS=Math.min(VIEW,VH)/(N*CS);ZINI=1.5*BN/5*K/K3;ZMAX=4*BN/5*K/K3;}
 const sc=()=>BS*CAM.z;
 function clampCam(){const w=VIEW/sc(),h=VH/sc(),M=N*CS,G=P*K*CS;CAM.x=M+2*G<=w?(M-w)/2:Math.max(-G,Math.min(M-w+G,CAM.x));CAM.y=M+2*G<=h?(M-h)/2:Math.max(-G,Math.min(M-h+G,CAM.y));}
 // «y» pasa a «e» delante de palabras que empiezan por i / hi (pero no hie, hia…)

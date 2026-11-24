@@ -51,7 +51,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  om.fam=['fis','ven','con','uni','ele','mag','fue','apo'];om.lvl=4;const nb=S.list.find(t=>t!==om);
  startWave();S.enemies=[];const e={t:'norm',x:om.x+2,y:om.y,tx:om.x+2,ty:om.y,hp:1e6,max:1e6,fx:{}};S.enemies.push(e);for(let k=0;k<60;k++){heroAbTick(.05);}
  out.fight=e.hp<1e6&&!!(e.ps&&e.ps.length)&&e.bn>0&&!!e.fx.slow&&!!(e.cs&&e.cs.length)&&e.ez&&e.ez.n>0;out.drones=(S.summ||[]).some(u=>u.odr&&u.sd.length===3);
- S.tsel='bunker';const sp=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+1)+','+(ky*K+1)])sp.push({x:kx*K+1,y:ky*K+1});sp.sort((a,b)=>Math.hypot(a.x-om.x,a.y-om.y)-Math.hypot(b.x-om.x,b.y-om.y));
+ S.tsel='bunker';const sp=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+KC)+','+(ky*K+KC)])sp.push({x:kx*K+KC,y:ky*K+KC});sp.sort((a,b)=>Math.hypot(a.x-om.x,a.y-om.y)-Math.hypot(b.x-om.x,b.y-om.y));
  if(sp[0]&&Math.hypot(sp[0].x-om.x,sp[0].y-om.y)<=2*K+.5){build(sp[0].x,sp[0].y);const nt=S.list[S.list.length-1];const d1=stats(nt).dmg;om.fam=['fis'];out.apo=d1>stats(nt).dmg*1.19;}else out.apo=true;
  return out;});
 await p.screenshot({path:__dirname+'/out/eventos_e2.png'});

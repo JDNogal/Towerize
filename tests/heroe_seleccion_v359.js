@@ -9,7 +9,7 @@ await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.disp
  RL.open=false;$('relic').classList.remove('open');S.gold=99999;S.deck=['frost'];HQ.q=[];if(HQ.cur)hintClose();ui();
  const free=[];for(let gy=0;gy<NC;gy++)for(let gx=0;gx<NC;gx++)if(S.cc[gy][gx]===1)free.push([gx,gy,Math.hypot(gx*K-S.core.x,gy*K-S.core.y)]);free.sort((a,b)=>a[2]-b[2]);
  S.tsel='frost';for(const c of free){const n=S.list.length;build(c[0]*K+K/2,c[1]*K+K/2);if(S.list.length>n)break;}S.tsel=null;
- const t=S.list[0];CAM.x=(t.x+.5)*CS-VIEW/sc()/2;CAM.y=(t.y+.5)*CS-VH/sc()/2;clampCam();ui();});
+ /* v365: con 5 carriles el encuadre deja el mapa más cerca; esta prueba mide fichas y clics con las casillas al tamaño de siempre, así que fija el zoom */OPT.camauto=false;try{CAMA.on=false;CAMA.tw=null;}catch(e){}CAM.z=1.4;const t=S.list[0];CAM.x=(t.x+.5)*CS-VIEW/sc()/2;CAM.y=(t.y+.5)*CS-VH/sc()/2;clampCam();ui();});
 await p.waitForTimeout(1500);
 const info=await p.evaluate(()=>{const t=S.list[0];let empty=null;for(let y=0;y<N&&!empty;y++)for(let x=0;x<N&&!empty;x++){const r=cellRect(x,y);if(r.l<300||r.r>1000||r.t<120||r.b>600)continue;if(S.cells[y][x]!==2&&!S.occ[x+','+y]&&!bmFree(sqOf(x,y))&&!heroAt({x,y,fx:x+.5,fy:y+.5})){M.x=(r.l+r.r)/2;M.y=(r.t+r.b)/2;let g=null;try{g=resolve(cv);}catch(e){}if(!g)empty={x,y};}}return {t:{x:t.x,y:t.y},empty};});
 const pt=c=>p.evaluate(([x,y])=>{const r=cellRect(x,y);return [(r.l+r.r)/2,(r.t+r.b)/2];},[c.x,c.y]);
@@ -24,7 +24,7 @@ const sb=await p.$('[data-a="sel"]');if(sb){await sb.click();await p.waitForTime
 await p.evaluate(()=>{S.tsel=null;ui();});
 // ficha fijada que sigue a la torre
 await p.evaluate(()=>{tmClose();pinTower(S.list[0]);});await p.waitForTimeout(400);
-const d=await p.evaluate(async()=>{/* v362: aquí se mira solo que siga a la torre; si al moverla pisa la interfaz, se aparta (primAvoidHud, prueba ficha_reintentar_v362) */const _pa=primAvoidHud;primAvoidHud=()=>null;const tw=()=>{const t=S.list[0],r=cellRect(t.x-1,t.y-1,K);return r;};const tp=$('tip').getBoundingClientRect(),a=tw();CAM.x-=150;await new Promise(r=>setTimeout(r,600));const tp2=$('tip').getBoundingClientRect(),b2=tw();primAvoidHud=_pa;return [Math.round((tp2.left-tp.left)-(b2.l-a.l)),Math.round(b2.l-a.l)];});
+const d=await p.evaluate(async()=>{/* v362: aquí se mira solo que siga a la torre; si al moverla pisa la interfaz, se aparta (primAvoidHud, prueba ficha_reintentar_v362) */const _pa=primAvoidHud;primAvoidHud=()=>null;const tw=()=>{const t=S.list[0],r=cellRect(t.x-KC,t.y-KC,K);return r;};const tp=$('tip').getBoundingClientRect(),a=tw();CAM.x-=150;await new Promise(r=>setTimeout(r,600));const tp2=$('tip').getBoundingClientRect(),b2=tw();primAvoidHud=_pa;return [Math.round((tp2.left-tp.left)-(b2.l-a.l)),Math.round(b2.l-a.l)];});
 if(Math.abs(d[0])>3)F.push('la ficha no sigue a la torre: '+d);
 // arrastrar el mapa con la ficha fijada no la cierra
 await p.evaluate(()=>{pinTower(S.list[0]);});await p.waitForTimeout(300);

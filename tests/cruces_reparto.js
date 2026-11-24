@@ -6,7 +6,7 @@ const run=async sq=>p.evaluate((sq)=>{INTRO.on=false;STO.intro=1;OPT.hints=false
  S.cc=Array.from({length:NC},()=>Array(NC).fill(0));S.cells=Array.from({length:N},()=>Array(N).fill(0));
  const set=(x,y)=>{S.cc[y][x]=2;for(let j=0;j<K;j++)for(let i=0;i<K;i++)S.cells[y*K+j][x*K+i]=2;};
  /* v329: los caminos cruzan de una pieza a otra solo por las salidas (casilla 3 de cada lado) */for(let y=1;y<=10;y++)set(3,y);for(let x=3;x<=17;x++)set(x,3);for(let y=3;y<=10;y++)set(17,y);for(let x=3;x<=20;x++)set(x,10);
- S.core={x:20*K+1,y:10*K+1};S.portals=[{x:3*K+1,y:1*K+1,dir:[0,-1]}];const P0=S.portals[0];for(const q of S.portals){q.sq=[];q.sqm=[];q.plan={norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}
+ S.core={x:20*K+KC,y:10*K+KC};S.portals=[{x:3*K+KC,y:1*K+KC,dir:[0,-1]}];const P0=S.portals[0];for(const q of S.portals){q.sq=[];q.sqm=[];q.plan={norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}
  S.phase='build';S.hp=999;startWave();S.enemies=[];
  const es=[];for(let i=0;i<24;i++){const sid=sq?Math.floor(i/4)+1:0;const e={t:'norm',x:P0.x,y:P0.y,tx:P0.x,ty:P0.y,hp:1e9,max:1e9,fx:{},sqid:sid||undefined};if(sq&&i%4===0){e.sqlead=1;(S.sqL=S.sqL||{})[sid]=e;}es.push(e);}
  let rel=0;const out={right:0,down:0};const seen=new Set();

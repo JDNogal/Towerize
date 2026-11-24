@@ -83,7 +83,7 @@ function tmDo(b,direct){const t=TM.t;if(!t)return;const a=b.dataset.tm,v=b.datas
  else if(a==='sell'){sell(t);tmClose();return;}
  else if(a==='flag'){tmClose();startFlag(t);return;}
  else if(a==='flz'){const cd=S.phase==='wave'?((t.lzcd||[0,0])[+v]||0):0;if(cd>0){errBubble('La luz se podrá mover en '+Math.ceil(cd)+' s.');return;}tmClose();S.selT=null;S.aim='faroz';S.flzSel={id:t.id,i:+v};S.msg='Elige dónde proyectar la luz del Faro (en cualquier parte del mapa; Esc para cancelar).';renderRelics();ui();return;}
- else if(a==='lupa'){const tg={key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:{x:t.x,y:t.y}};TM.sig='';if(MFSQ()){LUPA.tg=tg;LUPA.sticky=false;}openPrim(tg);PR.pinned=true;refreshPrim();ui();return;}
+ else if(a==='lupa'){const tg={key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-KC,t.y-KC,K),cell:{x:t.x,y:t.y}};TM.sig='';if(MFSQ()){LUPA.tg=tg;LUPA.sticky=false;}openPrim(tg);PR.pinned=true;refreshPrim();ui();return;}
  TM.sig='';ui();}
 function tmClick(b){const k=b.dataset.k,a=b.dataset.tm;if(a==='lupa'||a==='flag'||a==='flz'){try{sfx('ui');}catch(e){}tmDo(b);return;}
  if(TM.arm===k){tmDo(b);return;}TM.arm=k;TM.sig='';try{sfx('ui');}catch(e){}}

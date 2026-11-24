@@ -13,7 +13,7 @@ const r1=await p.evaluate(()=>{const out={};RL.open=false;document.getElementByI
  const sol=[];for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===1&&!S.occ[x+','+y]){const q=sqOf(x,y);if(q.x===x&&q.y===y)sol.push([x,y]);}
  S.tsel='arrow';build(sol[0][0],sol[0][1]);const t=S.list[0];S.tsel=null;
  // ficha de la torre con botón 📖
- openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K)});PR.pinned=true;refreshPrim();
+ openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-KC,t.y-KC,K)});PR.pinned=true;refreshPrim();
  const box=PMN()?document.getElementById('tip'):document.getElementById('side');out.twBtn=!!box.querySelector('.cpgo[data-t="tw"][data-v="arrow"]');
  // aviso de enemigo nuevo: la primera vez que sale un tipo
  out.seenBefore=!!SEEN.en.norm;startWave();for(let i=0;i<20;i++)update(.05);out.q=NEC.q.slice();out.cur=NEC.cur;return out;});
@@ -33,7 +33,7 @@ const want=await p.evaluate(()=>{const u=document.querySelector('#comp .mecuse')
 const r6=await p.evaluate(()=>({tab:CP.tab}));r6.want=want;
 // bocadillo de palabra clave con 📖 que abre Mecánicas
 await p.evaluate(()=>{lbClose(true,true);});await p.waitForTimeout(300);
-const r7=await p.evaluate(()=>{const t=S.list[0];openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K)});PR.pinned=true;refreshPrim();const box=PMN()?document.getElementById('tip'):document.getElementById('side');const k=box.querySelector('.kw[data-kw="dmg"]')||box.querySelector('.kw');openKw(k,0);const d=KS[KS.length-1].el;return{kwBtn:!!d.querySelector('.cpgo'),t:(d.querySelector('.cpgo')||{dataset:{}}).dataset.t};});
+const r7=await p.evaluate(()=>{const t=S.list[0];openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-KC,t.y-KC,K)});PR.pinned=true;refreshPrim();const box=PMN()?document.getElementById('tip'):document.getElementById('side');const k=box.querySelector('.kw[data-kw="dmg"]')||box.querySelector('.kw');openKw(k,0);const d=KS[KS.length-1].el;return{kwBtn:!!d.querySelector('.cpgo'),t:(d.querySelector('.cpgo')||{dataset:{}}).dataset.t};});
 if(shots){await p.waitForTimeout(200);await p.screenshot({path:shots+'/v287_boton.png'});}
 ck(r1.twBtn,'la ficha de una torre no tiene el botón 📖');ck(!r1.seenBefore&&(r1.q.includes('norm')||r1.cur==='norm'||r2.cur==='norm'),'no se avisa del primer Guerrero ('+JSON.stringify(r1)+')');
 ck(r2.notice,'el aviso de enemigo nuevo no se ve abajo');ck(r3.card&&r3.held&&r3.tip.length>10&&r3.btn,'al pulsar el aviso no sale la ficha corta con «Cómo enfrentarlo» y su 📖');

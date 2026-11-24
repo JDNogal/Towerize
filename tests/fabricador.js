@@ -35,7 +35,7 @@ const sp=await p.evaluate(()=>fabSpots(fabPiece(FAB.st)));
 if(!mob){ck(sp.length>0,'el sector no encaja en ningún sitio del mapa de prueba');
  if(sp.length){const nb=await p.evaluate(()=>Object.keys(S.blocks).length),[bx,by]=sp[0];
   await p.evaluate(([bx,by])=>{const r=FAB.cvs.getBoundingClientRect();window._pt={x:r.x+(bx+.5)*r.width/BN,y:r.y+(by+.5)*r.width/BN};},[bx,by]);const pt=await p.evaluate(()=>window._pt);await p.mouse.click(pt.x,pt.y);await p.waitForTimeout(400);
-  const r=await p.evaluate(([bx,by])=>{let bf=0;for(let y=0;y<P;y++)for(let x=0;x<P;x++){const v=S.buff[(by*P+y)*K+1][(bx*P+x)*K+1];if(v)bf++;}return {nb:Object.keys(S.blocks).length,open:FAB.open,g:S.gold,bf,ph:S.phase};},[bx,by]);
+  const r=await p.evaluate(([bx,by])=>{let bf=0;for(let y=0;y<P;y++)for(let x=0;x<P;x++){const v=S.buff[(by*P+y)*K+KC][(bx*P+x)*K+KC];if(v)bf++;}return {nb:Object.keys(S.blocks).length,open:FAB.open,g:S.gold,bf,ph:S.phase};},[bx,by]);
   ck(r.nb===nb+1&&!r.open,'no se coloca el sector');ck(r.g===970-125,'no cobra lo que cuesta el sector (25 + 50): '+r.g);ck(r.bf===1,'la casilla especial no queda en el mapa');ck(r.ph==='build','no vuelve a la fase de construir');}}
 else{// en móvil se guarda y sale en la próxima elección, ya pagado
  await p.click('#fabw [data-fb="keep"]');await p.waitForTimeout(200);const g1=await p.evaluate(()=>S.gold);ck(g1===970-125,'guardar no cobra el sector');

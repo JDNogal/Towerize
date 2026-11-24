@@ -14,7 +14,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  const game=h=>{ERA=2;startGame(15);chooseHero(h);if(DLG.on)dlgEnd();S.revAt=0;S.chests={};S.evts={};RL.open=false;HQ.q=[];if(HQ.cur)hintClose();
   for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
   RL.open=false;S.phase='build';S.hp=999;for(const q of S.portals){q.sq=[];q.sqm=[];q.plan={norm:0,fast:0,tank:0,custodian:0,mini:0,elite:0,boss:0,colossus:0};}startWave();clr();return S.hero;};
- const mk=(dx,hp,t)=>{const H=S.hero,r=h2Route(Math.round(H.s.x),Math.round(H.s.y),Math.max(0,dx)),c=r[Math.min(r.length-1,Math.max(0,dx))];const e={t:t||'norm',x:c.x,y:c.y,tx:c.x,ty:c.y,hp:hp||500,max:hp||500,fx:{}};S.enemies.push(e);return e;};
+ /* v365: las distancias de la prueba estaban en casillas pequeñas de un mapa de 3 carriles; se pasan a las de ahora para que los enemigos tarden lo mismo */const mk=(dx0,hp,t)=>{const dx=Math.round(dx0*K/3),H=S.hero,r=h2Route(Math.round(H.s.x),Math.round(H.s.y),Math.max(0,dx)),c=r[Math.min(r.length-1,Math.max(0,dx))];const e={t:t||'norm',x:c.x,y:c.y,tx:c.x,ty:c.y,hp:hp||500,max:hp||500,fx:{}};S.enemies.push(e);return e;};
  const run=(s)=>{for(let i=0;i<Math.round(s/.05);i++)update(.05);};
  // ---------- Korr ----------
  let H=game('korr');out.kRelic=S.relics[0]==='seal';out.kDeck=S.deck.join()==='nano,sonic';H.lvl=8;heroSync();

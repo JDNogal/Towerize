@@ -3,7 +3,7 @@
 // Se guarda: al empezar cada oleada (el estado justo antes), al terminar cada ronda, en cada acción de la fase de
 // construcción (con retardo), al pulsar «Guardar y salir» y al cerrar la página. Al ganar o perder, se borra.
 // En localStorage queda un resumen (rt-save) para pintar «Continuar partida» en la portada sin esperar a la base de datos.
-const SAVE_FMT=1;                      // formato del guardado: si cambia, las partidas antiguas no se cargan (se avisa)
+const SAVE_FMT=2;                      // formato del guardado: si cambia, las partidas antiguas no se cargan (se avisa). 2 = v365, mapa con 5 carriles (las coordenadas de las partidas de 3 carriles no valen)
 const SAV={meta:null,t:0,busy:false,db:null};
 try{SAV.meta=JSON.parse(localStorage.getItem('rt-save'))||null;}catch(e){}
 // guardados viejos de un tutorial ya terminado (antes no se borraban al acabarlo): fuera

@@ -191,8 +191,8 @@ function dismAt(c){const t=S.occ[c.x+','+c.y];if(!t||!lv1Ok(t)){S.msg='Elige una
  for(const o of S.dsel){S.list=S.list.filter(x=>x!==o);for(const[a,b]of o.sq)delete S.occ[a+','+b];o.sold=1;S.fx.push({x:o.x,y:o.y,t:.5,m:.5,r:K,col:'#c9b8ff'});}
  S.dsel=[];S.dneed=0;S.aim=null;startUPlace();}
 // ---- colocar torres únicas dentro de la pieza del evento ----
-function uSpots(bk){const[bx,by]=bk.split(',').map(Number),o=[];for(let j=0;j<P;j++)for(let i=0;i<P;i++){const kx=bx*P+i,ky=by*P+j;if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+1,y:ky*K+1};if(!S.occ[q.x+','+q.y])o.push(q);}
- if(o.length)return o;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+1,y:ky*K+1};if(!S.occ[q.x+','+q.y])o.push(q);}return o;}
+function uSpots(bk){const[bx,by]=bk.split(',').map(Number),o=[];for(let j=0;j<P;j++)for(let i=0;i<P;i++){const kx=bx*P+i,ky=by*P+j;if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+KC,y:ky*K+KC};if(!S.occ[q.x+','+q.y])o.push(q);}
+ if(o.length)return o;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+KC,y:ky*K+KC};if(!S.occ[q.x+','+q.y])o.push(q);}return o;}
 function startUPlace(){if(!S.uq.length)return;closePrim();S.aim='uplace';S.upc=null;S.selT=null;S.tsel=null;S.msg='';toast(TW[S.uq[0].type].ic+' Elige uno de los huecos marcados para «'+TW[S.uq[0].type].n+'».');renderRelics();ui();}
 function uPlaceAt(c){const u=S.uq[0];if(!u)return;const kx=Math.floor(c.x/K),ky=Math.floor(c.y/K),q=uSpots(u.bk).find(q=>q.kx===kx&&q.ky===ky);if(!q){S.upc=null;try{errBubble('Elige uno de los huecos marcados.');}catch(e){}return;}
  /* confirmación: el primer toque marca el hueco; el segundo, en el mismo hueco, construye */
@@ -213,10 +213,10 @@ function roundRewards(){
 const MIMR=4,/* v343: antes 2,5 */MIM0=50,MIMUP=100;/* v345: antes 30 y 20 */
 function mimPlace(){if(!S||S.mim)return;const isC=(x,y)=>inbc(x,y),cc=(x,y)=>isC(x,y)?S.cc[y][x]:-1,NB=P;let best=null,bs=-1e9;
  for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!S.blocks[Math.floor(x/NB)+','+Math.floor(y/NB)])continue;const v0=cc(x,y);if(v0!==0&&v0!==3)continue;if(!D.some(([a,b])=>cc(x+a,y+b)===2))continue;
-  let sol=0,tw=0;for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){if(i*i+j*j>10)continue;const v=cc(x+i,y+j);if(v===1){if(S.occ[((x+i)*K+1)+','+((y+j)*K+1)])tw++;else sol++;}}
+  let sol=0,tw=0;for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){if(i*i+j*j>10)continue;const v=cc(x+i,y+j);if(v===1){if(S.occ[((x+i)*K+KC)+','+((y+j)*K+KC)])tw++;else sol++;}}
   const bx=Math.floor(x/NB),by=Math.floor(y/NB),edge=D.filter(([a,b])=>!S.blocks[(bx+a)+','+(by+b)]).length;
   const sc=sol*2-tw*4+(edge===0?4:edge===1?1:0)+Math.random()*.5;if(sol>=1&&sc>bs){bs=sc;best=[x,y];}}
- if(!best)return;S.mim={x:best[0]*K+1,y:best[1]*K+1,food:0,need:MIM0,rdy:0,n:0,t0:performance.now()};
+ if(!best)return;S.mim={x:best[0]*K+KC,y:best[1]*K+KC,food:0,need:MIM0,rdy:0,n:0,t0:performance.now()};
  S.fx.push({x:S.mim.x,y:S.mim.y,r:2*K,t:.8,m:.8,col:'#c9a24a'});
  {const m=S.mim,s0=S;if(!S.tut)setTimeout(()=>{if(S!==s0||!m)return;hint('mimic','El mímico','El mímico ha caído en el mapa, junto al camino. Cada enemigo que muere cerca lo <b>alimenta</b>; cuando se llena, <b>escupe un cofre</b> al colocar la siguiente pieza. Construye cerca para llenarlo antes.',tgCell(m.x,m.y,1.6));},0);}}
 function mimFeed(e){const m=S.mim;if(!m||!rp('mimic')||m.rdy>0/* v345: lleno no come más hasta soltar el cofre */||Math.hypot(e.x-m.x,e.y-m.y)>MIMR*K)return;m.food++;m.ch=performance.now();RS('mimic').n++;
@@ -262,9 +262,9 @@ function drawFaros(){for(const f of S.list){if(!TW[f.type].faro)continue;const L
  if(S.aim==='faroz'&&S.hover){const f=S.list.find(o=>o.id===S.flzSel.id);if(f){const L=FARO[(f.lvl||1)-1],R=L.r*K*CS,h=S.hover;g.setLineDash([CS*.3,CS*.2]);g.strokeStyle='rgba(255,236,150,.9)';g.lineWidth=CS*.1;g.beginPath();g.arc(h.x*CS+CS/2,h.y*CS+CS/2,R,0,7);g.stroke();g.setLineDash([]);}}}
 // ---- casas de los cerditos ----
 const logDur=lv=>2+.5*((lv||1)-1);
-function logShot(t,tg,s,dm){const sq0=sqOf(Math.round(tg.tx),Math.round(tg.ty)),fv=(kx,ky)=>{const v=S.field&&S.field[ky*K+1]?S.field[ky*K+1][kx*K+1]:1e9;return v<1e9?v:-1;};
+function logShot(t,tg,s,dm){const sq0=sqOf(Math.round(tg.tx),Math.round(tg.ty)),fv=(kx,ky)=>{const v=S.field&&S.field[ky*K+KC]?S.field[ky*K+KC][kx*K+KC]:1e9;return v<1e9?v:-1;};
  // recorrido por los centros de casilla del camino, en sentido contrario al de los enemigos (hacia más lejos del núcleo)
- const pts=[[sq0.x,sq0.y]];let kx=sq0.kx,ky=sq0.ky;for(let n=0;n<12;n++){const f0=fv(kx,ky);let b=null;for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||cutC(kx,ky,nx,ny))continue;const f1=fv(nx,ny);if(f1>f0&&(!b||f1>b.f))b={x:nx,y:ny,f:f1};}if(!b)break;kx=b.x;ky=b.y;pts.push([kx*K+1,ky*K+1]);}
+ const pts=[[sq0.x,sq0.y]];let kx=sq0.kx,ky=sq0.ky;for(let n=0;n<12;n++){const f0=fv(kx,ky);let b=null;for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||cutC(kx,ky,nx,ny))continue;const f1=fv(nx,ny);if(f1>f0&&(!b||f1>b.f))b={x:nx,y:ny,f:f1};}if(!b)break;kx=b.x;ky=b.y;pts.push([kx*K+KC,ky*K+KC]);}
  if(pts.length<2){pts.push([pts[0][0]+(tg.x-t.x>0?K:-K),pts[0][1]]);}
  (S.logs=S.logs||[]).push({pts,d:0,t:s.ldur||logDur(t.lvl),sp:2*K,dm,src:t,pen:s.pen,hit:[]});}
 function logTick(dt){if(!S.logs||!S.logs.length)return;

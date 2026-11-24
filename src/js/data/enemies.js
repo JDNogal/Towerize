@@ -1,6 +1,6 @@
 // Las tablas se escriben en 'casillas viejas'; aquí pasan a casillas de la rejilla fina (x K). Los radios de enemigos se reducen para que quepan varios por camino.
 for(const k in TW){const T=TW[k];T.range*=K;if(T.ps)T.ps*=K;if(T.splash)T.splash*=K;if(T.pr)T.pr*=K;if(T.unit)T.unit.spd*=K;}
-for(const k in ET){const E=ET[k];E.sp*=K;E.r*=K*ENR;if(E.aura)E.aura.r*=K;}
+for(const k in ET){const E=ET[k];E.sp*=K;E.r*=K3*ENR;if(E.aura)E.aura.r*=K;}
 // Armadura: reducción = armadura/(armadura+ARM_K). Física y mágica; el daño elemental (veneno) las ignora.
 const ARM_K=50,DT={phys:{n:'Físico',cls:'cph',kw:'tphys'},magic:{n:'Mágico',cls:'cmg',kw:'tmagic'},elem:{n:'Elemental',cls:'cel',kw:'telem'}};
 const armTxt=a=>a+' ('+Math.round(a/(a+ARM_K)*100)+'%)';

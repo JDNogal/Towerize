@@ -103,13 +103,13 @@ function drawPrev(){
  const X=x=>(x-PVX+.5)*PVC,Y=y=>(y-PVY+.5)*PVC;
 c.fillStyle="#2e3441";c.fillRect(0,0,PVN*PVC,PVN*PVC);
  for(let y=0;y<PVN;y++)for(let x=0;x<PVN;x++){c.fillStyle=s.cells[PVY+y][PVX+x]===2?'#a8854a':'#2e3441';c.fillRect(x*PVC,y*PVC,PVC,PVC);}
- c.fillStyle='#3dd6c4';c.fillRect(X(s.core.x)-PVC*1.2,Y(s.core.y)-PVC*1.2,PVC*2.4,PVC*2.4);
+ c.fillStyle='#3dd6c4';c.fillRect(X(s.core.x)-PVC*.4*K,Y(s.core.y)-PVC*.4*K,PVC*.8*K,PVC*.8*K);
  c.fillStyle='rgba(90,180,255,.15)';c.strokeStyle='rgba(110,190,255,.9)';c.lineWidth=1.5;c.beginPath();c.arc(X(tw.x),Y(tw.y),(T.uniq?(()=>{const r=S;S=s;try{return stats(tw).range;}catch(e){return T.range;}finally{S=r;}})():T.range*lvMods(PV.k,tw.lvl,tw.spec).range)*PVC,0,7);c.fill();c.stroke();
  for(const m of s.mines){c.fillStyle='#3a2a2a';c.strokeStyle='#ff9a5c';c.lineWidth=2;c.beginPath();c.arc(X(m.x),Y(m.y),PVC*.5,0,7);c.fill();c.stroke();}
  for(const p of s.pools){c.fillStyle=p.el==='bleed'?'rgba(224,72,90,.28)':p.el==='fire'?'rgba(255,120,40,.3)':'rgba(123,211,74,.28)';c.strokeStyle=p.el==='bleed'?'rgba(240,100,110,.8)':p.el==='fire'?'rgba(255,160,70,.85)':'rgba(150,230,90,.8)';c.beginPath();c.arc(X(p.x),Y(p.y),p.r*PVC,0,7);c.fill();c.stroke();}
  drawFlame(c,tw,X,Y,PVC);
- c.fillStyle=tinfo(tw).col;c.beginPath();c.arc(X(tw.x),Y(tw.y),PVC*1.35,0,7);c.fill();
- c.fillStyle='#14161c';icDraw(c,twIcO(evIcX(tw,tinfo(tw))),X(tw.x),Y(tw.y)+1,PVC*2);
+ c.fillStyle=tinfo(tw).col;c.beginPath();c.arc(X(tw.x),Y(tw.y),PVC*.45*K,0,7);c.fill();
+ c.fillStyle='#14161c';icDraw(c,twIcO(evIcX(tw,tinfo(tw))),X(tw.x),Y(tw.y)+1,PVC*K*2/3);
  if(tw.rays){c.lineWidth=2;for(const r of tw.rays)if(r.e.hp>0){c.strokeStyle=r.el.col;c.beginPath();c.moveTo(X(tw.x),Y(tw.y));c.lineTo(X(r.e.x),Y(r.e.y));c.stroke();}}
  else if(tw.tgt&&tw.tgt.hp>0){c.strokeStyle=T.col;c.lineWidth=3;c.beginPath();c.moveTo(X(tw.x),Y(tw.y));c.lineTo(X(tw.tgt.x),Y(tw.tgt.y));c.stroke();}
  for(const q of s.fx)if(q.bolt)drawBolt(c,q,X,Y,2,3);

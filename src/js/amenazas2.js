@@ -41,7 +41,7 @@ setInterval(()=>{try{azFogTick();}catch(e){}},100);
 // él y la torre salen marcados y una línea de puntos aparece y se desvanece. Si llega a 2 casillas, la torre se apaga 6 s (interferencia).
 const SABR=2,SABT=6;
 function azSabTargets(){const out=[];for(const t of S.list){const T=TW[t.type];if(!T||T.unit||T.uniq||t.hero)continue;let ok=false;
-  for(let y=Math.max(0,t.y-3);y<=Math.min(N-1,t.y+3)&&!ok;y++)for(let x=Math.max(0,t.x-3);x<=Math.min(N-1,t.x+3);x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=2.5){ok=true;break;}
+  for(let y=Math.max(0,t.y-K);y<=Math.min(N-1,t.y+K)&&!ok;y++)for(let x=Math.max(0,t.x-K);x<=Math.min(N-1,t.x+K);x++)if(S.cells[y][x]===2&&Math.hypot(x-t.x,y-t.y)<=K-.5){ok=true;break;}
   if(ok)out.push(t);}return out;}
 {const _sw=startWave;startWave=function(){const r=_sw.apply(this,arguments);try{S.sabIdx=null;S.spN=0;S.flagSq={};
   if(azOn('sab')&&S.round>=3){const n=(S.round>=15?3:S.round>=9?2:1)+(azRank('sab')>=2?1:0);let tot=0;for(const p of S.portals)for(const t of p.q||[])if(t!=='|')tot++;

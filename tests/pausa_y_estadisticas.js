@@ -4,7 +4,7 @@ const run=async(name,ctxo)=>{const ctx=await b.newContext(ctxo);const p=await ct
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
 await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;localStorage.setItem('rt-tutchoice','skip');startGame(15);chooseHero(Object.keys(HEROES)[0]);S.chests={};
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
- RL.open=false;$('relic').classList.remove('open');S.gold=500;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&S.list.length<2){S.tsel=S.list.length?'bastion':'arrow';build(kx*K+1,ky*K+1);}S.tsel=null;S.selT=null;tmClose&&tmClose();
+ RL.open=false;$('relic').classList.remove('open');S.gold=500;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&S.list.length<2){S.tsel=S.list.length?'bastion':'arrow';build(kx*K+KC,ky*K+KC);}S.tsel=null;S.selT=null;tmClose&&tmClose();
  for(const id of ['coin','horn'])if(!S.relics.includes(id)){S.relics.push(id);S.rs[id]={cd:0,t:0,n:0};}startWave();for(let i=0;i<300;i++)update(1/30);RL.open=false;$('relic').classList.remove('open');});
 await p.waitForTimeout(300);
 if(name==='pc'){console.log(await p.evaluate(()=>JSON.stringify({aim:S.aim,tsel:S.tsel,pi:S.pi,selT:!!S.selT,pr:PR.pinned,rl:RL.open,cp:CP.open,op:OP.open,fo:FO.open,hq:!!HQ.cur,ph:S.phase,inm:document.body.classList.contains('inmenu')})));await p.keyboard.press('Escape');}else{await p.click('#mtl [data-a="pause"]');}

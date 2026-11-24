@@ -7,7 +7,7 @@ console.log('sin guardado: portada',await p.evaluate(()=>[!!SAV.meta,!!$('comp')
 // partida: colocar pieza, construir, empezar oleada
 await p.evaluate(()=>{startGame(15);chooseHero('sylvana');S.chests={};S.evts={};
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
- let sq=null;for(let ky=0;ky<NC&&!sq;ky++)for(let kx=0;kx<NC&&!sq;kx++){const q={kx,ky,x:kx*K+1,y:ky*K+1};if(bmFree(q))sq=q;}if(sq){S.gold=500;bmBuildNow(S.deck[0],sq);}CAM.z=ZMAX*.7;camCenter(S.core.x+3,S.core.y);});
+ let sq=null;for(let ky=0;ky<NC&&!sq;ky++)for(let kx=0;kx<NC&&!sq;kx++){const q={kx,ky,x:kx*K+KC,y:ky*K+KC};if(bmFree(q))sq=q;}if(sq){S.gold=500;bmBuildNow(S.deck[0],sq);}CAM.z=ZMAX*.7;camCenter(S.core.x+3,S.core.y);});
 await p.waitForTimeout(700);
 const ok1=await p.evaluate(()=>saveRun('build'));console.log('guardado en construcción',ok1,await p.evaluate(()=>SAV.meta&&[SAV.meta.round,SAV.meta.heroN,SAV.meta.why]));
 const before=await p.evaluate(()=>({gold:S.gold,towers:S.list.length,round:S.round,phase:S.phase,blocks:Object.keys(S.blocks).length,cam:[Math.round(CAM.x),Math.round(CAM.y),CAM.z],bn:BN,rounds:ROUNDS}));

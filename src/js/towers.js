@@ -23,7 +23,7 @@ function stats(t){
 }
 // cadencia de la torre respecto a la de su nivel sin bonus: los charcos (cuyo número no depende de disparar más) la usan para que Potencia y Frenesí sigan siendo un intercambio justo
 const rateF=(t,s)=>{try{const T=TW[t.type],L=lvMods(t.type,t.lvl,t.spec);return Math.max(.25,s.rate/(T.rate/(L.cd||1)));}catch(e){return 1;}};
-const sqOf=(x,y)=>{const kx=Math.floor(x/K),ky=Math.floor(y/K);return{kx,ky,x:kx*K+1,y:ky*K+1};};
+const sqOf=(x,y)=>{const kx=Math.floor(x/K),ky=Math.floor(y/K);return{kx,ky,x:kx*K+KC,y:ky*K+KC};};
 const sqCells=q=>{const a=[];for(let j=0;j<K;j++)for(let i=0;i<K;i++)a.push([q.kx*K+i,q.ky*K+j]);return a;};
 // quita la torre elegida en el menú de construcción
 function unsel(){if(!S.tsel)return;S.tsel=null;ui();}
@@ -102,7 +102,7 @@ function buyAb(t,id){if(placeLock()){plMsg();return;}{const w=abReq(t,id);if(w){
  if(S.gold<c){S.msg='Oro insuficiente para la habilidad.'+WISHTXT();ui();return;}
  t.ab=t.ab||{};t.acd=t.acd||{};S.gold-=c;S.st.spent+=c;t.ab[id]=rk+1;t.inv=(t.inv||TW[t.type].cost)+c;if(undoOk(t))t.undo+=c;if(rk===0)t.acd[id]=0;try{if(typeof uabBought==='function')uabBought(t,id);}catch(e){}S.msg='';refreshPrim();ui();
 }
-function pinTower(t){S.selT=t;openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:{x:t.x,y:t.y}});PR.pinned=true;refreshPrim();ui();}
+function pinTower(t){S.selT=t;openPrim({key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-KC,t.y-KC,K),cell:{x:t.x,y:t.y}});PR.pinned=true;refreshPrim();ui();}
 function sell(t){
  if(t&&TW[t.type].uniq){S.msg='Las torres únicas no se pueden vender.';ui();return;}
  S.gold+=sellVal(t);S.st.gSell+=sellVal(t);t.sold=1;S.nSell=(S.nSell||0)+1;/* v353: vender anula el Coleccionista */S.list=S.list.filter(o=>o!==t);
@@ -123,7 +123,8 @@ const sdHp=t=>TW[t.type].unit.hp*lvMods(t.type,t.lvl,t.spec).hp*(typeof tileV===
 function mkSoldiers(t){const U=TW[t.type].unit;t.sd=[];for(let i=0;i<U.n;i++)t.sd.push({i,x:t.x,y:t.y,hp:sdHp(t),max:sdHp(t),en:null,cd:0,rt:0,tw:t,lock:true,fight:false});}
 function autoFlag(t){const R2=stats(t).range,r=Math.ceil(R2);let b=null,bd=1e9;
  for(let y=Math.max(0,t.y-r);y<=Math.min(N-1,t.y+r);y++)for(let x=Math.max(0,t.x-r);x<=Math.min(N-1,t.x+r);x++){if(S.cells[y][x]!==2)continue;const d=Math.hypot(x-t.x,y-t.y);if(d<=R2&&d<bd){bd=d;b={x,y};}}
- if(b)t.flag=b;}
+ /* v365: con 5 carriles la casilla de camino más cercana es el carril de fuera; la bandera se mete KC-1 carriles hacia dentro para quedar junto al centro, como antes */
+ if(b){const dx=Math.sign(b.x-t.x),dy=Math.sign(b.y-t.y),ax=Math.abs(b.x-t.x)>=Math.abs(b.y-t.y);for(let i=0;i<KC-1;i++){const nx=b.x+(ax?dx:0),ny=b.y+(ax?0:dy);if(inb(nx,ny)&&S.cells[ny][nx]===2&&Math.hypot(nx-t.x,ny-t.y)<=R2)b={x:nx,y:ny};else break;}t.flag=b;}}
 function setFlag(t,c){t.flag={x:c.x,y:c.y};for(const s of t.sd||[]){s.lock=true;s.en=null;s.fight=false;}if(t.pigT)setFlag(t.pigT,c);}
 function mkPig(t){const P=PIGU[t.type];if(!t.flag)autoFlag(t);const pt={type:'bastion',lvl:3,pigU:t.type,home:t,x:t.x,y:t.y,cells:[],ab:{},acd:{},flag:t.flag,uov:{n:1,hp:P.hp,ap:P.ap,rez:10,spd:(P.spd||2)*K},ovr:{dmg:P.dmg,rate:P.rate,range:(P.range||2.5)*K,crit:CRIT,critm:2,area:0,gold:0,pen:0}};
  pt.sd=[{i:0,x:t.x,y:t.y,hp:P.hp,max:P.hp,en:null,cd:0,rt:0,tw:pt,lock:true,fight:false,wt:2,rng:!!P.rng,pig:t.type}];t.pigT=pt;}
@@ -160,7 +161,7 @@ function unitCombat(dt){
  for(const s of SL){if(s.en||s.lock)continue;let be=null,bd=1e9;const f0=fl(s);
   for(const e of S.enemies){if(e.hp<=0||e.nb>=(ET[e.t].need||1)||(ET[e.t].dodge&&!(e.gpin>0))||e.hk>0||(isFly(e)&&!(s.H&&s.H.def.ranged)&&!s.rng))continue;if(Math.hypot(f0.x-e.x,f0.y-e.y)>(s.tw.alert||ALERT))continue;const E2=ET[e.t],d=Math.hypot(s.x-e.x,s.y-e.y)-(s.pref&&(E2.rg==='ranged'||E2.eheal||E2.curse||E2.aura)?100:0);if(d<bd){bd=d;be=e;}}
   if(be){s.en=be;be.nb+=s.w;s.cd=0;}}
- for(const s of SL){s.fight=!!(s.en&&!s.lock&&Math.hypot(s.x-s.en.x,s.y-s.en.y)<=SCONTACT);if(s.fight)s.en.ct+=s.w;}
+ for(const s of SL){s.fight=!!(s.en&&!s.lock&&Math.hypot(s.x-s.en.x,s.y-s.en.y)<=((s.H&&s.H.def.ranged)||s.rng?SCONTR:SCONTACT));if(s.fight)s.en.ct+=s.w;}
  // bloqueo múltiple: con capacidad sobrante (corpulencia − lo que necesita su enemigo), retiene además a otro enemigo cercano
  for(const s of SL){const rem=s.fight&&!(s.H&&s.H.def.ranged)&&!s.rng?s.w-(ET[s.en.t].need||1):0;
   if(s.en2&&(rem<1||!(s.en2.hp>0)||s.en2===s.en||!S.enemies.includes(s.en2)||(ET[s.en2.t].need||1)>rem||Math.hypot(s.x-s.en2.x,s.y-s.en2.y)>SCONTACT*1.25))s.en2=null;

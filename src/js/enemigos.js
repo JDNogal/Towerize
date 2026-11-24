@@ -16,7 +16,7 @@ const ECOL={"norm": "#5a8a3a", "vet": "#4a7a30", "champ": "#3e6a28", "fast": "#7
  raptor:{n:'Diablo rapaz',gold:6,hp:3.3,hf:60,sp:1.2,r:.26,dmg:1,ap:0,am:10,fly:1},
  seal:{n:'Portador de sellos',gold:5,hp:1.4,hf:50,sp:.65,r:.3,dmg:1,ap:10,am:0,aura:{r:2.5,v:10,m:1}}};
  const MEL={minion:[5,1,1],demon:[8,1.2,1],dchamp:[14,1.3,1],hound:[3,.6,1],raptor:[4,1,1],seal:[2,1.2,1]},XP={minion:2,demon:5,dchamp:12,hound:2,raptor:5,seal:3};
- for(const k in NEW){const E=NEW[k];E.sp*=K;E.r*=K*ENR;if(E.aura)E.aura.r*=K;Object.assign(E,{ud:MEL[k][0],ac:MEL[k][1],need:MEL[k][2],rg:'melee',xp:XP[k]});ET[k]=E;}}
+ for(const k in NEW){const E=NEW[k];E.sp*=K;E.r*=K3*ENR;if(E.aura)E.aura.r*=K;Object.assign(E,{ud:MEL[k][0],ac:MEL[k][1],need:MEL[k][2],rg:'melee',xp:XP[k]});ET[k]=E;}}
 // nombres, colores y facciones de los de siempre
 {const NM={norm:'Orco',vet:'Orco veterano',champ:'Caudillo orco',fast:'Goblin',runner:'Jinete de lobo',tank:'Ogro',armored:'Ogro acorazado',bat:'Diablillo',harpy:'Arpía',griffin:'Gárgola',
  custodian:'Tamborilero orco',sling:'Hondero goblin',javelin:'Bombardero goblin',raider:'Goblin ladrón',acolyte:'Cultista',warlock:'Súcubo',shaman:'Chamán goblin'};
@@ -108,7 +108,7 @@ function sqCmd(dt){const L0=S.sqL;if(!L0)return;
   if(!lost&&!far)continue;e.loose=1;e.fsp=0;
   if(fac==='g'||fac==='a')e.scat=1;else if(fac==='d'&&lost&&!e.fx.haste)e.fx.haste={m:1.3,t:2};}}
 // ---- carriles: cualquier enemigo puede cambiar de carril (-1 izquierda, 0 centro, 1 derecha respecto a su marcha) ----
-function setLane(e,l){e.fln=Math.max(-1,Math.min(1,Math.round(l)));}
+function setLane(e,l){e.fln=Math.max(-KC,Math.min(KC,Math.round(l)));}
 const eProg=e=>{const f=S.field[e.ty]&&S.field[e.ty][e.tx];return (f==null||!isFinite(f)?1e9:f)+Math.hypot(e.tx-e.x,e.ty-e.y);};
 // ---- corro de los demonios: giran de verdad alrededor de su guía (cambian de carril y aprietan o aflojan el paso para rodearlo) ----
 const RINGLEAD={seal:1,acolyte:1,warlock:1},RINGR=1.25,RINGW=.55;
@@ -121,4 +121,4 @@ function ringTick(dt){const L0=S.sqL;if(!L0)return;const cnt={};
 {const _u=update;update=function(dt){_u(dt);if(S&&S.phase==='wave'){sqCmd(dt);ringTick(dt);}};}
 {const _s=startWave;startWave=function(){if(S&&S.phase==='build')S.sqL={};return _s.apply(this,arguments);};}
 // desperdigados: de vez en cuando cambian de carril
-{const _l=laneStep;laneStep=function(e,F){if(e.scat&&Math.random()<.3)e.fln=Math.floor(Math.random()*3)-1;return _l(e,F);};}
+{const _l=laneStep;laneStep=function(e,F){if(e.scat&&Math.random()<.3)e.fln=Math.floor(Math.random()*K)-KC;return _l(e,F);};}

@@ -7,14 +7,14 @@ function barrAt(x,y){const kx=Math.floor(x/K),ky=Math.floor(y/K),pc=(a,b)=>inbc(
  if(h===1&&v===1){const sx=L?-1:1,sy=U?-1:1,I=[X0+(sx<0?0:K),Y0+(sy<0?0:K)],O=[X0+(sx<0?K:0),Y0+(sy<0?K:0)];
   const dx=O[0]-I[0],dy=O[1]-I[1],l=Math.hypot(dx,dy),nx=-dy/l,ny=dx/l,c=nx*I[0]+ny*I[1];
   let poly=[[X0,Y0],[X0+K,Y0],[X0+K,Y0+K],[X0,Y0+K]];poly=clipPoly(poly,nx,ny,c+.55);poly=clipPoly(poly,-nx,-ny,-c+.55);
-  return{kx,ky,poly,seg:[I[0],I[1],O[0],O[1]],x:kx*K+1,y:ky*K+1};}
- const vert=h>v||(h===v&&Math.abs(y-(ky*K+1))<=Math.abs(x-(kx*K+1)));
+  return{kx,ky,poly,seg:[I[0],I[1],O[0],O[1]],x:kx*K+KC,y:ky*K+KC};}
+ const vert=h>v||(h===v&&Math.abs(y-(ky*K+KC))<=Math.abs(x-(kx*K+KC)));
  if(vert)return{kx,ky,poly:[[x,Y0],[x+1,Y0],[x+1,Y0+K],[x,Y0+K]],seg:[x+.5,Y0,x+.5,Y0+K],x,y};
  return{kx,ky,poly:[[X0,y],[X0+K,y],[X0+K,y+1],[X0,y+1]],seg:[X0,y+.5,X0+K,y+.5],x,y};}
 // punto válido más cercano: en un cruce, la vista previa salta a la casilla del camino válida más próxima
 function barrPick(x,y){if(!inb(x,y)||S.cells[y][x]!==2)return null;const b=barrAt(x,y);if(b)return b;
  let best=null,bd=1e9;const kx=Math.floor(x/K),ky=Math.floor(y/K);
- for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){const a=kx+i,c=ky+j;if(!inbc(a,c)||S.cc[c][a]!==2)continue;const cx=a*K+1,cy=c*K+1,d=Math.hypot(cx-x,cy-y);if(d<bd){const q=barrAt(cx,cy);if(q){bd=d;best=q;}}}
+ for(let j=-3;j<=3;j++)for(let i=-3;i<=3;i++){const a=kx+i,c=ky+j;if(!inbc(a,c)||S.cc[c][a]!==2)continue;const cx=a*K+KC,cy=c*K+KC,d=Math.hypot(cx-x,cy-y);if(d<bd){const q=barrAt(cx,cy);if(q){bd=d;best=q;}}}
  return best;}
 const segD=(px,py,s)=>{const ax=s[0],ay=s[1],bx=s[2]-ax,by=s[3]-ay,L2=bx*bx+by*by||1,u=Math.max(0,Math.min(1,((px-ax)*bx+(py-ay)*by)/L2));return Math.hypot(ax+bx*u-px,ay+by*u-py);};
 function drawBarr(b,alpha){if(!b||!b.poly||b.poly.length<3)return;g.save();g.globalAlpha=alpha;g.beginPath();b.poly.forEach((p,i)=>i?g.lineTo(p[0]*CS,p[1]*CS):g.moveTo(p[0]*CS,p[1]*CS));g.closePath();

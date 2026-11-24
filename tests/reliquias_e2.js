@@ -15,7 +15,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  const mk=(dx,hp,t)=>{const H=S.hero,r=h2Route(Math.round(H.s.x),Math.round(H.s.y),Math.max(0,dx)),c=r[Math.min(r.length-1,Math.max(0,dx))];const e={t:t||'norm',x:c.x,y:c.y,tx:c.x,ty:c.y,hp:hp||500,max:hp||500,fx:{}};S.enemies.push(e);return e;};
  const run=(s)=>{for(let i=0;i<Math.round(s/.05);i++)update(.05);};
  const give=id=>{if(!S.relics.includes(id))gainRelic(id);S.rs[id].cd=0;S.rs[id].t=0;};
- const sol=()=>{const a=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+1)+','+(ky*K+1)])a.push({x:kx*K+1,y:ky*K+1});return a;};
+ const sol=()=>{const a=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+KC)+','+(ky*K+KC)])a.push({x:kx*K+KC,y:ky*K+KC});return a;};
  const bld=(ty)=>{const c=sol()[0];if(!S.deck.includes(ty))S.deck.push(ty);S.tsel=ty;build(c.x,c.y);return S.list[S.list.length-1];};
  // cofres: solo en la era 2
  let H=game(1,'reinhart');let seen1=new Set();for(let k=0;k<300;k++)seen1.add(rndRelic());out.chestEra1=!NEW.some(id=>seen1.has(id));

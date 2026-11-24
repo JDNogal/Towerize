@@ -49,7 +49,10 @@ function kamiBoom(t,s,mul){const st=stats(t),dm=st.dmg*3*(mul||1),r=1*K;let n=0;
 // reaparición más rápida de los kamikazes: la reparación la lleva unitWalk con s.rt = U.rez; ajustamos el rez de la torre al elegir la habilidad
 {const _b=buyAb;buyAb=function(t,id){const r=_b.apply(this,arguments);try{if(id==='reens'&&t&&t.ab&&t.ab.reens)t.uov={...(t.uov||TW.robots.unit),n:4,rez:abRank(t,'reens').t,hp:TW.robots.unit.hp,ap:TW.robots.unit.ap,spd:TW.robots.unit.spd};if(id==='infect'&&t)nanoSetup(t);try{chapaCheck(t);}catch(e){}}catch(e){}return r;};}
 // camino hacia los portales desde una casilla: sigue las casillas de camino cuyo campo (distancia al núcleo) crece; en los cruces devuelve las ramas
-function awayNext(x,y){const f0=S.field[y]&&S.field[y][x];if(f0==null||f0<0)return[];const out=[];for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2||cutF(x,y,nx,ny))continue;const f=S.field[ny][nx];if(f!=null&&f>f0)out.push({x:nx,y:ny});}return out;}
+/* v365: con 5 carriles, las esquinas de las curvas y de la casilla del núcleo son fondos de saco de varias casillas. Lo que va «contra corriente» (rutas hacia los portales, nubes, rocas…) descarta los pasos que acaban en uno antes de K casillas, si tiene otro por donde seguir */
+function awayDeep(x,y,d){if(d<=0)return true;for(const q of awayNext0(x,y))if(awayDeep(q.x,q.y,d-1))return true;return false;}
+function awayNext(x,y){const nx=awayNext0(x,y);if(nx.length<2)return nx;const go=nx.filter(q=>awayDeep(q.x,q.y,K));return go.length?go:nx;}
+function awayNext0(x,y){const f0=S.field[y]&&S.field[y][x];if(f0==null||f0<0)return[];const out=[];for(const[dx,dy]of D){const nx=x+dx,ny=y+dy;if(!inb(nx,ny)||S.cells[ny][nx]!==2||cutF(x,y,nx,ny))continue;const f=S.field[ny][nx];if(f!=null&&f>f0)out.push({x:nx,y:ny});}return out;}
 function awayRoute(x,y,n){const r=[{x,y}];let cx=x,cy=y;for(let i=0;i<n;i++){const nx=awayNext(cx,cy);if(!nx.length)break;const q=nx[Math.floor(Math.random()*nx.length)];r.push(q);cx=q.x;cy=q.y;}return r;}
 function mechaTickE2(dt){for(const t of S.list){if(t.type!=='robots'||!t.sd)continue;const st=stats(t);
   // blindaje reactivo: si un robot ha perdido vida desde el último fotograma, puede rebotar el golpe

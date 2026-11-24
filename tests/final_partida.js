@@ -4,7 +4,7 @@ const ctx=await b.newContext(mob?{...devices['iPhone 13 landscape']}:{viewport:{
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);const sfx=mob?'m_':'';
 await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;localStorage.setItem('rt-tutchoice','skip');startGame(15);chooseHero('sylvana');S.chests={};S.evts={};
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
- let sq=null;for(let ky=0;ky<NC&&!sq;ky++)for(let kx=0;kx<NC&&!sq;kx++){const q={kx,ky,x:kx*K+1,y:ky*K+1};if(bmFree(q))sq=q;}if(sq){S.gold=999;bmBuildNow(S.deck[0],sq);}
+ let sq=null;for(let ky=0;ky<NC&&!sq;ky++)for(let kx=0;kx<NC&&!sq;kx++){const q={kx,ky,x:kx*K+KC,y:ky*K+KC};if(bmFree(q))sq=q;}if(sq){S.gold=999;bmBuildNow(S.deck[0],sq);}
  S.st.dmg=18430;S.st.kills=212;S.st.gKill=640;S.st.gRound=420;if(S.list[0]){S.list[0].dmgT=7820;S.list[0].kills=90;S.list[0].act=120;}S.hero.pt.dmgT=3900;S.round=9;S.phase='lost';endGame();});
 await p.waitForTimeout(500);
 // v352: primero la página de la puntuación sumándose; Saltar la acaba y Continuar pasa a la de siempre

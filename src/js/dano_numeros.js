@@ -10,7 +10,7 @@ const dnStyle=()=>OPT.dnst||'jump',dnSz=()=>({s:.8,n:1,l:1.25}[OPT.dnsz||'n']||1
 function dnShowE(e){const w=OPT.dnwho||'all';if(!e.t)return w==='all';if(w==='all')return true;const E=ET[e.t]||{},bs=DNBOSS.has(e.t)||(typeof isBoss==='function'&&isBoss(e));if(w==='boss')return bs;return bs||DNIMP.has(e.t)||!!E.el||!!e.wanted;}
 // lado hacia el que salta/se coloca: perpendicular a la marcha, hacia el borde del camino más cercano a su carril
 function dnSide(d){const e=d.e;let fd=e.fd||[0,1];const px=fd[1],py=-fd[0];let s=e.fln!=null&&e.fln!==0?Math.sign(e.fln):((d.k=(d.k||0)+1)%2?1:-1);if(d.side!=null)s=d.side;d.side=s;
- const cx=Math.floor(e.x/K)*K+1,cy=Math.floor(e.y/K)*K+1,base=(e.x-cx)*px+(e.y-cy)*py;const off=(K/2+.9)-base*s;return{px:px*s,py:py*s,off};}
+ const cx=Math.floor(e.x/K)*K+KC,cy=Math.floor(e.y/K)*K+KC,base=(e.x-cx)*px+(e.y-cy)*py;const off=(K/2+.9)-base*s;return{px:px*s,py:py*s,off};}
 // el acumulador de siempre (dnAdd) decide cuándo «lanzar» un salto: tras 0,3 s sin golpes, o 0,5 s acumulando; un crítico se lanza al momento
 {const _a=dnAdd;dnAdd=function(e,v,key){if(!OPT.dnum||!S.dn)return;if(!dnShowE(e))return;return _a.apply(this,arguments);};}
 {const _t=dnTick;dnTick=function(dt){if(dnStyle()!=='jump')return _t.apply(this,arguments);if(!S.dn)return;S.dj=S.dj||[];

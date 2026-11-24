@@ -17,9 +17,11 @@ function camTick(dt){if(!CAMA.on)return;if(CAMA.tw&&CAMA.cx!=null){const T=CAMA.
 // encuadre: caja de las piezas colocadas (en casillas de pieza). En la fase de colocar, se amplía una pieza por cada lado
 function camFitBox(){if(!S||!S.blocks)return null;let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const k in S.blocks){const[bx,by]=k.split(',').map(Number);x0=Math.min(x0,bx);y0=Math.min(y0,by);x1=Math.max(x1,bx);y1=Math.max(y1,by);}
  if(x0>x1)return null;if(S.phase==='place'){x0=Math.max(0,x0-1);y0=Math.max(0,y0-1);x1=Math.min(BN-1,x1+1);y1=Math.min(BN-1,y1+1);}return{x0,y0,x1,y1};}
-const CAMFITMAX=3.2;
-function camFit(instant){const b=camFitBox();if(!b)return;const PK=P*K,wc=(b.x1-b.x0+1)*PK+K*2,hc=(b.y1-b.y0+1)*PK+K*2;
- const z=Math.max(ZMIN,Math.min(ZMAX,CAMFITMAX,Math.min(VIEW/(wc*CS*BS),VH/(hc*CS*BS))*.92)),cx=(b.x0+b.x1+1)/2*PK-.5,cy=(b.y0+b.y1+1)/2*PK-.5;
+const CAMFITMAX=3.2*K/K3;
+/* v365 (5 carriles, Nogal 23-nov): las casillas pequeñas se ven igual de grandes que con 3 carriles, así que el mapa ocupa ×K/K3 más y el encuadre ya no encoge el mapa para que quepa entero:
+   se calcula como si cada casilla midiera K3 y no baja de K/K3 (lo que antes era ver el tablero completo). Con la rueda se puede seguir alejando hasta verlo todo */
+function camFit(instant){const b=camFitBox();if(!b)return;const PK=P*K,P3=P*K3,wc=(b.x1-b.x0+1)*P3+K3*2,hc=(b.y1-b.y0+1)*P3+K3*2;
+ const z=Math.max(ZMIN*K/K3,Math.min(ZMAX,CAMFITMAX,Math.min(VIEW/(wc*CS*BS),VH/(hc*CS*BS))*.92)),cx=(b.x0+b.x1+1)/2*PK-.5,cy=(b.y0+b.y1+1)/2*PK-.5;
  if(instant){CAMA.on=false;CAMA.tw=null;CAM.z=z;camCenter(cx,cy);}else camGoT(z,cx,cy,.9);}
 // el encuadre automático se repite al colocar pieza y al cambiar de fase (colocar ↔ construir); un zoom manual lo respeta hasta el siguiente cambio
 let CAMPH=null,CAMNB=0;

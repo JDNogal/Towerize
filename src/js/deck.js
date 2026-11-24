@@ -101,5 +101,5 @@ const abRank=(t,id)=>{const r=t.ab&&t.ab[id]?AB[id].ranks[t.ab[id]-1]:null;retur
 // v311 · las torres de evento también tienen habilidades a Nv 4 (el Dragón, al ser anciano): UAB dice cuáles; abIds(t) vale para cualquier torre
 const uabOk=t=>!!t&&typeof UAB!=='undefined'&&!!TW[t.type]&&!!UAB[t.type]&&!t.pigU&&!t.summ&&(TW[t.type].dragon?(t.stage||0)>=3:(t.lvl||1)>=4);
 const abIds=t=>t&&t.spec&&SPECS[t.type]&&SPECS[t.type][t.spec]?SPECS[t.type][t.spec].ab:uabOk(t)?UAB[t.type]:[];
-const TRI=.9,ALERT=2.3*K/* v305: era 2,75 (y antes de la v278, 2) */,SCONTACT=1.1,RANGED_R=3*K,MELR=1.6*K,SREGEN=3,SREGP=.05,SREGT=3;
+const TRI=.9,ALERT=2.3*K/* v305: era 2,75 (y antes de la v278, 2) */,SCONTACT=1.1,SCONTR=KC+.1/* v365: las unidades que no se mueven a por el enemigo (héroes y unidades a distancia) retienen a quien pase a esta distancia; con 3 carriles 1,1 les bastaba para tapar el camino entero desde el carril central, con 5 hacen falta 2,1 */,RANGED_R=3*K,MELR=1.6*K,SREGEN=3,SREGP=.05,SREGT=3;
 const uRegen=(s,dt)=>{if(S.wt-(s.lh===undefined?-99:s.lh)>=SREGT)s.hp=Math.min(s.max,s.hp+s.max*SREGP*dt);};

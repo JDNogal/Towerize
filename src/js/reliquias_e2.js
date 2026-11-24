@@ -62,7 +62,7 @@ nrAdd({id:'jammer',n:'Inhibidor de señal',ic:'📡',col:'#5a3a6a',era:2,evr:1,e
  pas:()=>`Cuando muere el líder de una escuadra, los suyos quedan ${kw('fear','aterrados','')} <span class="nd">2 s</span>.`,
  act:()=>`Todos los líderes del mapa quedan ${kw('stun','aturdidos','')} <span class="nd">4 s</span> y sus escuadras se desperdigan por los carriles.`},
  {use:()=>{const L=S.enemies.filter(e=>e.hp>0&&!e.leak&&e.sqlead);if(!L.length){S.msg='Inhibidor de señal: no hay líderes de escuadra en el mapa.';return false;}
-  for(const l of L){stunE(l,4);S.fx.push({x:l.x,y:l.y,t:.5,m:.5,r:K,col:'#c89aff'});for(const e of S.enemies)if(e!==l&&e.hp>0&&e.sqid===l.sqid&&!e.sqlead){e.loose=1;e.fsp=0;e.scat=1;try{setLane(e,Math.floor(Math.random()*3)-1);}catch(x){}}}RS('jammer').n+=L.length;return true;}});
+  for(const l of L){stunE(l,4);S.fx.push({x:l.x,y:l.y,t:.5,m:.5,r:K,col:'#c89aff'});for(const e of S.enemies)if(e!==l&&e.hp>0&&e.sqid===l.sqid&&!e.sqlead){e.loose=1;e.fsp=0;e.scat=1;try{setLane(e,Math.floor(Math.random()*K)-KC);}catch(x){}}}RS('jammer').n+=L.length;return true;}});
 H2K.push(e=>{if(e.sqlead&&S.relics.includes('jammer')&&rp('jammer')){let n=0;for(const o of S.enemies)if(o!==e&&o.hp>0&&o.sqid===e.sqid){const d=isBoss(o)?1:2;o.fx.fear={t:Math.max(d,o.fx.fear?o.fx.fear.t:0)};n++;}RS('jammer').n2+=n;}});
 // ---- Rayo de reprogramación: el Transformado de la era 2 (robot aspiradora) ----
 function vacDraw(g,px,py,r,lw){const R=r*1.15,a=performance.now()/260;g.fillStyle='#c9d0da';g.strokeStyle='#14101e';g.lineWidth=Math.max(1,r*.14);g.beginPath();g.arc(px,py,R,0,7);g.fill();g.stroke();
@@ -113,7 +113,7 @@ H2D.push((g,lw)=>{const X=v=>v*CS+CS/2,now=performance.now()/1000;
  if(S.dome){const d=S.dome,p=.5+.5*Math.sin(now*5);g.fillStyle='rgba(90,200,255,.12)';g.strokeStyle='rgba(140,225,255,'+(.6+.3*p)+')';g.lineWidth=lw(2.5);g.beginPath();g.arc(X(d.x),X(d.y),d.r*CS,0,7);g.fill();g.stroke();}
  for(const t of unitTowers())for(const s of t.sd)if(s.hp>0&&s.shd>0){g.strokeStyle='rgba(120,215,255,.9)';g.lineWidth=lw(2);g.beginPath();g.arc(X(s.x),X(s.y),CS*(s.H?1.25:.72),-Math.PI/2,-Math.PI/2+6.283*Math.min(1,s.shd/(s.max*.2)));g.stroke();}
  const gl=typeof OPT==='undefined'||OPT.dglitch!==false;
- for(const t of S.list){const x0=(t.x-1)*CS,y0=(t.y-1)*CS,W=K*CS;
+ for(const t of S.list){const x0=(t.x-KC)*CS,y0=(t.y-KC)*CS,W=K*CS;
   if(t.asim){g.strokeStyle='rgba(122,216,255,'+(.6+.4*Math.sin(now*8))+')';g.lineWidth=lw(2.5);g.setLineDash([lw(5),lw(4)]);g.strokeRect(x0+lw(1),y0+lw(1),W-lw(2),W-lw(2));g.setLineDash([]);}
   if(!(t.holo>0))continue;g.save();g.beginPath();g.rect(x0,y0,W,W);g.clip();g.fillStyle='rgba(20,60,80,.42)';g.fillRect(x0,y0,W,W);g.fillStyle='rgba(63,232,255,.16)';for(let y=y0+((now*18)%4);y<y0+W;y+=4)g.fillRect(x0,y,W,1.2);
   if(gl){const k=Math.floor(now*9),rnd=n=>{const v=Math.sin((k+n)*91.7+t.id*13.3)*43758.5;return v-Math.floor(v);};if(rnd(1)>.45)for(let i=0;i<2;i++){const yy=y0+rnd(2+i)*W,hh=2+rnd(4+i)*5,dx=(rnd(6+i)-.5)*10;g.fillStyle='rgba(63,232,255,.55)';g.fillRect(x0+dx,yy,W,hh*.5);g.fillStyle='rgba(255,79,216,.45)';g.fillRect(x0-dx,yy+hh*.5,W,hh*.5);}}

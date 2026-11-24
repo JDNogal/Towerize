@@ -7,7 +7,7 @@ function collectEnds(first){
     const nx=bx+(lx<0?-1:lx>=P?1:0),ny=by+(ly<0?-1:ly>=P?1:0);
     if(nx>=0&&ny>=0&&nx<BN&&ny<BN&&!S.blocks[nx+','+ny]){
      if(first)return[1];
-     if(!seen[gx+','+gy]){seen[gx+','+gy]=1;out.push({x:gx*K+1+a,y:gy*K+1+b,bx,by,dir:[a,b]});}}}}}
+     if(!seen[gx+','+gy]){seen[gx+','+gy]=1;out.push({x:gx*K+KC+a*KC,y:gy*K+KC+b*KC,bx,by,dir:[a,b]});}}}}}
  return out;
 }
 // salidas del camino al borde de la cuadrícula: no sirven para poner piezas, pero sí pueden abrir portales
@@ -16,7 +16,7 @@ function borderEnds(){const out=[];
   for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;if(S.cc[gy][gx]!==2||!exitL(x,y))continue;
    for(const[a,b]of D){const lx=x+a,ly=y+b;if(lx>=0&&ly>=0&&lx<P&&ly<P)continue;
     const nx=bx+(lx<0?-1:lx>=P?1:0),ny=by+(ly<0?-1:ly>=P?1:0);
-    if(nx<0||ny<0||nx>=BN||ny>=BN)out.push({x:gx*K+1+a,y:gy*K+1+b,bx,by,dir:[a,b],bd:1});}}}
+    if(nx<0||ny<0||nx>=BN||ny>=BN)out.push({x:gx*K+KC+a*KC,y:gy*K+KC+b*KC,bx,by,dir:[a,b],bd:1});}}}
  return out;}
 // 0 = válida, 1 = no conecta, 2 = cierra el camino, 3 = callejón: deja al camino casi sin sitio (menos de 3 bloques libres alcanzables)
 function check(bx,by,p){
@@ -87,7 +87,7 @@ function cfield(){
 }
 function afield(c){
  const k=c[0]+','+c[1];if(S.af[k])return S.af[k];
- const d=Array.from({length:N},()=>Array(N).fill(1e9)),sx=c[0]*K+1,sy=c[1]*K+1,q=[[sx,sy]];d[sy][sx]=0;
+ const d=Array.from({length:N},()=>Array(N).fill(1e9)),sx=c[0]*K+KC,sy=c[1]*K+KC,q=[[sx,sy]];d[sy][sx]=0;
  for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[a,b]of D){const nx=x+a,ny=y+b;if(inb(nx,ny)&&S.cells[ny][nx]===2&&!cutF(x,y,nx,ny)&&d[ny][nx]>d[y][x]+1){d[ny][nx]=d[y][x]+1;q.push([nx,ny]);}}}
  return S.af[k]=d;
 }
@@ -96,7 +96,7 @@ function placePiece(bx,by){
  const o=S.offers[S.pi],p=o.p,pc=payOn()?pcost(o):0;if(pc){S.gold-=pc;if(S.st)S.st.bfpay=(S.st.bfpay||0)+pc;}stamp(bx,by,p,o.b);
  if(joinsAt(bx,by)>=2&&!S.tut)(S.joins=S.joins||[]).push(bx+','+by);
  const d=field();let any=null,ad=-1;
- for(let y=0;y<P;y++)for(let x=0;x<P;x++){if(p[y][x]!=='.')continue;const fx=(bx*P+x)*K+1,fy=(by*P+y)*K+1,dd=d[fy][fx];if(dd<1e9&&dd>ad){ad=dd;any={x:fx,y:fy,d:dd,dir:[0,0]};}}
+ for(let y=0;y<P;y++)for(let x=0;x<P;x++){if(p[y][x]!=='.')continue;const fx=(bx*P+x)*K+KC,fy=(by*P+y)*K+KC,dd=d[fy][fx];if(dd<1e9&&dd>ad){ad=dd;any={x:fx,y:fy,d:dd,dir:[0,0]};}}
  // prioridad: extremos de la pieza nueva (más lejanos primero) y después el resto, de más lejos a más cerca de la base
  const ends=shuf(collectEnds().concat(borderEnds()));
  for(const e of ends){e.d=d[e.y][e.x];e.nw=e.bx===bx&&e.by===by;}
@@ -119,7 +119,7 @@ function placePiece(bx,by){
 function skipPlace(){
  const isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2,d=field(),cx=Math.floor(S.core.x/K),cy=Math.floor(S.core.y/K),ends=[];
  for(let y=0;y<NC;y++)for(let x=0;x<NC;x++){if(!isP(x,y)||(x===cx&&y===cy))continue;const nb=D.filter(([a,b])=>isP(x+a,y+b)&&!cutC(x,y,x+a,y+b));
-  if(nb.length===1){const fx=x*K+1,fy=y*K+1;if(d[fy][fx]<1e9)ends.push({x:fx,y:fy,dir:[-nb[0][0],-nb[0][1]],d:d[fy][fx],nw:false});}}
+  if(nb.length===1){const fx=x*K+KC,fy=y*K+KC;if(d[fy][fx]<1e9)ends.push({x:fx,y:fy,dir:[-nb[0][0],-nb[0][1]],d:d[fy][fx],nw:false});}}
  if(!ends.length){let any=null,ad=-1;for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(S.cells[y][x]===2&&d[y][x]<1e9&&d[y][x]>ad){ad=d[y][x];any={x,y,d:ad,dir:[0,0],nw:false};}ends.push(any);}
  ends.sort((a,b)=>b.d-a.d);S.ends=addMids(ends);const boss=bossRound(S.round)?ends[0]:null;
  makePortals(boss);S.phase='build';setTimeout(()=>tutPhase('build'),0);
@@ -151,7 +151,7 @@ function deadMids(ends){const cf=cfield(),isP=(x,y)=>inbc(x,y)&&S.cc[y][x]===2&&
   let m=comp[0],md=-1;const jc=comp.filter(inJoin),cand=jc.length?jc:comp;for(const c of cand){const v=dist.get(c[0]+','+c[1])||0;if(v>md){md=v;m=c;}}
   // las dos uniones más alejadas entre sí (si solo hay una, los enemigos salen todos hacia ella)
   const sp=J.length>1?J.slice(0,2):[J[0]];
-  out.push({x:m[0]*K+1,y:m[1]*K+1,dir:[0,0],d:cf[m[1]][m[0]],nw:false,mid:1,split:sp.map(j=>[j[0]*K+1,j[1]*K+1])});}
+  out.push({x:m[0]*K+KC,y:m[1]*K+KC,dir:[0,0],d:cf[m[1]][m[0]],nw:false,mid:1,split:sp.map(j=>[j[0]*K+KC,j[1]*K+KC])});}
  return out;}
 function addMids(ends){const mids=deadMids(ends);if(!mids.length)return ends;ends.splice(Math.min(1,ends.length),0,...mids);
  if(!S.tut)setTimeout(()=>hint('midportal','Portal en medio del camino','Un tramo del camino había quedado cerrado y ningún enemigo pasaba por él: se abre un <b>portal en medio</b>'+(mids[0].split.length>1?' y sus enemigos salen <b>mitad hacia cada lado</b>.':'.'),tgCell(mids[0].x,mids[0].y,1.4)),0);return ends;}
@@ -176,7 +176,7 @@ function showFocus(pt){
  el.classList.add('open');posFocus();
 }
 function showSolarFocus(bx,by){
- const cells=[];for(let gy=0;gy<NC;gy++)for(let gx=0;gx<NC;gx++)if(S.cc[gy][gx]===1&&!S.occ[(gx*K+1)+','+(gy*K+1)])cells.push({x:gx*K,y:gy*K});if(!cells.length)return false;
+ const cells=[];for(let gy=0;gy<NC;gy++)for(let gx=0;gx<NC;gx++)if(S.cc[gy][gx]===1&&!S.occ[(gx*K+KC)+','+(gy*K+KC)])cells.push({x:gx*K,y:gy*K});if(!cells.length)return false;
  FO.open=true;FO.cells=cells;FO.pt={x:bx*P*K+P*K/2-.5,y:by*P*K+P*K/2-.5};closePrim();camGo(CAM.z,FO.pt.x,FO.pt.y,4);const el=$('focus');
  el.innerHTML='<svg class="fsvg"></svg><div class="fmsg tipc"><b class="ftit">Solares</b><div>Las casillas marcadas son <span class="kw" data-kw="g_solar" data-src="">solares</span>: solo ahí puedes construir torres. Cada pieza trae los suyos.</div><div class="hbtn"><button class="go" data-a="focusok">Entendido</button></div></div>';
  el.classList.add('open');posFocus();return true;

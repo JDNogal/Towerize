@@ -16,7 +16,7 @@ function baseQueue(p,qf){const q=[],f=[],cnt={};
  return q.filter((t,i)=>keep[i]);}
 // ---- bocadillos de los portales: una fila por escuadra (las iguales seguidas se agrupan con ×N) ----
 const PSPEC=['mini','elite','wanted','greyw','bigw','momdrg','boss','colossus','bob'];let PTAP=null,PTSIG='';
-const portalAt=c=>S.portals.find(p=>Math.abs(c.x-p.x)<=1&&Math.abs(c.y-p.y)<=1)||null;
+const portalAt=c=>S.portals.find(p=>Math.abs(c.x-p.x)<=KC&&Math.abs(c.y-p.y)<=KC)||null;
 function qGroups(list){const gs=[[]];for(let t of list){if(t==='|'){gs.push([]);continue;}t=t.replace('#','');gs[gs.length-1].push(t);}return gs.filter(g=>g.length);}
 function rowOf(g){const o=[];for(const t of g){const r=o.find(x=>x[0]===t);if(r)r[1]++;else o.push([t,1]);}return o;}
 function rowHtml(r){return `<div class="pbr">${r.map(([t,c])=>`<span class="${PSPEC.includes(t)?'pbs':''}"><i style="background:${ET[t==='wanted'?'elite':t].col}"></i>${t==='wanted'?'Élite (encargo)':ET[t].n} <b class="pbc">×${c}</b></span>`).join('')}</div>`;}
@@ -44,7 +44,7 @@ function ptipTick(){const el=$('ptips');if(!el)return;
  let html='';for(const p of list){const rows=portalRows(p,p!==hv&&S.phase==='wave');if(!rows)continue;
   const px=((p.x+.5)*CS-CAM.x)*k+(r.left-c.left),py=((p.y+.5)*CS-CAM.y)*k+(r.top-c.top);
   if(px<0||py<0||px>c.width||py>c.height)continue;
-  html+=`<div class="pbub${p===hv?' hv':''}" style="left:${px.toFixed(0)}px;top:${(py-Math.max(10,1.2*CS*k)).toFixed(0)}px" data-py="${py.toFixed(0)}" data-of="${Math.max(10,1.2*CS*k).toFixed(0)}"><div class="pbin">${rows}</div><span class="pd1"></span><span class="pd2"></span><span class="pd3"></span></div>`;}
+  html+=`<div class="pbub${p===hv?' hv':''}" style="left:${px.toFixed(0)}px;top:${(py-Math.max(10,1.2*CT*k)).toFixed(0)}px" data-py="${py.toFixed(0)}" data-of="${Math.max(10,1.2*CT*k).toFixed(0)}"><div class="pbin">${rows}</div><span class="pd1"></span><span class="pd2"></span><span class="pd3"></span></div>`;}
  if(html!==PTSIG){PTSIG=html;el.innerHTML=html;}
  // que el bocadillo no se salga del mapa: se desplaza en horizontal y, si no cabe arriba, se abre hacia abajo
  const W=c.width;for(const b of el.children){const inn=b.firstChild,w=inn.offsetWidth,h=b.offsetHeight,x=parseFloat(b.style.left),py=+b.dataset.py,of=+b.dataset.of;
@@ -81,7 +81,7 @@ const oldHP=t=>!ET[t].hf,ehpOf=(t,r)=>oldHP(t)?HP0*HPOLD(r)*ET[t].hp:ET[t].hf*hp
 function spawnEnemy(t,p,fo){
  let wanted=0;if(t==='wanted'){t='elite';wanted=1;}
  see('en',t);if(ET[t].fly&&!S.tut)hint('fly','Enemigos voladores','Los enemigos <b>voladores</b> no se pueden bloquear y no les afecta nada que golpee el suelo. El resto de tus ataques sí les dan.');
- const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus'||(ET[t]&&ET[t].story))&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%3)-1;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
+ const hp=ehpOf(t,S.round)*((t==='boss'||t==='colossus'||(ET[t]&&ET[t].story))&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%K)-KC;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
  const dest=p.split?p.split[(p.si=(p.si||0)+1)%p.split.length]:null;
  // pv: «venía de fuera del portal», para que el primer paso siga recto hacia dentro y conserve su carril
  S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest,fsp:fo?fo.sp:0,sqid:fo?(p.sqn=(p.sqn||0),p.x+'.'+p.y+'.'+S.round+'.'+fo.sid):null,pv:[x+da,y+db]});
@@ -128,9 +128,9 @@ function forkPick(e,cx,cy,prev){if(e.away||e.dest||e.wps||S.pvE||S.pvH||!S.cc||!
 function sqFollow(e){const F=S.field,f0=F[e.ty]&&F[e.ty][e.tx];let sp=99;if(f0==null)return sp;for(const o of S.enemies){if(o===e||o.hp<=0||o.sqid===e.sqid||isFly(o)!==isFly(e))continue;const d=Math.hypot(o.x-e.x,o.y-e.y);if(d>1.4)continue;const f1=F[o.ty]&&F[o.ty][o.tx];if(f1==null||f1>=f0)continue;
   const os=o.fx.stun||o.fx.freeze||o.fx.root||o.stopped?0:(o.fsp||ET[o.t].sp)*(o.fx.slow?o.fx.slow.m:1);sp=Math.min(sp,Math.max(.15,os));}return sp;}
 function laneDir(e,F){const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K);let best=null,bv=Infinity;
- for(const[a,b]of D){const mx=(cx+a)*K+1,my=(cy+b)*K+1;if(!inb(mx,my)||cutC(cx,cy,cx+a,cy+b))continue;const v=F[my][mx];if(v==null||v<0||!isFinite(v))continue;if(S.cells[my][mx]!==2)continue;if(v<bv||(v===bv&&e.fd&&e.fd[0]===a&&e.fd[1]===b)){bv=v;best=[a,b];}}
- const v0=F[cy*K+1]&&F[cy*K+1][cx*K+1];if(best&&v0!=null&&bv>=v0)return null;return best;}
-const laneOf=(x,y,fd)=>{const ox=x-Math.floor(x/K)*K-1,oy=y-Math.floor(y/K)*K-1;return ox*fd[1]-oy*fd[0];};
+ for(const[a,b]of D){const mx=(cx+a)*K+KC,my=(cy+b)*K+KC;if(!inb(mx,my)||cutC(cx,cy,cx+a,cy+b))continue;const v=F[my][mx];if(v==null||v<0||!isFinite(v))continue;if(S.cells[my][mx]!==2)continue;if(v<bv||(v===bv&&e.fd&&e.fd[0]===a&&e.fd[1]===b)){bv=v;best=[a,b];}}
+ const v0=F[cy*K+KC]&&F[cy*K+KC][cx*K+KC];if(best&&v0!=null&&bv>=v0)return null;return best;}
+const laneOf=(x,y,fd)=>{const ox=x-Math.floor(x/K)*K-KC,oy=y-Math.floor(y/K)*K-KC;return ox*fd[1]-oy*fd[0];};
 function laneStep(e,F){if(e.nolane)return null;const fd=laneDir(e,F);if(!fd)return null;e.fd=fd;if(e.fln==null)e.fln=laneOf(e.tx,e.ty,fd);
  const cur=laneOf(e.tx,e.ty,fd),ok=(x,y)=>inb(x,y)&&S.cells[y][x]===2&&F[y][x]!=null&&isFinite(F[y][x])&&F[y][x]>=0;
  /* v337: el cambio de carril se hace en diagonal y siempre avanzando (antes daban un paso de lado, sin avanzar, y se les veía andar en horizontal) */if(cur!==e.fln){const dir=e.fln>cur?1:-1,lx=fd[1]*dir,ly=-fd[0]*dir,sx=e.tx+lx,sy=e.ty+ly,fx=e.tx+fd[0],fy=e.ty+fd[1],dx=fx+lx,dy=fy+ly;if(ok(sx,sy)&&ok(fx,fy)&&ok(dx,dy)&&F[dy][dx]<F[e.ty][e.tx]&&Math.floor(sx/K)===Math.floor(e.tx/K)&&Math.floor(sy/K)===Math.floor(e.ty/K))return[dx,dy];}

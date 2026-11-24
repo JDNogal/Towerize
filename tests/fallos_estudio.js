@@ -7,7 +7,7 @@ const w=dom.window;
 setTimeout(()=>{let r;try{r=w.eval(`(()=>{const o={};ERA=2;startGame(15);chooseHero('vega');if(DLG.on)dlgEnd();RL.open=false;
  for(let pi=0;pi<3;pi++){S.pi=pi;const of=S.offers[pi];let ok=0;for(let q=0;q<4&&!ok;q++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,of.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(of);}if(ok)break;}
  RL.open=false;S.gold=1e5;S.phase='build';
- const sol=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+1)+','+(ky*K+1)])sol.push({x:kx*K+1,y:ky*K+1});
+ const sol=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+KC)+','+(ky*K+KC)])sol.push({x:kx*K+KC,y:ky*K+KC});
  const bld=(ty,i)=>{S.tsel=ty;if(!S.deck.includes(ty))S.deck.push(ty);build(sol[i].x,sol[i].y);return S.list[S.list.length-1];};
  const so=bld('sonic',0),na=bld('nano',1);startWave();for(const p of S.portals)p.q=[];const P0=S.portals[0];S.enemies=[{t:'auto',x:P0.x,y:P0.y,tx:P0.x,ty:P0.y,hp:1e9,max:1e9,fx:{freeze:{t:999}},src:null,pv:[P0.x,P0.y]}];
  // interferencia: al acabar, la recarga vuelve a la normal

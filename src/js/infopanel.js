@@ -256,9 +256,9 @@ function resolve(el){
   const c=cell({clientX:M.x,clientY:M.y});S.hover=c;if(!inb(c.x,c.y))return null;
   const rect=cellRect(c.x,c.y);
   const at=q=>Math.abs(q.x-c.x)<=1&&Math.abs(q.y-c.y)<=1,pt=S.portals.find(at),po=pt||S.ends.find(at);
-  /* v340: los portales activos ya no abren panel (el bocadillo de encima del portal ya dice qué sale); los extremos inactivos sí */if(po)return pt?null:{key:'pt:'+po.x+','+po.y+'i',html:()=>portalInfo(null),rect:cellRect(po.x-1,po.y-1,3)};
+  /* v340: los portales activos ya no abren panel (el bocadillo de encima del portal ya dice qué sale); los extremos inactivos sí */if(po)return pt?null:{key:'pt:'+po.x+','+po.y+'i',html:()=>portalInfo(null),rect:cellRect(po.x-KC,po.y-KC,K)};
   const t=S.occ[c.x+','+c.y];
-  if(t)return{key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-1,t.y-1,K),cell:c};
+  if(t)return{key:'tw:'+t.id,html:()=>towerInfo(t),rect:cellRect(t.x-KC,t.y-KC,K),cell:c};
   const k=S.buff[c.y][c.x];
   const kx=Math.floor(c.x/K),ky=Math.floor(c.y/K),kr=cellRect(kx*K,ky*K,K);
   if(k)return{key:'bf:'+kx+','+ky,html:()=>buffInfo(k,0,c.x,c.y),rect:kr};
@@ -376,7 +376,7 @@ function hoverTick(rdt){
   /* v359: con el libro abierto (menús), el bocadillo crece con la pantalla; en el mapa, no */const TZ=typeof LB!=='undefined'&&LB.open?bkZ():1;if((parseFloat(tip.style.zoom)||1)!==TZ)tip.style.zoom=TZ>1?TZ:'';
   const wd=tip.offsetWidth*TZ,ht=tip.offsetHeight*TZ;
   /* v359: la ficha fijada de una torre sigue a la torre si mueves o acercas la cámara (antes se quedaba donde se abrió) */
-  if(PR.pinned&&String(PR.key).startsWith('tw:')){const t=S.list.find(o=>'tw:'+o.id===PR.key);if(t)PR.rect=cellRect(t.x-1,t.y-1,K);}
+  if(PR.pinned&&String(PR.key).startsWith('tw:')){const t=S.list.find(o=>'tw:'+o.id===PR.key);if(t)PR.rect=cellRect(t.x-KC,t.y-KC,K);}
   let r=PR.rect;
   /* si el anillo de controles de la torre (o del solar) está abierto, el panel se coloca fuera de él para no taparlo */
   for(const id of ['tmenu','bmenu']){const m=$(id);if(m&&m.classList.contains('on')&&m.offsetParent!==null){let u=null;m.querySelectorAll('button').forEach(b=>{const q=b.getBoundingClientRect();if(!q.width)return;u=u?{l:Math.min(u.l,q.left),t:Math.min(u.t,q.top),r:Math.max(u.r,q.right),b:Math.max(u.b,q.bottom)}:{l:q.left,t:q.top,r:q.right,b:q.bottom};});if(u)r={l:Math.min(r.l,u.l),t:r.t,r:Math.max(r.r,u.r),b:r.b};}}

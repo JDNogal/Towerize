@@ -213,6 +213,7 @@
   "ventanas_clic_v360.js",
   "eventos_cambio.js",
   "data/guia_img.js",
-  "guia_opciones.js"
+  "guia_opciones.js",
+  "tamanos.js"
  ]
 }

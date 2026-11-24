@@ -10,8 +10,8 @@ const r=await p.evaluate(()=>{INTRO.on=false;STO.intro=1;OPT.hints=false;OPT.ete
  for(let x=7;x<=10;x++)set(x,3);for(let y=0;y<=3;y++)set(7,y);
  // pieza (0,0): camino pegado a su borde derecho (6,0..2), sin salida
  for(let y=0;y<=2;y++)set(6,y);
- S.core={x:10*K+1,y:3*K+1};const F=field();const o={};
- o.across=F[1*K+1][6*K+1];o.own=F[1*K+1][7*K+1];o.fences=fences().length;
+ S.core={x:10*K+KC,y:3*K+KC};const F=field();const o={};
+ o.across=F[1*K+KC][6*K+KC];o.own=F[1*K+KC][7*K+KC];o.fences=fences().length;
  o.cut=[cutC(6,1,7,1),cutC(6,3,7,3),cutC(3,6,3,7),cutC(2,6,2,7)];o.exit=[exitL(3,0),exitL(0,3),exitL(2,0)];
  S.blocks={'0,0':1,'1,0':1};S.phase='build';CAM.x=0;CAM.y=0;return o;});
 console.log(JSON.stringify(r));

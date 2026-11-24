@@ -10,9 +10,9 @@ function uPrevFix(st,k){const T=TW[k],cur=(CP.ulv&&CP.ulv[k])||1,tw=st.list[0];i
 let PV=null;const PVN=P*K,PVX=14*K,PVY=14*K,PVC=288/PVN,PVCX=PVX+(PVN>>1);
 function newPrev(k,en){if(TW[k].uniq&&!uPrevOk(k,(CP.ulv&&CP.ulv[k])||1)){PV=null;return;}
  const cells=Array.from({length:N},()=>Array(N).fill(0)),buff=Array.from({length:N},()=>Array(N).fill(null));
- for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=Math.abs(x-PVCX)<=1?2:1;
+ for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=Math.abs(x-PVCX)<=KC?2:1;
  const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:PVCX,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:0,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:0,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:k,selT:null,hover:null,core:{x:PVCX,y:PVY+PVN-1},speed:1,field:null,msg:'',espd:CP.spd,pvT:1};
- const real=S;S=st;try{st.field=field();const tx=PVCX-3,ty=PVY+7,tw={id:1,type:k,lvl:cpState(k).lv,spec:cpState(k).spec,ab:{},acd:{},x:tx,y:ty,cells:[[tx,ty]],sq:[[tx,ty]],cd:0,tgt:null,mode:'core'};if(TW[k].unit){mkSoldiers(tw);tw.flag={x:PVCX,y:ty};tw.sd.forEach(q=>{const o=slotOf(tw,q.i);q.x=o.x;q.y=o.y;q.lock=false;});}if(tw.spec)for(const id of SPECS[k][tw.spec].ab)tw.ab[id]=AB[id].ranks.length;st.list.push(tw);st.occ[tx+','+ty]=tw;}finally{S=real;}
+ const real=S;S=st;try{st.field=field();const tx=PVCX-K,ty=PVY+2*K+KC,tw={id:1,type:k,lvl:cpState(k).lv,spec:cpState(k).spec,ab:{},acd:{},x:tx,y:ty,cells:[[tx,ty]],sq:[[tx,ty]],cd:0,tgt:null,mode:'core'};if(TW[k].unit){mkSoldiers(tw);tw.flag={x:PVCX,y:ty};tw.sd.forEach(q=>{const o=slotOf(tw,q.i);q.x=o.x;q.y=o.y;q.lock=false;});}if(tw.spec)for(const id of SPECS[k][tw.spec].ab)tw.ab[id]=AB[id].ranks.length;st.list.push(tw);st.occ[tx+','+ty]=tw;}finally{S=real;}
  if(TW[k].uniq)uPrevFix(st,k);
  PV={S:st,k,en,rt:.3};
 }
@@ -29,13 +29,13 @@ function allyList(){const a=Object.keys(HEROES).filter(h=>seen('hr',h)||h==='rei
  return a;}
 function newEPrev(k,h){if(!h||!h.includes(':')&&!['dragon','barr','brick'].includes(h))h='hero:'+(h||'reinhart');
  const cells=Array.from({length:N},()=>Array(N).fill(0)),buff=Array.from({length:N},()=>Array(N).fill(null));
- for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=Math.abs(x-PVCX)<=1?2:1;
+ for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=Math.abs(x-PVCX)<=KC?2:1;
  const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],tz:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:PVCX,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:1,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:null,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:null,selT:null,hover:null,core:{x:PVCX,y:PVY+PVN-1},speed:1,field:null,msg:'',espd:CP.spd,dn:[],pvE:1};
- const real=S;S=st;const fy=PVY+12;try{st.field=field();
+ const real=S;S=st;const fy=PVY+4*K;try{st.field=field();
   if(h.startsWith('hero:')){mkHero(h.slice(5));const H=st.hero;H.pt.flag={x:PVCX,y:fy};H.s.x=PVCX;H.s.y=fy;}
-  else if(h.startsWith('tw:')){const[,ty,lv]=h.split(':'),sp=isNaN(+lv)?lv:null,tw={id:1,type:ty,lvl:sp?4:+lv,spec:sp,ab:{},acd:{},x:PVCX-3,y:fy,cells:[[PVCX-3,fy]],sq:[[PVCX-3,fy]],cd:0,tgt:null,mode:'core'};
+  else if(h.startsWith('tw:')){const[,ty,lv]=h.split(':'),sp=isNaN(+lv)?lv:null,tw={id:1,type:ty,lvl:sp?4:+lv,spec:sp,ab:{},acd:{},x:PVCX-3,y:fy,cells:[[PVCX-K,fy]],sq:[[PVCX-K,fy]],cd:0,tgt:null,mode:'core'};
    if(sp)for(const id of SPECS[ty][sp].ab)tw.ab[id]=AB[id].ranks.length;if(TW[ty].guild)mkGuild(tw);else mkSoldiers(tw);tw.flag={x:PVCX,y:fy};tw.sd.forEach(q=>{const o=slotOf(tw,q.i);q.x=o.x;q.y=o.y;q.lock=false;});st.list.push(tw);}
-  else if(h==='dragon'){const tw={id:1,type:'dragon',lvl:1,spec:null,ab:{},acd:{},x:PVCX-3,y:fy,cells:[[PVCX-3,fy]],sq:[[PVCX-3,fy]],cd:0,tgt:null,mode:'core',born:-3,stage:1,flag:{x:PVCX,y:fy}};tw.sd=[{i:0,x:PVCX,y:fy,hp:60,max:60,en:null,cd:0,rt:0,tw,lock:false,fight:false,rng:1,drag:1}];st.list.push(tw);}
+  else if(h==='dragon'){const tw={id:1,type:'dragon',lvl:1,spec:null,ab:{},acd:{},x:PVCX-3,y:fy,cells:[[PVCX-K,fy]],sq:[[PVCX-K,fy]],cd:0,tgt:null,mode:'core',born:-3,stage:1,flag:{x:PVCX,y:fy}};tw.sd=[{i:0,x:PVCX,y:fy,hp:60,max:60,en:null,cd:0,rt:0,tw,lock:false,fight:false,rng:1,drag:1}];st.list.push(tw);}
   else{st.wallKind=h;}
  }finally{S=real;}
  PE={S:st,k,h,rt:.3,wt:0};
@@ -48,7 +48,7 @@ function ePrevStep(rdt){
   update(rdt);S.phase='wave';S.hp=1e9;if(H){H.lvl=1;H.xp=0;}
   if(H&&H.s.hp<=0){H.s.hp=H.s.max;H.s.rt=0;H.s.x=H.pt.flag.x;H.s.y=H.pt.flag.y;H.s.en=null;H.s.fight=false;}
   for(const t of S.list)for(const s of t.sd||[])if(s.hp<=0){s.hp=s.max;s.rt=0;const o=slotOf(t,s.i);s.x=o.x;s.y=o.y;s.en=null;s.fight=false;}
-  if(S.wallKind&&!S.barr.length){PE.wt-=rdt;if(PE.wt<=0){const fy2=PVY+12,b={poly:[[PVCX-1,fy2],[PVCX+2,fy2],[PVCX+2,fy2+1],[PVCX-1,fy2+1]],seg:[PVCX-1,fy2+.5,PVCX+2,fy2+.5],x:PVCX,y:fy2};if(b)S.barr.push({t:S.wallKind==='brick'?4:5,...b,brick:S.wallKind==='brick'?1:0});PE.wt=1.5;}}
+  if(S.wallKind&&!S.barr.length){PE.wt-=rdt;if(PE.wt<=0){const fy2=PVY+4*K,b={poly:[[PVCX-KC,fy2],[PVCX+KC+1,fy2],[PVCX+KC+1,fy2+1],[PVCX-KC,fy2+1]],seg:[PVCX-KC,fy2+.5,PVCX+KC+1,fy2+.5],x:PVCX,y:fy2};if(b)S.barr.push({t:S.wallKind==='brick'?4:5,...b,brick:S.wallKind==='brick'?1:0});PE.wt=1.5;}}
   dnTick(rdt);
  }finally{S=real;ui=_ui;}
  drawEPrev();
@@ -56,7 +56,7 @@ function ePrevStep(rdt){
 function drawEPrev(){
  const cv2=document.getElementById('pvc');if(!cv2||!PE)return;const c=cv2.getContext('2d'),s=PE.S,X=x=>(x-PVX+.5)*PVC,Y=y=>(y-PVY+.5)*PVC;
  for(let y=0;y<PVN;y++)for(let x=0;x<PVN;x++){c.fillStyle=s.cells[PVY+y][PVX+x]===2?'#a8854a':'#2e3441';c.fillRect(x*PVC,y*PVC,PVC,PVC);}
- c.fillStyle='#3dd6c4';c.fillRect(X(s.core.x)-PVC*1.2,Y(s.core.y)-PVC*1.2,PVC*2.4,PVC*2.4);
+ c.fillStyle='#3dd6c4';c.fillRect(X(s.core.x)-PVC*.4*K,Y(s.core.y)-PVC*.4*K,PVC*.8*K,PVC*.8*K);
  for(const q of s.fx){if(q.bolt||q.frag)continue;if(q.mk){const k=1-q.t/q.m;c.globalAlpha=Math.min(1,q.t/q.m*2);c.font='bold 20px sans-serif,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji"';c.textAlign='center';c.textBaseline='middle';c.lineWidth=3;c.strokeStyle='#fff';c.fillStyle='#e8262e';const tx=X(q.x)+12,ty=Y(q.y)-8-k*14;c.strokeText('!',tx,ty);c.fillText('!',tx,ty);c.globalAlpha=1;continue;}c.globalAlpha=Math.max(0,q.t/q.m)*.7;c.fillStyle=q.col;c.beginPath();c.arc(X(q.x),Y(q.y),q.r*PVC,0,7);c.fill();c.globalAlpha=1;}
  for(const b of s.barr){c.save();c.beginPath();b.poly.forEach((p,i)=>i?c.lineTo((p[0]-PVX)*PVC,(p[1]-PVY)*PVC):c.moveTo((p[0]-PVX)*PVC,(p[1]-PVY)*PVC));c.closePath();c.fillStyle=b.brick?'#b0503a':'#8a5a2b';c.fill();c.strokeStyle='#f0c040';c.lineWidth=2;c.stroke();c.restore();}
  drawUnits(c,s,PVC,-PVX*PVC,-PVY*PVC);
@@ -72,7 +72,7 @@ function drawEPrev(){
 let PHV=null;const HLR={1:1,5:7,10:14};
 function newHPrev(id,en,lv){
  const cells=Array.from({length:N},()=>Array(N).fill(0)),buff=Array.from({length:N},()=>Array(N).fill(null));
- for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=Math.abs(x-PVCX)<=1?2:1;
+ for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=Math.abs(x-PVCX)<=KC?2:1;
  const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],tz:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:PVCX,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:HLR[lv]||1,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:null,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:null,selT:null,hover:null,core:{x:PVCX,y:PVY+PVN-1},speed:1,field:null,msg:'',espd:CP.spd,dn:[],pvE:1,pvH:1};
  const real=S;S=st;try{st.field=field();mkHero(id);const H=st.hero,fy=PVY+13;H.lvl=lv;const x=hsAt(id,lv);H.s.max=x.hp;H.s.hp=x.hp;H.pt.flag={x:PVCX,y:fy};H.s.x=PVCX;H.s.y=fy;}finally{S=real;}
  PHV={S:st,id,en,lv,rt:.3};
@@ -92,9 +92,9 @@ function hpkNew(id){const D=HEROES[id],rg=!!D.ranged;
  const cells=Array.from({length:N},()=>Array(N).fill(0)),buff=Array.from({length:N},()=>Array(N).fill(null));
  for(let y=PVY;y<PVY+PVN;y++)for(let x=PVX;x<PVX+PVN;x++)cells[y][x]=1;
  let core,hx,hy,sx,vw;
- if(!rg){for(let y=PVY;y<PVY+PVN;y++)for(let x=PVCX-1;x<=PVCX+1;x++)cells[y][x]=2;core={x:PVCX,y:PVY+PVN-1};sx=PVCX;hx=PVCX;hy=PVY+13;vw={cx:PVCX+.5,cy:PVY+10,h:12};}
- else{const cx=PVX+4,cy=PVY+12;for(let y=PVY;y<=cy+1;y++)for(let x=cx-1;x<=cx+1;x++)cells[y][x]=2;for(let y=cy-1;y<=cy+1;y++)for(let x=cx-1;x<PVX+PVN;x++)cells[y][x]=2;
-  core={x:PVX+PVN-1,y:cy};sx=cx;hx=cx+7;hy=cy;vw={cx:PVX+PVN/2,cy:PVY+PVN/2-1,h:PVN-1};}
+ if(!rg){for(let y=PVY;y<PVY+PVN;y++)for(let x=PVCX-KC;x<=PVCX+KC;x++)cells[y][x]=2;core={x:PVCX,y:PVY+PVN-1};sx=PVCX;hx=PVCX;hy=PVY+13;vw={cx:PVCX+.5,cy:PVY+10,h:12};}
+ else{const cx=PVX+K+KC,cy=PVY+4*K;for(let y=PVY;y<=cy+KC;y++)for(let x=cx-KC;x<=cx+KC;x++)cells[y][x]=2;for(let y=cy-KC;y<=cy+KC;y++)for(let x=cx-KC;x<PVX+PVN;x++)cells[y][x]=2;
+  core={x:PVX+PVN-1,y:cy};sx=cx;hx=cx+Math.round(7*K/K3);hy=cy;vw={cx:PVX+PVN/2,cy:PVY+PVN/2-1,h:PVN-1};}
  const st={cells,buff,blocks:{},rain:[],mines:[],barr:[],dbl:[],tz:[],list:[],occ:{},tid:1,enemies:[],pools:[],proj:[],fx:[],ends:[],portals:[{q:['x'],t:1e9,x:sx,y:PVY,dir:[0,-1],ln:0,plan:{}}],bags:{},af:{},round:1,hp:1e9,gold:0,phase:'wave',offers:[],sup:0,pi:null,dtg:{},relics:[],rs:{},wt:0,aim:null,chests:{},tsel:null,selT:null,hover:null,core,speed:1,field:null,msg:'',espd:1,dn:[],pvE:1,pvH:1};
  const real=S;S=st;try{st.field=field();mkHero(id);const H=st.hero;H.pt.flag={x:hx,y:hy};H.s.x=hx;H.s.y=hy;}finally{S=real;}
  PHV={S:st,id,en:'norm',lv:1,rt:.3,pick:1,sx,vw,rg};}

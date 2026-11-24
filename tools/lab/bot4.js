@@ -4,7 +4,7 @@
 const R=()=>Math.random();
 const pick=a=>a[Math.floor(R()*a.length)];
 function cover(x,y,rg){let n=0;const r=Math.ceil(rg);for(let yy=y-r;yy<=y+r;yy++)for(let xx=x-r;xx<=x+r;xx++){if(!inb(xx,yy)||S.cells[yy][xx]!==2)continue;if(Math.hypot(xx-x,yy-y)<=rg)n++;}return n;}
-function spots(){const out=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const x=kx*K+1,y=ky*K+1;if(S.occ[x+','+y])continue;out.push({x,y});}return out;}
+function spots(){const out=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const x=kx*K+KC,y=ky*K+KC;if(S.occ[x+','+y])continue;out.push({x,y});}return out;}
 function evalPlace(){ // puntúa la colocación actual
  const f=field(),ends=collectEnds();let mx=0;for(const e of ends){const v=f[e.y]&&f[e.y][e.x];if(v<1e9)mx=Math.max(mx,v);}return mx-25*Math.max(0,ends.length-1);}
 function place(cfg){cfg=cfg||{};let best=null;

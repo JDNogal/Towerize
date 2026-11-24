@@ -120,14 +120,14 @@ function dragonAir(t){if(!t.fly)return null;let s=t.sd&&t.sd[0];if(!s||!s.air){c
 const dragonUp=t=>{const s=t.sd&&t.sd[0];return !(s&&s.air)||s.hp>0;};
 // Llamarada del anciano: vuela hasta el objetivo y pasa por el camino dejando una franja de fuego a todo lo ancho (el mismo sistema que los charcos en franja).
 // En un cruce toma una de las ramas al azar y sigue por ella.
-function dragonRoute(tg,n){const fv=(kx,ky)=>{const v=S.field&&S.field[ky*K+1]?S.field[ky*K+1][kx*K+1]:null;return v==null||!isFinite(v)||v>=1e9?-1:v;};const q0=sqOf(Math.round(tg.tx??tg.x),Math.round(tg.ty??tg.y));let kx=q0.kx,ky=q0.ky;
+function dragonRoute(tg,n){const fv=(kx,ky)=>{const v=S.field&&S.field[ky*K+KC]?S.field[ky*K+KC][kx*K+KC]:null;return v==null||!isFinite(v)||v>=1e9?-1:v;};const q0=sqOf(Math.round(tg.tx??tg.x),Math.round(tg.ty??tg.y));let kx=q0.kx,ky=q0.ky;
  if(!inbc(kx,ky)||S.cc[ky][kx]!==2){const p=pathNear(tg.x,tg.y);if(!p)return[];const q=sqOf(p.x,p.y);kx=q.kx;ky=q.ky;}
  const out=[[kx,ky]];while(out.length<n){const f0=fv(kx,ky),op=[];for(const[a,c]of D){const nx=kx+a,ny=ky+c;if(!inbc(nx,ny)||S.cc[ny][nx]!==2||cutC(kx,ky,nx,ny)||out.some(o=>o[0]===nx&&o[1]===ny))continue;if(fv(nx,ny)>f0)op.push([nx,ny]);}if(!op.length)break;const nx=op[Math.floor(Math.random()*op.length)];kx=nx[0];ky=nx[1];out.push(nx);}
  return out;}
 function dragonBreath(t,fx,fy,tg){const br=abRank(t,'dbreath'),n=Math.round(DBRL+(br?br.L:0)),rt=dragonRoute(tg,n);if(!rt.length)return;
  const bm=1+(br?br.b:0),all=[];rt.forEach(([kx,ky],i)=>{const cs=[];for(let j=0;j<K;j++)for(let q=0;q<K;q++){const x=kx*K+q,y=ky*K+j;if(S.cells[y]&&S.cells[y][x]===2)cs.push({x,y});}
   const pv=rt[i-1]||rt[i+1],dx=pv?(i?kx-pv[0]:pv[0]-kx):0,dy=pv?(i?ky-pv[1]:pv[1]-ky):0;cs.sort((a,b)=>(a.x*dx+a.y*dy)-(b.x*dx+b.y*dy));all.push(...cs);});
- const z=addStrip({cells:[],t:DBRT+(br?br.t:0),src:t,burn:DBRS*bm,fire:1}),pts=rt.map(([kx,ky])=>[kx*K+1,ky*K+1]);if(pts.length<2)pts.push([pts[0][0],pts[0][1]]);
+ const z=addStrip({cells:[],t:DBRT+(br?br.t:0),src:t,burn:DBRS*bm,fire:1}),pts=rt.map(([kx,ky])=>[kx*K+KC,ky*K+KC]);if(pts.length<2)pts.push([pts[0][0],pts[0][1]]);
  t.fly.pass={pts,k:0,T:Math.max(.4,(pts.length-1)/DRPASS),z,all,i:0,n0:DBRN*bm,on:0};}
 // extiende la franja hasta donde ha llegado el dragón (k de 0 a 1) y prende a los enemigos de las celdas nuevas
 function dragonLay(t,k){const P=t.fly&&t.fly.pass;if(!P||!P.z)return;const n=Math.min(P.all.length,Math.ceil(k*P.all.length)),nw=new Set();while(P.i<n){const c=P.all[P.i++],q=c.x+','+c.y;P.z.cells.push(c);P.z.set.add(q);nw.add(q);}

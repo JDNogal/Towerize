@@ -120,7 +120,7 @@ function heroAbHtml(id,lvl){const A=HAB[id];if(!A)return '';const box=(a,tp,dk,a
  return `<div class="esec" style="margin-top:12px">Habilidades</div>`+box(A.b,'Activa','b',1,1)+box(A.p4,'Pasiva · Nv 4','p4',0,4)+box(A.p8,'Pasiva · Nv 8','p8',0,8)+box(A.u,'Definitiva · Nv 10','u',1,10)+(lvl==null?'<small>Las activas solo se usan durante la oleada y con el héroe vivo.</small>':'');}
 function startTut(){SEEOK=true;saveClear();TUTON=true;TUTR=0;TUTHS={};ROUNDS=10;CHESTS=2;setSize(5);$('menu').classList.remove('setup');
  if(TOUCH&&OPT.fs)enterFS();lbClose(false);document.body.classList.remove('inmenu');$('endscr').classList.remove('open');init();}
-function lockSquares(bk){if(!bk)return[];const[bx,by]=bk.split(',').map(Number),o=[];for(let j=0;j<P;j++)for(let i=0;i<P;i++){const kx=bx*P+i,ky=by*P+j;if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+1,y:ky*K+1};if(S.buff[q.y]&&S.buff[q.y][q.x]&&!S.occ[q.x+','+q.y])o.push(q);}return o;}
+function lockSquares(bk){if(!bk)return[];const[bx,by]=bk.split(',').map(Number),o=[];for(let j=0;j<P;j++)for(let i=0;i<P;i++){const kx=bx*P+i,ky=by*P+j;if(S.cc[ky][kx]!==1)continue;const q={kx,ky,x:kx*K+KC,y:ky*K+KC};if(S.buff[q.y]&&S.buff[q.y][q.x]&&!S.occ[q.x+','+q.y])o.push(q);}return o;}
 // tutorial, ronda 2: se recomienda construir en la casilla especial, pero nunca deja al jugador sin poder construir:
 // la primera vez que intenta otro solar, avisa; si insiste (mismo solar), construye ahí. Al empezar la oleada se quita.
 function tutLockBlock(x,y){const T=S&&S.tut;if(!T||!T.lock||T.lock.some(l=>l.x===x&&l.y===y))return false;

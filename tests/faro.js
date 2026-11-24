@@ -4,7 +4,7 @@ await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
 const r=await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.display='none';INTRO.on=false;STO.intro=1;OPT.hints=false;localStorage.setItem('rt-tutchoice','skip');startGame(15);chooseHero('yrsa');S.chests={};S.evts={};
  for(let k=0;k<3;k++){for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}RL.open=false;$('relic').classList.remove('open');S.chests={};if(S.phase!=='place'){S.phase='place';deal();}}
  RL.open=false;$('relic').classList.remove('open');S.phase='build';S.gold=999;
- const sol=[];for(let gy=0;gy<NC;gy++)for(let gx=0;gx<NC;gx++)if(S.cc[gy][gx]===1)sol.push({x:gx*K+1,y:gy*K+1});
+ const sol=[];for(let gy=0;gy<NC;gy++)for(let gx=0;gx<NC;gx++)if(S.cc[gy][gx]===1)sol.push({x:gx*K+KC,y:gy*K+KC});
  S.deck.push('arrow');S.tsel='arrow';build(sol[1].x,sol[1].y);build(sol[2].x,sol[2].y);S.tsel=null;
  const q=sqOf(sol[0].x,sol[0].y);const tw={id:++S.tid,type:'faro',lvl:4,x:q.x,y:q.y,cells:[[q.x,q.y]],sq:sqCells(q),inv:0,spec:null,ab:{},acd:{},cd:0,tgt:null,mode:'core',rd:S.round,light:0,lz:[{x:q.x,y:q.y}],lzcd:[0,0]};S.list.push(tw);for(const[a,b2]of tw.sq)S.occ[a+','+b2]=tw;
  CAM.z=ZMIN*1.05;CAM.x=(q.x+.5)*CS-VIEW/sc()/2;CAM.y=(q.y+.5)*CS-VH/sc()/2;clampCam();ui();return {faro:[q.x,q.y],t1:sol[1],t2:sol[2],id:tw.id};});

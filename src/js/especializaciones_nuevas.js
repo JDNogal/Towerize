@@ -9,7 +9,7 @@ let SPNERR=null;
   if(o&&o.dmg!=null&&T&&!T.dmg){const d0=T.dmg,r0=T.rate;T.dmg=o.dmg;T.rate=o.rate||1;try{return _s.apply(this,arguments);}finally{T.dmg=d0;T.rate=r0;}}return _s.apply(this,arguments);};}
 const spnField=(x,y)=>{const r=S.field&&S.field[Math.round(y)];const f=r?r[Math.round(x)]:null;return f==null||!isFinite(f)||f<0||f>=1e9?null:f;};
 // casillas de camino (su centro) dentro del alcance de una torre
-function spnCells(t,s){const out=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==2)continue;const x=kx*K+1,y=ky*K+1;if(Math.hypot(x-t.x,y-t.y)>s.range)continue;const f=spnField(x,y);if(f==null)continue;out.push({x,y,f});}return out;}
+function spnCells(t,s){const out=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==2)continue;const x=kx*K+KC,y=ky*K+KC;if(Math.hypot(x-t.x,y-t.y)>s.range)continue;const f=spnField(x,y);if(f==null)continue;out.push({x,y,f});}return out;}
 
 // ================= Senda rúnica =================
 function sendaTick(t,dt){const s=stats(t);t.rt=(t.rt==null?1:t.rt)-dt;if(t.rt>0)return;const R=S.srun=S.srun||[],F=S.srfly=S.srfly||[];

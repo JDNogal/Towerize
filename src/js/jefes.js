@@ -23,7 +23,7 @@ for(const k of['kgob','argos'])if(!PSPEC.includes(k))PSPEC.push(k);
  return r;};}
 // v305: todos a la vez y, si se puede, cada uno por un portal distinto del de ARGOS; si no hay bastantes, se reparten (alguno sale por el suyo) en carriles distintos
 function argosCall(e,n,p0){const oth=S.portals.filter(p=>p!==p0),ps=[];for(let i=0;i<n;i++)ps.push(i<oth.length?oth[i]:(oth.concat(p0?[p0]:[]))[(i-oth.length)%Math.max(1,oth.length+(p0?1:0))]||p0);
- const used=new Map();for(let i=0;i<n;i++){const p=ps[i];if(!p)continue;const k=used.get(p)||0;used.set(p,k+1);const n0=S.enemies.length;spawnEnemy('gen',p,null);const g=S.enemies[n0];if(g){g.boss=e;g.walk=0;if(k){try{setLane(g,[0,-1,1][k%3]);}catch(x){}}}
+ const used=new Map();for(let i=0;i<n;i++){const p=ps[i];if(!p)continue;const k=used.get(p)||0;used.set(p,k+1);const n0=S.enemies.length;spawnEnemy('gen',p,null);const g=S.enemies[n0];if(g){g.boss=e;g.walk=0;if(k){try{setLane(g,[0,-KC,KC][k%3]);}catch(x){}}}
   /* v305: cada generador va escoltado por una escuadra de 4 autómatas que marchan a su paso */for(let j=0;j<GENESC;j++){const n1=S.enemies.length;spawnEnemy('auto',p,null);const a=S.enemies[n1];if(a&&g){a.escG=g;try{setLane(a,[-1,1,-1,1][j]);}catch(x){}}}}S.msg='ARGOS llama a '+(n===1?'un generador de escudo':n+' generadores de escudo')+'.';}
 // ---- movimiento: los porteadores van pegados al trono; los generadores avanzan despacio con su escolta; el rey caído va lento ----
 {const _m=move;move=function(e,dt){if(e.carry&&e.carry.hp>0)return false;if(e.anch)return false;

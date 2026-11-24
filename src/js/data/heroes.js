@@ -28,7 +28,7 @@ function giveXp(H,x){if(H.lvl>=HLMAX||!(x>0))return;if(S&&S.st)S.st.xp=(S.st.xp|
  if(up&&!S.pvE&&!S.pvH&&H.lvl>(HLV[H.id]||1)){HLV[H.id]=H.lvl;try{localStorage.setItem('rt-hlv',JSON.stringify(HLV));}catch(e){}}
  if(up){const m=hsAt(H.id,H.lvl).hp*heroHpM(),q=H.s,dd=m-q.max;q.max=m;if(q.hp>0)q.hp+=dd;S.fx.push({x:q.x,y:q.y,t:.8,m:.8,r:2*K,col:'#ffe27a'});S.msg=H.def.n+' sube a Nv '+H.lvl+'.';}}
 function mkHero(id){const D=HEROES[id],H={id,def:D,lvl:1,xp:0},st=hsAt(id,1);
- let b=null,bd=1e9;for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(S.cells[y][x]!==2||(x===S.core.x&&y===S.core.y))continue;const d=Math.hypot(x-S.core.x,y-S.core.y);if(d<bd){bd=d;b={x,y};}}
+ let b=null,bd=1e9;for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(S.cells[y][x]!==2||(x===S.core.x&&y===S.core.y))continue;const d=Math.hypot(x-S.core.x,y-S.core.y);/* v365: en el borde de la casilla del núcleo, como con 3 carriles (no pegado a él), y del lado por el que sale el camino (el otro lado es un rincón sin salida) */if(d<KC)continue;const ox=Math.sign(x-S.core.x)*(KC+1),oy=Math.sign(y-S.core.y)*(KC+1),out=(x===S.core.x||y===S.core.y)&&inb(S.core.x+ox,S.core.y+oy)&&S.cells[S.core.y+oy][S.core.x+ox]===2,dd=d+(out?0:K);if(dd<bd){bd=dd;b={x,y};}}
  b=b||{x:S.core.x,y:S.core.y};
  H.pt={hero:H,type:'hero',x:S.core.x,y:S.core.y,flag:{x:b.x,y:b.y},ab:{},acd:{},sd:[],alert:HEROES[id]&&!HEROES[id].ranged?3*K:undefined};/* cuerpo a cuerpo: va a por los enemigos desde algo más lejos (2,75 casillas en vez de 2) */
  H.s={i:0,x:b.x,y:b.y,hp:st.hp,max:st.hp,en:null,cd:0,rt:0,tw:H.pt,lock:false,fight:false,H};H.pt.sd.push(H.s);S.hero=H;}

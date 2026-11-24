@@ -17,7 +17,7 @@ for(let guard=0;guard<14;guard++){await W(250);await clear();if(process.env.DBG)
   const ph=await p.evaluate(()=>S.phase);if(ph==='place'){errs.push('ronda '+st[0]+': tras colocar «'+r+'» sigue pidiendo pieza');break;}log.push(st[0]+':'+r);}
  await clear();
  // construye lo que pueda en solares libres junto al camino
- await p.evaluate(()=>{let n=0;for(let gy=0;gy<NC&&n<2;gy++)for(let gx=0;gx<NC&&n<2;gx++){const x=gx*K+1,y=gy*K+1;if(S.cc[gy][gx]!==1||S.occ[x+','+y])continue;const k=S.deck.find(k=>TW[k]&&TW[k].cost<=S.gold);if(!k)return;S.tsel=k;try{build(x,y);n++;}catch(e){}}S.tsel=null;});
+ await p.evaluate(()=>{let n=0;for(let gy=0;gy<NC&&n<2;gy++)for(let gx=0;gx<NC&&n<2;gx++){const x=gx*K+KC,y=gy*K+KC;if(S.cc[gy][gx]!==1||S.occ[x+','+y])continue;const k=S.deck.find(k=>TW[k]&&TW[k].cost<=S.gold);if(!k)return;S.tsel=k;try{build(x,y);n++;}catch(e){}}S.tsel=null;});
  await W(300);await clear();
  const ok=await p.evaluate(()=>{if(S.phase!=='build')return S.phase;startWave();return S.phase;});
  if(ok!=='wave'){await clear();await p.evaluate(()=>{if(S.phase==='build')startWave();});}

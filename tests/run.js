@@ -122,6 +122,7 @@ const T=[
  ['amenazas4.js','Amenazas: Piezas corruptas (casilla maldita)'],
  ['apoyos.js','Apoyos: desbloqueo, doble página, puntuación y efectos'],
  ['enemigos_pz.js','Enemigos que entran poco a poco en cada era'],
+ ['cinco_carriles_v365.js','v365: 5 carriles (casillas de 5×5, portal en el borde, carriles -2…2, tamaños por ficha, encuadre, guardados de 3 carriles fuera)'],
  ['eter_cristal.js','ÉTER en la era fantástica: cristal atado a la cinta del libro'],
  ['suerte.js','Mala suerte con red: misma media y sin rachas largas'],
  ['solares.js','Solares revisados: tres disposiciones por pieza'],

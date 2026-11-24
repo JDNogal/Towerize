@@ -39,7 +39,7 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 // ---------- Aviso de oro sin gastar ----------
 // lo más barato que puedes hacer ahora mismo: construir una torre del mazo en un solar libre o mejorar una torre
 function goldCheap(){if(!S||!S.list)return Infinity;let m=Infinity;
- let free=false;for(let ky=0;ky<NC&&!free;ky++)for(let kx=0;kx<NC&&!free;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+1)+','+(ky*K+1)])free=true;
+ let free=false;for(let ky=0;ky<NC&&!free;ky++)for(let kx=0;kx<NC&&!free;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+KC)+','+(ky*K+KC)])free=true;
  if(free)for(const k of S.deck||[]){const T=TW[k];if(T&&T.cost>0&&!T.uniq)m=Math.min(m,S.half?Math.ceil(T.cost/2):T.cost);}
  for(const t of S.list){const T=TW[t.type];if(!T||t.hero||t.summ||(T.uniq&&!T.upc)||t.lvl>=(T.pig?4:3))continue;let c=Infinity;try{c=tCost(t,upCost(T,t.lvl+1));}catch(e){}if(c>0)m=Math.min(m,c);}
  return m;}

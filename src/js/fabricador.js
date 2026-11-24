@@ -22,9 +22,9 @@ if(typeof EVIMG!=='undefined')EVIMG.fabric={ev:'<svg viewBox="-4 -4 408 268"><re
 {const _c=chip;chip=function(k){const[a,b]=k.split(':');if(a==='fab')return '<span class="cf">🏭 diseñas tu propio sector</span>';if(a==='bf'&&BF[b])return `<span class="gd">${BF[b].n}${BF[b].sup?' ★':''} en un solar de la pieza</span>`;return _c.apply(this,arguments);};}
 // Desguazarla: un solar libre de la pieza del evento recibe una casilla especial al azar
 function fabScrap(){const bk=EVK;if(!bk){goldEv(40);return null;}const[bx,by]=bk.split(',').map(Number),L=[];
- for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;if(!inbc(gx,gy)||S.cc[gy][gx]!==1)continue;const fx=gx*K+1,fy=gy*K+1;if(S.buff[fy]&&S.buff[fy][fx])continue;if(S.occ[fx+','+fy])continue;L.push([gx,gy]);}
+ for(let y=0;y<P;y++)for(let x=0;x<P;x++){const gx=bx*P+x,gy=by*P+y;if(!inbc(gx,gy)||S.cc[gy][gx]!==1)continue;const fx=gx*K+KC,fy=gy*K+KC;if(S.buff[fy]&&S.buff[fy][fx])continue;if(S.occ[fx+','+fy])continue;L.push([gx,gy]);}
  if(!L.length){goldEv(40);return null;}const[gx,gy]=L[Math.floor(Math.random()*L.length)],k=rollBuff();
- for(let j=0;j<K;j++)for(let i=0;i<K;i++)S.buff[gy*K+j][gx*K+i]=k;see('bf',bkey(k));S.fx.push({x:gx*K+1,y:gy*K+1,t:.8,m:.8,r:1.4*K,col:BF[k].col});return k;}
+ for(let j=0;j<K;j++)for(let i=0;i<K;i++)S.buff[gy*K+j][gx*K+i]=k;see('bf',bkey(k));S.fx.push({x:gx*K+KC,y:gy*K+KC,t:.8,m:.8,r:1.4*K,col:BF[k].col});return k;}
 // al cerrar el evento, se abre el Fabricador
 {const _c=closeEvent;closeEvent=function(){const go=S&&S.fabGo&&!RL.evNext;const r=_c.apply(this,arguments);if(go){S.fabGo=0;setTimeout(fabOpen,0);}return r;};}
 // mientras está abierto, la elección de torre espera

@@ -8,7 +8,7 @@ await p.evaluate(()=>{const i=document.getElementById('intro');if(i)i.style.disp
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
  RL.open=false;S.phase='build';S.gold=5000;ui();});
 await p.waitForTimeout(1200);
-const pos=await p.evaluate(()=>{for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const x=kx*K+1,y=ky*K+1;if(S.occ[x+','+y])continue;const r=cellRect(x-1,y-1,3);return {x:(r.l+r.r)/2,y:(r.t+r.b)/2};}});
+const pos=await p.evaluate(()=>{/* v365: con 5 carriles el mapa ya no cabe entero en la pantalla; se elige el solar libre más cercano al centro de la ventana */let best=null,bd=1e9;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const x=kx*K+KC,y=ky*K+KC;if(S.occ[x+','+y])continue;const r=cellRect(x,y,1),px=(r.l+r.r)/2,py=(r.t+r.b)/2,d=Math.hypot(px-innerWidth/2,py-innerHeight/2);if(d<bd){bd=d;best={x:px,y:py};}}return best;});
 const ctr=r=>({x:r.x+r.width/2,y:r.y+r.height/2});
 const glide=async(a,c,n)=>{for(let i=1;i<=n;i++){await p.mouse.move(a.x+(c.x-a.x)*i/n,a.y+(c.y-a.y)*i/n);await p.waitForTimeout(16);}};
 // --- anillo de construir

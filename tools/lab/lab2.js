@@ -9,7 +9,7 @@ function setup(){startGame(15);S.chests={};S.evts={};chooseHero('reinhart');if(t
  S.hero.s.hp=-1;S.hero.s.rt=1e9;S.hero.s.en=null;S.hero.s.fight=false;/* el héroe no participa (nextRound lo había revivido) */
  RL.open=false;S.phase='build';S.deck=Object.keys(TW).filter(k=>!TW[k].uniq);S.relics=[];}
 // solares ordenados por cuántas casillas de camino caen dentro del rango
-function spots(rg,n){const a=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const x=kx*K+1,y=ky*K+1;if(S.occ[x+','+y])continue;let c=0;const r=Math.ceil(rg);for(let yy=y-r;yy<=y+r;yy++)for(let xx=x-r;xx<=x+r;xx++)if(inb(xx,yy)&&S.cells[yy][xx]===2&&S.field&&S.field[yy]&&S.field[yy][xx]<1e9&&Math.hypot(xx-x,yy-y)<=rg*.85)c++;a.push({x,y,n:c});}
+function spots(rg,n){const a=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const x=kx*K+KC,y=ky*K+KC;if(S.occ[x+','+y])continue;let c=0;const r=Math.ceil(rg);for(let yy=y-r;yy<=y+r;yy++)for(let xx=x-r;xx<=x+r;xx++)if(inb(xx,yy)&&S.cells[yy][xx]===2&&S.field&&S.field[yy]&&S.field[yy][xx]<1e9&&Math.hypot(xx-x,yy-y)<=rg*.85)c++;a.push({x,y,n:c});}
  a.sort((p,q)=>q.n-p.n);return a.slice(0,n);}
 function buildOne(type,lvl,spec,abMax,tile,q){S.gold=1e9;S.tsel=type;build(q.x,q.y);const t=S.list[S.list.length-1];if(!t||t.type!==type)return null;
  if(tile)S.buff[q.y][q.x]=tile;
@@ -69,7 +69,7 @@ window.LAB2={TILES,setup,
   const sp=spots(R,copies||1),ts=[];for(const q of sp){const t=buildOne(type,lvl,spec,abMax,tile,q);if(t)ts.push(t);}
   if(!ts.length)return{...job,err:'sin solar'};
   // torres de apoyo (Altar, Dron): se miden junto a unos Arqueros Nv 3 dentro de su alcance; la referencia es esos Arqueros solos
-  if(TW[type].support||job.ref){const t0=ts[0],rg=stats(t0).range;let b=null,bd=1e9;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const x=kx*K+1,y=ky*K+1;if(S.occ[x+','+y])continue;const d=Math.hypot(x-t0.x,y-t0.y);if(d<=rg&&d<bd){bd=d;b={x,y};}}
+  if(TW[type].support||job.ref){const t0=ts[0],rg=stats(t0).range;let b=null,bd=1e9;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++){if(S.cc[ky][kx]!==1)continue;const x=kx*K+KC,y=ky*K+KC;if(S.occ[x+','+y])continue;const d=Math.hypot(x-t0.x,y-t0.y);if(d<=rg&&d<bd){bd=d;b={x,y};}}
    if(b){const r=buildOne(job.ref||'arrow',3,null,false,'',b);if(r)ts.push(r);}
    /* solo la referencia, en el mismo solar: para saber cuánto aporta la torre principal */
    if(job.refOnly&&ts.length>1){const m=ts.shift();S.list.splice(S.list.indexOf(m),1);for(const k in S.occ)if(S.occ[k]===m)delete S.occ[k];if(m.sd)m.sd.length=0;}}

@@ -8,7 +8,7 @@ const r=await p.evaluate(async()=>{const out={};const i=document.getElementById(
  ERA=1;startGame(15);chooseHero(Object.keys(HEROES)[0]);if(DLG.on)dlgEnd();RL.open=false;HQ.q=[];if(HQ.cur)hintClose();
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
  RL.open=false;$('relic').classList.remove('open');S.phase='build';S.round=3;S.gold=600;
- const sol=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+1)+','+(ky*K+1)])sol.push({x:kx*K+1,y:ky*K+1});
+ const sol=[];for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1&&!S.occ[(kx*K+KC)+','+(ky*K+KC)])sol.push({x:kx*K+KC,y:ky*K+KC});
  S.tsel=S.deck[0];build(sol[0].x,sol[0].y);
  out.opts=['goldw','rtlw','whyl','tips'].every(k=>OPT[k]===true&&OPTS.some(o=>o.key===k&&OSEC[k]==='Ayudas'));
  out.kb=KB.rng==='x'&&KBL.some(g=>g[1].some(r=>r[0]==='rng'));

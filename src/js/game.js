@@ -33,7 +33,7 @@ function stamp(bx,by,p,bs){
  for(let y=0;y<P;y++)for(let x=0;x<P;x++){const ch=p[y][x],gx=bx*P+x,gy=by*P+y;
   S.cc[gy][gx]=cellOf(ch);if(OBS[ch])(S.obs=S.obs||{})[gx+','+gy]=ch;
   for(let j=0;j<K;j++)for(let i=0;i<K;i++)S.cells[gy*K+j][gx*K+i]=cellOf(ch);
-  if(ch==='C')S.core={x:gx*K+1,y:gy*K+1};}
+  if(ch==='C')S.core={x:gx*K+KC,y:gy*K+KC};}
  for(const b of bs){const gx=bx*P+b.x,gy=by*P+b.y;for(let j=0;j<K;j++)for(let i=0;i<K;i++)S.buff[gy*K+j][gx*K+i]=b.k;}
 }
 function conns(bx,by,p){
