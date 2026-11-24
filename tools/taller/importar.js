@@ -13,7 +13,7 @@ const E=col('enemigos'),N=col('nuevos'),Q=col('escuadrones'),IC=X.iconos||{},avi
 const out={v:X.version||new Date().toISOString().slice(0,10),tam:{},en:{},sq:{},ic:{}};
 for(const k in E)if(E[k]&&E[k].tam>0)out.tam[k]=E[k].tam;
 for(const id in N){const d=N[id];if(!d||!d.fam)continue;   // sin familia = idea, no enemigo
- out.en[id]={n:d.n,era:d.era,fac:d.fac,fam:d.fam,tipo:d.tipo,rg:d.rg,col:d.col,st:d.st,tam:d.tam,lleva:d.lleva,vf:d.vf,mec:d.mec,aviso:d.aviso};
+ out.en[id]={n:d.n,era:d.era,fac:d.fac,fam:d.fam,tipo:d.tipo,rg:d.rg,col:d.col,st:d.st,tam:d.tam,lleva:d.lleva,vf:d.vf,mec:d.mec,aviso:d.aviso,contra:d.contra};
  for(const f in out.en[id])if(out.en[id][f]===undefined||out.en[id][f]==='')delete out.en[id][f];
  const svg=d.ic||IC[id];if(svg)out.ic[id]=svg;else avisos.push('sin icono: '+id+' ('+d.n+')');}
 const cuenta=f=>{const c={};for(const u of f)c[u[0]]=(c[u[0]]||0)+1;return c;},igual=(a,b)=>{const ks=new Set([...Object.keys(a),...Object.keys(b)]);for(const k of ks)if((a[k]||0)!==(b[k]||0))return false;return true;};

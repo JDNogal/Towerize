@@ -11,10 +11,11 @@ const TFAC={'Pieles verdes':'g','Demonios':'d','Máquinas':'m','Alienígenas':'a
 if(typeof FACN!=='undefined'&&!FACN.x)FACN.x='Monstruos';
 function tallerAplicar(T){const rep={en:0,enOff:[],sq:0,ver:0,jefe:0,sqOff:[],tam:0};if(!T)return rep;
  for(const k in T.tam||{})if(ET[k]&&T.tam[k]>0){TAM[k]=T.tam[k];ET[k].r=T.tam[k]/2/EVS;rep.tam++;}
- for(const id in T.en||{}){const d=T.en[id],st=d.st||{};if(ET[id]||!d.fam||d.tipo==='agua')continue;const ok=!!TALLER_MEC[id],tam=d.tam||1.3;
+ for(const id in T.en||{}){const d=T.en[id],st=d.st||{};if(ET[id]||!d.fam||d.tipo==='agua')continue;const mec=typeof TMEC!=='undefined'&&TMEC[id],ok=!!(TALLER_MEC[id]||mec),tam=d.tam||1.3;
   ET[id]={n:d.n,era:d.era||1,fac:TFAC[d.fac]||undefined,gold:st.gold||1,hp:(st.hp||18)/HP0,hf:st.hp||18,sp:(st.sp||1)*K,r:tam/2/EVS,col:d.col||'#888',dmg:st.dmg||1,ap:st.ap||0,am:st.am||0,
    ud:st.ud||0,ac:1.2,need:1,rg:d.rg==='A distancia'?'ranged':'melee',xp:Math.max(1,Math.round((st.gold||1)*.6)),taller:id,fam:d.fam};
-  if(d.tipo==='aire')ET[id].fly=1;if(d.lleva)ET[id].lleva=d.lleva;if(d.vf)ET[id].vf=d.vf;if(!ok){ET[id].hidden=1;ET[id].pend=1;rep.enOff.push(id);}
+  if(d.tipo==='aire')ET[id].fly=1;if(d.lleva)ET[id].lleva=d.lleva;if(d.vf)ET[id].vf=d.vf;if(mec)Object.assign(ET[id],mec);if(!ok){ET[id].hidden=1;ET[id].pend=1;rep.enOff.push(id);}
+  else{if(d.contra&&typeof ETIP2!=='undefined')ETIP2[id]=d.contra;if(typeof EFAM!=='undefined'){let f=EFAM.find(x=>x[0]===d.fam);if(!f){f=[d.fam,[]];EFAM.push(f);}if(!f[1].includes(id))f[1].push(id);}}
   TAM[id]=tam;if(T.ic&&T.ic[id]&&typeof EIC!=='undefined')EIC[id]={esvg:T.ic[id]};rep.en++;}
  const jefes=typeof SBALL!=='undefined'?SBALL.filter(k=>ET[k]&&ET[k].story):[];
  for(const k in T.sq||{}){const d=T.sq[k],base=SQUADS[k]&&!SQUADS[k].tut?SQUADS[k]:null;if(SQUADS[k]&&SQUADS[k].tut)continue;if(!base&&!d.custom)continue;

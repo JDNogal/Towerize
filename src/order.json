@@ -215,6 +215,7 @@
   "data/guia_img.js",
   "guia_opciones.js",
   "tamanos.js",
+  "mecanicas_taller.js",
   "taller_aplicar.js"
  ]
 }
