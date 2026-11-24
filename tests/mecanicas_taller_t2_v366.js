@@ -74,5 +74,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   // 8 s abierto, luego anda 10 s y abre otro
   run(GATEW+.1);const t0=S.wt;const cerr=run(GATET+.5,()=>!(po.go>0));out.portalDura=cerr&&Math.abs((S.wt-t0)-GATET)<.4&&po.gcd>GATECD-.3;
   const ax=po.x,ay=po.y;run(2);out.portalAnda=Math.hypot(po.x-ax,po.y-ay)>2;out.portalOtro=!run(GATECD-2.6,()=>po.gw>0)&&run(1.5,()=>po.gw>0);}
+ // sin que nadie le pegue, abre el primero a los 6 s de entrar
+ limpio();A.jam=999;{const po=pon('i01portalero',TR[4]);out.portalSolo=!run(GATEFIRST-.5,()=>po.gw>0)&&run(1,()=>po.gw>0);}
  return out;});
 const bad=Object.keys(r).filter(k=>r[k]!==true&&!/V$/.test(k));console.log(JSON.stringify(r));console.log(bad.length?'FALLA: '+bad.join(', '):'mecanicas_taller_t2 ok');console.log(errs.length?'ERRS '+JSON.stringify(errs.slice(0,5)):'ERRS []');await b.close();process.exit(bad.length||errs.length?1:0);})();

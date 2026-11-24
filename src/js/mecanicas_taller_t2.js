@@ -5,14 +5,14 @@
 //  · Globo trasgo (bomb): cada 5 s marca la torre más cercana (7,5 celdas) y 1 s después cae la bomba: no dispara 2,5 s. Las torres con unidades no reponen a las caídas
 //    en ese tiempo; prefiere las torres sin unidades.
 //  · Ogro retador (taunt): cada 8 s grita; las torres a 12,5 celdas le apuntan a él mientras lo tengan a tiro, hasta que muera.
-//  · Murciélago de fuego (ember): cada 4 s marca el suelo bajo la unidad más cercana (7,5 celdas) y 0,8 s después caen brasas: su golpe a las unidades que sigan a 1,5 celdas.
+//  · Murciélago de fuego (ember): cada 4 s marca el suelo bajo la unidad más cercana (7,5 celdas) y 0,8 s después caen brasas: su golpe a las unidades que sigan a 2 celdas (con 1,5 solo alcanzaba a un soldado de un Baluarte: están a 1,56 unos de otros).
 //  · Portatótem goblin (totem): cada 12 s planta un tótem (10 s, se puede romper). Quien pasa a 7,5 celdas gana Firmeza 4 s: no le entra ningún control
 //    (ralentizar, aturdir, congelar, enraizar, miedo, empujones, transformaciones, hackeo); solo se le para con unidades.
-//  · Portalero (gate): al recibir daño abre un portal (aviso 1,5 s) y lo mantiene 8 s parado: todo el que llega (voladores también; jefes no) sale 15 celdas más adelante
+//  · Portalero (gate): al recibir daño (o a los 6 s de entrar, como dice la ficha: «o cada pocos segundos») abre un portal (aviso 1,5 s) y lo mantiene 8 s parado: todo el que llega (voladores también; jefes no) sale 15 celdas más adelante
 //    siguiendo el camino. Después anda 6 s (24 celdas) antes de abrir otro: con 10 s recorría 40 celdas, casi un mapa pequeño entero. Si una unidad pelea con él, o lo aturden o congelan, se cierra; 2,5 s después de quedar libre lo reabre.
 Object.assign(TMEC,{i40bruja:{hex:1},i04bombardero:{bomb:1},i15provocador:{taunt:1},i17murcielago:{ember:1},i41totem:{totem:1},i01portalero:{gate:1}});
-const HEXCD=6,HEXR=2*K,OJOT=5,HEXIMM=10,HEXM=.8,BOMBCD=5,BOMBR=1.5*K,BOMBW=1,BOMBT=2.5,TAUCD=8,TAUR=2.5*K,EMBCD=4,EMBR=1.5*K,EMBW=.8,EMBA=1.5,
- TOTCD=12,TOTT=10,TOTR=1.5*K,FIRMT=4,GATEW=1.5,GATET=8,GATECD=6,GATER=KC+1.2,GATEFREE=2.5,GATEAH=1.5;
+const HEXCD=6,HEXR=2*K,OJOT=5,HEXIMM=10,HEXM=.8,BOMBCD=5,BOMBR=1.5*K,BOMBW=1,BOMBT=2.5,TAUCD=8,TAUR=2.5*K,EMBCD=4,EMBR=1.5*K,EMBW=.8,EMBA=2,
+ TOTCD=12,TOTT=10,TOTR=1.5*K,FIRMT=4,GATEW=1.5,GATET=8,GATECD=6,GATER=KC+1.2,GATEFREE=2.5,GATEAH=1.5,GATEFIRST=6;
 const tm2Tw=t=>{const T=TW[t.type];return T&&!T.uniq&&!t.hero?T:null;};   // como la maldición y la interferencia de siempre: las torres de evento no se ven afectadas
 // ---- Bruja goblin: mal de ojo ----
 function hexTick(e,dt){e.hxc=(e.hxc===undefined?3:e.hxc)-dt;if(e.hxc>0)return;let b=null,bd=HEXR;for(const t of S.list){if(!tm2Tw(t)||t.hexr>0||t.heximm>0)continue;const d=Math.hypot(t.x-e.x,t.y-e.y);if(d<=bd){bd=d;b=t;}}
@@ -55,7 +55,7 @@ function gateTick(e,dt,SL){const held=SL.some(s=>(s.fight&&s.en===e)||s.en2===e)
   if(e.go<=0){e.go=0;e.gcd=GATECD;}return;}
  if(e.gheld){if(held||cc){e.gfree=GATEFREE;return;}e.gfree-=dt;if(e.gfree<=0){e.gheld=0;gateOpen(e);}return;}
  if(e.gcd>0){e.gcd-=dt;return;}
- if(!e.gact){if(e.hp<e.max-.01)e.gact=1;else return;}
+ if(!e.gact){e.gage=(e.gage||0)+dt;/* el primero: al recibir daño o, si nadie le pega (suele ir detrás), a los 6 s de entrar */if(e.hp<e.max-.01||e.gage>=GATEFIRST)e.gact=1;else return;}
  gateOpen(e);}
 {const _m=move;move=function(e,dt){if(e.gw>0||e.go>0)return false;if(e.firm>S.wt)firmClear(e);return _m(e,dt);};}
 // ---- tick general ----
@@ -102,7 +102,7 @@ function tm2Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=perform
  if(id==='eember')return '<b>Brasas</b><small>Cada '+EMBCD+' s marca con una diana el suelo bajo tu unidad más cercana (a '+R(EMBR)+' o menos) y '+c(EMBW)+' s después caen las brasas: golpean a todas las unidades que sigan dentro.</small>';
  if(id==='etotem')return '<b>Tótem de firmeza</b><small>Cada '+TOTCD+' s planta un tótem que dura '+TOTT+' s y se puede destruir como un enemigo más (no se mueve ni ataca). Los enemigos que pasan a '+R(TOTR)+' o menos ganan Firmeza durante '+FIRMT+' s.</small>';
  if(id==='efirm')return '<b>Firmeza</b><small>No le afecta ningún control: ni ralentización, ni aturdimiento, ni congelación, ni enraizamiento, ni miedo, ni empujones. Solo se le puede parar con unidades.</small>';
- if(id==='egate')return '<b>Portal</b><small>Al recibir daño abre un portal (avisa '+c(GATEW)+' s antes) y se queda '+GATET+' s manteniéndolo: todo el que llega lo cruza y sale '+R(TELED)+' más adelante siguiendo el camino. Los jefes no caben. Después anda '+GATECD+' s antes de abrir otro. Si una unidad tuya pelea con él, o lo aturdes o congelas, el portal se cierra.</small>';
+ if(id==='egate')return '<b>Portal</b><small>Al recibir daño, o a los '+GATEFIRST+' s de entrar si nadie le ha pegado, abre un portal (avisa '+c(GATEW)+' s antes) y se queda '+GATET+' s manteniéndolo: todo el que llega lo cruza y sale '+R(TELED)+' más adelante siguiendo el camino. Los jefes no caben. Después anda '+GATECD+' s antes de abrir otro. Si una unidad tuya pelea con él, o lo aturdes o congelas, el portal se cierra.</small>';
  return _k(id,src);};}
 {const KW2={hex:['ehex','Mal de ojo','💀'],bomb:['ebomb','Bombardeo','💣'],taunt:['etaunt','Grito de desafío','📢'],ember:['eember','Brasas','🔥'],totem:['etotem','Tótem de firmeza','🗿'],gate:['egate','Portal','🌀']};   // iconos provisionales: falta dibujarlos (prioritario)
  Object.assign(TMECKW,KW2);if(typeof MECG2!=='undefined'){for(const k in KW2)MECG2.push(KW2[k]);MECG2.push(['efirm','Firmeza','🪨']);}
