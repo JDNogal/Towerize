@@ -159,13 +159,13 @@ function unitCombat(dt){
   if(s.lock||(s.en&&(!(s.en.hp>0)||!S.enemies.includes(s.en)||Math.hypot(fl(s).x-s.en.x,fl(s).y-s.en.y)>(s.tw.alert||ALERT)+SCONTACT*2+(s.enR===s.en?RANGED_R:0))))s.en=null;
   if(s.en)s.en.nb+=s.w;}
  for(const s of SL){if(s.en||s.lock)continue;let be=null,bd=1e9;const f0=fl(s);
-  for(const e of S.enemies){if(e.hp<=0||e.nb>=(ET[e.t].need||1)||(ET[e.t].dodge&&!(e.gpin>0))||e.hk>0||(isFly(e)&&!(s.H&&s.H.def.ranged)&&!s.rng))continue;if(Math.hypot(f0.x-e.x,f0.y-e.y)>(s.tw.alert||ALERT))continue;const E2=ET[e.t],d=Math.hypot(s.x-e.x,s.y-e.y)-(s.pref&&(E2.rg==='ranged'||E2.eheal||E2.curse||E2.aura)?100:0);if(d<bd){bd=d;be=e;}}
+  for(const e of S.enemies){if(e.hp<=0||e.nb>=(ET[e.t].need||1)||(ET[e.t].dodge&&!(e.gpin>0))||e.nblk/* v366: en tierra pero sin dejarse retener (Jinete de buitre tras el picado) */||e.hk>0||(isFly(e)&&!(s.H&&s.H.def.ranged)&&!s.rng))continue;if(Math.hypot(f0.x-e.x,f0.y-e.y)>(s.tw.alert||ALERT))continue;const E2=ET[e.t],d=Math.hypot(s.x-e.x,s.y-e.y)-(s.pref&&(E2.rg==='ranged'||E2.eheal||E2.curse||E2.aura)?100:0);if(d<bd){bd=d;be=e;}}
   if(be){s.en=be;be.nb+=s.w;s.cd=0;}}
  for(const s of SL){s.fight=!!(s.en&&!s.lock&&Math.hypot(s.x-s.en.x,s.y-s.en.y)<=((s.H&&s.H.def.ranged)||s.rng?SCONTR:SCONTACT));if(s.fight)s.en.ct+=s.w;}
  // bloqueo múltiple: con capacidad sobrante (corpulencia − lo que necesita su enemigo), retiene además a otro enemigo cercano
  for(const s of SL){const rem=s.fight&&!(s.H&&s.H.def.ranged)&&!s.rng?s.w-(ET[s.en.t].need||1):0;
   if(s.en2&&(rem<1||!(s.en2.hp>0)||s.en2===s.en||!S.enemies.includes(s.en2)||(ET[s.en2.t].need||1)>rem||Math.hypot(s.x-s.en2.x,s.y-s.en2.y)>SCONTACT*1.25))s.en2=null;
-  if(!s.en2&&rem>=1){let be=null,bd=SCONTACT;for(const e of S.enemies){const E=ET[e.t];if(e.hp<=0||e===s.en||(E.dodge&&!(e.gpin>0))||e.hk>0||isFly(e)||E.rg==='ranged'||(E.need||1)>rem||e.ct>=(E.need||1))continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;be=e;}}s.en2=be;}
+  if(!s.en2&&rem>=1){let be=null,bd=SCONTACT;for(const e of S.enemies){const E=ET[e.t];if(e.hp<=0||e===s.en||(E.dodge&&!(e.gpin>0))||e.nblk||e.hk>0||isFly(e)||E.rg==='ranged'||(E.need||1)>rem||e.ct>=(E.need||1))continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;be=e;}}s.en2=be;}
   if(s.en2)s.en2.ct+=ET[s.en2.t].need||1;}
  for(const s of SL){
   if(s.H&&s.H.def.ranged){heroShoot(s,dt);continue;}
