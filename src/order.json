@@ -216,6 +216,7 @@
   "guia_opciones.js",
   "tamanos.js",
   "mecanicas_taller.js",
+  "mecanicas_taller_t2.js",
   "taller_aplicar.js"
  ]
 }
