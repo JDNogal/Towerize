@@ -1,5 +1,5 @@
 // Graba una escena de demostración de un enemigo nuevo (para la Mesa): SEMILLA=7 node tools/taller/grabar_escena.js <escena> salida.webm segundos
-// Escenas: corneta, jabali, buitre, limo, bruja, globo, ogro, murcielago, totem, portalero, cuervo. Después se recorta el arranque (~5-12 s) y se pasa a mp4 con ffmpeg.
+// Escenas: corneta, jabali, buitre, limo, bruja, globo, ogro, murcielago, totem, portalero, cuervo, guardian, gloton, sacrificador, golem, transporte, alado, guiverno. Después se recorta el arranque (~5-12 s) y se pasa a mp4 con ffmpeg.
 // Ojo: las rutas son las del entorno de Claude (/home/claude/towerize y /tmp/demo/vid); las fichas van copiadas del Taller (24-nov).
 // node demo.js escena salida.webm segundos  → graba la escena a tiempo real
 const {chromium}=require('/home/claude/towerize/node_modules/playwright');const fs=require('fs');(async()=>{const esc=process.argv[2],out=process.argv[3],secs=+(process.argv[4]||8);
@@ -13,6 +13,13 @@ await p.evaluate(async(esc)=>{{const i=document.getElementById('intro');if(i)i.s
   i47minilimo:{n:'Mini limo',era:1,fac:'Monstruos',fam:'Guerreros',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#6a9a4a',st:{am:0,ap:0,dmg:1,gold:1,hp:25,sp:1,ud:2},tam:.8},
   i37buitre:{n:'Jinete de buitre goblin',era:1,fac:'Pieles verdes',fam:'Guerreros',tipo:'aire',rg:'Cuerpo a cuerpo',col:'#8a6a3a',st:{am:0,ap:5,dmg:1,gold:6,hp:55,sp:1.2,ud:6}},
   i03directo:{n:'Cuervo de batalla',era:1,fac:'Monstruos',fam:'Rápidos',tipo:'aire',rg:'No ataca',col:'#3a3a48',st:{am:0,ap:0,dmg:1,gold:3,hp:30,sp:.9,ud:0}},
+  i10pesado:{n:'Guiverno',era:1,fac:'Monstruos',fam:'Tanques',tipo:'aire',rg:'No ataca',col:'#4a6a4a',st:{am:0,ap:40,dmg:2,gold:14,hp:400,sp:.6,ud:0}},
+  i33gloton:{n:'Ogro glotón',era:1,fac:'Pieles verdes',fam:'Tanques',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#6a8a3a',st:{am:0,ap:15,dmg:2,gold:12,hp:220,sp:.6,ud:12}},
+  i34sacrificador:{n:'Sacrificador',era:1,fac:'Demonios',fam:'Místicos',tipo:'tierra',rg:'A distancia',col:'#8a1a2a',st:{am:20,ap:0,dmg:1,gold:8,hp:70,sp:.75,ud:4}},
+  i44golem:{n:'Gólem de magma',era:1,fac:'Demonios',fam:'Tanques',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#a0401a',st:{am:10,ap:25,dmg:3,gold:14,hp:240,sp:.55,ud:12}},
+  i14transporte:{n:'Transportador aéreo',era:1,fac:'Pieles verdes',fam:'Apoyo',tipo:'aire',rg:'No ataca',col:'#7a6a5a',lleva:{sling:6},st:{am:0,ap:20,dmg:1,gold:10,hp:250,sp:.8,ud:0}},
+  i05guardian:{n:'Guardián de la inmortalidad',era:1,fac:'Demonios',fam:'Apoyo',tipo:'tierra',rg:'No ataca',col:'#e0c050',st:{am:20,ap:20,dmg:1,gold:12,hp:200,sp:.7,ud:0}},
+  i11alado:{n:'Portaestandarte alado',era:1,fac:'Pieles verdes',fam:'Apoyo',tipo:'aire',rg:'No ataca',col:'#8a3a6a',st:{am:20,ap:0,dmg:1,gold:7,hp:80,sp:.8,ud:0}},
   i40bruja:{n:'Bruja goblin',era:1,fac:'Pieles verdes',fam:'Místicos',tipo:'aire',rg:'A distancia',col:'#5a3a7a',st:{am:30,ap:0,dmg:1,gold:7,hp:50,sp:1,ud:4}},
   i04bombardero:{n:'Globo trasgo',era:1,fac:'Pieles verdes',fam:'A distancia',tipo:'aire',rg:'No ataca',col:'#8a3a3a',st:{am:10,ap:0,dmg:1,gold:7,hp:90,sp:.7,ud:0}},
   i15provocador:{n:'Ogro retador',era:1,fac:'Pieles verdes',fam:'Tanques',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#a07a5a',st:{am:10,ap:40,dmg:2,gold:10,hp:200,sp:.7,ud:8}},
@@ -27,7 +34,7 @@ await p.evaluate(async(esc)=>{{const i=document.getElementById('intro');if(i)i.s
  let sol=null,bd=1e9;{const mx=(P0.x+S.core.x)/2,my=(P0.y+S.core.y)/2;for(let ky=0;ky<NC;ky++)for(let kx=0;kx<NC;kx++)if(S.cc[ky][kx]===1){const x=kx*K+KC,y=ky*K+KC;let adj=false;for(const[dx,dy]of[[K,0],[-K,0],[0,K],[0,-K]]){const px=x+dx,py=y+dy;if(inb(px,py)&&S.cells[py][px]===2&&S.field[py][px]<1e9)adj=true;}if(!adj)continue;const d=Math.hypot(x-mx,y-my);if(d<bd){bd=d;sol={x,y};}}}
  for(const q of S.portals){q.sq=[];q.sqm=[];q.plan={norm:0,fast:0,tank:0,mini:0,elite:0,boss:0};}
  const tw=k=>{S.deck=[k];S.tsel=k;build(sol.x,sol.y);return S.list[S.list.length-1];};
- let T=null;if(esc==='jabali'||esc==='buitre'||esc==='murcielago')T=tw('bastion');if(esc==='bruja'||esc==='globo'||esc==='ogro'||esc==='portalero'||esc==='totem'||esc==='cuervo')T=tw('arrow');
+ let T=null;if(esc==='jabali'||esc==='buitre'||esc==='murcielago'||esc==='ogrob'||esc==='golem'||esc==='transporte')T=tw('bastion');if(esc==='guardian'||esc==='gloton'||esc==='sacrificador'||esc==='alado'||esc==='guiverno')T=tw('arrow');if(esc==='bruja'||esc==='globo'||esc==='ogro'||esc==='portalero'||esc==='totem'||esc==='cuervo')T=tw('arrow');
  const arr=()=>{startWave();for(const q of S.portals){q.q=[];q.qf=[];}S.hp=999;S.hero.s.hp=0;S.hero.s.rt=999;};if(esc==='cuervo'){S.portals[0].sqm=[{i03directo:7}];S.hp=999;}else arr();
  const keep=()=>{try{SEEN.en.bat=1;}catch(e){}spawnEnemy('bat',P0,null);const k=S.enemies[S.enemies.length-1];k.hp=k.max=1e9;k.fx.root={t:1e9,m:1e9};k.x=-50;k.y=-50;};if(esc!=='cuervo')keep();
  window.__sp=(t,n,gap,hp)=>{let i=0;const f=()=>{spawnEnemy(t,P0,null);const e=S.enemies[S.enemies.length-1];if(hp)e.hp=e.max=hp;if(window.__from){if(!window.__row){const isP=(x,y)=>inb(x,y)&&S.cells[y][x]===2,run=(a,b)=>{const r=[__from];for(const sg of[1,-1])for(let k=1;k<8;k++){const x=__from.x+a*k*sg,y=__from.y+b*k*sg;if(isP(x,y))r.push({x,y});else break;}return r;},h=run(1,0),v=run(0,1),row=(h.length<=v.length?h:v).sort((p,q)=>(p.x-q.x)||(p.y-q.y));const m=Math.floor(row.length/2);window.__row=[0,1,-1,2,-2].map(d=>row[m+d]).filter(Boolean);window.__ri=0;}const q=__row[(__ri++)%__row.length];e.x=e.tx=q.x;e.y=e.ty=q.y;e.pv=null;e.trail=[];e.fln=null;}if(++i<n)setTimeout(f,gap);};setTimeout(f,4500);};
@@ -37,17 +44,25 @@ await p.evaluate(async(esc)=>{{const i=document.getElementById('intro');if(i)i.s
  if(esc==='buitre'){__sp('i37buitre',2,2600,600);}
  if(esc==='limo'){__sp('i07divisor',2,3000,40);}
  if(esc==='cuervo'){setTimeout(()=>{arr();keep();[[0,0],[450,-1],[450,1],[900,-2],[900,2],[1350,-1],[1350,1]].forEach(([d,l])=>setTimeout(()=>{spawnEnemy('i03directo',P0,{r:0,l,sp:ET.i03directo.sp,sid:'cv'});const e=S.enemies[S.enemies.length-1];e.hp=e.max=400;},d));},9500);}
+ if(esc==='guardian'){__sp('i05guardian',1,1,2500);setTimeout(()=>__sp('norm',8,500,60),300);}
+ if(esc==='gloton'){__sp('i33gloton',1,1,700);setTimeout(()=>__sp('sling',6,450,200),300);}
+ if(esc==='sacrificador'){__sp('i34sacrificador',1,1,1500);setTimeout(()=>__sp('minion',8,350,900),200);}
+ if(esc==='golem'){__sp('i44golem',2,6000,3000);}
+ if(esc==='transporte'){__sp('i14transporte',1,1,2000);}
+ if(esc==='alado'){__sp('i11alado',1,1,3000);setTimeout(()=>__sp('norm',8,500,90),200);}
+ if(esc==='guiverno'){__sp('i10pesado',2,4000,2500);}
  if(esc==='bruja'){__sp('i40bruja',2,5500,2500);__sp('norm',10,900,300);}
  if(esc==='globo'){__sp('i04bombardero',2,5000,3000);__sp('norm',10,1000,300);}
  if(esc==='ogro'){__sp('i15provocador',1,1,4000);setTimeout(()=>__sp('norm',8,700,250),1200);}
+ if(esc==='ogrob'){__sp('norm',3,500,250);setTimeout(()=>__sp('i15provocador',1,1,4000),900);setTimeout(()=>__sp('norm',7,700,250),2600);}
  if(esc==='murcielago'){__sp('i17murcielago',3,2500,900);}
  if(esc==='totem'){__sp('i41totem',1,1,900);setTimeout(()=>__sp('norm',9,800,400),300);}
  if(esc==='portalero'){__sp('i01portalero',1,1,5000);setTimeout(()=>{__sp('norm',9,650,500);__sp('bat',3,1500,500);},600);}
  try{CAMA.on=false;CAMA.tw=null;}catch(e){}
  const up=(p0,n)=>{let q=pathNear(p0.x,p0.y)||p0;for(let i=0;i<n;i++){let b=null;for(const[a,b2]of[[1,0],[-1,0],[0,1],[0,-1]]){const x=q.x+a,y=q.y+b2;if(inb(x,y)&&S.cells[y][x]===2&&S.field[y][x]<1e9&&S.field[y][x]>S.field[q.y][q.x]&&(!b||S.field[y][x]>S.field[b.y][b.x]))b={x,y};}if(!b)break;q=b;}return q;};
- let cc=esc==='corneta'?{x:(P0.x+S.core.x)/2,y:(P0.y+S.core.y)/2}:up(c,esc==='limo'?0:({bruja:0,globo:0,ogro:2,portalero:0,totem:10})[esc]??3);CAM.z=esc==='corneta'?ZMAX*.8:esc==='limo'?17:({bruja:7.5,globo:8.5,ogro:7.5,murcielago:10,totem:8,portalero:5.6,cuervo:4.3})[esc]||9;const down=(p0,n)=>{let q=pathNear(p0.x,p0.y)||p0;const tr=[q];for(let i=0;i<n;i++){let b=null;for(const[a,b2]of[[1,0],[-1,0],[0,1],[0,-1]]){const x=q.x+a,y=q.y+b2;if(inb(x,y)&&S.cells[y][x]===2&&S.field[y][x]<S.field[q.y][q.x]&&(!b||S.field[y][x]<S.field[b.y][b.x]))b={x,y};}if(!b)break;q=b;tr.push(q);}return tr;};
+ let cc=esc==='corneta'?{x:(P0.x+S.core.x)/2,y:(P0.y+S.core.y)/2}:up(c,esc==='limo'?0:({bruja:0,globo:0,ogro:2,portalero:0,totem:10})[esc]??3);CAM.z=esc==='corneta'?ZMAX*.8:esc==='limo'?17:({bruja:7.5,globo:8.5,ogro:7.5,ogrob:9,guardian:7,gloton:7.5,sacrificador:7.5,golem:6.5,transporte:5,alado:7.5,guiverno:7,murcielago:10,totem:8,portalero:5.6,cuervo:4.3})[esc]||9;const down=(p0,n)=>{let q=pathNear(p0.x,p0.y)||p0;const tr=[q];for(let i=0;i<n;i++){let b=null;for(const[a,b2]of[[1,0],[-1,0],[0,1],[0,-1]]){const x=q.x+a,y=q.y+b2;if(inb(x,y)&&S.cells[y][x]===2&&S.field[y][x]<S.field[q.y][q.x]&&(!b||S.field[y][x]<S.field[b.y][b.x]))b={x,y};}if(!b)break;q=b;tr.push(q);}return tr;};
  if(esc==='cuervo'){const e0=crowEntry();cc={x:(e0.x+S.core.x)/2,y:(e0.y+S.core.y)/2};}
- if(esc==='limo'){const tr=down(P0,400),m=Math.floor(tr.length/2);cc=tr[m];window.__from=tr[Math.max(0,m-11)];}else if(esc!=='corneta'&&esc!=='cuervo')window.__from=up(cc,({portalero:26,totem:26})[esc]||22);camCenter(cc.x,cc.y);if(esc!=='corneta'){const w=VIEW/sc(),h=VH/sc();CAM.x=cc.x*CS+CS/2-w/2;CAM.y=cc.y*CS+CS/2-h/2;}
+ if(esc==='limo'){const tr=down(P0,400),m=Math.floor(tr.length/2);cc=tr[m];window.__from=tr[Math.max(0,m-11)];}else if(esc!=='corneta'&&esc!=='cuervo')window.__from=up(cc,({portalero:26,totem:26,guardian:12,gloton:12,sacrificador:12,golem:9,alado:12,guiverno:16})[esc]||22);camCenter(cc.x,cc.y);if(esc!=='corneta'){const w=VIEW/sc(),h=VH/sc();CAM.x=cc.x*CS+CS/2-w/2;CAM.y=cc.y*CS+CS/2-h/2;}
  if(esc==='limo'){const f0=S.field[Math.round(cc.y)][Math.round(cc.x)];setInterval(()=>{for(const e of S.enemies)if(e.t==='i07divisor'&&e.hp>0&&S.field[e.ty][e.tx]<=f0+1)hurt(e,1e5,null,'phys');},50);}
  window.__cam=[CAM.z,CAM.x,CAM.y];S.speed=1;S.paused=false;},esc);
 await p.evaluate(()=>{setInterval(()=>{try{CAMA.on=false;CAM.z=__cam[0];CAM.x=__cam[1];CAM.y=__cam[2];}catch(e){}for(const e of document.querySelectorAll('div'))if(e.offsetWidth<420&&e.offsetWidth>150&&/NUEVO ENEMIGO/i.test(e.textContent))e.style.visibility='hidden';},30);});

@@ -125,6 +125,7 @@ const T=[
  ['escuadrones_versiones_v366.js','v366: versiones Nv 1/2/3 diseñadas, formaciones del Taller en 5 carriles, reparto por ronda, jefe con escolta, valor por unidad y Coloso fuera'],
  ['mecanicas_taller_t1_v366.js','v366: enemigos nuevos del Taller, tanda 1 (Limo, Cornetero orco, Jabalí de guerra, Jinete de buitre goblin)'],
  ['mecanicas_taller_t2_v366.js','v366: enemigos nuevos del Taller, tanda 2 (Bruja goblin, Globo trasgo, Ogro retador, Murciélago de fuego, Portatótem y Portalero)'],
+ ['mecanicas_taller_t3_v366.js','v366: enemigos nuevos del Taller, tanda 3 (Guiverno, Ogro glotón, Sacrificador, Gólem de magma, Transportador aéreo, Guardián y Portaestandarte alado)'],
  ['cinco_carriles_v365.js','v365: 5 carriles (casillas de 5×5, portal en el borde, carriles -2…2, tamaños por ficha, encuadre, guardados de 3 carriles fuera)'],
  ['eter_cristal.js','ÉTER en la era fantástica: cristal atado a la cinta del libro'],
  ['suerte.js','Mala suerte con red: misma media y sin rachas largas'],
