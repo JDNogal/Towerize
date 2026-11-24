@@ -12,8 +12,9 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   i15provocador:{n:'Ogro retador',era:1,fac:'Pieles verdes',fam:'Tanques',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#a07a5a',st:{am:10,ap:40,dmg:2,gold:10,hp:200,sp:.7,ud:8}},
   i17murcielago:{n:'Murciélago de fuego',era:1,fac:'Demonios',fam:'A distancia',tipo:'aire',rg:'A distancia',col:'#c0502a',st:{am:10,ap:0,dmg:1,gold:5,hp:40,sp:1.3,ud:6}},
   i41totem:{n:'Portatótem goblin',era:1,fac:'Pieles verdes',fam:'Apoyo',tipo:'tierra',rg:'No ataca',col:'#8a5a2a',st:{am:10,ap:5,dmg:1,gold:6,hp:60,sp:.75,ud:2}},
+  i03directo:{n:'Cuervo de batalla',era:1,fac:'Monstruos',fam:'Rápidos',tipo:'aire',rg:'No ataca',col:'#3a3a48',st:{am:0,ap:0,dmg:1,gold:3,hp:30,sp:.9,ud:0}},
   i01portalero:{n:'Portalero',era:1,fac:'Demonios',fam:'Místicos',tipo:'tierra',rg:'No ataca',col:'#7a3ab8',st:{am:20,ap:10,dmg:1,gold:10,hp:200,sp:.8,ud:0}}}});
- out.carga=rep.en===6&&rep.enOff.length===0&&ET.i40bruja.hex===1&&ET.i40bruja.fly===1&&ET.i04bombardero.bomb===1&&ET.i15provocador.taunt===1&&ET.i17murcielago.ember===1&&ET.i41totem.totem===1&&ET.i01portalero.gate===1&&!ET.i01portalero.hidden&&!!ET.ttotem;
+ out.carga=rep.en===7&&ET.i03directo.direct===1&&ET.i03directo.fly===1&&rep.enOff.length===0&&ET.i40bruja.hex===1&&ET.i40bruja.fly===1&&ET.i04bombardero.bomb===1&&ET.i15provocador.taunt===1&&ET.i17murcielago.ember===1&&ET.i41totem.totem===1&&ET.i01portalero.gate===1&&!ET.i01portalero.hidden&&!!ET.ttotem;
  out.compendio=EFAM.some(f=>f[1].includes('i01portalero'))&&kwHtml0('ehex','').includes('20 %')&&kwHtml0('ebomb','').includes('2,5 s')&&kwHtml0('etaunt','').includes('hasta que muera')&&kwHtml0('efirm','').includes('ningún control')&&kwHtml0('egate','').includes('Los jefes no caben');
  startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
@@ -76,5 +77,14 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   const ax=po.x,ay=po.y;run(2);out.portalAnda=Math.hypot(po.x-ax,po.y-ay)>2;out.portalOtro=!run(GATECD-2.6,()=>po.gw>0)&&run(1.5,()=>po.gw>0);}
  // sin que nadie le pegue, abre el primero a los 6 s de entrar
  limpio();A.jam=999;{const po=pon('i01portalero',TR[4]);out.portalSolo=!run(GATEFIRST-.5,()=>po.gw>0)&&run(1,()=>po.gw>0);}
+ // ---------- Cuervo de batalla: entra por el borde de tus piezas y va recto al núcleo ----------
+ limpio();A.jam=0;{out.cuervoSinAviso=!crowNext();S.crowLeft=2;out.cuervoAviso=crowNext();S.crowLeft=0;{const ph=S.phase;S.phase='build';S.portals[0].sqm=[{i03directo:5}];out.cuervoAviso=out.cuervoAviso&&crowNext()&&crowPlan()===5;S.portals[0].sqm=[];out.cuervoSinAviso=out.cuervoSinAviso&&!crowNext();S.phase=ph;}
+  S.crowIn=null;const c=crowEntry(),c2=crowEntry();let x0=1e9,y0=1e9,x1=-1,y1=-1;for(let ty=0;ty<NC;ty++)for(let tx=0;tx<NC;tx++)if(S.cc[ty][tx]){x0=Math.min(x0,tx);y0=Math.min(y0,ty);x1=Math.max(x1,tx);y1=Math.max(y1,ty);}
+  const L=Math.max(0,x0*K-CROWMARG),T=Math.max(0,y0*K-CROWMARG),R=Math.min(N-1,(x1+1)*K-1+CROWMARG),Bm=Math.min(N-1,(y1+1)*K-1+CROWMARG);
+  out.cuervoBorde=c===c2&&(c.x===L||c.x===R||c.y===T||c.y===Bm)&&c.x>=L&&c.x<=R&&c.y>=T&&c.y<=Bm&&c.pz>=1;out.cuervoLejosDelGrueso=c.cov<=Math.max(1,Math.floor(c.max/2));out.cuervoV=[c.x,c.y,c.pz,c.cov,c.max].join('/');
+  spawnEnemy('i03directo',P0,{r:0,l:1,sp:ET.i03directo.sp,sid:'cv'});const e=S.enemies[S.enemies.length-1];e.hp=e.max=1e6;out.cuervoEntra=e.dirc===1&&Math.hypot(e.x-c.x,e.y-c.y)<=2.1&&Math.hypot(e.x-P0.x,e.y-P0.y)>3;
+  const d0=Math.hypot(S.core.x-e.x,S.core.y-e.y),a0=Math.atan2(S.core.y-e.y,S.core.x-e.x);run(1);const d1=Math.hypot(S.core.x-e.x,S.core.y-e.y),a1=Math.atan2(S.core.y-e.y,S.core.x-e.x);
+  out.cuervoRecto=Math.abs((d0-d1)-ET.i03directo.sp)<.2&&Math.abs(a1-a0)<.02;slowE(e,.5,5);const d2=Math.hypot(S.core.x-e.x,S.core.y-e.y);run(1);const d3=Math.hypot(S.core.x-e.x,S.core.y-e.y);out.cuervoLento=Math.abs((d2-d3)-ET.i03directo.sp*.5)<.3;
+  delete e.fx.slow;const h0=S.hp;e.x=S.core.x-c.ux*3;e.y=S.core.y-c.uy*3;out.cuervoLlega=run(3,()=>!S.enemies.includes(e))&&S.hp<h0;}
  return out;});
 const bad=Object.keys(r).filter(k=>r[k]!==true&&!/V$/.test(k));console.log(JSON.stringify(r));console.log(bad.length?'FALLA: '+bad.join(', '):'mecanicas_taller_t2 ok');console.log(errs.length?'ERRS '+JSON.stringify(errs.slice(0,5)):'ERRS []');await b.close();process.exit(bad.length||errs.length?1:0);})();
