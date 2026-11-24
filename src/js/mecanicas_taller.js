@@ -36,7 +36,7 @@ function hornTick(e,dt){e.hnc=(e.hnc===undefined?3:e.hnc)-dt;if(e.hnc>0)return;e
  e.hornB=.7;S.fx.push({x:e.x,y:e.y,t:.6,m:.6,r:HORNR,col:'#e08a2e'});}
 // ---- Jabalí de guerra: embestida ----
 // Las unidades derribadas (udwn) no andan, no pelean y no retienen a nadie mientras están en el suelo.
-function withoutDowned(fn){const saved=[];for(const t of unitTowers())if(t.sd&&t.sd.some(s=>s.udwn>0)){saved.push([t,t.sd]);t.sd=t.sd.filter(s=>!(s.udwn>0));}try{return fn();}finally{for(const[t,sd]of saved)t.sd=sd;}}
+function withoutDowned(fn){const saved=[];for(const t of unitTowers())if(t.sd&&t.sd.some(s=>s.udwn>0||s.hook>0)){saved.push([t,t.sd]);t.sd=t.sd.filter(s=>!(s.udwn>0||s.hook>0))/* v366: también las que arrastra el Dron arpón */;}try{return fn();}finally{for(const[t,sd]of saved)t.sd=sd;}}
 // chw = cogiendo carrerilla (s que le quedan) · chr = corriendo (s que le quedan) · chgc = espera hasta la siguiente
 function chargeTick(e,E,dt,SL){const cc=e.fx.slow||e.fx.stun||e.fx.freeze||e.fx.root||e.fx.poly||e.fx.fear;
  if(e.chw>0||e.chr>0){if(cc){chargeEnd(e);return;}

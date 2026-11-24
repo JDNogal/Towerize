@@ -24,7 +24,7 @@ function eHurtMod(e,a,src,ty){const E=ET[e.t];if(!E)return a;
  if(E.adapt){const r=e.res||(e.res={phys:0,magic:0,elem:0});a*=1-(r[ty]||0);(e.adT=e.adT||{phys:0,magic:0,elem:0})[ty]=(e.adT[ty]||0)+a;}
  return a;}
 // ---- camuflaje: las torres solo le apuntan de cerca o si está revelado ----
-const camoHid=e=>{const E=ET[e.t];return !!(E&&E.camo&&!(e.rev>0)&&!(e.ct>0));};
+const camoHid=(e,t)=>{if(typeof eHidX==='function'&&eHidX(e,t))return true;/* v366: enemigos que no se pueden apuntar (Gusano bajo tierra, Garrapata pegada a su torre) */const E=ET[e.t];return !!(E&&E.camo&&!(e.rev>0)&&!(e.ct>0));};
 // regla única para todas las torres: el camuflado se revela (para todas) mientras pase a 1,5 casillas de alguna torre, al recibir daño o al chocar con tus unidades
 {const _t=e2TowersTick;e2TowersTick=function(dt){if(!S||!S.enemies.some(e=>ET[e.t]&&ET[e.t].camo))return _t.apply(this,arguments);
  const all=S.enemies,vis=all.filter(e=>!camoHid(e));S.enemies=vis;try{return _t.apply(this,arguments);}finally{const add=S.enemies.filter(e=>!all.includes(e));S.enemies=all.concat(add);}};}
