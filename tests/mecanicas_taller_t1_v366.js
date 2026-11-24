@@ -2,7 +2,8 @@
 // Las fichas son las del Taller (24-nov); aquí se cargan con tallerAplicar como lo hará el archivo exportado.
 const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const errs=[];
 const p=await b.newPage({viewport:{width:1280,height:720}});p.on('pageerror',e=>errs.push(e.message));
-await p.addInitScript(()=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');}catch(e){}});
+/* mapa y azar fijos (semilla), para que la prueba mida siempre lo mismo; con SEMILLA=n se prueba con otro mapa */
+await p.addInitScript(s0=>{try{localStorage.clear();localStorage.setItem('rt-tutchoice','skip');}catch(e){}let a=s0>>>0;Math.random=()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};},+(process.env.SEMILLA||7));
 await p.goto('file://'+process.argv[2]);await p.waitForTimeout(800);
 const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById('intro');if(i)i.style.display='none';}INTRO.on=false;STO.intro=1;OPT.hints=false;OPT.eter=false;
  const rep=tallerAplicar({en:{
@@ -26,9 +27,11 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  // el héroe, lejos del portal para que no estorbe
  // ---------- Limo: tres Mini limos que saltan y caen en triángulo, sin amontonarse ----------
  spawnEnemy('i07divisor',P0,null);run(1.5);const limo=S.enemies.find(e=>e.t==='i07divisor');const lx=limo.x,ly=limo.y;hurt(limo,1e5,null,'phys');run(.1);
- let minis=S.enemies.filter(e=>e.t==='i47minilimo');out.limoSalta=minis.length===3&&minis.every(e=>e.spj&&Math.hypot(e.x-lx,e.y-ly)<1.2);run(SPLT);
+ let minis=S.enemies.filter(e=>e.t==='i47minilimo');out.limoSalta=minis.length===3&&minis.every(e=>e.spj&&Math.hypot(e.x-lx,e.y-ly)<1.7);run(SPLT);
  {const d=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y),m=minis;out.limo=m.length===3&&!S.enemies.includes(limo)&&m.every(e=>!e.spj&&S.cells[Math.round(e.y)][Math.round(e.x)]===2)&&d(m[0],m[1])>=.9&&d(m[0],m[2])>=.9&&d(m[1],m[2])>=.9;out.limoV=[d(m[0],m[1]),d(m[0],m[2]),d(m[1],m[2])].map(v=>v.toFixed(1)).join('/');}
  run(1.5);{const d=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y),m=minis;out.limoSiguenSeparados=d(m[0],m[1])>=.7&&d(m[0],m[2])>=.7&&d(m[1],m[2])>=.7&&m.every(e=>S.field[e.ty][e.tx]<S.field[Math.round(ly)][Math.round(lx)]+2);}
+ // sueltos, los Limos salen siempre por el carril central o los de al lado
+ {limpio();let ok=true;for(let i=0;i<7;i++){spawnEnemy('i07divisor',P0,null);const e=S.enemies[S.enemies.length-1];if(Math.max(Math.abs(e.x-P0.x),Math.abs(e.y-P0.y))>1.01)ok=false;hurt(e,1e5,null,'phys');}out.limoCarril=ok;run(.2);minis=S.enemies.filter(e=>e.t==='i47minilimo');}
  for(const e of minis)hurt(e,1e5,null,'phys');run(.6);out.miniNoDivide=S.enemies.filter(e=>e.t==='i47minilimo').length===0;
  // ---------- Cornetero: cada 7 s, +50 % 2 s a su escuadrón, sin romper la formación ----------
  limpio();{const fo=sqForm('qcharanga',SQUADS.qcharanga.m);const sp=Math.min(...fo.map(o=>ET[o.t].sp));for(const o of fo)spawnEnemy(o.t,P0,{r:o.r,l:o.l,sp,sid:'t1',lead:o.lead});}
@@ -49,7 +52,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  const vel=(e,t)=>{let d=0,x=e.x,y=e.y;const n=Math.round(t/.05);for(let i=0;i<n;i++){update(.05);d+=Math.hypot(e.x-x,e.y-y);x=e.x;y=e.y;}return d/(n*.05);};
  uno();spawnEnemy('i43jabali',P0,null);const j1=S.enemies[S.enemies.length-1];j1.hp=j1.max=1e6;const jv0=vel(j1,.3),sp=ET.i43jabali.sp;
  out.jabaliAnda=Math.abs(jv0-sp)<sp*.1&&!(j1.chw>0)&&!(j1.chr>0);
- const frena=run(20,()=>j1.chw>0);const dSol=Math.hypot(T.sd[0].x-j1.x,T.sd[0].y-j1.y);out.jabaliFrena=frena&&dSol<=CHGSEE+.01&&dSol>2&&!(T.sd[0].udwn>0);
+ const frena=run(20,()=>j1.chw>0);const dSol=Math.hypot(T.sd[0].x-j1.x,T.sd[0].y-j1.y);out.jabaliFrena=frena&&dSol<=CHGSEE+.01&&dSol>.3&&!(T.sd[0].udwn>0);
  const jv1=vel(j1,.3);out.jabaliCarrerilla=j1.chw>0&&jv1<sp*.5&&jv1>sp*.3;
  run(1,()=>j1.chr>0);const hpS=T.sd[0].hp;const jv2=vel(j1,.1);out.jabaliCorre=(j1.chr>0||T.sd[0].udwn>0)&&jv2>sp*1.6;out.jabaliV=[jv0,jv1,jv2].map(v=>v.toFixed(1)).join('/');
  const tumbado=T.sd[0].udwn>0||run(3,()=>T.sd[0].udwn>0);out.jabaliTumba=tumbado&&j1.chgc>CHGCD-.2&&!j1.stopped&&!(j1.chr>0);

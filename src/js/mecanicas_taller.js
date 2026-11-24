@@ -4,7 +4,8 @@
 // Tanda 1 · Era Fantástica, partida 1 (valores acordados con Nogal el 24-nov):
 //  · Limo (split): al morir se parte en 3 Mini limos, que ya no se dividen. Saltan desde donde muere y caen en triángulo (uno delante y dos detrás, un carril a cada lado).
 //  · Cornetero orco (horn): cada 7 s toca el cuerno y su escuadrón va un 50 % más rápido 2 s. No rompe la formación.
-//  · Jabalí de guerra (charge): anda a su paso. Cuando tiene una unidad tuya delante (1,5 casillas) frena 0,6 s para coger carrerilla (va al 40 %) y arranca al doble de velocidad:
+//  · Jabalí de guerra (charge): anda a su paso. Cuando tiene una unidad tuya delante (1,5 casillas) frena 0,6 s para coger carrerilla (va al 40 %) y arranca al doble de velocidad, en línea recta hacia ella
+//    (solo embiste si entre los dos hay camino en línea recta):
 //    a la primera unidad que toca (también el héroe) le hace el doble de su golpe y la tumba 1 s, y sigue a su paso. Tarda 5 s en repetirlo.
 //    Mientras coge carrerilla y corre, tus unidades no salen a por él (lo esperan en su sitio): así se ve la carrera.
 //    Ralentizado, aturdido, congelado o enraizado mientras coge carrerilla o corre, pierde la embestida.
@@ -37,16 +38,25 @@ function hornTick(e,dt){e.hnc=(e.hnc===undefined?3:e.hnc)-dt;if(e.hnc>0)return;e
 function withoutDowned(fn){const saved=[];for(const t of unitTowers())if(t.sd&&t.sd.some(s=>s.udwn>0)){saved.push([t,t.sd]);t.sd=t.sd.filter(s=>!(s.udwn>0));}try{return fn();}finally{for(const[t,sd]of saved)t.sd=sd;}}
 // chw = cogiendo carrerilla (s que le quedan) · chr = corriendo (s que le quedan) · chgc = espera hasta la siguiente
 function chargeTick(e,E,dt,SL){const cc=e.fx.slow||e.fx.stun||e.fx.freeze||e.fx.root||e.fx.poly||e.fx.fear;
- if(e.chw>0||e.chr>0){if(cc){e.chw=e.chr=0;e.chgc=CHGCD;return;}
-  if(e.chw>0){e.chw-=dt;if(e.chw<=0){e.chw=0;e.chr=CHGRUN;}}else{e.chr-=dt;if(e.chr<=0){e.chr=0;e.chgc=CHGCD;}}return;}
- if(e.chgc>0||cc)return;if(tmTarget(e,SL,CHGSEE)){e.chw=CHGWIND;e.fsp=0;e.nblk=1;tmRelease(e);}}
+ if(e.chw>0||e.chr>0){if(cc){chargeEnd(e);return;}
+  if(e.chw>0){e.chw-=dt;if(e.chw<=0){e.chw=0;e.chr=CHGRUN;}}else{e.chr-=dt;if(e.chr<=0||!e.chT||!(e.chT.hp>0))chargeEnd(e);}return;}
+ if(e.chgc>0||cc)return;let s=null,bd=1e9;for(const u of SL){if(u.air||(u.H&&u.H.camo>0))continue;const d=tmAhead(e,u,CHGSEE);if(d>=0&&d<bd&&tmLine(e,u)){bd=d;s=u;}}
+ if(s){e.chw=CHGWIND;e.chT=s;e.fsp=0;e.nblk=1;tmRelease(e);}}
+// ¿hay camino en línea recta entre el enemigo y la unidad? (el jabalí solo embiste a lo que tiene de frente, sin atajar por fuera del camino)
+function tmLine(e,s){const d=Math.hypot(s.x-e.x,s.y-e.y),n=Math.max(1,Math.ceil(d/.5));for(let i=0;i<=n;i++){const x=Math.round(e.x+(s.x-e.x)*i/n),y=Math.round(e.y+(s.y-e.y)*i/n);if(!inb(x,y)||S.cells[y][x]!==2)return false;}return true;}
+// vuelve al camino donde esté: siguiente celda, carril y ruta se recalculan desde ahí
+function tmReattach(e){const q=pathNear(e.x,e.y);if(q){e.tx=q.x;e.ty=q.y;}e.pv=null;e.trail=[];e.fln=null;
+ if(e.wps){const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K),i=e.wps.findIndex(w=>w[0]===cx&&w[1]===cy);if(i>=0){e.wps=e.wps.slice(i+1);if(!e.wps.length)e.wps=null;}}}
+function chargeEnd(e){const ran=e.chr>0;e.chw=e.chr=0;e.chT=null;e.chgc=CHGCD;if(ran)tmReattach(e);}
+// la carrera: en línea recta hacia la unidad a la que embiste, al doble de su velocidad
+function chargeRun(e,dt){const s=e.chT;if(!s||!(s.hp>0))return;const dx=s.x-e.x,dy=s.y-e.y,d=Math.hypot(dx,dy);if(d<.05)return;const st=Math.min(d,ET[e.t].sp*CHGM*(S.espd||1)*dt);e.x+=dx/d*st;e.y+=dy/d*st;const q=pathNear(e.x,e.y);if(q){e.tx=q.x;e.ty=q.y;e.pv=null;}}
 // quien lo retenía o iba a por él lo suelta
 function tmRelease(e){for(const t of unitTowers())for(const s of t.sd||[]){if(s.en===e){s.en=null;s.fight=false;}if(s.en2===e)s.en2=null;}}
 // mientras corre nadie lo retiene; a la primera unidad que toca la golpea y la tumba
 function chargeCheck(){for(const e of S.enemies){if(!(e.chr>0)||e.hp<=0)continue;const E=ET[e.t];let v=null,bd=CHGHIT;
   for(const t of unitTowers())for(const s of t.sd||[]){if(!(s.hp>0)||s.udwn>0||s.air||s.charm)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;v=s;}}
   e.stopped=false;e.ct=0;if(!v)continue;
-  hitUnit(v,(E.ud||0)*CHGDM*(typeof udM==='function'?udM(e):1),e);v.udwn=CHGDOWN;v.en=null;v.fight=false;v.en2=null;e.chr=0;e.chgc=CHGCD;
+  hitUnit(v,(E.ud||0)*CHGDM*(typeof udM==='function'?udM(e):1),e);v.udwn=CHGDOWN;v.en=null;v.fight=false;v.en2=null;chargeEnd(e);
   S.fx.push({x:v.x,y:v.y,t:.4,m:.4,r:.6*K,col:'#c9a57a'});}}
 {const _w=unitWalk;unitWalk=function(dt){return withoutDowned(()=>_w(dt));};}
 {const _c=unitCombat;unitCombat=function(dt){const r=withoutDowned(()=>_c(dt));if(S&&S.phase==='wave')chargeCheck();return r;};}
@@ -65,7 +75,7 @@ function diveTick(e,E,dt,SL){
    const q=pathNear(s.x+ux*DIVEPAST,s.y+uy*DIVEPAST)||pathNear(s.x,s.y)||{x:e.tx,y:e.ty};e.dvs={s,qx:q.x,qy:q.y,x0:e.x,y0:e.y,hit:0};e.fsp=0;}return;}
  e.dvc=(e.dvc===undefined?1.5:e.dvc)-dt;if(e.dvc>0)return;
  const s=tmTarget(e,SL,DIVESEE);if(s){e.dvt=s;e.dvw=DIVEWARN;}else e.dvc=.2;}
-{const _m=move;move=function(e,dt){if(e.dvs||e.dvd>0||e.spj)return false;return _m(e,dt);};}
+{const _m=move;move=function(e,dt){if(e.dvs||e.dvd>0||e.spj)return false;if(e.chr>0){if(!e.fx.freeze&&!e.fx.stun&&!e.fx.root)chargeRun(e,dt);return false;}return _m(e,dt);};}
 // ---- tick general ----
 function tmecTick(dt){const SL=liveUnits().filter(s=>!s.charm&&!(s.udwn>0));
  for(const t of unitTowers())for(const s of t.sd||[])if(s.udwn>0)s.udwn-=dt;

@@ -83,7 +83,7 @@ const oldHP=t=>!ET[t].hf,ehpOf=(t,r)=>oldHP(t)?HP0*HPOLD(r)*ET[t].hp:ET[t].hf*hp
 function spawnEnemy(t,p,fo){
  let wanted=0;if(t==='wanted'){t='elite';wanted=1;}
  see('en',t);if(ET[t].fly&&!S.tut)hint('fly','Enemigos voladores','Los enemigos <b>voladores</b> no se pueden bloquear y no les afecta nada que golpee el suelo. El resto de tus ataques sí les dan.');
- const hp=ehpOf(t,S.round)*((t==='boss'||(ET[t]&&ET[t].story))&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(p.ln=((p.ln||0)+1)%K)-KC;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
+ const hp=ehpOf(t,S.round)*((t==='boss'||(ET[t]&&ET[t].story))&&S.round===ROUNDS?bossB():1),[da,db]=p.dir||[0,0],l=fo?fo.l:(v=>ET[t].split?Math.max(-1,Math.min(1,v)):v)((p.ln=((p.ln||0)+1)%K)-KC)/* v366: los que se parten al morir (Limo) salen por el carril central o los de al lado, para que quepa el triángulo */;let x=p.x,y=p.y;if(da!==0)y+=l;else if(db!==0)x+=l;
  const dest=p.split?p.split[(p.si=(p.si||0)+1)%p.split.length]:null;
  // pv: «venía de fuera del portal», para que el primer paso siga recto hacia dentro y conserve su carril
  S.enemies.push({t,x,y,tx:x,ty:y,hp,max:hp,fx:{},src:null,wanted,dest,fsp:fo?fo.sp:0,sqid:fo?(p.sqn=(p.sqn||0),p.x+'.'+p.y+'.'+S.round+'.'+fo.sid):null,pv:[x+da,y+db]});
@@ -139,7 +139,7 @@ function laneStep(e,F){if(e.nolane)return null;const fd=laneDir(e,F);if(!fd)retu
  const nx=e.tx+fd[0],ny=e.ty+fd[1];if(ok(nx,ny)&&F[ny][nx]<F[e.ty][e.tx]+K)return[nx,ny];return null;}
 function move(e,dt){if(isBoss(e))e.blk=e.stopped?(e.blk||0)+dt:Math.max(0,(e.blk||0)-2*dt);if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
  /* v305: una ralentización ya no saca al enemigo del paso de su escuadra (antes, al pasársele, corría a su velocidad propia, más rápida que la de la formación: ralentizar acababa acelerando la oleada) */if(e.fsp&&(e.fx.stun||e.fx.freeze||e.fx.root||e.fx.poly||e.fx.haste||e.stopped))e.fsp=0;
- const PBK=.25;let mv=(e.fsp?Math.min(e.fsp,sqFollow(e)):ET[e.t].sp)*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(e.hornU>S.wt?HORNM:1)/* v366: toque de cuerno del Cornetero */*(e.chw>0?CHGWM:e.chr>0?CHGM:1)/* v366: carrerilla y embestida del Jabalí */*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
+ const PBK=.25;let mv=(e.fsp?Math.min(e.fsp,sqFollow(e)):ET[e.t].sp)*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(e.hornU>S.wt?HORNM:1)/* v366: toque de cuerno del Cornetero */*(e.chw>0?CHGWM:1)/* v366: el Jabalí frena mientras coge carrerilla (la carrera va aparte, en mecanicas_taller.js) */*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
  const go=c=>{(e.trail=e.trail||[]).push([e.tx,e.ty]);if(e.trail.length>3000)e.trail.shift();e.pv=[e.tx,e.ty];e.tx=c[0];e.ty=c[1];};
  while(mv>0){
   const dx=e.tx-e.x,dy=e.ty-e.y,dd=Math.hypot(dx,dy);

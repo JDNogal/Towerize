@@ -9,6 +9,7 @@ const fs=require('fs'),path=require('path');
 const ROOT=path.join(__dirname,'..','..'),src=process.argv[2];
 if(!src||!fs.existsSync(src)){console.error('Uso: node tools/taller/importar.js exportado.json');process.exit(1);}
 const X=JSON.parse(fs.readFileSync(src,'utf8')),col=k=>{const c=X[k]||{};return Array.isArray(c)?Object.fromEntries(c.map(d=>[d.id,d.data||d])):c;};
+const CENTRO=['i07divisor'];/* enemigos que se parten al morir: en las formaciones conviene que vayan por los carriles -1, 0 o 1 */
 const E=col('enemigos'),N=col('nuevos'),Q=col('escuadrones'),IC=X.iconos||{},avisos=[];
 const out={v:X.version||new Date().toISOString().slice(0,10),tam:{},en:{},sq:{},ic:{}};
 for(const k in E)if(E[k]&&E[k].tam>0)out.tam[k]=E[k].tam;
@@ -18,7 +19,8 @@ for(const id in N){const d=N[id];if(!d||!d.fam)continue;   // sin familia = idea
  const svg=d.ic||IC[id];if(svg)out.ic[id]=svg;else avisos.push('sin icono: '+id+' ('+d.n+')');}
 const cuenta=f=>{const c={};for(const u of f)c[u[0]]=(c[u[0]]||0)+1;return c;},igual=(a,b)=>{const ks=new Set([...Object.keys(a),...Object.keys(b)]);for(const k of ks)if((a[k]||0)!==(b[k]||0))return false;return true;};
 for(const k in Q){const d=Q[k];if(!d)continue;const o={};for(const f of['n','era','pz','min','m','f','lead','de','nv','custom'])if(d[f]!==undefined&&d[f]!==null)o[f]=d[f];
- if(o.f){o.f.forEach((f,i)=>{for(const u of f)if(Math.abs(u[2])>2||u[1]<0)avisos.push(k+' F'+(i+1)+': ficha fuera de los 5 carriles o con fila negativa ('+u.join(',')+')');
+ if(o.f){o.f.forEach((f,i)=>{for(const u of f)if(CENTRO.includes(u[0])&&Math.abs(u[2])>1)avisos.push(k+' F'+(i+1)+': '+u[0]+' va por un carril del borde ('+u[2]+'); al partirse no le cabe el triángulo: mejor en el carril central o los de al lado');
+  for(const u of f)if(Math.abs(u[2])>2||u[1]<0)avisos.push(k+' F'+(i+1)+': ficha fuera de los 5 carriles o con fila negativa ('+u.join(',')+')');
    if(o.m&&!igual(cuenta(f),o.m))avisos.push(k+' F'+(i+1)+': la formación no cuadra con la composición '+JSON.stringify(o.m)+' ≠ '+JSON.stringify(cuenta(f)));});}
  if(o.de&&!Q[o.de]&&!o.custom)avisos.push(k+': versión de un escuadrón que no está ('+o.de+')');
  out.sq[k]=o;}
