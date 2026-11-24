@@ -58,6 +58,11 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  const tumbado=T.sd[0].udwn>0||run(3,()=>T.sd[0].udwn>0);out.jabaliTumba=tumbado&&j1.chgc>CHGCD-.2&&!j1.stopped&&!(j1.chr>0);
  out.jabaliGolpea=Math.abs((hpS-T.sd[0].hp)-ET.i43jabali.ud*CHGDM)<.01;
  run(.5);out.jabaliPasa=!j1.stopped&&T.sd[0].udwn>0&&!T.sd[0].fight&&Math.abs(vel(j1,.1)-sp)<sp*.1;run(.6);out.jabaliSeLevanta=!(T.sd[0].udwn>0);
+ // rompe la fila: con los tres soldados juntos tumba a más de uno; el golpe entero a uno y la mitad al resto; al levantarse no vuelven a caer durante 1 s
+ limpio();todos();run(.3);{const h0=T.sd.map(s=>s.hp);spawnEnemy('i43jabali',P0,null);const jj=S.enemies[S.enemies.length-1];jj.hp=jj.max=1e6;run(20,()=>T.sd.some(s=>s.udwn>0));
+  const per=T.sd.map((s,i)=>+(h0[i]-s.hp).toFixed(2)),dn=T.sd.filter(s=>s.udwn>0).length,full=ET.i43jabali.ud*CHGDM;out.jabaliFila=dn>=2&&per.filter(v=>v===full).length===1&&per.filter(v=>v===full*CHGSIDE).length===dn-1;out.jabaliFilaV=per.join('/')+' · '+dn;
+  run(CHGDOWN+.1);const lev=T.sd.filter(s=>s.uimm>0);out.jabaliInmune=lev.length===dn&&!T.sd.some(s=>s.udwn>0);
+  /* otro jabalí que embiste a uno recién levantado le pega pero no lo tumba */const s0=lev[0],hh=s0.hp;const j9={t:'i43jabali',x:s0.x+.8,y:s0.y,tx:Math.round(s0.x),ty:Math.round(s0.y),hp:1e6,max:1e6,fx:{},chr:1,chT:s0};S.enemies.push(j9);unitCombat(.01);out.jabaliNoRepite=!(s0.udwn>0)&&s0.hp<hh&&!(j9.chr>0);S.enemies.splice(S.enemies.indexOf(j9),1);}
  // con la embestida gastada sí se le para
  limpio();todos();spawnEnemy('i43jabali',P0,null);const j2=S.enemies[S.enemies.length-1];j2.hp=j2.max=1e6;j2.chgc=999;out.jabaliGastado=run(20,()=>j2.stopped)&&!T.sd.some(s=>s.udwn>0);
  // ralentizado no embiste

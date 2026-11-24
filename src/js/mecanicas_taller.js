@@ -6,14 +6,15 @@
 //  · Cornetero orco (horn): cada 7 s toca el cuerno y su escuadrón va un 50 % más rápido 2 s. No rompe la formación.
 //  · Jabalí de guerra (charge): anda a su paso. Cuando tiene una unidad tuya delante (1,5 casillas) frena 0,6 s para coger carrerilla (va al 40 %) y arranca al doble de velocidad, en línea recta hacia ella
 //    (solo embiste si entre los dos hay camino en línea recta):
-//    a la primera unidad que toca (también el héroe) le hace el doble de su golpe y la tumba 1 s, y sigue a su paso. Tarda 5 s en repetirlo.
+//    a la primera unidad que toca (también el héroe) le hace el doble de su golpe y la tumba 1 s; a las que tiene pegadas (2 celdas) las tumba con la mitad del golpe. Sigue a su paso. Tarda 5 s en repetirlo.
+//    Al levantarse, una unidad no puede volver a caer durante 1 s (uimm).
 //    Mientras coge carrerilla y corre, tus unidades no salen a por él (lo esperan en su sitio): así se ve la carrera.
 //    Ralentizado, aturdido, congelado o enraizado mientras coge carrerilla o corre, pierde la embestida.
 //  · Jinete de buitre goblin (dive): volador. Cuando tiene una unidad tuya delante (2 casillas) la marca con una sombra 0,6 s sin dejar de avanzar, se lanza en línea recta hacia ella,
 //    le hace 20 de daño y aterriza justo detrás. Se queda 2,5 s en el suelo, donde le pegan las torres que solo dan a tierra, pero tus unidades no lo retienen (nblk) salvo que esté aturdido o congelado;
 //    después sube siempre y tarda 6 s en repetir.
 const TMEC={i07divisor:{split:{i47minilimo:3}},i47minilimo:{},i06potenciador:{horn:1},i43jabali:{charge:1},i37buitre:{dive:1}};
-const HORNCD=7,HORNT=2,HORNM=1.5,HORNR=2*K,CHGCD=5,CHGDOWN=1,CHGSEE=1.5*K,CHGWIND=.6,CHGWM=.4,CHGM=2,CHGRUN=1.6,CHGDM=2,CHGHIT=1.1,
+const HORNCD=7,HORNT=2,HORNM=1.5,HORNR=2*K,CHGCD=5,CHGDOWN=1,CHGSEE=1.5*K,CHGWIND=.6,CHGWM=.4,CHGM=2,CHGRUN=1.6,CHGDM=2,CHGHIT=1.1,CHGAREA=2,CHGSIDE=.5,CHGIMM=1,
  DIVECD=6,DIVEWARN=.6,DIVEDOWN=2.5,DIVESEE=2*K,DIVEV=3.6*K,DIVEDMG=20,DIVEPAST=2.2,SPLT=.35;
 // ¿Tiene el enemigo a esta unidad delante (por el camino) y a la vista? Devuelve la distancia o -1.
 function tmAhead(e,s,see){const d=Math.hypot(s.x-e.x,s.y-e.y);if(d>see)return -1;const F=S.field,q=pathNear(s.x,s.y),fe=F&&F[e.ty]&&F[e.ty][e.tx],fs=q&&F&&F[q.y]&&F[q.y][q.x];
@@ -56,7 +57,11 @@ function tmRelease(e){for(const t of unitTowers())for(const s of t.sd||[]){if(s.
 function chargeCheck(){for(const e of S.enemies){if(!(e.chr>0)||e.hp<=0)continue;const E=ET[e.t];let v=null,bd=CHGHIT;
   for(const t of unitTowers())for(const s of t.sd||[]){if(!(s.hp>0)||s.udwn>0||s.air||s.charm)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;v=s;}}
   e.stopped=false;e.ct=0;if(!v)continue;
-  hitUnit(v,(E.ud||0)*CHGDM*(typeof udM==='function'?udM(e):1),e);v.udwn=CHGDOWN;v.en=null;v.fight=false;v.en2=null;chargeEnd(e);
+  /* rompe la fila: tumba a la que embiste y a las que tiene pegadas (a 2 celdas: los soldados de un Baluarte están a 1,56 unos de otros); el golpe entero solo a la primera, la mitad al resto.
+     Una unidad recién levantada (uimm) recibe el golpe pero no vuelve a caer. */
+  const dm=(E.ud||0)*CHGDM*(typeof udM==='function'?udM(e):1),pega=(s,m)=>{hitUnit(s,dm*m,e);if(!(s.uimm>0)&&s.hp>0){s.udwn=CHGDOWN;s.en=null;s.fight=false;s.en2=null;}};
+  const lado=[];for(const t of unitTowers())for(const s of t.sd||[])if(s!==v&&s.hp>0&&!(s.udwn>0)&&!s.air&&!s.charm&&Math.hypot(s.x-v.x,s.y-v.y)<=CHGAREA)lado.push(s);
+  pega(v,1);for(const s of lado)pega(s,CHGSIDE);chargeEnd(e);
   S.fx.push({x:v.x,y:v.y,t:.4,m:.4,r:.6*K,col:'#c9a57a'});}}
 {const _w=unitWalk;unitWalk=function(dt){return withoutDowned(()=>_w(dt));};}
 {const _c=unitCombat;unitCombat=function(dt){const r=withoutDowned(()=>_c(dt));if(S&&S.phase==='wave')chargeCheck();return r;};}
@@ -78,12 +83,12 @@ function diveTick(e,E,dt,SL){
 {const _m=move;move=function(e,dt){if(e.dvs||e.dvd>0||e.spj)return false;if(e.chr>0){if(!e.fx.freeze&&!e.fx.stun&&!e.fx.root)chargeRun(e,dt);return false;}return _m(e,dt);};}
 // ---- tick general ----
 function tmecTick(dt){const SL=liveUnits().filter(s=>!s.charm&&!(s.udwn>0));
- for(const t of unitTowers())for(const s of t.sd||[])if(s.udwn>0)s.udwn-=dt;
+ for(const t of unitTowers())for(const s of t.sd||[]){if(s.udwn>0){s.udwn-=dt;if(s.udwn<=0){s.udwn=0;s.uimm=CHGIMM;}}else if(s.uimm>0)s.uimm-=dt;}
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];if(!E)continue;if(e.chgc>0)e.chgc-=dt;if(e.hornB>0)e.hornB-=dt;
   if(e.spj){const j=e.spj;j.t+=dt;const k=Math.min(1,j.t/SPLT),kk=1-(1-k)*(1-k);e.x=j.x0+(j.x1-j.x0)*kk;e.y=j.y0+(j.y1-j.y0)*kk-Math.sin(Math.PI*k)*.45;if(k>=1){e.x=j.x1;e.y=j.y1;e.spj=null;}}
   if(E.charge)chargeTick(e,E,dt,SL);if(E.dive||E.charge)e.nblk=(e.dvd>0&&!e.fx.stun&&!e.fx.freeze)||e.chw>0||e.chr>0?1:0;/* nblk: tus unidades no van a por él ni lo retienen (buitre en tierra; jabalí cogiendo carrerilla o corriendo) */if(e.fx.freeze||e.fx.stun||e.fx.poly)continue;
   if(E.horn)hornTick(e,dt);if(E.dive)diveTick(e,E,dt,SL);}}
-{const _u=update;update=function(dt){_u(dt);if(!S)return;if(S.phase==='wave')tmecTick(dt);else if(S.list)for(const t of unitTowers())for(const s of t.sd||[])if(s.udwn>0)s.udwn=0;};}
+{const _u=update;update=function(dt){_u(dt);if(!S)return;if(S.phase==='wave')tmecTick(dt);else if(S.list)for(const t of unitTowers())for(const s of t.sd||[]){if(s.udwn>0)s.udwn=0;if(s.uimm>0)s.uimm=0;}};}
 // ---- dibujo ----
 function tmecDraw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performance.now()/1000;
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];if(!E)continue;const px=X(e.x),py=X(e.y);
@@ -112,7 +117,7 @@ function tmecDraw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=perfor
 {const _k=kwHtml0;kwHtml0=function(id,src){
  if(id==='esplit')return '<b>División</b><small>Al morir se parte en 3 criaturas más pequeñas y algo más rápidas, que ya no se dividen.</small>';
  if(id==='ehorn')return '<b>Toque de cuerno</b><small>Cada '+HORNCD+' s toca el cuerno: todo su escuadrón va un '+Math.round((HORNM-1)*100)+' % más rápido durante '+HORNT+' s.</small>';
- if(id==='echarge')return '<b>Embestida</b><small>Cuando tiene delante a una unidad tuya, frena un momento para coger carrerilla y embiste: a la primera que toca le hace el doble de su golpe y la tumba '+CHGDOWN+' s, y sigue adelante. Tarda '+CHGCD+' s en repetirlo. Si lo ralentizas, aturdes o congelas mientras coge carrerilla, pierde la embestida.</small>';
+ if(id==='echarge')return '<b>Embestida</b><small>Cuando tiene delante a una unidad tuya, frena un momento para coger carrerilla y embiste: a la primera que toca le hace el doble de su golpe y la tumba '+CHGDOWN+' s, y a las que tenga pegadas las tumba también con la mitad del golpe. Después sigue adelante. Tarda '+CHGCD+' s en repetirlo. Una unidad recién levantada no vuelve a caer durante '+CHGIMM+' s. Si lo ralentizas, aturdes o congelas mientras coge carrerilla, pierde la embestida.</small>';
  if(id==='edive')return '<b>Picado</b><small>Vuela, pero cuando tiene delante a una unidad tuya la marca con su sombra y se lanza contra ella: le hace '+DIVEDMG+' de daño y se queda '+String(DIVEDOWN).replace('.',',')+' s en el suelo, donde le alcanzan también las torres que solo dan a tierra. Tus unidades no pueden retenerlo salvo que esté aturdido o congelado. Después vuelve a subir y tarda '+DIVECD+' s en repetirlo.</small>';
  return _k(id,src);};}
 const TMECKW={split:['esplit','División','🫧'],horn:['ehorn','Toque de cuerno','📯'],charge:['echarge','Embestida','🐗'],dive:['edive','Picado','🦅']};   // iconos provisionales: falta dibujarlos (prioritario)
