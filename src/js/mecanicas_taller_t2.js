@@ -12,7 +12,8 @@
 //  · Portalero (gate): al recibir daño (o a los 6 s de entrar, como dice la ficha: «o cada pocos segundos») abre un portal (aviso 1,5 s) y lo mantiene 8 s parado: todo el que llega (voladores también; jefes no) sale 15 celdas más adelante
 //    siguiendo el camino.
 //  · Cuervo de batalla (direct): no sale del portal ni sigue el camino. Entra por el borde de tus piezas y va en línea recta al núcleo. El punto de entrada se decide al
-//    empezar la construcción y se avisa con flechas: su línea al núcleo pasa por encima de tus piezas y cerca de alguna torre, pero lejos del grueso de tus defensas. Después anda 6 s (24 celdas) antes de abrir otro: con 10 s recorría 40 celdas, casi un mapa pequeño entero. Si una unidad pelea con él, o lo aturden o congelan, se cierra; 2,5 s después de quedar libre lo reabre.
+//    empezar la construcción y se avisa con flechas. Entra por el borde del mapa; su línea al núcleo pasa por encima de tus piezas y a tiro de alguna torre antes
+//    de llegar a la casilla del núcleo, pero lejos del grueso de tus defensas (Nogal, 24-nov). Después anda 6 s (24 celdas) antes de abrir otro: con 10 s recorría 40 celdas, casi un mapa pequeño entero. Si una unidad pelea con él, o lo aturden o congelan, se cierra; 2,5 s después de quedar libre lo reabre.
 Object.assign(TMEC,{i03directo:{direct:1},i40bruja:{hex:1,dt:'magic'},i04bombardero:{bomb:1},i15provocador:{taunt:1},i17murcielago:{ember:1},i41totem:{totem:1},i01portalero:{gate:1}});
 const HEXCD=6,HEXR=2*K,OJOT=5,HEXIMM=10,HEXM=.8,BOMBCD=5,BOMBR=1.5*K,BOMBW=1,BOMBT=2.5,TAUCD=8,TAUR=2.5*K,EMBCD=4,EMBR=1.5*K,EMBW=.8,EMBA=2,
  TOTCD=12,TOTT=10,TOTR=1.5*K,FIRMT=4,GATEW=1.5,GATET=8,GATECD=6,GATER=KC+1.2,GATEFREE=2.5,GATEAH=1.5,GATEFIRST=6;
@@ -56,15 +57,17 @@ function firmClear(e){if(!firmOn(e))return;const f=e.fx;if(f.slow)delete f.slow;
 // gw = aviso · go = abierto · gcd = espera andando · gheld/gfree = cerrado porque pelean con él · gx,gy entrada · gex,gey salida
 function gateGhost(e,d0){const g=Object.assign({},e,{fx:{},trail:(e.trail||[]).slice(),gw:0,go:0,fsp:0,stopped:false,ghost:1});let d=0;for(let i=0;i<400&&d<d0;i++){const px=g.x,py=g.y;if(move(g,.05))break;d+=Math.hypot(g.x-px,g.y-py);if(g.x===px&&g.y===py)break;}return g;}
 function gateOpen(e){const a=gateGhost(e,GATEAH),b=gateGhost(e,GATEAH+TELED);e.gx=a.x;e.gy=a.y;e.gex=b.x;e.gey=b.y;e.gw=GATEW;e.fsp=0;}
+// dentro de la casilla del núcleo no abre portal: los que lo cruzaran acabarían en el núcleo sin forma de pararlos (Nogal, 24-nov). En la anterior sí.
+const gateInCore=e=>S.core&&Math.floor(e.x/K)===Math.floor(S.core.x/K)&&Math.floor(e.y/K)===Math.floor(S.core.y/K);
 function gateTick(e,dt,SL){const held=SL.some(s=>(s.fight&&s.en===e)||s.en2===e),cc=!!(e.fx.stun||e.fx.freeze||e.fx.poly);
  if((e.gw>0||e.go>0)&&(held||cc)){e.gw=0;e.go=0;e.gheld=1;e.gfree=GATEFREE;S.fx.push({x:e.gx,y:e.gy,t:.4,m:.4,r:.6*K,col:'#7a3ab8'});return;}
  if(e.gw>0){e.gw-=dt;if(e.gw<=0){e.gw=0;e.go=GATET;}return;}
  if(e.go>0){e.go-=dt;for(const o of S.enemies){if(o===e||o.hp<=0||o.leak||isBoss(o)||ET[o.t].flag||o.spj||o.dvs||o.dvd>0||o.chr>0||Math.hypot(o.x-e.gx,o.y-e.gy)>GATER)continue;teleFwd(o);}
   if(e.go<=0){e.go=0;e.gcd=GATECD;}return;}
- if(e.gheld){if(held||cc){e.gfree=GATEFREE;return;}e.gfree-=dt;if(e.gfree<=0){e.gheld=0;gateOpen(e);}return;}
+ if(e.gheld){if(held||cc){e.gfree=GATEFREE;return;}e.gfree-=dt;if(e.gfree<=0&&!gateInCore(e)){e.gheld=0;gateOpen(e);}return;}
  if(e.gcd>0){e.gcd-=dt;return;}
  if(!e.gact){e.gage=(e.gage||0)+dt;/* el primero: al recibir daño o, si nadie le pega (suele ir detrás), a los 6 s de entrar */if(e.hp<e.max-.01||e.gage>=GATEFIRST)e.gact=1;else return;}
- gateOpen(e);}
+ if(gateInCore(e))return;gateOpen(e);}
 {const _m=move;move=function(e,dt){if(e.gw>0||e.go>0)return false;if(e.firm>S.wt)firmClear(e);return _m(e,dt);};}
 // ---- Cuervo de batalla: entra por un borde y va recto al núcleo ----
 const CROWMARG=2*K;
@@ -74,17 +77,17 @@ const crowPlan=()=>{let n=0;for(const p of S.portals||[])for(const m of p.sqm||[
 function crowNext(){if(!S||!S.portals)return false;if(S.phase==='wave')return S.crowLeft>0||S.enemies.some(e=>e.dirc&&e.hp>0);return crowPlan()>0;}
 function crowSegD(px,py,ax,ay,bx,by){const dx=bx-ax,dy=by-ay,l=dx*dx+dy*dy||1;let t=((px-ax)*dx+(py-ay)*dy)/l;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(ax+dx*t),py-(ay+dy*t));}
 // El punto de entrada de esta ronda (se calcula una vez y no cambia aunque construyas después: ya está avisado)
-function crowEntry(){if(S.crowIn&&S.crowIn.r===S.round)return S.crowIn;const C=S.core;let x0=1e9,y0=1e9,x1=-1,y1=-1;
- for(let ty=0;ty<NC;ty++)for(let tx=0;tx<NC;tx++)if(S.cc[ty]&&S.cc[ty][tx]){x0=Math.min(x0,tx);y0=Math.min(y0,ty);x1=Math.max(x1,tx);y1=Math.max(y1,ty);}
- if(x1<0){x0=x1=Math.floor(C.x/K);y0=y1=Math.floor(C.y/K);}
- const L=Math.max(0,x0*K-CROWMARG),T=Math.max(0,y0*K-CROWMARG),R=Math.min(N-1,(x1+1)*K-1+CROWMARG),B=Math.min(N-1,(y1+1)*K-1+CROWMARG),cand=[];
- for(let x=L;x<=R;x+=K){cand.push([x,T]);cand.push([x,B]);}for(let y=T+K;y<B;y+=K){cand.push([L,y]);cand.push([R,y]);}
+function crowEntry(){if(S.crowIn&&S.crowIn.r===S.round)return S.crowIn;const C=S.core,cand=[];
+ // entran por el borde del mapa (donde ya no se puede poner pieza), no desde el medio (Nogal, 24-nov)
+ for(let x=KC;x<N;x+=K){cand.push([x,0]);cand.push([x,N-1]);}for(let y=KC;y<N;y+=K){cand.push([0,y]);cand.push([N-1,y]);}
  const tws=(S.list||[]).filter(t=>{const W=TW[t.type];return W&&!t.hero&&!W.unit&&!W.support&&!W.ground;}).map(t=>[t.x,t.y,stats(t).range]),ck=Math.floor(C.x/K)+','+Math.floor(C.y/K);
  const sc=cand.map(([x,y])=>{const d=Math.hypot(C.x-x,C.y-y),n=Math.max(1,Math.ceil(d)),seen={};let pz=0;for(let i=0;i<=n;i++){const tx=Math.floor((x+(C.x-x)*i/n)/K),ty=Math.floor((y+(C.y-y)*i/n)/K),k=tx+','+ty;if(!seen[k]){seen[k]=1;if(k!==ck&&S.cc[ty]&&S.cc[ty][tx])pz++;}}
-  let cov=0;for(const[a,b,r]of tws)if(crowSegD(a,b,x,y,C.x,C.y)<=r)cov++;return{x,y,d,pz,cov};}).filter(c=>c.d>=2*K);
+  // torres que les pueden dar ANTES de llegar a la casilla del núcleo (las que solo los pillan encima del núcleo no cuentan)
+  const fx=C.x-(C.x-x)/d*1.5*K,fy=C.y-(C.y-y)/d*1.5*K;let cov=0;for(const[a,b,r]of tws)if(crowSegD(a,b,x,y,fx,fy)<=r)cov++;return{x,y,d,pz,cov};}).filter(c=>c.d>=2*K);
  let pool=sc.filter(c=>c.pz>=2);if(!pool.length)pool=sc.filter(c=>c.pz>=1);if(!pool.length)pool=sc;
+ // con alguna torre a tiro por el camino, pero no por donde está el grueso: como mucho la mitad de las que cubren la mejor línea
  const mx=Math.max(...pool.map(c=>c.cov)),lim=Math.max(1,Math.floor(mx/2));let pick=pool.filter(c=>c.cov>=1&&c.cov<=lim);if(!pick.length){const mn=Math.min(...pool.map(c=>c.cov));pick=pool.filter(c=>c.cov===mn);}
- const c=pick[Math.floor(Math.random()*pick.length)]||{x:L,y:T,d:1,cov:0,pz:0},d=Math.hypot(C.x-c.x,C.y-c.y)||1;
+ const c=pick[Math.floor(Math.random()*pick.length)]||sc[0]||{x:0,y:0,cov:0,pz:0},d=Math.hypot(C.x-c.x,C.y-c.y)||1;
  return S.crowIn={r:S.round,x:c.x,y:c.y,ux:(C.x-c.x)/d,uy:(C.y-c.y)/d,cov:c.cov,pz:c.pz,max:mx};}
 {const _sp=spawnEnemy;spawnEnemy=function(t,p,fo){const r=_sp.apply(this,arguments);if(ET[t]&&ET[t].direct&&S&&S.enemies.length){const e=S.enemies[S.enemies.length-1];if(e.t===t&&!e.dirc){if(S.crowLeft>0)S.crowLeft--;const c=crowEntry(),l=fo?fo.l:Math.round(Math.random()*4)-2;
    e.x=c.x-c.uy*l;e.y=c.y+c.ux*l;e.tx=Math.round(e.x);e.ty=Math.round(e.y);e.pv=null;e.dest=null;e.fsp=0;e.dirc=1;}}return r;};}
@@ -95,7 +98,7 @@ function crowMove(e,dt){const f=e.fx;if(f.freeze||f.stun||f.root)return false;co
 function tm2Tick(dt){const SL=liveUnits().filter(s=>!s.charm);
  for(const t of S.list){if(t.hexr>0){t.hexr-=dt;if(t.hexr<=0){t.hexr=0;t.heximm=HEXIMM;}}else if(t.heximm>0)t.heximm-=dt;
   if(t.jam>0&&TW[t.type]&&TW[t.type].unit&&t.sd)for(const s of t.sd)if(s.hp<=0&&s.rt>0)s.rt+=dt;/* bombardeada: no repone a las caídas */}
- if(S.tmb&&S.tmb.length){for(const m of S.tmb){m.w-=dt;if(m.w<=0&&S.list.includes(m.t)){m.t.jam=Math.max(m.t.jam||0,BOMBT);S.fx.push({x:m.t.x,y:m.t.y,t:.5,m:.5,r:1*K,col:'#ffb04a'});}}S.tmb=S.tmb.filter(m=>m.w>0);}
+ if(S.tmb&&S.tmb.length){for(const m of S.tmb){m.w-=dt;if(m.w<=0&&S.list.includes(m.t)){m.t.jam=Math.max(m.t.jam||0,BOMBT);m.t.bombU=S.wt+BOMBT;S.fx.push({x:m.t.x,y:m.t.y,t:.5,m:.5,r:1*K,col:'#ffb04a'});}}S.tmb=S.tmb.filter(m=>m.w>0);}
  if(S.tmz&&S.tmz.length){for(const z of S.tmz){z.w-=dt;if(z.w<=0){for(const s of liveUnits())if(Math.hypot(s.x-z.x,s.y-z.y)<=EMBA)hitUnit(s,z.d,z.src);S.fx.push({x:z.x,y:z.y,t:.45,m:.45,r:EMBA,col:'#ff7a2a'});}}S.tmz=S.tmz.filter(z=>z.w>0);}
  totemsTick(dt);
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];if(!E)continue;firmClear(e);if(E.gate)gateTick(e,dt,SL);if(e.fx.freeze||e.fx.stun||e.fx.poly)continue;
@@ -111,6 +114,12 @@ function tm2Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=perform
  for(const t of S.list||[])if(t.hexr>0){/* el alcance encogido, para que se vea qué deja de cubrir */g.strokeStyle='rgba(111,224,122,.75)';g.lineWidth=lw(1.8);g.setLineDash([lw(7),lw(5)]);g.beginPath();g.arc(X(t.x),X(t.y),stats(t).range*CS,0,7);g.stroke();g.setLineDash([]);
    const x=X(t.x),y=X(t.y)-CT*1.25,r=CT*.42;g.fillStyle='#6fe07a';g.strokeStyle='#1b1712';g.lineWidth=lw(1.6);g.beginPath();g.arc(x,y,r,0,7);g.fill();g.stroke();g.beginPath();g.rect(x-r*.55,y+r*.5,r*1.1,r*.6);g.fill();g.stroke();
    g.fillStyle='#1b1712';g.beginPath();g.arc(x-r*.38,y-r*.05,r*.24,0,7);g.arc(x+r*.38,y-r*.05,r*.24,0,7);g.fill();}
+ // torres bombardeadas: humo y aro roto sobre toda la torre mientras no disparan
+ for(const t of S.list||[])if(t.bombU>S.wt&&t.jam>0){const x=X(t.x),y=X(t.y),R=CT*1.45;g.fillStyle='rgba(30,25,20,.45)';g.beginPath();g.arc(x,y,R,0,7);g.fill();g.strokeStyle='rgba(255,150,60,.9)';g.lineWidth=lw(3);g.setLineDash([lw(7),lw(6)]);g.beginPath();g.arc(x,y,R,now*1.5,now*1.5+6.28);g.stroke();g.setLineDash([]);
+   for(let i=0;i<4;i++){const ph=(now*.9+i/4)%1;g.fillStyle='rgba(140,140,140,'+(.6*(1-ph)).toFixed(2)+')';g.beginPath();g.arc(x+(i-1.5)*R*.35,y-R*(.3+ph*1.1),R*(.16+ph*.2),0,7);g.fill();}}
+ // torres provocadas por el Ogro: icono de grito encima
+ for(const t of S.list||[]){const o=t.taunt;if(!o||!(o.hp>0)||!S.enemies.includes(o))continue;const x=X(t.x),y=X(t.y)-CT*1.35,r=CT*.42;g.fillStyle='#e0403a';g.strokeStyle='#1b1712';g.lineWidth=lw(1.6);g.beginPath();g.arc(x,y,r,0,7);g.fill();g.stroke();
+   g.fillStyle='#fff3e0';g.font='bold '+Math.round(r*1.4)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('!',x,y+r*.05);}
  // bombas del Globo: diana sobre la torre y la bomba cayendo
  for(const m of S.tmb||[]){const k=1-m.w/BOMBW,x=X(m.t.x),y=X(m.t.y);diana(x,y,CT*.9,k,'rgba(255,90,60,'+(.5+.5*k).toFixed(2)+')');const bx=X(m.x0)+(x-X(m.x0))*k,by=X(m.y0)+(y-X(m.y0))*k-Math.sin(Math.PI*k)*CT*.8;g.fillStyle='#1b1712';g.beginPath();g.arc(bx,by,CT*.22,0,7);g.fill();g.fillStyle='#ffb04a';g.beginPath();g.arc(bx+CT*.12,by-CT*.2,CT*.08,0,7);g.fill();}
  // brasas del Murciélago: diana en el suelo y la brasa cayendo
@@ -138,7 +147,7 @@ function tm2Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=perform
  if(id==='eember')return '<b>Brasas</b><small>Cada '+EMBCD+' s marca con una diana el suelo bajo tu unidad más cercana (a '+R(EMBR)+' o menos) y '+c(EMBW)+' s después caen las brasas: golpean a todas las unidades que sigan dentro.</small>';
  if(id==='etotem')return '<b>Tótem de firmeza</b><small>Cada '+TOTCD+' s planta un tótem que dura '+TOTT+' s y se puede destruir como un enemigo más (no se mueve ni ataca). Los enemigos que pasan a '+R(TOTR)+' o menos ganan Firmeza durante '+FIRMT+' s.</small>';
  if(id==='efirm')return '<b>Firmeza</b><small>No le afecta ningún control: ni ralentización, ni aturdimiento, ni congelación, ni enraizamiento, ni miedo, ni empujones. Solo se le puede parar con unidades.</small>';
- if(id==='edirect')return '<b>Vuelo directo</b><small>No sale del portal ni sigue el camino: entra por el borde de tus piezas y va en línea recta al núcleo. Durante la construcción, unas flechas avisan de por dónde va a entrar.</small>';
+ if(id==='edirect')return '<b>Vuelo directo</b><small>No sale del portal ni sigue el camino: entra por el borde del mapa y va en línea recta al núcleo. Durante la construcción, unas flechas avisan de por dónde va a entrar.</small>';
  if(id==='egate')return '<b>Portal</b><small>Al recibir daño, o a los '+GATEFIRST+' s de entrar si nadie le ha pegado, abre un portal (avisa '+c(GATEW)+' s antes) y se queda '+GATET+' s manteniéndolo: todo el que llega lo cruza y sale '+R(TELED)+' más adelante siguiendo el camino. Los jefes no caben. Después anda '+GATECD+' s antes de abrir otro. Si una unidad tuya pelea con él, o lo aturdes o congelas, el portal se cierra.</small>';
  return _k(id,src);};}
 {const KW2={hex:['ehex','Mal de ojo','💀'],bomb:['ebomb','Bombardeo','💣'],taunt:['etaunt','Grito de desafío','📢'],ember:['eember','Brasas','🔥'],totem:['etotem','Tótem de firmeza','🗿'],gate:['egate','Portal','🌀'],direct:['edirect','Vuelo directo','🐦']};   // iconos provisionales: falta dibujarlos (prioritario)

@@ -85,12 +85,13 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  out.brujaMagica=ET.i40bruja.dt==='magic';{const tE={type:'faro',x:0,y:0};out.eventoAfectada=!!tm2Tw(tE);}
  // ---------- Cuervo de batalla: entra por el borde de tus piezas y va recto al núcleo ----------
  limpio();A.jam=0;{out.cuervoSinAviso=!crowNext();S.crowLeft=2;out.cuervoAviso=crowNext();S.crowLeft=0;{const ph=S.phase;S.phase='build';S.portals[0].sqm=[{i03directo:5}];out.cuervoAviso=out.cuervoAviso&&crowNext()&&crowPlan()===5;S.portals[0].sqm=[];out.cuervoSinAviso=out.cuervoSinAviso&&!crowNext();S.phase=ph;}
-  S.crowIn=null;const c=crowEntry(),c2=crowEntry();let x0=1e9,y0=1e9,x1=-1,y1=-1;for(let ty=0;ty<NC;ty++)for(let tx=0;tx<NC;tx++)if(S.cc[ty][tx]){x0=Math.min(x0,tx);y0=Math.min(y0,ty);x1=Math.max(x1,tx);y1=Math.max(y1,ty);}
-  const L=Math.max(0,x0*K-CROWMARG),T=Math.max(0,y0*K-CROWMARG),R=Math.min(N-1,(x1+1)*K-1+CROWMARG),Bm=Math.min(N-1,(y1+1)*K-1+CROWMARG);
-  out.cuervoBorde=c===c2&&(c.x===L||c.x===R||c.y===T||c.y===Bm)&&c.x>=L&&c.x<=R&&c.y>=T&&c.y<=Bm&&c.pz>=1;out.cuervoLejosDelGrueso=c.cov<=Math.max(1,Math.floor(c.max/2));out.cuervoV=[c.x,c.y,c.pz,c.cov,c.max].join('/');
+  S.crowIn=null;const c=crowEntry(),c2=crowEntry();
+  out.cuervoBorde=c===c2&&(c.x===0||c.x===N-1||c.y===0||c.y===N-1)&&c.pz>=1;out.cuervoLejosDelGrueso=c.cov>=1&&c.cov<=Math.max(1,Math.floor(c.max/2));out.cuervoV=[c.x,c.y,c.pz,c.cov,c.max].join('/');
   spawnEnemy('i03directo',P0,{r:0,l:1,sp:ET.i03directo.sp,sid:'cv'});const e=S.enemies[S.enemies.length-1];e.hp=e.max=1e6;out.cuervoEntra=e.dirc===1&&Math.hypot(e.x-c.x,e.y-c.y)<=2.1&&Math.hypot(e.x-P0.x,e.y-P0.y)>3;
   const d0=Math.hypot(S.core.x-e.x,S.core.y-e.y),a0=Math.atan2(S.core.y-e.y,S.core.x-e.x);run(1);const d1=Math.hypot(S.core.x-e.x,S.core.y-e.y),a1=Math.atan2(S.core.y-e.y,S.core.x-e.x);
   out.cuervoRecto=Math.abs((d0-d1)-ET.i03directo.sp)<.2&&Math.abs(a1-a0)<.02;slowE(e,.5,5);const d2=Math.hypot(S.core.x-e.x,S.core.y-e.y);run(1);const d3=Math.hypot(S.core.x-e.x,S.core.y-e.y);out.cuervoLento=Math.abs((d2-d3)-ET.i03directo.sp*.5)<.3;
   delete e.fx.slow;const h0=S.hp;e.x=S.core.x-c.ux*3;e.y=S.core.y-c.uy*3;out.cuervoLlega=run(3,()=>!S.enemies.includes(e))&&S.hp<h0;}
+ // dentro de la casilla del núcleo no abre portal
+ limpio();A.jam=999;{let q=null;for(const t of TR)if(Math.floor(t.x/K)===Math.floor(S.core.x/K)&&Math.floor(t.y/K)===Math.floor(S.core.y/K)){q=t;break;}const po=pon('i01portalero',q,1);po.gact=1;po.hp-=5;out.portalNoNucleo=!run(2,()=>po.gw>0||po.go>0);}
  return out;});
 const bad=Object.keys(r).filter(k=>r[k]!==true&&!/V$/.test(k));console.log(JSON.stringify(r));console.log(bad.length?'FALLA: '+bad.join(', '):'mecanicas_taller_t2 ok');console.log(errs.length?'ERRS '+JSON.stringify(errs.slice(0,5)):'ERRS []');await b.close();process.exit(bad.length||errs.length?1:0);})();

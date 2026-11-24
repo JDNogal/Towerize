@@ -2,7 +2,7 @@
 // Era Fantástica, partida 3 (acordado con Nogal el 24-nov). Medidas en celdas pequeñas (K = 5 = el ancho del camino); ninguna zona más estrecha que el camino.
 //  · Guiverno: tanque volador sin mecánica propia; lleva una sombra grande en el suelo.
 //  · Ogro glotón (devour): al bajar del 50 % se para 1 s, se come al goblin de tierra más cercano (7,5 celdas) y se cura un 30 %. Como mucho 2 veces.
-//  · Sacrificador (sacr): cada 8 s marca a 2 Esbirros a 7,5 celdas; 1 s después los sacrifica e invoca un Demonio. Si alguno muere antes, no invoca. Sin límite.
+//  · Sacrificador (sacr): cada 6 s (Nogal: un pelín menos que los 8 s del principio) marca a 2 Esbirros a 7,5 celdas; 1 s después los sacrifica e invoca un Demonio. Si alguno muere antes, no invoca. Sin límite.
 //  · Gólem de magma (magma): quien le pega cuerpo a cuerpo se quema con la misma quemadura que los enemigos (1 stack por segundo de pelea).
 //  · Transportador aéreo (ferry): lleva 6 Honderos que disparan a tus unidades desde el aire al 60 % de su ritmo. A mitad de su recorrido los suelta con la vida
 //    entera (X en el suelo desde que entra); si lo derribas antes, caen donde cae él con la mitad de vida.
@@ -11,7 +11,7 @@
 //  · Portaestandarte alado (rage): volador que va encima de su escuadrón. Cuando muere uno de tierra a 7,5 celdas de él, los de tierra que tiene a 7,5 celdas
 //    se enfurecen 3 s: +15 % de velocidad y de daño a tus unidades (no se acumula; se renueva). Elegido por Nogal (opción C, 24-nov).
 Object.assign(TMEC,{i10pesado:{},i33gloton:{devour:1},i34sacrificador:{sacr:1},i44golem:{magma:1},i14transporte:{ferry:6},i05guardian:{immo:1},i11alado:{rage:1}});
-const GLOTR=1.5*K,GLOTH=.3,GLOTN=2,SACRR=1.5*K,SACRCD=8,FERRYM=.6,GUARDR=1.5*K,RAGER=1.5*K,RAGET=3,RAGEM=1.15;
+const GLOTR=1.5*K,GLOTH=.3,GLOTN=2,SACRR=1.5*K,SACRCD=6,FERRYM=.6,GUARDR=1.5*K,RAGER=1.5*K,RAGET=3,RAGEM=1.15;
 const GOBS=['fast','sling','javelin','raider','shaman','porter'];   // goblins de tierra que se puede comer el Ogro glotón
 // ---- quemadura en tus unidades: las mismas reglas que en los enemigos (BURND por stack y segundo; cada segundo se pierde un BURNK de los stacks) ----
 if(typeof UST!=='undefined')UST.burn={n:'Quemadura',col:'#ff7a2a'};
@@ -32,8 +32,12 @@ function guardTick(){const gs=S.enemies.filter(g=>g.hp>0&&ET[g.t]&&ET[g.t].immo)
   for(const o of S.enemies)if(o!==e&&o.hp>0&&!isFly(o)&&!isBoss(o)&&Math.hypot(o.x-a.x,o.y-a.y)<=RAGER)o.furU=S.wt+RAGET;}
  return _a.apply(this,arguments);};}
 // ---- Transportador aéreo ----
-function ferryDrop(e,hpM){const n=e.fcar;e.fcar=0;if(!ET.sling)return;const q=pathNear(e.x,e.y)||{x:e.tx,y:e.ty},hp=ehpOf('sling',S.round)*hpM,L=[0,-1,1,-2,2,0];
- for(let i=0;i<n;i++)(S.espw=S.espw||[]).push({t:'sling',x:e.x+(Math.random()-.5),y:e.y+(Math.random()-.5),tx:q.x,ty:q.y,hp,max:ehpOf('sling',S.round),fx:{},src:null,pv:null,fln:L[i%L.length],fd:e.fd,spj:{x0:e.x,y0:e.y,x1:q.x+(Math.random()-.5)*1.2,y1:q.y+(Math.random()-.5)*1.2,t:0}});
+// los suelta como un escuadrón: dos filas de 3 a lo ancho del camino (carriles −2, 0 y 2), la segunda 1,5 celdas detrás
+function ferryDrop(e,hpM){const n=e.fcar;e.fcar=0;if(!ET.sling)return;const q=pathNear(e.x,e.y)||{x:e.tx,y:e.ty},hp=ehpOf('sling',S.round)*hpM,F=S.field;
+ let dx=0,dy=1;{let b=null;for(const[a,c]of[[1,0],[-1,0],[0,1],[0,-1]]){const x=q.x+a,y=q.y+c;if(inb(x,y)&&S.cells[y][x]===2&&F[y][x]<F[q.y][q.x]&&(!b||F[y][x]<F[b[1]][b[0]]))b=[x,y,a,c];}if(b){dx=b[2];dy=b[3];}}
+ const ok=(x,y)=>inb(x,y)&&S.cells[y][x]===2;
+ for(let i=0;i<n;i++){const ln=[-2,0,2][i%3],row=Math.floor(i/3)%2,x=Math.round(q.x-dy*ln-dx*row*1.5),y=Math.round(q.y+dx*ln-dy*row*1.5),p=ok(x,y)?{x,y}:q;
+  (S.espw=S.espw||[]).push({t:'sling',x:e.x,y:e.y,tx:p.x,ty:p.y,hp,max:ehpOf('sling',S.round),fx:{},src:null,pv:null,fln:ln,fd:[dx,dy],spj:{x0:e.x,y0:e.y,x1:p.x,y1:p.y,t:0}});}
  S.fx.push({x:q.x,y:q.y,t:.5,m:.5,r:1*K,col:'#c9a57a'});}
 {const _sp=spawnEnemy;spawnEnemy=function(t,p,fo){const r=_sp.apply(this,arguments);if(ET[t]&&ET[t].ferry&&S&&S.enemies.length){const e=S.enemies[S.enemies.length-1];
   if(e.t===t&&e.fcar==null){e.fcar=ET[t].ferry;e.frc=Array.from({length:e.fcar},(_,i)=>.4+i*.2);const F=S.field,f0=F[e.ty]&&F[e.ty][e.tx];

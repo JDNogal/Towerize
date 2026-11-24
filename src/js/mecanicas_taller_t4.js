@@ -18,7 +18,7 @@ function stingTick(e,E,dt,SL){const g=e.wsp;
  if(g){const s=g.s,tx=g.back?g.hx:s.x,ty=g.back?g.hy:s.y,dx=tx-e.x,dy=ty-e.y,d=Math.hypot(dx,dy),st=STGV*dt;
   if(d<=st){e.x=tx;e.y=ty;if(!g.back){if(s.hp>0){hitUnit(s,(E.ud||0)*(typeof udM==='function'?udM(e):1),e);if(typeof uAddPois==='function')uAddPois(s,1.5,e);S.fx.push({x:s.x,y:s.y,t:.25,m:.25,r:.35*K,col:'#c0e04a'});}g.back=1;}else{e.wsp=null;e.wcd=STGCD;}}
   else{e.x+=dx/d*st;e.y+=dy/d*st;}return;}
- e.wcd=(e.wcd===undefined?1+Math.random()*2:e.wcd)-dt;if(e.wcd>0)return;let b=null,bd=STGR;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}
+ e.wcd=(e.wcd===undefined?Math.random()*.4:e.wcd)-dt;/* la primera picada en cuanto tiene una unidad a tiro (antes esperaba 1-3 s y algunas pasaban de largo) */if(e.wcd>0)return;let b=null,bd=STGR;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}
  if(b)e.wsp={s:b,hx:e.x,hy:e.y,back:0};else e.wcd=.3;}
 // ---- Escupidor alado ----
 function spitTick(e,E,dt,SL){e.rw=9;/* su ataque son los charcos */e.spc=(e.spc===undefined?2:e.spc)-dt;if(e.spc>0)return;let b=null,bd=SPITR;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<=bd){bd=d;b=s;}}

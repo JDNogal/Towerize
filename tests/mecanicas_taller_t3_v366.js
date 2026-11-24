@@ -52,7 +52,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  // ---------- Transportador ----------
  limpio();for(const s of B.sd){s.hp=s.max=9999;s.rt=0;}{spawnEnemy('i14transporte',P0,null);const tr=S.enemies[S.enemies.length-1];tr.hp=tr.max=1e6;
   out.transporte=tr.fcar===6&&tr.fdX!=null&&S.cells[tr.fdY][tr.fdX]===2;const n0=S.enemies.filter(e=>e.t==='sling').length;const suelta=run(80,()=>!(tr.fcar>0));run(.1);const sl=S.enemies.filter(e=>e.t==='sling');
-  out.transporteSuelta=suelta&&sl.length===n0+6&&sl.every(e=>Math.abs(e.hp-e.max)<.01)&&Math.hypot(tr.x-tr.fdX,tr.y-tr.fdY)<4;}
+  out.transporteSuelta=suelta&&sl.length===n0+6&&sl.every(e=>Math.abs(e.hp-e.max)<.01)&&Math.hypot(tr.x-tr.fdX,tr.y-tr.fdY)<4&&new Set(sl.map(e=>Math.round(e.tx)+','+Math.round(e.ty))).size>=4;}
  limpio();{spawnEnemy('i14transporte',P0,null);const tr=S.enemies[S.enemies.length-1];run(1);for(const s of B.sd){s.hp=0;s.rt=999;}A.jam=999;hurt(tr,1e9,null,'phys');run(.3);const sl=S.enemies.filter(e=>e.t==='sling');out.transporteDerribado=sl.length===6&&sl.every(e=>Math.abs(e.hp-e.max*.5)<.01);}
  // dispara a tus unidades desde el aire
  limpio();for(const s of B.sd){s.hp=s.max=9999;s.rt=0;}{const fl=B.flag||B,tr=pon('i14transporte',pathNear(fl.x,fl.y),1);tr.hp=tr.max=1e6;tr.fdF=-1;const h0=B.sd.reduce((a,s)=>a+s.hp,0);run(3);out.transporteDispara=B.sd.reduce((a,s)=>a+s.hp,0)<h0;}
