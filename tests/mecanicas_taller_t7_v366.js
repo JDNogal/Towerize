@@ -41,7 +41,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   for(const k of['v01sicario','v02espiritu','v03mimico','elite'])delete P0.plan[k];}
  // ---------- Sicario: humo 2 s al primer daño; los de dentro no se pueden apuntar ----------
  limpio();A.jam=999;{const si=pon('v01sicario',TR[M],1),o=pon('norm',TR[M+1],1);si.hp=si.max=o.hp=o.max=1e6;hurt(si,10,null,'magic');out.sicario=(S.smk||[]).length===1&&camoHid(o,A)&&camoHid(si,A);
-  hurt(si,10,null,'magic');out.sicarioUnaVez=S.smk.length===1;run(SMKT+.2);out.sicarioDura=!camoHid(o,A);}
+  const s2=pon('v01sicario',TR[M+1],1);s2.hp=s2.max=1e6;const h2=s2.hp;hurt(s2,10,null,'magic');hurt(si,10,null,'magic');out.sicarioUnaVez=S.smk.length===1&&s2.hp===h2&&!s2.smk;run(SMKT+.2);out.sicarioDura=!camoHid(o,A);}
  // ---------- Espíritu: lo físico lo atraviesa; atraviesa a las unidades y les hace daño ----------
  limpio();A.jam=999;{const gh=pon('v02espiritu',TR[M],1);gh.hp=gh.max=1e5;hurt(gh,500,null,'phys');const h1=gh.hp;hurt(gh,500,null,'magic');out.espiritu=h1===1e5&&gh.hp<1e5;
   const s=B.sd[0];s.hp=s.max=9999;s.rt=0;run(.2,()=>{s.x=gh.x;s.y=gh.y;});out.espirituUnidades=s.hp<9999&&gh.nblk===1&&!(s.en===gh&&s.fight);run(.5,()=>{s.x=gh.x;s.y=gh.y;});const h2=s.hp;run(.5,()=>{s.x=gh.x;s.y=gh.y;});out.espirituCada2s=s.hp===h2;s.hp=0;s.rt=999;}

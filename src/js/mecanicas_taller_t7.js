@@ -1,7 +1,7 @@
 // ==================== v366 · Mecánicas de los enemigos nuevos del Taller, tanda 7: enemigos de evento de la Fantástica ====================
 // Acordado con Nogal el 25-nov (01:46). Medidas en celdas pequeñas (K = 5 = el ancho del camino). Sustituyen costes de los eventos (events.js, abajo).
 //  · Sicario (smoke): salen 4 («Robarle» al Mercader, en vez de la Élite extra). La primera vez que cada uno recibe daño suelta una bomba de humo de 2,5 celdas de
-//    radio: él y los que estén dentro no se pueden apuntar 2 s. Quita 2 de vida si llega (Nogal: que los 4 no quiten más de la mitad de la vida).
+//    radio: él y los que estén dentro no se pueden apuntar 2 s y esquivan todo (también lo que ya iba por el aire, para que no salten todas las bombas a la vez). Quita 2 de vida si llega (Nogal: que los 4 no quiten más de la mitad de la vida).
 //  · Espíritu maldito (ghost): («Llevarte el ídolo» del Santuario, en vez de perder 3 de vida). Lo físico lo atraviesa; solo le hace daño lo mágico y lo elemental.
 //    Tus unidades no lo paran (es un ente que las atraviesa) y a cada una que atraviesa le hace daño.
 //  · Mímico enfurecido (mimr): (opción nueva del Cofre, «Abrirlo a la fuerza»). Suelta 10 🪙 por cada 10 % de vida que pierde y una bolsa de 100 al morir. Si llega
@@ -16,6 +16,7 @@ const SMKR=K/2,SMKT=2,GHD=10,GHCD=2,GHR=.9,MIMC=.1,MIMG=10,MIMB=100,BITECD=1.5,B
  BNTYB=['v04manticora','v05basilisco','v06hidra'];
 // ---- daño recibido: humo, espíritu, monedas del mímico, a quién culpa el basilisco ----
 {const _h=eHurtMod;eHurtMod=function(e,a,src,ty){const E=ET[e.t];
+ /* Nogal (25-nov): dentro del humo nada les da, ni las flechas que ya iban por el aire; así no saltan todas las bombas a la vez */if(S&&S.smk&&S.smk.length&&smkHid(e)){if(!(e.dgF>S.wt)){e.dgF=S.wt+.3;S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.4*K,col:'#b0b0c0'});}return 0;}
  if(E&&E.ghost&&(ty==='phys'||ty==null)){if(!(e.ghF>S.wt)){e.ghF=S.wt+.25;S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.5*K,col:'#c8e0ff'});}return 0;}
  a=_h(e,a,src,ty);if(!(a>0)||!E)return a;
  if(E.smoke&&!e.smk){e.smk=1;(S.smk=S.smk||[]).push({x:e.x,y:e.y,t:SMKT});S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:SMKR,col:'#8a8a9a'});}
@@ -66,7 +67,7 @@ function t7Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
 {const _d=eSkillsDraw;eSkillsDraw=function(g,lw){_d(g,lw);try{t7Draw(g,lw);}catch(x){}};}
 // ---- palabras clave ----
 {const _k=kwHtml0,R=v=>(typeof RGV==='function'&&typeof f==='function')?RGV(f(v/K)):String(v/K).replace('.',',');kwHtml0=function(id,src){
- if(id==='esmoke')return '<b>Bomba de humo</b><small>La primera vez que recibe daño suelta humo: él y los que estén dentro (a '+R(SMKR)+' o menos) no se pueden apuntar durante '+SMKT+' s.</small>';
+ if(id==='esmoke')return '<b>Bomba de humo</b><small>La primera vez que recibe daño suelta humo: él y los que estén dentro (a '+R(SMKR)+' o menos) no se pueden apuntar ni reciben daño durante '+SMKT+' s.</small>';
  if(id==='eghost')return '<b>Ente</b><small>Lo físico lo atraviesa: solo le hace daño lo mágico y lo elemental. Tus unidades no lo paran, y a cada una que atraviesa le hace daño.</small>';
  if(id==='emimr')return '<b>Botín a la carrera</b><small>Suelta '+MIMG+' 🪙 por cada '+Math.round(MIMC*100)+' % de vida que pierde y una bolsa de '+MIMB+' 🪙 al morir. Si llega al núcleo te roba 200 🪙.</small>';
  if(id==='espike')return '<b>Púas venenosas</b><small>Sus disparos dejan 1 stack de veneno. Si tus unidades se le pegan, muerde con su cabeza de león.</small>';
