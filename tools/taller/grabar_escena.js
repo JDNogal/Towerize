@@ -86,7 +86,7 @@ await p.evaluate(async(esc)=>{{const i=document.getElementById('intro');if(i)i.s
  if(esc==='inhibidor'){__sp('i08inhibidor',1,1,2000);__sp('norm',10,700,150);}
  if(esc==='nexo'){__sp('i20nexo',1,1,2500);__sp('norm',6,500,300);}
  if(esc==='fragata'){__sp('i30fragata',2,3500,1500);}
- if(esc==='saltador'){__sp('i31saltador',4,1500,55);setInterval(()=>{for(const e of S.enemies)if(e.qjF&&!e._qjn0){e._qjn0=1;window.__qj=(window.__qj||0)+1;}for(const e of S.enemies)if(e.qjF&&e.qjF.t<=0)e._qjn0=0;},50);}
+ if(esc==='saltador'){__sp('i31saltador',3,2500,150);setInterval(()=>{for(const e of S.enemies)if(e.qjF&&!e._qjn0){e._qjn0=1;window.__qj=(window.__qj||0)+1;}for(const e of S.enemies)if(e.qjF&&e.qjF.t<=0)e._qjn0=0;},50);}
  if(esc==='sobrecarga'){setTimeout(()=>{const fo=sqForm('qmarea',SQUADS.qmarea.m),sp=Math.min(...fo.map(o=>ET[o.t].sp));for(const o of fo){spawnEnemy(o.t,P0,{r:o.r,l:o.l,sp,sid:'d9',lead:o.lead});const e=S.enemies[S.enemies.length-1];e.hp=e.max=o.t==='i19sobrecarga'?3000:200;}},3000);}
  if(esc==='avispa'){__sp('i38avispa',8,250,300);setInterval(()=>{for(const t of S.list)if(t.sd)for(const s of t.sd)if(s.hp>0&&s.hp<s.max*.4)s.hp=s.max;},500);}
  if(esc==='caza'){__sp('i45caza',6,700,400);}

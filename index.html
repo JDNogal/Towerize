@@ -16719,7 +16719,7 @@ function t4Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
 //  · Saltador cuántico (qjump): si recibe de una vez más del 15 % de su vida, salta 10 celdas camino adelante (1 s entre saltos).
 Object.assign(TMEC,{i02tunelador:{burrow:1},i16amalgama:{amal:1},i21garrapata:{vtick:1},i39choque:{harp2:1},i08inhibidor:{inhib:1},i20nexo:{nexus:1},i30fragata:{fshield:1},i31saltador:{qjump:1}});
 const BURCD=5,BURT=1.5,BURSEE=2,BURMAX=3,AMREG=.02,AMSEE=K,AMFUS=1.2,AMT=1,TICKR=2*K,TICKM=.5,HARPCD=6,ARPR=1.5*K,HARPW=.5,HARPD=2*K,HARPT=.6,INHR=2*K,INHN=3,INHM=.7/* Nogal (25-nov): −30 % */,
- NEXR=1.5*K,NEXM=.5,FSHM=.4,FSHT=3,QJM=.15,QJD=2*K,QJCD=1;
+ NEXR=1.5*K,NEXM=.5,FSHM=.4,FSHT=3,QJM=.05,QJD=2*K,QJCD=10/* Nogal (25-nov): salta con cualquier golpe de verdad (≥5 %) y espera 10 s; antes 15 % y 1 s */;
 // ---- ocultar y modificar daño ----
 function eHidX(e,t){return e.under>0||(!!t&&!!e.tkT&&e.tkT===t);}
 {const _h=eHurtMod;eHurtMod=function(e,a,src,ty){if(e.under>0)return 0;
@@ -16766,7 +16766,7 @@ function nexusTick(e){const L=[];for(const o of S.enemies){if(o===e||o.hp<=0||is
 {const _a=achDeath;achDeath=function(e){const E=e&&ET[e.t];if(E&&E.nexus&&S&&S.enemies)for(const o of S.enemies)if(o.nxL===e){o.nxL=null;if(o.hp>0&&!isBoss(o)){o.fx.stun={t:1};}}
  if(E&&E.amal&&e.gold2&&!e.leak&&S){S.gold+=e.gold2;}/* una Amalgama fusionada da el oro de todas */return _a.apply(this,arguments);};}
 // ---- Saltador cuántico ----
-function qjumpDo(e){const x0=e.x,y0=e.y;e.fsp=0;let d=0;for(let i=0;i<300&&d<QJD;i++){const px=e.x,py=e.y;if(move(e,.05)){e.leak=true;break;}d+=Math.hypot(e.x-px,e.y-py);}
+function qjumpDo(e){const x0=e.x,y0=e.y;e.fsp=0;/* se teletransporta: si una unidad lo retenía, la deja atrás */tmRelease(e);e.stopped=false;e.ct=0;let d=0;for(let i=0;i<300&&d<QJD;i++){const px=e.x,py=e.y;if(move(e,.05)){e.leak=true;break;}d+=Math.hypot(e.x-px,e.y-py);}
  e.qjc=S.wt+QJCD;S.fx.push({x:x0,y:y0,t:.5,m:.5,r:.8*K,col:'#9a6aff'});S.fx.push({x:e.x,y:e.y,t:.5,m:.5,r:.8*K,col:'#c9a8ff'});e.qjF={x0,y0,t:.5};}
 // ---- tick general ----
 function t5Tick(dt){const SL=liveUnits().filter(s=>!s.charm);hookTick(dt);
@@ -16803,7 +16803,7 @@ function t5Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
  if(id==='einhib')return '<b>Inhibición</b><small>Mientras vive, tus '+INHN+' torres más cercanas (a '+R(INHR)+' o menos) disparan un '+Math.round((1-INHM)*100)+' % más despacio.</small>';
  if(id==='enexus')return '<b>Vínculo de colmena</b><small>Une a los enemigos de alrededor (a '+R(NEXR)+' o menos): la mitad del daño que reciben se lo lleva el Nexo. Al morir, los unidos quedan aturdidos 1 s.</small>';
  if(id==='efshield')return '<b>Escudo de energía</b><small>Un escudo del '+Math.round(FSHM*100)+' % de su vida absorbe el daño. Si pasa '+FSHT+' s sin recibir daño, se recarga entero.</small>';
- if(id==='eqjump')return '<b>Salto cuántico</b><small>Si recibe de una vez un golpe de más del '+Math.round(QJM*100)+' % de su vida, se teletransporta '+R(QJD)+' camino adelante.</small>';
+ if(id==='eqjump')return '<b>Salto cuántico</b><small>Si recibe de una vez un golpe de más del '+Math.round(QJM*100)+' % de su vida, se teletransporta '+R(QJD)+' camino adelante. Después tarda '+QJCD+' s en poder volver a saltar.</small>';
  return _k(id,src);};}
 {const KW5={burrow:['eburrow','Excavar','🪱'],amal:['eamal','Fusión','🫧'],vtick:['evtick','Parásito','🕷️'],harp2:['eharp2','Arpón','🪝'],inhib:['einhib','Inhibición','📡'],nexus:['enexus','Vínculo de colmena','🕸️'],fshield:['efshield','Escudo de energía','🛡️'],qjump:['eqjump','Salto cuántico','✨']};   // iconos provisionales: falta dibujarlos (prioritario)
  Object.assign(TMECKW,KW5);if(typeof MECG2!=='undefined')for(const k in KW5)MECG2.push(KW5[k]);
