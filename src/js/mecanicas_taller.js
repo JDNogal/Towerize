@@ -15,7 +15,7 @@
 //    después sube siempre y tarda 6 s en repetir.
 const TMEC={i07divisor:{split:{i47minilimo:3}},i47minilimo:{},i06potenciador:{horn:1},i43jabali:{charge:1},i37buitre:{dive:1}};
 const HORNCD=7,HORNT=2,HORNM=1.5,HORNR=2*K,CHGCD=5,CHGDOWN=1,CHGSEE=1.5*K,CHGWIND=.6,CHGWM=.4,CHGM=2,CHGRUN=1.6,CHGDM=2,CHGHIT=1.1,CHGAREA=2,CHGSIDE=.5,CHGIMM=1,
- DIVECD=6,DIVEWARN=.6,DIVEDOWN=2.5,DIVESEE=2*K,DIVEV=3.6*K,DIVEDMG=20,DIVEPAST=2.2,SPLT=.35;
+ DIVECD=6,DIVEWARN=.6,DIVEDOWN=1.5/* Nogal (25-nov): antes 2,5, tardaba mucho en volver a volar */,DIVESEE=2*K,DIVEV=3.6*K,DIVEDMG=20,DIVEPAST=2.2,SPLT=.35;
 // ¿Tiene el enemigo a esta unidad delante (por el camino) y a la vista? Devuelve la distancia o -1.
 function tmAhead(e,s,see){const d=Math.hypot(s.x-e.x,s.y-e.y);if(d>see)return -1;const F=S.field,q=pathNear(s.x,s.y),fe=F&&F[e.ty]&&F[e.ty][e.tx],fs=q&&F&&F[q.y]&&F[q.y][q.x];
  if(fe==null||fs==null||!(fe<1e9)||!(fs<1e9))return -1;const g=fe-fs;return g>=-.5&&g<=see*2?d:-1;}
@@ -50,7 +50,7 @@ function tmReattach(e){const q=pathNear(e.x,e.y);if(q){e.tx=q.x;e.ty=q.y;}e.pv=n
  if(e.wps){const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K),i=e.wps.findIndex(w=>w[0]===cx&&w[1]===cy);if(i>=0){e.wps=e.wps.slice(i+1);if(!e.wps.length)e.wps=null;}}}
 function chargeEnd(e){const ran=e.chr>0;e.chw=e.chr=0;e.chT=null;e.chgc=CHGCD;if(ran)tmReattach(e);}
 // la carrera: en línea recta hacia la unidad a la que embiste, al doble de su velocidad
-function chargeRun(e,dt){const s=e.chT;if(!s||!(s.hp>0))return;const dx=s.x-e.x,dy=s.y-e.y,d=Math.hypot(dx,dy);if(d<.05)return;const st=Math.min(d,ET[e.t].sp*CHGM*(S.espd||1)*dt);e.x+=dx/d*st;e.y+=dy/d*st;const q=pathNear(e.x,e.y);if(q){e.tx=q.x;e.ty=q.y;e.pv=null;}}
+function chargeRun(e,dt){const s=e.chT;if(!s||!(s.hp>0))return;const dx=s.x-e.x,dy=s.y-e.y,d=Math.hypot(dx,dy);if(d<.05)return;e.chD=[dx/d,dy/d];const st=Math.min(d,ET[e.t].sp*CHGM*(S.espd||1)*dt);e.x+=dx/d*st;e.y+=dy/d*st;const q=pathNear(e.x,e.y);if(q){e.tx=q.x;e.ty=q.y;e.pv=null;}}
 // quien lo retenía o iba a por él lo suelta
 function tmRelease(e){for(const t of unitTowers())for(const s of t.sd||[]){if(s.en===e){s.en=null;s.fight=false;}if(s.en2===e)s.en2=null;}}
 // mientras corre nadie lo retiene; a la primera unidad que toca la golpea y la tumba
@@ -98,7 +98,7 @@ function tmecDraw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=perfor
   // el Cornetero al tocar: ondas del cuerno
   if(e.hornB>0){const a=e.hornB/.7,r=E.r*CS*EVS;g.strokeStyle='rgba(255,170,60,'+(a*.9).toFixed(2)+')';g.lineWidth=lw(2.5);for(let i=1;i<=2;i++){g.beginPath();g.arc(px,py-r*.3,r*(1+i*(1.3-a)),-2.2,-.9);g.stroke();}}
   // Jabalí: polvo mientras coge carrerilla y estela mientras corre
-  if(e.chw>0||e.chr>0){let ux=e.tx-e.x,uy=e.ty-e.y;const d=Math.hypot(ux,uy);if(d>.01){ux/=d;uy/=d;}else if(e.fd){ux=e.fd[0];uy=e.fd[1];}else{ux=1;uy=0;}const r=E.r*CS*EVS;
+  if(e.chw>0||e.chr>0){/* v366: hacia la unidad que embiste (antes hacia la casilla más cercana, que cambiaba a cada paso y las líneas daban vueltas) */const T0=e.chT;let ux=e.chr>0&&e.chD?e.chD[0]:T0?T0.x-e.x:e.tx-e.x,uy=e.chr>0&&e.chD?e.chD[1]:T0?T0.y-e.y:e.ty-e.y;const d=Math.hypot(ux,uy);if(d>.01){ux/=d;uy/=d;}else if(e.fd){ux=e.fd[0];uy=e.fd[1];}else{ux=1;uy=0;}const r=E.r*CS*EVS;
    if(e.chw>0){const k=1-e.chw/CHGWIND;g.fillStyle='rgba(214,196,160,.75)';for(let i=0;i<4;i++){const ph=(now*3+i*.25)%1,bx=px-ux*r*(1+ph*1.6)-uy*r*(i-1.5)*.45,by=py-uy*r*(1+ph*1.6)+ux*r*(i-1.5)*.45;g.globalAlpha=(1-ph)*.8;g.beginPath();g.arc(bx,by,r*(.25+ph*.4),0,7);g.fill();}g.globalAlpha=1;
     g.strokeStyle='rgba(255,120,70,'+(.35+.55*k).toFixed(2)+')';g.lineWidth=lw(3.5);g.beginPath();g.arc(px,py,r*(2-.75*k),0,7);g.stroke();}
    else{g.strokeStyle='rgba(255,236,200,.85)';g.lineCap='round';g.lineWidth=lw(2.5);for(let i=-2;i<=2;i++){const ox=-uy*i*r*.4,oy=ux*i*r*.4,L=2.6-Math.abs(i)*.5;g.beginPath();g.moveTo(px-ux*r*1.1+ox,py-uy*r*1.1+oy);g.lineTo(px-ux*r*(1.1+L)+ox,py-uy*r*(1.1+L)+oy);g.stroke();}

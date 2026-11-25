@@ -18,11 +18,11 @@ const NETCD=10,NETR=RANGED_R/* dispara desde donde se para (a 15 celdas de tus u
 // piezas del Centinela: n nombre, col color
 const CNP={fis:{n:'físico',col:'#d9c08a'},ele:{n:'eléctrico',col:'#7ad0ff'},fue:{n:'fuego',col:'#ff7a3a'},ven:{n:'veneno',col:'#8ae05a'},mag:{n:'mágico',col:'#b08aff'},uni:{n:'unidades',col:'#c9d3dd'},con:{n:'control',col:'#5a8aff'},apo:{n:'apoyo',col:'#ffd75a'}};
 // ---- Unidad de contención: red ----
-function netTick(e,dt,SL){if(e.ntF){const f=e.ntF;f.t+=dt;if(f.t>=NETF){e.ntF=null;let n=0;for(const s of SL){if(s.air||!(s.hp>0)||Math.hypot(s.x-f.x,s.y-f.y)>NETA)continue;s.net=S.wt+NETT;s.en=null;s.fight=false;s.en2=null;n++;}
+function netTick(e,dt,SL){if(e.ntF){const f=e.ntF;f.t+=dt;if(f.s&&f.s.hp>0){f.x=f.s.x;f.y=f.s.y;}/* v366: sigue a la unidad elegida, para que no la esquive */if(f.t>=NETF){e.ntF=null;let n=0;for(const s of SL){if(s.air||!(s.hp>0)||Math.hypot(s.x-f.x,s.y-f.y)>NETA)continue;s.net=S.wt+NETT;s.en=null;s.fight=false;s.en2=null;n++;}
    S.fx.push({x:f.x,y:f.y,t:.5,m:.5,r:NETA,col:'#c9e0ff'});}return;}
  e.ntc=(e.ntc===undefined?2:e.ntc)-dt;if(e.ntc>0)return;let b=null,bn=0;
  for(const s of SL){if(s.air||!(s.hp>0)||(s.net>S.wt)||Math.hypot(s.x-e.x,s.y-e.y)>NETR)continue;let n=0;for(const o of SL)if(!o.air&&o.hp>0&&Math.hypot(o.x-s.x,o.y-s.y)<=NETA)n++;if(n>bn){bn=n;b=s;}}
- if(!b){e.ntc=.4;return;}e.ntF={x0:e.x,y0:e.y,x:b.x,y:b.y,t:0};e.ntc=NETCD;}
+ if(!b){e.ntc=.4;return;}e.ntF={x0:e.x,y0:e.y,x:b.x,y:b.y,s:b,t:0};e.ntc=NETCD;}
 // atrapadas: no andan, y no retienen a nadie (peso casi 0: pueden pegar a lo que tengan al lado, pero no lo paran)
 function withoutNet(fn){const saved=[];for(const t of unitTowers())if(t.sd&&t.sd.some(s=>s.net>S.wt)){saved.push([t,t.sd]);t.sd=t.sd.filter(s=>!(s.net>S.wt));}try{return fn();}finally{for(const[t,sd]of saved)t.sd=sd;}}
 {const _w=unitWalk;unitWalk=function(dt){return withoutNet(()=>_w(dt));};}
@@ -92,7 +92,7 @@ function t8Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
   if(E.thaw&&(e.thw||0)<1){const a=1-(e.thw||0);g.fillStyle='rgba(170,220,255,'+(.55*a).toFixed(2)+')';g.strokeStyle='rgba(230,245,255,'+(.8*a).toFixed(2)+')';g.lineWidth=lw(1.5);g.beginPath();g.arc(px,py,r*1.1,0,7);g.fill();g.stroke();}}
  for(const s of liveUnits())if(s.net>S.wt){g.strokeStyle='rgba(200,225,255,.85)';g.lineWidth=lw(1.2);const x=X(s.x),y=X(s.y),R=CS*.55;g.beginPath();for(let i=-1;i<=1;i++){g.moveTo(x-R,y+i*R*.5);g.lineTo(x+R,y+i*R*.5);g.moveTo(x+i*R*.5,y-R);g.lineTo(x+i*R*.5,y+R);}g.stroke();}
  for(const t of S.list||[]){const x=X(t.x),y=X(t.y);if(t.reaU>S.wt){g.fillStyle='rgba(40,30,20,.45)';g.beginPath();g.arc(x,y,CT*1.05,0,7);g.fill();g.fillStyle='#ffb43a';g.font='bold '+Math.round(CT*.6)+'px sans-serif';g.textAlign='center';g.fillText('⚡',x,y+CT*.2);}
-  if(t.cfU>S.wt){g.fillStyle='#b08aff';g.font='bold '+Math.round(CT*.55)+'px sans-serif';g.textAlign='center';g.fillText('?',x+CT*.6,y-CT*.6);}
+  if(t.cfU>S.wt){for(let i=0;i<3;i++){const a=now*4+i*2.09;g.fillStyle='#ffe07a';g.font='bold '+Math.round(CT*.4)+'px sans-serif';g.textAlign='center';g.fillText('✦',x+Math.cos(a)*CT*.6,y-CT*.95+Math.sin(a)*CT*.2);}g.fillStyle='#b08aff';g.font='bold '+Math.round(CT*.55)+'px sans-serif';g.textAlign='center';g.fillText('?',x+CT*.6,y-CT*.6);}
   if(t.omcU>S.wt){g.strokeStyle='rgba(90,140,255,.7)';g.lineWidth=lw(2);g.beginPath();g.arc(x,y,CT*1.1,0,7);g.stroke();}}}
 {const _d=eSkillsDraw;eSkillsDraw=function(g,lw){_d(g,lw);try{t8Draw(g,lw);}catch(x){}};}
 // ---- palabras clave ----

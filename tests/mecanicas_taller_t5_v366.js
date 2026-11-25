@@ -50,9 +50,11 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   g2.tkT=A;run(.1);out.garrapataNoAcumula=Math.abs(stats(A).dmg-d0*TICKM)<1e-6;hurt(g1,1e9,null,'phys');run(.2);out.garrapataSigue=Math.abs(stats(A).dmg-d0*TICKM)<1e-6;hurt(g2,1e9,null,'phys');run(.2);out.garrapataQuita=Math.abs(stats(A).dmg-d0)<1e-6;}
  // sin torres a 10 celdas sigue el camino
  limpio();{const g3=pon('i21garrapata',TR[2]);g3.hp=g3.max=1e6;const far=!S.list.some(t=>Math.hypot(t.x-g3.x,t.y-g3.y)<=TICKR);const x0=g3.x,y0=g3.y;run(1);out.garrapataCamino=!far||Math.hypot(g3.x-x0,g3.y-y0)>.5;}
+ // la Amalgama fundida va más lenta (Nogal, 25-nov)
+ limpio();{const a1=pon('i16amalgama',TR[2]),a3=pon('i16amalgama',TR[2]);a1.hp=a1.max=a3.hp=a3.max=1e7;a3.amN=3;a1.amc=a3.amc=99;const f1=P(a1),f3=P(a3);run(2);out.amalgamaLenta=(f1-P(a1))>(f3-P(a3))*1.2;out.amalgamaLentaV=(f1-P(a1)).toFixed(1)+'/'+(f3-P(a3)).toFixed(1);}
  // ---------- Dron arpón: engancha y arrastra 10 celdas atrás; la unidad vuelve ----------
  limpio();A.jam=999;for(const s of B.sd){s.hp=s.max=9999;s.rt=0;s.lock=false;}run(1.2);{const fl=B.flag||B,dr=pon('i39choque',pathNear(fl.x,fl.y),1);dr.hp=dr.max=1e6;dr.hpc=0;const m=run(1,()=>!!dr.hpS);const s=dr.hpS,x0=s.x,y0=s.y,f0=S.field[Math.round(y0)][Math.round(x0)];
-  run(HARPW+HARPT+.1);const f1=S.field[Math.round(s.y)][Math.round(s.x)];out.arpon=m&&f1>=f0+HARPD-3&&!(s.hook>0);out.arponV=f0+'/'+f1;run(6);out.arponVuelve=Math.hypot(s.x-x0,s.y-y0)<3;}
+  run(HARPW+HARPT+.1);const f1=S.field[Math.round(s.y)][Math.round(s.x)];out.arpon=m&&f1<=f0-HARPD+3&&!(s.hook>0)/* v366: hacia delante (Nogal) */;out.arponV=f0+'/'+f1;run(6);out.arponVuelve=Math.hypot(s.x-x0,s.y-y0)<3;}
  // ---------- Inhibidor: las 3 torres más cercanas a 10 celdas, a la mitad ----------
  limpio();A.jam=0;{const r0=stats(A).rate;const ih=pon('i08inhibidor',{x:Math.round(A.x),y:Math.round(A.y)+3},1);ih.hp=ih.max=1e6;run(.3);out.inhibidor=Math.abs(stats(A).rate-r0*INHM)<1e-6&&(ih.inhL||[]).length<=INHN;hurt(ih,1e9,null,'phys');run(.4);out.inhibidorMuere=Math.abs(stats(A).rate-r0)<1e-6;}
  // ---------- Nexo: se lleva la mitad del daño; al morir aturde 1 s ----------

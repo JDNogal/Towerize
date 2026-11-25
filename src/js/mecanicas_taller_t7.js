@@ -11,8 +11,8 @@
 //    Basilisco (gaze): cada 8 s mira 1 s a una torre a 12,5 celdas (la que más daño le hace) y la deja petrificada 3 s.
 //    Hidra (heads): al perder 1/3 de su vida le sale otra cabeza (+50 % de daño a unidades) y al perder 2/3, otra (+100 %).
 Object.assign(TMEC,{v01sicario:{smoke:1,evn:1,dmg:2},v02espiritu:{ghost:1,evn:1},v03mimico:{mimr:1,evn:1,dmg:1,steal:200},
- v04manticora:{spike:1,evn:1,el:1,bounty:1},v05basilisco:{gaze:1,evn:1,el:1,bounty:1},v06hidra:{heads:1,evn:1,el:1,bounty:1}});
-const SMKR=K/2,SMKT=2,GHD=10,GHCD=2,GHR=.9,MIMC=.1,MIMG=10,MIMB=100,BITECD=1.5,BITEM=1.5,BITER=1.6,GAZECD=8,GAZEW=1,GAZER=2.5*K,GAZET=3,HEADM=.5,
+ v04manticora:{spike:1,upois:1.5,evn:1,el:1,bounty:1},v05basilisco:{gaze:1,evn:1,el:1,bounty:1},v06hidra:{heads:1,evn:1,el:1,bounty:1}});
+const SMKR=K/2,SMKT=2,GHD=10,GHCD=2,GHR=1.4,MIMC=.1,MIMG=10,MIMB=100,BITECD=1.5,BITEM=1.5,BITER=1.6,GAZECD=8,GAZEW=1,GAZER=2.5*K,GAZET=3,HEADM=.5,
  BNTYB=['v04manticora','v05basilisco','v06hidra'];
 // ---- daño recibido: humo, espíritu, monedas del mímico, a quién culpa el basilisco ----
 {const _h=eHurtMod;eHurtMod=function(e,a,src,ty){const E=ET[e.t];
@@ -33,7 +33,7 @@ function smkHid(e){if(!S.smk||!S.smk.length)return false;for(const c of S.smk)if
 // ---- Espíritu: atraviesa a las unidades y les hace daño ----
 function ghostTick(e,SL){e.nblk=1;for(const s of SL){if(s.air||!(s.hp>0)||Math.hypot(s.x-e.x,s.y-e.y)>GHR)continue;const m=e.ghU||(e.ghU=new Map()),k=m.get(s)||0;if(k>S.wt)continue;m.set(s,S.wt+GHCD);hitUnit(s,GHD,e);S.fx.push({x:s.x,y:s.y,t:.3,m:.3,r:.4*K,col:'#a8c8ff'});}}
 // ---- Mantícora: púas venenosas (los disparos) y mordisco si se le pegan ----
-{const _hu=hitUnit;hitUnit=function(s,d,e){const r=_hu.apply(this,arguments);if(e&&!e._bite&&ET[e.t]&&ET[e.t].spike&&s&&s.hp>0&&typeof uAddPois==='function')uAddPois(s,1.5,e);return r;};}
+/* el veneno de las púas va por E.upois (towers.js, en cada golpe); la púa que vuela, S.spkP */
 function biteTick(e,E,dt,SL){e.btc=(e.btc||0)-dt;if(e.btc>0)return;let s=null,bd=BITER;for(const u of SL){if(u.air||!(u.hp>0))continue;const d=Math.hypot(u.x-e.x,u.y-e.y)-(u.en===e?.5:0);if(d<=bd){bd=d;s=u;}}/* la unidad pegada a ella (prefiere la que pelea con ella) */if(!s){e.btc=.2;return;}
  e._bite=1;try{hitUnit(s,(E.ud||0)*BITEM*(typeof udM==='function'?udM(e):1),e);}finally{e._bite=0;}e.btc=BITECD;e.btF={x:s.x,y:s.y,t:.35};S.fx.push({x:s.x,y:s.y,t:.3,m:.3,r:.5*K,col:'#d08a3a'});}
 // ---- Basilisco: mirada petrificante ----
@@ -46,6 +46,7 @@ function headsTick(e){const n=e.hp<=e.max/3?3:e.hp<=e.max*2/3?2:1;if(n>(e.hyN||1
 // ---- tick general ----
 function t7Tick(dt){const SL=liveUnits().filter(s=>!s.charm);
  if(S.smk&&S.smk.length){for(const c of S.smk)c.t-=dt;S.smk=S.smk.filter(c=>c.t>0);}
+ if(S.spkP&&S.spkP.length){for(const p of S.spkP)p.t+=dt;S.spkP=S.spkP.filter(p=>p.t<.3);}
  if(S.coinB&&S.coinB.length){for(const c of S.coinB)c.t+=dt;S.coinB=S.coinB.filter(c=>c.t<.6);}
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];if(!E)continue;if(e.btF&&e.btF.t>0)e.btF.t-=dt;
   if(E.heads)headsTick(e);if(E.ghost)ghostTick(e,SL);
@@ -55,6 +56,7 @@ function t7Tick(dt){const SL=liveUnits().filter(s=>!s.charm);
 // ---- dibujo ----
 function t7Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performance.now()/1000;
  for(const c of S.smk||[]){const a=Math.min(1,c.t/.5);for(let i=0;i<5;i++){g.fillStyle='rgba(120,120,135,'+(.28*a).toFixed(2)+')';g.beginPath();g.arc(X(c.x)+Math.cos(i*1.26+now*.8)*SMKR*CS*.45,X(c.y)+Math.sin(i*1.26+now*.8)*SMKR*CS*.45,SMKR*CS*.55,0,7);g.fill();}}
+ for(const p of S.spkP||[]){const k=Math.min(1,p.t/.25),x=X(p.x0+(p.x1-p.x0)*k),y=X(p.y0+(p.y1-p.y0)*k),a=Math.atan2(p.y1-p.y0,p.x1-p.x0);g.strokeStyle='#5a3a1a';g.lineWidth=lw(2.5);g.beginPath();g.moveTo(x-Math.cos(a)*CS*.5,y-Math.sin(a)*CS*.5);g.lineTo(x,y);g.stroke();g.fillStyle='#8ae05a';g.beginPath();g.arc(x,y,Math.max(1.5,CS*.1),0,7);g.fill();}
  for(const c of S.coinB||[]){const k=c.t/.6;g.fillStyle='rgba(255,215,90,'+(1-k).toFixed(2)+')';g.strokeStyle='rgba(120,80,10,'+(1-k).toFixed(2)+')';g.lineWidth=lw(1);for(const s of[-1,1]){g.beginPath();g.arc(X(c.x)+s*CS*.4*k,X(c.y)-CS*1.2*Math.sin(Math.PI*k),Math.max(2,CS*.16),0,7);g.fill();g.stroke();}}
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];if(!E)continue;const px=X(e.x),py=X(e.y),r=E.r*CS*EVS*(e.szm||1);
   if(E.ghost){g.fillStyle='rgba(200,225,255,'+(.18+.1*Math.sin(now*4)).toFixed(2)+')';g.beginPath();g.arc(px,py,r*1.3,0,7);g.fill();}

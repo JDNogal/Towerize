@@ -88,8 +88,8 @@ function t3Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
    if(e.rageB>0){e.rageB-=1/60;g.strokeStyle='rgba(255,60,40,.9)';g.lineWidth=lw(3);g.beginPath();g.arc(px,py,r*(1.3+(.6-e.rageB)*2),0,7);g.stroke();}}
   if(e.furU>S.wt){g.strokeStyle='rgba(255,50,30,.9)';g.lineWidth=lw(2.4);for(let i=0;i<3;i++){const a=-1.9+i*.4;g.beginPath();g.moveTo(px+Math.cos(a)*r*1.05,py+Math.sin(a)*r*1.05);g.lineTo(px+Math.cos(a)*r*1.55,py+Math.sin(a)*r*1.55);g.stroke();}}
   if(E.magma){g.strokeStyle='rgba(255,120,40,'+(.5+.3*Math.sin(now*5)).toFixed(2)+')';g.lineWidth=lw(1.8);for(let i=0;i<3;i++){const a=i*2.1+.4;g.beginPath();g.moveTo(px+Math.cos(a)*r*.2,py+Math.sin(a)*r*.2);g.lineTo(px+Math.cos(a+.3)*r*.8,py+Math.sin(a+.3)*r*.8);g.stroke();}}}
- for(const t of unitTowers())for(const s of t.sd||[]){if(!(s.ubn>0)||!(s.hp>0))continue;const x=X(s.x),y=X(s.y);for(let i=0;i<3;i++){const ph=(now*1.4+i/3)%1;g.fillStyle='rgba(120,120,120,'+(.5*(1-ph)).toFixed(2)+')';g.beginPath();g.arc(x+(i-1)*CS*.25,y-CS*(.4+ph*1.1),CS*(.12+ph*.15),0,7);g.fill();}
-  g.fillStyle='rgba(255,130,40,.85)';g.beginPath();g.arc(x,y-CS*.15,CS*.14,0,7);g.fill();}}
+ for(const t of unitTowers())for(const s of t.sd||[]){if(!(s.ubn>0)||!(s.hp>0))continue;const x=X(s.x),y=X(s.y);for(let i=0;i<3;i++){const ph=(now*1.4+i/3)%1;g.fillStyle='rgba(120,120,120,'+(.5*(1-ph)).toFixed(2)+')';g.beginPath();g.arc(x+(i-1)*CS*.45,y-CS*(.7+ph*2),CS*(.3+ph*.4),0,7);g.fill();}/* v366: más grande (Nogal: no se apreciaba) */
+  for(let i=0;i<3;i++){const fl=.75+.25*Math.sin(now*14+i*2);g.fillStyle=i===1?'rgba(255,220,90,.9)':'rgba(255,120,30,.9)';g.beginPath();g.moveTo(x+(i-1)*CS*.3-CS*.18,y);g.quadraticCurveTo(x+(i-1)*CS*.3,y-CS*(.9+.3*(i===1))*fl,x+(i-1)*CS*.3+CS*.18,y);g.fill();}}}
 {const _d=eSkillsDraw;eSkillsDraw=function(g,lw){_d(g,lw);try{t3Draw(g,lw);}catch(x){}};}
 // otros golpes de enemigos a tus unidades (picados, brasas…) también llevan la furia
 {const _h=hitUnit;hitUnit=function(s,d,e){if(e&&e.furU>S.wt)d*=RAGEM;return _h(s,d,e);};}

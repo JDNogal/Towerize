@@ -4081,7 +4081,7 @@ const abRank=(t,id)=>{const r=t.ab&&t.ab[id]?AB[id].ranks[t.ab[id]-1]:null;retur
 // v311 · las torres de evento también tienen habilidades a Nv 4 (el Dragón, al ser anciano): UAB dice cuáles; abIds(t) vale para cualquier torre
 const uabOk=t=>!!t&&typeof UAB!=='undefined'&&!!TW[t.type]&&!!UAB[t.type]&&!t.pigU&&!t.summ&&(TW[t.type].dragon?(t.stage||0)>=3:(t.lvl||1)>=4);
 const abIds=t=>t&&t.spec&&SPECS[t.type]&&SPECS[t.type][t.spec]?SPECS[t.type][t.spec].ab:uabOk(t)?UAB[t.type]:[];
-const RGMELEE=.5/* v366: ritmo de un enemigo a distancia que tiene una unidad peleando con él */,TRI=.9,ALERT=K/* v366 (Nogal): un ancho de camino desde la bandera, para que no salgan de la zona de control (era 2,3·K = 11,5 celdas; en la v305, 2,75; antes de la v278, 2) */,SCONTACT=1.1,SCONTR=KC+.1/* v365: las unidades que no se mueven a por el enemigo (héroes y unidades a distancia) retienen a quien pase a esta distancia; con 3 carriles 1,1 les bastaba para tapar el camino entero desde el carril central, con 5 hacen falta 2,1 */,RANGED_R=3*K,MELR=1.6*K,SREGEN=3,SREGP=.05,SREGT=3;
+const RGMELEE=.5,RSHMAX=2/* v366: ritmo de un enemigo a distancia que tiene una unidad peleando con él */,TRI=.9,ALERT=K/* v366 (Nogal): un ancho de camino desde la bandera, para que no salgan de la zona de control (era 2,3·K = 11,5 celdas; en la v305, 2,75; antes de la v278, 2) */,SCONTACT=1.1,SCONTR=KC+.1/* v365: las unidades que no se mueven a por el enemigo (héroes y unidades a distancia) retienen a quien pase a esta distancia; con 3 carriles 1,1 les bastaba para tapar el camino entero desde el carril central, con 5 hacen falta 2,1 */,RANGED_R=3*K,MELR=1.6*K,SREGEN=3,SREGP=.05,SREGT=3;
 const uRegen=(s,dt)=>{if(S.wt-(s.lh===undefined?-99:s.lh)>=SREGT)s.hp=Math.min(s.max,s.hp+s.max*SREGP*dt);};
 // Las tablas se escriben en 'casillas viejas'; aquí pasan a casillas de la rejilla fina (x K). Los radios de enemigos se reducen para que quepan varios por camino.
 for(const k in TW){const T=TW[k];T.range*=K;if(T.ps)T.ps*=K;if(T.splash)T.splash*=K;if(T.pr)T.pr*=K;if(T.unit)T.unit.spd*=K;}
@@ -6784,12 +6784,12 @@ function unitCombat(dt){
  for(const e of S.enemies){const E=ET[e.t];let tg=null;
   if(e.hp<=0||e.sw||e.fx.freeze||e.fx.poly||e.fx.fear){e.acd=E.ac;continue;}
   if(E.rg==='ranged'){if(e.rw>0)e.rw-=dt;else{/* v366 (Nogal): si alguien pelea con él, le dispara a ese; si no, se reparten: cada uno a la unidad a tiro con menos tiradores encima (antes todos a la más cercana: salían de una en una y morían) */
-   tg=SL.find(s=>s.fight&&s.en===e&&s.hp>0)||null;if(!tg){let bs=1e9;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d>RANGED_R)continue;let n=0;for(const o of S.enemies)if(o!==e&&o.rshT===s&&o.hp>0)n++;const sc=n*100+d;if(sc<bs){bs=sc;tg=s;}}}e.rshT=tg;
+   tg=SL.find(s=>s.fight&&s.en===e&&s.hp>0)||null;if(!tg){let bs=1e9;for(const s of SL){if(s.H&&s.H.camo>0)continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d>RANGED_R)continue;let n=0;for(const o of S.enemies)if(o!==e&&o.rshT===s&&o.hp>0)n++;if(n>=RSHMAX)continue/* v366 (Nogal): con 2 disparándole ya, los demás siguen avanzando hasta otra */;const sc=n*100+d;if(sc<bs){bs=sc;tg=s;}}}e.rshT=tg;
    if(tg){if(e.rsH===undefined||e.hp<e.rsH-.01){e.rsH=e.hp;e.rsT=0;}else e.rsT=(e.rsT||0)+dt;if(e.rsT>20){e.rsT=0;e.rw=3;tg=null;}else{e.stopped=true;if(!tg.en&&!tg.lock&&!(tg.H&&tg.H.def.ranged)&&!tg.rng&&!isFly(e)){tg.en=e;tg.enR=e;e.nb=(e.nb||0)+tg.w;}}}else e.rsT=0;}}
   else if(e.ct>0){/* cuerpo a cuerpo: le pega a la unidad que lo retiene (también los que retiene de más) */tg=SL.find(s=>s.fight&&s.en===e)||SL.find(s=>s.en2===e&&s.hp>0)||null;if(tg&&Math.hypot(tg.x-e.x,tg.y-e.y)>MELR)tg=null;e.stopped=e.ct>=(E.need||1);}
   else if(e.sqid&&!e.loose&&!isFly(e)&&(E.ud||0)>0){/* v305 · escuadra frenada: si una unidad tuya pelea con alguien de su escuadra, los de al lado se paran y le pegan también (no se quedan mirando) */const m=SL.find(s=>s.hp>0&&s.en&&s.en.sqid===e.sqid&&s.en.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<=MELR*1.5);if(m){tg=m;e.stopped=true;}}
   if(tg){const U=unitOf(tg.tw);e.acd=(e.acd===undefined?E.ac:e.acd)-dt*(E.rg==='ranged'&&SL.some(s=>s.fight&&s.en===e)?RGMELEE:1)/* v366: a distancia con una unidad encima dispara a la mitad de ritmo */;
-   while(e.acd<=0&&tg.hp>0){e.acd+=E.ac;if(E.rg==='ranged')S.fx.push({x:tg.x,y:tg.y,t:.25,m:.25,r:.35*K,col:E.dt==='magic'?'#a58bff':'#d9c08a'});const sg=tg.drunk>0&&abRank(tg.tw,'stagger');if(sg&&prdRoll(sg,sg.p)){if(S.pvE&&S.dn)dnAdd(tg,0,'taken');continue;}
+   while(e.acd<=0&&tg.hp>0){e.acd+=E.ac;if(E.rg==='ranged'){S.fx.push({x:tg.x,y:tg.y,t:.25,m:.25,r:.35*K,col:E.dt==='magic'?'#a58bff':'#d9c08a'});if(E.spike)(S.spkP=S.spkP||[]).push({x0:e.x,y0:e.y,x1:tg.x,y1:tg.y,t:0})/* v366: púa de la Mantícora */;}const sg=tg.drunk>0&&abRank(tg.tw,'stagger');if(sg&&prdRoll(sg,sg.p)){if(S.pvE&&S.dn)dnAdd(tg,0,'taken');continue;}
     {const co=abRank(tg.tw,'counter');if(co&&prdRoll(co,co.p)){const cs=stats(tg.tw),cd=cs.dmg;hurt(e,cd,tg.tw,'phys');const MT=TW[tg.tw.type],ch=abRank(tg.tw,'chi');if(MT&&MT.monk){DNK='magic';hurt(e,cd*(ch?ch.m:MT.mhit),tg.tw,'magic');DNK=null;}S.fx.push({x:e.x,y:e.y,t:.2,m:.2,r:.4*K,col:'#ffd27a'});}}
     const ua=E.dt==='magic'?auraAP(tg):(uapOf(tg.tw)+auraAP(tg)+((CLS[tg.cls]||CLS0).ap))*(1-(E.pierce||0)),wl=abRank(tg.tw,'wall'),dg=abRank(tg.tw,'dodge');if(!(dg&&prdRoll(dg,dg.p))){let ud=(tg.H&&tg.H.inv>0)?0:E.ud*udM(e)*furyM()*(e.furU>S.wt?RAGEM:1)/* v366: furia del Portaestandarte alado */*(e.hyM||1)/* v366: cabezas de la Hidra */*(1-ua/(ua+ARM_K))*(1-(wl?wl.red:0))*(tg.H&&tg.H.id==='reinhart'&&tg.H.lvl>=4?.85:1);if(ud>0&&typeof uHitMod==='function')ud=uHitMod(tg,ud,e);tg.hp-=ud;tg.lh=S.wt;if(S.pvE&&S.dn)dnAdd(tg,ud,'taken');if(E.splashU&&typeof splashUnits==='function')splashUnits(tg,ud*.5,e);if(E.upois&&typeof uAddPois==='function')uAddPois(tg,E.upois,e);}if(tg.hp<=0&&!tg.H&&ra('banner'))tg.hp=1;if(tg.hp<=0){if(tg.H&&S.st)S.st.hDie=(S.st.hDie||0)+1;tg.rt=U.rez*(!tg.H&&rp('banner')?.7:1);tg.en=null;tg.fight=false;}}}
   else e.acd=E.ac;}
@@ -6952,7 +6952,7 @@ function laneStep(e,F){if(e.nolane)return null;const fd=laneDir(e,F);if(!fd)retu
  const nx=e.tx+fd[0],ny=e.ty+fd[1];if(ok(nx,ny)&&F[ny][nx]<F[e.ty][e.tx]+K)return[nx,ny];return null;}
 function move(e,dt){if(isBoss(e))e.blk=e.stopped?(e.blk||0)+dt:Math.max(0,(e.blk||0)-2*dt);if(e.fx.fear&&!e.fx.freeze&&!e.fx.stun){knock(e,ET[e.t].sp*.8*(S.espd||1)*dt);return false;}
  /* v305: una ralentización ya no saca al enemigo del paso de su escuadra (antes, al pasársele, corría a su velocidad propia, más rápida que la de la formación: ralentizar acababa acelerando la oleada) */if(e.fsp&&(e.fx.stun||e.fx.freeze||e.fx.root||e.fx.poly||e.fx.haste||e.stopped))e.fsp=0;
- const PBK=.25;let mv=(e.fsp?Math.min(e.fsp,sqFollow(e)):ET[e.t].sp)*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(e.hornU>S.wt?HORNM:1)/* v366: toque de cuerno del Cornetero */*(e.chw>0?CHGWM:1)/* v366: el Jabalí frena mientras coge carrerilla (la carrera va aparte, en mecanicas_taller.js) */*(e.furU>S.wt?RAGEM:1)/* v366: furia del Portaestandarte alado */*(e.ovU>S.wt?OVLM:e.ohU>S.wt?OVHM:1)*(e.abU>S.wt?ABM:1)/* v366: sobrecarga (Sobrecargador) y postcombustión (Caza) */*(e.phU>S.wt?1+PHEM*(e.phN||0):1)/* v366: feromonas */*(e.thwM||1)/* v366: Durmientes congelados */*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
+ const PBK=.25;let mv=(e.fsp?Math.min(e.fsp,sqFollow(e)):ET[e.t].sp)*(e.fx.slow?e.fx.slow.m:1)*(e.fx.poly?POLYS:1)*(e.fx.haste?e.fx.haste.m:1)*(e.hornU>S.wt?HORNM:1)/* v366: toque de cuerno del Cornetero */*(e.chw>0?CHGWM:1)/* v366: el Jabalí frena mientras coge carrerilla (la carrera va aparte, en mecanicas_taller.js) */*(e.furU>S.wt?RAGEM:1)/* v366: furia del Portaestandarte alado */*(e.ovU>S.wt?OVLM:e.ohU>S.wt?OVHM:1)*(e.abU>S.wt?ABM:1)/* v366: sobrecarga (Sobrecargador) y postcombustión (Caza) */*(e.phU>S.wt?1+PHEM*(e.phN||0):1)/* v366: feromonas */*(e.thwM||1)/* v366: Durmientes congelados */*(e.amN>=3?.7:e.amN===2?.85:1)/* v366: Amalgama fundida, más lenta */*(S.espd||1)*dt;if(e.fx.freeze||e.fx.stun||e.fx.root||e.stopped)mv=0;else if((ET[e.t].need||1)>1&&e.ct>0)mv*=Math.max(0,1-PBK*e.ct);
  const go=c=>{(e.trail=e.trail||[]).push([e.tx,e.ty]);if(e.trail.length>3000)e.trail.shift();e.pv=[e.tx,e.ty];e.tx=c[0];e.ty=c[1];};
  while(mv>0){
   const dx=e.tx-e.x,dy=e.ty-e.y,dd=Math.hypot(dx,dy);
@@ -16263,7 +16263,7 @@ for(const k in TAM)if(ET[k])ET[k].r=TAM[k]/2/EVS;
 //    después sube siempre y tarda 6 s en repetir.
 const TMEC={i07divisor:{split:{i47minilimo:3}},i47minilimo:{},i06potenciador:{horn:1},i43jabali:{charge:1},i37buitre:{dive:1}};
 const HORNCD=7,HORNT=2,HORNM=1.5,HORNR=2*K,CHGCD=5,CHGDOWN=1,CHGSEE=1.5*K,CHGWIND=.6,CHGWM=.4,CHGM=2,CHGRUN=1.6,CHGDM=2,CHGHIT=1.1,CHGAREA=2,CHGSIDE=.5,CHGIMM=1,
- DIVECD=6,DIVEWARN=.6,DIVEDOWN=2.5,DIVESEE=2*K,DIVEV=3.6*K,DIVEDMG=20,DIVEPAST=2.2,SPLT=.35;
+ DIVECD=6,DIVEWARN=.6,DIVEDOWN=1.5/* Nogal (25-nov): antes 2,5, tardaba mucho en volver a volar */,DIVESEE=2*K,DIVEV=3.6*K,DIVEDMG=20,DIVEPAST=2.2,SPLT=.35;
 // ¿Tiene el enemigo a esta unidad delante (por el camino) y a la vista? Devuelve la distancia o -1.
 function tmAhead(e,s,see){const d=Math.hypot(s.x-e.x,s.y-e.y);if(d>see)return -1;const F=S.field,q=pathNear(s.x,s.y),fe=F&&F[e.ty]&&F[e.ty][e.tx],fs=q&&F&&F[q.y]&&F[q.y][q.x];
  if(fe==null||fs==null||!(fe<1e9)||!(fs<1e9))return -1;const g=fe-fs;return g>=-.5&&g<=see*2?d:-1;}
@@ -16298,7 +16298,7 @@ function tmReattach(e){const q=pathNear(e.x,e.y);if(q){e.tx=q.x;e.ty=q.y;}e.pv=n
  if(e.wps){const cx=Math.floor(e.tx/K),cy=Math.floor(e.ty/K),i=e.wps.findIndex(w=>w[0]===cx&&w[1]===cy);if(i>=0){e.wps=e.wps.slice(i+1);if(!e.wps.length)e.wps=null;}}}
 function chargeEnd(e){const ran=e.chr>0;e.chw=e.chr=0;e.chT=null;e.chgc=CHGCD;if(ran)tmReattach(e);}
 // la carrera: en línea recta hacia la unidad a la que embiste, al doble de su velocidad
-function chargeRun(e,dt){const s=e.chT;if(!s||!(s.hp>0))return;const dx=s.x-e.x,dy=s.y-e.y,d=Math.hypot(dx,dy);if(d<.05)return;const st=Math.min(d,ET[e.t].sp*CHGM*(S.espd||1)*dt);e.x+=dx/d*st;e.y+=dy/d*st;const q=pathNear(e.x,e.y);if(q){e.tx=q.x;e.ty=q.y;e.pv=null;}}
+function chargeRun(e,dt){const s=e.chT;if(!s||!(s.hp>0))return;const dx=s.x-e.x,dy=s.y-e.y,d=Math.hypot(dx,dy);if(d<.05)return;e.chD=[dx/d,dy/d];const st=Math.min(d,ET[e.t].sp*CHGM*(S.espd||1)*dt);e.x+=dx/d*st;e.y+=dy/d*st;const q=pathNear(e.x,e.y);if(q){e.tx=q.x;e.ty=q.y;e.pv=null;}}
 // quien lo retenía o iba a por él lo suelta
 function tmRelease(e){for(const t of unitTowers())for(const s of t.sd||[]){if(s.en===e){s.en=null;s.fight=false;}if(s.en2===e)s.en2=null;}}
 // mientras corre nadie lo retiene; a la primera unidad que toca la golpea y la tumba
@@ -16346,7 +16346,7 @@ function tmecDraw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=perfor
   // el Cornetero al tocar: ondas del cuerno
   if(e.hornB>0){const a=e.hornB/.7,r=E.r*CS*EVS;g.strokeStyle='rgba(255,170,60,'+(a*.9).toFixed(2)+')';g.lineWidth=lw(2.5);for(let i=1;i<=2;i++){g.beginPath();g.arc(px,py-r*.3,r*(1+i*(1.3-a)),-2.2,-.9);g.stroke();}}
   // Jabalí: polvo mientras coge carrerilla y estela mientras corre
-  if(e.chw>0||e.chr>0){let ux=e.tx-e.x,uy=e.ty-e.y;const d=Math.hypot(ux,uy);if(d>.01){ux/=d;uy/=d;}else if(e.fd){ux=e.fd[0];uy=e.fd[1];}else{ux=1;uy=0;}const r=E.r*CS*EVS;
+  if(e.chw>0||e.chr>0){/* v366: hacia la unidad que embiste (antes hacia la casilla más cercana, que cambiaba a cada paso y las líneas daban vueltas) */const T0=e.chT;let ux=e.chr>0&&e.chD?e.chD[0]:T0?T0.x-e.x:e.tx-e.x,uy=e.chr>0&&e.chD?e.chD[1]:T0?T0.y-e.y:e.ty-e.y;const d=Math.hypot(ux,uy);if(d>.01){ux/=d;uy/=d;}else if(e.fd){ux=e.fd[0];uy=e.fd[1];}else{ux=1;uy=0;}const r=E.r*CS*EVS;
    if(e.chw>0){const k=1-e.chw/CHGWIND;g.fillStyle='rgba(214,196,160,.75)';for(let i=0;i<4;i++){const ph=(now*3+i*.25)%1,bx=px-ux*r*(1+ph*1.6)-uy*r*(i-1.5)*.45,by=py-uy*r*(1+ph*1.6)+ux*r*(i-1.5)*.45;g.globalAlpha=(1-ph)*.8;g.beginPath();g.arc(bx,by,r*(.25+ph*.4),0,7);g.fill();}g.globalAlpha=1;
     g.strokeStyle='rgba(255,120,70,'+(.35+.55*k).toFixed(2)+')';g.lineWidth=lw(3.5);g.beginPath();g.arc(px,py,r*(2-.75*k),0,7);g.stroke();}
    else{g.strokeStyle='rgba(255,236,200,.85)';g.lineCap='round';g.lineWidth=lw(2.5);for(let i=-2;i<=2;i++){const ox=-uy*i*r*.4,oy=ux*i*r*.4,L=2.6-Math.abs(i)*.5;g.beginPath();g.moveTo(px-ux*r*1.1+ox,py-uy*r*1.1+oy);g.lineTo(px-ux*r*(1.1+L)+ox,py-uy*r*(1.1+L)+oy);g.stroke();}
@@ -16621,8 +16621,8 @@ function t3Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
    if(e.rageB>0){e.rageB-=1/60;g.strokeStyle='rgba(255,60,40,.9)';g.lineWidth=lw(3);g.beginPath();g.arc(px,py,r*(1.3+(.6-e.rageB)*2),0,7);g.stroke();}}
   if(e.furU>S.wt){g.strokeStyle='rgba(255,50,30,.9)';g.lineWidth=lw(2.4);for(let i=0;i<3;i++){const a=-1.9+i*.4;g.beginPath();g.moveTo(px+Math.cos(a)*r*1.05,py+Math.sin(a)*r*1.05);g.lineTo(px+Math.cos(a)*r*1.55,py+Math.sin(a)*r*1.55);g.stroke();}}
   if(E.magma){g.strokeStyle='rgba(255,120,40,'+(.5+.3*Math.sin(now*5)).toFixed(2)+')';g.lineWidth=lw(1.8);for(let i=0;i<3;i++){const a=i*2.1+.4;g.beginPath();g.moveTo(px+Math.cos(a)*r*.2,py+Math.sin(a)*r*.2);g.lineTo(px+Math.cos(a+.3)*r*.8,py+Math.sin(a+.3)*r*.8);g.stroke();}}}
- for(const t of unitTowers())for(const s of t.sd||[]){if(!(s.ubn>0)||!(s.hp>0))continue;const x=X(s.x),y=X(s.y);for(let i=0;i<3;i++){const ph=(now*1.4+i/3)%1;g.fillStyle='rgba(120,120,120,'+(.5*(1-ph)).toFixed(2)+')';g.beginPath();g.arc(x+(i-1)*CS*.25,y-CS*(.4+ph*1.1),CS*(.12+ph*.15),0,7);g.fill();}
-  g.fillStyle='rgba(255,130,40,.85)';g.beginPath();g.arc(x,y-CS*.15,CS*.14,0,7);g.fill();}}
+ for(const t of unitTowers())for(const s of t.sd||[]){if(!(s.ubn>0)||!(s.hp>0))continue;const x=X(s.x),y=X(s.y);for(let i=0;i<3;i++){const ph=(now*1.4+i/3)%1;g.fillStyle='rgba(120,120,120,'+(.5*(1-ph)).toFixed(2)+')';g.beginPath();g.arc(x+(i-1)*CS*.45,y-CS*(.7+ph*2),CS*(.3+ph*.4),0,7);g.fill();}/* v366: más grande (Nogal: no se apreciaba) */
+  for(let i=0;i<3;i++){const fl=.75+.25*Math.sin(now*14+i*2);g.fillStyle=i===1?'rgba(255,220,90,.9)':'rgba(255,120,30,.9)';g.beginPath();g.moveTo(x+(i-1)*CS*.3-CS*.18,y);g.quadraticCurveTo(x+(i-1)*CS*.3,y-CS*(.9+.3*(i===1))*fl,x+(i-1)*CS*.3+CS*.18,y);g.fill();}}}
 {const _d=eSkillsDraw;eSkillsDraw=function(g,lw){_d(g,lw);try{t3Draw(g,lw);}catch(x){}};}
 // otros golpes de enemigos a tus unidades (picados, brasas…) también llevan la furia
 {const _h=hitUnit;hitUnit=function(s,d,e){if(e&&e.furU>S.wt)d*=RAGEM;return _h(s,d,e);};}
@@ -16718,7 +16718,7 @@ function t4Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
 //  · Fragata de escudo (fshield): escudo del 40 % de su vida (Nogal); si pasa 3 s sin recibir daño, se recarga entero.
 //  · Saltador cuántico (qjump): si recibe de una vez más del 15 % de su vida, salta 10 celdas camino adelante (1 s entre saltos).
 Object.assign(TMEC,{i02tunelador:{burrow:1},i16amalgama:{amal:1},i21garrapata:{vtick:1},i39choque:{harp2:1},i08inhibidor:{inhib:1},i20nexo:{nexus:1},i30fragata:{fshield:1},i31saltador:{qjump:1}});
-const BURCD=5,BURT=1.5,BURSEE=2,BURMAX=3,AMREG=.02,AMSEE=K,AMFUS=1.2,AMT=1,TICKR=2*K,TICKM=.5,HARPCD=6,ARPR=1.5*K,HARPW=.5,HARPD=2*K,HARPT=.6,INHR=2*K,INHN=3,INHM=.5,
+const BURCD=5,BURT=1.5,BURSEE=2,BURMAX=3,AMREG=.02,AMSEE=K,AMFUS=1.2,AMT=1,TICKR=2*K,TICKM=.5,HARPCD=6,ARPR=1.5*K,HARPW=.5,HARPD=2*K,HARPT=.6,INHR=2*K,INHN=3,INHM=.7/* Nogal (25-nov): −30 % */,
  NEXR=1.5*K,NEXM=.5,FSHM=.4,FSHT=3,QJM=.15,QJD=2*K,QJCD=1;
 // ---- ocultar y modificar daño ----
 function eHidX(e,t){return e.under>0||(!!t&&!!e.tkT&&e.tkT===t);}
@@ -16752,7 +16752,7 @@ function tickTick(e,E,dt){if(e.tkT){if(!S.list.includes(e.tkT)){e.tkT=null;retur
 {const _s=stats;stats=function(t){const s=_s(t);if(t&&s&&S&&S.enemies&&S.enemies.some(o=>o.tkT===t&&o.hp>0)&&s.dmg!=null)return Object.assign({},s,{dmg:s.dmg*TICKM});return s;};}
 // ---- Dron arpón ----
 function harpBack(q,n){const F=S.field;let p={x:q.x,y:q.y};for(let i=0;i<n;i++){let b=null;for(const[a,c]of[[1,0],[-1,0],[0,1],[0,-1]]){const x=p.x+a,y=p.y+c;if(inb(x,y)&&S.cells[y][x]===2&&F[y][x]<1e9&&F[y][x]>F[p.y][p.x]&&(!b||F[y][x]>F[b.y][b.x]))b={x,y};}if(!b)break;p=b;}return p;}
-function harpTick(e,dt,SL){if(e.hpW>0){e.hpW-=dt;const s=e.hpS;if(!s||!(s.hp>0)){e.hpW=0;e.hpS=null;e.hpc=1;return;}if(e.hpW<=0){const q=pathNear(s.x,s.y)||{x:Math.round(s.x),y:Math.round(s.y)},d=harpBack(q,HARPD);
+function harpTick(e,dt,SL){if(e.hpW>0){e.hpW-=dt;const s=e.hpS;if(!s||!(s.hp>0)){e.hpW=0;e.hpS=null;e.hpc=1;return;}if(e.hpW<=0){const q=pathNear(s.x,s.y)||{x:Math.round(s.x),y:Math.round(s.y)},d=hurlFwd(q,HARPD)/* v366 (Nogal): hacia donde van, no hacia atrás */;
    s.hook=HARPT;s.hkd={x0:s.x,y0:s.y,x1:d.x,y1:d.y,t:0};s.en=null;s.fight=false;s.en2=null;e.hpc=HARPCD;e.hpS=null;}return;}
  e.hpc=(e.hpc===undefined?2:e.hpc)-dt;if(e.hpc>0)return;let b=null,bs=1e9;for(const s of SL){if(s.air||s.hook>0||(s.H&&s.H.camo>0))continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d>ARPR)continue;const sc=d-(s.fight?50:0);if(sc<bs){bs=sc;b=s;}}
  if(b){e.hpS=b;e.hpW=HARPW;}else e.hpc=.3;}
@@ -16952,8 +16952,8 @@ function t6Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
 //    Basilisco (gaze): cada 8 s mira 1 s a una torre a 12,5 celdas (la que más daño le hace) y la deja petrificada 3 s.
 //    Hidra (heads): al perder 1/3 de su vida le sale otra cabeza (+50 % de daño a unidades) y al perder 2/3, otra (+100 %).
 Object.assign(TMEC,{v01sicario:{smoke:1,evn:1,dmg:2},v02espiritu:{ghost:1,evn:1},v03mimico:{mimr:1,evn:1,dmg:1,steal:200},
- v04manticora:{spike:1,evn:1,el:1,bounty:1},v05basilisco:{gaze:1,evn:1,el:1,bounty:1},v06hidra:{heads:1,evn:1,el:1,bounty:1}});
-const SMKR=K/2,SMKT=2,GHD=10,GHCD=2,GHR=.9,MIMC=.1,MIMG=10,MIMB=100,BITECD=1.5,BITEM=1.5,BITER=1.6,GAZECD=8,GAZEW=1,GAZER=2.5*K,GAZET=3,HEADM=.5,
+ v04manticora:{spike:1,upois:1.5,evn:1,el:1,bounty:1},v05basilisco:{gaze:1,evn:1,el:1,bounty:1},v06hidra:{heads:1,evn:1,el:1,bounty:1}});
+const SMKR=K/2,SMKT=2,GHD=10,GHCD=2,GHR=1.4,MIMC=.1,MIMG=10,MIMB=100,BITECD=1.5,BITEM=1.5,BITER=1.6,GAZECD=8,GAZEW=1,GAZER=2.5*K,GAZET=3,HEADM=.5,
  BNTYB=['v04manticora','v05basilisco','v06hidra'];
 // ---- daño recibido: humo, espíritu, monedas del mímico, a quién culpa el basilisco ----
 {const _h=eHurtMod;eHurtMod=function(e,a,src,ty){const E=ET[e.t];
@@ -16974,7 +16974,7 @@ function smkHid(e){if(!S.smk||!S.smk.length)return false;for(const c of S.smk)if
 // ---- Espíritu: atraviesa a las unidades y les hace daño ----
 function ghostTick(e,SL){e.nblk=1;for(const s of SL){if(s.air||!(s.hp>0)||Math.hypot(s.x-e.x,s.y-e.y)>GHR)continue;const m=e.ghU||(e.ghU=new Map()),k=m.get(s)||0;if(k>S.wt)continue;m.set(s,S.wt+GHCD);hitUnit(s,GHD,e);S.fx.push({x:s.x,y:s.y,t:.3,m:.3,r:.4*K,col:'#a8c8ff'});}}
 // ---- Mantícora: púas venenosas (los disparos) y mordisco si se le pegan ----
-{const _hu=hitUnit;hitUnit=function(s,d,e){const r=_hu.apply(this,arguments);if(e&&!e._bite&&ET[e.t]&&ET[e.t].spike&&s&&s.hp>0&&typeof uAddPois==='function')uAddPois(s,1.5,e);return r;};}
+/* el veneno de las púas va por E.upois (towers.js, en cada golpe); la púa que vuela, S.spkP */
 function biteTick(e,E,dt,SL){e.btc=(e.btc||0)-dt;if(e.btc>0)return;let s=null,bd=BITER;for(const u of SL){if(u.air||!(u.hp>0))continue;const d=Math.hypot(u.x-e.x,u.y-e.y)-(u.en===e?.5:0);if(d<=bd){bd=d;s=u;}}/* la unidad pegada a ella (prefiere la que pelea con ella) */if(!s){e.btc=.2;return;}
  e._bite=1;try{hitUnit(s,(E.ud||0)*BITEM*(typeof udM==='function'?udM(e):1),e);}finally{e._bite=0;}e.btc=BITECD;e.btF={x:s.x,y:s.y,t:.35};S.fx.push({x:s.x,y:s.y,t:.3,m:.3,r:.5*K,col:'#d08a3a'});}
 // ---- Basilisco: mirada petrificante ----
@@ -16987,6 +16987,7 @@ function headsTick(e){const n=e.hp<=e.max/3?3:e.hp<=e.max*2/3?2:1;if(n>(e.hyN||1
 // ---- tick general ----
 function t7Tick(dt){const SL=liveUnits().filter(s=>!s.charm);
  if(S.smk&&S.smk.length){for(const c of S.smk)c.t-=dt;S.smk=S.smk.filter(c=>c.t>0);}
+ if(S.spkP&&S.spkP.length){for(const p of S.spkP)p.t+=dt;S.spkP=S.spkP.filter(p=>p.t<.3);}
  if(S.coinB&&S.coinB.length){for(const c of S.coinB)c.t+=dt;S.coinB=S.coinB.filter(c=>c.t<.6);}
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];if(!E)continue;if(e.btF&&e.btF.t>0)e.btF.t-=dt;
   if(E.heads)headsTick(e);if(E.ghost)ghostTick(e,SL);
@@ -16996,6 +16997,7 @@ function t7Tick(dt){const SL=liveUnits().filter(s=>!s.charm);
 // ---- dibujo ----
 function t7Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performance.now()/1000;
  for(const c of S.smk||[]){const a=Math.min(1,c.t/.5);for(let i=0;i<5;i++){g.fillStyle='rgba(120,120,135,'+(.28*a).toFixed(2)+')';g.beginPath();g.arc(X(c.x)+Math.cos(i*1.26+now*.8)*SMKR*CS*.45,X(c.y)+Math.sin(i*1.26+now*.8)*SMKR*CS*.45,SMKR*CS*.55,0,7);g.fill();}}
+ for(const p of S.spkP||[]){const k=Math.min(1,p.t/.25),x=X(p.x0+(p.x1-p.x0)*k),y=X(p.y0+(p.y1-p.y0)*k),a=Math.atan2(p.y1-p.y0,p.x1-p.x0);g.strokeStyle='#5a3a1a';g.lineWidth=lw(2.5);g.beginPath();g.moveTo(x-Math.cos(a)*CS*.5,y-Math.sin(a)*CS*.5);g.lineTo(x,y);g.stroke();g.fillStyle='#8ae05a';g.beginPath();g.arc(x,y,Math.max(1.5,CS*.1),0,7);g.fill();}
  for(const c of S.coinB||[]){const k=c.t/.6;g.fillStyle='rgba(255,215,90,'+(1-k).toFixed(2)+')';g.strokeStyle='rgba(120,80,10,'+(1-k).toFixed(2)+')';g.lineWidth=lw(1);for(const s of[-1,1]){g.beginPath();g.arc(X(c.x)+s*CS*.4*k,X(c.y)-CS*1.2*Math.sin(Math.PI*k),Math.max(2,CS*.16),0,7);g.fill();g.stroke();}}
  for(const e of S.enemies){if(e.hp<=0)continue;const E=ET[e.t];if(!E)continue;const px=X(e.x),py=X(e.y),r=E.r*CS*EVS*(e.szm||1);
   if(E.ghost){g.fillStyle='rgba(200,225,255,'+(.18+.1*Math.sin(now*4)).toFixed(2)+')';g.beginPath();g.arc(px,py,r*1.3,0,7);g.fill();}
@@ -17049,11 +17051,11 @@ const NETCD=10,NETR=RANGED_R/* dispara desde donde se para (a 15 celdas de tus u
 // piezas del Centinela: n nombre, col color
 const CNP={fis:{n:'físico',col:'#d9c08a'},ele:{n:'eléctrico',col:'#7ad0ff'},fue:{n:'fuego',col:'#ff7a3a'},ven:{n:'veneno',col:'#8ae05a'},mag:{n:'mágico',col:'#b08aff'},uni:{n:'unidades',col:'#c9d3dd'},con:{n:'control',col:'#5a8aff'},apo:{n:'apoyo',col:'#ffd75a'}};
 // ---- Unidad de contención: red ----
-function netTick(e,dt,SL){if(e.ntF){const f=e.ntF;f.t+=dt;if(f.t>=NETF){e.ntF=null;let n=0;for(const s of SL){if(s.air||!(s.hp>0)||Math.hypot(s.x-f.x,s.y-f.y)>NETA)continue;s.net=S.wt+NETT;s.en=null;s.fight=false;s.en2=null;n++;}
+function netTick(e,dt,SL){if(e.ntF){const f=e.ntF;f.t+=dt;if(f.s&&f.s.hp>0){f.x=f.s.x;f.y=f.s.y;}/* v366: sigue a la unidad elegida, para que no la esquive */if(f.t>=NETF){e.ntF=null;let n=0;for(const s of SL){if(s.air||!(s.hp>0)||Math.hypot(s.x-f.x,s.y-f.y)>NETA)continue;s.net=S.wt+NETT;s.en=null;s.fight=false;s.en2=null;n++;}
    S.fx.push({x:f.x,y:f.y,t:.5,m:.5,r:NETA,col:'#c9e0ff'});}return;}
  e.ntc=(e.ntc===undefined?2:e.ntc)-dt;if(e.ntc>0)return;let b=null,bn=0;
  for(const s of SL){if(s.air||!(s.hp>0)||(s.net>S.wt)||Math.hypot(s.x-e.x,s.y-e.y)>NETR)continue;let n=0;for(const o of SL)if(!o.air&&o.hp>0&&Math.hypot(o.x-s.x,o.y-s.y)<=NETA)n++;if(n>bn){bn=n;b=s;}}
- if(!b){e.ntc=.4;return;}e.ntF={x0:e.x,y0:e.y,x:b.x,y:b.y,t:0};e.ntc=NETCD;}
+ if(!b){e.ntc=.4;return;}e.ntF={x0:e.x,y0:e.y,x:b.x,y:b.y,s:b,t:0};e.ntc=NETCD;}
 // atrapadas: no andan, y no retienen a nadie (peso casi 0: pueden pegar a lo que tengan al lado, pero no lo paran)
 function withoutNet(fn){const saved=[];for(const t of unitTowers())if(t.sd&&t.sd.some(s=>s.net>S.wt)){saved.push([t,t.sd]);t.sd=t.sd.filter(s=>!(s.net>S.wt));}try{return fn();}finally{for(const[t,sd]of saved)t.sd=sd;}}
 {const _w=unitWalk;unitWalk=function(dt){return withoutNet(()=>_w(dt));};}
@@ -17123,7 +17125,7 @@ function t8Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
   if(E.thaw&&(e.thw||0)<1){const a=1-(e.thw||0);g.fillStyle='rgba(170,220,255,'+(.55*a).toFixed(2)+')';g.strokeStyle='rgba(230,245,255,'+(.8*a).toFixed(2)+')';g.lineWidth=lw(1.5);g.beginPath();g.arc(px,py,r*1.1,0,7);g.fill();g.stroke();}}
  for(const s of liveUnits())if(s.net>S.wt){g.strokeStyle='rgba(200,225,255,.85)';g.lineWidth=lw(1.2);const x=X(s.x),y=X(s.y),R=CS*.55;g.beginPath();for(let i=-1;i<=1;i++){g.moveTo(x-R,y+i*R*.5);g.lineTo(x+R,y+i*R*.5);g.moveTo(x+i*R*.5,y-R);g.lineTo(x+i*R*.5,y+R);}g.stroke();}
  for(const t of S.list||[]){const x=X(t.x),y=X(t.y);if(t.reaU>S.wt){g.fillStyle='rgba(40,30,20,.45)';g.beginPath();g.arc(x,y,CT*1.05,0,7);g.fill();g.fillStyle='#ffb43a';g.font='bold '+Math.round(CT*.6)+'px sans-serif';g.textAlign='center';g.fillText('⚡',x,y+CT*.2);}
-  if(t.cfU>S.wt){g.fillStyle='#b08aff';g.font='bold '+Math.round(CT*.55)+'px sans-serif';g.textAlign='center';g.fillText('?',x+CT*.6,y-CT*.6);}
+  if(t.cfU>S.wt){for(let i=0;i<3;i++){const a=now*4+i*2.09;g.fillStyle='#ffe07a';g.font='bold '+Math.round(CT*.4)+'px sans-serif';g.textAlign='center';g.fillText('✦',x+Math.cos(a)*CT*.6,y-CT*.95+Math.sin(a)*CT*.2);}g.fillStyle='#b08aff';g.font='bold '+Math.round(CT*.55)+'px sans-serif';g.textAlign='center';g.fillText('?',x+CT*.6,y-CT*.6);}
   if(t.omcU>S.wt){g.strokeStyle='rgba(90,140,255,.7)';g.lineWidth=lw(2);g.beginPath();g.arc(x,y,CT*1.1,0,7);g.stroke();}}}
 {const _d=eSkillsDraw;eSkillsDraw=function(g,lw){_d(g,lw);try{t8Draw(g,lw);}catch(x){}};}
 // ---- palabras clave ----

@@ -14,7 +14,7 @@
 //  · Fragata de escudo (fshield): escudo del 40 % de su vida (Nogal); si pasa 3 s sin recibir daño, se recarga entero.
 //  · Saltador cuántico (qjump): si recibe de una vez más del 15 % de su vida, salta 10 celdas camino adelante (1 s entre saltos).
 Object.assign(TMEC,{i02tunelador:{burrow:1},i16amalgama:{amal:1},i21garrapata:{vtick:1},i39choque:{harp2:1},i08inhibidor:{inhib:1},i20nexo:{nexus:1},i30fragata:{fshield:1},i31saltador:{qjump:1}});
-const BURCD=5,BURT=1.5,BURSEE=2,BURMAX=3,AMREG=.02,AMSEE=K,AMFUS=1.2,AMT=1,TICKR=2*K,TICKM=.5,HARPCD=6,ARPR=1.5*K,HARPW=.5,HARPD=2*K,HARPT=.6,INHR=2*K,INHN=3,INHM=.5,
+const BURCD=5,BURT=1.5,BURSEE=2,BURMAX=3,AMREG=.02,AMSEE=K,AMFUS=1.2,AMT=1,TICKR=2*K,TICKM=.5,HARPCD=6,ARPR=1.5*K,HARPW=.5,HARPD=2*K,HARPT=.6,INHR=2*K,INHN=3,INHM=.7/* Nogal (25-nov): −30 % */,
  NEXR=1.5*K,NEXM=.5,FSHM=.4,FSHT=3,QJM=.15,QJD=2*K,QJCD=1;
 // ---- ocultar y modificar daño ----
 function eHidX(e,t){return e.under>0||(!!t&&!!e.tkT&&e.tkT===t);}
@@ -48,7 +48,7 @@ function tickTick(e,E,dt){if(e.tkT){if(!S.list.includes(e.tkT)){e.tkT=null;retur
 {const _s=stats;stats=function(t){const s=_s(t);if(t&&s&&S&&S.enemies&&S.enemies.some(o=>o.tkT===t&&o.hp>0)&&s.dmg!=null)return Object.assign({},s,{dmg:s.dmg*TICKM});return s;};}
 // ---- Dron arpón ----
 function harpBack(q,n){const F=S.field;let p={x:q.x,y:q.y};for(let i=0;i<n;i++){let b=null;for(const[a,c]of[[1,0],[-1,0],[0,1],[0,-1]]){const x=p.x+a,y=p.y+c;if(inb(x,y)&&S.cells[y][x]===2&&F[y][x]<1e9&&F[y][x]>F[p.y][p.x]&&(!b||F[y][x]>F[b.y][b.x]))b={x,y};}if(!b)break;p=b;}return p;}
-function harpTick(e,dt,SL){if(e.hpW>0){e.hpW-=dt;const s=e.hpS;if(!s||!(s.hp>0)){e.hpW=0;e.hpS=null;e.hpc=1;return;}if(e.hpW<=0){const q=pathNear(s.x,s.y)||{x:Math.round(s.x),y:Math.round(s.y)},d=harpBack(q,HARPD);
+function harpTick(e,dt,SL){if(e.hpW>0){e.hpW-=dt;const s=e.hpS;if(!s||!(s.hp>0)){e.hpW=0;e.hpS=null;e.hpc=1;return;}if(e.hpW<=0){const q=pathNear(s.x,s.y)||{x:Math.round(s.x),y:Math.round(s.y)},d=hurlFwd(q,HARPD)/* v366 (Nogal): hacia donde van, no hacia atrás */;
    s.hook=HARPT;s.hkd={x0:s.x,y0:s.y,x1:d.x,y1:d.y,t:0};s.en=null;s.fight=false;s.en2=null;e.hpc=HARPCD;e.hpS=null;}return;}
  e.hpc=(e.hpc===undefined?2:e.hpc)-dt;if(e.hpc>0)return;let b=null,bs=1e9;for(const s of SL){if(s.air||s.hook>0||(s.H&&s.H.camo>0))continue;const d=Math.hypot(s.x-e.x,s.y-e.y);if(d>ARPR)continue;const sc=d-(s.fight?50:0);if(sc<bs){bs=sc;b=s;}}
  if(b){e.hpS=b;e.hpW=HARPW;}else e.hpc=.3;}

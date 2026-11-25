@@ -51,8 +51,10 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  // ---------- Encargo: una de las tres bestias, con su recompensa ----------
  limpio();{spawnEnemy('wanted',P0,null);const e=S.enemies[S.enemies.length-1];out.encargo=['v04manticora','v05basilisco','v06hidra'].includes(e.t)&&e.wanted===1;}
  // ---------- Mantícora: púas con veneno; mordisco si se le pegan ----------
- limpio();A.jam=999;{const ma=pon('v04manticora',TR[M],1);ma.hp=ma.max=1e6;const s=B.sd[0];s.hp=s.max=9999;s.rt=0;s.ps=[];hitUnit(s,1,ma);out.manticoraPua=(s.ps||[]).length===1;
+ limpio();A.jam=999;{const ma=pon('v04manticora',TR[M],1);ma.hp=ma.max=1e6;const s=B.sd[0];s.hp=s.max=9999;s.rt=0;out.manticoraPua=ET.v04manticora.upois===1.5;
   s.ps=[];const h0=s.hp;run(.6,()=>{s.x=ma.x+.5;s.y=ma.y;s.en=ma;s.fight=true;});out.manticoraMuerde=!!ma.btF&&h0-s.hp>=ET.v04manticora.ud*BITEM*.3&&!(s.ps||[]).length;out.manticoraV=(h0-s.hp).toFixed(1);s.hp=0;s.rt=999;s.en=null;s.fight=false;}
+ // ---------- Tope de 2 enemigos a distancia por unidad: el tercero sigue andando (Nogal, 25-nov) ----------
+ limpio();A.jam=999;{for(const s of B.sd){s.hp=0;s.rt=999;}const s=B.sd[0];s.hp=s.max=1e6;s.rt=0;run(1);const L=[0,1,2].map(i=>{const m=pon('v04manticora',harpBack(pathNear(s.x,s.y),8+i));m.hp=m.max=1e7;return m;});run(1.5);const n=L.filter(m=>m.rshT===s).length;out.topeTiradores=n===2&&L.some(m=>!m.rshT&&!m.stopped);out.topeV=String(n);s.hp=0;s.rt=999;}
  // ---------- Basilisco: petrifica 3 s a la torre que más daño le hace ----------
  limpio();A.jam=0;{const bs=pon('v05basilisco',{x:Math.round(A.x),y:Math.round(A.y)+3},1);bs.hp=bs.max=1e7;hurt(bs,50,A,'magic');const r=run(3+GAZEW+.3,()=>A.stnU>S.wt);out.basilisco=r&&A.jam>0&&!(B.stnU>S.wt);run(GAZET+.3);out.basiliscoDura=!(A.stnU>S.wt);}
  // ---------- Hidra: cabezas al perder 1/3 y 2/3 ----------
