@@ -15,7 +15,7 @@ function evpList(){const o=[];if(!S||S.tut||PREVIEWING||S.pvE||S.pvH)return o;co
  for(const sc of S.sched||[]){const d=sc.r-S.round;if(d<0||(d===0&&!bld))continue;for(const k in sc.add){const n=sc.add[k];if(!(n>0))continue;
   const nm=k==='wanted'?'Élite de encargo':(ET[k]||{}).n||k;o.push({ic:enIcH(k==='wanted'?'elite':k),tx:(n>1?n+' × ':'')+nm,w:evpWhen(d),d,bad:1});}}
  // enemigos añadidos a esta oleada (solo mientras aún no ha empezado)
- if(bld&&S.evNow&&S.evNow.r===S.round){const agg={};for(const it of S.evNow.L){if(it.k==='add'){const a=agg[it.t]=agg[it.t]||{ic:enIcH(it.t),n:0,nm:(ET[it.t]||{}).n||it.t};a.n+=it.n;}else o.push({ic:it.ic,tx:it.tx,w:'esta ronda',d:0,bad:it.k!=='less'});}
+ if(bld&&S.evNow&&S.evNow.r===S.round){const agg={};for(const it of S.evNow.L){if(it.k==='add'){const a=agg[it.t]=agg[it.t]||{ic:enIcH(it.t),n:0,nm:(ET[it.t]&&ET[it.t].taller&&typeof seen==='function'&&!seen('en',it.t))?'???':(ET[it.t]||{}).n||it.t/* v366: los enemigos de evento del Taller, sin destripar hasta verlos (el evento tampoco dice cuáles son) */};a.n+=it.n;}else o.push({ic:it.ic,tx:it.tx,w:'esta ronda',d:0,bad:it.k!=='less'});}
   for(const k in agg){const a=agg[k];o.push({ic:a.ic,tx:(a.n>1?a.n+' × ':'')+a.nm+' extra',w:'esta ronda',d:0,bad:1});}}
  // oro guardado en la cámara criogénica
  if(S.bank&&S.bank.g>0){const d=Math.max(1,S.bank.at-S.round);o.push({ic:'🏦',tx:`<span class="gd">+${S.bank.g} 🪙</span> de la cámara`,w:evpWhen(d),d});}
