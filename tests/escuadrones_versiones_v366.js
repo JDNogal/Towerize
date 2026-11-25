@@ -19,7 +19,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
  RL.open=false;S.phase='build';
  // ---- qué versión toca ----
- out.ver=sqVer('conclave',0,12)==='conclave'&&sqVer('conclave',1,5)==='conclave'&&sqVer('conclave',1,6)==='conclave_n2'&&sqVer('conclave',2,8)==='conclave_n2'&&sqVer('conclave',2,12)==='conclave_n3'&&sqVer('patrol',1,9)===null;
+ out.ver=sqVer('conclave',0,12)==='conclave'&&sqVer('conclave',1,5)==='conclave'&&sqVer('conclave',1,6)==='conclave_n2'&&sqVer('conclave',2,8)==='conclave_n2'&&sqVer('conclave',2,12)==='conclave_n3'&&(()=>{/* con los datos del Taller cargados, uno sin versiones */const k=Object.keys(SQUADS).find(k=>!SQUADS[k].de&&!SQUADS[k].boss&&!Object.values(SQUADS).some(o=>o.de===k));return !k||sqVer(k,1,9)===null;})();
  S.round=8;const m2=sqTierM('conclave',1,8);out.tierM=m2.demon===2&&m2.minion===1&&m2.acolyte===2&&!m2.dchamp;
  // un escuadrón sin versiones diseñadas sigue con el cálculo de siempre
  {const m=sqTierM('patrol',1,8);out.viejo=(m.vet||0)>=1&&(m.norm||0)>=1;}
@@ -39,7 +39,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  {S.phase='build';const v0=enVal('norm');ET.norm.vf=2;const v1=enVal('norm');delete ET.norm.vf;ET.tank.lleva={norm:3};const v2=enVal('tank');delete ET.tank.lleva;out.valor=v0===ET.norm.hf&&v1===2*v0&&Math.abs(v2-(ET.tank.hf+3*v0))<1e-6;}
  // ---- jefe con escolta ----
  {S.enemies=[];S.phase='build';S.round=15;const _w=waveSquads;waveSquads=()=>['patrol'];makePortals(S.ends[0]||S.portals[0]);waveSquads=_w;
-  const q=S.portals.find(q=>q.bsq);out.jefePlan=!!q&&q.bsq==='qjefe_t'&&!q.esc&&q.plan.kgob===1;
+  const q=S.portals.find(q=>q.bsq);out.jefePlan=!!q&&SQUADS[q.bsq]&&SQUADS[q.bsq].boss==='kgob'&&!q.esc&&q.plan.kgob===1/* qjefe_t o el del Taller (qjefe_kgob) */;
   out.jefeBocadillo=!!q&&portalRows(q).includes(ET.runner.n);
   startWave();const iB=q.q.indexOf('kgob');out.jefeCola=iB>=0&&q.q.filter(t=>t==='runner').length>=4&&q.qf[iB]&&q.qf[iB].sid==='jefe'&&q.qf[iB].lead===1&&q.q.filter(t=>t==='kgob').length===1;
   let boss=null;for(let i=0;i<1500&&!(boss&&S.enemies.filter(e=>e.sqid===boss.sqid).length>=10);i++){update(.05);boss=S.enemies.find(e=>e.t==='kgob')||boss;}

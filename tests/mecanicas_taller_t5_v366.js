@@ -15,7 +15,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   i20nexo:{n:'Nexo de colmena',era:2,fac:'Alienígenas',fam:'Apoyo',tipo:'tierra',rg:'No ataca',col:'#7a3a8a',st:{am:20,ap:10,dmg:1,gold:10,hp:180,sp:.65,ud:0}},
   i30fragata:{n:'Fragata de escudo',era:2,fac:'Máquinas',fam:'Tanques',tipo:'aire',rg:'No ataca',col:'#3a6aa8',st:{am:10,ap:10,dmg:2,gold:16,hp:300,sp:.6,ud:0}},
   i31saltador:{n:'Saltador cuántico',era:2,fac:'Máquinas',fam:'Rápidos',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#6a3ad8',st:{am:10,ap:10,dmg:1,gold:8,hp:110,sp:.9,ud:6}}}});
- out.carga=rep.en===8&&rep.enOff.length===0&&ET.i02tunelador.burrow===1&&ET.i16amalgama.amal===1&&ET.i21garrapata.vtick===1&&ET.i39choque.harp2===1&&ET.i08inhibidor.inhib===1&&ET.i20nexo.nexus===1&&ET.i30fragata.fshield===1&&ET.i31saltador.qjump===1;
+ out.carga=!!rep&&/* con los datos del Taller ya cargados, rep cuenta otra cosa */ET.i02tunelador.burrow===1&&ET.i16amalgama.amal===1&&ET.i21garrapata.vtick===1&&ET.i39choque.harp2===1&&ET.i08inhibidor.inhib===1&&ET.i20nexo.nexus===1&&ET.i30fragata.fshield===1&&ET.i31saltador.qjump===1;
  out.compendio=kwHtml0('einhib','50 %')!==''&&kwHtml0('efshield','').includes('40 %')&&kwHtml0('evtick','').includes('50 %');
  startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}

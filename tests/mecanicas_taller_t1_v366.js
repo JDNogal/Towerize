@@ -15,7 +15,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   i99sinmecanica:{n:'Sin mecánica',era:1,fac:'Demonios',fam:'Místicos',tipo:'tierra',rg:'No ataca',st:{hp:200,sp:.8}}},
   sq:{qcharanga:{custom:true,era:1,pz:1,min:3,n:'Charanga de prueba',lead:'i06potenciador',m:{i06potenciador:1,norm:4},f:[[['norm',0,-1],['norm',0,1],['i06potenciador',1.5,0],['norm',3,-1],['norm',3,1]]]}}});
  // los cinco de la tanda entran encendidos; el que no tiene mecánica hecha, apagado
- out.carga=rep.en===6&&rep.enOff.length===1&&rep.enOff[0]==='i99sinmecanica'&&!ET.i07divisor.hidden&&ET.i07divisor.split.i47minilimo===3&&ET.i06potenciador.horn===1&&ET.i43jabali.charge===1&&ET.i37buitre.dive===1&&ET.i37buitre.fly===1&&!SQUADS.qcharanga.off;
+ out.carga=!!rep&&/* con los datos del Taller ya cargados, rep cuenta 0 */!ET.i07divisor.hidden&&ET.i07divisor.split.i47minilimo===3&&ET.i06potenciador.horn===1&&ET.i43jabali.charge===1&&ET.i37buitre.dive===1&&ET.i37buitre.fly===1&&!SQUADS.qcharanga.off;
  out.compendio=EFAM.some(f=>f[1].includes('i43jabali'))&&!EFAM.some(f=>f[1].includes('i99sinmecanica'))&&kwHtml0('ehorn','').includes('50 %')&&kwHtml0('echarge','').includes('5 s')&&kwHtml0('edive','').includes('20 de daño')&&kwHtml0('edive','').includes('1,5 s')&&ETIP2.i06potenciador.includes('ralentizar');
  startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}

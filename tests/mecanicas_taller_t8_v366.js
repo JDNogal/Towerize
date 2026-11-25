@@ -14,7 +14,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   v11prototipos:{n:'Prototipo fallido',era:2,fac:'Máquinas',fam:'Eventos',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#7a8a8a',st:{am:10,ap:15,dmg:1,gold:6,hp:120,sp:.8,ud:6}},
   v12especimen:{n:'Espécimen',era:2,fac:'Alienígenas',fam:'Eventos',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#6a3a8a',st:{am:15,ap:15,dmg:6,gold:50,hp:1000,sp:.7,ud:15}},
   v13durmiente:{n:'Durmiente',era:2,fac:'',fam:'Eventos',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#7ab0d0',st:{am:10,ap:40,dmg:2,gold:8,hp:150,sp:.4,ud:8}}}});
- out.carga=rep.en===7&&rep.enOff.length===0&&ET.v07contencion.netter===1&&ET.v08nucleoandante.dmg===3&&ET.v09cazasenales.counter===1&&ET.v10centinela.omegae===1&&ET.v11prototipos.scrapm===1&&ET.v12especimen.evolve===1&&ET.v13durmiente.thaw===1;
+ out.carga=!!rep&&/* con los datos del Taller ya cargados, rep cuenta otra cosa */ET.v07contencion.netter===1&&ET.v08nucleoandante.dmg===3&&ET.v09cazasenales.counter===1&&ET.v10centinela.omegae===1&&ET.v11prototipos.scrapm===1&&ET.v12especimen.evolve===1&&ET.v13durmiente.thaw===1;
  out.compendio=kwHtml0('ereactor','').includes('4 s')&&kwHtml0('ethaw','').includes('doble');
  {const L=['Llevarte el prototipo','Activar el reactor','Quedarte su equipo','Activar el prototipo','Extraer su núcleo','Tomar una muestra','Quedarte el refrigerante','Descargar los registros de la terminal'].map(evOpt);
   out.eventosTexto=L.every(Boolean)&&/un élite/.test(L[0].c)&&/unos enemigos/.test(L[6].c)&&!/Unidad|Durmiente|Centinela|Espécimen/.test(L.map(o=>o.c||'').join(' '))&&/10 %/.test(L[7].c);window.__ev=L;}

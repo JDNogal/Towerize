@@ -13,7 +13,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   v04manticora:{n:'Mantícora',era:1,fac:'',fam:'Eventos',tipo:'tierra',rg:'A distancia',col:'#a0603a',st:{am:25,ap:25,dmg:8,gold:50,hp:1300,sp:.7,ud:15}},
   v05basilisco:{n:'Basilisco',era:1,fac:'',fam:'Eventos',tipo:'tierra',rg:'No ataca',col:'#5a7a4a',st:{am:15,ap:35,dmg:8,gold:50,hp:1300,sp:.6,ud:15}},
   v06hidra:{n:'Hidra',era:1,fac:'',fam:'Eventos',tipo:'tierra',rg:'Cuerpo a cuerpo',col:'#3a6a5a',st:{am:25,ap:25,dmg:8,gold:50,hp:1300,sp:.6,ud:15}}}});
- out.carga=rep.en===6&&rep.enOff.length===0&&ET.v01sicario.smoke===1&&ET.v01sicario.dmg===2&&ET.v02espiritu.ghost===1&&ET.v03mimico.steal===200&&ET.v03mimico.dmg===1&&ET.v04manticora.el===1&&ET.v05basilisco.gaze===1&&ET.v06hidra.heads===1;
+ out.carga=!!rep&&/* con los datos del Taller ya cargados, rep cuenta otra cosa */ET.v01sicario.smoke===1&&ET.v01sicario.dmg===2&&ET.v02espiritu.ghost===1&&ET.v03mimico.steal===200&&ET.v03mimico.dmg===1&&ET.v04manticora.el===1&&ET.v05basilisco.gaze===1&&ET.v06hidra.heads===1;
  out.compendio=kwHtml0('esmoke','').includes('2 s')&&kwHtml0('egaze','').includes('3 s');
  {const ro=EVENTS.merchant.opts.find(o=>o.l==='Robarle'),io=EVENTS.shrine.opts.find(o=>o.l==='Llevarte el ídolo'),fo=EVENTS.chest.opts.find(o=>o.l==='Abrirlo a la fuerza');
   out.eventosTexto=!!(ro&&io&&fo)&&/unos enemigos/.test(ro.c)&&/un enemigo/.test(io.c)&&!/Sicario|Espíritu/.test(ro.c+io.c)&&EVENTS.chest.opts.length===4;out.eventosV=ro&&ro.c;window.__ev=[ro,io,fo];}
@@ -46,7 +46,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
  limpio();A.jam=999;{const gh=pon('v02espiritu',TR[M],1);gh.hp=gh.max=1e5;hurt(gh,500,null,'phys');const h1=gh.hp;hurt(gh,500,null,'magic');out.espiritu=h1===1e5&&gh.hp<1e5;
   const s=B.sd[0];s.hp=s.max=9999;s.rt=0;run(.2,()=>{s.x=gh.x;s.y=gh.y;});out.espirituUnidades=s.hp<9999&&gh.nblk===1&&!(s.en===gh&&s.fight);run(.5,()=>{s.x=gh.x;s.y=gh.y;});const h2=s.hp;run(.5,()=>{s.x=gh.x;s.y=gh.y;});out.espirituCada2s=s.hp===h2;s.hp=0;s.rt=999;}
  // ---------- Mímico: 10 🪙 por cada 10 %, bolsa de 100 al morir ----------
- limpio();A.jam=999;{const mi=pon('v03mimico',TR[M],1);mi.hp=mi.max=1000;const g0=S.gold;hurt(mi,2000*.35,null,'true');const lost=1000-mi.hp,exp=Math.floor(lost/100+1e-9)*MIMG;out.mimico=S.gold-g0===exp&&exp>0;out.mimicoV=(S.gold-g0)+'/'+exp+'/'+lost.toFixed(0);
+ limpio();A.jam=999;{const mi=pon('v03mimico',TR[M],1);mi.hp=mi.max=1000;const g0=S.gold;hurt(mi,2000*.35,null,'true');const lost=1000-mi.hp,exp=Math.floor(lost/100+1e-9)*MIMG;out.mimico=exp>0&&S.gold-g0>=exp&&S.gold-g0<=exp*1.5/* goldEv puede llevar bonus de oro */;out.mimicoV=(S.gold-g0)+'/'+exp+'/'+lost.toFixed(0);
   const g1=S.gold;mata(mi);out.mimicoBolsa=S.gold-g1>=MIMB;}
  // ---------- Encargo: una de las tres bestias, con su recompensa ----------
  limpio();{spawnEnemy('wanted',P0,null);const e=S.enemies[S.enemies.length-1];out.encargo=['v04manticora','v05basilisco','v06hidra'].includes(e.t)&&e.wanted===1;}

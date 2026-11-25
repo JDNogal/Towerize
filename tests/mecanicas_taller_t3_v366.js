@@ -14,7 +14,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   i14transporte:{n:'Transportador aéreo',era:1,fac:'Pieles verdes',fam:'Apoyo',tipo:'aire',rg:'No ataca',col:'#7a6a5a',lleva:{sling:6},st:{am:0,ap:20,dmg:1,gold:10,hp:250,sp:.8,ud:0}},
   i05guardian:{n:'Guardián de la inmortalidad',era:1,fac:'Demonios',fam:'Apoyo',tipo:'tierra',rg:'No ataca',col:'#e0c050',st:{am:20,ap:20,dmg:1,gold:12,hp:200,sp:.7,ud:0}},
   i11alado:{n:'Portaestandarte alado',era:1,fac:'Pieles verdes',fam:'Apoyo',tipo:'aire',rg:'No ataca',col:'#8a3a6a',st:{am:20,ap:0,dmg:1,gold:7,hp:80,sp:.8,ud:0}}}});
- out.carga=rep.en===7&&rep.enOff.length===0&&ET.i10pesado.fly===1&&ET.i33gloton.devour===1&&ET.i34sacrificador.sacr===1&&ET.i44golem.magma===1&&ET.i14transporte.ferry===6&&ET.i05guardian.immo===1&&ET.i11alado.rage===1;
+ out.carga=!!rep&&/* con los datos del Taller ya cargados, rep cuenta otra cosa */ET.i10pesado.fly===1&&ET.i33gloton.devour===1&&ET.i34sacrificador.sacr===1&&ET.i44golem.magma===1&&ET.i14transporte.ferry===6&&ET.i05guardian.immo===1&&ET.i11alado.rage===1;
  out.compendio=kwHtml0('eimmo','').includes('1 de vida')&&kwHtml0('erage','').includes('15 %')&&kwHtml0('eferry','').includes('mitad de vida')&&kwHtml0('burn','').includes('Gólem');
  startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}

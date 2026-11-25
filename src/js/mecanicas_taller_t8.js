@@ -110,7 +110,7 @@ function t8Draw(g,lw){if(!S||!S.enemies)return;const X=v=>v*CS+CS/2,now=performa
  if(typeof MECUSE2!=='undefined')for(const k in KW8)MECUSE2[KW8[k][0]]=Object.keys(TMEC).filter(id=>TMEC[id][k]).map(id=>'en:'+id);}
 // ---- eventos de la Distópica: los costes pasan a ser estos enemigos (sin destripar: hasta verlos, «unos enemigos» / «un élite») ----
 function evOpt(l){for(const id in EVENTS){const o=(EVENTS[id].opts||[]).find(x=>x.l===l);if(o)return o;}return null;}
-function evT8(){if(typeof EVENTS==='undefined'||!ET.v07contencion||ET.v07contencion.pend)return;const ok=k=>ET[k]&&!ET[k].pend,nm=(k,a,b)=>evSeen(k)?a:b,setC=(o,f)=>Object.defineProperty(o,'c',{get:f,configurable:true});
+function evT8(){if(typeof EVENTS==='undefined'||!ET.v07contencion||ET.v07contencion.pend||evT8.ok)return;evT8.ok=1;/* una sola vez: algunas opciones envuelven su run */const ok=k=>ET[k]&&!ET[k].pend,nm=(k,a,b)=>evSeen(k)?a:b,setC=(o,f)=>Object.defineProperty(o,'c',{get:f,configurable:true});
  {const o=evOpt('Llevarte el prototipo');if(o&&ok('v07contencion')){const run0=o.run;setC(o,()=>'La próxima oleada trae '+nm('v07contencion','una Unidad de contención','un élite')+' (la seguridad del laboratorio te sigue)');
    o.run=()=>{const r=run0().filter(k=>k!=='elite');for(const p of S.portals)if(p.plan.elite>0){p.plan.elite--;break;}addNow('v07contencion',1);return r.concat(['evn:v07contencion:1']);};}}
  {const o=evOpt('Activar el reactor');if(o&&ok('v08nucleoandante')){delete o.req;o.run=()=>{if(Math.random()<.5){goldEv(200);return['gold:200'];}addNow('v08nucleoandante',1);return['evn:v08nucleoandante:1'];};}}

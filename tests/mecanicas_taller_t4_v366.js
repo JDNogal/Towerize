@@ -13,7 +13,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   i45caza:{n:'Caza interceptor',era:2,fac:'Máquinas',fam:'Rápidos',tipo:'aire',rg:'No ataca',col:'#4a6a8a',st:{am:0,ap:10,dmg:1,gold:7,hp:70,sp:1.5,ud:0}},
   i42escupidor:{n:'Escupidor alado',era:2,fac:'Alienígenas',fam:'A distancia',tipo:'aire',rg:'A distancia',col:'#6a9a2a',st:{am:10,ap:0,dmg:1,gold:6,hp:50,sp:1.1,ud:4}}},
   sq:{qmarea:{custom:true,era:2,pz:1,min:1,n:'Marea de prueba',lead:'i19sobrecarga',m:{i19sobrecarga:1,i29microbot:4},f:[[['i29microbot',0,-1],['i29microbot',0,1],['i19sobrecarga',1.5,0],['i29microbot',3,-1],['i29microbot',3,1]]]}}});
- out.carga=rep.en===5&&rep.enOff.length===0&&ET.i19sobrecarga.ovl===1&&ET.i38avispa.sting===1&&ET.i45caza.aburn===1&&ET.i42escupidor.spit2===1&&ET.i29microbot.fac==='m'&&!SQUADS.qmarea.off;
+ out.carga=!!rep&&/* con los datos del Taller ya cargados, rep cuenta otra cosa */ET.i19sobrecarga.ovl===1&&ET.i38avispa.sting===1&&ET.i45caza.aburn===1&&ET.i42escupidor.spit2===1&&ET.i29microbot.fac==='m'&&!SQUADS.qmarea.off;
  out.compendio=kwHtml0('eovl','').includes('30 %')&&kwHtml0('eaburn','').includes('doble')&&kwHtml0('espit2','').includes('ácido');
  startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}

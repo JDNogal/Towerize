@@ -15,9 +15,9 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  out.shrineSpec=open('shrine',spec);             // con casilla especial → Santuario
  S.hero.lvl=HLMAX;out.shrineMax=open('shrine',spec);S.hero.lvl=1; // héroe al máximo → otro evento
  S.gold=0;out.merchNoGold=open('merchant',spec);S.gold=5000;      // solo falta oro → se queda
- S.gold=0;S.hp=1;out.chestBoth=open('chest',spec);S.gold=5000;S.hp=20; // oro y vida a la vez → menos de 2 opciones → otro
+ out.mimico=!!(ET.v03mimico&&ET.v03mimico.mimr);S.gold=0;S.hp=1;out.chestBoth=open('chest',spec);S.gold=5000;S.hp=20; // oro y vida a la vez → menos de 2 opciones → otro
  S.gold=0;out.chestGold=open('chest',spec);S.gold=5000;            // solo oro → se queda
  return out;});
-const ok=r.specOk&&r.shrinePlain!=='shrine'&&!!EVOK(r.shrinePlain)&&r.shrineSpec==='shrine'&&r.shrineMax!=='shrine'&&r.merchNoGold==='merchant'&&r.chestBoth!=='chest'&&r.chestGold==='chest'&&!errs.length;
+const ok=r.specOk&&r.shrinePlain!=='shrine'&&!!EVOK(r.shrinePlain)&&r.shrineSpec==='shrine'&&r.shrineMax!=='shrine'&&r.merchNoGold==='merchant'&&(r.chestBoth!=='chest'||r.mimico)/* v366: con el Mímico enfurecido, «Abrirlo a la fuerza» no cuesta oro ni vida y el cofre se queda */&&r.chestGold==='chest'&&!errs.length;
 function EVOK(x){return typeof x==='string'&&x.length>0;}
 console.log(JSON.stringify(r),errs.slice(0,3));console.log(ok?'eventos_cambio ok':'FALLO');await b.close();process.exit(ok?0:1);})();

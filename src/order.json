@@ -219,7 +219,11 @@
   "mecanicas_taller_t2.js",
   "mecanicas_taller_t3.js",
   "mecanicas_taller_t4.js",
-  "mecanicas_taller_t5.js","mecanicas_taller_t6.js","mecanicas_taller_t7.js","mecanicas_taller_t8.js",
+  "mecanicas_taller_t5.js",
+  "mecanicas_taller_t6.js",
+  "mecanicas_taller_t7.js",
+  "mecanicas_taller_t8.js",
+  "data/taller_datos.js",
   "taller_aplicar.js"
  ]
 }

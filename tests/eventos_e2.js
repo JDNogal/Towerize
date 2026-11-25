@@ -16,10 +16,10 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  // Cápsula caída
  out.capOpen=ev('capsule',0)&&!!S.ally&&unitTowers().includes(S.ally)&&S.allyOn===1&&STO.h_korr===1&&!HEROES.korr.lockTxt;done();out.capPanel=heroPanel().includes('data-a="ally"');out.capKorr=S.allyKorr===1&&S.ally.sd[0].port==='korr'&&heroPanel().includes('#5ad0e0');
  S.h2just={};S.ally=null;mkAlly();out.capOther=S.allyKorr===0&&!S.ally.sd[0].port&&chip('hero:korr')==='';
- let g=S.gold;ev('capsule',1);done();out.capGold=S.gold===g+150;let hp=S.hp;ev('capsule',2);done();out.capRel=S.relics.includes('sample')&&S.hp===hp-2;
+ let g=S.gold;ev('capsule',1);done();out.capGold=S.gold===g+150;let hp=S.hp;ev('capsule',2);done();out.capRel=S.relics.includes('sample')&&(ET.v12especimen&&ET.v12especimen.evolve?S.hp===hp&&S.portals.some(p=>p.plan.v12especimen>0)/* v366: el coste es el Espécimen */:S.hp===hp-2);
  // Laboratorio
- let el=S.portals[0].plan.elite||0;ev('lab',0);done();out.labRel=S.relics.includes('repro')&&(S.portals[0].plan.elite||0)===el+1;
- ev('lab',1);done();out.labVch=S.vch.up===1;const rnd=Math.random;Math.random=()=>.1;g=S.gold;ev('lab',2);done();out.labWin=S.gold===g+200;Math.random=()=>.9;hp=S.hp;ev('lab',2);done();Math.random=rnd;out.labLose=S.hp===hp-3;
+ let el=S.portals[0].plan.elite||0;ev('lab',0);done();out.labRel=S.relics.includes('repro')&&(ET.v07contencion&&ET.v07contencion.netter?S.portals.some(p=>p.plan.v07contencion>0)/* v366: Unidad de contención */:(S.portals[0].plan.elite||0)===el+1);
+ ev('lab',1);done();out.labVch=S.vch.up===1;const rnd=Math.random;Math.random=()=>.1;g=S.gold;ev('lab',2);done();out.labWin=S.gold===g+200;Math.random=()=>.9;hp=S.hp;ev('lab',2);done();Math.random=rnd;out.labLose=ET.v08nucleoandante&&ET.v08nucleoandante.reactor?S.hp===hp&&S.portals.some(p=>p.plan.v08nucleoandante>0)/* v366: Núcleo andante */:S.hp===hp-3;
  // Señal de socorro
  g=S.gold;ev('sos',0);done();out.sosSq=S.resc===1&&S.gold===g-100;ev('sos',1);done();out.sosRel=S.relics.includes('jammer');{const nc=Object.keys(S.chests).filter(k=>S.chests[k]).length;ev('sos',2);done();out.sosCh=Object.keys(S.chests).filter(k=>S.chests[k]).length===nc+1;}/* v362: la tercera opción ya no recarga reliquias: da coordenadas (cofre y evento lejos) */
  // Cámara criogénica
@@ -28,7 +28,7 @@ const r=await p.evaluate(()=>{const out={};const i=document.getElementById('intr
  // Proyecto Omega: fase 1 → fase 2 → torre
  g=S.gold;ev('omega',1);done();out.omCoord=S.gold===g+120;ev('omega',2);done();out.omLog=S.vch.ab===1;
  g=S.gold;ev('omega',0);out.omNext=RL.evNext==='omega2'&&S.gold===g-100;closeEvent();out.omPhase2=RL.open&&RL.ev==='omega2';
- hp=S.hp;chooseEvent(0);out.omAct=S.hp===hp-4&&S.uq.some(u=>u.type==='omega');closeEvent();out.omPlace=S.aim==='uplace';
+ hp=S.hp;chooseEvent(0);out.omAct=(ET.v10centinela&&ET.v10centinela.omegae?S.hp===hp&&S.portals.some(p=>p.plan.v10centinela>0)/* v366: Centinela Omega */:S.hp===hp-4)&&S.uq.some(u=>u.type==='omega');closeEvent();out.omPlace=S.aim==='uplace';
  const q=uSpots(bk)[0];uPlaceAt({x:q.x,y:q.y});uPlaceAt({x:q.x,y:q.y});const om=S.list.find(t=>t.type==='omega');out.omBuilt=!!om&&S.aim!=='uplace';
  S.evPlayed={};openEvent('omega2',bk);out.omOnce=!!EVENTS.omega2.opts[0].req();chooseEvent(1);closeEvent();out.omCore=S.relics.includes('core2');
  S.evPlayed={};openEvent('omega2',bk);const v0=S.vch.up;chooseEvent(2);closeEvent();out.omPlans=S.vch.up===v0+1;

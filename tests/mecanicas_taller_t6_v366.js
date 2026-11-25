@@ -13,7 +13,7 @@ const r=await p.evaluate(async()=>{const out={};{const i=document.getElementById
   i22reciclador:{n:'Dron reciclador',era:2,fac:'Máquinas',fam:'Apoyo',tipo:'aire',rg:'Cuerpo a cuerpo',col:'#8a7a3a',st:{am:0,ap:20,dmg:1,gold:7,hp:90,sp:.8,ud:5}},
   i36feromonas:{n:'Portador de feromonas',era:2,fac:'Alienígenas',fam:'Apoyo',tipo:'tierra',rg:'No ataca',col:'#b8a02a',st:{am:10,ap:0,dmg:1,gold:7,hp:80,sp:.8,ud:2}},
   i46saboteador:{n:'Dron saboteador',era:2,fac:'Máquinas',fam:'A distancia',tipo:'aire',rg:'A distancia',col:'#6a4a6a',st:{am:10,ap:0,dmg:1,gold:7,hp:60,sp:1.1,ud:0}}}});
- out.carga=rep.en===6&&rep.enOff.length===0&&ET.i24holo.holo2===1&&ET.i24holo.ud===1&&ET.i32arrojador.hurl===1&&ET.i18lanzadera.lander===1&&ET.i22reciclador.recyc===1&&ET.i22reciclador.ud===0&&ET.i36feromonas.phero===1&&ET.i46saboteador.sabo===1&&ET.i46saboteador.rg==='melee';
+ out.carga=!!rep&&/* con los datos del Taller ya cargados, rep cuenta otra cosa */ET.i24holo.holo2===1&&ET.i24holo.ud===1&&ET.i32arrojador.hurl===1&&ET.i18lanzadera.lander===1&&ET.i22reciclador.recyc===1&&ET.i22reciclador.ud===0&&ET.i36feromonas.phero===1&&ET.i46saboteador.sabo===1&&ET.i46saboteador.rg==='melee';
  out.compendio=kwHtml0('ephero','').includes('15 %')&&kwHtml0('eholo2','').includes('50 %')&&kwHtml0('esabo','').includes('★');
  startGame(15);chooseHero('reinhart');if(DLG.on)dlgEnd();S.chests={};S.evts={};RL.open=false;HQ.q=[];
  for(let pi=0;pi<3;pi++){S.pi=pi;const o=S.offers[pi];let ok=0;for(let r=0;r<4&&!ok;r++){for(let by=0;by<BN&&!ok;by++)for(let bx=0;bx<BN&&!ok;bx++)if(check(bx,by,o.p)===0){placePiece(bx,by);ok=1;}if(!ok)rotO(o);}if(ok)break;}
