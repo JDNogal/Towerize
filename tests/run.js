@@ -128,6 +128,7 @@ const T=[
  ['mecanicas_taller_t3_v366.js','v366: enemigos nuevos del Taller, tanda 3 (Guiverno, Ogro glotón, Sacrificador, Gólem de magma, Transportador aéreo, Guardián y Portaestandarte alado)'],
  ['mecanicas_taller_t4_v366.js','v366: enemigos nuevos del Taller, tanda 4 (Microbot, Sobrecargador, Avispa de colmena, Caza interceptor y Escupidor alado)'],
  ['mecanicas_taller_t5_v366.js','v366: enemigos nuevos del Taller, tanda 5 (Gusano, Amalgama, Garrapata, Dron arpón, Inhibidor, Nexo, Fragata y Saltador)'],
+ ['mecanicas_taller_t6_v366.js','v366: enemigos nuevos del Taller, tanda 6 (Proyector, Arrojador, Lanzadera, Reciclador, Feromonas y Saboteador)'],
  ['cinco_carriles_v365.js','v365: 5 carriles (casillas de 5×5, portal en el borde, carriles -2…2, tamaños por ficha, encuadre, guardados de 3 carriles fuera)'],
  ['eter_cristal.js','ÉTER en la era fantástica: cristal atado a la cinta del libro'],
  ['suerte.js','Mala suerte con red: misma media y sin rachas largas'],
